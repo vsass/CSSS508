@@ -4,7 +4,7 @@ subtitle: "Syllabus and Introduction to R, RStudio, and Quarto"
 author: "Victoria Sass"
 date: "October 3, 2023"
 date-format: long
-highlight-style:  vim-dark #, oblivion, radical, vim-dark, espresso, zenburn, , , kate, monochrome, breezedark, haddock
+highlight-style:  vim-dark #, oblivion, radical, vim-dark, espresso, zenburn, kate, monochrome, breezedark, haddock
 footnotes-hover: true
 reference-location: margin
 execute: 
@@ -19,12 +19,19 @@ format:
     chalkboard: true
     incremental: false 
     smaller: true
+    preview-links: true
+    code-line-numbers: false
     #logo: "../../images/csss-white.png" # need to add css for size <https://stackoverflow.com/questions/74083521/how-to-increase-size-logo-in-quarto-reveal-js-presentation>
 ---
 
-## Welcome!
+```{r}
+#| echo = FALSE
+require(downlit, xml2)
+```
 
-Agenda for today: 
+# Introductions & Syllabus
+
+## Welcome!
 
 - Introductions
 - Syllabus
@@ -198,19 +205,19 @@ Don't ask like this:
 Instead, ask like this: 
 
 <blockquote>
-<pre>
+```
 y <- seq(1:10) + rnorm(10)
 x <- seq(0:10)
 model <- lm(y ~ x)
-</pre>
+```
 
 Running the block above gives me the following error, anyone know why?
 
-<pre>
+```
 Error in model.frame.default(formula = y ~ x, 
 drop.unused.levels = TRUE) : variable lengths differ 
 (found for 'x')
-</pre>
+```
 </blockquote>
 
 I may send out your question (anonymously) and my answer to the course mailing list!
@@ -218,7 +225,7 @@ I may send out your question (anonymously) and my answer to the course mailing l
 ## Questions?
 
 
-## Lecture 1: Introduction to R, RStudio, and Quarto
+# Lecture 1: Introduction to R, RStudio, and Quarto
 
 ## A Note on Slide Formatting
 
@@ -346,7 +353,7 @@ If you don't already have R and RStudio on your machine, now is the time to do s
 :::
 . . . 
 
-We'll take a ~10 minute break now to stretch and solve any software issues!
+Alright, that's it for lecture today! I'll see most of you over in Savery 117 for our lab section and I'll see the rest of you there on Thursday!
 
 ## Getting Started
 
@@ -534,7 +541,7 @@ There are other, more complex data types in R which we will discuss later in the
 
 Most data sets you will work with will be read into R and stored as a **dataframe**, so this course will mainly focus on manipulating and visualizing these objects.
 
-## Quarto
+# Quarto
 
 ## Quarto Documents
 
@@ -625,11 +632,8 @@ output:
 ### Syntax
 
 ```{markdown}
-#| code-line-numbers: false
 **bold/strong emphasis**
-
 *italic/normal emphasis*
-  
   
   
   
@@ -637,16 +641,12 @@ output:
   
   
   
-  
-  
 ## Subheader
   
 
 
-
 ### Subsubheader
   
-
 
 
 
@@ -688,8 +688,6 @@ output:
     
     
     
-  
-    
     
 * Unordered lists
 * Are also real easy
@@ -700,10 +698,251 @@ output:
 :::
 ::::
 
+## Formulae and Syntax
+
+:::: {.columns}
+::: {.column width="39%"}
+
+### Output 
+
+Include math $y= \left( \frac{2}{3} \right)^2$ inline. 
+
+Or centered on your page like so: 
+
+$$\frac{1}{n} \sum_{i=1}^{n} x_i = \bar{x}_n$$
+
+Or write `code-looking font`.
 
 
+Or a block of code:
+
+```{r}
+#| eval: false
+#| code-line-numbers: false
+y <- 1:5
+z <- y^2
+```
+:::
+
+::: {.column width="61%"}
+### Syntax
+
+````
+Include math $y= \left(\frac{2}{3} \right)^2$ inline. 
+
+Or centered on your page like so: 
+  
+$$\frac{1}{n} \sum_{i=1}^{n}x_i = \bar{x}_n$$
 
 
+  
+  
+Or write`code-looking font`.
+
+Or a block of code:
+
+```{{r}}
+y <- 1:5
+z <- y^2
+```
+
+````
+
+:::
+::::
+
+## Quarto Tinkering
+
+Quarto docs can be modified in many ways. Visit these links for more information.
+
+* [Ways to modify the overall document appearance](https://quarto.org/docs/output-formats/html-basics.html)
+* [Ways to format parts of your document](https://quarto.org/docs/authoring/markdown-basics.html)
+* [Getting started with Quarto](https://quarto.org/docs/get-started/hello/rstudio.html)
+
+## R Code in Quarto
+
+Inside RMarkdown, lines of R code are called **chunks**. Code is sandwiched between sets of three backticks and `{r}`. This chunk of code...
+
+````
+```{{r}}
+summary(cars)
+```
+````
+
+Produces this output in your document:
+```{r}
+summary(cars)
+```
+
+## Chunk Options
+
+Chunks have options that control what happens with their code. They are specified as special comments at the top of a block. For example: 
+
+````
+```{{r}}
+#| label: bar-chart
+#| echo: false
+#| fig-cap: "A line plot on a polar axis"
+```
+````
+
+## Chunk Options
+
+Some useful and common options include: 
+
+* `echo: false` - Keeps R code from being shown in the document
+
+* `eval: false` - Shows R code in the document without running it
+
+* `include: false` - Hides all output but still runs code (good for `setup` chunks where you load packages!)
+
+* `output: false` - Doesn't include the results of that code chunk in the output
+
+* `cache: true` - Saves results of running that chunk so if it takes a while, you won't have to re-run it each time you re-knit the document
+
+* `fig.height: 5, fig.width: 5` - modify the dimensions of any plots that are generated in the chunk (units are in inches)
+
+* `fig.cap: "Text"` - add a caption to your figure in the chunk
+
+## Playing with Chunk Options
+
+Try adding or changing the chunk options (separated by commas) for the two chunks in `my_first_Rmd.qmd` and re-knitting to check what happens.
+
+````
+```{{r}}
+#| echo: false
+summary(cars)
+```
+````
+
+## In-Line R code
+
+Sometimes we want to insert a value directly into our text. We do that using code in single backticks starting off with `r`.
+
+
+. . . 
+
+```{r}
+#| echo: false
+library(knitr)
+```
+
+    Four score and seven years ago is the same as `r inline_expr("4*20 + 7", "md")` years.
+
+. . . 
+
+Four score and seven years ago is the same as `r 4*20 + 7` years.
+
+. . . 
+
+<br>
+
+Maybe we've saved a variable in a chunk we want to reference in the text:
+
+```{r}
+x <- sqrt(77) # <- is how we assign objects
+```
+
+. . .
+
+    The value of `x` rounded to the nearest two decimals is `r inline_expr("round(x, 2)", "md")`.
+
+. . . 
+
+The value of `x` rounded to the nearest two decimals is `r round(x, 2)`.
+
+## This is Amazing!
+
+Having R dump values directly into your document protects you from silly mistakes:
+
+. . . 
+
+* Never wonder "how did I come up with this quantity?" ever again: Just look at your formula in your .qmd file!
+
+. . . 
+
+* Consistency! No "find/replace" mishaps; reference a variable in-line throughout your document without manually updating if the calculation changes (e.g. reporting sample sizes).
+
+. . . 
+
+* You are more likely to make a typo in a "hard-coded" number than you are to write R code that somehow runs but gives you the wrong thing.
+
+## Example: Keeping Dates
+
+In your YAML header, make the date come from R's `Sys.time()` function by changing:
+
+<br>
+
+    date: "October 3, 2023"
+  
+to
+
+    date: "`r inline_expr("Sys.time()", "md")`"
+
+# Data Frames
+
+## What's Up with `cars`?
+
+In the sample R Markdown document you are working on, we can load the built-in data
+`cars`, which loads as a dataframe, a type of object mentioned earlier. Then, we can look at it in a couple different ways.
+
+. . . 
+
+`data(cars)` loads this dataframe into the **Global Environment**.
+
+. . . 
+
+`View(cars)` pops up a **Viewer** pane ("interactive" use only, don't put in R Markdown document!). 
+
+. . . 
+
+```{r}
+head(cars, 5) # prints first 5 rows, can use tail() too
+```
+
+## Tell Me More About `cars`
+
+`str()` displays the structure of an object:
+```{r}
+str(cars) # str[ucture]
+```
+
+. . . 
+
+`summary()` displays summary information ^[[Note R is **object-oriented**](https://adv-r.hadley.nz/oo.html): `summary()` provides different information for different types of objects!]:
+```{r}
+summary(cars)
+```
+
+## Ugly Pictures of `cars`
+
+`hist()` generates a histogram of a vector. Note you can access a vector that is a column of a dataframe using `$`, the **extract operator**.
+
+::::{.columns}
+
+:::{.column width="50%"}
+```{r, out.height="330px"}
+hist(cars$speed) # Histogram
+```
+:::
+
+::: {.column width="50%"}
+```{r, out.height="330px"}
+hist(cars$dist)
+```
+:::
+::::
+
+---
+
+## Drawing Slightly Less Ugly Pictures
+
+
+```{r, out.height="400px"}
+hist(cars$dist,
+     xlab = "Distance (ft)", # X axis label
+     main = "Observed stopping distances of cars") # Title
+```
 
 
 
