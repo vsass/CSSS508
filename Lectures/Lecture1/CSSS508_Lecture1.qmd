@@ -921,29 +921,81 @@ summary(cars)
 ::::{.columns}
 
 :::{.column width="50%"}
-```{r, out.height="330px"}
+```{r}
+#| fig-width: 5
+#| fig-height: 5.25
 hist(cars$speed) # Histogram
 ```
 :::
 
 ::: {.column width="50%"}
-```{r, out.height="330px"}
+```{r}
+#| fig-width: 5
+#| fig-height: 5.25
 hist(cars$dist)
 ```
 :::
 ::::
 
----
-
 ## Drawing Slightly Less Ugly Pictures
 
-
-```{r, out.height="400px"}
+```{r}
+#| fig-width: 6
+#| fig-height: 6
 hist(cars$dist,
      xlab = "Distance (ft)", # X axis label
      main = "Observed stopping distances of cars") # Title
 ```
 
+## Math with `cars`
 
+```{r}
+dist_mean  <- mean(cars$dist) 
+print(dist_mean)
+speed_mean <- mean(cars$speed)
+print(speed_mean)
+```
 
+## Drawing Still Ugly Pictures
 
+```{r}
+#| fig-width: 6
+#| fig-height: 6
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (mph)",
+     ylab = "Stopping distance (ft)",
+     main = "Speeds and stopping distances of cars",
+     pch = 16) # Point size
+```
+
+## `swiss` Time
+
+Let's switch gears to the `swiss` data frame built in to R.
+
+. . . 
+
+First, use `?swiss` to see what things mean.
+
+. . . 
+
+Then, load it using `data(swiss)`
+
+. . . 
+
+Add chunks to your Quarto document inspecting `swiss`, defining variables, doing some exploratory plots using `hist` or `plot`.
+
+You might experiment with [colors](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) and [shapes](http://www.cookbook-r.com/Graphs/Shapes_and_line_types/).
+
+## Looking at `swiss`
+
+```{r}
+#| code-line-numbers: "|1"
+#| fig-width: 5
+#| fig-height: 5
+pairs(swiss, pch = 8, col = "violet",
+      main = "Pairwise comparisons of Swiss variables")
+```
+
+::: aside
+pairs() is a pairwise scatterplot function. Good for a quick look at small datasets, but mostly useless for larger data.
+:::
