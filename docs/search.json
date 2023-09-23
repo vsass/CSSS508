@@ -1111,5 +1111,306 @@
     "title": "CSSS 508 • Lecture 2",
     "section": "Something",
     "text": "Something\n::: :::{.column width=“50%”}\n\n::: ::::"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#death-to-spreadsheets",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#death-to-spreadsheets",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Death to Spreadsheets",
+    "text": "Death to Spreadsheets\nTools like Excel or Google Sheets lets you manipulate spreadsheets using functions.\n\nSpreadsheets are not reproducible: It’s hard to know how someone changed the raw data!\nIt’s hard to catch mistakes when you use spreadsheets. Don’t be the next sad Research Assistant who makes headlines with an Excel error! (Reinhart & Rogoff, 2010)\n\nToday, we’ll use R to manipulate data more transparently and reproducibly."
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#logical-operators",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#logical-operators",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Logical Operators",
+    "text": "Logical Operators\nLogical operators refer to base functions which allow us to test a connection between two objects.\n\nFor example, we may test\n\nIs A equal to B?\nIs A greater than B?\nIs A within B?\n\nand many others!"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#logical-operators-in-code",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#logical-operators-in-code",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Logical Operators in Code",
+    "text": "Logical Operators in Code\n\n\n==: is equal to (note: there are TWO equal signs here!)\n\n\n\n\n!=: not equal to\n\n\n\n\n\n&gt;, &gt;=, &lt;, &lt;=: less than, less than or equal to, etc.\n\n\n\n\n\n%in%: used with checking equal to one of several values"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#examples-of-logical-operators",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#examples-of-logical-operators",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Examples of Logical Operators",
+    "text": "Examples of Logical Operators\nLet’s create two objects, A and B\n\nA &lt;- c(5,10,15)\nB &lt;- c(5,15,25)\n\n\n\nA == B\n\n[1]  TRUE FALSE FALSE\n\nA &gt;  B\n\n[1] FALSE FALSE FALSE\n\nA %in% B\n\n[1]  TRUE FALSE  TRUE"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#combining-logical-operators",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#combining-logical-operators",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Combining Logical Operators",
+    "text": "Combining Logical Operators\nWe have three main ways to combine logical operators:\n\n\n&: both conditions need to hold (AND)\n\n\n\n\n|: at least one condition needs to hold (OR)\n\n\n\n\n\n!: inverts a logical condition (TRUE becomes FALSE, FALSE becomes TRUE)"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#examples",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#examples",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Examples",
+    "text": "Examples\n\nA &lt;- c(5,10,15)\nB &lt;- c(5,15,25)\n\n\n\nA &gt; 5 & A &lt;= B\n\n[1] FALSE  TRUE  TRUE\n\nB &lt; 10 | B &gt; 20\n\n[1]  TRUE FALSE  TRUE\n\n!(A == 10)\n\n[1]  TRUE FALSE  TRUE"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#building-block-of-dplyr-pipes",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#building-block-of-dplyr-pipes",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Building Block of dplyr: Pipes",
+    "text": "Building Block of dplyr: Pipes\ndplyr allows us to “pipe” data between functions using the (%&gt;%) operator. So instead of nesting functions like this:\n\nlog(mean(gapminder$pop))\n\n[1] 17.20333\n\n\n\nWe can pipe them like this:\n\ngapminder$pop %&gt;% mean() %&gt;% log()\n\n[1] 17.20333\n\n\n\n\n\nPipes read “left to right.” (intuitive)\nNested functions read “inside to out.” (kinda weird; gets unwieldy the more nested your code becomes)"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#subset-rows-filter",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#subset-rows-filter",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Subset Rows: filter\n",
+    "text": "Subset Rows: filter\n\nWe often get big datasets, and we only want some of the entries. We can subset rows using filter.\n\n\ngapminder |&gt; \n  filter(country == \"China\") |&gt;\n  head(4) # display first four rows\n\n# A tibble: 4 × 6\n  country continent  year lifeExp       pop gdpPercap\n  &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;\n1 China   Asia       1952    44   556263527      400.\n2 China   Asia       1957    50.5 637408000      576.\n3 China   Asia       1962    44.5 665770000      488.\n4 China   Asia       1967    58.4 754550000      613.\n\nChina &lt;- gapminder |&gt; \n  filter(country == \"China\")\n\n(Now, China is an object in our environment which contains rows corresponding to China.)"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#subset-columns-select",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#subset-columns-select",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Subset Columns: select\n",
+    "text": "Subset Columns: select\n\nWhat if we want to keep each entry, but only use certain variables? Use select!\n\n\ngapminder |&gt; \n  select(country,continent,year,lifeExp) |&gt; \n  head(4)\n\n# A tibble: 4 × 4\n  country     continent  year lifeExp\n  &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;\n1 Afghanistan Asia       1952    28.8\n2 Afghanistan Asia       1957    30.3\n3 Afghanistan Asia       1962    32.0\n4 Afghanistan Asia       1967    34.0"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#dropping-columns-with-select",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#dropping-columns-with-select",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Dropping columns with select\n",
+    "text": "Dropping columns with select\n\nAlternatively, we can use select() to drop variables using a - sign:\n\ngapminder |&gt; \n  select(-continent, -pop, -lifeExp) |&gt; \n  head(4)\n\n# A tibble: 4 × 3\n  country      year gdpPercap\n  &lt;fct&gt;       &lt;int&gt;     &lt;dbl&gt;\n1 Afghanistan  1952      779.\n2 Afghanistan  1957      821.\n3 Afghanistan  1962      853.\n4 Afghanistan  1967      836."
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#finding-unique-rows-distinct",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#finding-unique-rows-distinct",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Finding Unique Rows: distinct\n",
+    "text": "Finding Unique Rows: distinct\n\nYou may want to find the unique combinations of variables in a dataset. Use distinct\n\n\ngapminder |&gt; \n  distinct(continent, year) |&gt; \n  head(6)\n\n# A tibble: 6 × 2\n  continent  year\n  &lt;fct&gt;     &lt;int&gt;\n1 Asia       1952\n2 Asia       1957\n3 Asia       1962\n4 Asia       1967\n5 Asia       1972\n6 Asia       1977"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#distinct-drops-variables",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#distinct-drops-variables",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "\ndistinct drops variables!",
+    "text": "distinct drops variables!\nBy default, distinct() drops unused variables. If you don’t want to drop them, add the argument .keep_all = TRUE:\n\ngapminder |&gt; \n  distinct(continent, year, .keep_all=TRUE) |&gt; \n  head(6)\n\n# A tibble: 6 × 6\n  country     continent  year lifeExp      pop gdpPercap\n  &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;\n1 Afghanistan Asia       1952    28.8  8425333      779.\n2 Afghanistan Asia       1957    30.3  9240934      821.\n3 Afghanistan Asia       1962    32.0 10267083      853.\n4 Afghanistan Asia       1967    34.0 11537966      836.\n5 Afghanistan Asia       1972    36.1 13079460      740.\n6 Afghanistan Asia       1977    38.4 14880372      786."
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#sorting-data-by-rows-arrange",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#sorting-data-by-rows-arrange",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Sorting data by rows: arrange\n",
+    "text": "Sorting data by rows: arrange\n\nSometimes it’s useful to sort rows in your data, in ascending (low to high) or descending (high to low) order. We do that with arrange.\n\n\nUS_and_Canada &lt;- gapminder |&gt; \n  filter(country %in% c(\"United States\",\"Canada\"))\nUS_and_Canada |&gt; \n  arrange(year,lifeExp) |&gt; \n  head(4)\n\n# A tibble: 4 × 6\n  country       continent  year lifeExp       pop gdpPercap\n  &lt;fct&gt;         &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;\n1 United States Americas   1952    68.4 157553000    13990.\n2 Canada        Americas   1952    68.8  14785584    11367.\n3 United States Americas   1957    69.5 171984000    14847.\n4 Canada        Americas   1957    70.0  17010154    12490."
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#sorting-data-by-rows-arrange-1",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#sorting-data-by-rows-arrange-1",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Sorting data by rows: arrange\n",
+    "text": "Sorting data by rows: arrange\n\nTo sort in descending order, using desc() within arrange\n\nUS_and_Canada |&gt; \n  arrange(desc(pop)) |&gt; \n  head(4)\n\n# A tibble: 4 × 6\n  country       continent  year lifeExp       pop gdpPercap\n  &lt;fct&gt;         &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;\n1 United States Americas   2007    78.2 301139947    42952.\n2 United States Americas   2002    77.3 287675526    39097.\n3 United States Americas   1997    76.8 272911760    35767.\n4 United States Americas   1992    76.1 256894189    32004."
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#rename-variables-rename",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#rename-variables-rename",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Rename variables: rename\n",
+    "text": "Rename variables: rename\n\nYou may receive data with unintuitive variable names. You can change them using rename().\n\n\nUS_and_Canada |&gt; \n  rename(life_expectancy = lifeExp) |&gt;\n  head(4)\n\n# A tibble: 4 × 6\n  country continent  year life_expectancy      pop gdpPercap\n  &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;           &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;\n1 Canada  Americas   1952            68.8 14785584    11367.\n2 Canada  Americas   1957            70.0 17010154    12490.\n3 Canada  Americas   1962            71.3 18985849    13462.\n4 Canada  Americas   1967            72.1 20819767    16077.\n\n\n\n\n\n* NOTE 1: I did not re-save the object US_and_Canada, so the name change is not permanent!\n* NOTE 2: I recommend against using spaces in a name! It makes things really hard sometimes!!"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#create-new-columns-mutate",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#create-new-columns-mutate",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Create new columns: mutate\n",
+    "text": "Create new columns: mutate\n\nYou can add new columns to a data frame using mutate().\n\nFor example, perhaps we wish to state the population in millions:\n\nUS_and_Canada |&gt; \n  select(country, year, pop) |&gt;\n  mutate(pop_millions = pop / 1000000) |&gt; \n  head(5)\n\n# A tibble: 5 × 4\n  country  year      pop pop_millions\n  &lt;fct&gt;   &lt;int&gt;    &lt;int&gt;        &lt;dbl&gt;\n1 Canada   1952 14785584         14.8\n2 Canada   1957 17010154         17.0\n3 Canada   1962 18985849         19.0\n4 Canada   1967 20819767         20.8\n5 Canada   1972 22284500         22.3"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#summarizing-data-summarize",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#summarizing-data-summarize",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Summarizing data: summarize\n",
+    "text": "Summarizing data: summarize\n\nsummarize() calculates summaries of variables in your data:\n\nCount the number of rows\nCalculate the mean\nCalculate the sum\nFind the minimum or maximum value\n\nYou can use any function inside summarize() that aggregates multiple values into a single value (like sd(), mean(), or max())."
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#summarize-example",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#summarize-example",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "\nsummarize() Example",
+    "text": "summarize() Example\nFor the year 1982, let’s summarize some values in gapminder\n\ngapminder |&gt; \n  filter(year == 1982) |&gt;\n  summarize(number_observations = n(),\n            max_lifeexp = max(lifeExp),\n            mean_pop = mean(pop),\n            sd_pop = sd(pop))\n\n# A tibble: 1 × 4\n  number_observations max_lifeexp  mean_pop     sd_pop\n                &lt;int&gt;       &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;\n1                 142        77.1 30207302. 105098650."
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#summarizing-data-by-groups-group_by",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#summarizing-data-by-groups-group_by",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Summarizing data by groups: group_by\n",
+    "text": "Summarizing data by groups: group_by\n\nWhat if we want to summarize data by category? Use group_by and summarize\n\nFunctions after group_by() are computed within each group as defined by variables given, rather than over all rows at once."
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#group_by-example",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#group_by-example",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "\ngroup_by() Example",
+    "text": "group_by() Example\n\nUS_and_Canada |&gt; group_by(year) |&gt;  \n  summarize(total_pop = sum(pop)) |&gt; \n  head(4)\n\n# A tibble: 4 × 2\n   year total_pop\n  &lt;int&gt;     &lt;int&gt;\n1  1952 172338584\n2  1957 188994154\n3  1962 205523849\n4  1967 219531767\n\n\nBecause we did group_by() with year then used summarize(), we get one row per value of year!"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#why-merge",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#why-merge",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Why merge?!",
+    "text": "Why merge?!\nIn practice, we often collect data from different sources. To analyze the data, we usually must first combine (merge) them.\n\nFor example, imagine you would like to study county-level patterns with respect to age and grocery spending. However, you can only find,\n\nCounty level age data from the US Census, and\nCounty level grocery spending data from the US Department of Agriculture\n\n\n\nMerge the data!!"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#merging-in-concept",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#merging-in-concept",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Merging in Concept",
+    "text": "Merging in Concept\nWhen merging datasets A and B, ask yourself the following two questions:\n\n\n\nWhich rows do I want to keep?\n\nAll rows in A?\nAll rows in both A and B?\n\n\n\n\n\n\n\nHow do my datasets connect?\n\nIs there a specific variable they have in common?\nMultiple variables they have in common?"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#which-rows-to-keep",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#which-rows-to-keep",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Which Rows to Keep:",
+    "text": "Which Rows to Keep:\nWe’ll focus on two types of joins1:\n\nA |&gt; left_join(B): keeps A and adds variables from B after matching.\nA |&gt; full_join(B): keeps all of A and B, but combines rows when possible.\nOther types include right_join, inner_join, semi_join, and anti_join, but we won’t study those here."
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#matching-criteria",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#matching-criteria",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Matching Criteria",
+    "text": "Matching Criteria\nWe have to tell R which variables to use when merging datasets! Rows are matched when the values in matching variables are equivalent.\n\n\n\nby = c(\"County\"): Both datasets have a County variable, match on this!\n\n\n\n\n\nby = c(\"CountyName\" = \"County_Name\"): Match CountyName in A with County_Name in B"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#example-nycflights13-data",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#example-nycflights13-data",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Example: nycflights13 Data",
+    "text": "Example: nycflights13 Data\nThe nycflights13 package includes five data frames, some of which contain missing data (NA):\n\n\nflights: flights leaving JFK, LGA, or EWR in 2013\n\nairlines: airline abbreviations\n\nairports: airport metadata\n\nplanes: airplane metadata\n\nweather: hourly weather data for JFK, LGA, and EWR\n\n\n# install.packages(\"nycflights13\") # remember to do this in the console, not in your .R or .qmd document\nlibrary(nycflights13)"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#join-example-1",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#join-example-1",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Join Example 1",
+    "text": "Join Example 1\nflights has one row per flight, with abbreviated airline names.\n\nflights |&gt; \n  select(flight,origin,dest,carrier) |&gt; \n  head(2)\n\n# A tibble: 2 × 4\n  flight origin dest  carrier\n   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  \n1   1545 EWR    IAH   UA     \n2   1714 LGA    IAH   UA     \n\n\n\nairlines has one row per airline, with airline abbreviations and full names\n\nairlines |&gt; \n  head(2)\n\n# A tibble: 2 × 2\n  carrier name                  \n  &lt;chr&gt;   &lt;chr&gt;                 \n1 9E      Endeavor Air Inc.     \n2 AA      American Airlines Inc."
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#join-example-1-continued",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#join-example-1-continued",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Join Example 1 (continued)",
+    "text": "Join Example 1 (continued)\nLet’s left join flights with airlines to add full airline name to each flight record!\n\nflights |&gt; \n  select(flight,origin,dest,carrier) |&gt;\n  left_join(airlines, by = \"carrier\")  |&gt; \n  head(5)\n\n# A tibble: 5 × 5\n  flight origin dest  carrier name                  \n   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;                 \n1   1545 EWR    IAH   UA      United Air Lines Inc. \n2   1714 LGA    IAH   UA      United Air Lines Inc. \n3   1141 JFK    MIA   AA      American Airlines Inc.\n4    725 JFK    BQN   B6      JetBlue Airways       \n5    461 LGA    ATL   DL      Delta Air Lines Inc.  \n\n\nWe now have one row per flight, with both carrier abbreviations and full names!"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#join-example-2",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#join-example-2",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Join Example #2",
+    "text": "Join Example #2\nflights also includes a tailnum variable for each plane’s tail number.\n\nflights |&gt; \n  select(flight,origin,dest,tailnum) |&gt; \n  head(2)\n\n# A tibble: 2 × 4\n  flight origin dest  tailnum\n   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  \n1   1545 EWR    IAH   N14228 \n2   1714 LGA    IAH   N24211 \n\n\n\nplanes includes a row for each plane type, including the manufacturer.\n\nplanes |&gt; \n  select(tailnum,year,manufacturer,model) |&gt; \n  head(2)\n\n# A tibble: 2 × 4\n  tailnum  year manufacturer     model    \n  &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;            &lt;chr&gt;    \n1 N10156   2004 EMBRAER          EMB-145XR\n2 N102UW   1998 AIRBUS INDUSTRIE A320-214"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#join-example-2-continued",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#join-example-2-continued",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Join Example 2 (continued)",
+    "text": "Join Example 2 (continued)\nLet’s left join flights with planes to add manufacture to each flight record!\n\nflights |&gt; \n  select(flight,origin,dest,tailnum) |&gt;\n  left_join(planes, by = \"tailnum\")  |&gt; \n  head(5)\n\n# A tibble: 5 × 12\n  flight origin dest  tailnum  year type  manufacturer model engines seats speed\n   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1   1545 EWR    IAH   N14228   1999 Fixe… BOEING       737-…       2   149    NA\n2   1714 LGA    IAH   N24211   1998 Fixe… BOEING       737-…       2   149    NA\n3   1141 JFK    MIA   N619AA   1990 Fixe… BOEING       757-…       2   178    NA\n4    725 JFK    BQN   N804JB   2012 Fixe… AIRBUS       A320…       2   200    NA\n5    461 LGA    ATL   N668DN   1991 Fixe… BOEING       757-…       2   178    NA\n# ℹ 1 more variable: engine &lt;chr&gt;\n\n\nA bunch of columns from planes are now in the dataset!"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#join-example-2-continued-1",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#join-example-2-continued-1",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Join Example 2 (continued)",
+    "text": "Join Example 2 (continued)\nLet’s remove some of the “spare” columns\n\nflights |&gt; \n  select(flight, origin, dest, tailnum) |&gt;\n  left_join(planes, by = \"tailnum\")  |&gt; \n  select(flight, origin, dest, manufacturer, model) |&gt;\n  head(5)\n\n# A tibble: 5 × 5\n  flight origin dest  manufacturer model   \n   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;   \n1   1545 EWR    IAH   BOEING       737-824 \n2   1714 LGA    IAH   BOEING       737-824 \n3   1141 JFK    MIA   BOEING       757-223 \n4    725 JFK    BQN   AIRBUS       A320-232\n5    461 LGA    ATL   BOEING       757-232"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#activity",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#activity",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Activity",
+    "text": "Activity\n\nCreate a new object that contains gapminder (1) observations from China, India, and United States after 1980, and (2) variables corresponding to country, year, population, and life expectancy.\nHow many rows and columns does the object contain?\nSave over your object after sorting the rows by year (ascending order) and population (descending order). Print the first 6 rows.\nAdd a new variable that contains population in billions.\nBy year, calculate the total population (in billions) across these three countries\nIn ggplot, create a line plot showing life expectancy over time by country. Make the plot visually appealing!"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#my-answers",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#my-answers",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "My Answers",
+    "text": "My Answers\nQuestion 1:\n\nsubset_gapminder &lt;- gapminder |&gt; \n  filter(country %in% c(\"China\",\"India\",\"United States\"),  year &gt; 1980 ) |&gt;\n  select(country, year, pop, lifeExp)\n\n\nQuestion 2:\n\nc(nrow(subset_gapminder), ncol(subset_gapminder))\n\n[1] 18  4"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#my-answers-1",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#my-answers-1",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "My Answers",
+    "text": "My Answers\nQuestion 3:\n\nsubset_gapminder &lt;- subset_gapminder |&gt; \n  arrange(year,desc(pop))\n\nsubset_gapminder |&gt; head(6)\n\n# A tibble: 6 × 4\n  country        year        pop lifeExp\n  &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;\n1 China          1982 1000281000    65.5\n2 India          1982  708000000    56.6\n3 United States  1982  232187835    74.6\n4 China          1987 1084035000    67.3\n5 India          1987  788000000    58.6\n6 United States  1987  242803533    75.0\n\n\n\nQuestion 4:\n\nsubset_gapminder &lt;- subset_gapminder |&gt; \n  mutate(pop_billions = pop/1000000000)"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#my-answers-2",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#my-answers-2",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "My Answers",
+    "text": "My Answers\nQuestion 5:\n\nsubset_gapminder |&gt; \n  group_by(year) |&gt; \n  summarize(TotalPop_Billions = sum(pop_billions))\n\n# A tibble: 6 × 2\n   year TotalPop_Billions\n  &lt;int&gt;             &lt;dbl&gt;\n1  1982              1.94\n2  1987              2.11\n3  1992              2.29\n4  1997              2.46\n5  2002              2.60\n6  2007              2.73"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#my-answers-3",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#my-answers-3",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "My Answers",
+    "text": "My Answers\nQuestion 6:\n\nlibrary(ggplot2)\nggplot(subset_gapminder, aes(year, lifeExp, color = country, group = country)) +\n  theme_bw(base_size=20) + geom_point() + geom_line() +\n  xlab(\"Year\") + ylab(\"Life Expectancy (years)\") +\n  ggtitle(\"Life Expectancy (1982-2007)\",\"China, India, and United States\") +\n  scale_x_continuous(breaks = c(1982, 1987, 1992, 1997, 2002, 2007), minor_breaks = c()) +\n  ylim(c(50, 80)) + scale_color_discrete(name = \"Country\") + theme(legend.position = \"bottom\")"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#homework-3",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#homework-3",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Homework 3",
+    "text": "Homework 3\nCreate a qmd file (from scratch this time!) in which you answer each of the following questions. Be sure to display all your code in the knitted version (use throughout echo: false).\nRemember, the package nycflights13 contains data on flights originating in NYC during the year 2013. There are three airports servicing NYC: JFK, LGA (“LaGuardia”), and EWR (“Newark”).\n\nChoose an airport outside New York, and count how many flights went to that airport from NYC in 2013. How many of those flights started at JFK, LGA, and EWR? (Hint: Use filter, group_by, and summarize)\nThe variable arr_delay contains arrival delays in minutes (negative values represent early arrivals). Make a ggplot histogram displaying arrival delays for 2013 flights from NYC to the airport you chose.\nUse left_join to add weather data at departure to the subsetted data1. Calculate the mean temperature by month at departure (temp) across all flights2.\nInvestigate if there is a relationship between departure delay (dep_delay) and wind speed (wind_speed). Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation.\n\nAs always, submit both the .qmd and knitted .html to Canvas.\n\nHint 1: Match on origin, year, month, day, and hour!!Hint 2: Use mean(temp, na.rm=T) to have R calculate an average after ignoring missing data values"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#due-dates",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#due-dates",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Due dates",
+    "text": "Due dates\n\nSection AA:\n\nHomework #1 due Tuesday, October 24th (before lecture)\nPeer grading due Sunday, October 29nd (4:30pm)\n\n\n\n\n\nSection AB:\n\nHomework #1 due Thursday, October 26th (before lab)\nPeer grading due Tuesday, October 31th (before lecture)"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#answers",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#answers",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Answers",
+    "text": "Answers\nQuestion 1:\n\nsubset_gapminder &lt;- gapminder |&gt; \n  filter(country %in% c(\"China\",\"India\",\"United States\"),  year &gt; 1980 ) |&gt;\n  select(country, year, pop, lifeExp)\nsubset_gapminder |&gt; head(n = 5)\n\n# A tibble: 5 × 4\n  country  year        pop lifeExp\n  &lt;fct&gt;   &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;\n1 China    1982 1000281000    65.5\n2 China    1987 1084035000    67.3\n3 China    1992 1164970000    68.7\n4 China    1997 1230075000    70.4\n5 China    2002 1280400000    72.0"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#answers-1",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#answers-1",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Answers",
+    "text": "Answers\nQuestion 2:\n\n# Option 1\nc(nrow(subset_gapminder), ncol(subset_gapminder))\n\n[1] 18  4\n\n# Option 2\nglimpse(subset_gapminder)\n\nRows: 18\nColumns: 4\n$ country &lt;fct&gt; \"China\", \"China\", \"China\", \"China\", \"China\", \"China\", \"India\",…\n$ year    &lt;int&gt; 1982, 1987, 1992, 1997, 2002, 2007, 1982, 1987, 1992, 1997, 20…\n$ pop     &lt;int&gt; 1000281000, 1084035000, 1164970000, 1230075000, 1280400000, 13…\n$ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58.553…\n\n# Option 3\ndim(subset_gapminder)\n\n[1] 18  4"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#answers-2",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#answers-2",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Answers",
+    "text": "Answers\nQuestion 3:\n\nsubset_gapminder &lt;- subset_gapminder |&gt; \n  arrange(year, desc(pop))\n\nsubset_gapminder |&gt; head(6)\n\n# A tibble: 6 × 4\n  country        year        pop lifeExp\n  &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;\n1 China          1982 1000281000    65.5\n2 India          1982  708000000    56.6\n3 United States  1982  232187835    74.6\n4 China          1987 1084035000    67.3\n5 India          1987  788000000    58.6\n6 United States  1987  242803533    75.0"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#answers-3",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#answers-3",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Answers",
+    "text": "Answers\nQuestion 4:\n\nsubset_gapminder &lt;- subset_gapminder |&gt; \n  mutate(pop_billions = pop/1000000000)\n\nsubset_gapminder |&gt; head(n = 5)\n\n# A tibble: 5 × 5\n  country        year        pop lifeExp pop_billions\n  &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;        &lt;dbl&gt;\n1 China          1982 1000281000    65.5        1.00 \n2 India          1982  708000000    56.6        0.708\n3 United States  1982  232187835    74.6        0.232\n4 China          1987 1084035000    67.3        1.08 \n5 India          1987  788000000    58.6        0.788"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#answers-4",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#answers-4",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Answers",
+    "text": "Answers\nQuestion 5:\n\n\nClassic syntax\nNew syntax (dplyr 1.1.0)\n\n\n\n\nsubset_gapminder |&gt; \n  group_by(year) |&gt; \n  summarize(TotalPop_Billions = sum(pop_billions))\n\n# A tibble: 6 × 2\n   year TotalPop_Billions\n  &lt;int&gt;             &lt;dbl&gt;\n1  1982              1.94\n2  1987              2.11\n3  1992              2.29\n4  1997              2.46\n5  2002              2.60\n6  2007              2.73\n\n\n\n\n\nsubset_gapminder |&gt; \n  summarize(TotalPop_Billions = sum(pop_billions), \n            .by = year)\n\n# A tibble: 6 × 2\n   year TotalPop_Billions\n  &lt;int&gt;             &lt;dbl&gt;\n1  1982              1.94\n2  1987              2.11\n3  1992              2.29\n4  1997              2.46\n5  2002              2.60\n6  2007              2.73\n\n\nThis new syntax allows for per-operation grouping which means it is only active within a single verb at a time (as opposed to being applied to the entire tibble until ungroup() is called). You can more about this new feature here)"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#answers-5",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#answers-5",
+    "title": "CSSS 508 • Lecture 3",
+    "section": "Answers",
+    "text": "Answers\nQuestion 6:\n\n\nCode\nPlot\n\n\n\n\nlibrary(ggplot2) \n# install.packages(\"ggthemes\") # run in console\nlibrary(ggthemes)\nggplot(subset_gapminder, aes(year, lifeExp, color = country, group = country)) +\n  theme_tufte(base_size = 20) + \n  geom_point() + \n  geom_line() +\n  xlab(\"Year\") + \n  ylab(\"Life Expectancy (years)\") +\n  ggtitle(\"Life Expectancy (1982-2007)\",\"China, India, and United States\") +\n  scale_x_continuous(breaks = c(1982, 1987, 1992, 1997, 2002, 2007), minor_breaks = c()) +\n  ylim(c(50, 80)) + \n  scale_color_discrete(name = \"Country\") + \n  theme(legend.position = \"bottom\")"
   }
 ]

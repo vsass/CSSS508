@@ -1,4 +1,690 @@
 ---
-title: "Syllabus and Introduction to R, RStudio, and Quarto"
-format: revealjs
+title: "CSSS 508 • Lecture 3"
+subtitle: "Manipulating and Summarizing Data"
+author: "Victoria Sass"
+date: "October 17, 2023"
+date-format: long
+highlight-style:  vim-dark #, oblivion, radical, vim-dark, espresso, zenburn, kate, monochrome, breezedark, haddock
+footnotes-hover: true
+reference-location: margin
+execute: 
+  echo: true
+  message: false
+  warning: false
+  fig-format: "svg"
+format: 
+  revealjs:
+    theme: lecture_styles.scss
+    slide-number: true
+    code-link: true
+    chalkboard: true
+    incremental: false 
+    smaller: true
+    preview-links: true
+    code-line-numbers: false
+    #logo: "../../images/csss-white.png" # need to add css for size <https://stackoverflow.com/questions/74083521/how-to-increase-size-logo-in-quarto-reveal-js-presentation>
 ---
+
+```{r}
+#| echo: false
+#| cache: false
+require(downlit)
+require(xml2)
+require(tidyverse)
+#options(width = 90)
+```
+
+# Roadmap
+
+---
+
+<br>
+
+Last time, we learned about,
+
+* Useful coding tips: packages, directories, and saving data
+* Basics of ggplot: layers and aesthetics
+* Advanced ggplot tools
+
+. . . 
+
+Today, we will cover,
+
+* Building blocks
+* Subsetting data
+* Modifying data 
+* Summarizing data
+* Merging together data
+
+## Death to Spreadsheets
+
+Tools like *Excel* or *Google Sheets* lets you manipulate spreadsheets using functions.
+
+* Spreadsheets are *not reproducible*: It's hard to know how someone changed the raw data!
+* It's hard to catch mistakes when you use spreadsheets. Don't be the next sad Research Assistant who makes headlines with an Excel error! ([Reinhart & Rogoff, 2010](http://www.bloomberg.com/news/articles/2013-04-18/faq-reinhart-rogoff-and-the-excel-error-that-changed-history))
+
+Today, we'll use R to manipulate data more *transparently* and *reproducibly*.
+
+# Building Blocks
+
+1. Logical Operators (`!=`, `==`, `>`, `<=`, etc. )
+1. Combining Logical Operators (`&`, `|`)
+
+## Logical Operators
+
+Logical operators refer to base functions which allow us to **test a connection** between two objects.
+
+. . . 
+
+For example, we may test
+
++ Is A equal to B?
++ Is A greater than B?
++ Is A within B?
+
+and many others!
+
+## Logical Operators in Code
+
+* `==`: is equal to (note: there are TWO equal signs here!)
+
+. . . 
+
+* `!=`: not equal to
+
+. . . 
+
+* `>`, `>=`, `<`, `<=`: less than, less than or equal to, etc.
+
+. . . 
+
+* `%in%`: used with checking equal to one of several values
+
+## Examples of Logical Operators
+
+Let's create two objects, `A` and `B`
+
+```{r}
+A <- c(5,10,15)
+B <- c(5,15,25)
+```
+
+. . . 
+
+```{r}
+A == B
+A >  B
+A %in% B
+```
+
+## Combining Logical Operators
+
+We have three main ways to combine logical operators:
+
+* `&`: **both** conditions need to hold (AND)
+
+. . . 
+
+* `|`: **at least one** condition needs to hold (OR)
+
+. . . 
+
+* `!`: **inverts** a logical condition (`TRUE` becomes `FALSE`, `FALSE` becomes `TRUE`)
+
+## Examples
+
+```{r}
+A <- c(5,10,15)
+B <- c(5,15,25)
+```
+
+. . . 
+
+```{r}
+A > 5 & A <= B
+B < 10 | B > 20
+!(A == 10)
+```
+
+# Aside: `dplyr`
+
+---
+
+Today, we'll use tools from the `dplyr` package to manipulate data! 
+
++ Like `ggplot2`, `dplyr` is part of the *Tidyverse*, a modern collection of data science tools introduced by Hadley Wickham.
+
++ You can read more about the tidyverse on its [website](http://tidyverse.org/).
+
+. . . 
+
+To get started, let's install (in the console) and load (in an R/qmd file) dplyr. (We also load `gapminder`!)
+
+```{r}
+# install.packages("dplyr") 
+library(dplyr)
+
+library(gapminder)
+```
+
+## Building Block of `dplyr`: Pipes
+
+`dplyr` allows us to "pipe" data between functions using the (`%>%`) operator. So instead of nesting functions like this:
+
+```{r}
+log(mean(gapminder$pop))
+```
+
+. . . 
+
+We can **pipe** them like this:
+
+```{r}
+gapminder$pop %>% mean() %>% log()
+```
+
+. . . 
+
++ Pipes read "left to right." (intuitive)
++ Nested functions read "inside to out." (kinda weird; gets unwieldy the more nested your code becomes)
+
+# Subsetting data
+
++ `filter()`
++ `select()`
++ `distinct()`
+
+## Subset Rows: `filter`
+
+We often get *big* datasets, and we only want some of the entries. We can subset rows using `filter`.
+
+. . . 
+
+```{r}
+gapminder |> 
+  filter(country == "China") |>
+  head(4) # display first four rows
+China <- gapminder |> 
+  filter(country == "China")
+```
+
+(Now, `China` is an object in our environment which contains rows corresponding to China.)
+
+## Subset Columns: `select`
+
+What if we want to keep each entry, but only use certain variables? Use `select`!
+
+. . . 
+
+```{r}
+gapminder |> 
+  select(country,continent,year,lifeExp) |> 
+  head(4)
+```
+
+## Dropping columns with `select`
+
+Alternatively, we can use `select()` to drop variables using a `-` sign: 
+
+```{r}
+gapminder |> 
+  select(-continent, -pop, -lifeExp) |> 
+  head(4)
+```
+
+## Finding Unique Rows: `distinct`
+
+You may want to find the unique combinations of variables in a dataset.  Use `distinct`
+
+. . . 
+
+```{r}
+gapminder |> 
+  distinct(continent, year) |> 
+  head(6)
+```
+
+## `distinct` drops variables!
+
+By default, `distinct()` drops unused variables. If you don't want to drop them, add the argument `.keep_all = TRUE`:
+
+```{r}
+gapminder |> 
+  distinct(continent, year, .keep_all=TRUE) |> 
+  head(6)
+```
+
+# Modifying data
+
++ `arrange()`
++ `rename()`
++ `mutate()`
+
+## Sorting data by rows: `arrange`
+
+Sometimes it's useful to sort rows in your data, in ascending (low to high) or descending (high to low) order. We do that with `arrange`.
+
+. . . 
+
+```{r}
+US_and_Canada <- gapminder |> 
+  filter(country %in% c("United States","Canada"))
+US_and_Canada |> 
+  arrange(year,lifeExp) |> 
+  head(4)
+```
+
+## Sorting data by rows: `arrange`
+
+To sort in descending order, using `desc()` within `arrange`
+
+```{r}
+US_and_Canada |> 
+  arrange(desc(pop)) |> 
+  head(4)
+```
+
+## Rename variables: `rename`
+
+You may receive data with unintuitive variable names. You can change them using `rename()`.
+
+. . . 
+
+```{r}
+US_and_Canada |> 
+  rename(life_expectancy = lifeExp) |>
+  head(4)
+```
+
+::: aside
+\* NOTE 1: I did *not* re-save the object `US_and_Canada`, so the name change is *not* permanent!
+
+\* NOTE 2: I recommend **against** using spaces in a name! It makes things *really hard* sometimes!!
+:::
+
+## Create new columns: `mutate`
+
+You can add new columns to a data frame using `mutate()`. 
+
+. . . 
+
+For example, perhaps we wish to state the population in millions:
+
+```{r}
+#| code-line-numbers: "3"
+US_and_Canada |> 
+  select(country, year, pop) |>
+  mutate(pop_millions = pop / 1000000) |> 
+  head(5)
+```
+
+# Summarizing data
+
++ `summarize()`
++ `group_by()`
+
+## Summarizing data: `summarize`
+
+**`summarize()`** calculates summaries of variables in your data:
+
+* Count the number of rows
+* Calculate the mean
+* Calculate the sum
+* Find the minimum or maximum value
+
+You can use any function inside `summarize()` that aggregates *multiple values* into a *single value* (like `sd()`, `mean()`, or `max()`).
+
+## `summarize()` Example
+
+For the year 1982, let's summarize some values in `gapminder`
+
+```{r}
+gapminder |> 
+  filter(year == 1982) |>
+  summarize(number_observations = n(),
+            max_lifeexp = max(lifeExp),
+            mean_pop = mean(pop),
+            sd_pop = sd(pop))
+```
+
+## Summarizing data by groups: `group_by`
+
+What if we want to summarize data by category? Use `group_by` **and** `summarize`
+
+. . . 
+
+Functions after `group_by()` are computed *within each group* as defined by variables given, rather than over all rows at once.
+
+## `group_by()` Example
+
+```{r}
+#| code-line-numbers: "1-2"
+US_and_Canada |> group_by(year) |>  
+  summarize(total_pop = sum(pop)) |> 
+  head(4)
+```
+
+Because we did `group_by()` with `year` then used `summarize()`, we get *one row per value of `year`*!
+
+# 5. Merging together data
+
++ `left_join()`
++ `full_join()`
+
+## Why merge?!
+
+In practice, we often collect data from different sources. To analyze the data, we usually must first combine (merge) them.
+
+. . . 
+
+For example, imagine you would like to study county-level patterns with respect to age and grocery spending. However, you can only find,
+
+* County level age data from the US Census, and 
+* County level grocery spending data from the US Department of Agriculture
+
+. . . 
+
+Merge the data!!
+
+## Merging in Concept
+
+When merging datasets `A` and `B`, ask yourself the following two questions:
+  
+. . . 
+
+* Which **rows** do I want to keep?
+
+  + All rows in `A`?
+  + All rows in both `A` and `B`?
+  
+. . . 
+
+* How do my datasets **connect**?
+
+  + Is there a specific variable they have in common?
+  + Multiple variables they have in common?
+  
+## Which Rows to Keep:
+
+
+We'll focus on two types of joins^[Other types include `right_join`, `inner_join`, `semi_join`, and `anti_join`, but we won't study those here.]:
+
+* `A |> left_join(B)`: keeps `A` and adds variables from `B` after matching.
+
+* `A |> full_join(B)`: keeps all of `A` and `B`, but combines rows when possible.
+
+## Matching Criteria
+
+We have to tell R **which variables** to use when merging datasets! Rows are matched when the values in matching variables are equivalent.
+
+. . . 
+
+* `by = c("County")`: Both datasets have a `County` variable, match on this!
+
+. . . 
+
+* `by = c("CountyName" = "County_Name")`: Match `CountyName` in `A` with `County_Name` in `B`
+
+## Example: `nycflights13` Data
+
+The `nycflights13` package includes five data frames, some of which contain missing data (`NA`):
+
+* `flights`: flights leaving JFK, LGA, or EWR in 2013
+* `airlines`: airline abbreviations
+* `airports`: airport metadata
+* `planes`: airplane metadata
+* `weather`: hourly weather data for JFK, LGA, and EWR
+
+```{r}
+# install.packages("nycflights13") # remember to do this in the console, not in your .R or .qmd document
+library(nycflights13)
+```
+
+## Join Example 1
+
+`flights` has one row per flight, with abbreviated airline names.
+
+```{r}
+flights |> 
+  select(flight,origin,dest,carrier) |> 
+  head(2)
+```
+
+. . . 
+
+`airlines` has one row per airline, with airline abbreviations *and* full names
+
+```{r}
+airlines |> 
+  head(2)
+```
+
+## Join Example 1 (continued)
+
+Let's left join `flights` with `airlines` to add full airline name to each flight record!
+
+```{r}
+#| code-line-numbers: "3"
+flights |> 
+  select(flight,origin,dest,carrier) |>
+  left_join(airlines, by = "carrier")  |> 
+  head(5)
+```
+ 
+We now have one row per flight, with both carrier abbreviations and full names!
+
+## Join Example #2
+
+`flights` also includes a `tailnum` variable for each plane's tail number.
+
+```{r}
+flights |> 
+  select(flight,origin,dest,tailnum) |> 
+  head(2)
+```
+
+. . . 
+
+`planes` includes a row for each plane type, including the manufacturer.
+
+```{r}
+planes |> 
+  select(tailnum,year,manufacturer,model) |> 
+  head(2)
+```
+
+## Join Example 2 (continued)
+
+Let's left join `flights` with `planes` to add manufacture to each flight record!
+
+```{r}
+#| code-line-numbers: "3"
+flights |> 
+  select(flight,origin,dest,tailnum) |>
+  left_join(planes, by = "tailnum")  |> 
+  head(5)
+```
+
+A bunch of columns from `planes` are now in the dataset!
+
+## Join Example 2 (continued)
+
+Let's remove some of the "spare" columns
+
+```{r}
+#| code-line-numbers: "4"
+flights |> 
+  select(flight, origin, dest, tailnum) |>
+  left_join(planes, by = "tailnum")  |> 
+  select(flight, origin, dest, manufacturer, model) |>
+  head(5)
+```
+
+# Summary
+
+* Logical Operators (`&, |, ==, <, %in%,` etc.)
+* Subsetting (`filter, select, distinct`)
+* Modifying (`arrange, rename, mutate`)
+* Summarizing (`summarize, group_by`)
+* Merging (`left_join, full_join`)
+
+Let's take a 10-minute break, then come back together to practice!
+
+## Activity
+
+1. Create a new object that contains `gapminder` (1) observations from China, India, and United States after 1980, and (2) variables corresponding to country, year, population, and life expectancy. 
+1. How many rows and columns does the object contain?
+1. Save over your object after sorting the rows by year (ascending order) and population (descending order). Print the first 6 rows.
+1. Add a new variable that contains population in billions.
+1. By year, calculate the total population (in billions) across these three countries
+1. In ggplot, create a line plot showing life expectancy over time by country. Make the plot visually appealing!
+
+## Answers
+
+Question 1:
+
+```{r}
+subset_gapminder <- gapminder |> 
+  filter(country %in% c("China","India","United States"),  year > 1980 ) |>
+  select(country, year, pop, lifeExp)
+subset_gapminder |> head(n = 5)
+```
+
+## Answers
+
+Question 2: 
+```{r}
+# Option 1
+c(nrow(subset_gapminder), ncol(subset_gapminder))
+# Option 2
+glimpse(subset_gapminder)
+# Option 3
+dim(subset_gapminder)
+```
+
+. . . 
+
+## Answers
+
+Question 3:
+```{r}
+subset_gapminder <- subset_gapminder |> 
+  arrange(year, desc(pop))
+
+subset_gapminder |> head(6)
+```
+
+## Answers
+
+Question 4:
+```{r}
+subset_gapminder <- subset_gapminder |> 
+  mutate(pop_billions = pop/1000000000)
+
+subset_gapminder |> head(n = 5)
+```
+
+## Answers
+
+Question 5:
+
+::: {.panel-tabset}
+
+### Classic syntax
+
+```{r}
+subset_gapminder |> 
+  group_by(year) |> 
+  summarize(TotalPop_Billions = sum(pop_billions))
+```
+
+### New syntax (dplyr 1.1.0)
+
+```{r}
+subset_gapminder |> 
+  summarize(TotalPop_Billions = sum(pop_billions), 
+            .by = year)
+```
+
+This new syntax allows for per-operation grouping which means it is only active within a single verb at a time (as opposed to being applied to the entire tibble until `ungroup()` is called). You can more about this new feature [here](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/))
+
+:::
+
+## Answers
+
+Question 6:
+
+::: {.panel-tabset}
+
+### Code
+
+```{r}
+#| eval: false
+#| code-line-numbers: "|2,3,5|"
+library(ggplot2) 
+# install.packages("ggthemes") # run in console
+library(ggthemes)
+ggplot(subset_gapminder, aes(year, lifeExp, color = country, group = country)) +
+  theme_tufte(base_size = 20) + 
+  geom_point() + 
+  geom_line() +
+  xlab("Year") + 
+  ylab("Life Expectancy (years)") +
+  ggtitle("Life Expectancy (1982-2007)","China, India, and United States") +
+  scale_x_continuous(breaks = c(1982, 1987, 1992, 1997, 2002, 2007), minor_breaks = c()) +
+  ylim(c(50, 80)) + 
+  scale_color_discrete(name = "Country") + 
+  theme(legend.position = "bottom")
+```
+
+### Plot
+
+```{r}
+#| fig-height: 6
+#| fig-width: 12
+#| fig-align: center
+#| echo: false
+library(ggplot2)
+# install.packages("ggthemes") # run in console
+library(ggthemes)
+ggplot(subset_gapminder, aes(year, lifeExp, color = country, group = country)) +
+  theme_tufte(base_size = 20) + geom_point() + geom_line() +
+  xlab("Year") + ylab("Life Expectancy (years)") +
+  ggtitle("Life Expectancy (1982-2007)","China, India, and United States") +
+  scale_x_continuous(breaks = c(1982, 1987, 1992, 1997, 2002, 2007), minor_breaks = c()) +
+  ylim(c(50, 80)) + scale_color_discrete(name = "Country") + theme(legend.position = "bottom")
+```
+
+:::
+
+## Homework 3 {.scrollable}
+
+Create a qmd file (from scratch this time!) in which you answer each of the following questions. Be sure to display **all your code in the knitted** version (use throughout `echo: false`). 
+
+Remember, the package `nycflights13` contains data on flights originating in NYC during the year 2013. There are three airports servicing NYC: JFK, LGA ("LaGuardia"), and EWR ("Newark").
+
+1. Choose an airport outside New York, and count how many flights went to that airport from NYC in 2013. How many of those flights started at JFK, LGA, and EWR? (Hint: Use `filter`, `group_by`, and `summarize`)
+2. The variable `arr_delay` contains arrival delays in minutes (negative values represent early arrivals). Make a `ggplot` histogram displaying arrival delays for 2013 flights from NYC to the airport you chose.
+3. Use `left_join` to add weather data at departure to the subsetted data^[Hint 1: Match on `origin`, `year`, `month`, `day`, **and** `hour`!!]. Calculate the mean temperature by month at departure (`temp`) across all flights^[Hint 2: Use `mean(temp, na.rm=T)` to have R calculate an average after ignoring missing data values].
+4. Investigate if there is a relationship between departure delay (`dep_delay`) and wind speed (`wind_speed`). Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation.
+
+As always, submit both the .qmd and knitted .html to Canvas.
+
+<br>
+<br>
+
+## Due dates
+
+* Section AA: 
+  + Homework #1 due Tuesday, October 24th (before lecture)
+  + Peer grading due Sunday, October 29nd (4:30pm)
+
+<br>
+
+* Section AB: 
+  + Homework #1 due Thursday, October 26th (before lab)
+  + Peer grading due Tuesday, October 31th (before lecture)
+
+
+
+

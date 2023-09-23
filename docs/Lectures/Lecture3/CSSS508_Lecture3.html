@@ -7,16 +7,18 @@
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.353">
-
-  <title>Syllabus and Introduction to R, RStudio, and Quarto</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
-  <style>
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+<meta name="author" content="Victoria Sass">
+<meta name="dcterms.date" content="2023-10-17">
+<title>CSSS 508 • Lecture 3</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+<style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -28,13 +30,80 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #b2b2b2; background-color: #000000; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #b2b2b2; } /* Normal */
+    code span.al { color: #ff0000; background-color: #3f0000; font-weight: bold; } /* Alert */
+    code span.an { color: #ff00ff; } /* Annotation */
+    code span.at { color: #ffffaf; } /* Attribute */
+    code span.bn { color: #ff8b8b; } /* BaseN */
+    code span.bu { color: #87ffaf; font-weight: bold; } /* BuiltIn */
+    code span.cf { color: #ffff54; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #ff5454; } /* Char */
+    code span.cn { color: #af7f00; font-weight: bold; } /* Constant */
+    code span.co { color: #54ffff; } /* Comment */
+    code span.cv { color: #0095ff; } /* CommentVar */
+    code span.do { color: #e0ffff; } /* Documentation */
+    code span.dt { color: #ffff54; } /* DataType */
+    code span.dv { color: #ff8b8b; } /* DecVal */
+    code span.er { color: #ff5500; text-decoration: underline; } /* Error */
+    code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+    code span.fl { color: #ff8b8b; } /* Float */
+    code span.fu { color: #cd00cd; } /* Function */
+    code span.im { color: #ff54ff; } /* Import */
+    code span.in { color: #ffaa00; } /* Information */
+    code span.kw { color: #5fd7ff; font-weight: bold; } /* Keyword */
+    code span.op { color: #b2b2b2; } /* Operator */
+    code span.ot { color: #54ff54; } /* Other */
+    code span.pp { color: #87ffaf; } /* Preprocessor */
+    code span.re { color: #0095ff; background-color: #22226d; } /* RegionMarker */
+    code span.sc { color: #0095ff; } /* SpecialChar */
+    code span.ss { color: #ff5500; } /* SpecialString */
+    code span.st { color: #ff54ff; } /* String */
+    code span.va { color: #06989a; } /* Variable */
+    code span.vs { color: #ff54ff; } /* VerbatimString */
+    code span.wa { color: #ff0000; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css">
-  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css">
+<link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
 
   .callout {
     margin-top: 1em;
@@ -231,7 +300,7 @@
   }
 
   </style>
-  <style type="text/css">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -323,53 +392,854 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Syllabus and Introduction to R, RStudio, and Quarto</h1>
+<section id="title-slide" class="quarto-title-block center"><h1 class="title">CSSS 508 • Lecture 3</h1>
+  <p class="subtitle">Manipulating and Summarizing Data</p>
 
 <div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Victoria Sass 
+</div>
+</div>
 </div>
 
-</section>
-<section class="slide level2">
+  <p class="date">October 17, 2023</p>
+</section><section><section id="roadmap" class="title-slide slide level1 center"><h1>Roadmap</h1>
 
+</section><section class="slide level2"><p><br></p>
+<p>Last time, we learned about,</p>
+<ul>
+<li>Useful coding tips: packages, directories, and saving data</li>
+<li>Basics of ggplot: layers and aesthetics</li>
+<li>Advanced ggplot tools</li>
+</ul>
+<div class="fragment">
+<p>Today, we will cover,</p>
+<ul>
+<li>Building blocks</li>
+<li>Subsetting data</li>
+<li>Modifying data</li>
+<li>Summarizing data</li>
+<li>Merging together data</li>
+</ul>
+</div>
+</section><section id="death-to-spreadsheets" class="slide level2"><h2>Death to Spreadsheets</h2>
+<p>Tools like <em>Excel</em> or <em>Google Sheets</em> lets you manipulate spreadsheets using functions.</p>
+<ul>
+<li>Spreadsheets are <em>not reproducible</em>: It’s hard to know how someone changed the raw data!</li>
+<li>It’s hard to catch mistakes when you use spreadsheets. Don’t be the next sad Research Assistant who makes headlines with an Excel error! (<a href="http://www.bloomberg.com/news/articles/2013-04-18/faq-reinhart-rogoff-and-the-excel-error-that-changed-history">Reinhart &amp; Rogoff, 2010</a>)</li>
+</ul>
+<p>Today, we’ll use R to manipulate data more <em>transparently</em> and <em>reproducibly</em>.</p>
+</section></section><section><section id="building-blocks" class="title-slide slide level1 center"><h1>Building Blocks</h1>
+<ol type="1">
+<li>Logical Operators (<code>!=</code>, <code>==</code>, <code>&gt;</code>, <code>&lt;=</code>, etc. )</li>
+<li>Combining Logical Operators (<code>&amp;</code>, <code>|</code>)</li>
+</ol></section><section id="logical-operators" class="slide level2"><h2>Logical Operators</h2>
+<p>Logical operators refer to base functions which allow us to <strong>test a connection</strong> between two objects.</p>
+<div class="fragment">
+<p>For example, we may test</p>
+<ul>
+<li>Is A equal to B?</li>
+<li>Is A greater than B?</li>
+<li>Is A within B?</li>
+</ul>
+<p>and many others!</p>
+</div>
+</section><section id="logical-operators-in-code" class="slide level2"><h2>Logical Operators in Code</h2>
+<ul>
+<li>
+<code>==</code>: is equal to (note: there are TWO equal signs here!)</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>
+<code>!=</code>: not equal to</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>
+<code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code>: less than, less than or equal to, etc.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>
+<code>%in%</code>: used with checking equal to one of several values</li>
+</ul>
+</div>
+</section><section id="examples-of-logical-operators" class="slide level2"><h2>Examples of Logical Operators</h2>
+<p>Let’s create two objects, <code>A</code> and <code>B</code></p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">10</span>,<span class="fl">15</span><span class="op">)</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">15</span>,<span class="fl">25</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">A</span> <span class="op">==</span> <span class="va">B</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE FALSE FALSE</code></pre>
+</div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">A</span> <span class="op">&gt;</span>  <span class="va">B</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE FALSE FALSE</code></pre>
+</div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">B</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE FALSE  TRUE</code></pre>
+</div>
+</div>
+</div>
+</section><section id="combining-logical-operators" class="slide level2"><h2>Combining Logical Operators</h2>
+<p>We have three main ways to combine logical operators:</p>
+<ul>
+<li>
+<code>&amp;</code>: <strong>both</strong> conditions need to hold (AND)</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>
+<code>|</code>: <strong>at least one</strong> condition needs to hold (OR)</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>
+<code>!</code>: <strong>inverts</strong> a logical condition (<code>TRUE</code> becomes <code>FALSE</code>, <code>FALSE</code> becomes <code>TRUE</code>)</li>
+</ul>
+</div>
+</section><section id="examples" class="slide level2"><h2>Examples</h2>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">10</span>,<span class="fl">15</span><span class="op">)</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">15</span>,<span class="fl">25</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">A</span> <span class="op">&gt;</span> <span class="fl">5</span> <span class="op">&amp;</span> <span class="va">A</span> <span class="op">&lt;=</span> <span class="va">B</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE  TRUE  TRUE</code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">B</span> <span class="op">&lt;</span> <span class="fl">10</span> <span class="op">|</span> <span class="va">B</span> <span class="op">&gt;</span> <span class="fl">20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE FALSE  TRUE</code></pre>
+</div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">!</span><span class="op">(</span><span class="va">A</span> <span class="op">==</span> <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE FALSE  TRUE</code></pre>
+</div>
+</div>
+</div>
+</section></section><section><section id="aside-dplyr" class="title-slide slide level1 center"><h1>Aside: <code>dplyr</code>
+</h1>
+
+</section><section class="slide level2"><p>Today, we’ll use tools from the <code>dplyr</code> package to manipulate data!</p>
+<ul>
+<li><p>Like <code>ggplot2</code>, <code>dplyr</code> is part of the <em>Tidyverse</em>, a modern collection of data science tools introduced by Hadley Wickham.</p></li>
+<li><p>You can read more about the tidyverse on its <a href="http://tidyverse.org/">website</a>.</p></li>
+</ul>
+<div class="fragment">
+<p>To get started, let’s install (in the console) and load (in an R/qmd file) dplyr. (We also load <code>gapminder</code>!)</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("dplyr") </span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jennybc/gapminder">gapminder</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section><section id="building-block-of-dplyr-pipes" class="slide level2"><h2>Building Block of <code>dplyr</code>: Pipes</h2>
+<p><code>dplyr</code> allows us to “pipe” data between functions using the (<code>%&gt;%</code>) operator. So instead of nesting functions like this:</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">gapminder</span><span class="op">$</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 17.20333</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>We can <strong>pipe</strong> them like this:</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gapminder</span><span class="op">$</span><span class="va">pop</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 17.20333</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Pipes read “left to right.” (intuitive)</li>
+<li>Nested functions read “inside to out.” (kinda weird; gets unwieldy the more nested your code becomes)</li>
+</ul>
+</div>
+</section></section><section><section id="subsetting-data" class="title-slide slide level1 center"><h1>Subsetting data</h1>
+<ul>
+<li><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code></li>
+<li><code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code></li>
+<li><code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code></li>
+</ul></section><section id="subset-rows-filter" class="slide level2"><h2>Subset Rows: <code>filter</code>
+</h2>
+<p>We often get <em>big</em> datasets, and we only want some of the entries. We can subset rows using <code>filter</code>.</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gapminder</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span> <span class="op">==</span> <span class="st">"China"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span> <span class="co"># display first four rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  country continent  year lifeExp       pop gdpPercap
+  &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;
+1 China   Asia       1952    44   556263527      400.
+2 China   Asia       1957    50.5 637408000      576.
+3 China   Asia       1962    44.5 665770000      488.
+4 China   Asia       1967    58.4 754550000      613.</code></pre>
+</div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">China</span> <span class="op">&lt;-</span> <span class="va">gapminder</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span> <span class="op">==</span> <span class="st">"China"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>(Now, <code>China</code> is an object in our environment which contains rows corresponding to China.)</p>
+</div>
+</section><section id="subset-columns-select" class="slide level2"><h2>Subset Columns: <code>select</code>
+</h2>
+<p>What if we want to keep each entry, but only use certain variables? Use <code>select</code>!</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gapminder</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">country</span>,<span class="va">continent</span>,<span class="va">year</span>,<span class="va">lifeExp</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  country     continent  year lifeExp
+  &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;
+1 Afghanistan Asia       1952    28.8
+2 Afghanistan Asia       1957    30.3
+3 Afghanistan Asia       1962    32.0
+4 Afghanistan Asia       1967    34.0</code></pre>
+</div>
+</div>
+</div>
+</section><section id="dropping-columns-with-select" class="slide level2"><h2>Dropping columns with <code>select</code>
+</h2>
+<p>Alternatively, we can use <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> to drop variables using a <code>-</code> sign:</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gapminder</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">continent</span>, <span class="op">-</span><span class="va">pop</span>, <span class="op">-</span><span class="va">lifeExp</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  country      year gdpPercap
+  &lt;fct&gt;       &lt;int&gt;     &lt;dbl&gt;
+1 Afghanistan  1952      779.
+2 Afghanistan  1957      821.
+3 Afghanistan  1962      853.
+4 Afghanistan  1967      836.</code></pre>
+</div>
+</div>
+</section><section id="finding-unique-rows-distinct" class="slide level2"><h2>Finding Unique Rows: <code>distinct</code>
+</h2>
+<p>You may want to find the unique combinations of variables in a dataset. Use <code>distinct</code></p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gapminder</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">continent</span>, <span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  continent  year
+  &lt;fct&gt;     &lt;int&gt;
+1 Asia       1952
+2 Asia       1957
+3 Asia       1962
+4 Asia       1967
+5 Asia       1972
+6 Asia       1977</code></pre>
+</div>
+</div>
+</div>
+</section><section id="distinct-drops-variables" class="slide level2"><h2>
+<code>distinct</code> drops variables!</h2>
+<p>By default, <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> drops unused variables. If you don’t want to drop them, add the argument <code>.keep_all = TRUE</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gapminder</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">continent</span>, <span class="va">year</span>, .keep_all<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  country     continent  year lifeExp      pop gdpPercap
+  &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+1 Afghanistan Asia       1952    28.8  8425333      779.
+2 Afghanistan Asia       1957    30.3  9240934      821.
+3 Afghanistan Asia       1962    32.0 10267083      853.
+4 Afghanistan Asia       1967    34.0 11537966      836.
+5 Afghanistan Asia       1972    36.1 13079460      740.
+6 Afghanistan Asia       1977    38.4 14880372      786.</code></pre>
+</div>
+</div>
+</section></section><section><section id="modifying-data" class="title-slide slide level1 center"><h1>Modifying data</h1>
+<ul>
+<li><code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code></li>
+<li><code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code></li>
+<li><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code></li>
+</ul></section><section id="sorting-data-by-rows-arrange" class="slide level2"><h2>Sorting data by rows: <code>arrange</code>
+</h2>
+<p>Sometimes it’s useful to sort rows in your data, in ascending (low to high) or descending (high to low) order. We do that with <code>arrange</code>.</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">US_and_Canada</span> <span class="op">&lt;-</span> <span class="va">gapminder</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"United States"</span>,<span class="st">"Canada"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">US_and_Canada</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">year</span>,<span class="va">lifeExp</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  country       continent  year lifeExp       pop gdpPercap
+  &lt;fct&gt;         &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;
+1 United States Americas   1952    68.4 157553000    13990.
+2 Canada        Americas   1952    68.8  14785584    11367.
+3 United States Americas   1957    69.5 171984000    14847.
+4 Canada        Americas   1957    70.0  17010154    12490.</code></pre>
+</div>
+</div>
+</div>
+</section><section id="sorting-data-by-rows-arrange-1" class="slide level2"><h2>Sorting data by rows: <code>arrange</code>
+</h2>
+<p>To sort in descending order, using <code><a href="https://dplyr.tidyverse.org/reference/desc.html">desc()</a></code> within <code>arrange</code></p>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">US_and_Canada</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  country       continent  year lifeExp       pop gdpPercap
+  &lt;fct&gt;         &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;
+1 United States Americas   2007    78.2 301139947    42952.
+2 United States Americas   2002    77.3 287675526    39097.
+3 United States Americas   1997    76.8 272911760    35767.
+4 United States Americas   1992    76.1 256894189    32004.</code></pre>
+</div>
+</div>
+</section><section id="rename-variables-rename" class="slide level2"><h2>Rename variables: <code>rename</code>
+</h2>
+<p>You may receive data with unintuitive variable names. You can change them using <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code>.</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">US_and_Canada</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>life_expectancy <span class="op">=</span> <span class="va">lifeExp</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  country continent  year life_expectancy      pop gdpPercap
+  &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;           &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+1 Canada  Americas   1952            68.8 14785584    11367.
+2 Canada  Americas   1957            70.0 17010154    12490.
+3 Canada  Americas   1962            71.3 18985849    13462.
+4 Canada  Americas   1967            72.1 20819767    16077.</code></pre>
+</div>
+</div>
+
+</div>
+<aside><div>
+<p>* NOTE 1: I did <em>not</em> re-save the object <code>US_and_Canada</code>, so the name change is <em>not</em> permanent!</p>
+<p>* NOTE 2: I recommend <strong>against</strong> using spaces in a name! It makes things <em>really hard</em> sometimes!!</p>
+</div></aside></section><section id="create-new-columns-mutate" class="slide level2"><h2>Create new columns: <code>mutate</code>
+</h2>
+<p>You can add new columns to a data frame using <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>.</p>
+<div class="fragment">
+<p>For example, perhaps we wish to state the population in millions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>US_and_Canada <span class="sc">|&gt;</span> </span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">select</span>(country, year, pop) <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>  <span class="fu">mutate</span>(<span class="at">pop_millions =</span> pop <span class="sc">/</span> <span class="dv">1000000</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb37-4"><a href="#cb37-4"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+  country  year      pop pop_millions
+  &lt;fct&gt;   &lt;int&gt;    &lt;int&gt;        &lt;dbl&gt;
+1 Canada   1952 14785584         14.8
+2 Canada   1957 17010154         17.0
+3 Canada   1962 18985849         19.0
+4 Canada   1967 20819767         20.8
+5 Canada   1972 22284500         22.3</code></pre>
+</div>
+</div>
+</div>
+</section></section><section><section id="summarizing-data" class="title-slide slide level1 center"><h1>Summarizing data</h1>
+<ul>
+<li><code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code></li>
+<li><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code></li>
+</ul></section><section id="summarizing-data-summarize" class="slide level2"><h2>Summarizing data: <code>summarize</code>
+</h2>
+<p><strong><code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code></strong> calculates summaries of variables in your data:</p>
+<ul>
+<li>Count the number of rows</li>
+<li>Calculate the mean</li>
+<li>Calculate the sum</li>
+<li>Find the minimum or maximum value</li>
+</ul>
+<p>You can use any function inside <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> that aggregates <em>multiple values</em> into a <em>single value</em> (like <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>, <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>, or <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>).</p>
+</section><section id="summarize-example" class="slide level2"><h2>
+<code>summarize()</code> Example</h2>
+<p>For the year 1982, let’s summarize some values in <code>gapminder</code></p>
+<div class="cell">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gapminder</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">1982</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>number_observations <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>            max_lifeexp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">lifeExp</span><span class="op">)</span>,</span>
+<span>            mean_pop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,</span>
+<span>            sd_pop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  number_observations max_lifeexp  mean_pop     sd_pop
+                &lt;int&gt;       &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+1                 142        77.1 30207302. 105098650.</code></pre>
+</div>
+</div>
+</section><section id="summarizing-data-by-groups-group_by" class="slide level2"><h2>Summarizing data by groups: <code>group_by</code>
+</h2>
+<p>What if we want to summarize data by category? Use <code>group_by</code> <strong>and</strong> <code>summarize</code></p>
+<div class="fragment">
+<p>Functions after <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> are computed <em>within each group</em> as defined by variables given, rather than over all rows at once.</p>
+</div>
+</section><section id="group_by-example" class="slide level2"><h2>
+<code>group_by()</code> Example</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41" data-code-line-numbers="1-2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>US_and_Canada <span class="sc">|&gt;</span> <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span>  </span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">summarize</span>(<span class="at">total_pop =</span> <span class="fu">sum</span>(pop)) <span class="sc">|&gt;</span> </span>
+<span id="cb41-3"><a href="#cb41-3"></a>  <span class="fu">head</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+   year total_pop
+  &lt;int&gt;     &lt;int&gt;
+1  1952 172338584
+2  1957 188994154
+3  1962 205523849
+4  1967 219531767</code></pre>
+</div>
+</div>
+<p>Because we did <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> with <code>year</code> then used <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>, we get <em>one row per value of <code>year</code></em>!</p>
+</section></section><section><section id="merging-together-data" class="title-slide slide level1 center"><h1>5. Merging together data</h1>
+<ul>
+<li><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code></li>
+<li><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code></li>
+</ul></section><section id="why-merge" class="slide level2"><h2>Why merge?!</h2>
+<p>In practice, we often collect data from different sources. To analyze the data, we usually must first combine (merge) them.</p>
+<div class="fragment">
+<p>For example, imagine you would like to study county-level patterns with respect to age and grocery spending. However, you can only find,</p>
+<ul>
+<li>County level age data from the US Census, and</li>
+<li>County level grocery spending data from the US Department of Agriculture</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Merge the data!!</p>
+</div>
+</section><section id="merging-in-concept" class="slide level2"><h2>Merging in Concept</h2>
+<p>When merging datasets <code>A</code> and <code>B</code>, ask yourself the following two questions:</p>
+<div class="fragment">
+<ul>
+<li>
+<p>Which <strong>rows</strong> do I want to keep?</p>
+<ul>
+<li>All rows in <code>A</code>?</li>
+<li>All rows in both <code>A</code> and <code>B</code>?</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>
+<p>How do my datasets <strong>connect</strong>?</p>
+<ul>
+<li>Is there a specific variable they have in common?</li>
+<li>Multiple variables they have in common?</li>
+</ul>
+</li>
+</ul>
+</div>
+</section><section id="which-rows-to-keep" class="slide level2"><h2>Which Rows to Keep:</h2>
+<p>We’ll focus on two types of joins<sup>1</sup>:</p>
+<ul>
+<li><p><code>A |&gt; left_join(B)</code>: keeps <code>A</code> and adds variables from <code>B</code> after matching.</p></li>
+<li><p><code>A |&gt; full_join(B)</code>: keeps all of <code>A</code> and <code>B</code>, but combines rows when possible.</p></li>
+</ul><aside><ol class="aside-footnotes"><li id="fn1"><p>Other types include <code>right_join</code>, <code>inner_join</code>, <code>semi_join</code>, and <code>anti_join</code>, but we won’t study those here.</p></li></ol></aside></section><section id="matching-criteria" class="slide level2"><h2>Matching Criteria</h2>
+<p>We have to tell R <strong>which variables</strong> to use when merging datasets! Rows are matched when the values in matching variables are equivalent.</p>
+<div class="fragment">
+<ul>
+<li>
+<code>by = c("County")</code>: Both datasets have a <code>County</code> variable, match on this!</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>
+<code>by = c("CountyName" = "County_Name")</code>: Match <code>CountyName</code> in <code>A</code> with <code>County_Name</code> in <code>B</code>
+</li>
+</ul>
+</div>
+</section><section id="example-nycflights13-data" class="slide level2"><h2>Example: <code>nycflights13</code> Data</h2>
+<p>The <code>nycflights13</code> package includes five data frames, some of which contain missing data (<code>NA</code>):</p>
+<ul>
+<li>
+<code>flights</code>: flights leaving JFK, LGA, or EWR in 2013</li>
+<li>
+<code>airlines</code>: airline abbreviations</li>
+<li>
+<code>airports</code>: airport metadata</li>
+<li>
+<code>planes</code>: airplane metadata</li>
+<li>
+<code>weather</code>: hourly weather data for JFK, LGA, and EWR</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("nycflights13") # remember to do this in the console, not in your .R or .qmd document</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/nycflights13">nycflights13</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="join-example-1" class="slide level2"><h2>Join Example 1</h2>
+<p><code>flights</code> has one row per flight, with abbreviated airline names.</p>
+<div class="cell">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">flight</span>,<span class="va">origin</span>,<span class="va">dest</span>,<span class="va">carrier</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  flight origin dest  carrier
+   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  
+1   1545 EWR    IAH   UA     
+2   1714 LGA    IAH   UA     </code></pre>
+</div>
+</div>
+<div class="fragment">
+<p><code>airlines</code> has one row per airline, with airline abbreviations <em>and</em> full names</p>
+<div class="cell">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">airlines</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  carrier name                  
+  &lt;chr&gt;   &lt;chr&gt;                 
+1 9E      Endeavor Air Inc.     
+2 AA      American Airlines Inc.</code></pre>
+</div>
+</div>
+</div>
+</section><section id="join-example-1-continued" class="slide level2"><h2>Join Example 1 (continued)</h2>
+<p>Let’s left join <code>flights</code> with <code>airlines</code> to add full airline name to each flight record!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb48-2"><a href="#cb48-2"></a>  <span class="fu">select</span>(flight,origin,dest,carrier) <span class="sc">|&gt;</span></span>
+<span id="cb48-3"><a href="#cb48-3"></a>  <span class="fu">left_join</span>(airlines, <span class="at">by =</span> <span class="st">"carrier"</span>)  <span class="sc">|&gt;</span> </span>
+<span id="cb48-4"><a href="#cb48-4"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  flight origin dest  carrier name                  
+   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;                 
+1   1545 EWR    IAH   UA      United Air Lines Inc. 
+2   1714 LGA    IAH   UA      United Air Lines Inc. 
+3   1141 JFK    MIA   AA      American Airlines Inc.
+4    725 JFK    BQN   B6      JetBlue Airways       
+5    461 LGA    ATL   DL      Delta Air Lines Inc.  </code></pre>
+</div>
+</div>
+<p>We now have one row per flight, with both carrier abbreviations and full names!</p>
+</section><section id="join-example-2" class="slide level2"><h2>Join Example #2</h2>
+<p><code>flights</code> also includes a <code>tailnum</code> variable for each plane’s tail number.</p>
+<div class="cell">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">flight</span>,<span class="va">origin</span>,<span class="va">dest</span>,<span class="va">tailnum</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  flight origin dest  tailnum
+   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  
+1   1545 EWR    IAH   N14228 
+2   1714 LGA    IAH   N24211 </code></pre>
+</div>
+</div>
+<div class="fragment">
+<p><code>planes</code> includes a row for each plane type, including the manufacturer.</p>
+<div class="cell">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">planes</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">tailnum</span>,<span class="va">year</span>,<span class="va">manufacturer</span>,<span class="va">model</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  tailnum  year manufacturer     model    
+  &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;            &lt;chr&gt;    
+1 N10156   2004 EMBRAER          EMB-145XR
+2 N102UW   1998 AIRBUS INDUSTRIE A320-214 </code></pre>
+</div>
+</div>
+</div>
+</section><section id="join-example-2-continued" class="slide level2"><h2>Join Example 2 (continued)</h2>
+<p>Let’s left join <code>flights</code> with <code>planes</code> to add manufacture to each flight record!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb54-2"><a href="#cb54-2"></a>  <span class="fu">select</span>(flight,origin,dest,tailnum) <span class="sc">|&gt;</span></span>
+<span id="cb54-3"><a href="#cb54-3"></a>  <span class="fu">left_join</span>(planes, <span class="at">by =</span> <span class="st">"tailnum"</span>)  <span class="sc">|&gt;</span> </span>
+<span id="cb54-4"><a href="#cb54-4"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 12
+  flight origin dest  tailnum  year type  manufacturer model engines seats speed
+   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;
+1   1545 EWR    IAH   N14228   1999 Fixe… BOEING       737-…       2   149    NA
+2   1714 LGA    IAH   N24211   1998 Fixe… BOEING       737-…       2   149    NA
+3   1141 JFK    MIA   N619AA   1990 Fixe… BOEING       757-…       2   178    NA
+4    725 JFK    BQN   N804JB   2012 Fixe… AIRBUS       A320…       2   200    NA
+5    461 LGA    ATL   N668DN   1991 Fixe… BOEING       757-…       2   178    NA
+# ℹ 1 more variable: engine &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>A bunch of columns from <code>planes</code> are now in the dataset!</p>
+</section><section id="join-example-2-continued-1" class="slide level2"><h2>Join Example 2 (continued)</h2>
+<p>Let’s remove some of the “spare” columns</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb56-2"><a href="#cb56-2"></a>  <span class="fu">select</span>(flight, origin, dest, tailnum) <span class="sc">|&gt;</span></span>
+<span id="cb56-3"><a href="#cb56-3"></a>  <span class="fu">left_join</span>(planes, <span class="at">by =</span> <span class="st">"tailnum"</span>)  <span class="sc">|&gt;</span> </span>
+<span id="cb56-4"><a href="#cb56-4"></a>  <span class="fu">select</span>(flight, origin, dest, manufacturer, model) <span class="sc">|&gt;</span></span>
+<span id="cb56-5"><a href="#cb56-5"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  flight origin dest  manufacturer model   
+   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;   
+1   1545 EWR    IAH   BOEING       737-824 
+2   1714 LGA    IAH   BOEING       737-824 
+3   1141 JFK    MIA   BOEING       757-223 
+4    725 JFK    BQN   AIRBUS       A320-232
+5    461 LGA    ATL   BOEING       757-232 </code></pre>
+</div>
+</div>
+</section></section><section><section id="summary" class="title-slide slide level1 center"><h1>Summary</h1>
+<ul>
+<li>Logical Operators (<code>&amp;, |, ==, &lt;, %in%,</code> etc.)</li>
+<li>Subsetting (<code>filter, select, distinct</code>)</li>
+<li>Modifying (<code>arrange, rename, mutate</code>)</li>
+<li>Summarizing (<code>summarize, group_by</code>)</li>
+<li>Merging (<code>left_join, full_join</code>)</li>
+</ul>
+<p>Let’s take a 10-minute break, then come back together to practice!</p>
+</section><section id="activity" class="slide level2"><h2>Activity</h2>
+<ol type="1">
+<li>Create a new object that contains <code>gapminder</code> (1) observations from China, India, and United States after 1980, and (2) variables corresponding to country, year, population, and life expectancy.</li>
+<li>How many rows and columns does the object contain?</li>
+<li>Save over your object after sorting the rows by year (ascending order) and population (descending order). Print the first 6 rows.</li>
+<li>Add a new variable that contains population in billions.</li>
+<li>By year, calculate the total population (in billions) across these three countries</li>
+<li>In ggplot, create a line plot showing life expectancy over time by country. Make the plot visually appealing!</li>
+</ol></section><section id="answers" class="slide level2"><h2>Answers</h2>
+<p>Question 1:</p>
+<div class="cell">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">subset_gapminder</span> <span class="op">&lt;-</span> <span class="va">gapminder</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"China"</span>,<span class="st">"India"</span>,<span class="st">"United States"</span><span class="op">)</span>,  <span class="va">year</span> <span class="op">&gt;</span> <span class="fl">1980</span> <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">year</span>, <span class="va">pop</span>, <span class="va">lifeExp</span><span class="op">)</span></span>
+<span><span class="va">subset_gapminder</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+  country  year        pop lifeExp
+  &lt;fct&gt;   &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;
+1 China    1982 1000281000    65.5
+2 China    1987 1084035000    67.3
+3 China    1992 1164970000    68.7
+4 China    1997 1230075000    70.4
+5 China    2002 1280400000    72.0</code></pre>
+</div>
+</div>
+</section><section id="answers-1" class="slide level2"><h2>Answers</h2>
+<p>Question 2:</p>
+<div class="cell">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Option 1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">subset_gapminder</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">subset_gapminder</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 18  4</code></pre>
+</div>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Option 2</span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">subset_gapminder</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 18
+Columns: 4
+$ country &lt;fct&gt; "China", "China", "China", "China", "China", "China", "India",…
+$ year    &lt;int&gt; 1982, 1987, 1992, 1997, 2002, 2007, 1982, 1987, 1992, 1997, 20…
+$ pop     &lt;int&gt; 1000281000, 1084035000, 1164970000, 1230075000, 1280400000, 13…
+$ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58.553…</code></pre>
+</div>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Option 3</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">subset_gapminder</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 18  4</code></pre>
+</div>
+</div>
+</section><section id="answers-2" class="slide level2"><h2>Answers</h2>
+<p>Question 3:</p>
+<div class="cell">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">subset_gapminder</span> <span class="op">&lt;-</span> <span class="va">subset_gapminder</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">year</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">subset_gapminder</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country        year        pop lifeExp
+  &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;
+1 China          1982 1000281000    65.5
+2 India          1982  708000000    56.6
+3 United States  1982  232187835    74.6
+4 China          1987 1084035000    67.3
+5 India          1987  788000000    58.6
+6 United States  1987  242803533    75.0</code></pre>
+</div>
+</div>
+</section><section id="answers-3" class="slide level2"><h2>Answers</h2>
+<p>Question 4:</p>
+<div class="cell">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">subset_gapminder</span> <span class="op">&lt;-</span> <span class="va">subset_gapminder</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pop_billions <span class="op">=</span> <span class="va">pop</span><span class="op">/</span><span class="fl">1000000000</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">subset_gapminder</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  country        year        pop lifeExp pop_billions
+  &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;        &lt;dbl&gt;
+1 China          1982 1000281000    65.5        1.00 
+2 India          1982  708000000    56.6        0.708
+3 United States  1982  232187835    74.6        0.232
+4 China          1987 1084035000    67.3        1.08 
+5 India          1987  788000000    58.6        0.788</code></pre>
+</div>
+</div>
+</section><section id="answers-4" class="slide level2"><h2>Answers</h2>
+<p>Question 5:</p>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby">
+<li><a data-tabby-default="" href="#tabset-1-1">Classic syntax</a></li>
+<li><a href="#tabset-1-2">New syntax (dplyr 1.1.0)</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="cell">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">subset_gapminder</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>TotalPop_Billions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop_billions</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+   year TotalPop_Billions
+  &lt;int&gt;             &lt;dbl&gt;
+1  1982              1.94
+2  1987              2.11
+3  1992              2.29
+4  1997              2.46
+5  2002              2.60
+6  2007              2.73</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-2">
+<div class="cell">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">subset_gapminder</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>TotalPop_Billions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop_billions</span><span class="op">)</span>, </span>
+<span>            .by <span class="op">=</span> <span class="va">year</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+   year TotalPop_Billions
+  &lt;int&gt;             &lt;dbl&gt;
+1  1982              1.94
+2  1987              2.11
+3  1992              2.29
+4  1997              2.46
+5  2002              2.60
+6  2007              2.73</code></pre>
+</div>
+</div>
+<p>This new syntax allows for per-operation grouping which means it is only active within a single verb at a time (as opposed to being applied to the entire tibble until <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> is called). You can more about this new feature <a href="https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/">here</a>)</p>
+</div>
+</div>
+</div>
+</section><section id="answers-5" class="slide level2"><h2>Answers</h2>
+<p>Question 6:</p>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby">
+<li><a data-tabby-default="" href="#tabset-2-1">Code</a></li>
+<li><a href="#tabset-2-2">Plot</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74" data-code-line-numbers="|2,3,5|"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="fu">library</span>(ggplot2) </span>
+<span id="cb74-2"><a href="#cb74-2"></a><span class="co"># install.packages("ggthemes") # run in console</span></span>
+<span id="cb74-3"><a href="#cb74-3"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb74-4"><a href="#cb74-4"></a><span class="fu">ggplot</span>(subset_gapminder, <span class="fu">aes</span>(year, lifeExp, <span class="at">color =</span> country, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="cb74-5"><a href="#cb74-5"></a>  <span class="fu">theme_tufte</span>(<span class="at">base_size =</span> <span class="dv">20</span>) <span class="sc">+</span> </span>
+<span id="cb74-6"><a href="#cb74-6"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb74-7"><a href="#cb74-7"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb74-8"><a href="#cb74-8"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> </span>
+<span id="cb74-9"><a href="#cb74-9"></a>  <span class="fu">ylab</span>(<span class="st">"Life Expectancy (years)"</span>) <span class="sc">+</span></span>
+<span id="cb74-10"><a href="#cb74-10"></a>  <span class="fu">ggtitle</span>(<span class="st">"Life Expectancy (1982-2007)"</span>,<span class="st">"China, India, and United States"</span>) <span class="sc">+</span></span>
+<span id="cb74-11"><a href="#cb74-11"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1982</span>, <span class="dv">1987</span>, <span class="dv">1992</span>, <span class="dv">1997</span>, <span class="dv">2002</span>, <span class="dv">2007</span>), <span class="at">minor_breaks =</span> <span class="fu">c</span>()) <span class="sc">+</span></span>
+<span id="cb74-12"><a href="#cb74-12"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">80</span>)) <span class="sc">+</span> </span>
+<span id="cb74-13"><a href="#cb74-13"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">"Country"</span>) <span class="sc">+</span> </span>
+<span id="cb74-14"><a href="#cb74-14"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-2-2">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="CSSS508_Lecture3_files/figure-revealjs/unnamed-chunk-35-1.svg"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="homework-3" class="slide level2 scrollable"><h2>Homework 3</h2>
+<p>Create a qmd file (from scratch this time!) in which you answer each of the following questions. Be sure to display <strong>all your code in the knitted</strong> version (use throughout <code>echo: false</code>).</p>
+<p>Remember, the package <code>nycflights13</code> contains data on flights originating in NYC during the year 2013. There are three airports servicing NYC: JFK, LGA (“LaGuardia”), and EWR (“Newark”).</p>
+<ol type="1">
+<li>Choose an airport outside New York, and count how many flights went to that airport from NYC in 2013. How many of those flights started at JFK, LGA, and EWR? (Hint: Use <code>filter</code>, <code>group_by</code>, and <code>summarize</code>)</li>
+<li>The variable <code>arr_delay</code> contains arrival delays in minutes (negative values represent early arrivals). Make a <code>ggplot</code> histogram displaying arrival delays for 2013 flights from NYC to the airport you chose.</li>
+<li>Use <code>left_join</code> to add weather data at departure to the subsetted data<sup>1</sup>. Calculate the mean temperature by month at departure (<code>temp</code>) across all flights<sup>2</sup>.</li>
+<li>Investigate if there is a relationship between departure delay (<code>dep_delay</code>) and wind speed (<code>wind_speed</code>). Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation.</li>
+</ol>
+<p>As always, submit both the .qmd and knitted .html to Canvas.</p>
+<p><br><br></p>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>Hint 1: Match on <code>origin</code>, <code>year</code>, <code>month</code>, <code>day</code>, <strong>and</strong> <code>hour</code>!!</p></li><li id="fn3"><p>Hint 2: Use <code>mean(temp, na.rm=T)</code> to have R calculate an average after ignoring missing data values</p></li></ol></aside></section><section id="due-dates" class="slide level2"><h2>Due dates</h2>
+<ul>
+<li>Section AA:
+<ul>
+<li>Homework #1 due Tuesday, October 24th (before lecture)</li>
+<li>Peer grading due Sunday, October 29nd (4:30pm)</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<ul>
+<li>Section AB:
+<ul>
+<li>Homework #1 due Thursday, October 26th (before lab)</li>
+<li>Peer grading due Tuesday, October 31th (before lecture)</li>
+</ul>
+</li>
+</ul>
 
 <div class="footer footer-default">
 
 </div>
-</section>
-    </div>
+</section></section>
+</div>
   </div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="../../site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script><script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="../../site_libs/revealjs/plugin/notes/notes.js"></script><script src="../../site_libs/revealjs/plugin/search/search.js"></script><script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="../../site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
+'smaller': true,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'smaller': false,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': true,
  
         // Display controls in the bottom right corner
         controls: false,
@@ -389,7 +1259,7 @@
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -491,7 +1361,7 @@
         hideCursorTime: 5000,
 
         // Opens links in an iframe preview overlay
-        previewLinks: false,
+        previewLinks: true,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
         transition: 'none',
@@ -539,7 +1409,7 @@
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
           RevealNotes,
@@ -547,8 +1417,42 @@
           RevealZoom
         ]
       });
-    </script>
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script><script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
         const mode = bsSheetEl.getAttribute("data-mode");
@@ -694,6 +1598,6 @@
       }
     });
     </script>
-    
+
 
 </body></html>
