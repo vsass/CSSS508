@@ -130,10 +130,10 @@ We won't really cover any statistics in this course but the goal is for you to i
 
 **Final grade:** Credit/No Credit (C/NC); You need at least 60% to get Credit.
 
-* **Homework** (75%; assessed by peers): 8 total homeworks; assessed on a 0-3 point rubric. Assigned after lectures and due before the following lecture.
-* **Peer Grading** (25%; assessed by the instructor): One per homework, assessed on a binary "good"/"not good" scale. Due before the following lab.
+* **Homework** (75%; assessed by peers): 8 total homeworks; assessed on a 0-3 point rubric. Assigned at the end of lab sections and due a week later.
+* **Peer Grading** (25%; assessed by the instructor): One per homework, assessed on a binary "good"/"not good" scale. Due 5 days after homework due date. 
 
-Assignment/peer grading instructions and deadlines can be found on the [Homework](https://vsass.github.io/CSSS508/Homework/homework.qmd) page of the course website. All homework will be turned in on Canvas.
+Assignment/peer grading instructions and deadlines can be found on the [Homework](https://vsass.github.io/CSSS508/Homework/homework.qmd) page of the course website. All homework will be turned in on [Canvas](https://canvas.uw.edu/courses/1665088).
 
 ## Ugh, peer grading?
 
@@ -781,7 +781,7 @@ Chunks have options that control what happens with their code. They are specifie
 ````
 ```{{r}}
 #| label: bar-chart
-#| echo: false
+#| eval: false
 #| fig-cap: "A line plot on a polar axis"
 ```
 ````
@@ -808,12 +808,11 @@ Some useful and common options include:
 
 Try adding or changing the chunk options (separated by commas) for the two chunks in `my_first_Rmd.qmd` and re-knitting to check what happens.
 
-````
-```{{r}}
-#| echo: false
+```{r}
+#| echo: fenced
+#| eval: false
 summary(cars)
 ```
-````
 
 ## In-Line R code
 
@@ -999,3 +998,120 @@ pairs(swiss, pch = 8, col = "violet",
 ::: aside
 pairs() is a pairwise scatterplot function. Good for a quick look at small datasets, but mostly useless for larger data.
 :::
+
+## Installing Packages
+
+Let's make a table that looks a little less code-y in the output. To do this, we'll 
+want to install a **package** called `gt`. Packages contain pre-made functions 
+and/or data we can use. R's strength is its wide variety of packages!
+
+In the console: `install.packages("gt")`.
+
+. . . 
+
+* Note that unlike the `library()` command, *the name of a package to be installed must be in quotes*. This is because the name here is a search term (text, not an object!) while for `library()` it is an actual R object.
+
+. . . 
+
+* Once you install a package, you don't need to re-install it until you update R. *Consequently, you should not include* `install.packages()` *in any markdown document or R script!*
+
+## Making Tables 
+
+```{r}
+#| eval: false
+#| code-line-numbers: "|1"
+library(pander) # loads pander, do once in your session
+pander(summary(swiss), style = "rmarkdown", split.tables = 120)
+```
+
+<br>
+
+::: custom-small
+```{r}
+#| echo: false
+library(pander) # loads pander, do once in your session
+pander(summary(swiss), style = "rmarkdown", split.tables = 120)
+```
+:::
+
+::: aside
+Note that we put the `summary(swiss)` function call inside the `pander()` call. This is called *nesting functions* and is very common. I'll introduce a method next week to avoid confusion from nesting too many functions inside each other
+:::
+
+## Data Look a Little Nicer This Way
+
+```{r, eval=FALSE}
+pander(head(swiss, 5), style = "rmarkdown", split.tables = 120)
+```
+
+<br>
+
+::: custom-small
+```{r, echo=FALSE}
+pander(head(swiss, 5), style = "rmarkdown", split.tables = 120)
+```
+:::
+
+::: aside
+`split.tables = 120` tells `pander` to break a table into multiple tables if it will be over 120 characters wide. Adjust this to get widths *just right*.
+:::
+
+# Homework
+
+## Homework #1
+Write up a .qmd file showing some exploratory analyses of the Swiss fertility data. Upload both the `.qmd` file and the `.html` file to Canvas. You must upload **BOTH** for credit.
+
+. . . 
+
+<br>
+
+Mix in-line R calculations, R output, and plots with text describing the relationships you see. Include *at least* two plots. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. functions like `nrow()`, `mean()`, `sd()`, `cor()`, `median()`, `min()`) and *may not hard-code any numbers referenced in your text*.
+
+. . . 
+
+<br>
+
+Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `output` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text---*not as printed code and output*---and rounded so as not to be absurdly precise (e.g. round `x` with `round(x, 2)`).
+
+::: aside
+Take a look at the template provided on our [course website](https://vsass.github.io/CSSS508/Homework/HW1/homework1.html) for an idea of what this might look like using a different dataset. 
+:::
+
+## Grading Rubric
+<br>
+
+0 - Didn't turn anything in.
+
+<br>
+
+. . . 
+
+1 - Turned in but low effort, ignoring many directions.
+
+<br>
+
+. . . 
+
+2 - Decent effort, followed directions with some minor issues.
+
+<br>
+
+. . . 
+
+3 - Nailed it!
+
+<br>
+
+## Due dates
+
+* Section AA: 
+  + Homework #1 due Tuesday, October 10th (before lecture)
+  + Peer grading due Sunday, October 15th (4:30pm)
+
+<br>
+
+* Section AB: 
+  + Homework #1 due Thursday, October 12th (before lab)
+  + Peer grading due Tuesday, October 17th (before lecture)
+
+
