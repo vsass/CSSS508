@@ -54,6 +54,8 @@ Today, we will cover,
 * Strings in Base R
 * Strings in `stringr` (tidyverse)
 
+# Basics of Strings
+
 ## Basics of Strings
 
 ::: {.incremental}
@@ -65,7 +67,7 @@ Today, we will cover,
 
 ::: {.incremental}
 * We can create strings by surrounding text, numbers, spaces, or symbols with quotes!
-  + Examples: `"Hello! My name is Michael"` or `"%*$#01234"`
+  + Examples: `"Hello! My name is Vic"` or `"%*$#01234"`
 :::
 
 ## Basics of Strings 
@@ -86,7 +88,7 @@ R can treat strings in funny ways!
 c(class("1"), class(1))
 ```
 
-# 2. Strings in Base R
+# Strings in Base R
 
 * `nchar()`
 * `substr()`
@@ -94,17 +96,14 @@ c(class("1"), class(1))
 
 ## Data: King County Restaurant Inspections!
 
-PICK UP HERE TOMORROW
-
 Today we'll study real data on **food safety inspections in King County**, collected from [data.kingcounty.gov](https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5).
 
 Note these data are *fairly large*. The following code can be used to download the data directly from my Github page:
 
 ```{r}
-restaurants <- read_csv(file = "")
+restaurants <- read_csv(file = "https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture8/data/restaurants.csv")
 ```
 
----
 ## Quick Examination of the Data
 
 ```{r}
@@ -112,142 +111,135 @@ names(restaurants)
 dim(restaurants)
 ```
 
----
 ## Quick Examination of the Data
 
 **Good Questions to Ask:**
 
-  + What does each row represent?
-  + Is the data in long or wide format?
-  + What are the key variables?
-  + How are the data stored? (*data type*)
+* What does each row represent?
+* Is the data in long or wide format?
+* What are the key variables?
+* How are the data stored? (*data type*)
 
----
 ## `nchar()`
 
 The `nchar()` function calculates the *number of characters* in a given string. 
 
-+ `length()` doesn't work with strings!!
-+ Why not?
+* `length()` doesn't work with strings!!
+  * Why not?
 
---
+. . . 
 
 ```{r}
-nchar("Mike Pearce")
+nchar("Victoria Sass")
+length("Victoria Sass")
 ```
 
---
+. . . 
 
 In our `restaurants` data, let's see how many characters are in each zip code:
 
 ```{r nchar_zip}
-length_zip <- nchar(restaurants$Zip_Code)
+length_zip <- nchar(restaurants$`Zip Code`) # notice when a variable name has spaces we need to contain it within backticks so R knows it is a singular entity
 table(length_zip)
 ```
 
+. . . 
 
----
 ## `substr()`
 
 The `substr()` function allows us to extract characters from a string.
 
---
+. . . 
 
 For example, we can extract the third through fifth elements of a string as follows:
 
 ```{r}
-substr("98126",3,5)
+substr("98126", 3, 5)
 ```
 
-
----
 ## `substr()`
 
-Let's extract the first five chararacters from each zip code in the restaurants data, and add it to our dataset.
+Let's extract the first five characters from each zip code in the restaurants data, and add it to our dataset.
 
-```{r warning=FALSE,message=FALSE}
+```{r}
 library(dplyr)
-restaurants$ZIP_5 <- substr(restaurants$Zip_Code,1,5)
-restaurants %>% distinct(ZIP_5) %>% head()
+restaurants$ZIP_5 <- substr(restaurants$`Zip Code`, 1, 5) 
+restaurants %>% 
+  distinct(ZIP_5) %>% 
+  head()
 ```
 
----
 ## `paste()`
 
 We combine strings together using `paste()`. By default, it puts a space between different strings.
 
---
+. . . 
 
-For example, we can combine `"Michael"` and `"Pearce"` as follows:
+For example, we can combine `"Victoria"` and `"Sass"` as follows:
 
 ```{r}
-paste("Michael","Pearce")
+paste("Victoria", "Sass")
 ```
 
----
 ## More complex `paste()` commands
 
 There are two additional common arguments to use with `paste()`:
 
-1. `sep=` controls what separates vectors, entry-wise
-1. `collapse=` controls if/how multiple outputs are collapsed into a single string.
+1. `sep =` controls what separates vectors, entry-wise
+1. `collapse =` controls if/how multiple outputs are collapsed into a single string.
 
---
+. . . 
 
 Examples:
 
 ```{r}
-paste("CSSS","508",sep= "_")
-paste(c("CSSS","STAT"),"508",sep= "_")
-paste(c("CSSS","STAT"),"508",sep= "_",collapse=" , ")
+paste("CSSS", "508", sep = "_")
+paste(c("CSSS", "STAT"), "508", sep = "_")
+paste(c("CSSS", "STAT"), "508", sep = "_", collapse = " , ")
 ```
 
 *When do we get one string as output vs. two?*
 
----
 ## `paste()`
 
 Let's use `paste()` to create complete mailing addresses for each restaurant:
 
+. . . 
+
 ```{r mailing_address}
-restaurants$mailing_address <- 
-  paste(restaurants$Address,", ",
-        restaurants$City,", WA ",restaurants$ZIP_5,
-        sep = "")
-restaurants %>% distinct(mailing_address) %>% head()
+restaurants$mailing_address <- paste(restaurants$Address, ", ", restaurants$City, 
+                                     ", WA ", restaurants$ZIP_5, sep = "")
+restaurants %>% 
+  distinct(mailing_address) %>% 
+  head()
 ```
 
+# Strings in `stringr`
 
----
-class: inverse
-# 3. Strings in `stringr`
+* `str_length()`
+* `str_sub()`
+* `str_c()`
+* `str_to_upper()`, `str_to_lower()`, and `str_to_title()`
+* `str_trim()`
+* `str_detect()`
+* `str_replace()`
 
-+ `str_length()`
-+ `str_sub()`
-+ `str_c()`
-+ `str_to_upper()`, `str_to_lower()`, and `str_to_title()`
-+ `str_trim()`
-+ `str_detect()`
-+ `str_replace()`
-
-
----
 ## `stringr`
 
 `stringr` is yet another R package from the Tidyverse (like `ggplot2`, `dplyr`, `tidyr`, `lubridate`, `readr`).
 
---
+. . . 
 
 It provides TONS of functions for working with strings:
 
-  + Some are equivalent/better versions of Base R functions
-  + Some can do *fancier* tricks with strings
+* Some are equivalent/better versions of Base R functions
+* Some can do *fancier* tricks with strings
   
---
+. . . 
 
 *Most* `stringr` functions begin with "`str_`" to make RStudio auto-complete more useful.
 
---
+. . . 
 
 We'll cover the basics today, but know there's much more out there!
     
@@ -255,7 +247,6 @@ We'll cover the basics today, but know there's much more out there!
 library(stringr)
 ```
 
----
 ## Equivalencies: `str_length()`
 
 `str_length()` is equivalent to `nchar()`:
@@ -265,16 +256,17 @@ nchar("weasels")
 str_length("weasels")
 ```
 
----
+. . . 
+
 ## Equivalencies: `str_sub()`
 
 `str_sub()` is like `substr()`:
 
 ```{r}
-str_sub("Washington", 2,4)
+str_sub("Washington", 2, 4)
 ```
 
---
+. . . 
 
 `str_sub()` also lets you put in negative values to count backwards from the end (-1 is the end, -3 is third from end):
 
@@ -282,93 +274,89 @@ str_sub("Washington", 2,4)
 str_sub("Washington", 4, -3)
 ```
 
----
 ## Equivalencies: `str_c()`
 
 `str_c()` ("string combine") is just like `paste()` but where the default is `sep = ""` (no space!)
 
-
 ```{r str_c_example}
-str_c(c("CSSS","STAT"),508)
-str_c(c("CSSS","STAT"),508,sep=" ")
-str_c(c("CSSS","STAT"),508,sep = " ",collapse = ", ")
+str_c(c("CSSS","STAT"), 508)
+str_c(c("CSSS","STAT"), 508, sep = " ")
+str_c(c("CSSS","STAT"), 508, sep = " ", collapse = ", ")
 ```
 
-
-
----
 ## Changing Cases
 
 `str_to_upper()`, `str_to_lower()`, `str_to_title()` convert cases, which is often a good idea to do before searching for values:
 
 ```{r make_seattle_uppercase}
 unique_cities <- unique(restaurants$City)
-unique_cities %>% head()
+unique_cities %>% 
+  head()
 
-str_to_upper(unique_cities) %>% head()
-str_to_lower(unique_cities) %>% head()
-str_to_title(unique_cities) %>% head()
+str_to_upper(unique_cities) %>% 
+  head()
+str_to_lower(unique_cities) %>% 
+  head()
+str_to_title(unique_cities) %>% 
+  head()
 ```
 
----
 ## Whitespace: `str_trim()`
 
 Extra leading or trailing whitespace is common in text data:
 
 ```{r show_whitespace}
 unique_names <- unique(restaurants$Name)
-unique_names %>% head(3)
+unique_names %>% 
+  head(3)
 ```
-
---
 
 We can remove the whitespace using `str_trim()`:
 
 ```{r clean_whitespace}
-str_trim(unique_names) %>% head(3)
+str_trim(unique_names) %>% 
+  head(3)
 ```
 
----
 ## Patterns!
 
 It's common to want to see if a string satisfies a certain *pattern*.
 
---
+. . . 
 
 We did this with numeric values earlier in this course!
 
 ```{r}
-cars %>% filter(speed < 5 | speed > 24)
-cars %>% filter(dist > 2 & dist <= 10)
+cars %>% 
+  filter(speed < 5 | speed > 24)
+cars %>% 
+  filter(dist > 2 & dist <= 10)
 ```
 
----
 ## Patterns: `str_detect()`
 
 We can do similar pattern-checking using `str_detect()`:
 
-```{r eval=FALSE}
-str_detect(string,pattern)
+```{r}
+#| eval: false
+str_detect(string, pattern)
 ```
 
-+ `string` is the character string (or vector of strings) we want to examine
-+ `pattern` is the pattern that we're checking for inside `string`
-+ Output: TRUE/FALSE vector indicating if pattern was found
+* `string` is the character string (or vector of strings) we want to examine
+* `pattern` is the pattern that we're checking for inside `string`
+* Output: TRUE/FALSE vector indicating if pattern was found
 
-
---
+. . . 
 
 ```{r}
-str_detect(string = c("Hello","my name","is Michael"),
-           pattern = "m")
-str_detect(string = c("Hello","my name","is Michael"),
-           pattern = "M")
+str_detect(string = c("Hello", "my middle name", "is Anne"),
+           pattern = "a")
+str_detect(string = c("Hello", "my middle name", "is Anne"),
+           pattern = "A")
 ```
 
 Results are case-sensitive!!
 
-
----
 ## Patterns: `str_detect()`
 
 Let's see which phone numbers are in the 206 area code:
@@ -376,15 +364,14 @@ Let's see which phone numbers are in the 206 area code:
 ```{r}
 unique_phones <- unique(restaurants$Phone)
 unique_phones %>% tail(4)
-str_detect(unique_phones,"206") %>% tail(4)
+str_detect(unique_phones, "206") %>% tail(4)
 ```
 
----
 ## Replacement: `str_replace()`
 
 What about if you want to replace a string with something else? Use `str_replace()`!
 
---
+. . . 
 
 This function works very similarly to `str_detect()`, but with one extra argument:
 
@@ -392,181 +379,192 @@ This function works very similarly to `str_detect()`, but with one extra argumen
 str_replace(string, pattern, replacement)
 ```
 
-+ `replacement` is what `pattern` is substituted for.
+* `replacement` is what `pattern` is substituted for.
 
---
+. . . 
 
 ```{r}
-str_replace(string="Hi, I'm Michael",
-            pattern="Hi",replacement="Hello")
+str_replace(string = "Hi, I'm Vic",
+            pattern = "Hi", replacement = "Hello")
 ```
 
----
 ## Replacement: `str_replace()`
 
 In the `Date` variable, let's replace each dash ("-") with an underscore ("_")
 
 ```{r}
-dates <- restaurants$Date
-dates %>% tail(3)
-str_replace(dates,"-","_") %>% tail(3)
+dates <- restaurants$`Inspection Date`
+dates %>% 
+  tail(3)
+str_replace(dates, "/", "_") %>% 
+  tail(3)
 ```
 
 Wait, what?
 
----
 ## Replacement: `str_replace_all()`
 
 `str_replace()` only changes the **first** instance of a pattern in each string! 
 
---
+. . . 
 
 If we want to replace **all** patterns, use `str_replace_all()`
 
 ```{r}
-dates <- restaurants$Date
+dates <- restaurants$`Inspection Date`
 dates %>% tail(3)
-str_replace_all(dates,"-","_") %>% tail(3)
+str_replace_all(dates, "/", "_") %>% 
+  tail(3)
 ```
 
----
-class:inverse
-# Quick Summary
+## Quick Summary
 
 We've seen lots of functions today! 
 
 *Don't try to memorize them!* Instead, use this page as a reference.
 
-+ Character Length: `nchar` and `str_length`
+* Character Length: `nchar` and `str_length`
+* Subsetting: `substr` and `str_sub`
+* Combining: `paste` and `str_c`
+* Case Changes: `str_to_upper()`, `str_to_lower()`, and `str_to_title()`
+* Removing Whitespace: `str_trim`
+* Pattern Detection/Replacement: `str_detect()` and `str_replace()`
 
-+ Subsetting: `substr` and `str_sub`
+## Activity 1: Base R Functions
 
-+ Combining: `paste` and `str_c`
+The variable `Inspection Date` is in the format "MM/DD/YYYY". In this question, we'll change the format using functions for strings.
 
-+ Case Changes: `str_to_upper()`, `str_to_lower()`, and `str_to_title()`
+1. How long is each character string in this variable?
+2. Use `substr()` to extract the month of each entry and save it to an object called "months"
+3. Use `substr()` to extract the year of each entry and save it to an object called "years"
+4. Use `paste()` to combine each month and year, separated by an underscore (`_`). Save this as a new variable in the data called "Inspection_Date_Formatted"
 
-+ Removing Whitespace: `str_trim`
-
-+ Pattern Detection/Replacement: `str_detect()` and `str_replace()`
-
-
----
-class:inverse
-# Activity 1: Base R Functions
+## Activity: Answers
 
 The variable `Inspection_Date` is in the format "MM/DD/YYYY". In this question, we'll change the format using functions for strings.
 
 1. How long is each character string in this variable?
-1. Use `substr()` to extract the month of each entry and save it to an object called "months"
-1. Use `substr()` to extract the year of each entry and save it to an object called "years"
-1. Use `paste()` to combine each month and year, separated by an underscore (`_`). Save this as a new variable in the data called "Inspection_Date_Formatted"
-
----
-## Activity: My Answers
-
-The variable `Inspection_Date` is in the format "MM/DD/YYYY". In this question, we'll change the format using functions for strings.
-
-1.How long is each character string in this variable?
 
 ```{r}
-table(nchar(restaurants$Inspection_Date))
+table(nchar(restaurants$`Inspection Date`))
 ```
 
---
+. . . 
 
-2.Use `substr()` to extract the month of each entry and save it to an object called "months"
-
-3.Use `substr()` to extract the year of each entry and save it to an object called "years"
+2. Use `substr()` to extract the month of each entry and save it to an object called "months"
 
 ```{r}
-months <- substr(restaurants$Inspection_Date,1,2)
-years <- substr(restaurants$Inspection_Date,7,10)
-```
-
----
-## Activity: My Answers
-
-4.Use `paste()` to combine each month and year, separated by an underscore (`_`). Save this as a new variable in the data called "Inspection_Date_Formatted"
-
-```{r}
-restaurants$Inspection_Date_Formatted <- 
-  paste(months,years,sep="_")
-restaurants %>% 
-  select(Name,Inspection_Date,Inspection_Date_Formatted) %>%
+months <- substr(restaurants$`Inspection Date`, 1, 2)
+months |> 
   head(5)
 ```
 
+## Activity: Answers
 
----
-class:inverse
-# Activity 2: HW 8
+3. Use `substr()` to extract the year of each entry and save it to an object called "years"
+
+```{r}
+years <- substr(restaurants$`Inspection Date`, 7, 10)
+years |> 
+  head(5)
+```
+
+. . . 
+
+4. Use `paste()` to combine each month and year, separated by an underscore (`_`). Save this as a new variable in the data called "Inspection_Date_Formatted"
+
+```{r}
+restaurants$Inspection_Date_Formatted <- paste(months, years, sep = "_")
+
+restaurants %>% 
+  select(Name, `Inspection Date`, Inspection_Date_Formatted) %>%
+  head(5)
+```
+
+## Activity 2: HW 8
 
 Let's examine the coffee shops of King County!
 
 1. Filter your data to only include rows in which the `Name` includes the word "coffee" (in any case!)
 
-1. Create a new variable in your data which includes the length of the business name, after removing beginning/trailing whitespace.
+2.. Create a new variable in your data which includes the length of the business name, after removing beginning/trailing whitespace.
 
-1. Create a new variable in your data for the inspection year, *using a `stringr` function!*
+3. Create a new variable in your data for the inspection year, *using a `stringr` function!*
 
-1. Create side-by-side boxplots for the length of business name vs. year.
+4. Create side-by-side boxplots for the length of business name vs. year.
 
-1. Calculate the maximum `Inspection_Score` by business and year.
+5. Calculate the maximum `Inspection Score` by business and year.
 
-1. Create a line plot of maximum score ("MaxScore") over time ("Year"), by business ("Name"). That is, you should have a single line for each business. (Don't try to label them, as there are far too many!)
+6. Create a line plot of maximum score ("MaxScore") over time ("Year"), by business ("Name"). That is, you should have a single line for each business. (Don't try to label them, as there are far too many!)
 
----
-## Activity: My Solutions
+## Activity: Solutions
 
 1\. Filter your data to only include rows in which the `Name` includes the word "coffee" (in any case!)
 
 ```{r}
 coffee <- restaurants
 coffee$Name <- str_to_lower(coffee$Name)
-coffee <- coffee %>% filter(str_detect(Name,"coffee"))
+coffee <- coffee %>% 
+  filter(str_detect(Name, "coffee"))
+coffee |> 
+  head(5)
 ```
 
----
-## Activity: My Solutions
+## Activity: Solutions
 
 2\.Create a new variable in your data which includes the length of the business name, after removing beginning/trailing whitespace.
+
+```{r}
+coffee$NameLength <- str_length(str_trim(coffee$Name))
+coffee |> 
+  select(Name, NameLength) |> 
+  slice(1:10)
+```
+
+## Activity: Solutions
 
 3\. Create a new variable in your data for the inspection year.
 
 ```{r}
-coffee$NameLength <- str_length(str_trim(coffee$Name))
-coffee$Year <- str_sub(coffee$Inspection_Date,-4,-1)
+coffee$Year <- str_sub(coffee$`Inspection Date`,-4,-1)
+coffee$Year |> 
+  head(5)
 ```
 
----
-## Activity: My Solutions
+## Activity: Solutions
 
 4\.  Create side-by-side boxplots for the length of business name vs. year.
 
-```{r warning=FALSE,message=FALSE,fig.height=5}
+```{r}
+#| fig-height: 6
+#| fig-width: 12
+#| fig-align: center
 library(ggplot2)
-ggplot(coffee,aes(Year,NameLength))+geom_boxplot()
+ggplot(coffee, aes(Year, NameLength)) + 
+  geom_boxplot()
 ```
 
----
-## Activity: My Solutions
+## Activity: Solutions
 
-5\. Calculate the maximum `Inspection_Score` by business and year.
+5\. Calculate the maximum `Inspection Score` by business and year.
 
 ```{r}
-coffee_summary <- coffee %>% group_by(Name,Year) %>% 
-  summarize(MaxScore=max(Inspection_Score))
+coffee_summary <- coffee %>% 
+  group_by(Name, Year) %>% 
+  summarize(MaxScore = max(`Inspection Score`))
+coffee_summary |> 
+  head(5)
 ```
 
-
----
-## Activity: My Solutions
-
+## Activity: Solutions
 
 6\. Create a line plot of maximum score ("MaxScore") over time ("Year"), by business ("Name"). That is, you should have a single line for each business. (Don't try to label them, as there are far too many!)
-```{r warning=FALSE,fig.height=4.5}
-ggplot(coffee_summary,aes(Year,MaxScore,group=Name))+
-  geom_line(alpha=.2)
+```{r}
+#| fig-height: 6
+#| fig-width: 12
+#| fig-align: center
+ggplot(coffee_summary, aes(Year, MaxScore, group = Name)) +
+  geom_line(alpha = .2)
 ```
 
 ## Due Dates

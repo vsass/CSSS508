@@ -2322,5 +2322,250 @@
     "title": "CSSS 508 • Lecture 7",
     "section": "Due Dates",
     "text": "Due Dates\n\n\nSection AA:\n\nHomework #4 due Tuesday, November 21st (before lecture)\nPeer grading due Sunday, November 26th (by 4:30pm)\n\n\n\n\n\n\nSection AB:\n\nHomework #4 due Thursday, November 23rd (before lab)\nPeer grading due Tuesday, November 28th (before lecture)"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#basics-of-strings-1",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#basics-of-strings-1",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Basics of Strings",
+    "text": "Basics of Strings\n\n\nA general programming term for a unit of character data is a string\n\nStrings are a sequence of characters\n\nIn R, “strings” and “character data” are mostly interchangeable.\nSome languages have more precise distinctions, but we won’t worry about that here!\n\n\n\n\n\n\nWe can create strings by surrounding text, numbers, spaces, or symbols with quotes!\n\nExamples: \"Hello! My name is Vic\" or \"%*$#01234\""
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#basics-of-strings-2",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#basics-of-strings-2",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Basics of Strings",
+    "text": "Basics of Strings\nR can treat strings in funny ways!\n\n\"01\" == \"1\"\n\n[1] FALSE\n\n\"01\" == 1\n\n[1] FALSE\n\n\"1\" == 1\n\n[1] TRUE\n\n\n\nReminder: We can check data types using the class() function!\n\nc(class(\"1\"), class(1))\n\n[1] \"character\" \"numeric\""
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#data-king-county-restaurant-inspections",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#data-king-county-restaurant-inspections",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Data: King County Restaurant Inspections!",
+    "text": "Data: King County Restaurant Inspections!\nToday we’ll study real data on food safety inspections in King County, collected from data.kingcounty.gov.\nNote these data are fairly large. The following code can be used to download the data directly from my Github page:\n\nrestaurants &lt;- read_csv(file = \"https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture8/data/restaurants.csv\")"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#quick-examination-of-the-data",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#quick-examination-of-the-data",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Quick Examination of the Data",
+    "text": "Quick Examination of the Data\n\nnames(restaurants)\n\n [1] \"Name\"                       \"Program Identifier\"        \n [3] \"Inspection Date\"            \"Description\"               \n [5] \"Address\"                    \"City\"                      \n [7] \"Zip Code\"                   \"Phone\"                     \n [9] \"Longitude\"                  \"Latitude\"                  \n[11] \"Inspection Business Name\"   \"Inspection Type\"           \n[13] \"Inspection Score\"           \"Inspection Result\"         \n[15] \"Inspection Closed Business\" \"Violation Type\"            \n[17] \"Violation Description\"      \"Violation Points\"          \n[19] \"Business_ID\"                \"Inspection_Serial_Num\"     \n[21] \"Violation_Record_ID\"        \"Grade\"                     \n\ndim(restaurants)\n\n[1] 255270     22"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#quick-examination-of-the-data-1",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#quick-examination-of-the-data-1",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Quick Examination of the Data",
+    "text": "Quick Examination of the Data\nGood Questions to Ask:\n\nWhat does each row represent?\nIs the data in long or wide format?\nWhat are the key variables?\nHow are the data stored? (data type)"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#nchar",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#nchar",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "nchar()",
+    "text": "nchar()\nThe nchar() function calculates the number of characters in a given string.\n\n\nlength() doesn’t work with strings!!\n\nWhy not?\n\n\n\n\n\nnchar(\"Victoria Sass\")\n\n[1] 13\n\nlength(\"Victoria Sass\")\n\n[1] 1\n\n\n\n\nIn our restaurants data, let’s see how many characters are in each zip code:\n\nlength_zip &lt;- nchar(restaurants$`Zip Code`) # notice when a variable name has spaces we need to contain it within backticks so R knows it is a singular entity\ntable(length_zip)\n\nlength_zip\n     4      5      6 \n    15 255248      1"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#substr",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#substr",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "substr()",
+    "text": "substr()\nThe substr() function allows us to extract characters from a string.\n\nFor example, we can extract the third through fifth elements of a string as follows:\n\nsubstr(\"98126\", 3, 5)\n\n[1] \"126\""
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#substr-1",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#substr-1",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "substr()",
+    "text": "substr()\nLet’s extract the first five characters from each zip code in the restaurants data, and add it to our dataset.\n\nlibrary(dplyr)\nrestaurants$ZIP_5 &lt;- substr(restaurants$`Zip Code`, 1, 5) \nrestaurants %&gt;% \n  distinct(ZIP_5) %&gt;% \n  head()\n\n# A tibble: 6 × 1\n  ZIP_5\n  &lt;chr&gt;\n1 98105\n2 98103\n3 98104\n4 98109\n5 98101\n6 98052"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#paste",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#paste",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "paste()",
+    "text": "paste()\nWe combine strings together using paste(). By default, it puts a space between different strings.\n\nFor example, we can combine \"Victoria\" and \"Sass\" as follows:\n\npaste(\"Victoria\", \"Sass\")\n\n[1] \"Victoria Sass\""
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#more-complex-paste-commands",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#more-complex-paste-commands",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "More complex paste() commands",
+    "text": "More complex paste() commands\nThere are two additional common arguments to use with paste():\n\n\nsep = controls what separates vectors, entry-wise\n\ncollapse = controls if/how multiple outputs are collapsed into a single string.\n\n\nExamples:\n\npaste(\"CSSS\", \"508\", sep = \"_\")\n\n[1] \"CSSS_508\"\n\npaste(c(\"CSSS\", \"STAT\"), \"508\", sep = \"_\")\n\n[1] \"CSSS_508\" \"STAT_508\"\n\npaste(c(\"CSSS\", \"STAT\"), \"508\", sep = \"_\", collapse = \" , \")\n\n[1] \"CSSS_508 , STAT_508\"\n\n\nWhen do we get one string as output vs. two?"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#paste-1",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#paste-1",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "paste()",
+    "text": "paste()\nLet’s use paste() to create complete mailing addresses for each restaurant:\n\n\nrestaurants$mailing_address &lt;- paste(restaurants$Address, \", \", restaurants$City, \n                                     \", WA \", restaurants$ZIP_5, sep = \"\")\nrestaurants %&gt;% \n  distinct(mailing_address) %&gt;% \n  head()\n\n# A tibble: 6 × 1\n  mailing_address                                  \n  &lt;chr&gt;                                            \n1 2746 NE 45TH ST, SEATTLE, WA 98105               \n2 1906 N 34TH ST, SEATTLE, WA 98103                \n3 122 2ND AVE S, SEATTLE, WA 98104                 \n4 1001 FAIRVIEW AVE N Unit 1700A, SEATTLE, WA 98109\n5 1225 1ST AVE, SEATTLE, WA 98101                  \n6 15364 NE 96TH PL, REDMOND, WA 98052"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#stringr",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#stringr",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "stringr",
+    "text": "stringr\nstringr is yet another R package from the Tidyverse (like ggplot2, dplyr, tidyr, lubridate, readr).\n\nIt provides TONS of functions for working with strings:\n\nSome are equivalent/better versions of Base R functions\nSome can do fancier tricks with strings\n\n\n\nMost stringr functions begin with “str_” to make RStudio auto-complete more useful.\n\n\nWe’ll cover the basics today, but know there’s much more out there!\n\nlibrary(stringr)"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#equivalencies-str_length",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#equivalencies-str_length",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Equivalencies: str_length()\n",
+    "text": "Equivalencies: str_length()\n\nstr_length() is equivalent to nchar():\n\nnchar(\"weasels\")\n\n[1] 7\n\nstr_length(\"weasels\")\n\n[1] 7"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#equivalencies-str_sub",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#equivalencies-str_sub",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Equivalencies: str_sub()\n",
+    "text": "Equivalencies: str_sub()\n\nstr_sub() is like substr():\n\nstr_sub(\"Washington\", 2, 4)\n\n[1] \"ash\"\n\n\n\nstr_sub() also lets you put in negative values to count backwards from the end (-1 is the end, -3 is third from end):\n\nstr_sub(\"Washington\", 4, -3)\n\n[1] \"hingt\""
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#equivalencies-str_c",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#equivalencies-str_c",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Equivalencies: str_c()\n",
+    "text": "Equivalencies: str_c()\n\nstr_c() (“string combine”) is just like paste() but where the default is sep = \"\" (no space!)\n\nstr_c(c(\"CSSS\",\"STAT\"), 508)\n\n[1] \"CSSS508\" \"STAT508\"\n\nstr_c(c(\"CSSS\",\"STAT\"), 508, sep = \" \")\n\n[1] \"CSSS 508\" \"STAT 508\"\n\nstr_c(c(\"CSSS\",\"STAT\"), 508, sep = \" \", collapse = \", \")\n\n[1] \"CSSS 508, STAT 508\""
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#changing-cases",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#changing-cases",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Changing Cases",
+    "text": "Changing Cases\nstr_to_upper(), str_to_lower(), str_to_title() convert cases, which is often a good idea to do before searching for values:\n\nunique_cities &lt;- unique(restaurants$City)\nunique_cities %&gt;% \n  head()\n\n[1] \"SEATTLE\" \"REDMOND\" \"KENT\"    \"KENMORE\" \"Seattle\" \"RENTON\" \n\nstr_to_upper(unique_cities) %&gt;% \n  head()\n\n[1] \"SEATTLE\" \"REDMOND\" \"KENT\"    \"KENMORE\" \"SEATTLE\" \"RENTON\" \n\nstr_to_lower(unique_cities) %&gt;% \n  head()\n\n[1] \"seattle\" \"redmond\" \"kent\"    \"kenmore\" \"seattle\" \"renton\" \n\nstr_to_title(unique_cities) %&gt;% \n  head()\n\n[1] \"Seattle\" \"Redmond\" \"Kent\"    \"Kenmore\" \"Seattle\" \"Renton\""
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#whitespace-str_trim",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#whitespace-str_trim",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Whitespace: str_trim()\n",
+    "text": "Whitespace: str_trim()\n\nExtra leading or trailing whitespace is common in text data:\n\nunique_names &lt;- unique(restaurants$Name)\nunique_names %&gt;% \n  head(3)\n\n[1] \"#807 TUTTA BELLA\" \"+MAS CAFE\"        \"?al?al Cafe\"     \n\n\nWe can remove the whitespace using str_trim():\n\nstr_trim(unique_names) %&gt;% \n  head(3)\n\n[1] \"#807 TUTTA BELLA\" \"+MAS CAFE\"        \"?al?al Cafe\""
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#patterns",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#patterns",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Patterns!",
+    "text": "Patterns!\nIt’s common to want to see if a string satisfies a certain pattern.\n\nWe did this with numeric values earlier in this course!\n\ncars %&gt;% \n  filter(speed &lt; 5 | speed &gt; 24)\n\n  speed dist\n1     4    2\n2     4   10\n3    25   85\n\ncars %&gt;% \n  filter(dist &gt; 2 & dist &lt;= 10)\n\n  speed dist\n1     4   10\n2     7    4\n3     9   10"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#patterns-str_detect",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#patterns-str_detect",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Patterns: str_detect()\n",
+    "text": "Patterns: str_detect()\n\nWe can do similar pattern-checking using str_detect():\n\nstr_detect(string, pattern)\n\n\n\nstring is the character string (or vector of strings) we want to examine\n\npattern is the pattern that we’re checking for inside string\n\nOutput: TRUE/FALSE vector indicating if pattern was found\n\n\n\nstr_detect(string = c(\"Hello\", \"my middle name\", \"is Anne\"),\n           pattern = \"a\")\n\n[1] FALSE  TRUE FALSE\n\nstr_detect(string = c(\"Hello\", \"my middle name\", \"is Anne\"),\n           pattern = \"A\")\n\n[1] FALSE FALSE  TRUE\n\n\nResults are case-sensitive!!"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#patterns-str_detect-1",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#patterns-str_detect-1",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Patterns: str_detect()\n",
+    "text": "Patterns: str_detect()\n\nLet’s see which phone numbers are in the 206 area code:\n\nunique_phones &lt;- unique(restaurants$Phone)\nunique_phones %&gt;% tail(4)\n\n[1] \"(206) 257-0857\" \"(206) 390-9205\" \"(415) 385-1379\" \"(206) 779-0528\"\n\nstr_detect(unique_phones, \"206\") %&gt;% tail(4)\n\n[1]  TRUE  TRUE FALSE  TRUE"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#replacement-str_replace",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#replacement-str_replace",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Replacement: str_replace()\n",
+    "text": "Replacement: str_replace()\n\nWhat about if you want to replace a string with something else? Use str_replace()!\n\nThis function works very similarly to str_detect(), but with one extra argument:\n\nstr_replace(string, pattern, replacement)\n\n\n\nreplacement is what pattern is substituted for.\n\n\n\n\nstr_replace(string = \"Hi, I'm Vic\",\n            pattern = \"Hi\", replacement = \"Hello\")\n\n[1] \"Hello, I'm Vic\""
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#replacement-str_replace-1",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#replacement-str_replace-1",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Replacement: str_replace()\n",
+    "text": "Replacement: str_replace()\n\nIn the Date variable, let’s replace each dash (“-”) with an underscore (“_“)\n\ndates &lt;- restaurants$`Inspection Date`\ndates %&gt;% \n  tail(3)\n\n[1] \"01/23/2023\" \"01/23/2023\" \"07/28/2022\"\n\nstr_replace(dates, \"/\", \"_\") %&gt;% \n  tail(3)\n\n[1] \"01_23/2023\" \"01_23/2023\" \"07_28/2022\"\n\n\nWait, what?"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#replacement-str_replace_all",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#replacement-str_replace_all",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Replacement: str_replace_all()\n",
+    "text": "Replacement: str_replace_all()\n\nstr_replace() only changes the first instance of a pattern in each string!\n\nIf we want to replace all patterns, use str_replace_all()\n\ndates &lt;- restaurants$`Inspection Date`\ndates %&gt;% tail(3)\n\n[1] \"01/23/2023\" \"01/23/2023\" \"07/28/2022\"\n\nstr_replace_all(dates, \"/\", \"_\") %&gt;% \n  tail(3)\n\n[1] \"01_23_2023\" \"01_23_2023\" \"07_28_2022\""
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-answers",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-answers",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Activity: Answers",
+    "text": "Activity: Answers\nThe variable Inspection_Date is in the format “MM/DD/YYYY”. In this question, we’ll change the format using functions for strings.\n\nHow long is each character string in this variable?\n\n\ntable(nchar(restaurants$`Inspection Date`))\n\n\n    10 \n254624 \n\n\n\n\nUse substr() to extract the month of each entry and save it to an object called “months”\n\n\nmonths &lt;- substr(restaurants$`Inspection Date`, 1, 2)\nmonths |&gt; \n  head(5)\n\n[1] \"03\" \"03\" \"08\" \"08\" \"01\""
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-answers-1",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-answers-1",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Activity: Answers",
+    "text": "Activity: Answers\n\nUse substr() to extract the year of each entry and save it to an object called “years”\n\n\nyears &lt;- substr(restaurants$`Inspection Date`, 7, 10)\nyears |&gt; \n  head(5)\n\n[1] \"2023\" \"2023\" \"2022\" \"2022\" \"2022\"\n\n\n\n\nUse paste() to combine each month and year, separated by an underscore (_). Save this as a new variable in the data called “Inspection_Date_Formatted”\n\n\nrestaurants$Inspection_Date_Formatted &lt;- paste(months, years, sep = \"_\")\n\nrestaurants %&gt;% \n  select(Name, `Inspection Date`, Inspection_Date_Formatted) %&gt;%\n  head(5)\n\n# A tibble: 5 × 3\n  Name             `Inspection Date` Inspection_Date_Formatted\n  &lt;chr&gt;            &lt;chr&gt;             &lt;chr&gt;                    \n1 #807 TUTTA BELLA 03/02/2023        03_2023                  \n2 #807 TUTTA BELLA 03/02/2023        03_2023                  \n3 #807 TUTTA BELLA 08/31/2022        08_2022                  \n4 #807 TUTTA BELLA 08/31/2022        08_2022                  \n5 #807 TUTTA BELLA 01/13/2022        01_2022"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-solutions",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-solutions",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Activity: Solutions",
+    "text": "Activity: Solutions\n1. Filter your data to only include rows in which the Name includes the word “coffee” (in any case!)\n\ncoffee &lt;- restaurants\ncoffee$Name &lt;- str_to_lower(coffee$Name)\ncoffee &lt;- coffee %&gt;% \n  filter(str_detect(Name, \"coffee\"))\ncoffee |&gt; \n  head(5)\n\n# A tibble: 5 × 25\n  Name          `Program Identifier` `Inspection Date` Description Address City \n  &lt;chr&gt;         &lt;chr&gt;                &lt;chr&gt;             &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;\n1 203 degrees … 203 DEGREES FAHRENH… 06/08/2023        Seating 13… 11901 … KIRK…\n2 203 degrees … 203 DEGREES FAHRENH… 06/08/2023        Seating 13… 11901 … KIRK…\n3 203 degrees … 203 DEGREES FAHRENH… 01/26/2022        Seating 13… 11901 … KIRK…\n4 203 degrees … 203 DEGREES FAHRENH… 08/11/2021        Seating 13… 11901 … KIRK…\n5 203 degrees … 203 DEGREES FAHRENH… 01/23/2020        Seating 13… 11901 … KIRK…\n# ℹ 19 more variables: `Zip Code` &lt;dbl&gt;, Phone &lt;chr&gt;, Longitude &lt;dbl&gt;,\n#   Latitude &lt;dbl&gt;, `Inspection Business Name` &lt;chr&gt;, `Inspection Type` &lt;chr&gt;,\n#   `Inspection Score` &lt;dbl&gt;, `Inspection Result` &lt;chr&gt;,\n#   `Inspection Closed Business` &lt;lgl&gt;, `Violation Type` &lt;chr&gt;,\n#   `Violation Description` &lt;chr&gt;, `Violation Points` &lt;dbl&gt;, Business_ID &lt;chr&gt;,\n#   Inspection_Serial_Num &lt;chr&gt;, Violation_Record_ID &lt;chr&gt;, Grade &lt;dbl&gt;,\n#   ZIP_5 &lt;chr&gt;, mailing_address &lt;chr&gt;, Inspection_Date_Formatted &lt;chr&gt;"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-solutions-1",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-solutions-1",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Activity: Solutions",
+    "text": "Activity: Solutions\n2.Create a new variable in your data which includes the length of the business name, after removing beginning/trailing whitespace.\n\ncoffee$NameLength &lt;- str_length(str_trim(coffee$Name))\ncoffee |&gt; \n  select(Name, NameLength) |&gt; \n  slice(1:10)\n\n# A tibble: 10 × 2\n   Name                          NameLength\n   &lt;chr&gt;                              &lt;int&gt;\n 1 203 degrees fahrenheit coffee         29\n 2 203 degrees fahrenheit coffee         29\n 3 203 degrees fahrenheit coffee         29\n 4 203 degrees fahrenheit coffee         29\n 5 203 degrees fahrenheit coffee         29\n 6 203 degrees fahrenheit coffee         29\n 7 909 coffee and wine                   19\n 8 909 coffee and wine                   19\n 9 909 coffee and wine                   19\n10 909 coffee and wine                   19"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-solutions-2",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-solutions-2",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Activity: Solutions",
+    "text": "Activity: Solutions\n3. Create a new variable in your data for the inspection year.\n\ncoffee$Year &lt;- str_sub(coffee$`Inspection Date`,-4,-1)\ncoffee$Year |&gt; \n  head(5)\n\n[1] \"2023\" \"2023\" \"2022\" \"2021\" \"2020\""
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-solutions-3",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-solutions-3",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Activity: Solutions",
+    "text": "Activity: Solutions\n4. Create side-by-side boxplots for the length of business name vs. year.\n\nlibrary(ggplot2)\nggplot(coffee, aes(Year, NameLength)) + \n  geom_boxplot()"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-solutions-4",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-solutions-4",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Activity: Solutions",
+    "text": "Activity: Solutions\n5. Calculate the maximum Inspection Score by business and year.\n\ncoffee_summary &lt;- coffee %&gt;% \n  group_by(Name, Year) %&gt;% \n  summarize(MaxScore = max(`Inspection Score`))\ncoffee_summary |&gt; \n  head(5)\n\n# A tibble: 5 × 3\n# Groups:   Name [1]\n  Name                          Year  MaxScore\n  &lt;chr&gt;                         &lt;chr&gt;    &lt;dbl&gt;\n1 203 degrees fahrenheit coffee 2019         0\n2 203 degrees fahrenheit coffee 2020        10\n3 203 degrees fahrenheit coffee 2021         0\n4 203 degrees fahrenheit coffee 2022         0\n5 203 degrees fahrenheit coffee 2023        15"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#due-dates",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#due-dates",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Due Dates",
+    "text": "Due Dates\n\n\nSection AA:\n\nHomework #4 due Tuesday, November 28st (before lecture)\nPeer grading due Sunday, December 3rd (by 4:30pm)\n\n\n\n\n\n\nSection AB:\n\nHomework #4 due Thursday, November 30th (before lab)\nPeer grading due Tuesday, December 5th (before lecture)"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#quick-summary",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#quick-summary",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Quick Summary",
+    "text": "Quick Summary\nWe’ve seen lots of functions today!\nDon’t try to memorize them! Instead, use this page as a reference.\n\nCharacter Length: nchar and str_length\n\nSubsetting: substr and str_sub\n\nCombining: paste and str_c\n\nCase Changes: str_to_upper(), str_to_lower(), and str_to_title()\n\nRemoving Whitespace: str_trim\n\nPattern Detection/Replacement: str_detect() and str_replace()"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-1-base-r-functions",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-1-base-r-functions",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Activity 1: Base R Functions",
+    "text": "Activity 1: Base R Functions\nThe variable Inspection Date is in the format “MM/DD/YYYY”. In this question, we’ll change the format using functions for strings.\n\nHow long is each character string in this variable?\nUse substr() to extract the month of each entry and save it to an object called “months”\nUse substr() to extract the year of each entry and save it to an object called “years”\nUse paste() to combine each month and year, separated by an underscore (_). Save this as a new variable in the data called “Inspection_Date_Formatted”"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-2-hw-8",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-2-hw-8",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Activity 2: HW 8",
+    "text": "Activity 2: HW 8\nLet’s examine the coffee shops of King County!\n\nFilter your data to only include rows in which the Name includes the word “coffee” (in any case!)\n\n2.. Create a new variable in your data which includes the length of the business name, after removing beginning/trailing whitespace.\n\nCreate a new variable in your data for the inspection year, using a stringr function!\nCreate side-by-side boxplots for the length of business name vs. year.\nCalculate the maximum Inspection Score by business and year.\nCreate a line plot of maximum score (“MaxScore”) over time (“Year”), by business (“Name”). That is, you should have a single line for each business. (Don’t try to label them, as there are far too many!)"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-solutions-5",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#activity-solutions-5",
+    "title": "CSSS 508 • Lecture 8",
+    "section": "Activity: Solutions",
+    "text": "Activity: Solutions\n6. Create a line plot of maximum score (“MaxScore”) over time (“Year”), by business (“Name”). That is, you should have a single line for each business. (Don’t try to label them, as there are far too many!)\n\nggplot(coffee_summary, aes(Year, MaxScore, group = Name)) +\n  geom_line(alpha = .2)"
   }
 ]
