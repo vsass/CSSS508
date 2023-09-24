@@ -1930,5 +1930,229 @@
     "title": "CSSS 508 • Lecture 5",
     "section": "Example Visualization",
     "text": "Example Visualization\n\n\nCode\nCharts of 2000: Beauty!\n\n\n\n\nlibrary(ggplot2)\nlibrary(ggthemes)\nbillboard_trajectories &lt;- \n  ggplot(data = billboard_2000_question,\n         aes(x = week, y = rank, group = track,\n             color = `Peak Rank`)) +\n  geom_line(aes(size = `Peak Rank`), alpha = 0.4) +\n  theme_tufte() +\n  xlab(\"Week\") + ylab(\"Rank\") +\n  scale_color_manual(values = c(\"black\", \"red\")) +\n  scale_size_manual(values = c(0.25, 1)) +\n  theme(legend.position = c(0.90, 0.75),\n        legend.background = element_rect(fill = \"transparent\"))\n\n\n\n\nbillboard_trajectories\n\n\n\n\n\n\n\n\n\nSongs that reach #1 on the Billboard charts appear to last &gt;20 weeks on the charts, while other songs very rarely make it past that point."
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#bad-repetition",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#bad-repetition",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Bad Repetition",
+    "text": "Bad Repetition\nIf someone doesn’t know better, they might find the means of variables in the swiss data by typing in a line of code for each column:\n\nmean1 &lt;- mean(swiss$Fertility)\nmean2 &lt;- mean(swiss$Agriculture)\nmean3 &lt;- mean(swissExamination)\nmean4 &lt;- mean(swiss$Fertility)\nmean5 &lt;- mean(swiss$Catholic)\nmean5 &lt;- mean(swiss$Infant.Mortality)\nc(mean1, mean2 mean3, mean4, mean5, man6)\n\nCan you spot the problems?\n\nHow upset would they be if the swiss data had 200 columns instead of 6?"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#good-repetition",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#good-repetition",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Good Repetition",
+    "text": "Good Repetition\nYou will learn a better way to calculate column means today using loops!\n\nmeans &lt;- rep(NA, ncol(swiss))\nfor(i in 1:ncol(swiss)){\n  means[i] &lt;- mean(swiss[,i])\n}\ndata.frame(Variable=names(swiss),Mean=means)\n\n          Variable Mean\n1        Fertility 70.1\n2      Agriculture 50.7\n3      Examination 16.5\n4        Education 11.0\n5         Catholic 41.1\n6 Infant.Mortality 19.9\n\n\nDon’t worry about the details yet!"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#dont-repeat-yourself-dry",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#dont-repeat-yourself-dry",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Don’t Repeat Yourself (DRY)!",
+    "text": "Don’t Repeat Yourself (DRY)!\nThe DRY idea: Computers are much better at doing the same thing over and over again than we are.\n\n\nWriting code to repeat tasks for us reduces the most common human coding mistakes.\nIt also substantially reduces the time and effort involved in processing large volumes of data.\nLastly, compact code is more readable and easier to troubleshoot."
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#the-for-loop",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#the-for-loop",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "The for() Loop",
+    "text": "The for() Loop\nfor() loops are the most general kind of loop, found in pretty much every programming language.\n“For each of these values – in order – do this”\n\nConceptually:\nGiven a set of values…\n\nSet an index variable (often i) equal to the first value\nDo something (perhaps depending on i)\nIs there a next value?\n\n\nYES: Update to next value, go back to 2.\n\nNO: Exit loop\n\n\n\nWe are looping through values and repeating some actions."
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#for-loop-diagram",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#for-loop-diagram",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "\nfor() Loop: Diagram",
+    "text": "for() Loop: Diagram\nGiven a set of values…"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#for-loop-example",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#for-loop-example",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "\nfor() Loop: Example",
+    "text": "for() Loop: Example\n\nfor(i in 1:5) {\n    # inside for, output won't show up without print()\n    print(i^2) \n}\n\n[1] 1\n[1] 4\n[1] 9\n[1] 16\n[1] 25\n\n\nNote this runs 5 separate print commands, which is why each line starts with [1]."
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#these-do-the-same-thing",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#these-do-the-same-thing",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "These Do the Same Thing",
+    "text": "These Do the Same Thing\n\n\n\nfor(i in 1:3) {\n    print(i^2) \n}\n\n[1] 1\n[1] 4\n[1] 9\n\n\n\n\ni &lt;- 1\nprint(i^2) \ni &lt;- 2\nprint(i^2)\ni &lt;- 3\nprint(i^2)\n\n[1] 1\n[1] 4\n[1] 9"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#iteration-conventions",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#iteration-conventions",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Iteration Conventions",
+    "text": "Iteration Conventions\n\n\nWe call what happens in the loop for a particular value one iteration.\nIterating over indices 1:n is very common. n might be the length of a vector, the number of rows or columns in a matrix or data frame, or the length of a list.\nCommon notation: i is the object that holds the current value inside the loop.\n\nIf loops are nested, you will often see j and k used for the inner loops.\nThis notation is similar to indexing in mathematical symbols (e.g \\(\\sum\\limits_{i=1}^n\\))\n\n\nNote i (and j,k, etc) are just normal objects. You can use any other names you want.\n\nEx: When iterating over rows and/or columns, I often use row and/or col!"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#iterate-over-characters",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#iterate-over-characters",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Iterate Over Characters",
+    "text": "Iterate Over Characters\nWhat we iterate over doesn’t have to be numbers 1:n or numbers at all! You can also iterate over a character vector in R:\n\nfor(i in letters[1:3]) {\n    print(i)\n}\n\n[1] \"a\"\n[1] \"b\"\n[1] \"c\"\n\ni # in R, this will exist outside of the loop!\n\n[1] \"c\""
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#pre-allocation",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#pre-allocation",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Pre-Allocation",
+    "text": "Pre-Allocation\nUsually in a for() loop, you aren’t just printing output, but want to store results from calculations in each iteration somewhere.\n\nTo do that, figure out what you want to store, and pre-allocate an object of the right size as a placeholder (typically with missing values as placeholders).\n\n\nExamples of what to pre-allocate based on what you store:\n\n\nSingle numeric value per iteration:\n\nrep(NA, num_iter_iters)\n\n\nNumeric vector per iteration:\n\nmatrix(NA, nrow = num_of_iters, ncol = length_of_vector)"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#pre-allocation-numeric",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#pre-allocation-numeric",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Pre-Allocation: Numeric",
+    "text": "Pre-Allocation: Numeric\n\niters &lt;- 10 # Set number of interations\noutput &lt;- rep(NA,iters) # Pre-allocate numeric vector \noutput\n\n [1] NA NA NA NA NA NA NA NA NA NA\n\nfor(i in 1:iters) { # Run code below iters times\n    output[i] &lt;- (i-1)^2 + (i-2)^2\n}\noutput # Display output\n\n [1]   1   1   5  13  25  41  61  85 113 145\n\n\nSteps:\n\nSet a number of iterations\nPre-allocate a numeric vector of that length\nRun ten iterations where the output is a mathematical function of each iteration number."
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#pre-allocation-numeric-vector-per-iteration-matrix",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#pre-allocation-numeric-vector-per-iteration-matrix",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Pre-Allocation: Numeric Vector per Iteration Matrix",
+    "text": "Pre-Allocation: Numeric Vector per Iteration Matrix\n\nrownums &lt;- 3\ncolnums &lt;- 6\noutput &lt;- matrix(NA,nrow=rownums,ncol=colnums)\n\nfor(i in 1:rownums){\n  for(j in 1:colnums){\n    output[i,j] &lt;- i + j\n  }\n}\noutput\n\n     [,1] [,2] [,3] [,4] [,5] [,6]\n[1,]    2    3    4    5    6    7\n[2,]    3    4    5    6    7    8\n[3,]    4    5    6    7    8    9"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#aside-ifelse-statements",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#aside-ifelse-statements",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Aside: If/Else Statements",
+    "text": "Aside: If/Else Statements\nTo test a logical statement and then conditionally execute a set of actions, use if() and else. The structure is:\n\nif(CONDITION){\n  SOME CALCULATION\n} else{\n  A DIFFERENT CALCULATION\n}\n\nWarning! else needs to be on same line as the closing brace } of previous if()."
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#ifelse-simple-example",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#ifelse-simple-example",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "If/Else Simple Example",
+    "text": "If/Else Simple Example\n\nif(8  &lt; 10){\n  print(\"Less than 10!\")\n}else{\n  print(\"Not less than 10!\")\n}\n\n[1] \"Less than 10!\""
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#more-complex-ifelse",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#more-complex-ifelse",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "More Complex If/Else",
+    "text": "More Complex If/Else\nWe can nest together multiple if/elses! if we wish:\n\ni &lt;- 13\nif(i &lt;= 10) { \n  print(\"i is less than or equal to 10!\")\n} else if(i &lt;= 14) {\n  print(\"i is greater than 10, less than or equal to 14\")\n} else {\n  print(\"i is greater than or equal to 15\")\n}\n\n[1] \"i is greater than 10, less than or equal to 14\""
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#loops-with-ifelse-statements",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#loops-with-ifelse-statements",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Loops with If/Else Statements",
+    "text": "Loops with If/Else Statements\nSuppose we want to take the numbers between 1 and 5, and divide the evens by 2 and multiply the odds by 2. We could do that using a loop with if/else statements!\n\nfor(i in 1:5){\n  if(i %% 2 == 0){ #check for even numbers\n    print(i / 2)\n  }else{\n    print(i * 2)\n  }\n}\n\n[1] 2\n[1] 1\n[1] 6\n[1] 2\n[1] 10"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#handling-special-cases",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#handling-special-cases",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Handling Special Cases",
+    "text": "Handling Special Cases\nAside from the previous toy example, if() statements are useful when you have to handle special cases.\nif() statements can be used to make a loop ignore or fix problematic cases.\nThey are also useful for producing error messages, by generating a message if an input value is not what is expected."
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#while",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#while",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "while()",
+    "text": "while()\nA lesser-used looping structure is the while() loop.\nRather than iterating over a predefined vector, the loop keeps going until some condition is no longer true.\n\nHere is the structure:\n\nwhile(COND IS MET){\n  RUN CODE\n}\n\nIf you’re not careful, the while loop will run forever!!"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#simple-while-loop-example",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#simple-while-loop-example",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Simple while() loop example:",
+    "text": "Simple while() loop example:\n\nx &lt;- 0 \nwhile(x &lt; 3){\n  x &lt;- x + 1\n  print(x)\n}\n\n[1] 1\n[1] 2\n[1] 3\n\n\nWhat happened in each iteration?"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#these-do-the-same-thing-1",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#these-do-the-same-thing-1",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "These Do the Same Thing",
+    "text": "These Do the Same Thing\n\n\n\nx &lt;- 0 \nwhile(x &lt; 3){\n  x &lt;- x + 1\n  print(x)\n}\n\n[1] 1\n[1] 2\n[1] 3\n\n\n\n\nx &lt;- 0\nx &lt;- x+1\nprint(x)\nx &lt;- x+1\nprint(x)\nx &lt;- x+1\nprint(x)\n\n[1] 1\n[1] 2\n[1] 3"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#more-complex-example",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#more-complex-example",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "More Complex Example",
+    "text": "More Complex Example\nLet’s see how many times we need to flip a coin to get 4 heads:\n\nnum_heads &lt;- 0\nnum_flips &lt;- 0\n\nwhile(num_heads &lt; 4) {\n  # simulating a coin flip\n  coin_flip &lt;- rbinom(n = 1, size = 1, prob = 0.5) \n\n  # keep track of heads\n  if (coin_flip == 1) { \n    num_heads &lt;- num_heads + 1 \n  }\n  \n  # update number of coin flips\n  num_flips &lt;- num_flips + 1 \n}\n\nnum_flips # follows negative binomial distribution\n\n[1] 10"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#summary",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Summary",
+    "text": "Summary\n\nWhy Loops?\n\n\nTo make our lives easier!\n\n\n\nfor() loops:\n\n\nFor iterating over a fixed number of items\n\n\n\nwhile() loops:\n\n\nFor iterating until some condition is met\n\nLet’s take a 10 minute break, then return for some activities!"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-1",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-1",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Activity 1",
+    "text": "Activity 1\n\nCreate a for loop to calculate the maximum value of each variable in the swiss data. What are the maximum values of each variable?\nUsing your previous answer as a starting point, create a nested for loop to calculate the maximum value for each variable in the swiss data (outer loop), and then divide that maximum by 1, 2, and 4 (inner loop). Print the output after each step.\nUsing your previous answer as a starting point, write a loop that does the same calculations as before but stores the values in a matrix with ncol(swiss) columns and 3 rows. How will you “pre-allocate” space for the results?"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-1-answers",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-1-answers",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Activity 1: Answers",
+    "text": "Activity 1: Answers\nQuestion 1:\n\nfor(i in 1:ncol(swiss)) {\n  curr_max &lt;- max(swiss[,i])\n  print(curr_max)\n}\n\n[1] 92.5\n[1] 89.7\n[1] 37\n[1] 53\n[1] 100\n[1] 26.6"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-1-answers-1",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-1-answers-1",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Activity 1: Answers",
+    "text": "Activity 1: Answers\nQuestion 2:\n\nfor(i in 1:ncol(swiss)) {\n  curr_max &lt;- max(swiss[,i])\n  for(j in c(1,2,4)){\n    print(curr_max/j)\n  }\n}\n\n[1] 92.5\n[1] 46.2\n[1] 23.1\n[1] 89.7\n[1] 44.9\n[1] 22.4\n[1] 37\n[1] 18.5\n[1] 9.25\n[1] 53\n[1] 26.5\n[1] 13.2\n[1] 100\n[1] 50\n[1] 25\n[1] 26.6\n[1] 13.3\n[1] 6.65"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-1-answers-2",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-1-answers-2",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Activity 1: Answers",
+    "text": "Activity 1: Answers\nQuestion 3:\n\nresults &lt;- matrix(NA, ncol=ncol(swiss),nrow=3)\nfor(i in 1:ncol(swiss)) {\n  curr_max &lt;- max(swiss[,i])\n  for(j in 1:3){\n    curr_divisor &lt;- c(1,2,4)[j]\n    results[j,i] &lt;- curr_max/curr_divisor\n  }\n}\nresults\n\n     [,1] [,2]  [,3] [,4] [,5]  [,6]\n[1,] 92.5 89.7 37.00 53.0  100 26.60\n[2,] 46.2 44.9 18.50 26.5   50 13.30\n[3,] 23.1 22.4  9.25 13.2   25  6.65"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-2",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-2",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Activity 2",
+    "text": "Activity 2\n1. Consider the vector vec &lt;- c(1,2,NA,3,NA). Write a for loop that includes an if/else function so that for each value x in vec, we print “Missing!” if x is NA, and x^3 otherwise.\n2. What will happen if I run the following loop:\n\nx &lt;- 1\nwhile(x &lt; 10){\n  print(x + 1)\n}\n\n3. Write a while() loop that starts with x &lt;- 1 and doubles x each iteration, while x &lt; 100. Print x after each iteration."
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-2-answers",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-2-answers",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Activity 2: Answers",
+    "text": "Activity 2: Answers\n1.\n\nfor(x in c(1,2,NA,3,NA)){\n  if(is.na(x)){\n    print(\"Missing!\")\n  } else{\n    print(x^3)\n  }\n}\n\n[1] 1\n[1] 8\n[1] \"Missing!\"\n[1] 27\n[1] \"Missing!\""
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-2-answers-1",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-2-answers-1",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Activity 2: Answers",
+    "text": "Activity 2: Answers\n2. What will happen if I run the following loop:\n\nx &lt;- 1\nwhile(x &lt; 10){\n  print(x + 1)\n}\n\n\n\nAnswer: The while loop will run forever printing 1, since we are not updating x!!"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-2-answers-2",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#activity-2-answers-2",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Activity 2: Answers",
+    "text": "Activity 2: Answers\n3. Write a while() loop that starts with x &lt;- 1 and doubles x each iteration, while x &lt; 100. Print x after each iteration.\n\nx &lt;- 1\nwhile(x &lt;100){\n  x &lt;- x * 2\n  print(x)\n}\n\n[1] 2\n[1] 4\n[1] 8\n[1] 16\n[1] 32\n[1] 64\n[1] 128\n\n\nWhy does x reach 128?!"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#homework",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#homework",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Homework",
+    "text": "Homework\nHW 6 will be posted on the website shortly! Remember that it is a continuation of HW 5!"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#due-dates",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#due-dates",
+    "title": "CSSS 508 • Lecture 6",
+    "section": "Due Dates",
+    "text": "Due Dates\n\n\nSection AA:\n\nHomework #4 due Tuesday, November 14th (before lecture)\nPeer grading due Sunday, November 19th (by 4:30pm)\n\n\n\n\n\n\nSection AB:\n\nHomework #4 due Thursday, November 16th (before lab)\nPeer grading due Tuesday, November 21th (before lecture)"
   }
 ]
