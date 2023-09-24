@@ -523,7 +523,7 @@ Victoria Sass
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">billboard_2000_raw</span>, path <span class="op">=</span> <span class="st">"billboard_data.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This saved the data we pulled off the web in a file called <code>billboard_data.csv</code> in my working directory.</p>
-</section></section><section><section id="reshaping-data" class="title-slide slide level1 center" data-background-image="images/tidyr.svg" data-background-size="contain" data-background-opacity="0.25" data-background-position="right"><h1>Reshaping Data</h1>
+</section></section><section><section id="reshaping-data" class="title-slide slide level1 center" data-background-image="images/tidyr.png" data-background-size="contain" data-background-opacity="0.25" data-background-position="center"><h1>Reshaping Data</h1>
 
 </section><section id="initial-spot-checks" class="slide level2"><h2>Initial Spot Checks</h2>
 <p>First things to check after loading new data:</p>
@@ -842,7 +842,7 @@ Victoria Sass
 </div>
 <p>More sophisticated tools for character strings will be covered later in this course!</p>
 </div>
-</section></section><section><section id="dates-and-times" class="title-slide slide level1 center" data-background-image="images/lubridate.svg" data-background-size="contain" data-background-opacity="0.25" data-background-position="right"><h1>Dates and Times</h1>
+</section></section><section><section id="dates-and-times" class="title-slide slide level1 center" data-background-image="images/lubridate.png" data-background-size="contain" data-background-opacity="0.25" data-background-position="center"><h1>Dates and Times</h1>
 
 </section><section id="lubridate" class="slide level2"><h2><code>lubridate</code></h2>
 <p>The package <code>lubridate</code> (part of the tidyverse!) has a <em>very large</em> number of functions you can use!</p>
@@ -919,7 +919,7 @@ Victoria Sass
 <pre><code>[1] TRUE TRUE TRUE TRUE TRUE</code></pre>
 </div>
 </div>
-</section></section><section id="summary" class="title-slide slide level1 center"><h1>Summary</h1>
+</section><section id="summary" class="slide level2"><h2>Summary</h2>
 <ul>
 <li>Importing/Exporting Data: <code>readr</code>
 </li>
@@ -929,7 +929,7 @@ Victoria Sass
 </li>
 </ul>
 <p><em>Let’s take a 10 minute break, then reconvene for an activity!</em></p>
-</section><section><section id="activity" class="title-slide slide level1 center"><h1>Activity!</h1>
+</section><section id="activity" class="slide level2"><h2>Activity!</h2>
 <p>In groups of 2-3, you will use the <a href="https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture5/data/billboard.csv">Billboard data</a> to investigate a question:</p>
 <ol type="1">
 <li>
@@ -957,10 +957,19 @@ Victoria Sass
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`Weeks at #1` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">rank</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>           `Peak Rank`   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="va">rank</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>                                  <span class="st">"Hit #1"</span>,</span>
-<span>                                  <span class="st">"Didn't #1"</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                                  <span class="st">"Didn't hit #1"</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note: <code>any(min_rank==1)</code> checks to see if <em>any</em> value of <code>rank</code> is equal to one for the given <code>artist</code> and <code>track</code></p>
-</section><section id="example-figure" class="slide level2"><h2>Example: Figure</h2>
+
+<aside><div>
+<p>Note: <code>any(rank==1)</code> checks to see if <em>any</em> value of <code>rank</code> is equal to one for the given <code>artist</code> and <code>track</code></p>
+</div></aside></section><section id="example-visualization" class="slide level2"><h2>Example Visualization</h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby">
+<li><a data-tabby-default="" href="#tabset-1-1">Code</a></li>
+<li><a href="#tabset-1-2">Charts of 2000: Beauty!</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-1-1">
 <div class="cell">
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jrnold/ggthemes">ggthemes</a></span><span class="op">)</span></span>
@@ -976,10 +985,21 @@ Victoria Sass
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.90</span>, <span class="fl">0.75</span><span class="op">)</span>,</span>
 <span>        legend.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"transparent"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="charts-of-2000-beauty" class="slide level2"><h2>Charts of 2000: Beauty!</h2>
+</div>
+<div id="tabset-1-2">
+<div class="cell">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">billboard_trajectories</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-18-1.svg"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
 
-<img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-18-1.svg" class="r-stretch"><p>Songs that reach #1 on the Billboard charts appear to last &gt;20 weeks on the charts, while other songs very rarely make it past that point.</p>
-</section></section><section><section id="homework-5" class="title-slide slide level1 center"><h1>Homework 5</h1>
+<aside><div>
+<p>Songs that reach #1 on the Billboard charts appear to last &gt;20 weeks on the charts, while other songs very rarely make it past that point.</p>
+</div></aside></section></section><section><section id="homework-5" class="title-slide slide level1 center"><h1>Homework 5</h1>
 <p>*On <a href="https://vsass.github.io/CSSS508/Homework/HW5/homework5.html">Course Website!*</a></p>
 </section><section id="due-dates" class="slide level2"><h2>Due Dates</h2>
 <ul>

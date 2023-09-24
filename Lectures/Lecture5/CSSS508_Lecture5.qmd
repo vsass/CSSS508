@@ -167,7 +167,7 @@ write_csv(billboard_2000_raw, path = "billboard_data.csv")
 
 This saved the data we pulled off the web in a file called `billboard_data.csv` in my working directory.
 
-# Reshaping Data {background-image="images/tidyr.svg" background-size="contain" background-opacity="0.25" background-position="right"}
+# Reshaping Data {background-image="images/tidyr.png" background-size="contain" background-opacity="0.25" background-position="center"}
 
 ## Initial Spot Checks
 
@@ -376,7 +376,7 @@ summary(billboard_2000$week)
 
 More sophisticated tools for character strings will be covered later in this course!
 
-# Dates and Times {background-image="images/lubridate.svg" background-size="contain" background-opacity="0.25" background-position="right"}
+# Dates and Times {background-image="images/lubridate.png" background-size="contain" background-opacity="0.25" background-position="center"}
 
 ## `lubridate`
 
@@ -424,7 +424,7 @@ leap_year(billboard_2000$date.entered) %>%
    head(5)
 ```
 
-# Summary
+## Summary
 
 * Importing/Exporting Data: `readr`
 * Reshaping data: `tidyr`
@@ -432,7 +432,7 @@ leap_year(billboard_2000$date.entered) %>%
 
 *Let's take a 10 minute break, then reconvene for an activity!*
 
-# Activity!
+## Activity!
 
 In groups of 2-3, you will use the [Billboard data](https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture5/data/billboard.csv) to investigate a question:
 
@@ -459,12 +459,18 @@ billboard_2000_question <- billboard_2000 %>%
     mutate(`Weeks at #1` = sum(rank == 1),
            `Peak Rank`   = ifelse(any(rank == 1),
                                   "Hit #1",
-                                  "Didn't #1")) 
+                                  "Didn't hit #1")) 
 ```
 
-Note: `any(min_rank==1)` checks to see if *any* value of `rank` is equal to one for the given `artist` and `track`
+::: aside
+Note: `any(rank==1)` checks to see if *any* value of `rank` is equal to one for the given `artist` and `track`
+:::
 
-## Example: Figure
+## Example Visualization
+
+::: {.panel-tabset}
+
+### Code
 
 ```{r}
 library(ggplot2)
@@ -482,15 +488,18 @@ billboard_trajectories <-
         legend.background = element_rect(fill = "transparent"))
 ```
 
-## Charts of 2000: Beauty!
+### Charts of 2000: Beauty!
 
-```{r, cache=FALSE, echo=FALSE, dev="svg", fig.height=4}
-#| fig-height: 4
+```{r}
+#| fig-height: 6
+#| fig-width: 12
 billboard_trajectories
 ```
+:::
 
+::: aside
 Songs that reach #1 on the Billboard charts appear to last >20 weeks on the charts, while other songs very rarely make it past that point.
-
+:::
 # Homework 5
 
 *On [Course Website!*](https://vsass.github.io/CSSS508/Homework/HW5/homework5.html)
