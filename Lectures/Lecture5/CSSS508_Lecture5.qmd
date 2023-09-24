@@ -120,7 +120,7 @@ library(readr)
 Let's import some data about song ranks on the Billboard Hot 100 in 2000:
 
 ```{r}
-billboard_2000_raw <- read_csv(file = "data/billboard.csv")
+billboard_2000_raw <- read_csv(file = "https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture5/data/billboard.csv")
 ```
 
 ## Did It Load?
@@ -128,14 +128,15 @@ billboard_2000_raw <- read_csv(file = "data/billboard.csv")
 ```{r}
 library(dplyr)
 dim(billboard_2000_raw)
-names(billboard_2000_raw) %>% head(20)
+names(billboard_2000_raw) %>% 
+  head(20)
 ```
 
 ## Alternate Solution
 
 Import the data manually!
 
-In the upper right-hand console, select:
+In the upper right-hand pane of RStudio (make sure you're in the Environment tab), select:
 
 `Import Dataset > From Text (readr)`
 
@@ -152,7 +153,9 @@ This makes the process *reproducible!*
 * For Stata, SPSS, and SAS files, use package `haven` (`tidyverse`)
 * For Stata, SPSS, and Minitab, use package `foreign`
 
-You **won't** keep text formatting, color, comments, or merged cells!!
+::: aside
+Note: You **won't** keep text formatting, color, comments, or merged cells!!
+:::
 
 ## Writing Delimited Files
 
@@ -164,9 +167,7 @@ write_csv(billboard_2000_raw, path = "billboard_data.csv")
 
 This saved the data we pulled off the web in a file called `billboard_data.csv` in my working directory.
 
-# Reshaping Data
-
-![](images/tidyr.svg)
+# Reshaping Data {background-image="images/tidyr.svg" background-size="contain" background-opacity="0.25" background-position="right"}
 
 ## Initial Spot Checks
 
@@ -203,6 +204,9 @@ Why do we want tidy data?
 
 ## Slightly "Messy" Data
 
+::::{.columns}
+:::{.column width="60%"}
+
 | **Program**     | **First Year** | **Second Year** |
 |-----------------|-----------:|---------:|
 | Evans School    |     10     |    6    |
@@ -210,7 +214,8 @@ Why do we want tidy data?
 | Public Health   |      2     |    3    |
 | Other           |      5     |    1    |
 
-. . . 
+:::
+:::{.column width="40%"}
 
 * What is an **observation**?
     + A group of students from a program of a given year
@@ -224,8 +229,13 @@ Why do we want tidy data?
     + Program: Evans School, Arts & Sciences, Public Health, Other
     + Year: First, Second -- **in column headings. Bad!**
     + Count: **spread over two columns!**
+:::
+::::
 
 ## Tidy Version
+
+::::{.columns}
+:::{.column width="50%"}
 
 | **Program**     | **Year** | **Count** |
 |-----------------|-----------:|---------:|
@@ -237,14 +247,15 @@ Why do we want tidy data?
 | Public Health   |     Second   |    3    |
 | Other           |     First |    5    |
 | Other           |     Second   |    1    |
-
-. . . 
-
+:::
+:::{.column width="50%"}
 * Each variable is a column.
 
 * Each observation is a row.
 
 * Each cell has a single value.
+:::
+::::
 
 ## Billboard is Just Ugly-Messy
 
@@ -254,7 +265,9 @@ billboard_2000_raw %>%
   head(10)
 ```
 
+::: aside
 Week columns continue up to `wk76`!
+:::
 
 ## Billboard
 
@@ -275,13 +288,13 @@ The `tidyr` package provides functions to tidy up data.
 
 Key functions:
 
-* **`pivot_longer()`**: takes a set of columns and pivots them down to make two new columns (which you can name yourself): 
+* **`pivot_longer()`**: takes a set of columns and pivots them down ("longer") to make two new columns (which you can name yourself): 
     * A `name` column that stores the original column names
     * A `value` with the values in those original columns
 
 . . . 
 
-* **`pivot_wider()`**: inverts `pivot_longer()` by taking two columns and pivoting them up into multiple columns
+* **`pivot_wider()`**: inverts `pivot_longer()` by taking two columns and pivoting them up and across ("wider") into multiple columns
 
 . . . 
 
@@ -297,14 +310,13 @@ This function usually takes three arguments:
 
 ## Example of `pivot_longer()`
 
-
 ```{r}
-#| code-line-numbers: "3-5"
+#| code-line-numbers: "|3-5"
 library(tidyr)
 billboard_2000 <- billboard_2000_raw %>%
-  pivot_longer(cols=wk1:wk76,#<<
-               names_to ="week", #<<
-               values_to = "rank") #<<
+  pivot_longer(cols=wk1:wk76,
+               names_to ="week",
+               values_to = "rank")
 billboard_2000 %>% 
   head(5)
 ```
@@ -322,13 +334,14 @@ We don't want to keep the `r sum(is.na(billboard_2000$rank))` rows with missing 
 ## Pivoting Better: `values_drop_na`
 
 Adding the argument `values_drop_na = TRUE` to `pivot_longer()` will remove rows with missing ranks.
+
 ```{r}
-#| code-line-numbers: "5"
+#| code-line-numbers: "|5"
 billboard_2000 <- billboard_2000_raw %>%
   pivot_longer(cols = wk1:wk76, 
                names_to = "week", 
                values_to = "rank", 
-               values_drop_na = TRUE) #<<
+               values_drop_na = TRUE)
 summary(billboard_2000$rank)
 ```
 
@@ -344,7 +357,7 @@ And way fewer rows!
 
 ## `parse_number()`
 
-The week column is character, but should be numeric.
+The week column is of they type character, but it should be numeric.
 
 ```{r}
 head(billboard_2000$week)
@@ -355,17 +368,15 @@ head(billboard_2000$week)
 `parse_number()` grabs just the numeric information from a character string:
 
 ```{r}
-#| code-line-numbers: "2"
+#| code-line-numbers: "|2"
 billboard_2000 <- billboard_2000 %>%
-    mutate(week = parse_number(week)) #<<
+    mutate(week = parse_number(week))
 summary(billboard_2000$week)
 ```
 
 More sophisticated tools for character strings will be covered later in this course!
 
-# Dates and Times
-
-![](images/lubridate.svg)
+# Dates and Times {background-image="images/lubridate.svg" background-size="contain" background-opacity="0.25" background-position="right"}
 
 ## `lubridate`
 
@@ -384,7 +395,9 @@ There's too much to cover all of it, but I'll run through a few examples.
 ## Dates in `billboard_2000` 
 
 ```{r}
-billboard_2000 %>% select(date.entered) %>% head(10)
+billboard_2000 %>% 
+  select(date.entered) %>% 
+  head(10)
 ```
 
 ## Extracting Year, Month, or Day
@@ -421,17 +434,16 @@ leap_year(billboard_2000$date.entered) %>%
 
 # Activity!
 
-In groups of 2-3, you will use the Billboard data to investigate a question:
+In groups of 2-3, you will use the [Billboard data](https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture5/data/billboard.csv) to investigate a question:
 
 1. Write down a question of interest that could be studied with this data
-  + *Which/how many artists had #1 hits?*
-  + *How does rank for each song change over time?*
-  + *Is there a relationship between highest rank and length of song?*
-  
+     * *Which/how many artists had #1 hits?*
+     * *How does rank for each song change over time?*
+     * *Is there a relationship between highest rank and length of song?*
 2. Make the Billboard data *tidy*, perhaps using the code from this lecture.
 
 3. Perform additional steps (if necessary) to help answer your question:
-  + Perhaps using `filter`, `select`, `group_by`, `mutate`, `summarize`, etc.
+    * Perhaps using `filter`, `select`, `group_by`, `mutate`, `summarize`, etc.
 
 4. Make a plot or table that answers your question and write down your answer in a sentence.
 
@@ -440,7 +452,6 @@ In groups of 2-3, you will use the Billboard data to investigate a question:
 ## Example: Question
 
 **Question:** Do songs that hit #1 have a different trajectory than those that don't?
-
 
 ```{r}
 billboard_2000_question <- billboard_2000 %>%
@@ -495,3 +506,5 @@ Songs that reach #1 on the Billboard charts appear to last >20 weeks on the char
 * **Section AB:** 
   + Homework #4 due Thursday, November 9th (before lab)
   + Peer grading due Tuesday, November 14th (before lecture)
+  
+  
