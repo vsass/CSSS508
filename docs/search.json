@@ -2154,5 +2154,173 @@
     "title": "CSSS 508 • Lecture 6",
     "section": "Due Dates",
     "text": "Due Dates\n\n\nSection AA:\n\nHomework #4 due Tuesday, November 14th (before lecture)\nPeer grading due Sunday, November 19th (by 4:30pm)\n\n\n\n\n\n\nSection AB:\n\nHomework #4 due Thursday, November 16th (before lab)\nPeer grading due Tuesday, November 21th (before lecture)"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#why-functions",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#why-functions",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Why Functions?",
+    "text": "Why Functions?\nR (as well as mathematics in general) is full of functions!\n\nWe use functions to:\n\nCompute summary statistics (mean(), sd(), min())\nFit models to data (lm(Fertility~Agriculture,data=swiss))\nLoad data (read_csv())\nCreate ggplots (ggplot())\nAnd so much more!!"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#examples-of-existing-functions",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#examples-of-existing-functions",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Examples of Existing Functions",
+    "text": "Examples of Existing Functions\n\n\n\nmean():\n\nInput: a vector\nOutput: a single number\n\n\n\ndplyr::filter():\n\nInput: a data frame, logical conditions\nOutput: a data frame with rows removed using those conditions\n\n\n\nreadr::read_csv():\n\nInput: a file path, optionally variable names or types\nOutput: a data frame containing info read in from file\n\n\n\n\n\nEach function requires inputs, and returns outputs"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#why-write-your-own-functions",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#why-write-your-own-functions",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Why Write Your Own Functions?",
+    "text": "Why Write Your Own Functions?\nFunctions encapsulate actions you might perform often, such as:\n\nGiven a vector, compute some special summary stats\nGiven a vector and definition of “invalid” values, replace with NA\n\nDefining a new logical operator\n\n\nAdvanced function applications (not covered in this class):\n\nParallel processing\nGenerating other functions\nMaking custom packages containing your functions"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#anatomy-of-a-function",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#anatomy-of-a-function",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Anatomy of a Function",
+    "text": "Anatomy of a Function\n\nNAME &lt;- function(ARGUMENT1, ARGUMENT2=DEFAULT){\n  BODY\n  return(OUTPUT)\n}\n\n\n\n\nName: What you call the function so you can use it later\n\nArguments (aka inputs, parameters): things the user passes to the function that affect how it works\n\ne.g. ARGUMENT1, ARGUMENT2\n\n\nARGUMENT2=DEFAULT is example of setting a default value\nIn this example, ARGUMENT1, ARGUMENT2 values won’t exist outside of the function\n\n\n\nBody: The actual operations inside the function.\n\nOutput: The object inside return(). Could be anything (or nothing!)\n\nIf unspecified, will be the last thing calculated"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#example-1-doubling-a-number",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#example-1-doubling-a-number",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Example 1: Doubling A Number",
+    "text": "Example 1: Doubling A Number\n\ndouble_x &lt;- function(x){\n  double_x &lt;- x * 2\n  return(double_x)\n}\n\n\nLet’s run it!\n\ndouble_x(5)\n\n[1] 10\n\ndouble_x(NA)\n\n[1] NA\n\ndouble_x(1:2)\n\n[1] 2 4"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#example-2-extract-firstlast",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#example-2-extract-firstlast",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Example 2: Extract First/Last",
+    "text": "Example 2: Extract First/Last\n\nfirst_and_last &lt;- function(x) {\n    first &lt;- x[1]\n    last  &lt;- x[length(x)]\n    return(c(\"first\" = first, \"last\" = last))\n}\n\n\nTest it out:\n\nfirst_and_last(c(4, 3, 1, 8))\n\nfirst  last \n    4     8"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#example-2-testing-first_and_last",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#example-2-testing-first_and_last",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Example 2: Testing first_and_last\n",
+    "text": "Example 2: Testing first_and_last\n\nWhat if I give first_and_last() a vector of length 1?\n\nfirst_and_last(7)\n\nfirst  last \n    7     7 \n\n\n\nOf length 0?\n\nfirst_and_last(numeric(0))\n\nfirst \n   NA \n\n\n\n\nMaybe we want it to be a little smarter."
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#example-3-checking-inputs",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#example-3-checking-inputs",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Example 3: Checking Inputs",
+    "text": "Example 3: Checking Inputs\nLet’s make sure we get an error message when the vector is too small:\n\nsmarter_first_and_last &lt;- function(x) {\n    if(length(x) &lt; 2){\n      stop(\"Input is not long enough!\")\n    } else{\n      first &lt;- x[1]\n      last  &lt;- x[length(x)]\n      return(c(\"first\" = first, \"last\" = last))    \n    }\n}\n\n\n\nstop() ceases running the function and prints the text inside as an error message."
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#example-3-testing-smarter-function",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#example-3-testing-smarter-function",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Example 3: Testing Smarter Function",
+    "text": "Example 3: Testing Smarter Function\n\nsmarter_first_and_last(NA)\n\nError in smarter_first_and_last(NA): Input is not long enough!\n\nsmarter_first_and_last(c(4, 3, 1, 8))\n\nfirst  last \n    4     8"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#cracking-open-functions",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#cracking-open-functions",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Cracking Open Functions",
+    "text": "Cracking Open Functions\nIf you type a function name without any parentheses or arguments, you can see its contents:\n\nsmarter_first_and_last\n\nfunction(x) {\n    if(length(x) &lt; 2){\n      stop(\"Input is not long enough!\")\n    } else{\n      first &lt;- x[1]\n      last  &lt;- x[length(x)]\n      return(c(\"first\" = first, \"last\" = last))    \n    }\n}\n&lt;bytecode: 0x7fa5d82c4438&gt;"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#applying-functions-multiple-times",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#applying-functions-multiple-times",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Applying Functions Multiple Times?",
+    "text": "Applying Functions Multiple Times?\nLast week, we saw an example where we wanted to take the mean of each column in the swiss data:\n\nfor(col_index in 1:ncol(swiss)){\n  mean_swiss_col &lt;- mean(swiss[,col_index])\n  names_swiss_col &lt;- names(swiss)[col_index]\n  print(c(names_swiss_col,round(mean_swiss_col,3)))\n}\n\n[1] \"Fertility\" \"70.143\"   \n[1] \"Agriculture\" \"50.66\"      \n[1] \"Examination\" \"16.489\"     \n[1] \"Education\" \"10.979\"   \n[1] \"Catholic\" \"41.144\"  \n[1] \"Infant.Mortality\" \"19.943\"          \n\n\nIsn’t this kind of complex?!"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#apply-dont-loop",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#apply-dont-loop",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "\napply(), don’t loop!",
+    "text": "apply(), don’t loop!\nWriting loops can be challenging and prone to bugs!!\n\nThe apply() can solve this issue:\n\n\napply a function to values in each row or column of a matrix\nDoesn’t require preallocation\nCan take built-in functions or user-created functions."
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#structure-of-apply",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#structure-of-apply",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Structure of apply()\n",
+    "text": "Structure of apply()\n\napply() takes 3 arguments:\n\nData (a matrix or data frame)\nMargin (1 applies function to each row, 2 applies to each column)\nFunction\n\n\napply(DATA, MARGIN, FUNCTION)\n\n\nFor example,\n\napply(swiss, 2, mean)\n\n       Fertility      Agriculture      Examination        Education \n        70.14255         50.65957         16.48936         10.97872 \n        Catholic Infant.Mortality \n        41.14383         19.94255"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#example-1",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#example-1",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Example 1",
+    "text": "Example 1\n\nrow_max &lt;- apply(swiss,1,max) # maximum in each row\nhead(row_max, 20)\n\n  Courtelary     Delemont Franches-Mnt      Moutier   Neuveville   Porrentruy \n       80.20        84.84        93.40        85.80        76.90        90.57 \n       Broye        Glane      Gruyere       Sarine      Veveyse        Aigle \n       92.85        97.16        97.67        91.38        98.61        64.10 \n     Aubonne     Avenches     Cossonay    Echallens     Grandson     Lausanne \n       67.50        68.90        69.30        72.60        71.70        55.70 \n   La Vallee       Lavaux \n       54.30        73.00"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#example-2",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#example-2",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Example 2",
+    "text": "Example 2\n\napply(swiss, 2, summary) # summary of each column\n\n        Fertility Agriculture Examination Education  Catholic Infant.Mortality\nMin.     35.00000     1.20000     3.00000   1.00000   2.15000         10.80000\n1st Qu.  64.70000    35.90000    12.00000   6.00000   5.19500         18.15000\nMedian   70.40000    54.10000    16.00000   8.00000  15.14000         20.00000\nMean     70.14255    50.65957    16.48936  10.97872  41.14383         19.94255\n3rd Qu.  78.45000    67.65000    22.00000  12.00000  93.12500         21.70000\nMax.     92.50000    89.70000    37.00000  53.00000 100.00000         26.60000\n\n\n**Note:* Matrix output!"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#example-3-user-created-function",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#example-3-user-created-function",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Example 3: User-Created Function",
+    "text": "Example 3: User-Created Function\n\nscores &lt;- matrix(1:21, nrow=3)\nprint(scores)\n\n     [,1] [,2] [,3] [,4] [,5] [,6] [,7]\n[1,]    1    4    7   10   13   16   19\n[2,]    2    5    8   11   14   17   20\n[3,]    3    6    9   12   15   18   21\n\nmy_function &lt;- function(x){ mean(x+10, na.rm = T) }\napply(scores, 1, my_function)\n\n[1] 20 21 22"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#activity-writing-a-function",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#activity-writing-a-function",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Activity: Writing A Function",
+    "text": "Activity: Writing A Function\nIn Olympic diving, a panel of 7 judges provide scores. After removing the worst and best scores, the mean of the remaining scores is given to the diver. We’ll write code to calculate this score!\n\nSuppose I get you a vector, x, of length 7. Write code that will sort the vector from least to greatest, then keep the 2nd-6th elements1.\n\nWrite a function to calculate a diver’s score:\n\nInput: Vector of length 7\nChecks: Check that the vector has length 7 (if not, stop!)\nOutput: Mean score after removing the lowest and greatest scores.\n\n\nCalculate the diver’s score given x &lt;- c(2, 1:5, 3)\nHINT: Use the sort() function and square brackets [ ] for subsetting"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#activity-solution",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#activity-solution",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Activity: Solution",
+    "text": "Activity: Solution\n\nSort and extract elements 2 through 6:\n\n\nAnswer: Given vector x, use sort(x)[2:6]\n\n\n\nFunction\n\n\ndivers_score &lt;- function(x){\n  if(length(x) != 7){\n    stop(\"x is not of length 7!\")\n  } else{\n    x_nofirst_nolast &lt;- sort(x)[2:6]\n    return(mean(x_nofirst_nolast))\n  }\n}\n\n\n\nCalculate the diver’s score given x &lt;- c(2, 1:5, 3)\n\n\n\ndivers_score(x = c(2,1:5,3) )\n\n[1] 2.8"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#activity",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#activity",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Activity",
+    "text": "Activity\nThese are homework questions!!\n\nPreallocate a matrix of NAs with 3 rows and 8 columns, called double_matrix. Manually specify the first column equal to the values 1, 2, and 3. Using a nested loop, fill in the matrix, row by row, such that each value is double that to its left.\nWrite an apply() function to take the median value of each column in the cars dataset\nUsing ggplot, make a scatterplot of the speed and dist variables in cars. Then, add an appropriate horizontal and vertical line symbolizing the median value of each variable1.\nHint: Using the layers geom_vline(xintercept = ) and geom_hline(yintercept = )"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#answers",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#answers",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Answers",
+    "text": "Answers\n\nPreallocate a matrix of NAs with 3 rows and 8 columns, called double_matrix. Manually specify the first column equal to the values 1, 2, and 3. Using a nested loop, fill in the matrix, row by row, such that each value is double that to its left.\n\n\ndouble_matrix &lt;- matrix(NA, nrow = 3,ncol = 8)\ndouble_matrix[ , 1] &lt;- 1:3\nfor(row in 1:3){\n  for(col in 2:8){\n    double_matrix[row, col] &lt;- double_matrix[row, col-1] * 2\n  }\n}\ndouble_matrix\n\n     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]\n[1,]    1    2    4    8   16   32   64  128\n[2,]    2    4    8   16   32   64  128  256\n[3,]    3    6   12   24   48   96  192  384"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#answers-1",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#answers-1",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Answers",
+    "text": "Answers\n2. Write an apply() function to take the median value of each column in the cars dataset\n\nmedian_cars &lt;- apply(cars, 2, median)\nmedian_cars\n\nspeed  dist \n   15    36"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#my-answers",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#my-answers",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "My Answers",
+    "text": "My Answers\n3. Make a ggplot\n\n\nCode\nPlot\n\n\n\n\nlibrary(ggplot2)\nggplot(cars, aes(speed, dist)) + \n  geom_point() +\n  geom_vline(xintercept = median_cars[1]) +\n  geom_hline(yintercept = median_cars[2])"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#homework",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#homework",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Homework",
+    "text": "Homework\nTime to work on Homework 7!"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#due-dates",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#due-dates",
+    "title": "CSSS 508 • Lecture 7",
+    "section": "Due Dates",
+    "text": "Due Dates\n\n\nSection AA:\n\nHomework #4 due Tuesday, November 21st (before lecture)\nPeer grading due Sunday, November 26th (by 4:30pm)\n\n\n\n\n\n\nSection AB:\n\nHomework #4 due Thursday, November 23rd (before lab)\nPeer grading due Tuesday, November 28th (before lecture)"
   }
 ]
