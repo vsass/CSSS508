@@ -1,4 +1,104 @@
+title: "CSSS 508 • Lecture 10"
+subtitle: "Workflow & Best Practices"
+author: "Victoria Sass"
+date: "November 14, 2023"
+date-format: long
+highlight-style:  vim-dark #, oblivion, radical, vim-dark, espresso, zenburn, kate, monochrome, breezedark, haddock
+footnotes-hover: true
+reference-location: margin
+execute: 
+  echo: true
+  message: false
+  warning: false
+  fig-format: "svg"
+format: 
+  revealjs:
+    theme: lecture_styles.scss
+    slide-number: true
+    code-link: true
+    chalkboard: true
+    incremental: false 
+    smaller: true
+    preview-links: true
+    code-line-numbers: false
+    #logo: "../../images/csss-white.png" # need to add css for size <https://stackoverflow.com/questions/74083521/how-to-increase-size-logo-in-quarto-reveal-js-presentation>
 ---
-title: "Syllabus and Introduction to R, RStudio, and Quarto"
-format: revealjs
+
+```{r}
+#| echo: false
+#| cache: false
+require(downlit)
+require(xml2)
+require(tidyverse)
+```
+
+# Roadmap
+
 ---
+
+<br>
+
+Last time, we learned about,
+
+*
+
+. . . 
+
+Today, we will cover,
+
+* 
+
+# Code Style
+
+## Naming Variables 
+
+It's good practice to name variables using only lowercase letters, numbers, and `_` (to separate words). 
+
+. . . 
+
+Remember to give them descriptive names, even if that means they're longer. 
+
+. . . 
+
+If you have many related variables, try and be consistent with your naming convention. 
+* A common prefix is preferable to a common suffix due to RStudio's autocomplete feature. 
+
+```{r}
+#| eval: false
+# Code goal: 
+short_flights <- flights |> 
+  filter(air_time < 60)
+
+# Code foul: 
+SHORTFLIGHTS <- flights |> 
+  filter(air_time < 60)
+```
+
+## Spacing 
+
+For readability you'll want to put spaces around all mathematical operators^[except for ^] (i.e. `+`, `-`, `==`, `<`, etc.) as well as the assignment operator (`<-`). 
+
+```{r}
+#| eval: false
+# Code goals: 
+z <- (a + b)^2 / d
+mean(x, na.rm = TRUE)
+
+# Code foul: 
+z<-( a + b ) ^ 2/d
+mean (x ,na.rm=TRUE)
+```
+
+. . . 
+
+To make code easier to skim quickly it's alright to add extra space for better alignment. 
+
+```{r}
+#| eval: false
+flights |> 
+  mutate(
+    speed      = distance / air_time,
+    dep_hour   = dep_time %/% 100,
+    dep_minute = dep_time %%  100
+  )
+```

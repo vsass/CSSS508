@@ -440,21 +440,63 @@ clicking *Run* or hitting `Ctrl+Enter` or `⌘+Enter`.
 sqrt(400)
 ```
 
-## Functions and Help
+## Functions
 
 `sqrt()` is an example of a **function** in R.
 
-If we didn't have a good guess as to what `sqrt()` will do, we can type `?sqrt` in the console
-and look at the **Help** panel on the right.
 
-```{r Help, eval=FALSE}
+
+**Arguments** are the *inputs* to a function^[Functions can have a wide range of arguments and some are *required* for the function to run, while others remain optional. You can see from each functions' help page which are not required because they will have an `=` with some default value pre-selected. If there is no `=` it is up to the user to define that value and it's therefore a required specification. ]. In this case, the only argument to `sqrt()`
+is `x` which can be a number or a vector of numbers.
+
+<br>
+
+The basic template of a function is
+
+```{r functions}
+#| eval: false
+function_name(argument1, argument2 = value2, argument3 = value3...)
+```
+
+## Help
+
+:::: {.columns}
+::: {.column width="50%"}
+
+If we didn't have a good guess as to what `sqrt()` will do, we can type `?sqrt` in the console and look at the **Help** panel on the right.
+
+```{r Help}
+#| eval: false
 ?sqrt
 ```
 
-**Arguments** are the *inputs* to a function. In this case, the only argument to `sqrt()`
-is `x` which can be a number or a vector of numbers.
+<br>
 
-Help files provide documentation on how to use functions and what functions produce.
+If you're trying to look up the help page for a function and can't remember its name you can search by a keyword and you will get a list of help pages containing said keyword. 
+
+```{r Search help}
+#| eval: false
+??exponential
+```
+
+:::
+::: {.column width="50%"}
+
+![](images/help_page.png)
+:::
+::::
+
+## Help
+
+Help files provide documentation on how to use functions and what functions produce. They will generally consist of the following sections:
+
+* **Description** - *What does it do?*
+* **Usage** - *How do you write it?*
+* **Arguments** - *What arguments does it take; which are required; what are the defaults?*
+* **Details** - *A more in-depth description* 
+* **Value** - *What does the function return?*
+* **See Also** - *Related R functions*
+* **Examples** - *Example (& reproducible) code*
 
 ## Objects
 
@@ -486,20 +528,36 @@ You can display or "call" an object simply by using its name.
 new.object
 ```
 
+## Naming Objects
+
+Object names must begin with a letter and can contain letters, numbers, `.`, and `_`.
+
+Try to be consistent in naming objects. RStudio auto-complete means **long, descriptive names are better than short, vague ones**! *Good names save confusion later!*
+
 . . . 
 
-Object names can contain `_` and `.` in them but cannot *begin* with numbers. Try
-to be consistent in naming objects. RStudio auto-complete means *long names are better 
-than vague ones*! 
+* *snake_case*, where you separate lowercase words with `_` is a common and practical naming convention that I strongly recommend.
 
-*Good names save confusion later!*
+```{r}
+#| eval: false
+snake_case_is_easy_to_read
+CamelCaseIsAlsoAnOptionButSortOfHardToReadQuickly
+some.people.use.periods
+And_some.People_ARETRUErebels
+```
 
-Object names are **CaSe SeNsItIvE!!**
+. . . 
+
+<br>
+
+Remember that object names are **CaSe SeNsItIvE!!** 
+
+Also, **TYPOS MATTER**! 
+
 
 ## Using Objects
 
-An object's **name** represents the information stored in that **object**, so you can treat the object's name
-as if it were the values stored inside.
+An object's **name** represents the information stored in that **object**, so you can treat the object's name as if it were the values stored inside.
 . . . 
 
 ```{r Objects 3}
@@ -507,6 +565,26 @@ new.object + 10
 new.object + new.object
 sqrt(new.object)
 ```
+
+## Comments 
+
+Anything writen after `#` will be ignorned by R. 
+
+```{r}
+# create vector of ages of students
+ages <- c(45, 21, 27, 34, 23, 24, 24)
+
+# get average age of students
+mean(ages)
+```
+
+. . . 
+
+For straight-forward code like above this may not be necessary. But for more complex code, comments help collaborators and future-you understand *what*, and more importantly, **why** you are doing what you're doing with that specific line/chunk of code. 
+
+. . . 
+
+Additionally, comments allow you to explain your overall coding plan and record anything important that you've discovered along the way. 
 
 ## Vectors
 
@@ -799,7 +877,7 @@ Some useful and common options include:
 
 * `output: false` - Doesn't include the results of that code chunk in the output
 
-* `cache: true` - Saves results of running that chunk so if it takes a while, you won't have to re-run it each time you re-knit the document
+* `cache: true` - Saves results of running that chunk so if it takes a while, you won't have to re-run it each time you re-render the document
 
 * `fig.height: 5, fig.width: 5` - modify the dimensions of any plots that are generated in the chunk (units are in inches)
 
@@ -807,7 +885,7 @@ Some useful and common options include:
 
 ## Playing with Chunk Options
 
-Try adding or changing the chunk options (separated by commas) for the two chunks in `my_first_Rmd.qmd` and re-knitting to check what happens.
+Try adding or changing the chunk options (separated by commas) for the two chunks in `my_first_Rmd.qmd` and re-rendering to check what happens.
 
 ```{r}
 #| echo: fenced
@@ -883,8 +961,7 @@ to
 
 ## What's Up with `cars`?
 
-In the sample R Markdown document you are working on, we can load the built-in data
-`cars`, which loads as a dataframe, a type of object mentioned earlier. Then, we can look at it in a couple different ways.
+In the sample Quarto document you are working on, we can load the built-in data `cars`, which loads as a dataframe, a type of object mentioned earlier. Then, we can look at it in a couple different ways.
 
 . . . 
 
@@ -892,7 +969,7 @@ In the sample R Markdown document you are working on, we can load the built-in d
 
 . . . 
 
-`View(cars)` pops up a **Viewer** pane ("interactive" use only, don't put in R Markdown document!). 
+`View(cars)` pops up a **Viewer** pane ("interactive" use only, don't put in Quarto document!). 
 
 . . . 
 
