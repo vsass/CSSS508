@@ -1,3 +1,4 @@
+---
 title: "CSSS 508 • Lecture 10"
 subtitle: "Workflow & Best Practices"
 author: "Victoria Sass"
@@ -102,3 +103,68 @@ flights |>
     dep_minute = dep_time %%  100
   )
 ```
+
+## Pipes
+
+As you begin to use more functions, sequentially, it can start to get unclear what's happening when, and to what. 
+
+```{r}
+#| eval: false
+median(sqrt(log(mean(gapminder$pop))))
+```
+
+. . . 
+
+With nested functions, like those above, you need to read the order of operations from inside to outside which is a bit awkward. Furthermore, it's plain confusing if you need to perform many function calls on your data for plotting or data manipulation purposes. Even more so if your functions take more than one argument!
+
+. . . 
+
+**Enter the pipe:** `|>`
+
+Pipes read "left to right" which is much more intuitive! 
+
+```{r}
+#| eval: false
+gapminder$pop |> mean() |> log() |> sqrt() |> median()
+```
+
+::: {.incremental}
+* The above code takes what's on the left-hand side of `|>` and gives it as the first **unnamed** argument to the first function (`mean()`). 
+* The result of that function call is then "piped" to the first **unnamed** argument of the second function (`log()`). 
+:::
+
+. . . 
+
+As you can see, this allows us to "chain" many function calls together easily. 
+
+## Pipes 
+
+The so-called "native pipe" (i.e. built into base `R`) is relatively new. Before this, the pipe was a function from the `magrittr` package that looks like this: `%>%`. 
+
+. . . 
+
+This latter version continues to work and has a different functionality than the new, native pipe. 
+
+. . . 
+
+Most importantly, while both the `magrittr` pipe and the native pipe take the RHS (right-hand side) and "pipe" it to the LHS (left-hand side), they operate differently when it comes to explicitly specifying which argument of the LHS to pipe the RHS into. 
+
+. . . 
+
+```{r}
+#| eval: false
+# magrittr pipe
+a %>% gsub('A', '-', x = .)
+
+# native pipe
+a |> gsub('A','-', x = _) # _ is the placeholder for |> 
+a |> gsub(pattern = 'A', replacement = '-') # leaving the "piped" argument as the only unnamed argument also works 
+a |> (\(.) gsub('A', '-', x = .))() # using an anonymous function call allow you to be explicit while specifying your own placeholder
+
+```
+^[https://stackoverflow.com/questions/70598384/piping-second-or-higher-argument-in-native-pipe] 
+
+
+::: aside
+You can read more about the differences between `|>` and `%>%` [here](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/#-vs) and anonymous functions [here](http://adv-r.had.co.nz/Functional-programming.html#anonymous-functions). 
+:::

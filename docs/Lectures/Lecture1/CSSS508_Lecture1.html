@@ -1,468 +1,252 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-html/tabby.min.js"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
 <meta name="author" content="Victoria Sass">
 <meta name="dcterms.date" content="2023-10-03">
+
 <title>CSSS 508 • Lecture 1</title>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-<link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
-<link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
 <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-      vertical-align: middle;
-    }
-    /* CSS for syntax highlighting */
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-      }
-    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-    div.sourceCode
-      { color: #b2b2b2; background-color: #000000; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #b2b2b2; } /* Normal */
-    code span.al { color: #ff0000; background-color: #3f0000; font-weight: bold; } /* Alert */
-    code span.an { color: #ff00ff; } /* Annotation */
-    code span.at { color: #ffffaf; } /* Attribute */
-    code span.bn { color: #ff8b8b; } /* BaseN */
-    code span.bu { color: #87ffaf; font-weight: bold; } /* BuiltIn */
-    code span.cf { color: #ffff54; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #ff5454; } /* Char */
-    code span.cn { color: #af7f00; font-weight: bold; } /* Constant */
-    code span.co { color: #54ffff; } /* Comment */
-    code span.cv { color: #0095ff; } /* CommentVar */
-    code span.do { color: #e0ffff; } /* Documentation */
-    code span.dt { color: #ffff54; } /* DataType */
-    code span.dv { color: #ff8b8b; } /* DecVal */
-    code span.er { color: #ff5500; text-decoration: underline; } /* Error */
-    code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
-    code span.fl { color: #ff8b8b; } /* Float */
-    code span.fu { color: #cd00cd; } /* Function */
-    code span.im { color: #ff54ff; } /* Import */
-    code span.in { color: #ffaa00; } /* Information */
-    code span.kw { color: #5fd7ff; font-weight: bold; } /* Keyword */
-    code span.op { color: #b2b2b2; } /* Operator */
-    code span.ot { color: #54ff54; } /* Other */
-    code span.pp { color: #87ffaf; } /* Preprocessor */
-    code span.re { color: #0095ff; background-color: #22226d; } /* RegionMarker */
-    code span.sc { color: #0095ff; } /* SpecialChar */
-    code span.ss { color: #ff5500; } /* SpecialString */
-    code span.st { color: #ff54ff; } /* String */
-    code span.va { color: #06989a; } /* Variable */
-    code span.vs { color: #ff54ff; } /* VerbatimString */
-    code span.wa { color: #ff0000; } /* Warning */
-  </style>
-<link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css">
-<link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-<link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-<link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-<link href="../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-<link href="../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-<link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-<style type="text/css">
-
-  .callout {
-    margin-top: 1em;
-    margin-bottom: 1em;  
-    border-radius: .25rem;
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
   }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
 
-  .callout.callout-style-simple { 
-    padding: 0em 0.5em;
-    border-left: solid #acacac .3rem;
-    border-right: solid 1px silver;
-    border-top: solid 1px silver;
-    border-bottom: solid 1px silver;
-    display: flex;
-  }
 
-  .callout.callout-style-default {
-    border-left: solid #acacac .3rem;
-    border-right: solid 1px silver;
-    border-top: solid 1px silver;
-    border-bottom: solid 1px silver;
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
+}</script>
 
-  .callout .callout-body-container {
-    flex-grow: 1;
-  }
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-  .callout.callout-style-simple .callout-body {
-    font-size: 1rem;
-    font-weight: 400;
-  }
-
-  .callout.callout-style-default .callout-body {
-    font-size: 0.9rem;
-    font-weight: 400;
-  }
-
-  .callout.callout-titled.callout-style-simple .callout-body {
-    margin-top: 0.2em;
-  }
-
-  .callout:not(.callout-titled) .callout-body {
-      display: flex;
-  }
-
-  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
-    padding-left: 1.6em;
-  }
-
-  .callout.callout-titled .callout-header {
-    padding-top: 0.2em;
-    margin-bottom: -0.2em;
-  }
-
-  .callout.callout-titled .callout-title  p {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-  }
-    
-  .callout.callout-titled.callout-style-simple .callout-content  p {
-    margin-top: 0;
-  }
-
-  .callout.callout-titled.callout-style-default .callout-content  p {
-    margin-top: 0.7em;
-  }
-
-  .callout.callout-style-simple div.callout-title {
-    border-bottom: none;
-    font-size: .9rem;
-    font-weight: 600;
-    opacity: 75%;
-  }
-
-  .callout.callout-style-default  div.callout-title {
-    border-bottom: none;
-    font-weight: 600;
-    opacity: 85%;
-    font-size: 0.9rem;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-
-  .callout.callout-style-default div.callout-content {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-
-  .callout.callout-style-simple .callout-icon::before {
-    height: 1rem;
-    width: 1rem;
-    display: inline-block;
-    content: "";
-    background-repeat: no-repeat;
-    background-size: 1rem 1rem;
-  }
-
-  .callout.callout-style-default .callout-icon::before {
-    height: 0.9rem;
-    width: 0.9rem;
-    display: inline-block;
-    content: "";
-    background-repeat: no-repeat;
-    background-size: 0.9rem 0.9rem;
-  }
-
-  .callout-title {
-    display: flex
-  }
-    
-  .callout-icon::before {
-    margin-top: 1rem;
-    padding-right: .5rem;
-  }
-
-  .callout.no-icon::before {
-    display: none !important;
-  }
-
-  .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
-  }
-
-  .callout.callout-titled .callout-icon::before {
-    margin-top: .5rem;
-    padding-right: .5rem;
-  }
-
-  .callout:not(.callout-titled) .callout-icon::before {
-    margin-top: 1rem;
-    padding-right: .5rem;
-  }
-
-  /* Callout Types */
-
-  div.callout-note {
-    border-left-color: #4582ec !important;
-  }
-
-  div.callout-note .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
-  }
-
-  div.callout-note.callout-style-default .callout-title {
-    background-color: #dae6fb
-  }
-
-  div.callout-important {
-    border-left-color: #d9534f !important;
-  }
-
-  div.callout-important .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
-  }
-
-  div.callout-important.callout-style-default .callout-title {
-    background-color: #f7dddc
-  }
-
-  div.callout-warning {
-    border-left-color: #f0ad4e !important;
-  }
-
-  div.callout-warning .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
-  }
-
-  div.callout-warning.callout-style-default .callout-title {
-    background-color: #fcefdc
-  }
-
-  div.callout-tip {
-    border-left-color: #02b875 !important;
-  }
-
-  div.callout-tip .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
-  }
-
-  div.callout-tip.callout-style-default .callout-title {
-    background-color: #ccf1e3
-  }
-
-  div.callout-caution {
-    border-left-color: #fd7e14 !important;
-  }
-
-  div.callout-caution .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
-  }
-
-  div.callout-caution.callout-style-default .callout-title {
-    background-color: #ffe5d0
-  }
-
-  </style>
-<style type="text/css">
-    .reveal div.sourceCode {
-      margin: 0;
-      overflow: auto;
-    }
-    .reveal div.hanging-indent {
-      margin-left: 1em;
-      text-indent: -1em;
-    }
-    .reveal .slide:not(.center) {
-      height: 100%;
-    }
-    .reveal .slide.scrollable {
-      overflow-y: auto;
-    }
-    .reveal .footnotes {
-      height: 100%;
-      overflow-y: auto;
-    }
-    .reveal .slide .absolute {
-      position: absolute;
-      display: block;
-    }
-    .reveal .footnotes ol {
-      counter-reset: ol;
-      list-style-type: none; 
-      margin-left: 0;
-    }
-    .reveal .footnotes ol li:before {
-      counter-increment: ol;
-      content: counter(ol) ". "; 
-    }
-    .reveal .footnotes ol li > p:first-child {
-      display: inline-block;
-    }
-    .reveal .slide ul,
-    .reveal .slide ol {
-      margin-bottom: 0.5em;
-    }
-    .reveal .slide ul li,
-    .reveal .slide ol li {
-      margin-top: 0.4em;
-      margin-bottom: 0.2em;
-    }
-    .reveal .slide ul[role="tablist"] li {
-      margin-bottom: 0;
-    }
-    .reveal .slide ul li > *:first-child,
-    .reveal .slide ol li > *:first-child {
-      margin-block-start: 0;
-    }
-    .reveal .slide ul li > *:last-child,
-    .reveal .slide ol li > *:last-child {
-      margin-block-end: 0;
-    }
-    .reveal .slide .columns:nth-child(3) {
-      margin-block-start: 0.8em;
-    }
-    .reveal blockquote {
-      box-shadow: none;
-    }
-    .reveal .tippy-content>* {
-      margin-top: 0.2em;
-      margin-bottom: 0.7em;
-    }
-    .reveal .tippy-content>*:last-child {
-      margin-bottom: 0.2em;
-    }
-    .reveal .slide > img.stretch.quarto-figure-center,
-    .reveal .slide > img.r-stretch.quarto-figure-center {
-      display: block;
-      margin-left: auto;
-      margin-right: auto; 
-    }
-    .reveal .slide > img.stretch.quarto-figure-left,
-    .reveal .slide > img.r-stretch.quarto-figure-left  {
-      display: block;
-      margin-left: 0;
-      margin-right: auto; 
-    }
-    .reveal .slide > img.stretch.quarto-figure-right,
-    .reveal .slide > img.r-stretch.quarto-figure-right  {
-      display: block;
-      margin-left: auto;
-      margin-right: 0; 
-    }
-  </style>
 </head>
-<body class="quarto-light">
-  <div class="reveal">
-    <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center"><h1 class="title">CSSS 508 • Lecture 1</h1>
-  <p class="subtitle">Syllabus and Introduction to R, RStudio, and Quarto</p>
+<body class="nav-fixed">
 
-<div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Victoria Sass 
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="http://vsass.github.io" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">CS&amp;SS 508</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../syllabus.html" rel="" target="">
+ <span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../Lectures/lectures.html" rel="" target="">
+ <span class="menu-text">Lectures</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../Homework/homework.html" rel="" target="">
+ <span class="menu-text">Homework</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
-</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="CSSS508_Lecture1.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">CSSS 508 • Lecture 1</h1>
+<p class="subtitle lead">Syllabus and Introduction to R, RStudio, and Quarto</p>
 </div>
 
-  <p class="date">October 3, 2023</p>
-</section><section><section id="introductions-syllabus" class="title-slide slide level1 center"><h1>Introductions &amp; Syllabus</h1>
 
-</section><section id="welcome" class="slide level2"><h2>Welcome!</h2>
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Victoria Sass </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 3, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introductions-syllabus" class="level1">
+<h1>Introductions &amp; Syllabus</h1>
+<section id="welcome" class="level2">
+<h2 class="anchored" data-anchor-id="welcome">Welcome!</h2>
 <ul>
 <li>Introductions</li>
 <li>Syllabus</li>
 <li>Lecture 1: Introduction to R, RStudio, and Quarto</li>
-</ul></section><section id="introductions" class="slide level2"><h2>Introductions</h2>
+</ul>
+</section>
+<section id="introductions" class="level2">
+<h2 class="anchored" data-anchor-id="introductions">Introductions</h2>
 <p>Let’s start by going around the room and sharing our:</p>
 <ul>
 <li><p>Name and pronouns</p></li>
 <li><p>Program and year</p></li>
 <li><p>Experience with programming (in R or generally)</p></li>
 <li><p>Your favorite place to eat in Seattle (what do you usually order?)</p></li>
-</ul></section><section id="syllabus" class="slide level2"><h2>Syllabus</h2>
+</ul>
+</section>
+<section id="syllabus" class="level2">
+<h2 class="anchored" data-anchor-id="syllabus">Syllabus</h2>
 <p>The syllabus (as well as lots of other information) can be found on our course website:</p>
 <p><br></p>
 <p><strong>https://vsass.github.io/CSSS508</strong></p>
 <p><br></p>
 <p>Feel free to follow along online as I run through the syllabus!</p>
-</section><section id="course-goals" class="slide level2"><h2>Course goals</h2>
+</section>
+<section id="course-goals" class="level2">
+<h2 class="anchored" data-anchor-id="course-goals">Course goals</h2>
 <p>This course is intended to give students a foundational understanding of programming in the statistical language R. General topics include:</p>
-<div>
-<ul>
-<li class="fragment">Exploring data with graphics and summaries</li>
-<li class="fragment">Cleaning, preparing, and linking data for analyses</li>
-<li class="fragment">Foundational programming skills such as functions and loops</li>
-<li class="fragment">Organizing projects and creating reproducible research</li>
+<div class="incremental">
+<ul class="incremental">
+<li>Exploring data with graphics and summaries</li>
+<li>Cleaning, preparing, and linking data for analyses</li>
+<li>Foundational programming skills such as functions and loops</li>
+<li>Organizing projects and creating reproducible research</li>
 </ul>
 </div>
-<div class="fragment">
+<p>. . .</p>
 <p>We won’t really cover any statistics in this course but the goal is for you to increase your coding comprehension and learn the tools you need to be able to focus on <i>statistics instead of coding</i> in any future/current CSSS or STAT courses!</p>
-</div>
-</section><section id="logistics" class="slide level2"><h2>Logistics</h2>
+</section>
+<section id="logistics" class="level2">
+<h2 class="anchored" data-anchor-id="logistics">Logistics</h2>
 <p><strong>Sessions: </strong></p>
 <ul>
-<li>
-<p><strong>Lecture:</strong> <em>An overview of that week’s topic where we’ll learn key skills, concepts, and principles.</em></p>
+<li><p><strong>Lecture:</strong> <em>An overview of that week’s topic where we’ll learn key skills, concepts, and principles.</em></p>
 <ul>
 <li>Tuesdays, 4:30-5:20pm (Gowen 201)</li>
-</ul>
-</li>
-<li>
-<p><strong>Labs:</strong> <em>An interactive session where we’ll put what we’ve learned in lecture into practice.</em></p>
+</ul></li>
+<li><p><strong>Labs:</strong> <em>An interactive session where we’ll put what we’ve learned in lecture into practice.</em></p>
 <ul>
-<li>
-<strong>Lab AA:</strong> Tuesday, 5:30-6:20pm (Savery 117)</li>
-<li>
-<strong>Lab AB:</strong> Thursday, 4:30-5:20pm (Savery 117)</li>
-</ul>
-</li>
-<li>
-<p><strong>Office Hours:</strong> Thursdays, 2-4pm</p>
-<p>(on Zoom; link on <a href="https://canvas.uw.edu/courses/1665088">Canvas</a>)</p>
-</li>
+<li><strong>Lab AA:</strong> Tuesday, 5:30-6:20pm (Savery 117)</li>
+<li><strong>Lab AB:</strong> Thursday, 4:30-5:20pm (Savery 117)</li>
+</ul></li>
+<li><p><strong>Office Hours:</strong> Thursdays, 2-4pm</p>
+<p>(on Zoom; link on <a href="https://canvas.uw.edu/courses/1665088">Canvas</a>)</p></li>
 </ul>
 <p><strong>Course Website:</strong> https://vsass.github.io/CSSS508</p>
 <p><strong>Contact:</strong> Message me on our <a href="https://canvas.uw.edu/courses/1665088">Canvas course page</a> rather than sending me an email. <em>I get far too many emails a day and I don’t want to miss your message!</em></p>
-</section><section id="schedule" class="slide level2"><h2>Schedule</h2>
+</section>
+<section id="schedule" class="level2">
+<h2 class="anchored" data-anchor-id="schedule">Schedule</h2>
 <ul>
 <li>Week 1: Introduction to R, RStudio, and Quarto</li>
 <li>Week 2: Visualizing Data, Part I</li>
@@ -475,7 +259,10 @@ Victoria Sass
 <li>Week 9: Iteration</li>
 <li>Week 10: Visualizing Data, Part II</li>
 <li>Week 11: Next Steps (Optional - Last day of Finals Week)</li>
-</ul></section><section id="prerequisites-materials-and-texts" class="slide level2"><h2>Prerequisites, Materials, and Texts</h2>
+</ul>
+</section>
+<section id="prerequisites-materials-and-texts" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites-materials-and-texts">Prerequisites, Materials, and Texts</h2>
 <p><em>Prerequisites:</em> None</p>
 <p><strong>Materials:</strong> All course materials are provided on the <a href="https://vsass.github.io/CSSS508">course website</a>. This includes:</p>
 <ul>
@@ -486,83 +273,81 @@ Victoria Sass
 </ul>
 <p><strong>Laptops:</strong> It’s helpful to bring a laptop to class. If you don’t have one, you can use the lab computers or borrow one for free from the <a href="https://stlp.uw.edu/">UW Student Technology Loan Program</a>.</p>
 <p><strong>Textbooks:</strong> This course has no textbook. However, I will provide optional reading recommendations that I’ve found really useful!</p>
-</section><section id="grading" class="slide level2"><h2>Grading</h2>
+</section>
+<section id="grading" class="level2">
+<h2 class="anchored" data-anchor-id="grading">Grading</h2>
 <p><strong>Final grade:</strong> Credit/No Credit (C/NC); You need at least 60% to get Credit.</p>
 <ul>
-<li>
-<strong>Homework</strong> (75%; assessed by peers): 8 total homeworks; assessed on a 0-3 point rubric. Assigned at the end of lab sections and due a week later.</li>
-<li>
-<strong>Peer Grading</strong> (25%; assessed by the instructor): One per homework, assessed on a binary “good”/“not good” scale. Due 5 days after homework due date.</li>
+<li><strong>Homework</strong> (75%; assessed by peers): 8 total homeworks; assessed on a 0-3 point rubric. Assigned at the end of lab sections and due a week later.</li>
+<li><strong>Peer Grading</strong> (25%; assessed by the instructor): One per homework, assessed on a binary “good”/“not good” scale. Due 5 days after homework due date.</li>
 </ul>
 <p>Assignment/peer grading instructions and deadlines can be found on the <a href="https://vsass.github.io/CSSS508/Homework/homework.qmd">Homework</a> page of the course website. All homework will be turned in on <a href="https://canvas.uw.edu/courses/1665088">Canvas</a>.</p>
-</section><section id="ugh-peer-grading" class="slide level2"><h2>Ugh, peer grading?</h2>
+</section>
+<section id="ugh-peer-grading" class="level2">
+<h2 class="anchored" data-anchor-id="ugh-peer-grading">Ugh, peer grading?</h2>
 <p>Yes, because:</p>
 <ul>
 <li><p>You will write your reports better knowing others will see them</p></li>
 <li><p>You learn alternate approaches to the same problem</p></li>
 <li><p>You will have more opportunities to practice and have the material sink in</p></li>
 </ul>
-<div class="fragment">
+<p>. . .</p>
 <p>How to peer review:</p>
 <ul>
 <li>Leave <strong>constructive comments</strong>: You’ll only get the point if you write at least 1 full paragraph that includes
 <ul>
 <li>Any key issues from the assignment and,</li>
 <li>Points out something positive in your peer’s work.</li>
+</ul></li>
+<li><strong>Email me</strong> if you would like your assignment to be regraded or provide feedback if no peer review was given.</li>
 </ul>
-</li>
-<li>
-<strong>Email me</strong> if you would like your assignment to be regraded or provide feedback if no peer review was given.</li>
-</ul>
-</div>
-</section><section id="academic-integrity" class="slide level2"><h2>Academic Integrity</h2>
+</section>
+<section id="academic-integrity" class="level2">
+<h2 class="anchored" data-anchor-id="academic-integrity">Academic Integrity</h2>
 <p>Academic integrity is essential to this course and to your learning. Violations of the academic integrity policy include but are not limited to:</p>
 <ul>
 <li>Copying from a peer</li>
 <li>Copying from an online resource</li>
 <li>Using resources from a previous iteration of the course.</li>
 </ul>
-<div class="fragment">
+<p>. . .</p>
 <p>I hope you will collaborate with peers on assignments and use Internet resources when questions arise to help solve issues. The key is that you <strong>ultimately submit your own work</strong>.</p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>Anything found in violation of this policy will be automatically given a score of 0 with no exceptions. If the situation merits, it will also be reported to the UW Student Conduct Office, at which point it is out of my hands. If you have any questions about this policy, please do not hesitate to reach out and ask.</p>
-</div>
-</section><section id="classroom-environment" class="slide level2"><h2>Classroom Environment</h2>
+</section>
+<section id="classroom-environment" class="level2">
+<h2 class="anchored" data-anchor-id="classroom-environment">Classroom Environment</h2>
 <p><strong>I’m committed to fostering a friendly and inclusive classroom environment in which all students have an equal opportunity to learn and succeed.</strong></p>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>Names &amp; Pronouns: Everyone should be addressed respectfully and correctly. Feel free to send me your name/pronouns anytime.</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>Covid: Covid creates unique circumstances for each of us, which may limit your ability to fully participate in this course. You never need to apologize to me for anything pandemic-related. Let me know how I can help!</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>Accessibility &amp; Accomodations: See course website for information on health, disability, and religious accomodations.</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>Feedback: I encourage feedback at any point in the quarter. I will also send out a mid-quarter evaluation around Week 5.</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>Getting Help: If you ever find yourself struggling, know I’m here to help! Try chatting after class, messaging me on Canvas, or coming to office hours.</li>
 </ul>
-</div>
-</section><section id="asking-questions" class="slide level2"><h2>Asking Questions</h2>
+</section>
+<section id="asking-questions" class="level2">
+<h2 class="anchored" data-anchor-id="asking-questions">Asking Questions</h2>
 <p>Don’t ask like this:</p>
-<blockquote>
+<blockquote class="blockquote">
 <p>tried lm(y~x) but it iddn’t work wat do</p>
 </blockquote>
-<div class="fragment">
+<p>. . .</p>
 <p>Instead, ask like this:</p>
-<blockquote>
+<blockquote class="blockquote">
 <pre><code>y &lt;- seq(1:10) + rnorm(10)
 x &lt;- seq(0:10)
 model &lt;- lm(y ~ x)</code></pre>
@@ -572,383 +357,386 @@ drop.unused.levels = TRUE) : variable lengths differ
 (found for 'x')</code></pre>
 </blockquote>
 <p>I may send out your question (anonymously) and my answer to the course mailing list!</p>
-</div>
-</section><section id="questions" class="slide level2"><h2>Questions?</h2>
-</section></section><section><section id="lecture-1-introduction-to-r-rstudio-and-quarto" class="title-slide slide level1 center"><h1>Lecture 1: Introduction to R, RStudio, and Quarto</h1>
-
-</section><section id="a-note-on-slide-formatting" class="slide level2"><h2>A Note on Slide Formatting</h2>
+</section>
+<section id="questions" class="level2">
+<h2 class="anchored" data-anchor-id="questions">Questions?</h2>
+</section>
+</section>
+<section id="lecture-1-introduction-to-r-rstudio-and-quarto" class="level1 page-columns page-full">
+<h1>Lecture 1: Introduction to R, RStudio, and Quarto</h1>
+<section id="a-note-on-slide-formatting" class="level2">
+<h2 class="anchored" data-anchor-id="a-note-on-slide-formatting">A Note on Slide Formatting</h2>
 <p><strong>Bold</strong> and <em>Italics</em> indicate important terms!</p>
-<div class="fragment">
+<p>. . .</p>
 <p><code>Code</code> represents R code you could use to perform actions. For example: “Press <code>Ctrl-P</code> to open the print dialogue.”</p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>Code chunks that span the page represent <em>actual R code embedded in the slides</em>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-code-line-numbers="|1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Sometimes important stuff is highlighted!</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Sometimes important stuff is highlighted!</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="dv">7</span> <span class="sc">*</span> <span class="dv">49</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 343</code></pre>
 </div>
 </div>
-</div>
-</section><section id="why-r" class="slide level2"><h2>Why R?</h2>
+</section>
+<section id="why-r" class="level2">
+<h2 class="anchored" data-anchor-id="why-r">Why R?</h2>
 <p>R is a programming language built for statistical computing.</p>
 <p>If one already knows Stata or similar software, why use R?</p>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>R is <em>free</em>.</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>R has a <em>very</em> large community.</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>R can handle virtually any data format.</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>R makes replication easy.</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>R is a <em>language</em> so it can do <em>everything</em>.</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>R skills transfer to other languages like Python and Julia.</li>
 </ul>
-</div>
-</section><section id="r-studio" class="slide level2"><h2>R Studio</h2>
+</section>
+<section id="r-studio" class="level2">
+<h2 class="anchored" data-anchor-id="r-studio">R Studio</h2>
 <p>R Studio is a “front-end” or integrated development environment (IDE) for R that can make your life <em>easier</em>.</p>
-<div class="fragment">
+<p>. . .</p>
 <p>We’ll show RStudio can… . . .</p>
 <ul>
 <li>Organize your code, output, and plots</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>Auto-complete code and highlight syntax</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>Help view data and objects</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
-<li>Enable easy integration of R code into documents with <strong>Quarto</strong>
-</li>
+<li>Enable easy integration of R code into documents with <strong>Quarto</strong></li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>It can also…</p>
 <ul>
 <li><p>Manage <code>git</code> repositories</p></li>
 <li><p>Run interactive tutorials</p></li>
 <li><p>Handle other languages like C++, Python, SQL, HTML, and shell scripting</p></li>
 </ul>
-</div>
-</section><section id="selling-you-on-quarto" class="slide level2"><h2>Selling You on Quarto</h2>
+</section>
+<section id="selling-you-on-quarto" class="level2">
+<h2 class="anchored" data-anchor-id="selling-you-on-quarto">Selling You on Quarto</h2>
 <p>Built upon many of the developments of the R Markdown ecosystem, Quarto distills them into one coherent system and additionally expands its functionality by supporting other programming languages besides R, including Python and Julia.</p>
-
-<img data-src="images/rmarkdown-quarto.png" class="r-stretch quarto-figure-center"></section><section id="selling-you-on-quarto-1" class="slide level2 scrollable"><h2>Selling You on Quarto</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/rmarkdown-quarto.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="selling-you-on-quarto-1" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="selling-you-on-quarto-1">Selling You on Quarto</h2>
 <p>The ability to create Quarto files in R is a powerful advantage. It allows us to:</p>
-<div>
-<ul>
-<li class="fragment">Document analyses by combining text, code, and output
-<ul>
-<li class="fragment">No copying and pasting into Word</li>
-<li class="fragment">Easy for collaborators to understand</li>
-<li class="fragment">Show as little or as much code as you want</li>
-</ul>
+<div class="incremental">
+<ul class="incremental">
+<li>Document analyses by combining text, code, and output
+<ul class="incremental">
+<li>No copying and pasting into Word</li>
+<li>Easy for collaborators to understand</li>
+<li>Show as little or as much code as you want</li>
+</ul></li>
+<li>Produce many different document types as output
+<ul class="incremental">
+<li>PDF documents</li>
+<li>HTML webpages and reports</li>
+<li>Word and PowerPoint documents<br>
 </li>
-<li class="fragment">Produce many different document types as output
-<ul>
-<li class="fragment">PDF documents</li>
-<li class="fragment">HTML webpages and reports</li>
-<li class="fragment">Word and PowerPoint documents<br>
-</li>
-<li class="fragment">Presentations (like these slides)</li>
-<li class="fragment">Books</li>
-<li class="fragment">Theses/Dissertations 😉🎓</li>
-<li class="fragment">Websites (like the one for <a href="http://vsass.github.io/CSSS508">this course</a>!)</li>
-</ul>
-</li>
-<li class="fragment">Works with LaTeX and HTML for math and more formatting control</li>
+<li>Presentations (like these slides)</li>
+<li>Books</li>
+<li>Theses/Dissertations 😉🎓</li>
+<li>Websites (like the one for <a href="http://vsass.github.io/CSSS508">this course</a>!)</li>
+</ul></li>
+<li>Works with LaTeX and HTML for math and more formatting control</li>
 </ul>
 </div>
-<div class="fragment">
+<p>. . .</p>
 <p>We’ll get back to this shortly!</p>
-</div>
-</section><section id="downloading-r-and-rstudio" class="slide level2"><h2>Downloading R and RStudio</h2>
+</section>
+<section id="downloading-r-and-rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="downloading-r-and-rstudio">Downloading R and RStudio</h2>
 <p>If you don’t already have R and RStudio on your machine, now is the time to do so!</p>
-</section><section id="downloading-r-and-rstudio-1" class="slide level2"><h2>Downloading R and RStudio</h2>
+</section>
+<section id="downloading-r-and-rstudio-1" class="level2">
+<h2 class="anchored" data-anchor-id="downloading-r-and-rstudio-1">Downloading R and RStudio</h2>
 <p>If you don’t already have R and RStudio on your machine, now is the time to do so!</p>
-<div>
-<ol type="1">
-<li class="fragment">Go to the course homepage, <a href="https://vsass.github.io/CSSS508" class="uri">https://vsass.github.io/CSSS508</a>
-</li>
-<li class="fragment">Click the <em>Download R</em> link and download R to your machine.</li>
-<li class="fragment">Afterwards, click the <em>Download RStudio</em> link and download RStudio to your machine.</li>
-<li class="fragment">Lastly, click the <em>Download Quarto</em> link and download Quarto to your machine.</li>
+<div class="incremental">
+<ol class="incremental" type="1">
+<li>Go to the course homepage, <a href="https://vsass.github.io/CSSS508" class="uri">https://vsass.github.io/CSSS508</a></li>
+<li>Click the <em>Download R</em> link and download R to your machine.</li>
+<li>Afterwards, click the <em>Download RStudio</em> link and download RStudio to your machine.</li>
+<li>Lastly, click the <em>Download Quarto</em> link and download Quarto to your machine.</li>
 </ol>
 </div>
-<div class="fragment">
+<p>. . .</p>
 <p>Alright, that’s it for lecture today! I’ll see most of you over in Savery 117 for our lab section and I’ll see the rest of you there on Thursday!</p>
-</div>
-</section><section id="getting-started" class="slide level2"><h2>Getting Started</h2>
+</section>
+<section id="getting-started" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started">Getting Started</h2>
 <p>Open up RStudio now and choose <em>File &gt; New File &gt; R Script</em>.</p>
 <p>Then, let’s get oriented with the interface:</p>
-<div>
-<ul>
-<li class="fragment"><p><em>Top Left</em>: Code <strong>editor</strong> pane, data viewer (browse with tabs)</p></li>
-<li class="fragment"><p><em>Bottom Left</em>: <strong>Console</strong> for running code (<code>&gt;</code> prompt)</p></li>
-<li class="fragment"><p><em>Top Right</em>: List of objects in <strong>environment</strong>, code <strong>history</strong> tab.</p></li>
-<li class="fragment"><p><em>Bottom Right</em>: Tabs for browsing files, viewing plots, managing packages, and viewing help files.</p></li>
+<div class="incremental">
+<ul class="incremental">
+<li><p><em>Top Left</em>: Code <strong>editor</strong> pane, data viewer (browse with tabs)</p></li>
+<li><p><em>Bottom Left</em>: <strong>Console</strong> for running code (<code>&gt;</code> prompt)</p></li>
+<li><p><em>Top Right</em>: List of objects in <strong>environment</strong>, code <strong>history</strong> tab.</p></li>
+<li><p><em>Bottom Right</em>: Tabs for browsing files, viewing plots, managing packages, and viewing help files.</p></li>
 </ul>
 </div>
-</section><section id="section" class="slide level2" data-background-image="images/rstudio-panes-labeled.jpeg" data-background-size="70%"><h2></h2>
-</section><section id="editing-and-running-code" class="slide level2"><h2>Editing and Running Code</h2>
+</section>
+<section id="section" class="level2" data-background-image="images/rstudio-panes-labeled.jpeg" data-background-size="70%">
+<h2 data-background-image="images/rstudio-panes-labeled.jpeg" data-background-size="70%" class="anchored" data-anchor-id="section"></h2>
+</section>
+<section id="editing-and-running-code" class="level2">
+<h2 class="anchored" data-anchor-id="editing-and-running-code">Editing and Running Code</h2>
 <p>There are several ways to run R code in RStudio:</p>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>Highlight lines in the <strong>editor</strong> window and click <em>Run</em> at the top or hit <code>Ctrl+Enter</code> or <code>⌘+Enter</code> to run them all.</li>
 </ul>
-</div>
-</section><section id="editing-and-running-code-1" class="slide level2"><h2>Editing and Running Code</h2>
+</section>
+<section id="editing-and-running-code-1" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="editing-and-running-code-1">Editing and Running Code</h2>
 <p>There are several ways to run R code in RStudio:</p>
 <ul>
 <li><p>Highlight lines in the <strong>editor</strong> window and click <em>Run</em> at the top or hit <code>Ctrl+Enter</code> or <code>⌘+Enter</code> to run them all.</p></li>
-<li><p>With your <strong>caret</strong><sup>1</sup> on a line you want to run, hit <code>Ctrl+Enter</code> or <code>⌘+Enter</code>. Note your caret moves to the next line, so you can run code sequentially with repeated presses.</p></li>
+<li><p>With your <strong>caret</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> on a line you want to run, hit <code>Ctrl+Enter</code> or <code>⌘+Enter</code>. Note your caret moves to the next line, so you can run code sequentially with repeated presses.</p></li>
 </ul>
-<div class="fragment">
+<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;This thing is the caret: <span class="blink_me">|</span></p></li></div><p>. . .</p>
 <ul>
 <li>Type individual lines in the <strong>console</strong> and press <code>Enter</code>.</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>In quarto documents, click within a code chunk and click the green arrow to run the chunk. The button beside that runs <em>all prior chunks</em>.</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>The console will show the lines you ran followed by any printed output.</p>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>This thing is the caret: <span class="blink_me">|</span></p></li></ol></aside></section><section id="incomplete-code" class="slide level2"><h2>Incomplete Code</h2>
+</section>
+<section id="incomplete-code" class="level2">
+<h2 class="anchored" data-anchor-id="incomplete-code">Incomplete Code</h2>
 <p>If you mess up (e.g.&nbsp;leave off a parenthesis), R might show a <code>+</code> sign prompting you to finish the command:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> (<span class="dv">11-2</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finish the command or hit <code>Esc</code> to get out of this.</p>
-</section><section id="r-as-a-calculator" class="slide level2"><h2>R as a Calculator</h2>
+</section>
+<section id="r-as-a-calculator" class="level2">
+<h2 class="anchored" data-anchor-id="r-as-a-calculator">R as a Calculator</h2>
 <p>In the <strong>console</strong>, type <code>123 + 456 + 789</code> and hit <code>Enter</code>.</p>
-<div class="fragment">
+<p>. . .</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">123</span> <span class="op">+</span> <span class="fl">456</span> <span class="op">+</span> <span class="fl">789</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dv">123</span> <span class="sc">+</span> <span class="dv">456</span> <span class="sc">+</span> <span class="dv">789</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1368</code></pre>
 </div>
 </div>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>The <code>[1]</code> in the output indicates the numeric <strong>index</strong> of the first element on that line.</p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>Now in your blank R document in the <strong>editor</strong>, try typing the line <code>sqrt(400)</code> and either clicking <em>Run</em> or hitting <code>Ctrl+Enter</code> or <code>⌘+Enter</code>.</p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">400</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">400</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 20</code></pre>
 </div>
 </div>
-</div>
-</section><section id="functions" class="slide level2"><h2>Functions</h2>
-<p><code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code> is an example of a <strong>function</strong> in R.</p>
-<p><strong>Arguments</strong> are the <em>inputs</em> to a function<sup>1</sup>. In this case, the only argument to <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code> is <code>x</code> which can be a number or a vector of numbers.</p>
+</section>
+<section id="functions" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
+<p><code>sqrt()</code> is an example of a <strong>function</strong> in R.</p>
+<div class="page-columns page-full"><p><strong>Arguments</strong> are the <em>inputs</em> to a function<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. In this case, the only argument to <code>sqrt()</code> is <code>x</code> which can be a number or a vector of numbers.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;Functions can have a wide range of arguments and some are <em>required</em> for the function to run, while others remain optional. You can see from each functions’ help page which are not required because they will have an <code>=</code> with some default value pre-selected. If there is no <code>=</code> it is up to the user to define that value and it’s therefore a required specification. </p></li></div></div>
 <p><br></p>
 <p>The basic template of a function is</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">function_name</span><span class="op">(</span><span class="va">argument1</span>, argument2 <span class="op">=</span> <span class="va">value2</span>, argument3 <span class="op">=</span> <span class="va">value3...</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">function_name</span>(argument1, <span class="at">argument2 =</span> value2, <span class="at">argument3 =</span> value3...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>Functions can have a wide range of arguments and some are <em>required</em> for the function to run, while others remain optional. You can see from each functions’ help page which are not required because they will have an <code>=</code> with some default value pre-selected. If there is no <code>=</code> it is up to the user to define that value and it’s therefore a required specification. </p></li></ol></aside></section><section id="help" class="slide level2"><h2>Help</h2>
+</section>
+<section id="help" class="level2">
+<h2 class="anchored" data-anchor-id="help">Help</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>If we didn’t have a good guess as to what <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code> will do, we can type <code><a href="https://rdrr.io/r/base/MathFun.html">?sqrt</a></code> in the console and look at the <strong>Help</strong> panel on the right.</p>
+<p>If we didn’t have a good guess as to what <code>sqrt()</code> will do, we can type <code>?sqrt</code> in the console and look at the <strong>Help</strong> panel on the right.</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">?</span><span class="va">sqrt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>?sqrt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 <p>If you’re trying to look up the help page for a function and can’t remember its name you can search by a keyword and you will get a list of help pages containing said keyword.</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">?</span><span class="op">?</span><span class="va">exponential</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>??exponential</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
-<p><img data-src="images/help_page.png"></p>
+<p><img src="images/help_page.png" class="img-fluid"></p>
 </div>
 </div>
-</section><section id="help-1" class="slide level2"><h2>Help</h2>
+</section>
+<section id="help-1" class="level2">
+<h2 class="anchored" data-anchor-id="help-1">Help</h2>
 <p>Help files provide documentation on how to use functions and what functions produce. They will generally consist of the following sections:</p>
 <ul>
-<li>
-<strong>Description</strong> - <em>What does it do?</em>
-</li>
-<li>
-<strong>Usage</strong> - <em>How do you write it?</em>
-</li>
-<li>
-<strong>Arguments</strong> - <em>What arguments does it take; which are required; what are the defaults?</em>
-</li>
-<li>
-<strong>Details</strong> - <em>A more in-depth description</em>
-</li>
-<li>
-<strong>Value</strong> - <em>What does the function return?</em>
-</li>
-<li>
-<strong>See Also</strong> - <em>Related R functions</em>
-</li>
-<li>
-<strong>Examples</strong> - <em>Example (&amp; reproducible) code</em>
-</li>
-</ul></section><section id="objects" class="slide level2"><h2>Objects</h2>
+<li><strong>Description</strong> - <em>What does it do?</em></li>
+<li><strong>Usage</strong> - <em>How do you write it?</em></li>
+<li><strong>Arguments</strong> - <em>What arguments does it take; which are required; what are the defaults?</em></li>
+<li><strong>Details</strong> - <em>A more in-depth description</em></li>
+<li><strong>Value</strong> - <em>What does the function return?</em></li>
+<li><strong>See Also</strong> - <em>Related R functions</em></li>
+<li><strong>Examples</strong> - <em>Example (&amp; reproducible) code</em></li>
+</ul>
+</section>
+<section id="objects" class="level2">
+<h2 class="anchored" data-anchor-id="objects">Objects</h2>
 <p>R stores everything as an <strong>object</strong>, including data, functions, models, and output.</p>
-<div class="fragment">
+<p>. . .</p>
 <p>Creating an object can be done using the <strong>assignment operator</strong>: <code>&lt;-</code> . . .</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">new.object</span> <span class="op">&lt;-</span> <span class="fl">144</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>new.object <span class="ot">&lt;-</span> <span class="dv">144</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p><strong>Operators</strong> like <code>&lt;-</code> are functions that look like symbols but typically sit between their arguments (e.g.&nbsp;numbers or objects) instead of having them inside <code>()</code> like in <code>sqrt(x)</code>.</p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>We do math with operators, e.g., <code>x + y</code>. <code>+</code> is the addition operator!</p>
-</div>
-</section><section id="calling-objects" class="slide level2"><h2>Calling Objects</h2>
+</section>
+<section id="calling-objects" class="level2">
+<h2 class="anchored" data-anchor-id="calling-objects">Calling Objects</h2>
 <p>You can display or “call” an object simply by using its name.</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">new.object</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>new.object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 144</code></pre>
 </div>
 </div>
-</section><section id="naming-objects" class="slide level2"><h2>Naming objects</h2>
+</section>
+<section id="naming-objects" class="level2">
+<h2 class="anchored" data-anchor-id="naming-objects">Naming Objects</h2>
 <p>Object names must begin with a letter and can contain letters, numbers, <code>.</code>, and <code>_</code>.</p>
 <p>Try to be consistent in naming objects. RStudio auto-complete means <strong>long, descriptive names are better than short, vague ones</strong>! <em>Good names save confusion later!</em></p>
-<div class="fragment">
+<p>. . .</p>
 <ul>
-<li>
-<em>snake_case</em>, where you separate lowercase words with <code>_</code> is a common and practical naming convention that I strongly recommend.</li>
+<li><em>snake_case</em>, where you separate lowercase words with <code>_</code> is a common and practical naming convention that I strongly recommend.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">snake_case_is_easy_to_read</span></span>
-<span><span class="va">CamelCaseIsAlsoAnOptionButSortOfHardToReadQuickly</span></span>
-<span><span class="va">some.people.use.periods</span></span>
-<span><span class="va">And_some.People_ARETRUErebels</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>snake_case_is_easy_to_read</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>CamelCaseIsAlsoAnOptionButSortOfHardToReadQuickly</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>some.people.use.periods</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>And_some.People_ARETRUErebels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p><br></p>
 <p>Remember that object names are <strong>CaSe SeNsItIvE!!</strong></p>
 <p>Also, <strong>TYPOS MATTER</strong>!</p>
-</div>
-</section><section id="using-objects" class="slide level2"><h2>Using Objects</h2>
+</section>
+<section id="using-objects" class="level2">
+<h2 class="anchored" data-anchor-id="using-objects">Using Objects</h2>
 <p>An object’s <strong>name</strong> represents the information stored in that <strong>object</strong>, so you can treat the object’s name as if it were the values stored inside. . . .</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">new.object</span> <span class="op">+</span> <span class="fl">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>new.object <span class="sc">+</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 154</code></pre>
 </div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">new.object</span> <span class="op">+</span> <span class="va">new.object</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>new.object <span class="sc">+</span> new.object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 288</code></pre>
 </div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">new.object</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(new.object)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12</code></pre>
 </div>
 </div>
-</section><section id="comments" class="slide level2"><h2>Comments</h2>
+</section>
+<section id="comments" class="level2">
+<h2 class="anchored" data-anchor-id="comments">Comments</h2>
 <p>Anything writen after <code>#</code> will be ignorned by R.</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># create vector of ages of students</span></span>
-<span><span class="va">ages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">45</span>, <span class="fl">21</span>, <span class="fl">27</span>, <span class="fl">34</span>, <span class="fl">23</span>, <span class="fl">24</span>, <span class="fl">24</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># get average age of students</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">ages</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create vector of ages of students</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>ages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">21</span>, <span class="dv">27</span>, <span class="dv">34</span>, <span class="dv">23</span>, <span class="dv">24</span>, <span class="dv">24</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># get average age of students</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 28.28571</code></pre>
 </div>
 </div>
-<div class="fragment">
+<p>. . .</p>
 <p>For straight-forward code like above this may not be necessary. But for more complex code, comments help collaborators and future-you understand <em>what</em>, and more importantly, <strong>why</strong> you are doing what you’re doing with that specific line/chunk of code.</p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>Additionally, comments allow you to explain your overall coding plan and record anything important that you’ve discovered along the way.</p>
-</div>
-</section><section id="vectors" class="slide level2"><h2>Vectors</h2>
+</section>
+<section id="vectors" class="level2">
+<h2 class="anchored" data-anchor-id="vectors">Vectors</h2>
 <p>A <strong>vector</strong> is a series of <strong>elements</strong>, such as numbers.</p>
-<div class="fragment">
-<p>You can create a vector using the function <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> which stands for “combine” or “concatenate”. . . .</p>
+<p>. . .</p>
+<p>You can create a vector using the function <code>c()</code> which stands for “combine” or “concatenate”. . . .</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">new.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">9</span>, <span class="fl">16</span>, <span class="fl">25</span>, <span class="fl">36</span><span class="op">)</span></span>
-<span><span class="va">new.object</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>new.object <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">16</span>, <span class="dv">25</span>, <span class="dv">36</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>new.object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  4  9 16 25 36</code></pre>
 </div>
 </div>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>If you name an object the same name as an existing object, <em>it will overwrite it</em>.</p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>You can provide a vector as an argument for many functions. . . .</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">new.object</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(new.object)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2 3 4 5 6</code></pre>
 </div>
 </div>
-</div>
-</section><section id="more-complex-objects" class="slide level2"><h2>More Complex Objects</h2>
+</section>
+<section id="more-complex-objects" class="level2">
+<h2 class="anchored" data-anchor-id="more-complex-objects">More Complex Objects</h2>
 <p>There are other, more complex data types in R which we will discuss later in the quarter! These include <strong>matrices</strong>, <strong>arrays</strong>, <strong>lists</strong>, and <strong>dataframes</strong>.</p>
 <p>Most data sets you will work with will be read into R and stored as a <strong>dataframe</strong>, so this course will mainly focus on manipulating and visualizing these objects.</p>
-</section></section><section><section id="quarto" class="title-slide slide level1 center"><h1>Quarto</h1>
-
-</section><section id="quarto-documents" class="slide level2"><h2>Quarto Documents</h2>
+</section>
+</section>
+<section id="quarto" class="level1 page-columns page-full">
+<h1>Quarto</h1>
+<section id="quarto-documents" class="level2">
+<h2 class="anchored" data-anchor-id="quarto-documents">Quarto Documents</h2>
 <p>Let’s try making an Quarto file:</p>
 <ol type="1">
-<li>Choose <em>File &gt; New File &gt; Quarto Document…</em>
-</li>
+<li>Choose <em>File &gt; New File &gt; Quarto Document…</em></li>
 <li>Make sure <em>HTML Output</em> is selected</li>
-<li>In the <em>Title</em> box call this test document <code>my_first_qmd.qmd</code> and click <em>Create</em>
-</li>
+<li>In the <em>Title</em> box call this test document <code>my_first_qmd.qmd</code> and click <em>Create</em></li>
 <li>Save this document somewhere (you can delete it later) (either with <em>File &gt; Save</em> or clicking the 💾 icon towards the top left of the source pane)</li>
 <li>Click the ➡️<em>Render</em> button</li>
 <li>Watch the progress in the Background Jobs tab of the console pane, then gaze upon your result!</li>
 </ol>
-<div class="fragment">
+<p>. . .</p>
 <p>If you want to create PDF output in the future, you’ll need to run the following code in your console.</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"quarto"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'tinytex'</span><span class="op">)</span></span>
-<span><span class="fu">tinytex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytex/man/install_tinytex.html">install_tinytex</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"quarto"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'tinytex'</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</section><section id="quarto-headers" class="slide level2"><h2>Quarto Headers</h2>
+</section>
+<section id="quarto-headers" class="level2">
+<h2 class="anchored" data-anchor-id="quarto-headers">Quarto Headers</h2>
 <p>The header of an .qmd file is a code block, and everything else is part of the main document.</p>
-<div class="fragment">
+<p>. . .</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Untitled"</span></span>
@@ -957,8 +745,9 @@ drop.unused.levels = TRUE) : variable lengths differ
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span> html_document</span>
 <span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</section><section id="quarto-headers-1" class="slide level2"><h2>Quarto Headers</h2>
+</section>
+<section id="quarto-headers-1" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="quarto-headers-1">Quarto Headers</h2>
 <p>The header of an .qmd file is a code block, and everything else is part of the main document.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
@@ -968,31 +757,39 @@ drop.unused.levels = TRUE) : variable lengths differ
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span> html_document</span>
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>To mess with global formatting, <a href="http://rmarkdown.rstudio.com/html_document_format.html">you can modify the header</a><sup>1</sup>.</p>
+<div class="page-columns page-full"><p>To mess with global formatting, <a href="http://rmarkdown.rstudio.com/html_document_format.html">you can modify the header</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;Be careful though, YAML is space-sensitive; indents matter!</p></li></div></div>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">output</span><span class="op">:</span></span>
-<span>  <span class="va">html_document</span><span class="op">:</span></span>
-<span>    <span class="va">theme</span><span class="op">:</span> <span class="va">readable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  html_document<span class="sc">:</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    theme<span class="sc">:</span> readable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn3"><p>Be careful though, YAML is space-sensitive; indents matter!</p></li></ol></aside></section><section id="quarto-syntax" class="slide level2"><h2>Quarto Syntax</h2>
+</section>
+<section id="quarto-syntax" class="level2">
+<h2 class="anchored" data-anchor-id="quarto-syntax">Quarto Syntax</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<h3 id="output">Output</h3>
-<strong>bold/strong emphasis</strong> <br><em>italic/normal emphasis</em> <br><br><h1 style="font-size:2.5em; ">
+<section id="output" class="level3">
+<h3 class="anchored">Output</h3>
+<strong>bold/strong emphasis</strong> <br> <em>italic/normal emphasis</em> <br> <br>
+<h1 style="font-size:2.5em; ">
 Header
 </h1>
-<br><h2 style="font-size:1.6em; ">
+<br>
+<h2 style="font-size:1.6em; " class="anchored" data-anchor-id="output">
 Subheader
 </h2>
-<br><h3 style="font-size:1.3em; ">
+<br>
+<h3 style="font-size:1.3em; " class="anchored">
 Subsubheader
 </h3>
 <p><br></p>
-<blockquote>
+<blockquote class="blockquote">
 <p>Block quote from famous person</p>
 </blockquote>
+</section>
 </div><div class="column" style="width:50%;">
-<h3 id="syntax">Syntax</h3>
+<section id="syntax" class="level3">
+<h3 class="anchored" data-anchor-id="syntax">Syntax</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>**bold/strong emphasis**</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>*italic/normal emphasis*</span>
@@ -1015,20 +812,23 @@ Subsubheader
 <span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Block quote from</span></span>
 <span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; famous person</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 </div>
 </div>
-</section><section id="quarto-syntax-continued" class="slide level2"><h2>Quarto Syntax Continued</h2>
+</section>
+<section id="quarto-syntax-continued" class="level2">
+<h2 class="anchored" data-anchor-id="quarto-syntax-continued">Quarto Syntax Continued</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<h3 id="output-1">Output</h3>
+<section id="output-1" class="level3">
+<h3 class="anchored" data-anchor-id="output-1">Output</h3>
 <ol type="1">
 <li>Ordered lists</li>
 <li>Are real easy
 <ol type="1">
 <li>Even with sublists</li>
 <li>Or with lazy numbering</li>
-</ol>
-</li>
+</ol></li>
 </ol>
 <ul>
 <li>Unordered lists</li>
@@ -1037,13 +837,13 @@ Subsubheader
 <li>Also even with sublists
 <ul>
 <li>And subsublists</li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
+</section>
 </div><div class="column" style="width:50%;">
-<h3 id="syntax-1">Syntax</h3>
+<section id="syntax-1" class="level3">
+<h3 class="anchored" data-anchor-id="syntax-1">Syntax</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34" data-code-line-numbers="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Ordered lists</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Are real easy</span>
@@ -1059,23 +859,29 @@ Subsubheader
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="ss">  + </span>Also even with sublists</span>
 <span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>And subsublists</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 </div>
 </div>
-</section><section id="formulae-and-syntax" class="slide level2"><h2>Formulae and Syntax</h2>
+</section>
+<section id="formulae-and-syntax" class="level2">
+<h2 class="anchored" data-anchor-id="formulae-and-syntax">Formulae and Syntax</h2>
 <div class="columns">
 <div class="column" style="width:39%;">
-<h3 id="output-2">Output</h3>
+<section id="output-2" class="level3">
+<h3 class="anchored" data-anchor-id="output-2">Output</h3>
 <p>Include math <span class="math inline">\(y= \left( \frac{2}{3} \right)^2\)</span> inline.</p>
 <p>Or centered on your page like so:</p>
 <p><span class="math display">\[\frac{1}{n} \sum_{i=1}^{n} x_i = \bar{x}_n\]</span></p>
 <p>Or write <code>code-looking font</code>.</p>
 <p>Or a block of code:</p>
 <div class="cell">
-<div class="sourceCode" id="cb35" data-code-line-numbers="false"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span></span>
-<span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">y</span><span class="op">^</span><span class="fl">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35" data-code-line-numbers="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> y<span class="sc">^</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 </div><div class="column" style="width:61%;">
-<h3 id="syntax-2">Syntax</h3>
+<section id="syntax-2" class="level3">
+<h3 class="anchored" data-anchor-id="syntax-2">Syntax</h3>
 <div class="sourceCode" id="cb36"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Include math $y= \left(\frac{2}{3} \right)^2$ inline. </span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>Or centered on your page like so: </span>
@@ -1093,22 +899,28 @@ Subsubheader
 <span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
 <span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> y<span class="sc">^</span><span class="dv">2</span></span>
 <span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 </div>
 </div>
-</section><section id="quarto-tinkering" class="slide level2"><h2>Quarto Tinkering</h2>
+</section>
+<section id="quarto-tinkering" class="level2">
+<h2 class="anchored" data-anchor-id="quarto-tinkering">Quarto Tinkering</h2>
 <p>Quarto docs can be modified in many ways. Visit these links for more information.</p>
 <ul>
 <li><a href="https://quarto.org/docs/output-formats/html-basics.html">Ways to modify the overall document appearance</a></li>
 <li><a href="https://quarto.org/docs/authoring/markdown-basics.html">Ways to format parts of your document</a></li>
 <li><a href="https://quarto.org/docs/get-started/hello/rstudio.html">Getting started with Quarto</a></li>
-</ul></section><section id="r-code-in-quarto" class="slide level2"><h2>R Code in Quarto</h2>
+</ul>
+</section>
+<section id="r-code-in-quarto" class="level2">
+<h2 class="anchored" data-anchor-id="r-code-in-quarto">R Code in Quarto</h2>
 <p>Inside RMarkdown, lines of R code are called <strong>chunks</strong>. Code is sandwiched between sets of three backticks and <code>{r}</code>. This chunk of code…</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars)</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Produces this output in your document:</p>
 <div class="cell">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     speed           dist       
  Min.   : 4.0   Min.   :  2.00  
@@ -1119,14 +931,18 @@ Subsubheader
  Max.   :25.0   Max.   :120.00  </code></pre>
 </div>
 </div>
-</section><section id="chunk-options" class="slide level2"><h2>Chunk Options</h2>
+</section>
+<section id="chunk-options" class="level2">
+<h2 class="anchored" data-anchor-id="chunk-options">Chunk Options</h2>
 <p>Chunks have options that control what happens with their code. They are specified as special comments at the top of a block. For example:</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: bar-chart</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "A line plot on a polar axis"</span></span>
 <span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section><section id="chunk-options-1" class="slide level2"><h2>Chunk Options</h2>
+</section>
+<section id="chunk-options-1" class="level2">
+<h2 class="anchored" data-anchor-id="chunk-options-1">Chunk Options</h2>
 <p>Some useful and common options include:</p>
 <ul>
 <li><p><code>echo: false</code> - Keeps R code from being shown in the document</p></li>
@@ -1136,7 +952,10 @@ Subsubheader
 <li><p><code>cache: true</code> - Saves results of running that chunk so if it takes a while, you won’t have to re-run it each time you re-render the document</p></li>
 <li><p><code>fig.height: 5, fig.width: 5</code> - modify the dimensions of any plots that are generated in the chunk (units are in inches)</p></li>
 <li><p><code>fig.cap: "Text"</code> - add a caption to your figure in the chunk</p></li>
-</ul></section><section id="playing-with-chunk-options" class="slide level2"><h2>Playing with Chunk Options</h2>
+</ul>
+</section>
+<section id="playing-with-chunk-options" class="level2">
+<h2 class="anchored" data-anchor-id="playing-with-chunk-options">Playing with Chunk Options</h2>
 <p>Try adding or changing the chunk options (separated by commas) for the two chunks in <code>my_first_Rmd.qmd</code> and re-rendering to check what happens.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
@@ -1144,63 +963,62 @@ Subsubheader
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars)</span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="in-line-r-code" class="slide level2"><h2>In-Line R code</h2>
+</section>
+<section id="in-line-r-code" class="level2">
+<h2 class="anchored" data-anchor-id="in-line-r-code">In-Line R code</h2>
 <p>Sometimes we want to insert a value directly into our text. We do that using code in single backticks starting off with <code>r</code>.</p>
-<div class="fragment">
+<p>. . .</p>
 <pre><code>Four score and seven years ago is the same as `r 4*20 + 7` years.</code></pre>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>Four score and seven years ago is the same as 87 years.</p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p><br></p>
 <p>Maybe we’ve saved a variable in a chunk we want to reference in the text:</p>
 <div class="cell">
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">77</span><span class="op">)</span> <span class="co"># &lt;- is how we assign objects</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">77</span>) <span class="co"># &lt;- is how we assign objects</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <pre><code>The value of `x` rounded to the nearest two decimals is `r round(x, 2)`.</code></pre>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>The value of <code>x</code> rounded to the nearest two decimals is 8.77.</p>
-</div>
-</section><section id="this-is-amazing" class="slide level2"><h2>This is Amazing!</h2>
+</section>
+<section id="this-is-amazing" class="level2">
+<h2 class="anchored" data-anchor-id="this-is-amazing">This is Amazing!</h2>
 <p>Having R dump values directly into your document protects you from silly mistakes:</p>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>Never wonder “how did I come up with this quantity?” ever again: Just look at your formula in your .qmd file!</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>Consistency! No “find/replace” mishaps; reference a variable in-line throughout your document without manually updating if the calculation changes (e.g.&nbsp;reporting sample sizes).</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
 <li>You are more likely to make a typo in a “hard-coded” number than you are to write R code that somehow runs but gives you the wrong thing.</li>
 </ul>
-</div>
-</section><section id="example-keeping-dates" class="slide level2"><h2>Example: Keeping Dates</h2>
-<p>In your YAML header, make the date come from R’s <code><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time()</a></code> function by changing:</p>
+</section>
+<section id="example-keeping-dates" class="level2">
+<h2 class="anchored" data-anchor-id="example-keeping-dates">Example: Keeping Dates</h2>
+<p>In your YAML header, make the date come from R’s <code>Sys.time()</code> function by changing:</p>
 <p><br></p>
 <pre><code>date: "October 3, 2023"</code></pre>
 <p>to</p>
 <pre><code>date: "`r Sys.time()`"</code></pre>
-</section></section><section><section id="data-frames" class="title-slide slide level1 center"><h1>Data Frames</h1>
-
-</section><section id="whats-up-with-cars" class="slide level2"><h2>What’s Up with <code>cars</code>?</h2>
+</section>
+</section>
+<section id="data-frames" class="level1 page-columns page-full">
+<h1>Data Frames</h1>
+<section id="whats-up-with-cars" class="level2">
+<h2 class="anchored" data-anchor-id="whats-up-with-cars">What’s Up with <code>cars</code>?</h2>
 <p>In the sample Quarto document you are working on, we can load the built-in data <code>cars</code>, which loads as a dataframe, a type of object mentioned earlier. Then, we can look at it in a couple different ways.</p>
-<div class="fragment">
+<p>. . .</p>
 <p><code>data(cars)</code> loads this dataframe into the <strong>Global Environment</strong>.</p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p><code>View(cars)</code> pops up a <strong>Viewer</strong> pane (“interactive” use only, don’t put in Quarto document!).</p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <div class="cell">
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">cars</span>, <span class="fl">5</span><span class="op">)</span> <span class="co"># prints first 5 rows, can use tail() too</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cars, <span class="dv">5</span>) <span class="co"># prints first 5 rows, can use tail() too</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  speed dist
 1     4    2
@@ -1210,22 +1028,22 @@ Subsubheader
 5     8   16</code></pre>
 </div>
 </div>
-</div>
-</section><section id="tell-me-more-about-cars" class="slide level2"><h2>Tell Me More About <code>cars</code>
-</h2>
-<p><code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> displays the structure of an object:</p>
+</section>
+<section id="tell-me-more-about-cars" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="tell-me-more-about-cars">Tell Me More About <code>cars</code></h2>
+<p><code>str()</code> displays the structure of an object:</p>
 <div class="cell">
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span> <span class="co"># str[ucture]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cars) <span class="co"># str[ucture]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   50 obs. of  2 variables:
  $ speed: num  4 4 7 7 8 9 10 10 10 11 ...
  $ dist : num  2 10 4 22 16 10 18 26 34 17 ...</code></pre>
 </div>
 </div>
-<div class="fragment">
-<p><code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> displays summary information <sup>1</sup>:</p>
+<p>. . .</p>
+<div class="page-columns page-full"><p><code>summary()</code> displays summary information <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>:</p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;<a href="https://adv-r.hadley.nz/oo.html">Note R is <strong>object-oriented</strong></a>: <code>summary()</code> provides different information for different types of objects!</p></li></div></div>
 <div class="cell">
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     speed           dist       
  Min.   : 4.0   Min.   :  2.00  
@@ -1236,106 +1054,115 @@ Subsubheader
  Max.   :25.0   Max.   :120.00  </code></pre>
 </div>
 </div>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn4"><p><a href="https://adv-r.hadley.nz/oo.html">Note R is <strong>object-oriented</strong></a>: <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> provides different information for different types of objects!</p></li></ol></aside></section><section id="ugly-pictures-of-cars" class="slide level2"><h2>Ugly Pictures of <code>cars</code>
-</h2>
-<p><code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code> generates a histogram of a vector. Note you can access a vector that is a column of a dataframe using <code>$</code>, the <strong>extract operator</strong>.</p>
+</section>
+<section id="ugly-pictures-of-cars" class="level2">
+<h2 class="anchored" data-anchor-id="ugly-pictures-of-cars">Ugly Pictures of <code>cars</code></h2>
+<p><code>hist()</code> generates a histogram of a vector. Note you can access a vector that is a column of a dataframe using <code>$</code>, the <strong>extract operator</strong>.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">cars</span><span class="op">$</span><span class="va">speed</span><span class="op">)</span> <span class="co"># Histogram</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(cars<span class="sc">$</span>speed) <span class="co"># Histogram</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-18-1.png" width="480"></p>
+<p><img src="CSSS508_Lecture1_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="480"></p>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">cars</span><span class="op">$</span><span class="va">dist</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(cars<span class="sc">$</span>dist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-19-1.png" width="480"></p>
+<p><img src="CSSS508_Lecture1_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="480"></p>
 </div>
 </div>
 </div>
 </div>
-</section><section id="drawing-slightly-less-ugly-pictures" class="slide level2"><h2>Drawing Slightly Less Ugly Pictures</h2>
+</section>
+<section id="drawing-slightly-less-ugly-pictures" class="level2">
+<h2 class="anchored" data-anchor-id="drawing-slightly-less-ugly-pictures">Drawing Slightly Less Ugly Pictures</h2>
 <div class="cell">
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">cars</span><span class="op">$</span><span class="va">dist</span>,</span>
-<span>     xlab <span class="op">=</span> <span class="st">"Distance (ft)"</span>, <span class="co"># X axis label</span></span>
-<span>     main <span class="op">=</span> <span class="st">"Observed stopping distances of cars"</span><span class="op">)</span> <span class="co"># Title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(cars<span class="sc">$</span>dist,</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Distance (ft)"</span>, <span class="co"># X axis label</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Observed stopping distances of cars"</span>) <span class="co"># Title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="CSSS508_Lecture1_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="576"></p>
 </div>
-<img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-20-1.png" width="576" class="r-stretch"></section><section id="math-with-cars" class="slide level2"><h2>Math with <code>cars</code>
-</h2>
+</div>
+</section>
+<section id="math-with-cars" class="level2">
+<h2 class="anchored" data-anchor-id="math-with-cars">Math with <code>cars</code></h2>
 <div class="cell">
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dist_mean</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">cars</span><span class="op">$</span><span class="va">dist</span><span class="op">)</span> </span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">dist_mean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>dist_mean  <span class="ot">&lt;-</span> <span class="fu">mean</span>(cars<span class="sc">$</span>dist) </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dist_mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 42.98</code></pre>
 </div>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">speed_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">cars</span><span class="op">$</span><span class="va">speed</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">speed_mean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>speed_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(cars<span class="sc">$</span>speed)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(speed_mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 15.4</code></pre>
 </div>
 </div>
-</section><section id="drawing-still-ugly-pictures" class="slide level2"><h2>Drawing Still Ugly Pictures</h2>
+</section>
+<section id="drawing-still-ugly-pictures" class="level2">
+<h2 class="anchored" data-anchor-id="drawing-still-ugly-pictures">Drawing Still Ugly Pictures</h2>
 <div class="cell">
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span>,</span>
-<span>     xlab <span class="op">=</span> <span class="st">"Speed (mph)"</span>,</span>
-<span>     ylab <span class="op">=</span> <span class="st">"Stopping distance (ft)"</span>,</span>
-<span>     main <span class="op">=</span> <span class="st">"Speeds and stopping distances of cars"</span>,</span>
-<span>     pch <span class="op">=</span> <span class="fl">16</span><span class="op">)</span> <span class="co"># Point size</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars,</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Speed (mph)"</span>,</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Stopping distance (ft)"</span>,</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Speeds and stopping distances of cars"</span>,</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">16</span>) <span class="co"># Point size</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="CSSS508_Lecture1_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="576"></p>
 </div>
-<img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-22-1.png" width="576" class="r-stretch"></section><section id="swiss-time" class="slide level2"><h2>
-<code>swiss</code> Time</h2>
+</div>
+</section>
+<section id="swiss-time" class="level2">
+<h2 class="anchored" data-anchor-id="swiss-time"><code>swiss</code> Time</h2>
 <p>Let’s switch gears to the <code>swiss</code> data frame built in to R.</p>
-<div class="fragment">
-<p>First, use <code><a href="https://rdrr.io/r/datasets/swiss.html">?swiss</a></code> to see what things mean.</p>
-</div>
-<div class="fragment">
+<p>. . .</p>
+<p>First, use <code>?swiss</code> to see what things mean.</p>
+<p>. . .</p>
 <p>Then, load it using <code>data(swiss)</code></p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>Add chunks to your Quarto document inspecting <code>swiss</code>, defining variables, doing some exploratory plots using <code>hist</code> or <code>plot</code>.</p>
 <p>You might experiment with <a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf">colors</a> and <a href="http://www.cookbook-r.com/Graphs/Shapes_and_line_types/">shapes</a>.</p>
-</div>
-</section><section id="looking-at-swiss" class="slide level2"><h2>Looking at <code>swiss</code>
-</h2>
+</section>
+<section id="looking-at-swiss" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="looking-at-swiss">Looking at <code>swiss</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61" data-code-line-numbers="|1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">pairs</span>(swiss, <span class="at">pch =</span> <span class="dv">8</span>, <span class="at">col =</span> <span class="st">"violet"</span>,</span>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">pairs</span>(swiss, <span class="at">pch =</span> <span class="dv">8</span>, <span class="at">col =</span> <span class="st">"violet"</span>,</span>
 <span id="cb61-2"><a href="#cb61-2"></a>      <span class="at">main =</span> <span class="st">"Pairwise comparisons of Swiss variables"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-23-1.png" width="480"></p>
+<p><img src="CSSS508_Lecture1_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="480"></p>
 </div>
 </div>
 
-<aside><div>
+<div class="no-row-height column-margin column-container"><div class="">
 <p>pairs() is a pairwise scatterplot function. Good for a quick look at small datasets, but mostly useless for larger data.</p>
-</div></aside></section><section id="installing-packages" class="slide level2"><h2>Installing Packages</h2>
+</div></div></section>
+<section id="installing-packages" class="level2">
+<h2 class="anchored" data-anchor-id="installing-packages">Installing Packages</h2>
 <p>Let’s make a table that looks a little less code-y in the output. To do this, we’ll want to install a <strong>package</strong> called <code>gt</code>. Packages contain pre-made functions and/or data we can use. R’s strength is its wide variety of packages!</p>
 <p>In the console: <code>install.packages("gt")</code>.</p>
-<div class="fragment">
+<p>. . .</p>
 <ul>
-<li>Note that unlike the <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> command, <em>the name of a package to be installed must be in quotes</em>. This is because the name here is a search term (text, not an object!) while for <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> it is an actual R object.</li>
+<li>Note that unlike the <code>library()</code> command, <em>the name of a package to be installed must be in quotes</em>. This is because the name here is a search term (text, not an object!) while for <code>library()</code> it is an actual R object.</li>
 </ul>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <ul>
-<li>Once you install a package, you don’t need to re-install it until you update R. <em>Consequently, you should not include</em> <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> <em>in any markdown document or R script!</em>
-</li>
+<li>Once you install a package, you don’t need to re-install it until you update R. <em>Consequently, you should not include</em> <code>install.packages()</code> <em>in any markdown document or R script!</em></li>
 </ul>
-</div>
-</section><section id="making-tables" class="slide level2"><h2>Making Tables</h2>
+</section>
+<section id="making-tables" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="making-tables">Making Tables</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62" data-code-line-numbers="|1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="fu">library</span>(pander) <span class="co"># loads pander, do once in your session</span></span>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="fu">library</span>(pander) <span class="co"># loads pander, do once in your session</span></span>
 <span id="cb62-2"><a href="#cb62-2"></a><span class="fu">pander</span>(<span class="fu">summary</span>(swiss), <span class="at">style =</span> <span class="st">"rmarkdown"</span>, <span class="at">split.tables =</span> <span class="dv">120</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 <div class="custom-small">
 <div class="cell">
 <div class="cell-output-display">
-<table>
+<table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 15%">
 <col style="width: 15%">
@@ -1344,14 +1171,16 @@ Subsubheader
 <col style="width: 17%">
 <col style="width: 18%">
 </colgroup>
-<thead><tr class="header">
+<thead>
+<tr class="header">
 <th style="text-align: center;">Fertility</th>
 <th style="text-align: center;">Agriculture</th>
 <th style="text-align: center;">Examination</th>
 <th style="text-align: center;">Education</th>
 <th style="text-align: center;">Catholic</th>
 <th style="text-align: center;">Infant.Mortality</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">Min. :35.00</td>
@@ -1407,17 +1236,19 @@ Subsubheader
 </div>
 </div>
 
-<aside><div>
+<div class="no-row-height column-margin column-container"><div class="">
 <p>Note that we put the <code>summary(swiss)</code> function call inside the <code>pander()</code> call. This is called <em>nesting functions</em> and is very common. I’ll introduce a method next week to avoid confusion from nesting too many functions inside each other</p>
-</div></aside></section><section id="data-look-a-little-nicer-this-way" class="slide level2"><h2>Data Look a Little Nicer This Way</h2>
+</div></div></section>
+<section id="data-look-a-little-nicer-this-way" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="data-look-a-little-nicer-this-way">Data Look a Little Nicer This Way</h2>
 <div class="cell">
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pander</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">swiss</span>, <span class="fl">5</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"rmarkdown"</span>, split.tables <span class="op">=</span> <span class="fl">120</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">head</span>(swiss, <span class="dv">5</span>), <span class="at">style =</span> <span class="st">"rmarkdown"</span>, <span class="at">split.tables =</span> <span class="dv">120</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 <div class="custom-small">
 <div class="cell">
 <div class="cell-output-display">
-<table>
+<table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 19%">
 <col style="width: 11%">
@@ -1427,7 +1258,8 @@ Subsubheader
 <col style="width: 10%">
 <col style="width: 19%">
 </colgroup>
-<thead><tr class="header">
+<thead>
+<tr class="header">
 <th style="text-align: center;">&nbsp;</th>
 <th style="text-align: center;">Fertility</th>
 <th style="text-align: center;">Agriculture</th>
@@ -1435,7 +1267,8 @@ Subsubheader
 <th style="text-align: center;">Education</th>
 <th style="text-align: center;">Catholic</th>
 <th style="text-align: center;">Infant.Mortality</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><strong>Courtelary</strong></td>
@@ -1488,440 +1321,333 @@ Subsubheader
 </div>
 </div>
 
-<aside><div>
+<div class="no-row-height column-margin column-container"><div class="">
 <p><code>split.tables = 120</code> tells <code>pander</code> to break a table into multiple tables if it will be over 120 characters wide. Adjust this to get widths <em>just right</em>.</p>
-</div></aside></section></section><section><section id="homework" class="title-slide slide level1 center"><h1>Homework</h1>
-
-</section><section id="homework-1" class="slide level2"><h2>Homework #1</h2>
+</div></div></section>
+</section>
+<section id="homework" class="level1 page-columns page-full">
+<h1>Homework</h1>
+<section id="homework-1" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="homework-1">Homework #1</h2>
 <p>Write up a .qmd file showing some exploratory analyses of the Swiss fertility data. Upload both the <code>.qmd</code> file and the <code>.html</code> file to Canvas. You must upload <strong>BOTH</strong> for credit.</p>
-<div class="fragment">
+<p>. . .</p>
 <p><br></p>
-<p>Mix in-line R calculations, R output, and plots with text describing the relationships you see. Include <em>at least</em> two plots. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g.&nbsp;functions like <code><a href="https://rdrr.io/r/base/nrow.html">nrow()</a></code>, <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>, <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>, <code><a href="https://rdrr.io/r/stats/cor.html">cor()</a></code>, <code><a href="https://rdrr.io/r/stats/median.html">median()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>) and <em>may not hard-code any numbers referenced in your text</em>.</p>
-</div>
-<div class="fragment">
+<p>Mix in-line R calculations, R output, and plots with text describing the relationships you see. Include <em>at least</em> two plots. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g.&nbsp;functions like <code>nrow()</code>, <code>mean()</code>, <code>sd()</code>, <code>cor()</code>, <code>median()</code>, <code>min()</code>) and <em>may not hard-code any numbers referenced in your text</em>.</p>
+<p>. . .</p>
 <p><br></p>
 <p>Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options <code>echo</code> and <code>output</code> to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text—<em>not as printed code and output</em>—and rounded so as not to be absurdly precise (e.g.&nbsp;round <code>x</code> with <code>round(x, 2)</code>).</p>
 
-</div>
-<aside><div>
+<div class="no-row-height column-margin column-container"><div class="">
 <p>Take a look at the template provided on our <a href="https://vsass.github.io/CSSS508/Homework/HW1/homework1.html">course website</a> for an idea of what this might look like using a different dataset.</p>
-</div></aside></section><section id="grading-rubric" class="slide level2"><h2>Grading Rubric</h2>
+</div></div></section>
+<section id="grading-rubric" class="level2">
+<h2 class="anchored" data-anchor-id="grading-rubric">Grading Rubric</h2>
 <p><br></p>
 <p>0 - Didn’t turn anything in.</p>
 <p><br></p>
-<div class="fragment">
+<p>. . .</p>
 <p>1 - Turned in but low effort, ignoring many directions.</p>
 <p><br></p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>2 - Decent effort, followed directions with some minor issues.</p>
 <p><br></p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>3 - Nailed it!</p>
 <p><br></p>
-</div>
-</section><section id="due-dates" class="slide level2"><h2>Due dates</h2>
+</section>
+<section id="due-dates" class="level2">
+<h2 class="anchored" data-anchor-id="due-dates">Due dates</h2>
 <ul>
-<li>
-<strong>Section AA:</strong>
+<li><strong>Section AA:</strong>
 <ul>
 <li>Homework #1 due Tuesday, October 10th (before lecture)</li>
 <li>Peer grading due Sunday, October 15th (by 4:30pm)</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p><br></p>
 <ul>
-<li>
-<strong>Section AB: </strong>
+<li><strong>Section AB: </strong>
 <ul>
 <li>Homework #1 due Thursday, October 12th (before lab)</li>
 <li>Peer grading due Tuesday, October 17th (before lecture)</li>
+</ul></li>
 </ul>
-</li>
-</ul>
 
-<div class="footer footer-default">
 
-</div>
-</section></section>
-</div>
-  </div>
+</section>
+</section>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="../../site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script><script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="../../site_libs/revealjs/plugin/notes/notes.js"></script><script src="../../site_libs/revealjs/plugin/search/search.js"></script><script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="../../site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
-      // Full list of configuration options available at:
-      // https://revealjs.com/config/
-      Reveal.initialize({
-'controlsAuto': true,
-'previewLinksAuto': false,
-'smaller': true,
-'pdfSeparateFragments': false,
-'autoAnimateEasing': "ease",
-'autoAnimateDuration': 1,
-'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":true},
-'smaller': true,
- 
-        // Display controls in the bottom right corner
-        controls: false,
-
-        // Help the user learn the controls by providing hints, for example by
-        // bouncing the down arrow when they first encounter a vertical slide
-        controlsTutorial: false,
-
-        // Determines where controls appear, "edges" or "bottom-right"
-        controlsLayout: 'edges',
-
-        // Visibility rule for backwards navigation arrows; "faded", "hidden"
-        // or "visible"
-        controlsBackArrows: 'faded',
-
-        // Display a presentation progress bar
-        progress: true,
-
-        // Display the page number of the current slide
-        slideNumber: 'c/t',
-
-        // 'all', 'print', or 'speaker'
-        showSlideNumber: 'all',
-
-        // Add the current slide number to the URL hash so that reloading the
-        // page/copying the URL will return you to the same slide
-        hash: true,
-
-        // Start with 1 for the hash rather than 0
-        hashOneBasedIndex: false,
-
-        // Flags if we should monitor the hash and change slides accordingly
-        respondToHashChanges: true,
-
-        // Push each slide change to the browser history
-        history: true,
-
-        // Enable keyboard shortcuts for navigation
-        keyboard: true,
-
-        // Enable the slide overview mode
-        overview: true,
-
-        // Disables the default reveal.js slide layout (scaling and centering)
-        // so that you can use custom CSS layout
-        disableLayout: false,
-
-        // Vertical centering of slides
-        center: false,
-
-        // Enables touch navigation on devices with touch input
-        touch: true,
-
-        // Loop the presentation
-        loop: false,
-
-        // Change the presentation direction to be RTL
-        rtl: false,
-
-        // see https://revealjs.com/vertical-slides/#navigation-mode
-        navigationMode: 'linear',
-
-        // Randomizes the order of slides each time the presentation loads
-        shuffle: false,
-
-        // Turns fragments on and off globally
-        fragments: true,
-
-        // Flags whether to include the current fragment in the URL,
-        // so that reloading brings you to the same fragment position
-        fragmentInURL: false,
-
-        // Flags if the presentation is running in an embedded mode,
-        // i.e. contained within a limited portion of the screen
-        embedded: false,
-
-        // Flags if we should show a help overlay when the questionmark
-        // key is pressed
-        help: true,
-
-        // Flags if it should be possible to pause the presentation (blackout)
-        pause: true,
-
-        // Flags if speaker notes should be visible to all viewers
-        showNotes: false,
-
-        // Global override for autoplaying embedded media (null/true/false)
-        autoPlayMedia: null,
-
-        // Global override for preloading lazy-loaded iframes (null/true/false)
-        preloadIframes: null,
-
-        // Number of milliseconds between automatically proceeding to the
-        // next slide, disabled when set to 0, this value can be overwritten
-        // by using a data-autoslide attribute on your slides
-        autoSlide: 0,
-
-        // Stop auto-sliding after user input
-        autoSlideStoppable: true,
-
-        // Use this method for navigation when auto-sliding
-        autoSlideMethod: null,
-
-        // Specify the average time in seconds that you think you will spend
-        // presenting each slide. This is used to show a pacing timer in the
-        // speaker view
-        defaultTiming: null,
-
-        // Enable slide navigation via mouse wheel
-        mouseWheel: false,
-
-        // The display mode that will be used to show slides
-        display: 'block',
-
-        // Hide cursor if inactive
-        hideInactiveCursor: true,
-
-        // Time before the cursor is hidden (in ms)
-        hideCursorTime: 5000,
-
-        // Opens links in an iframe preview overlay
-        previewLinks: true,
-
-        // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'none',
-
-        // Transition speed (default/fast/slow)
-        transitionSpeed: 'default',
-
-        // Transition style for full page slide backgrounds
-        // (none/fade/slide/convex/concave/zoom)
-        backgroundTransition: 'none',
-
-        // Number of slides away from the current that are visible
-        viewDistance: 3,
-
-        // Number of slides away from the current that are visible on mobile
-        // devices. It is advisable to set this to a lower number than
-        // viewDistance in order to save resources.
-        mobileViewDistance: 2,
-
-        // The "normal" size of the presentation, aspect ratio will be preserved
-        // when the presentation is scaled to fit different resolutions. Can be
-        // specified using percentage units.
-        width: 1050,
-
-        height: 700,
-
-        // Factor of the display size that should remain empty around the content
-        margin: 0.1,
-
-        math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
-          config: 'TeX-AMS_HTML-full',
-          tex2jax: {
-            inlineMath: [['\\(','\\)']],
-            displayMath: [['\\[','\\]']],
-            balanceBraces: true,
-            processEscapes: false,
-            processRefs: true,
-            processEnvironments: true,
-            preview: 'TeX',
-            skipTags: ['script','noscript','style','textarea','pre','code'],
-            ignoreClass: 'tex2jax_ignore',
-            processClass: 'tex2jax_process'
-          },
-        },
-
-        // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
-
-          RevealMath,
-          RevealNotes,
-          RevealSearch,
-          RevealZoom
-        ]
-      });
-    </script><script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
             }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
             }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
           }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script><script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
-          }
-        }
-        return false;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
-          }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      });
-      function tippyHover(el, contentFn) {
-        const config = {
-          allowHTML: true,
-          content: contentFn,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start'
-        };
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          return note.innerHTML;
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
-          }
-        } else {
-          return undefined;
+          selectedAnnoteEl = annoteEl;
         }
       };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
-          });
-        }
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
       }
-    });
-    </script>
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Created with <a href="https://quarto.org/">Quarto</a> • <a href="https://creativecommons.org/licenses/by-nc/4.0/">License</a></div>   
+    <div class="nav-footer-center">Copyright © 2023 Victoria Sass</div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="mailto:vsass@uw.edu">
+      <i class="bi bi-envelope-at" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=A3lEdiIAAAAJ&amp;hl=en">
+      <i class="bi bi-google" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vsass">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="http://vsass.github.io/Sass_Victoria_CV_2023.pdf">
+      <i class="bi bi-file-person" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
 
 
 </body></html>
