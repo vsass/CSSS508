@@ -158,7 +158,7 @@ ul.task-list li input[type="checkbox"] {
     <i class="bi bi-upload"></i>
      <span class="about-link-text">Canvas</span>
   </a>
-  <a href="https://join.slack.com/t/slack-umk6842/shared_invite/zt-23web332b-jYCABkHe0ee0nt_9J~~1hQ" class="about-link" rel="" target="">
+  <a href="https://uw-csss-508.slack.com/" class="about-link" rel="" target="">
     <i class="bi bi-slack"></i>
      <span class="about-link-text">Slack</span>
   </a>
@@ -409,6 +409,20 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
 });
 </script>
 </div> <!-- /content -->

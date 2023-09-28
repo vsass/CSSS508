@@ -138,17 +138,17 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Instructor:</strong> Victoria Sass<br>
 <strong>Lecture:</strong> Tuesday 4:30-5:20pm (<a href="https://www.washington.edu/maps/#!/gwn">Gowen 201</a>)<br>
 • <strong>Lab AA</strong> Tuesday 5:30-6:20pm (<a href="https://www.washington.edu/maps/#!/SAV">Savery 117</a>)<br>
-• <strong>Lab AB</strong> Thursday 4:30-520pm (<a href="https://www.washington.edu/maps/#!/SAV">Savery 117</a>)<br>
-<strong>Office Hours:</strong> Tuesdays 9-10am, 3-4pm (Zoom - link on Canvas)</p>
+• <strong>Lab AB</strong> Thursday 4:30-5:20pm (<a href="https://www.washington.edu/maps/#!/SAV">Savery 117</a>)<br>
+<strong>Office Hours:</strong> Thursdays 2-4pm (Zoom - link on <a href="https://canvas.uw.edu/courses/1665088">Canvas</a>)</p>
 </section>
 <section id="overview-and-learning-objectives" class="level3">
 <h3 class="anchored" data-anchor-id="overview-and-learning-objectives"><strong>Overview and Learning Objectives:</strong></h3>
 <p>This course is intended to give students a foundational understanding of programming in the statistical language R. This knowledge is intended to be broadly useful wherever you encounter data in your education and career. General topics we will focus on include:</p>
 <ul>
-<li><p>Exploring data with graphics and summaries</p></li>
-<li><p>Cleaning and preparing data for analyses</p></li>
-<li><p>Linking data sets together</p></li>
-<li><p>Organizing projects and creating reproducible research</p></li>
+<li><p>Develop intermediate data management and visualization skills in R</p></li>
+<li><p>Learn basic programming</p></li>
+<li><p>Introduce reproducible research practices</p></li>
+<li><p>Prepare you for statistics and CSSS courses</p></li>
 </ul>
 <p>By the end of this course you should feel confident approaching any data you encounter in the future. We will cover almost no statistics, however it is the intention that this course will leave you prepared to progress in CS&amp;SS or STAT courses with the ability to focus on statistics instead of coding. Additionally, the basic concepts you learn will be applicable to other programming languages and research in general, such as logic and algorithmic thinking.</p>
 </section>
@@ -158,7 +158,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><p><strong>Lecture (in-person; 50 minutes):</strong> On Tuesdays, I will lead a collaborative session on a specific topic to help you learn fundamental skills, concepts, and principles for learning R. The content from lecture each week will be the basis of the homework assignment due the following week.</p></li>
 <li><p><strong>Lab (in-person; 50 minutes):</strong> On Tuesdays and Thursdays, we will meet in the CSSCR lab for an interactive session where we will practice the skills from lecture. Students will work with each other to learn and practice key skills in R, but I will be available to help as well!</p></li>
-<li><p><strong>Office Hours (remote; two 60 minute sessions):</strong> On Wednesdays, I will hold drop-in office hours on Zoom. This is a great time to ask questions, get advice, or continue discussions from lab/lecture. We can talk in a breakout room or with the group! A link to the Zoom meeting can be found on Canvas.</p></li>
+<li><p><strong>Office Hours (remote; one 2 hour session):</strong> On Thursdays, I will hold drop-in office hours on Zoom. This is a great time to ask questions, get advice, or continue discussions from lab/lecture. We can talk in a breakout room or with the group! A link to the Zoom meeting can be found on <a href="https://canvas.uw.edu/courses/1665088">Canvas</a>.</p></li>
 </ul>
 </section>
 <section id="schedule" class="level3">
@@ -447,6 +447,20 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
 });
 </script>
 </div> <!-- /content -->
