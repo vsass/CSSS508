@@ -420,13 +420,13 @@
 </section><section id="bad-repetition" class="slide level2"><h2>Bad Repetition</h2>
 <p>If someone doesn’t know better, they might find the means of variables in the <code>swiss</code> data by typing in a line of code for each column:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mean1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss<span class="sc">$</span>Fertility)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mean2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss<span class="sc">$</span>Agriculture)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>mean3 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swissExamination)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>mean4 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss<span class="sc">$</span>Fertility)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>mean5 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss<span class="sc">$</span>Catholic)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>mean5 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss<span class="sc">$</span>Infant.Mortality)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(mean1, mean2 mean3, mean4, mean5, man6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>mean1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss<span class="sc">$</span>Fertility)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>mean2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss<span class="sc">$</span>Agriculture)</span>
+<span id="cb1-3"><a href="#cb1-3"></a>mean3 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swissExamination)</span>
+<span id="cb1-4"><a href="#cb1-4"></a>mean4 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss<span class="sc">$</span>Fertility)</span>
+<span id="cb1-5"><a href="#cb1-5"></a>mean5 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss<span class="sc">$</span>Catholic)</span>
+<span id="cb1-6"><a href="#cb1-6"></a>mean5 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss<span class="sc">$</span>Infant.Mortality)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">c</span>(mean1, mean2 mean3, mean4, mean5, man6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Can you spot the problems?</p>
 <div class="fragment">
@@ -435,11 +435,11 @@
 </section><section id="good-repetition" class="slide level2"><h2>Good Repetition</h2>
 <p>You will learn a better way to calculate column means today using loops!</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">means</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">swiss</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">swiss</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">means</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">swiss</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Variable<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">swiss</span><span class="op">)</span>,Mean<span class="op">=</span><span class="va">means</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>means <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">ncol</span>(swiss))</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(swiss)){</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  means[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss[,i])</span>
+<span id="cb2-4"><a href="#cb2-4"></a>}</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="fu">data.frame</span>(<span class="at">Variable=</span><span class="fu">names</span>(swiss),<span class="at">Mean=</span>means)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          Variable Mean
 1        Fertility 70.1
@@ -490,10 +490,10 @@
 <img data-src="images/loop.svg" class="r-stretch"></section><section id="for-loop-example" class="slide level2"><h2>
 <code>for()</code> Loop: Example</h2>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="co"># inside for, output won't show up without print()</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> </span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="co"># inside for, output won't show up without print()</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="fu">print</span>(i<span class="sc">^</span><span class="dv">2</span>) </span>
+<span id="cb4-4"><a href="#cb4-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1
 [1] 4
@@ -507,9 +507,9 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> </span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<span id="cb6-2"><a href="#cb6-2"></a>    <span class="fu">print</span>(i<span class="sc">^</span><span class="dv">2</span>) </span>
+<span id="cb6-3"><a href="#cb6-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1
 [1] 4
@@ -518,12 +518,12 @@
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> </span>
-<span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">print</span>(i<span class="sc">^</span><span class="dv">2</span>) </span>
+<span id="cb8-3"><a href="#cb8-3"></a>i <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="fu">print</span>(i<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb8-5"><a href="#cb8-5"></a>i <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="fu">print</span>(i<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1
 [1] 4
@@ -553,15 +553,15 @@
 </section><section id="iterate-over-characters" class="slide level2"><h2>Iterate Over Characters</h2>
 <p>What we iterate over doesn’t have to be numbers <code>1:n</code> or numbers at all! You can also iterate over a character vector in R:</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="cf">for</span>(i <span class="cf">in</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]) {</span>
+<span id="cb10-2"><a href="#cb10-2"></a>    <span class="fu">print</span>(i)</span>
+<span id="cb10-3"><a href="#cb10-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "a"
 [1] "b"
 [1] "c"</code></pre>
 </div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">i</span> <span class="co"># in R, this will exist outside of the loop!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>i <span class="co"># in R, this will exist outside of the loop!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "c"</code></pre>
 </div>
@@ -590,16 +590,16 @@
 </div>
 </section><section id="pre-allocation-numeric" class="slide level2"><h2>Pre-Allocation: Numeric</h2>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">iters</span> <span class="op">&lt;-</span> <span class="fl">10</span> <span class="co"># Set number of interations</span></span>
-<span><span class="va">output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="va">iters</span><span class="op">)</span> <span class="co"># Pre-allocate numeric vector </span></span>
-<span><span class="va">output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>iters <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># Set number of interations</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>output <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,iters) <span class="co"># Pre-allocate numeric vector </span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>output</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] NA NA NA NA NA NA NA NA NA NA</code></pre>
 </div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">iters</span><span class="op">)</span> <span class="op">{</span> <span class="co"># Run code below iters times</span></span>
-<span>    <span class="va">output</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">i</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="op">(</span><span class="va">i</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">output</span> <span class="co"># Display output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>iters) { <span class="co"># Run code below iters times</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>    output[i] <span class="ot">&lt;-</span> (i<span class="dv">-1</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (i<span class="dv">-2</span>)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>}</span>
+<span id="cb16-4"><a href="#cb16-4"></a>output <span class="co"># Display output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]   1   1   5  13  25  41  61  85 113 145</code></pre>
 </div>
@@ -611,16 +611,16 @@
 <li>Run ten iterations where the output is a mathematical function of each iteration number.</li>
 </ol></section><section id="pre-allocation-numeric-vector-per-iteration-matrix" class="slide level2"><h2>Pre-Allocation: Numeric Vector per Iteration Matrix</h2>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rownums</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
-<span><span class="va">colnums</span> <span class="op">&lt;-</span> <span class="fl">6</span></span>
-<span><span class="va">output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>,nrow<span class="op">=</span><span class="va">rownums</span>,ncol<span class="op">=</span><span class="va">colnums</span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">rownums</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="kw">for</span><span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">colnums</span><span class="op">)</span><span class="op">{</span></span>
-<span>    <span class="va">output</span><span class="op">[</span><span class="va">i</span>,<span class="va">j</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">+</span> <span class="va">j</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>rownums <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>colnums <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>output <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>,<span class="at">nrow=</span>rownums,<span class="at">ncol=</span>colnums)</span>
+<span id="cb18-4"><a href="#cb18-4"></a></span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>rownums){</span>
+<span id="cb18-6"><a href="#cb18-6"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>colnums){</span>
+<span id="cb18-7"><a href="#cb18-7"></a>    output[i,j] <span class="ot">&lt;-</span> i <span class="sc">+</span> j</span>
+<span id="cb18-8"><a href="#cb18-8"></a>  }</span>
+<span id="cb18-9"><a href="#cb18-9"></a>}</span>
+<span id="cb18-10"><a href="#cb18-10"></a>output</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3] [,4] [,5] [,6]
 [1,]    2    3    4    5    6    7
@@ -631,20 +631,20 @@
 </section><section id="aside-ifelse-statements" class="slide level2"><h2>Aside: If/Else Statements</h2>
 <p>To test a logical statement and then conditionally execute a set of actions, use <code>if()</code> and <code>else</code>. The structure is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(CONDITION){</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  SOME CALCULATION</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span>{</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  A DIFFERENT CALCULATION</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="cf">if</span>(CONDITION){</span>
+<span id="cb20-2"><a href="#cb20-2"></a>  SOME CALCULATION</span>
+<span id="cb20-3"><a href="#cb20-3"></a>} <span class="cf">else</span>{</span>
+<span id="cb20-4"><a href="#cb20-4"></a>  A DIFFERENT CALCULATION</span>
+<span id="cb20-5"><a href="#cb20-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Warning!</strong> <code>else</code> needs to be on same line as the closing brace <code>}</code> of previous <code>if()</code>.</p>
 </section><section id="ifelse-simple-example" class="slide level2"><h2>If/Else Simple Example</h2>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="fl">8</span>  <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"Less than 10!"</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="kw">else</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"Not less than 10!"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="cf">if</span>(<span class="dv">8</span>  <span class="sc">&lt;</span> <span class="dv">10</span>){</span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">print</span>(<span class="st">"Less than 10!"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3"></a>}<span class="cf">else</span>{</span>
+<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">print</span>(<span class="st">"Not less than 10!"</span>)</span>
+<span id="cb21-5"><a href="#cb21-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Less than 10!"</code></pre>
 </div>
@@ -652,14 +652,14 @@
 </section><section id="more-complex-ifelse" class="slide level2"><h2>More Complex If/Else</h2>
 <p>We can nest together multiple if/elses! if we wish:</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">13</span></span>
-<span><span class="kw">if</span><span class="op">(</span><span class="va">i</span> <span class="op">&lt;=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">{</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"i is less than or equal to 10!"</span><span class="op">)</span></span>
-<span><span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span><span class="op">(</span><span class="va">i</span> <span class="op">&lt;=</span> <span class="fl">14</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"i is greater than 10, less than or equal to 14"</span><span class="op">)</span></span>
-<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"i is greater than or equal to 15"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>i <span class="ot">&lt;-</span> <span class="dv">13</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="cf">if</span>(i <span class="sc">&lt;=</span> <span class="dv">10</span>) { </span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">print</span>(<span class="st">"i is less than or equal to 10!"</span>)</span>
+<span id="cb23-4"><a href="#cb23-4"></a>} <span class="cf">else</span> <span class="cf">if</span>(i <span class="sc">&lt;=</span> <span class="dv">14</span>) {</span>
+<span id="cb23-5"><a href="#cb23-5"></a>  <span class="fu">print</span>(<span class="st">"i is greater than 10, less than or equal to 14"</span>)</span>
+<span id="cb23-6"><a href="#cb23-6"></a>} <span class="cf">else</span> {</span>
+<span id="cb23-7"><a href="#cb23-7"></a>  <span class="fu">print</span>(<span class="st">"i is greater than or equal to 15"</span>)</span>
+<span id="cb23-8"><a href="#cb23-8"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "i is greater than 10, less than or equal to 14"</code></pre>
 </div>
@@ -667,13 +667,13 @@
 </section><section id="loops-with-ifelse-statements" class="slide level2"><h2>Loops with If/Else Statements</h2>
 <p>Suppose we want to take the numbers between 1 and 5, and divide the evens by 2 and multiply the odds by 2. We could do that using a loop with if/else statements!</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="kw">if</span><span class="op">(</span><span class="va">i</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span> <span class="fl">2</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">{</span> <span class="co">#check for even numbers</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span></span>
-<span>  <span class="op">}</span><span class="kw">else</span><span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>){</span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="cf">if</span>(i <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>){ <span class="co">#check for even numbers</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>    <span class="fu">print</span>(i <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb25-4"><a href="#cb25-4"></a>  }<span class="cf">else</span>{</span>
+<span id="cb25-5"><a href="#cb25-5"></a>    <span class="fu">print</span>(i <span class="sc">*</span> <span class="dv">2</span>)</span>
+<span id="cb25-6"><a href="#cb25-6"></a>  }</span>
+<span id="cb25-7"><a href="#cb25-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2
 [1] 1
@@ -695,19 +695,19 @@
 <div class="fragment">
 <p>Here is the structure:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(COND IS MET){</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  RUN CODE</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="cf">while</span>(COND IS MET){</span>
+<span id="cb27-2"><a href="#cb27-2"></a>  RUN CODE</span>
+<span id="cb27-3"><a href="#cb27-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you’re not careful, the while loop will run <strong>forever!!</strong></p>
 </div>
 </section><section id="simple-while-loop-example" class="slide level2"><h2>Simple <code>while()</code> loop example:</h2>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">0</span> </span>
-<span><span class="kw">while</span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;</span> <span class="fl">3</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="cf">while</span>(x <span class="sc">&lt;</span> <span class="dv">3</span>){</span>
+<span id="cb28-3"><a href="#cb28-3"></a>  x <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a>  <span class="fu">print</span>(x)</span>
+<span id="cb28-5"><a href="#cb28-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1
 [1] 2
@@ -719,11 +719,11 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">0</span> </span>
-<span><span class="kw">while</span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;</span> <span class="fl">3</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="cf">while</span>(x <span class="sc">&lt;</span> <span class="dv">3</span>){</span>
+<span id="cb30-3"><a href="#cb30-3"></a>  x <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>  <span class="fu">print</span>(x)</span>
+<span id="cb30-5"><a href="#cb30-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1
 [1] 2
@@ -732,13 +732,13 @@
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">+</span><span class="fl">1</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">+</span><span class="fl">1</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">+</span><span class="fl">1</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>x <span class="ot">&lt;-</span> x<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="fu">print</span>(x)</span>
+<span id="cb32-4"><a href="#cb32-4"></a>x <span class="ot">&lt;-</span> x<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb32-5"><a href="#cb32-5"></a><span class="fu">print</span>(x)</span>
+<span id="cb32-6"><a href="#cb32-6"></a>x <span class="ot">&lt;-</span> x<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a><span class="fu">print</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1
 [1] 2
@@ -750,25 +750,25 @@
 </section><section id="more-complex-example" class="slide level2"><h2>More Complex Example</h2>
 <p>Let’s see how many times we need to flip a coin to get 4 heads:</p>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">num_heads</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
-<span><span class="va">num_flips</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
-<span></span>
-<span><span class="kw">while</span><span class="op">(</span><span class="va">num_heads</span> <span class="op">&lt;</span> <span class="fl">4</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="co"># simulating a coin flip</span></span>
-<span>  <span class="va">coin_flip</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1</span>, size <span class="op">=</span> <span class="fl">1</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> </span>
-<span></span>
-<span>  <span class="co"># keep track of heads</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">coin_flip</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span> </span>
-<span>    <span class="va">num_heads</span> <span class="op">&lt;-</span> <span class="va">num_heads</span> <span class="op">+</span> <span class="fl">1</span> </span>
-<span>  <span class="op">}</span></span>
-<span>  </span>
-<span>  <span class="co"># update number of coin flips</span></span>
-<span>  <span class="va">num_flips</span> <span class="op">&lt;-</span> <span class="va">num_flips</span> <span class="op">+</span> <span class="fl">1</span> </span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">num_flips</span> <span class="co"># follows negative binomial distribution</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>num_heads <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>num_flips <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a></span>
+<span id="cb34-4"><a href="#cb34-4"></a><span class="cf">while</span>(num_heads <span class="sc">&lt;</span> <span class="dv">4</span>) {</span>
+<span id="cb34-5"><a href="#cb34-5"></a>  <span class="co"># simulating a coin flip</span></span>
+<span id="cb34-6"><a href="#cb34-6"></a>  coin_flip <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.5</span>) </span>
+<span id="cb34-7"><a href="#cb34-7"></a></span>
+<span id="cb34-8"><a href="#cb34-8"></a>  <span class="co"># keep track of heads</span></span>
+<span id="cb34-9"><a href="#cb34-9"></a>  <span class="cf">if</span> (coin_flip <span class="sc">==</span> <span class="dv">1</span>) { </span>
+<span id="cb34-10"><a href="#cb34-10"></a>    num_heads <span class="ot">&lt;-</span> num_heads <span class="sc">+</span> <span class="dv">1</span> </span>
+<span id="cb34-11"><a href="#cb34-11"></a>  }</span>
+<span id="cb34-12"><a href="#cb34-12"></a>  </span>
+<span id="cb34-13"><a href="#cb34-13"></a>  <span class="co"># update number of coin flips</span></span>
+<span id="cb34-14"><a href="#cb34-14"></a>  num_flips <span class="ot">&lt;-</span> num_flips <span class="sc">+</span> <span class="dv">1</span> </span>
+<span id="cb34-15"><a href="#cb34-15"></a>}</span>
+<span id="cb34-16"><a href="#cb34-16"></a></span>
+<span id="cb34-17"><a href="#cb34-17"></a>num_flips <span class="co"># follows negative binomial distribution</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 10</code></pre>
+<pre><code>[1] 12</code></pre>
 </div>
 </div>
 </section><section id="summary" class="slide level2"><h2>Summary</h2>
@@ -801,10 +801,10 @@
 </ol></section><section id="activity-1-answers" class="slide level2"><h2>Activity 1: Answers</h2>
 <p>Question 1:</p>
 <div class="cell">
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">swiss</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">curr_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">swiss</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">curr_max</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(swiss)) {</span>
+<span id="cb36-2"><a href="#cb36-2"></a>  curr_max <span class="ot">&lt;-</span> <span class="fu">max</span>(swiss[,i])</span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">print</span>(curr_max)</span>
+<span id="cb36-4"><a href="#cb36-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 92.5
 [1] 89.7
@@ -817,12 +817,12 @@
 </section><section id="activity-1-answers-1" class="slide level2"><h2>Activity 1: Answers</h2>
 <p>Question 2:</p>
 <div class="cell">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">swiss</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">curr_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">swiss</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
-<span>  <span class="kw">for</span><span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">curr_max</span><span class="op">/</span><span class="va">j</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(swiss)) {</span>
+<span id="cb38-2"><a href="#cb38-2"></a>  curr_max <span class="ot">&lt;-</span> <span class="fu">max</span>(swiss[,i])</span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)){</span>
+<span id="cb38-4"><a href="#cb38-4"></a>    <span class="fu">print</span>(curr_max<span class="sc">/</span>j)</span>
+<span id="cb38-5"><a href="#cb38-5"></a>  }</span>
+<span id="cb38-6"><a href="#cb38-6"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 92.5
 [1] 46.2
@@ -847,15 +847,15 @@
 </section><section id="activity-1-answers-2" class="slide level2"><h2>Activity 1: Answers</h2>
 <p>Question 3:</p>
 <div class="cell">
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, ncol<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">swiss</span><span class="op">)</span>,nrow<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">swiss</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">curr_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">swiss</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
-<span>  <span class="kw">for</span><span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">{</span></span>
-<span>    <span class="va">curr_divisor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span><span class="op">[</span><span class="va">j</span><span class="op">]</span></span>
-<span>    <span class="va">results</span><span class="op">[</span><span class="va">j</span>,<span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">curr_max</span><span class="op">/</span><span class="va">curr_divisor</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol=</span><span class="fu">ncol</span>(swiss),<span class="at">nrow=</span><span class="dv">3</span>)</span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(swiss)) {</span>
+<span id="cb40-3"><a href="#cb40-3"></a>  curr_max <span class="ot">&lt;-</span> <span class="fu">max</span>(swiss[,i])</span>
+<span id="cb40-4"><a href="#cb40-4"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>){</span>
+<span id="cb40-5"><a href="#cb40-5"></a>    curr_divisor <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)[j]</span>
+<span id="cb40-6"><a href="#cb40-6"></a>    results[j,i] <span class="ot">&lt;-</span> curr_max<span class="sc">/</span>curr_divisor</span>
+<span id="cb40-7"><a href="#cb40-7"></a>  }</span>
+<span id="cb40-8"><a href="#cb40-8"></a>}</span>
+<span id="cb40-9"><a href="#cb40-9"></a>results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2]  [,3] [,4] [,5]  [,6]
 [1,] 92.5 89.7 37.00 53.0  100 26.60
@@ -867,22 +867,22 @@
 <p>1. Consider the vector <code>vec &lt;- c(1,2,NA,3,NA)</code>. Write a <code>for</code> loop that includes an <code>if</code>/<code>else</code> function so that for each value <code>x</code> in <code>vec</code>, we print “Missing!” if <code>x</code> is NA, and <code>x^3</code> otherwise.</p>
 <p>2. What will happen if I run the following loop:</p>
 <div class="cell">
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
-<span><span class="kw">while</span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="cf">while</span>(x <span class="sc">&lt;</span> <span class="dv">10</span>){</span>
+<span id="cb42-3"><a href="#cb42-3"></a>  <span class="fu">print</span>(x <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb42-4"><a href="#cb42-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>3. Write a <code>while()</code> loop that starts with <code>x &lt;- 1</code> and doubles x each iteration, while <code>x &lt; 100</code>. Print <code>x</code> after each iteration.</p>
 </section><section id="activity-2-answers" class="slide level2"><h2>Activity 2: Answers</h2>
 <p>1.</p>
 <div class="cell">
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">x</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="cn">NA</span>,<span class="fl">3</span>,<span class="cn">NA</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"Missing!"</span><span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span><span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="cf">for</span>(x <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="cn">NA</span>,<span class="dv">3</span>,<span class="cn">NA</span>)){</span>
+<span id="cb43-2"><a href="#cb43-2"></a>  <span class="cf">if</span>(<span class="fu">is.na</span>(x)){</span>
+<span id="cb43-3"><a href="#cb43-3"></a>    <span class="fu">print</span>(<span class="st">"Missing!"</span>)</span>
+<span id="cb43-4"><a href="#cb43-4"></a>  } <span class="cf">else</span>{</span>
+<span id="cb43-5"><a href="#cb43-5"></a>    <span class="fu">print</span>(x<span class="sc">^</span><span class="dv">3</span>)</span>
+<span id="cb43-6"><a href="#cb43-6"></a>  }</span>
+<span id="cb43-7"><a href="#cb43-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1
 [1] 8
@@ -894,10 +894,10 @@
 </section><section id="activity-2-answers-1" class="slide level2"><h2>Activity 2: Answers</h2>
 <p>2. What will happen if I run the following loop:</p>
 <div class="cell">
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
-<span><span class="kw">while</span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="cf">while</span>(x <span class="sc">&lt;</span> <span class="dv">10</span>){</span>
+<span id="cb45-3"><a href="#cb45-3"></a>  <span class="fu">print</span>(x <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb45-4"><a href="#cb45-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>
@@ -905,11 +905,11 @@
 </ul></section><section id="activity-2-answers-2" class="slide level2"><h2>Activity 2: Answers</h2>
 <p>3. Write a <code>while()</code> loop that starts with <code>x &lt;- 1</code> and doubles x each iteration, while <code>x &lt; 100</code>. Print <code>x</code> after each iteration.</p>
 <div class="cell">
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
-<span><span class="kw">while</span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;</span><span class="fl">100</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">2</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="cf">while</span>(x <span class="sc">&lt;</span><span class="dv">100</span>){</span>
+<span id="cb46-3"><a href="#cb46-3"></a>  x <span class="ot">&lt;-</span> x <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb46-4"><a href="#cb46-4"></a>  <span class="fu">print</span>(x)</span>
+<span id="cb46-5"><a href="#cb46-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2
 [1] 4
@@ -1003,7 +1003,7 @@
         respondToHashChanges: true,
 
         // Push each slide change to the browser history
-        history: true,
+        history: false,
 
         // Enable keyboard shortcuts for navigation
         keyboard: true,

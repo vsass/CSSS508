@@ -450,7 +450,7 @@
 <li>Compute summary statistics (<code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>, <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>)</li>
 <li>Fit models to data (<code>lm(Fertility~Agriculture,data=swiss)</code>)</li>
 <li>Load data (<code>read_csv()</code>)</li>
-<li>Create ggplots (<code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>)</li>
+<li>Create ggplots (<code>ggplot()</code>)</li>
 <li>And so much more!!</li>
 </ul>
 </div>
@@ -501,10 +501,10 @@
 </div>
 </section><section id="anatomy-of-a-function" class="slide level2"><h2>Anatomy of a Function</h2>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NAME</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">ARGUMENT1</span>, <span class="va">ARGUMENT2</span><span class="op">=</span><span class="va">DEFAULT</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">BODY</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">OUTPUT</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>NAME <span class="ot">&lt;-</span> <span class="cf">function</span>(ARGUMENT1, <span class="at">ARGUMENT2=</span>DEFAULT){</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  BODY</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="fu">return</span>(OUTPUT)</span>
+<span id="cb1-4"><a href="#cb1-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div>
 <ul>
@@ -534,23 +534,23 @@
 
 </section><section id="example-1-doubling-a-number" class="slide level2"><h2>Example 1: Doubling A Number</h2>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">double_x</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">double_x</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">2</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">double_x</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>double_x <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  double_x <span class="ot">&lt;-</span> x <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">return</span>(double_x)</span>
+<span id="cb2-4"><a href="#cb2-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>Let’s run it!</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">double_x</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">double_x</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 10</code></pre>
 </div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">double_x</span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">double_x</span>(<span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NA</code></pre>
 </div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">double_x</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">double_x</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2 4</code></pre>
 </div>
@@ -558,16 +558,16 @@
 </div>
 </section><section id="example-2-extract-firstlast" class="slide level2"><h2>Example 2: Extract First/Last</h2>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">first_and_last</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">first</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
-<span>    <span class="va">last</span>  <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"first"</span> <span class="op">=</span> <span class="va">first</span>, <span class="st">"last"</span> <span class="op">=</span> <span class="va">last</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>first_and_last <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb9-2"><a href="#cb9-2"></a>    first <span class="ot">&lt;-</span> x[<span class="dv">1</span>]</span>
+<span id="cb9-3"><a href="#cb9-3"></a>    last  <span class="ot">&lt;-</span> x[<span class="fu">length</span>(x)]</span>
+<span id="cb9-4"><a href="#cb9-4"></a>    <span class="fu">return</span>(<span class="fu">c</span>(<span class="st">"first"</span> <span class="ot">=</span> first, <span class="st">"last"</span> <span class="ot">=</span> last))</span>
+<span id="cb9-5"><a href="#cb9-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>Test it out:</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">first_and_last</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">first_and_last</span>(<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>first  last 
     4     8 </code></pre>
@@ -578,7 +578,7 @@
 </h2>
 <p>What if I give <code>first_and_last()</code> a vector of length 1?</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">first_and_last</span><span class="op">(</span><span class="fl">7</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">first_and_last</span>(<span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>first  last 
     7     7 </code></pre>
@@ -587,7 +587,7 @@
 <div class="fragment">
 <p>Of length 0?</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">first_and_last</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">first_and_last</span>(<span class="fu">numeric</span>(<span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>first 
    NA </code></pre>
@@ -615,11 +615,11 @@
 <p><code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code> ceases running the function and prints the text inside as an error message.</p>
 </div></aside></section><section id="example-3-testing-smarter-function" class="slide level2"><h2>Example 3: Testing Smarter Function</h2>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">smarter_first_and_last</span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">smarter_first_and_last</span>(<span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in smarter_first_and_last(NA): Input is not long enough!</code></pre>
 </div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">smarter_first_and_last</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">smarter_first_and_last</span>(<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>first  last 
     4     8 </code></pre>
@@ -628,7 +628,7 @@
 </section><section id="cracking-open-functions" class="slide level2"><h2>Cracking Open Functions</h2>
 <p>If you type a function name without any parentheses or arguments, you can see its contents:</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">smarter_first_and_last</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>smarter_first_and_last</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>function(x) {
     if(length(x) &lt; 2){
@@ -639,7 +639,7 @@
       return(c("first" = first, "last" = last))    
     }
 }
-&lt;bytecode: 0x7fcf8181c5c0&gt;</code></pre>
+&lt;bytecode: 0x121da17b0&gt;</code></pre>
 </div>
 </div>
 </section></section><section><section id="using-functions-with-apply" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Using functions with <code>apply()</code>
@@ -648,11 +648,11 @@
 </section><section id="applying-functions-multiple-times" class="slide level2"><h2>Applying Functions Multiple Times?</h2>
 <p>Last week, we saw an example where we wanted to take the mean of each column in the <code>swiss</code> data:</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">col_index</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">swiss</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">mean_swiss_col</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">swiss</span><span class="op">[</span>,<span class="va">col_index</span><span class="op">]</span><span class="op">)</span></span>
-<span>  <span class="va">names_swiss_col</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">swiss</span><span class="op">)</span><span class="op">[</span><span class="va">col_index</span><span class="op">]</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">names_swiss_col</span>,<span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">mean_swiss_col</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="cf">for</span>(col_index <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(swiss)){</span>
+<span id="cb23-2"><a href="#cb23-2"></a>  mean_swiss_col <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss[,col_index])</span>
+<span id="cb23-3"><a href="#cb23-3"></a>  names_swiss_col <span class="ot">&lt;-</span> <span class="fu">names</span>(swiss)[col_index]</span>
+<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">print</span>(<span class="fu">c</span>(names_swiss_col,<span class="fu">round</span>(mean_swiss_col,<span class="dv">3</span>)))</span>
+<span id="cb23-5"><a href="#cb23-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Fertility" "70.143"   
 [1] "Agriculture" "50.66"      
@@ -684,12 +684,12 @@
 <li>Function</li>
 </ol>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">DATA</span>, <span class="va">MARGIN</span>, <span class="va">FUNCTION</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">apply</span>(DATA, MARGIN, FUNCTION)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>For example,</p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">swiss</span>, <span class="fl">2</span>, <span class="va">mean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">apply</span>(swiss, <span class="dv">2</span>, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Fertility      Agriculture      Examination        Education 
         70.14255         50.65957         16.48936         10.97872 
@@ -700,8 +700,8 @@
 </div>
 </section><section id="example-1" class="slide level2"><h2>Example 1</h2>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">row_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">swiss</span>,<span class="fl">1</span>,<span class="va">max</span><span class="op">)</span> <span class="co"># maximum in each row</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">row_max</span>, <span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>row_max <span class="ot">&lt;-</span> <span class="fu">apply</span>(swiss,<span class="dv">1</span>,max) <span class="co"># maximum in each row</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">head</span>(row_max, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Courtelary     Delemont Franches-Mnt      Moutier   Neuveville   Porrentruy 
        80.20        84.84        93.40        85.80        76.90        90.57 
@@ -715,7 +715,7 @@
 </div>
 </section><section id="example-2" class="slide level2"><h2>Example 2</h2>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">swiss</span>, <span class="fl">2</span>, <span class="va">summary</span><span class="op">)</span> <span class="co"># summary of each column</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">apply</span>(swiss, <span class="dv">2</span>, summary) <span class="co"># summary of each column</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Fertility Agriculture Examination Education  Catholic Infant.Mortality
 Min.     35.00000     1.20000     3.00000   1.00000   2.15000         10.80000
@@ -729,16 +729,16 @@ Max.     92.50000    89.70000    37.00000  53.00000 100.00000         26.60000</
 <p>**Note:* Matrix output!</p>
 </section><section id="example-3-user-created-function" class="slide level2"><h2>Example 3: User-Created Function</h2>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">21</span>, nrow<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">scores</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="at">nrow=</span><span class="dv">3</span>)</span>
+<span id="cb32-2"><a href="#cb32-2"></a><span class="fu">print</span>(scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7]
 [1,]    1    4    7   10   13   16   19
 [2,]    2    5    8   11   14   17   20
 [3,]    3    6    9   12   15   18   21</code></pre>
 </div>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">+</span><span class="fl">10</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">}</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">scores</span>, <span class="fl">1</span>, <span class="va">my_function</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>my_function <span class="ot">&lt;-</span> <span class="cf">function</span>(x){ <span class="fu">mean</span>(x<span class="sc">+</span><span class="dv">10</span>, <span class="at">na.rm =</span> T) }</span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="fu">apply</span>(scores, <span class="dv">1</span>, my_function)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 20 21 22</code></pre>
 </div>
@@ -768,14 +768,14 @@ Max.     92.50000    89.70000    37.00000  53.00000 100.00000         26.60000</
 <li>Function</li>
 </ol>
 <div class="cell">
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">divers_score</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">7</span><span class="op">)</span><span class="op">{</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"x is not of length 7!"</span><span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span><span class="op">{</span></span>
-<span>    <span class="va">x_nofirst_nolast</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x_nofirst_nolast</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>divers_score <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="cf">if</span>(<span class="fu">length</span>(x) <span class="sc">!=</span> <span class="dv">7</span>){</span>
+<span id="cb36-3"><a href="#cb36-3"></a>    <span class="fu">stop</span>(<span class="st">"x is not of length 7!"</span>)</span>
+<span id="cb36-4"><a href="#cb36-4"></a>  } <span class="cf">else</span>{</span>
+<span id="cb36-5"><a href="#cb36-5"></a>    x_nofirst_nolast <span class="ot">&lt;-</span> <span class="fu">sort</span>(x)[<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb36-6"><a href="#cb36-6"></a>    <span class="fu">return</span>(<span class="fu">mean</span>(x_nofirst_nolast))</span>
+<span id="cb36-7"><a href="#cb36-7"></a>  }</span>
+<span id="cb36-8"><a href="#cb36-8"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ol start="3" type="1">
@@ -783,7 +783,7 @@ Max.     92.50000    89.70000    37.00000  53.00000 100.00000         26.60000</
 </li>
 </ol>
 <div class="cell">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">divers_score</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">3</span><span class="op">)</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">divers_score</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">3</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.8</code></pre>
 </div>
@@ -800,14 +800,14 @@ Max.     92.50000    89.70000    37.00000  53.00000 100.00000         26.60000</
 <li>Preallocate a matrix of NAs with 3 rows and 8 columns, called <code>double_matrix</code>. Manually specify the first column equal to the values 1, 2, and 3. Using a nested loop, fill in the matrix, row by row, such that each value is double that to its left.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">double_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="fl">3</span>,ncol <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
-<span><span class="va">double_matrix</span><span class="op">[</span> , <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">row</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="kw">for</span><span class="op">(</span><span class="va">col</span> <span class="kw">in</span> <span class="fl">2</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span><span class="op">{</span></span>
-<span>    <span class="va">double_matrix</span><span class="op">[</span><span class="va">row</span>, <span class="va">col</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">double_matrix</span><span class="op">[</span><span class="va">row</span>, <span class="va">col</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op">*</span> <span class="fl">2</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">double_matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>double_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">3</span>,<span class="at">ncol =</span> <span class="dv">8</span>)</span>
+<span id="cb39-2"><a href="#cb39-2"></a>double_matrix[ , <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span></span>
+<span id="cb39-3"><a href="#cb39-3"></a><span class="cf">for</span>(row <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>){</span>
+<span id="cb39-4"><a href="#cb39-4"></a>  <span class="cf">for</span>(col <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>){</span>
+<span id="cb39-5"><a href="#cb39-5"></a>    double_matrix[row, col] <span class="ot">&lt;-</span> double_matrix[row, col<span class="dv">-1</span>] <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb39-6"><a href="#cb39-6"></a>  }</span>
+<span id="cb39-7"><a href="#cb39-7"></a>}</span>
+<span id="cb39-8"><a href="#cb39-8"></a>double_matrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 [1,]    1    2    4    8   16   32   64  128
@@ -818,8 +818,8 @@ Max.     92.50000    89.70000    37.00000  53.00000 100.00000         26.60000</
 </section><section id="answers-1" class="slide level2"><h2>Answers</h2>
 <p>2. Write an <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> function to take the median value of each column in the <code>cars</code> dataset</p>
 <div class="cell">
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">median_cars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">cars</span>, <span class="fl">2</span>, <span class="va">median</span><span class="op">)</span></span>
-<span><span class="va">median_cars</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>median_cars <span class="ot">&lt;-</span> <span class="fu">apply</span>(cars, <span class="dv">2</span>, median)</span>
+<span id="cb41-2"><a href="#cb41-2"></a>median_cars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>speed  dist 
    15    36 </code></pre>
@@ -835,11 +835,11 @@ Max.     92.50000    89.70000    37.00000  53.00000 100.00000         26.60000</
 <div class="tab-content">
 <div id="tabset-1-1">
 <div class="cell">
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">cars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">speed</span>, <span class="va">dist</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">median_cars</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="va">median_cars</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="fu">ggplot</span>(cars, <span class="fu">aes</span>(speed, dist)) <span class="sc">+</span> </span>
+<span id="cb43-3"><a href="#cb43-3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb43-4"><a href="#cb43-4"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> median_cars[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> median_cars[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-1-2">
@@ -936,7 +936,7 @@ Max.     92.50000    89.70000    37.00000  53.00000 100.00000         26.60000</
         respondToHashChanges: true,
 
         // Push each slide change to the browser history
-        history: true,
+        history: false,
 
         // Enable keyboard shortcuts for navigation
         keyboard: true,
