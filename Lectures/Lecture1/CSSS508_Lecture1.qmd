@@ -27,7 +27,7 @@ require(downlit)
 require(xml2)
 ```
 
-## {#title-slide data-menu-title="Syllabus and Introduction to R, RStudio, and Quarto" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
+## {#title-slide data-menu-title="Syllabus and Introduction to R, RStudio, and Quarto" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%" background="#1e4655"}
 
 [Syllabus and Introduction to R, RStudio, and Quarto]{.custom-title}
 
@@ -111,16 +111,15 @@ We won't really cover any statistics in this course but the goal is for you to i
 ## Schedule
 
 - Week 1: Introduction to R, RStudio, and Quarto
-- Week 2: Visualizing Data, Part I
-- Week 3: Workflow and Best Practices
+- Week 2: Visualizing Data
+- Week 3: Workflow and Reproducibility
 - Week 4: Manipulating and Summarizing Data
-- Week 5: Understanding Data Structures
+- Week 5: R Data Structures & Types
 - Week 6: Working with Text Data 
 - Week 7: Importing, Exporting, and Cleaning Data
 - Week 8: Writing Functions
 - Week 9: Iteration
-- Week 10: Visualizing Data, Part II
-- Week 11: Next Steps (Optional - Last day of Finals Week)
+- Week 10: Next Steps
 
 ## Prerequisites, Materials, and Texts
 
@@ -238,11 +237,19 @@ If you ask me a question directly over Slack I may send out your question (anony
 
 ## A Note on Slide Formatting
 
-**Bold** and *Italics* indicate important terms! 
+**Bold** usually indicates an important vocabulary term. Remember these!
 
 . . . 
 
-`Code` represents R code you could use to perform actions. For example: "Press `Ctrl-P` to open the print dialogue."
+*Italics* indicate emphasis but also are used to point out things you must click with a mouse. 
+  
+   * For example: "Please click *File* > *Print*"
+
+. . . 
+
+`Code` represents R code you could use to perform actions. 
+
+   * For example: "Press `Ctrl-P` to open the print dialogue."
 
 . . . 
 
@@ -380,7 +387,7 @@ Then, let's get oriented with the interface:
 * *Bottom Right*: Tabs for browsing files, viewing plots, managing packages, and viewing help files.
 :::
 
-## {background-image="images/rstudio-panes-labeled.jpeg" background-size=70%}
+## {data-menu-title="RStudio IDE image" background-image="images/rstudio-panes-labeled.jpeg" background-size=70%}
 
 ## Editing and Running Code
 
@@ -459,12 +466,11 @@ is `x` which can be a number or a vector of numbers.
 
 <br>
 
+. . . 
+
 The basic template of a function is
 
-```{r functions}
-#| eval: false
-function_name(argument1, argument2 = value2, argument3 = value3...)
-```
+`function_name(argument1, argument2 = value2, argument3 = value3...)`
 
 ## Help
 
@@ -588,7 +594,7 @@ mean(ages)
 
 . . . 
 
-For straight-forward code like above this may not be necessary. But for more complex code, comments help collaborators and future-you understand *what*, and more importantly, **why** you are doing what you're doing with that specific line/chunk of code. 
+Comments help collaborators and future-you understand *what*, and more importantly, **why** you are doing what you're doing with that specific line/chunk of code. 
 
 . . . 
 
@@ -654,23 +660,7 @@ tinytex::install_tinytex()
 
 ## Quarto Headers
 
-The header of an .qmd file is a code block, and everything else is part of the main document.
-
-. . . 
-
-```{r}
-#| eval: false
----
-title: "Untitled"
-author: "Victoria Sass"
-date: "October 3, 2023"
-output: html_document
----
-```
-
-## Quarto Headers
-
-The header of an .qmd file is a code block, and everything else is part of the main document.
+The header of an .qmd file is a [YAML](https://en.wikipedia.org/wiki/YAML)^[You can read a bit more about YAML headers in Quarto [here](https://quarto.org/docs/get-started/hello/rstudio.html#yaml-header) and [this reference page](https://quarto.org/docs/reference/formats/html.html) lists all options possible for html output.]code block, and everything else is part of the main document.
 
 ```{r}
 #| eval: false
@@ -703,7 +693,7 @@ output:
 *italic/normal emphasis*
 <br>
 <br>
-<h1 style="font-size:2.5em; "> Header </h1>
+<h1 style="font-size:2.5em; color: #99a486"> Header </h1>
 <br>
 <h2 style="font-size:1.6em; "> Subheader </h2>
 <br>
@@ -745,7 +735,7 @@ output:
 :::
 ::::
 
-## Quarto Syntax Continued
+## Quarto Syntax^[This is all basic markdown syntax which you can learn about [here](https://quarto.org/docs/authoring/markdown-basics.html).] Continued
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -843,9 +833,12 @@ z <- y^2
 
 Quarto docs can be modified in many ways. Visit these links for more information.
 
+* Getting started with Quarto
+  * [Tutorial: Hello, Quarto](https://quarto.org/docs/get-started/hello/rstudio.html)
+  * [Tutorial: Computations](https://quarto.org/docs/get-started/computations/rstudio.html)
+  * [Tutorial: Authoring](https://quarto.org/docs/get-started/authoring/rstudio.html)
 * [Ways to modify the overall document appearance](https://quarto.org/docs/output-formats/html-basics.html)
 * [Ways to format parts of your document](https://quarto.org/docs/authoring/markdown-basics.html)
-* [Getting started with Quarto](https://quarto.org/docs/get-started/hello/rstudio.html)
 
 ## R Code in Quarto
 
@@ -894,7 +887,7 @@ Some useful and common options include:
 
 ## Playing with Chunk Options
 
-Try adding or changing the chunk options (separated by commas) for the two chunks in `my_first_Rmd.qmd` and re-rendering to check what happens.
+Try adding or changing the chunk options for the two chunks in `my_first_Rmd.qmd` and re-rendering to check what happens.
 
 ```{r}
 #| echo: fenced
@@ -978,7 +971,7 @@ In the sample Quarto document you are working on, we can load the built-in data 
 
 . . . 
 
-`View(cars)` pops up a **Viewer** pane ("interactive" use only, don't put in Quarto document!). 
+`View(cars)` pops up a **Viewer** pane  ("interactive" use only, don't put in Quarto document!). 
 
 . . . 
 

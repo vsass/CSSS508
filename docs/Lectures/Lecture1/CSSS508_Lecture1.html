@@ -391,7 +391,7 @@
     <div class="slides">
 
 
-<section id="title-slide" class="slide level2 center" data-menu-title="Syllabus and Introduction to R, RStudio, and Quarto" data-background="#1e4655" data-background-image="../../images/csss-logo.png" data-background-position="center top 5%" data-background-size="50%"><h2></h2>
+<section id="title-slide" class="slide level2 center" data-menu-title="Syllabus and Introduction to R, RStudio, and Quarto" data-background-image="../../images/csss-logo.png" data-background-position="center top 5%" data-background-size="50%" data-background="#1e4655"><h2></h2>
 <p><span class="custom-title">Syllabus and Introduction to R, RStudio, and Quarto</span></p>
 <p><span class="custom-subtitle">CS&amp;SS 508 • Lecture 1</span></p>
 <p><span class="custom-subtitle2">3 October 2023</span></p>
@@ -458,16 +458,15 @@
 </section><section id="schedule" class="slide level2"><h2>Schedule</h2>
 <ul>
 <li>Week 1: Introduction to R, RStudio, and Quarto</li>
-<li>Week 2: Visualizing Data, Part I</li>
-<li>Week 3: Workflow and Best Practices</li>
+<li>Week 2: Visualizing Data</li>
+<li>Week 3: Workflow and Reproducibility</li>
 <li>Week 4: Manipulating and Summarizing Data</li>
-<li>Week 5: Understanding Data Structures</li>
+<li>Week 5: R Data Structures &amp; Types</li>
 <li>Week 6: Working with Text Data</li>
 <li>Week 7: Importing, Exporting, and Cleaning Data</li>
 <li>Week 8: Writing Functions</li>
 <li>Week 9: Iteration</li>
-<li>Week 10: Visualizing Data, Part II</li>
-<li>Week 11: Next Steps (Optional - Last day of Finals Week)</li>
+<li>Week 10: Next Steps</li>
 </ul></section><section id="prerequisites-materials-and-texts" class="slide level2"><h2>Prerequisites, Materials, and Texts</h2>
 <p><em>Prerequisites:</em> None</p>
 <p><strong>Materials:</strong> All course materials are provided on the <a href="https://vsass.github.io/CSSS508">course website</a>. This includes:</p>
@@ -570,9 +569,18 @@ drop.unused.levels = TRUE) : variable lengths differ
 </section></section><section><section id="introduction-to-r-rstudio-and-quarto" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Introduction to R, RStudio, and Quarto</h1>
 
 </section><section id="a-note-on-slide-formatting" class="slide level2"><h2>A Note on Slide Formatting</h2>
-<p><strong>Bold</strong> and <em>Italics</em> indicate important terms!</p>
+<p><strong>Bold</strong> usually indicates an important vocabulary term. Remember these!</p>
 <div class="fragment">
-<p><code>Code</code> represents R code you could use to perform actions. For example: “Press <code>Ctrl-P</code> to open the print dialogue.”</p>
+<p><em>Italics</em> indicate emphasis but also are used to point out things you must click with a mouse.</p>
+<ul>
+<li>For example: “Please click <em>File</em> &gt; <em>Print</em>”</li>
+</ul>
+</div>
+<div class="fragment">
+<p><code>Code</code> represents R code you could use to perform actions.</p>
+<ul>
+<li>For example: “Press <code>Ctrl-P</code> to open the print dialogue.”</li>
+</ul>
 </div>
 <div class="fragment">
 <p>Code chunks that span the page represent <em>actual R code embedded in the slides</em>.</p>
@@ -708,7 +716,7 @@ drop.unused.levels = TRUE) : variable lengths differ
 <li class="fragment"><p><em>Bottom Right</em>: Tabs for browsing files, viewing plots, managing packages, and viewing help files.</p></li>
 </ul>
 </div>
-</section><section id="section" class="slide level2" data-background-image="images/rstudio-panes-labeled.jpeg" data-background-size="70%"><h2></h2>
+</section><section id="section" class="slide level2" data-menu-title="RStudio IDE image" data-background-image="images/rstudio-panes-labeled.jpeg" data-background-size="70%"><h2></h2>
 </section><section id="editing-and-running-code" class="slide level2"><h2>Editing and Running Code</h2>
 <p>There are several ways to run R code in RStudio:</p>
 <div class="fragment">
@@ -770,21 +778,21 @@ drop.unused.levels = TRUE) : variable lengths differ
 <p><code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code> is an example of a <strong>function</strong> in R.</p>
 <p><strong>Arguments</strong> are the <em>inputs</em> to a function<sup>1</sup>. In this case, the only argument to <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code> is <code>x</code> which can be a number or a vector of numbers.</p>
 <p><br></p>
+<div class="fragment">
 <p>The basic template of a function is</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">function_name</span>(argument1, <span class="at">argument2 =</span> value2, <span class="at">argument3 =</span> value3...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>function_name(argument1, argument2 = value2, argument3 = value3...)</code></p>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn2"><p>Functions can have a wide range of arguments and some are <em>required</em> for the function to run, while others remain optional. You can see from each functions’ help page which are not required because they will have an <code>=</code> with some default value pre-selected. If there is no <code>=</code> it is up to the user to define that value and it’s therefore a required specification. </p></li></ol></aside></section><section id="help" class="slide level2"><h2>Help</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>If we didn’t have a good guess as to what <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code> will do, we can type <code><a href="https://rdrr.io/r/base/MathFun.html">?sqrt</a></code> in the console and look at the <strong>Help</strong> panel on the right.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>?sqrt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>?sqrt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 <p>If you’re trying to look up the help page for a function and can’t remember its name you can search by a keyword and you will get a list of help pages containing said keyword.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>??exponential</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>??exponential</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
 <p><img data-src="images/help_page.png"></p>
@@ -819,7 +827,7 @@ drop.unused.levels = TRUE) : variable lengths differ
 <div class="fragment">
 <p>Creating an object can be done using the <strong>assignment operator</strong>: <code>&lt;-</code> . . .</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>new.object <span class="ot">&lt;-</span> <span class="dv">144</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>new.object <span class="ot">&lt;-</span> <span class="dv">144</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -831,7 +839,7 @@ drop.unused.levels = TRUE) : variable lengths differ
 </section><section id="calling-objects" class="slide level2"><h2>Calling Objects</h2>
 <p>You can display or “call” an object simply by using its name.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>new.object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>new.object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 144</code></pre>
 </div>
@@ -845,10 +853,10 @@ drop.unused.levels = TRUE) : variable lengths differ
 <em>snake_case</em>, where you separate lowercase words with <code>_</code> is a common and practical naming convention that I strongly recommend.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>snake_case_is_easy_to_read</span>
-<span id="cb16-2"><a href="#cb16-2"></a>CamelCaseIsAlsoAnOptionButSortOfHardToReadQuickly</span>
-<span id="cb16-3"><a href="#cb16-3"></a>some.people.use.periods</span>
-<span id="cb16-4"><a href="#cb16-4"></a>And_some.People_ARETRUErebels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>snake_case_is_easy_to_read</span>
+<span id="cb15-2"><a href="#cb15-2"></a>CamelCaseIsAlsoAnOptionButSortOfHardToReadQuickly</span>
+<span id="cb15-3"><a href="#cb15-3"></a>some.people.use.periods</span>
+<span id="cb15-4"><a href="#cb15-4"></a>And_some.People_ARETRUErebels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -859,15 +867,15 @@ drop.unused.levels = TRUE) : variable lengths differ
 </section><section id="using-objects" class="slide level2"><h2>Using Objects</h2>
 <p>An object’s <strong>name</strong> represents the information stored in that <strong>object</strong>, so you can treat the object’s name as if it were the values stored inside. . . .</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>new.object <span class="sc">+</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>new.object <span class="sc">+</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 154</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>new.object <span class="sc">+</span> new.object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>new.object <span class="sc">+</span> new.object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 288</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">sqrt</span>(new.object)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">sqrt</span>(new.object)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12</code></pre>
 </div>
@@ -875,17 +883,17 @@ drop.unused.levels = TRUE) : variable lengths differ
 </section><section id="comments" class="slide level2"><h2>Comments</h2>
 <p>Anything writen after <code>#</code> will be ignorned by R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># create vector of ages of students</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a>ages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">21</span>, <span class="dv">27</span>, <span class="dv">34</span>, <span class="dv">23</span>, <span class="dv">24</span>, <span class="dv">24</span>)</span>
-<span id="cb23-3"><a href="#cb23-3"></a></span>
-<span id="cb23-4"><a href="#cb23-4"></a><span class="co"># get average age of students</span></span>
-<span id="cb23-5"><a href="#cb23-5"></a><span class="fu">mean</span>(ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># create vector of ages of students</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>ages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">21</span>, <span class="dv">27</span>, <span class="dv">34</span>, <span class="dv">23</span>, <span class="dv">24</span>, <span class="dv">24</span>)</span>
+<span id="cb22-3"><a href="#cb22-3"></a></span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="co"># get average age of students</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a><span class="fu">mean</span>(ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 28.28571</code></pre>
 </div>
 </div>
 <div class="fragment">
-<p>For straight-forward code like above this may not be necessary. But for more complex code, comments help collaborators and future-you understand <em>what</em>, and more importantly, <strong>why</strong> you are doing what you’re doing with that specific line/chunk of code.</p>
+<p>Comments help collaborators and future-you understand <em>what</em>, and more importantly, <strong>why</strong> you are doing what you’re doing with that specific line/chunk of code.</p>
 </div>
 <div class="fragment">
 <p>Additionally, comments allow you to explain your overall coding plan and record anything important that you’ve discovered along the way.</p>
@@ -895,8 +903,8 @@ drop.unused.levels = TRUE) : variable lengths differ
 <div class="fragment">
 <p>You can create a vector using the function <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> which stands for “combine” or “concatenate”. . . .</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>new.object <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">16</span>, <span class="dv">25</span>, <span class="dv">36</span>)</span>
-<span id="cb25-2"><a href="#cb25-2"></a>new.object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>new.object <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">16</span>, <span class="dv">25</span>, <span class="dv">36</span>)</span>
+<span id="cb24-2"><a href="#cb24-2"></a>new.object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  4  9 16 25 36</code></pre>
 </div>
@@ -908,7 +916,7 @@ drop.unused.levels = TRUE) : variable lengths differ
 <div class="fragment">
 <p>You can provide a vector as an argument for many functions. . . .</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">sqrt</span>(new.object)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">sqrt</span>(new.object)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2 3 4 5 6</code></pre>
 </div>
@@ -934,44 +942,32 @@ drop.unused.levels = TRUE) : variable lengths differ
 <div class="fragment">
 <p>If you want to create PDF output in the future, you’ll need to run the following code in your console.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">install.packages</span>(<span class="st">"quarto"</span>)</span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">install.packages</span>(<span class="st">'tinytex'</span>)</span>
-<span id="cb29-3"><a href="#cb29-3"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">install.packages</span>(<span class="st">"quarto"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">install.packages</span>(<span class="st">'tinytex'</span>)</span>
+<span id="cb28-3"><a href="#cb28-3"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section><section id="quarto-headers" class="slide level2"><h2>Quarto Headers</h2>
-<p>The header of an .qmd file is a code block, and everything else is part of the main document.</p>
-<div class="fragment">
+<p>The header of an .qmd file is a <a href="https://en.wikipedia.org/wiki/YAML">YAML</a><sup>1</sup>code block, and everything else is part of the main document.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="sc">---</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a>title<span class="sc">:</span> <span class="st">"Untitled"</span></span>
-<span id="cb30-3"><a href="#cb30-3"></a>author<span class="sc">:</span> <span class="st">"Victoria Sass"</span></span>
-<span id="cb30-4"><a href="#cb30-4"></a>date<span class="sc">:</span> <span class="st">"October 3, 2023"</span></span>
-<span id="cb30-5"><a href="#cb30-5"></a>output<span class="sc">:</span> html_document</span>
-<span id="cb30-6"><a href="#cb30-6"></a><span class="sc">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="sc">---</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>title<span class="sc">:</span> <span class="st">"Untitled"</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>author<span class="sc">:</span> <span class="st">"Victoria Sass"</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a>date<span class="sc">:</span> <span class="st">"October 3, 2023"</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a>output<span class="sc">:</span> html_document</span>
+<span id="cb29-6"><a href="#cb29-6"></a><span class="sc">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</section><section id="quarto-headers-1" class="slide level2"><h2>Quarto Headers</h2>
-<p>The header of an .qmd file is a code block, and everything else is part of the main document.</p>
+<p>To mess with global formatting, <a href="http://rmarkdown.rstudio.com/html_document_format.html">you can modify the header</a><sup>2</sup>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="sc">---</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a>title<span class="sc">:</span> <span class="st">"Untitled"</span></span>
-<span id="cb31-3"><a href="#cb31-3"></a>author<span class="sc">:</span> <span class="st">"Victoria Sass"</span></span>
-<span id="cb31-4"><a href="#cb31-4"></a>date<span class="sc">:</span> <span class="st">"October 3, 2023"</span></span>
-<span id="cb31-5"><a href="#cb31-5"></a>output<span class="sc">:</span> html_document</span>
-<span id="cb31-6"><a href="#cb31-6"></a><span class="sc">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>output<span class="sc">:</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>  html_document<span class="sc">:</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>    theme<span class="sc">:</span> readable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>To mess with global formatting, <a href="http://rmarkdown.rstudio.com/html_document_format.html">you can modify the header</a><sup>1</sup>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>output<span class="sc">:</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a>  html_document<span class="sc">:</span></span>
-<span id="cb32-3"><a href="#cb32-3"></a>    theme<span class="sc">:</span> readable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn3"><p>Be careful though, YAML is space-sensitive; indents matter!</p></li></ol></aside></section><section id="quarto-syntax" class="slide level2"><h2>Quarto Syntax</h2>
+<aside><ol class="aside-footnotes"><li id="fn3"><p>You can read a bit more about YAML headers in Quarto <a href="https://quarto.org/docs/get-started/hello/rstudio.html#yaml-header">here</a> and <a href="https://quarto.org/docs/reference/formats/html.html">this reference page</a> lists all options possible for html output.</p></li><li id="fn4"><p>Be careful though, YAML is space-sensitive; indents matter!</p></li></ol></aside></section><section id="quarto-syntax" class="slide level2"><h2>Quarto Syntax</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <h3 id="output">Output</h3>
-<strong>bold/strong emphasis</strong> <br><em>italic/normal emphasis</em> <br><br><h1 style="font-size:2.5em; ">
+<strong>bold/strong emphasis</strong> <br><em>italic/normal emphasis</em> <br><br><h1 style="font-size:2.5em; color: #99a486">
 Header
 </h1>
 <br><h2 style="font-size:1.6em; ">
@@ -987,30 +983,30 @@ Subsubheader
 </div><div class="column" style="width:50%;">
 <h3 id="syntax">Syntax</h3>
 <div class="cell" data-codecode-line-numbers="false">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1"></a>**bold/strong emphasis**</span>
-<span id="cb33-2"><a href="#cb33-2"></a>*italic/normal emphasis*</span>
-<span id="cb33-3"><a href="#cb33-3"></a>  </span>
-<span id="cb33-4"><a href="#cb33-4"></a>  </span>
-<span id="cb33-5"><a href="#cb33-5"></a>  </span>
-<span id="cb33-6"><a href="#cb33-6"></a><span class="fu"># Header</span></span>
-<span id="cb33-7"><a href="#cb33-7"></a>  </span>
-<span id="cb33-8"><a href="#cb33-8"></a>  </span>
-<span id="cb33-9"><a href="#cb33-9"></a>  </span>
-<span id="cb33-10"><a href="#cb33-10"></a><span class="fu">## Subheader</span></span>
-<span id="cb33-11"><a href="#cb33-11"></a>  </span>
-<span id="cb33-12"><a href="#cb33-12"></a></span>
-<span id="cb33-13"><a href="#cb33-13"></a></span>
-<span id="cb33-14"><a href="#cb33-14"></a><span class="fu">### Subsubheader</span></span>
-<span id="cb33-15"><a href="#cb33-15"></a>  </span>
-<span id="cb33-16"><a href="#cb33-16"></a></span>
-<span id="cb33-17"><a href="#cb33-17"></a></span>
-<span id="cb33-18"><a href="#cb33-18"></a></span>
-<span id="cb33-19"><a href="#cb33-19"></a><span class="at">&gt; Block quote from</span></span>
-<span id="cb33-20"><a href="#cb33-20"></a><span class="at">&gt; famous person</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1"></a>**bold/strong emphasis**</span>
+<span id="cb31-2"><a href="#cb31-2"></a>*italic/normal emphasis*</span>
+<span id="cb31-3"><a href="#cb31-3"></a>  </span>
+<span id="cb31-4"><a href="#cb31-4"></a>  </span>
+<span id="cb31-5"><a href="#cb31-5"></a>  </span>
+<span id="cb31-6"><a href="#cb31-6"></a><span class="fu"># Header</span></span>
+<span id="cb31-7"><a href="#cb31-7"></a>  </span>
+<span id="cb31-8"><a href="#cb31-8"></a>  </span>
+<span id="cb31-9"><a href="#cb31-9"></a>  </span>
+<span id="cb31-10"><a href="#cb31-10"></a><span class="fu">## Subheader</span></span>
+<span id="cb31-11"><a href="#cb31-11"></a>  </span>
+<span id="cb31-12"><a href="#cb31-12"></a></span>
+<span id="cb31-13"><a href="#cb31-13"></a></span>
+<span id="cb31-14"><a href="#cb31-14"></a><span class="fu">### Subsubheader</span></span>
+<span id="cb31-15"><a href="#cb31-15"></a>  </span>
+<span id="cb31-16"><a href="#cb31-16"></a></span>
+<span id="cb31-17"><a href="#cb31-17"></a></span>
+<span id="cb31-18"><a href="#cb31-18"></a></span>
+<span id="cb31-19"><a href="#cb31-19"></a><span class="at">&gt; Block quote from</span></span>
+<span id="cb31-20"><a href="#cb31-20"></a><span class="at">&gt; famous person</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
-</section><section id="quarto-syntax-continued" class="slide level2"><h2>Quarto Syntax Continued</h2>
+</section><section id="quarto-syntax-continued" class="slide level2"><h2>Quarto Syntax<sup>1</sup> Continued</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <h3 id="output-1">Output</h3>
@@ -1038,23 +1034,23 @@ Subsubheader
 </div><div class="column" style="width:50%;">
 <h3 id="syntax-1">Syntax</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34" data-code-line-numbers="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Ordered lists</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Are real easy</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="ss">    1. </span>Even with sublists</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="ss">    1. </span>Or with lazy numbering</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Unordered lists</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Are also real easy</span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="ss">  + </span>Also even with sublists</span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>And subsublists</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32" data-code-line-numbers="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Ordered lists</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Are real easy</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="ss">    1. </span>Even with sublists</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="ss">    1. </span>Or with lazy numbering</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Unordered lists</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Are also real easy</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="ss">  + </span>Also even with sublists</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>And subsublists</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
-</section><section id="formulae-and-syntax" class="slide level2"><h2>Formulae and Syntax</h2>
+<aside><ol class="aside-footnotes"><li id="fn5"><p>This is all basic markdown syntax which you can learn about <a href="https://quarto.org/docs/authoring/markdown-basics.html">here</a>.</p></li></ol></aside></section><section id="formulae-and-syntax" class="slide level2"><h2>Formulae and Syntax</h2>
 <div class="columns">
 <div class="column" style="width:39%;">
 <h3 id="output-2">Output</h3>
@@ -1064,44 +1060,50 @@ Subsubheader
 <p>Or write <code>code-looking font</code>.</p>
 <p>Or a block of code:</p>
 <div class="cell">
-<div class="sourceCode" id="cb35" data-code-line-numbers="false"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span></span>
+<div class="sourceCode" id="cb33" data-code-line-numbers="false"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span></span>
 <span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">y</span><span class="op">^</span><span class="fl">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:61%;">
 <h3 id="syntax-2">Syntax</h3>
-<div class="sourceCode" id="cb36"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Include math $y= \left(\frac{2}{3} \right)^2$ inline. </span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>Or centered on your page like so: </span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>$$\frac{1}{n} \sum_{i=1}^{n}x_i = \bar{x}_n$$</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>Or write<span class="in">`code-looking font`</span>.</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>Or a block of code:</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> y<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>Include math $y= \left(\frac{2}{3} \right)^2$ inline. </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>Or centered on your page like so: </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>$$\frac{1}{n} \sum_{i=1}^{n}x_i = \bar{x}_n$$</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>Or write<span class="in">`code-looking font`</span>.</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>Or a block of code:</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> y<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section><section id="quarto-tinkering" class="slide level2"><h2>Quarto Tinkering</h2>
 <p>Quarto docs can be modified in many ways. Visit these links for more information.</p>
 <ul>
+<li>Getting started with Quarto
+<ul>
+<li><a href="https://quarto.org/docs/get-started/hello/rstudio.html">Tutorial: Hello, Quarto</a></li>
+<li><a href="https://quarto.org/docs/get-started/computations/rstudio.html">Tutorial: Computations</a></li>
+<li><a href="https://quarto.org/docs/get-started/authoring/rstudio.html">Tutorial: Authoring</a></li>
+</ul>
+</li>
 <li><a href="https://quarto.org/docs/output-formats/html-basics.html">Ways to modify the overall document appearance</a></li>
 <li><a href="https://quarto.org/docs/authoring/markdown-basics.html">Ways to format parts of your document</a></li>
-<li><a href="https://quarto.org/docs/get-started/hello/rstudio.html">Getting started with Quarto</a></li>
 </ul></section><section id="r-code-in-quarto" class="slide level2"><h2>R Code in Quarto</h2>
 <p>Inside RMarkdown, lines of R code are called <strong>chunks</strong>. Code is sandwiched between sets of three backticks and <code>{r}</code>. This chunk of code…</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars)</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Produces this output in your document:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">summary</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">summary</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     speed           dist       
  Min.   : 4.0   Min.   :  2.00  
@@ -1114,11 +1116,11 @@ Subsubheader
 </div>
 </section><section id="chunk-options" class="slide level2"><h2>Chunk Options</h2>
 <p>Chunks have options that control what happens with their code. They are specified as special comments at the top of a block. For example:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: bar-chart</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "A line plot on a polar axis"</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: bar-chart</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "A line plot on a polar axis"</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section><section id="chunk-options-1" class="slide level2"><h2>Chunk Options</h2>
 <p>Some useful and common options include:</p>
 <ul>
@@ -1130,12 +1132,12 @@ Subsubheader
 <li><p><code>fig.height: 5, fig.width: 5</code> - modify the dimensions of any plots that are generated in the chunk (units are in inches)</p></li>
 <li><p><code>fig.cap: "Text"</code> - add a caption to your figure in the chunk</p></li>
 </ul></section><section id="playing-with-chunk-options" class="slide level2"><h2>Playing with Chunk Options</h2>
-<p>Try adding or changing the chunk options (separated by commas) for the two chunks in <code>my_first_Rmd.qmd</code> and re-rendering to check what happens.</p>
+<p>Try adding or changing the chunk options for the two chunks in <code>my_first_Rmd.qmd</code> and re-rendering to check what happens.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb41-1"><a href="#cb41-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a><span class="co">#| eval: false</span></span>
-<span id="cb41-3"><a href="#cb41-3"></a><span class="fu">summary</span>(cars)</span>
-<span id="cb41-4"><a href="#cb41-4"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb39-1"><a href="#cb39-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-3"><a href="#cb39-3"></a><span class="fu">summary</span>(cars)</span>
+<span id="cb39-4"><a href="#cb39-4"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="in-line-r-code" class="slide level2"><h2>In-Line R code</h2>
 <p>Sometimes we want to insert a value directly into our text. We do that using code in single backticks starting off with <code>r</code>.</p>
@@ -1149,7 +1151,7 @@ Subsubheader
 <p><br></p>
 <p>Maybe we’ve saved a variable in a chunk we want to reference in the text:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">77</span>) <span class="co"># &lt;- is how we assign objects</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">77</span>) <span class="co"># &lt;- is how we assign objects</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -1193,7 +1195,7 @@ Subsubheader
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">head</span>(cars, <span class="dv">5</span>) <span class="co"># prints first 5 rows, can use tail() too</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">head</span>(cars, <span class="dv">5</span>) <span class="co"># prints first 5 rows, can use tail() too</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  speed dist
 1     4    2
@@ -1208,7 +1210,7 @@ Subsubheader
 </h2>
 <p><code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> displays the structure of an object:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">str</span>(cars) <span class="co"># str[ucture]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">str</span>(cars) <span class="co"># str[ucture]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   50 obs. of  2 variables:
  $ speed: num  4 4 7 7 8 9 10 10 10 11 ...
@@ -1218,7 +1220,7 @@ Subsubheader
 <div class="fragment">
 <p><code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> displays summary information <sup>1</sup>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">summary</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">summary</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     speed           dist       
  Min.   : 4.0   Min.   :  2.00  
@@ -1230,57 +1232,57 @@ Subsubheader
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn4"><p><a href="https://adv-r.hadley.nz/oo.html">Note R is <strong>object-oriented</strong></a>: <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> provides different information for different types of objects!</p></li></ol></aside></section><section id="ugly-pictures-of-cars" class="slide level2"><h2>Ugly Pictures of <code>cars</code>
+<aside><ol class="aside-footnotes"><li id="fn6"><p><a href="https://adv-r.hadley.nz/oo.html">Note R is <strong>object-oriented</strong></a>: <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> provides different information for different types of objects!</p></li></ol></aside></section><section id="ugly-pictures-of-cars" class="slide level2"><h2>Ugly Pictures of <code>cars</code>
 </h2>
 <p><code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code> generates a histogram of a vector. Note you can access a vector that is a column of a dataframe using <code>$</code>, the <strong>extract operator</strong>.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="fu">hist</span>(cars<span class="sc">$</span>speed) <span class="co"># Histogram</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">hist</span>(cars<span class="sc">$</span>speed) <span class="co"># Histogram</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-18-1.png" width="480"></p>
+<p><img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-17-1.png" width="480"></p>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">hist</span>(cars<span class="sc">$</span>dist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">hist</span>(cars<span class="sc">$</span>dist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-19-1.png" width="480"></p>
+<p><img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-18-1.png" width="480"></p>
 </div>
 </div>
 </div>
 </div>
 </section><section id="drawing-slightly-less-ugly-pictures" class="slide level2"><h2>Drawing Slightly Less Ugly Pictures</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">hist</span>(cars<span class="sc">$</span>dist,</span>
-<span id="cb55-2"><a href="#cb55-2"></a>     <span class="at">xlab =</span> <span class="st">"Distance (ft)"</span>, <span class="co"># X axis label</span></span>
-<span id="cb55-3"><a href="#cb55-3"></a>     <span class="at">main =</span> <span class="st">"Observed stopping distances of cars"</span>) <span class="co"># Title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="fu">hist</span>(cars<span class="sc">$</span>dist,</span>
+<span id="cb53-2"><a href="#cb53-2"></a>     <span class="at">xlab =</span> <span class="st">"Distance (ft)"</span>, <span class="co"># X axis label</span></span>
+<span id="cb53-3"><a href="#cb53-3"></a>     <span class="at">main =</span> <span class="st">"Observed stopping distances of cars"</span>) <span class="co"># Title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-20-1.png" width="576" class="r-stretch"></section><section id="math-with-cars" class="slide level2"><h2>Math with <code>cars</code>
+<img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-19-1.png" width="576" class="r-stretch"></section><section id="math-with-cars" class="slide level2"><h2>Math with <code>cars</code>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>dist_mean  <span class="ot">&lt;-</span> <span class="fu">mean</span>(cars<span class="sc">$</span>dist) </span>
-<span id="cb56-2"><a href="#cb56-2"></a><span class="fu">print</span>(dist_mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>dist_mean  <span class="ot">&lt;-</span> <span class="fu">mean</span>(cars<span class="sc">$</span>dist) </span>
+<span id="cb54-2"><a href="#cb54-2"></a><span class="fu">print</span>(dist_mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 42.98</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>speed_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(cars<span class="sc">$</span>speed)</span>
-<span id="cb58-2"><a href="#cb58-2"></a><span class="fu">print</span>(speed_mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>speed_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(cars<span class="sc">$</span>speed)</span>
+<span id="cb56-2"><a href="#cb56-2"></a><span class="fu">print</span>(speed_mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 15.4</code></pre>
 </div>
 </div>
 </section><section id="drawing-still-ugly-pictures" class="slide level2"><h2>Drawing Still Ugly Pictures</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">plot</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars,</span>
-<span id="cb60-2"><a href="#cb60-2"></a>     <span class="at">xlab =</span> <span class="st">"Speed (mph)"</span>,</span>
-<span id="cb60-3"><a href="#cb60-3"></a>     <span class="at">ylab =</span> <span class="st">"Stopping distance (ft)"</span>,</span>
-<span id="cb60-4"><a href="#cb60-4"></a>     <span class="at">main =</span> <span class="st">"Speeds and stopping distances of cars"</span>,</span>
-<span id="cb60-5"><a href="#cb60-5"></a>     <span class="at">pch =</span> <span class="dv">16</span>) <span class="co"># Point size</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">plot</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars,</span>
+<span id="cb58-2"><a href="#cb58-2"></a>     <span class="at">xlab =</span> <span class="st">"Speed (mph)"</span>,</span>
+<span id="cb58-3"><a href="#cb58-3"></a>     <span class="at">ylab =</span> <span class="st">"Stopping distance (ft)"</span>,</span>
+<span id="cb58-4"><a href="#cb58-4"></a>     <span class="at">main =</span> <span class="st">"Speeds and stopping distances of cars"</span>,</span>
+<span id="cb58-5"><a href="#cb58-5"></a>     <span class="at">pch =</span> <span class="dv">16</span>) <span class="co"># Point size</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-22-1.png" width="576" class="r-stretch"></section><section id="swiss-time" class="slide level2"><h2>
+<img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-21-1.png" width="576" class="r-stretch"></section><section id="swiss-time" class="slide level2"><h2>
 <code>swiss</code> Time</h2>
 <p>Let’s switch gears to the <code>swiss</code> data frame built in to R.</p>
 <div class="fragment">
@@ -1296,10 +1298,10 @@ Subsubheader
 </section><section id="looking-at-swiss" class="slide level2"><h2>Looking at <code>swiss</code>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61" data-code-line-numbers="|1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">pairs</span>(swiss, <span class="at">pch =</span> <span class="dv">8</span>, <span class="at">col =</span> <span class="st">"violet"</span>,</span>
-<span id="cb61-2"><a href="#cb61-2"></a>      <span class="at">main =</span> <span class="st">"Pairwise comparisons of Swiss variables"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59" data-code-line-numbers="|1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="fu">pairs</span>(swiss, <span class="at">pch =</span> <span class="dv">8</span>, <span class="at">col =</span> <span class="st">"violet"</span>,</span>
+<span id="cb59-2"><a href="#cb59-2"></a>      <span class="at">main =</span> <span class="st">"Pairwise comparisons of Swiss variables"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-23-1.png" width="480"></p>
+<p><img data-src="CSSS508_Lecture1_files/figure-revealjs/unnamed-chunk-22-1.png" width="480"></p>
 </div>
 </div>
 
@@ -1321,8 +1323,8 @@ Subsubheader
 </div>
 </section><section id="making-tables" class="slide level2"><h2>Making Tables</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62" data-code-line-numbers="|1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="fu">library</span>(pander) <span class="co"># loads pander, do once in your session</span></span>
-<span id="cb62-2"><a href="#cb62-2"></a><span class="fu">pander</span>(<span class="fu">summary</span>(swiss), <span class="at">style =</span> <span class="st">"rmarkdown"</span>, <span class="at">split.tables =</span> <span class="dv">120</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60" data-code-line-numbers="|1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">library</span>(pander) <span class="co"># loads pander, do once in your session</span></span>
+<span id="cb60-2"><a href="#cb60-2"></a><span class="fu">pander</span>(<span class="fu">summary</span>(swiss), <span class="at">style =</span> <span class="st">"rmarkdown"</span>, <span class="at">split.tables =</span> <span class="dv">120</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 <div class="custom-small">
@@ -1404,7 +1406,7 @@ Subsubheader
 <p>Note that we put the <code>summary(swiss)</code> function call inside the <code>pander()</code> call. This is called <em>nesting functions</em> and is very common. I’ll introduce a method next week to avoid confusion from nesting too many functions inside each other</p>
 </div></aside></section><section id="data-look-a-little-nicer-this-way" class="slide level2"><h2>Data Look a Little Nicer This Way</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="fu">pander</span>(<span class="fu">head</span>(swiss, <span class="dv">5</span>), <span class="at">style =</span> <span class="st">"rmarkdown"</span>, <span class="at">split.tables =</span> <span class="dv">120</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">pander</span>(<span class="fu">head</span>(swiss, <span class="dv">5</span>), <span class="at">style =</span> <span class="st">"rmarkdown"</span>, <span class="at">split.tables =</span> <span class="dv">120</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 <div class="custom-small">
