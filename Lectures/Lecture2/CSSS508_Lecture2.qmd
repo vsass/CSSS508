@@ -19,6 +19,7 @@ format:
     code-line-numbers: true
     history: false
     progress: true
+    link-external-icon: true
     #logo: "../../images/csss-white.png" # need to add css for size <https://stackoverflow.com/questions/74083521/how-to-increase-size-logo-in-quarto-reveal-js-presentation>
 ---
 
@@ -29,7 +30,6 @@ require(xml2)
 ```
 
 ## {#title-slide data-menu-title="Visualizing Data" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
-
 
 [Visualizing Data]{.custom-title}
 
@@ -95,93 +95,6 @@ We need to run this code every time we open a new R session: **Where should we p
 
 **Answer:** In qmd files, and not the console!
 
-## Comments
-
-You may have noticed that sometimes I have written code that looks like this:
-```{r}
-new.object <- 1:10 # Making vector of 1 to 10 
-```
-
-`#` is known as the *commenting symbol* in R!
-
-Anything written on the same line *after* `#` will not be run by R.
-
-This is useful for annotating your code to remind you (or others) what you are doing in a section.^[In Quarto documents, comments only work in chunks. Outside of a chunk, `#` creates **headers** like "comments" at the top of this slide.]
-
-## Saving Files
-
-You can save an R object on your computer as a file to open later:
-
-```{r}
-save(new.object, file = "new_object.RData")
-```
-
-. . . 
-
-You can open saved files in R as well:
-```{r}
-load("new_object.RData")
-```
-
-. . . 
-
-But where are these files being saved and loaded from?
-
-## Working Directories
-
-R saves files and looks for files to open in your current **working directory**. You
-can ask R what this is:
-
-```{r}
-getwd()
-```
-
-. . . 
-
-Similarly, we can set a working directory like so:
-
-```{r, eval=FALSE}
-setwd("C:/Users/vsass/CSSS508/HW2")
-```
-
-. . . 
-
-*Don't set a working directory in R Markdown documents!* They automatically set the directory they are in as the working directory.
-
-## Managing Files
-
-When managing R projects, it is normally best to give each project (such as a homework
-assignment) its own folder. I use the following system:
-
-. . . 
-
-* Every class or project has its own folder
-. . . 
-
-* Each assignment or task has a folder inside that, which is the working directory for that item.
-
-. . . 
-
-* `.qmd` and `.R` files are named clearly and completely
-
-. . . 
-
-For example, this presentation is located and named this:
-`GitHub/CSSS508/Lectures/Lecture1/CSSS508_Lecture1.qmd`
-
-. . . 
-
-You can use whatever system you want, but be consistent so your projects are organized! 
-You don't want to lose work by losing or overwriting files!
-
-. . . 
-
-For large projects containing many files, I recommend using RStudio's built in project management system found in the top right of the RStudio window.
-
-. . . 
-
-For journal articles I recommend Ben Marwick's [`rrtools`](https://github.com/benmarwick/rrtools) and [`huskydown`](https://github.com/benmarwick/huskydown) for UW dissertations and theses. 
-
 ## File Types
 
 We mainly work with three types of file in this class:
@@ -192,7 +105,7 @@ We mainly work with three types of file in this class:
 
 . . . 
 
-* `.R`: These are **R** *syntax* files, where you write code to process and analyze data *without making an output document*^[While beyond the scope of this class, you can use the `source()` function to run a `.R` script file inside a `.Rmd` or `.R` file. Using this you can break a large project up into multiple files but still run it all at once!].
+* `.R`: These are **R** *syntax* files, where you write code to process and analyze data *without making an output document*^[While beyond the scope of this class, you can use the `source()` function to run a `.R` script file inside a `.qmd` or `.R` file. Using this you can break a large project up into multiple files but still run it all at once!].
 
 . . . 
 
@@ -248,14 +161,14 @@ str(gapminder)
 
    + These are panel data!
 
-## Basics of `ggplot2`
+## Base `R` plot
 
 :::: {.columns}
 ::: {.column width="50%"}
 ```{r}
 #| eval=FALSE
-China <- subset(gapminder,
-          gapminder$country == "China")
+China <- gapminder |> 
+  filter(country == "China")
 plot(lifeExp ~ year, 
      data = China, 
      xlab = "Year", 
@@ -264,6 +177,8 @@ plot(lifeExp ~ year,
      col = "red", 
      pch = 16)
 ```
+
+<br>
 
 This plot is made with *one function* and *many arguments.*
 
@@ -281,7 +196,7 @@ plot(lifeExp ~ year, data = China, xlab = "Year", ylab = "Life expectancy",
 ::::
 
 ::: aside
-Note: Don't worry about the code used to create the object `China`. We'll explore data manipulation next week!
+Note: Don't worry about the code used to create the object `China`. We'll explore data manipulation in a couple weeks!
 :::
 
 ## Fancier: `ggplot`
@@ -299,7 +214,9 @@ ggplot(data = China,
   theme_bw(base_size=18)
 ```
 
-  This `ggplot` is made with *many functions* and *fewer arguments* in each.
+<br>
+
+This `ggplot` is made with *many functions* and *fewer arguments* in each.
 :::
 ::: {.column width="50%"}
 ```{r}
@@ -331,15 +248,15 @@ The `ggplot2` package provides an alternative toolbox for plotting.
 library(ggplot2)
 ```
 
-The core idea underlying this package is the [**layered grammar of graphics**](https://vita.had.co.nz/papers/layered-grammar.pdf): we can break up elements of a plot into pieces and combine them.
+The core idea underlying this package is the [**layered grammar of graphics**](https://vita.had.co.nz/papers/layered-grammar.pdf): i.e. we can break up elements of a plot into pieces and combine them.
 
 . . . 
 
 `ggplot`s are a bit harder to create, but are usually: 
 
-* prettier, 
-* more professional, and
-* more customizable!
+* prettier
+* more professional
+* more customizable
 
 ## Layered grammar of graphics 
 
@@ -399,7 +316,7 @@ We'll now build up two `ggplot`s together that demonstrate common layers and aes
 
 ## Axis Labels, Points, No Background
 
-### 1: Base Plot
+### Base `ggplot`
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -428,7 +345,7 @@ Initialize the plot with `ggplot()` and `x` and `y` aesthetics **mapped** to var
 
 ## Axis Labels, Points, No Background
 
-### 2: Scatterplot
+### Scatterplot
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -458,7 +375,7 @@ Add a scatterplot **layer**.
 
 ## Axis Labels, Points, No Background
 
-### 3: Point Color and Size
+### Point Color and Size
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -488,7 +405,7 @@ ggplot(data = China,
 
 ## Axis Labels, Points, No Background
 
-### 4: X-Axis Label
+### X-Axis Label
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -521,7 +438,7 @@ Add a layer to capitalize the x-axis label.
 
 ## Axis Labels, Points, No Background
 
-### 5: Y-Axis Label
+### Y-Axis Label
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -555,7 +472,7 @@ Add a layer to clean up the y-axis label.
 
 ## Axis Labels, Points, No Background
 
-### 6: Title
+### Title
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -591,7 +508,7 @@ Add a title layer.
 
 ## Axis Labels, Points, No Background
 
-### 7: Theme
+### Theme
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -629,7 +546,7 @@ Pick a nicer theme with a new layer.
 
 ## Axis Labels, Points, No Background
 
-### 8: Text Size
+### Text Size
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -673,7 +590,7 @@ We have a plot we like for China...
 
 ## Plotting All Countries
 
-### 1: A Mess!
+### A Mess!
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -711,7 +628,7 @@ We can't tell countries apart! Maybe we could follow *lines*?
 
 ## Plotting All Countries
 
-### 2: Lines
+### Lines
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -749,7 +666,7 @@ ggplot(data = gapminder,
 
 ## Plotting All Countries
 
-### 3: Grouping
+### Grouping
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -789,7 +706,7 @@ That looks more reasonable... but the lines are too thick!
 
 ## Plotting All Countries
 
-### 4: Size
+### Size
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -829,7 +746,7 @@ Much better... but maybe we can do highlight regional differences?
 
 ## Plotting All Countries
 
-### 5: Color
+### Color
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -871,7 +788,7 @@ Patterns are obvious... but it might be even more impactful if we separate conti
 
 ## Plotting All Countries
 
-### 6: Facets
+### Facets
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -915,7 +832,7 @@ Now the text is too big!
 
 ## Plotting All Countries
 
-### 7: Text Size
+### Text Size
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -959,7 +876,7 @@ Better. Do we even need the legend anymore?
 
 ## Plotting All Countries
 
-### 8: No Legend
+### No Legend
 
 :::: {.columns}
 :::{.column width="50%"}
@@ -1000,7 +917,7 @@ ggplot(data = gapminder,
 ::::
 
 ::: aside
-Looking good! But the x-axis still looks a little smooshed :(
+Looking good!
 :::
 
 ## Advanced ggplot tools
@@ -1137,14 +1054,46 @@ You can modify these with a `scale_[aesthetic]_[option]()` layer:
 #| fig-height: 6
 #| fig-width: 10
 #| fig-align: center
-#| code-line-numbers: "4"
+#| code-line-numbers: "4, 5-6"
+#| eval: false
 lifeExp_by_year +
   theme(legend.position = c(0.8, 0.2)) +
   scale_color_manual(
     name = "Which continent are\nwe looking at?", # \n adds a line break 
-    values = c("Africa" = "seagreen", "Americas" = "turquoise1", 
-               "Asia" = "royalblue", "Europe" = "violetred1", "Oceania" = "yellow"))
+    values = c("Africa" = "#4e79a7", "Americas" = "#f28e2c", 
+               "Asia" = "#e15759", "Europe" = "#76b7b2", "Oceania" = "#59a14f"))
 ```
+
+:::: {.columns}
+
+::: {.column width="70%"}
+```{r}
+#| fig-height: 6
+#| fig-width: 10
+#| fig-align: center
+#| eval: true
+#| echo: false
+lifeExp_by_year +
+  theme(legend.position = c(0.8, 0.2)) +
+  scale_color_manual(
+    name = "Which continent are\nwe looking at?", # \n adds a line break 
+    values = c("Africa" = "#4e79a7", "Americas" = "#f28e2c", 
+               "Asia" = "#e15759", "Europe" = "#76b7b2", "Oceania" = "#59a14f"))
+```
+:::
+
+::: {.column width="30%"}
+
+<br>
+
+<br>
+
+::: {.callout-note}
+This scale arguement knows to "map" onto `continent` because it is specified as an aesthetic in our original ggplot object.
+:::
+:::
+
+::::
 
 # Bonus: Advanced Example!{.section-title background-color="#99a486"}
 
@@ -1169,7 +1118,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   theme(legend.position=c(0.82, 0.15), axis.text.x = element_text(angle = 45)) #<<
 ```
 
-## 1. Base Plot
+## Base `ggplot` 
 
 ::: {.panel-tabset}
 
@@ -1177,8 +1126,9 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 
 ```{r}
 #| eval: false
-#| code-line-numbers: "1"
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) 
+#| code-line-numbers: "1-2"
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) 
 ```
 
 ### Plot
@@ -1189,7 +1139,8 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country))
 #| fig-height: 6
 #| fig-width: 10
 #| fig-align: center
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) 
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) 
 ```
 :::
 
@@ -1197,7 +1148,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country))
 What might be a good `geom` layer for this data?
 :::
 
-## 2. Lines
+## Lines
 
 ::: {.panel-tabset}
 
@@ -1205,8 +1156,9 @@ What might be a good `geom` layer for this data?
 
 ```{r}
 #| eval: false
-#| code-line-numbers: "2"
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+#| code-line-numbers: "3"
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
   geom_line() 
 ```
 
@@ -1218,16 +1170,18 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 #| fig-height: 6
 #| fig-width: 10
 #| fig-align: center
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
   geom_line() 
 ```
-:::
 
 ::: aside
 Let's add a continent-specific average so we can visualize country-deviations from the regional average. 
 :::
 
-## 3. Continent Average
+:::
+
+## Continent Average
 
 ::: {.panel-tabset}
 
@@ -1235,10 +1189,12 @@ Let's add a continent-specific average so we can visualize country-deviations fr
 
 ```{r}
 #| eval: false
-#| code-line-numbers: "3-4"
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+#| code-line-numbers: "4-6"
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
-  geom_line(stat = "smooth", method = "loess", 
+  geom_line(stat = "smooth", 
+            method = "loess", 
             aes(group = continent)) 
 ```
 
@@ -1250,22 +1206,20 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 #| fig-height: 6
 #| fig-width: 10
 #| fig-align: center
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
-  geom_line(stat = "smooth", method = "loess", 
+  geom_line(stat = "smooth", 
+            method = "loess", 
             aes(group = continent)) 
 ```
 :::
 
 ::: aside
-Note: A [*loess* curve](https://en.wikipedia.org/wiki/Local_regression) is something like a moving average.
-
-. . . 
-
-Let's use the facets to gain a clearer understanding of the regional patterns. 
+A [*loess* curve](https://en.wikipedia.org/wiki/Local_regression) is something like a moving average.
 :::
 
-## 4. Facets
+## Facets
 
 ::: {.panel-tabset}
 
@@ -1273,12 +1227,15 @@ Let's use the facets to gain a clearer understanding of the regional patterns.
 
 ```{r}
 #| eval: false
-#| code-line-numbers: "5"
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+#| code-line-numbers: "7-8"
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
-  geom_line(stat = "smooth", method = "loess", 
+  geom_line(stat = "smooth", 
+            method = "loess", 
             aes(group = continent)) +
-  facet_wrap(~ continent, nrow = 2)
+  facet_wrap(~ continent, 
+             nrow = 2)
 ```
 
 ### Plot
@@ -1289,19 +1246,23 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 #| fig-height: 6
 #| fig-width: 10
 #| fig-align: center
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
-  geom_line(stat = "smooth", method = "loess", 
+  geom_line(stat = "smooth", 
+            method = "loess", 
             aes(group = continent)) +
   facet_wrap(~ continent, nrow = 2)
 ```
 :::
 
 ::: aside
+Facets allow us to gain a clearer understanding of the regional patterns. 
+
 We want to differentiate the continent-average line from the country-specific lines so let's change it's color. 
 :::
 
-## 5. Color Scale
+## Color Scale 
 
 ::: {.panel-tabset}
 
@@ -1310,12 +1271,15 @@ We want to differentiate the continent-average line from the country-specific li
 ```{r}
 #| eval: false
 #| code-line-numbers: "6"
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
-  geom_line(stat = "smooth", method = "loess", 
+  geom_line(stat = "smooth", 
+            method = "loess", 
             aes(group = continent)) +
   facet_wrap(~ continent, nrow = 2) +
-  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue"))
+  scale_color_manual(name = "Life Exp. for:", 
+                     values = c("Country" = "black", "Continent" = "blue"))
 ```
 
 ### Plot
@@ -1326,20 +1290,24 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 #| fig-height: 6
 #| fig-width: 10
 #| fig-align: center
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
-  geom_line(stat = "smooth", method = "loess", 
+  geom_line(stat = "smooth", 
+            method = "loess", 
             aes(group = continent)) +
   facet_wrap(~ continent, nrow = 2) +
-  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue"))
+  scale_color_manual(name = "Life Exp. for:", 
+                     values = c("Country" = "black", "Continent" = "blue"))
 ```
-:::
 
 ::: aside
 It's hard to see when it's thickness is not also differentiated. Let's change that. 
 :::
 
-## 6. Size Scale
+:::
+
+## Size Scale
 
 ::: {.panel-tabset}
 
@@ -1348,13 +1316,18 @@ It's hard to see when it's thickness is not also differentiated. Let's change th
 ```{r}
 #| eval: false
 #| code-line-numbers: "7"
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
-  geom_line(stat = "smooth", method = "loess", 
+  geom_line(stat = "smooth", 
+            method = "loess", 
             aes(group = continent)) +
-  facet_wrap(~ continent, nrow = 2) +
-  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
-  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3))
+  facet_wrap(~ continent, 
+             nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", 
+                     values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", 
+                    values = c("Country" = 0.25, "Continent" = 3))
 ```
 
 ### Plot
@@ -1365,17 +1338,22 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 #| fig-height: 6
 #| fig-width: 10
 #| fig-align: center
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
-  geom_line(stat = "smooth", method = "loess", 
+  geom_line(stat = "smooth", 
+            method = "loess", 
             aes(group = continent)) +
-  facet_wrap(~ continent, nrow = 2) +
-  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
-  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3))
+  facet_wrap(~ continent, 
+             nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", 
+                     values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", 
+                    values = c("Country" = 0.25, "Continent" = 3))
 ```
 :::
 
-## 7. Alpha (Transparency)
+## Alpha (Transparency)
 
 ::: {.panel-tabset}
 
@@ -1384,13 +1362,18 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 ```{r}
 #| eval: false
 #| code-line-numbers: "2,4"
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
-  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, 
+            aes(color = "Country", size = "Country")) +
   geom_line(stat = "smooth", method = "loess", 
-            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
+            aes(group = continent, color = "Continent", size = "Continent"), 
+            alpha = 0.5) +
   facet_wrap(~ continent, nrow = 2) +
-  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
-  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3))
+  scale_color_manual(name = "Life Exp. for:", 
+                     values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", 
+                    values = c("Country" = 0.25, "Continent" = 3))
 ```
 
 ### Plot
@@ -1401,13 +1384,20 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 #| fig-height: 6
 #| fig-width: 10
 #| fig-align: center
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
-  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
-  geom_line(stat = "smooth", method = "loess", 
-            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
-  facet_wrap(~ continent, nrow = 2) +
-  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
-  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3))
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, 
+            aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", 
+            method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), 
+            alpha = 0.5) +
+  facet_wrap(~ continent, 
+             nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", 
+                     values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", 
+                    values = c("Country" = 0.25, "Continent" = 3))
 ```
 :::
 
@@ -1415,7 +1405,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 Now we're getting somewhere! We can also add useful labels and clean up the theme. 
 :::
 
-## 8. Theme and Labels
+## Theme and Labels
 
 ::: {.panel-tabset}
 
@@ -1424,14 +1414,21 @@ Now we're getting somewhere! We can also add useful labels and clean up the them
 ```{r}
 #| eval: false
 #| code-line-numbers: "8"
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
-  geom_line(stat = "smooth", method = "loess", 
+  geom_line(stat = "smooth", 
+            method = "loess", 
             aes(group = continent)) +
-  facet_wrap(~ continent, nrow = 2) +
-  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
-  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
-  theme_minimal(base_size = 14) + ylab("Years") + xlab("")
+  facet_wrap(~ continent, 
+             nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", 
+                     values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", 
+                    values = c("Country" = 0.25, "Continent" = 3)) +
+  theme_minimal(base_size = 14) + 
+  ylab("Years") + 
+  xlab("")
 ```
 
 ### Plot
@@ -1442,14 +1439,23 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 #| fig-height: 6
 #| fig-width: 10
 #| fig-align: center
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
-  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
-  geom_line(stat = "smooth", method = "loess", 
-            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
-  facet_wrap(~ continent, nrow = 2) +
-  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
-  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
-  theme_minimal(base_size = 14) + ylab("Years") + xlab("")
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, 
+            aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", 
+            method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), 
+            alpha = 0.5) +
+  facet_wrap(~ continent, 
+             nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", 
+                     values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", 
+                    values = c("Country" = 0.25, "Continent" = 3)) +
+  theme_minimal(base_size = 14) + 
+  ylab("Years") + 
+  xlab("")
 ```
 :::
 
@@ -1457,7 +1463,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 What's our plot showing? We should be explicit about that. 
 :::
 
-## 9. Title and Subtitle
+## Title and Subtitle
 
 ::: {.panel-tabset}
 
@@ -1466,15 +1472,23 @@ What's our plot showing? We should be explicit about that.
 ```{r}
 #| eval: false
 #| code-line-numbers: "9"
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
-  geom_line(stat = "smooth", method = "loess", 
+  geom_line(stat = "smooth", 
+            method = "loess", 
             aes(group = continent)) +
-  facet_wrap(~ continent, nrow = 2) +
-  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
-  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
-  theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
-  ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country")
+  facet_wrap(~ continent, 
+             nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", 
+                     values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", 
+                    values = c("Country" = 0.25, "Continent" = 3)) +
+  theme_minimal(base_size = 14) + 
+  ylab("Years") + 
+  xlab("") + 
+  ggtitle("Life Expectancy, 1952-2007", 
+          subtitle = "By continent and country")
 ```
 
 ### Plot
@@ -1485,15 +1499,25 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 #| fig-height: 6
 #| fig-width: 10
 #| fig-align: center
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
-  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
-  geom_line(stat = "smooth", method = "loess", 
-            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
-  facet_wrap(~ continent, nrow = 2) +
-  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
-  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
-  theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
-  ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country")
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, 
+            aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", 
+            method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), 
+            alpha = 0.5) +
+  facet_wrap(~ continent, 
+             nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", 
+                     values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", 
+                    values = c("Country" = 0.25, "Continent" = 3)) +
+  theme_minimal(base_size = 14) + 
+  ylab("Years") + 
+  xlab("") + 
+  ggtitle("Life Expectancy, 1952-2007", 
+          subtitle = "By continent and country")
 ```
 :::
 
@@ -1501,7 +1525,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 The x-axis feels a little busy right now...
 :::
 
-## 10. Angled Tick Values
+## Angled Tick Values
 
 ::: {.panel-tabset}
 
@@ -1510,15 +1534,23 @@ The x-axis feels a little busy right now...
 ```{r}
 #| eval: false
 #| code-line-numbers: "10"
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
-  geom_line(stat = "smooth", method = "loess", 
+  geom_line(stat = "smooth", 
+            method = "loess", 
             aes(group = continent)) +
-  facet_wrap(~ continent, nrow = 2) +
-  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
-  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
-  theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
-  ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") +
+  facet_wrap(~ continent, 
+             nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", 
+                     values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", 
+                    values = c("Country" = 0.25, "Continent" = 3)) +
+  theme_minimal(base_size = 14) + 
+  ylab("Years") + 
+  xlab("") + 
+  ggtitle("Life Expectancy, 1952-2007", 
+          subtitle = "By continent and country") +
   theme(axis.text.x = element_text(angle = 45)) 
 ```
 
@@ -1530,15 +1562,25 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 #| fig-height: 6
 #| fig-width: 10
 #| fig-align: center
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
-  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
-  geom_line(stat = "smooth", method = "loess", 
-            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
-  facet_wrap(~ continent, nrow = 2) +
-  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
-  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
-  theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
-  ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") +
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, 
+            aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", 
+            method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), 
+            alpha = 0.5) +
+  facet_wrap(~ continent, 
+             nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", 
+                     values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", 
+                    values = c("Country" = 0.25, "Continent" = 3)) +
+  theme_minimal(base_size = 14) + 
+  ylab("Years") + 
+  xlab("") + 
+  ggtitle("Life Expectancy, 1952-2007", 
+          subtitle = "By continent and country") +
   theme(axis.text.x = element_text(angle = 45)) 
 ```
 :::
@@ -1549,7 +1591,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 Note: Fewer values might be better than angled labels!
 :::
 
-## 11. Legend Position
+## Legend Position
 
 ::: {.panel-tabset}
 
@@ -1558,16 +1600,25 @@ Note: Fewer values might be better than angled labels!
 ```{r}
 #| eval: false
 #| code-line-numbers: "10"
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
   geom_line() +
-  geom_line(stat = "smooth", method = "loess", 
+  geom_line(stat = "smooth", 
+            method = "loess", 
             aes(group = continent)) +
-  facet_wrap(~ continent, nrow = 2) +
-  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
-  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
-  theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
-  ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") +
-  theme(legend.position=c(0.82, 0.15), axis.text.x = element_text(angle = 45))
+  facet_wrap(~ continent, 
+             nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", 
+                     values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", 
+                    values = c("Country" = 0.25, "Continent" = 3)) +
+  theme_minimal(base_size = 14) + 
+  ylab("Years") + 
+  xlab("") + 
+  ggtitle("Life Expectancy, 1952-2007", 
+          subtitle = "By continent and country") +
+  theme(legend.position=c(0.82, 0.15), 
+        axis.text.x = element_text(angle = 45))
 ```
 
 ### Plot
@@ -1578,16 +1629,27 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
 #| fig-height: 6
 #| fig-width: 10
 #| fig-align: center
-ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
-  geom_line(alpha = 0.5, aes(color = "Country", size = "Country")) +
-  geom_line(stat = "smooth", method = "loess", 
-            aes(group = continent, color = "Continent", size = "Continent"), alpha = 0.5) +
-  facet_wrap(~ continent, nrow = 2) +
-  scale_color_manual(name = "Life Exp. for:", values = c("Country" = "black", "Continent" = "blue")) +
-  scale_size_manual(name = "Life Exp. for:", values = c("Country" = 0.25, "Continent" = 3)) +
-  theme_minimal(base_size = 14) + ylab("Years") + xlab("") + 
-  ggtitle("Life Expectancy, 1952-2007", subtitle = "By continent and country") +
-  theme(legend.position=c(0.82, 0.15), axis.text.x = element_text(angle = 45))
+ggplot(data = gapminder, 
+       aes(x = year, y = lifeExp, group = country)) +
+  geom_line(alpha = 0.5, 
+            aes(color = "Country", size = "Country")) +
+  geom_line(stat = "smooth", 
+            method = "loess", 
+            aes(group = continent, color = "Continent", size = "Continent"), 
+            alpha = 0.5) +
+  facet_wrap(~ continent, 
+             nrow = 2) +
+  scale_color_manual(name = "Life Exp. for:", 
+                     values = c("Country" = "black", "Continent" = "blue")) +
+  scale_size_manual(name = "Life Exp. for:", 
+                    values = c("Country" = 0.25, "Continent" = 3)) +
+  theme_minimal(base_size = 14) + 
+  ylab("Years") + 
+  xlab("") + 
+  ggtitle("Life Expectancy, 1952-2007", 
+          subtitle = "By continent and country") +
+  theme(legend.position=c(0.82, 0.15), 
+        axis.text.x = element_text(angle = 45))
 ```
 :::
 
@@ -1613,7 +1675,7 @@ Voilà!
   
   + The [RStudio ggplot Cheatsheets](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf).
   
-  + Kieran Healy's book [Data Visualization: A Practical Introduction](https://socviz.co/) (right) which is targeted at social scientists without technical backgrounds and uses the same tools we'll be learning in this class.
+  + Kieran Healy's book [Data Visualization: A Practical Introduction](https://socviz.co/) (right) is targeted at social scientists without technical backgrounds and uses the same tools we'll be learning in this class.
 :::
 :::{.column width="50%"}
 ![](images/dataviz_kieranhealy.jpeg)

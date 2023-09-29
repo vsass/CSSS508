@@ -460,10 +460,10 @@
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">median</span>(<span class="fu">sqrt</span>(<span class="fu">log</span>(<span class="fu">mean</span>(gapminder<span class="sc">$</span>pop))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
-<p>With nested functions, like those above, you need to read the order of operations from inside to outside which is a bit awkward. Furthermore, it’s plain confusing if you need to perform many function calls on your data for plotting or data manipulation purposes. Even more so if your functions take more than one argument!</p>
+<p>With nested functions, like those above, you need to read the order of operations inside out, which is a bit awkward. It becomes even more confusing the more function calls you have, especially when they have multiple arguments each.</p>
 </div>
 <div class="fragment">
-<p><strong>Enter the pipe:</strong> <code>|&gt;</code></p>
+<p><strong>Enter the pipe<sup>1</sup>:</strong> <code>|&gt;</code></p>
 <p>Pipes read “left to right” which is much more intuitive!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>gapminder<span class="sc">$</span>pop <span class="sc">|&gt;</span> <span class="fu">mean</span>() <span class="sc">|&gt;</span> <span class="fu">log</span>() <span class="sc">|&gt;</span> <span class="fu">sqrt</span>() <span class="sc">|&gt;</span> <span class="fu">median</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -475,11 +475,11 @@
 </ul>
 </div>
 </div>
+<aside><ol class="aside-footnotes"><li id="fn2"><p><a href="https://en.wikipedia.org/wiki/The_Treachery_of_Images">Ceci n’est pas une pipe.</a></p></li></ol></aside></section><section id="pipes-1" class="slide level2"><h2>Pipes</h2>
+<p>As you can see, pipes allow us to “chain” many function calls together easily.</p>
 <div class="fragment">
-<p>As you can see, this allows us to “chain” many function calls together easily.</p>
-</div>
-</section><section id="pipes-1" class="slide level2"><h2>Pipes</h2>
 <p>The so-called “native pipe” (i.e.&nbsp;built into base <code>R</code>) is relatively new. Before this, the pipe was a function from the <code>magrittr</code> package that looks like this: <code>%&gt;%</code>.</p>
+</div>
 <div class="fragment">
 <p>This latter version continues to work and has a different functionality than the new, native pipe.</p>
 </div>

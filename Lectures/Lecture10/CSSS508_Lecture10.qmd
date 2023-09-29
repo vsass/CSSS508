@@ -125,11 +125,11 @@ median(sqrt(log(mean(gapminder$pop))))
 
 . . . 
 
-With nested functions, like those above, you need to read the order of operations from inside to outside which is a bit awkward. Furthermore, it's plain confusing if you need to perform many function calls on your data for plotting or data manipulation purposes. Even more so if your functions take more than one argument!
+With nested functions, like those above, you need to read the order of operations inside out, which is a bit awkward. It becomes even more confusing the more function calls you have, especially when they have multiple arguments each. 
 
 . . . 
 
-**Enter the pipe:** `|>`
+**Enter the pipe^[[Ceci n'est pas une pipe.](https://en.wikipedia.org/wiki/The_Treachery_of_Images)]:** `|>`
 
 Pipes read "left to right" which is much more intuitive! 
 
@@ -143,11 +143,11 @@ gapminder$pop |> mean() |> log() |> sqrt() |> median()
 * The result of that function call is then "piped" to the first **unnamed** argument of the second function (`log()`). 
 :::
 
+## Pipes
+
+As you can see, pipes allow us to "chain" many function calls together easily. 
+
 . . . 
-
-As you can see, this allows us to "chain" many function calls together easily. 
-
-## Pipes 
 
 The so-called "native pipe" (i.e. built into base `R`) is relatively new. Before this, the pipe was a function from the `magrittr` package that looks like this: `%>%`. 
 
