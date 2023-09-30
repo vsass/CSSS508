@@ -1369,7 +1369,7 @@
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#due-dates",
     "title": "",
     "section": "Due dates",
-    "text": "Due dates\n\n\nSection AA:\n\nHomework #3 due Tuesday, October 24th (before lecture)\nPeer grading due Sunday, October 29nd (by 4:30pm)\n\n\n\n\n\n\nSection AB:\n\nHomework #3 due Thursday, October 26th (before lab)\nPeer grading due Tuesday, October 31th (before lecture)"
+    "text": "Due dates\n\n\n\n\n\n\n\n\n#\n      \n        Section AA\n      \n      \n        Section AB\n      \n    \n\nHomework Due\n      Peer Review Due\n      Homework Due\n      Peer Review Due\n    \n\n\n\n1\n10 October\n15 October\n12 October\n17 October\n\n\n2\n17 October\n22 October\n19 October\n24 October\n\n\n3\n24 October\n29 October\n26 October\n31 October\n\n\n4\n31 October\n5 November\n2 November\n7 November\n\n\n5\n7 November\n12 November\n9 November\n14 November\n\n\n6\n14 November\n19 November\n16 November\n21 November\n\n\n7\n21 November\n26 November\n23 November\n28 November\n\n\n8\n28 November\n3 November\n30 November\n5 November\n\n\n9\n5 December\n10 December\n7 December\n12 December"
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#answers",
@@ -3369,7 +3369,7 @@
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#title-slide",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#title-slide",
-    "title": "Roadmap",
+    "title": "",
     "section": "",
     "text": "Workflow & Reproducibility\nCS&SS 508 • Lecture 3\n17 October 2023\nVictoria Sass"
   },
@@ -5889,79 +5889,79 @@
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#naming-variables",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#naming-variables",
-    "title": "Roadmap",
+    "title": "",
     "section": "Naming Variables",
-    "text": "Naming Variables\nIt’s good practice to name variables using only lowercase letters, numbers, and _ (to separate words).\n. . .\nRemember to give them descriptive names, even if that means they’re longer.\n. . .\nIf you have many related variables, try and be consistent with your naming convention.\n\nA common prefix is preferable to a common suffix due to RStudio’s autocomplete feature.\n\n\n# Code goal: \nshort_flights &lt;- flights |&gt; \n  filter(air_time &lt; 60)\n\n# Code foul: \nSHORTFLIGHTS &lt;- flights |&gt; \n  filter(air_time &lt; 60)"
+    "text": "Naming Variables\nIt’s good practice to name variables using only lowercase letters, numbers, and _ (to separate words).\n\nRemember to give them descriptive names, even if that means they’re longer.\n\n\nIf you have many related variables, try and be consistent with your naming convention.\n\nA common prefix is preferable to a common suffix due to RStudio’s autocomplete feature.\n\n\n# Code goal: \nshort_flights &lt;- flights |&gt; \n  filter(air_time &lt; 60)\n\n# Code foul: \nSHORTFLIGHTS &lt;- flights |&gt; \n  filter(air_time &lt; 60)"
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#spacing",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#spacing",
-    "title": "Roadmap",
+    "title": "",
     "section": "Spacing",
-    "text": "Spacing\nFor readability you’ll want to put spaces around all mathematical operators1 (i.e. +, -, ==, &lt;, etc.) as well as the assignment operator (&lt;-).1 except for ^\n\n# Code goals: \nz &lt;- (a + b)^2 / d\nmean(x, na.rm = TRUE)\n\n# Code foul: \nz&lt;-( a + b ) ^ 2/d\nmean (x ,na.rm=TRUE)\n\n. . .\nTo make code easier to skim quickly it’s alright to add extra space for better alignment.\n\nflights |&gt; \n  mutate(\n    speed      = distance / air_time,\n    dep_hour   = dep_time %/% 100,\n    dep_minute = dep_time %%  100\n  )"
+    "text": "Spacing\nFor readability you’ll want to put spaces around all mathematical operators1 (i.e. +, -, ==, &lt;, etc.) as well as the assignment operator (&lt;-).\n\n# Code goals: \nz &lt;- (a + b)^2 / d\nmean(x, na.rm = TRUE)\n\n# Code foul: \nz&lt;-( a + b ) ^ 2/d\nmean (x ,na.rm=TRUE)\n\n\nTo make code easier to skim quickly it’s alright to add extra space for better alignment.\n\nflights |&gt; \n  mutate(\n    speed      = distance / air_time,\n    dep_hour   = dep_time %/% 100,\n    dep_minute = dep_time %%  100\n  )\n\n\nexcept for ^"
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#pipes",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#pipes",
-    "title": "Roadmap",
+    "title": "",
     "section": "Pipes",
-    "text": "Pipes\nAs you begin to use more functions, sequentially, it can start to get unclear what’s happening when, and to what.\n\nmedian(sqrt(log(mean(gapminder$pop))))\n\n. . .\nWith nested functions, like those above, you need to read the order of operations inside out, which is a bit awkward. It becomes even more confusing the more function calls you have, especially when they have multiple arguments each.\n. . .\nEnter the pipe2:2 Ceci n’est pas une pipe. |&gt;\nPipes read “left to right” which is much more intuitive!\n\ngapminder$pop |&gt; mean() |&gt; log() |&gt; sqrt() |&gt; median()\n\n\n\nThe above code takes what’s on the left-hand side of |&gt; and gives it as the first unnamed argument to the first function (mean()).\nThe result of that function call is then “piped” to the first unnamed argument of the second function (log())."
+    "text": "Pipes\nAs you begin to use more functions, sequentially, it can start to get unclear what’s happening when, and to what.\n\nmedian(sqrt(log(mean(gapminder$pop))))\n\n\nWith nested functions, like those above, you need to read the order of operations inside out, which is a bit awkward. It becomes even more confusing the more function calls you have, especially when they have multiple arguments each.\n\n\nEnter the pipe1: |&gt;\nPipes read “left to right” which is much more intuitive!\n\ngapminder$pop |&gt; mean() |&gt; log() |&gt; sqrt() |&gt; median()\n\n\n\nThe above code takes what’s on the left-hand side of |&gt; and gives it as the first unnamed argument to the first function (mean()).\nThe result of that function call is then “piped” to the first unnamed argument of the second function (log()).\n\n\n\nCeci n’est pas une pipe."
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#pipes-1",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#pipes-1",
-    "title": "Roadmap",
+    "title": "",
     "section": "Pipes",
-    "text": "Pipes\nAs you can see, pipes allow us to “chain” many function calls together easily.\n. . .\nThe so-called “native pipe” (i.e. built into base R) is relatively new. Before this, the pipe was a function from the magrittr package that looks like this: %&gt;%.\n. . .\nThis latter version continues to work and has a different functionality than the new, native pipe.\n. . .\nMost importantly, while both the magrittr pipe and the native pipe take the RHS (right-hand side) and “pipe” it to the LHS (left-hand side), they operate differently when it comes to explicitly specifying which argument of the LHS to pipe the RHS into.\n. . .\n\n# magrittr pipe\na %&gt;% gsub('A', '-', x = .)\n\n# native pipe\na |&gt; gsub('A','-', x = _) # _ is the placeholder for |&gt; \na |&gt; gsub(pattern = 'A', replacement = '-') # leaving the \"piped\" argument as the only unnamed argument also works \na |&gt; (\\(.) gsub('A', '-', x = .))() # using an anonymous function call allow you to be explicit while specifying your own placeholder\n\n. . .\n\n\nYou can read more about the differences between |&gt; and %&gt;% here and anonymous functions here. Code above comes from responses to this stackoverflow post."
+    "text": "Pipes\nAs you can see, pipes allow us to “chain” many function calls together easily.\n\nThe so-called “native pipe” (i.e. built into base R) is relatively new. Before this, the pipe was a function from the magrittr package that looks like this: %&gt;%.\n\n\nThis latter version continues to work and has a different functionality than the new, native pipe.\n\n\nMost importantly, while both the magrittr pipe and the native pipe take the RHS (right-hand side) and “pipe” it to the LHS (left-hand side), they operate differently when it comes to explicitly specifying which argument of the LHS to pipe the RHS into.\n\n\n\n# magrittr pipe\na %&gt;% gsub('A', '-', x = .)\n\n# native pipe\na |&gt; gsub('A','-', x = _) # _ is the placeholder for |&gt; \na |&gt; gsub(pattern = 'A', replacement = '-') # leaving the \"piped\" argument as the only unnamed argument also works \na |&gt; (\\(.) gsub('A', '-', x = .))() # using an anonymous function call allow you to be explicit while specifying your own placeholder\n\n\n\n\n\n\nYou can read more about the differences between |&gt; and %&gt;% here and anonymous functions here. Code above comes from responses to this stackoverflow post."
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#pipes-2",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#pipes-2",
-    "title": "Roadmap",
+    "title": "",
     "section": "Pipes",
     "text": "Pipes\nSome good syntax practices:\n\nYou should always put a space before |&gt; and it should usually be the last thing on a line.\n\nNew functions should be on a new line, indented 2 spaces (RStudio will automatically do this for you)\nNamed arguments within a function should also get their own line\n\n\n# code goals\nflights |&gt;  \n  group_by(tailnum) |&gt; \n  summarize(\n    delay = mean(arr_delay, na.rm = TRUE),\n    n = n()\n  )\n\n# code fouls\nflights |&gt;\n  group_by(\n    tailnum\n  ) |&gt; \n  summarize(delay = mean(arr_delay, na.rm = TRUE), n = n())"
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#r-scripts",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#r-scripts",
-    "title": "Roadmap",
+    "title": "",
     "section": ".R scripts",
-    "text": ".R scripts\nWe’ve been working with Quarto documents but you’ll sometimes simply want to use an R script, which is basically an entire file that is just a code chunk.\n\nWhy would you prefer an .R file over a .qmd file?When might you use a .qmd file?\n\n\n\nYou just need to run code, without the need for accompanying text output and plots in the same document. Examples include:\n\nReading in and cleaning/manipulating your data before analysis\nWriting functions you’ll use throughout your project\nGetting descriptive statistics/making descriptive plots of data\nRunning models and generating tables/plots of their results\n\n\n\n\n\nHomework assignments (like for this class) that require you to show code, describe your process for arriving at your solution, and include any results (i.e. tables, statistics, visualizations)\nAcademic articles\nPresentations for class, conferences, talks, etc.\nTheses/dissertations\nInteractive visualizations (i.e. widgets)\nBuilding your own website"
+    "text": ".R scripts\nWe’ve been working with Quarto documents but you’ll sometimes simply want to use an R script, which is basically an entire file that is just a code chunk.\n\n\nWhy would you prefer an .R file over a .qmd file?\nWhen might you use a .qmd file?\n\n\n\n\nYou just need to run code, without the need for accompanying text output and plots in the same document. Examples include:\n\nReading in and cleaning/manipulating your data before analysis\nWriting functions you’ll use throughout your project\nGetting descriptive statistics/making descriptive plots of data\nRunning models and generating tables/plots of their results\n\n\n\n\n\n\nHomework assignments (like for this class) that require you to show code, describe your process for arriving at your solution, and include any results (i.e. tables, statistics, visualizations)\nAcademic articles\nPresentations for class, conferences, talks, etc.\nTheses/dissertations\nInteractive visualizations (i.e. widgets)\nBuilding your own website"
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#file-naming",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#file-naming",
-    "title": "Roadmap",
+    "title": "",
     "section": "File naming",
     "text": "File naming\nFile names should:\n\nbe machine readable: avoid spaces, symbols, and special characters. Don’t rely on case sensitivity to distinguish files.\nbe human readable: use file names to describe what’s in the file.\nplay well with default ordering: start file names with numbers so that alphabetical sorting puts them in the order they get used."
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#file-naming-1",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#file-naming-1",
-    "title": "Roadmap",
+    "title": "",
     "section": "File naming",
-    "text": "File naming\n\nGood Example directoryBad Example directory\n\n\n01-load-data.R\n02-exploratory-analysis.R\n03-model-approach-1.R\n04-model-approach-2.R\nfig-01.png\nfig-02.png\nreport-2022-03-20.qmd\nreport-2022-04-02.qmd\nreport-draft-notes.txt\n\n\n\nNumbering scripts makes it clear in which order they should be run.\nConsistent naming scheme makes it easy to see what things are grouped together and what varies.\nWith many files in one directory you should go a step further and create subfolders for different types of files (i.e. scripts, figures, tables, etc.)\n\n\n\n\nalternative model.R\ncode for exploratory analysis.r\nfinalreport.qmd\nFinalReport.qmd\nfig 1.png\nFigure_02.png\nmodel_first_try.R\nrun-first.r\ntemp.txt\n\n\n\nOrdering of the files is unclear\nInconsistent naming is confusing (which final report is THE final report?)\nNon-descriptive naming means more work for you in trying to decipher its contents"
+    "text": "File naming\n\n\nGood Example directory\nBad Example directory\n\n\n\n01-load-data.R\n02-exploratory-analysis.R\n03-model-approach-1.R\n04-model-approach-2.R\nfig-01.png\nfig-02.png\nreport-2022-03-20.qmd\nreport-2022-04-02.qmd\nreport-draft-notes.txt\n\n\n\nNumbering scripts makes it clear in which order they should be run.\nConsistent naming scheme makes it easy to see what things are grouped together and what varies.\nWith many files in one directory you should go a step further and create subfolders for different types of files (i.e. scripts, figures, tables, etc.)\n\n\n\n\nalternative model.R\ncode for exploratory analysis.r\nfinalreport.qmd\nFinalReport.qmd\nfig 1.png\nFigure_02.png\nmodel_first_try.R\nrun-first.r\ntemp.txt\n\n\n\nOrdering of the files is unclear\nInconsistent naming is confusing (which final report is THE final report?)\nNon-descriptive naming means more work for you in trying to decipher its contents"
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#working-directory",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#working-directory",
-    "title": "Roadmap",
+    "title": "",
     "section": "Working directory",
-    "text": "Working directory\nYour working directory is where R will look for any files that you ask it to load and where it’ll put anything you ask it to save. It is literally just a folder somewhere on your computer or the remote server/cloud you’re working within.\n. . .\nYou can ask R what your current working directory is by running getwd() (get working directory).\n. . .\n\ngetwd()\n\n[1] \"/Users/victoriasass/Desktop/GitHub/CSSS508/Lectures/Lecture3\"\n\n\nYou can see above that this lecture was created in a lecture-specific folder within a lectures folder, in a directory for this class, which is in a folder called GitHub on the Desktop of my laptop.\n. . .\nWhile you can technically set your working directory using setwd() and giving R a filepath, in the name of reproducible research I strongly advise an alternative: RStudio projects."
+    "text": "Working directory\nYour working directory is where R will look for any files that you ask it to load and where it’ll put anything you ask it to save. It is literally just a folder somewhere on your computer or the remote server/cloud you’re working within.\n\nYou can ask R what your current working directory is by running getwd() (get working directory).\n\n\n\ngetwd()\n\n[1] \"/Users/victoriasass/Desktop/GitHub/CSSS508/Lectures/Lecture3\"\n\n\nYou can see above that this lecture was created in a lecture-specific folder within a lectures folder, in a directory for this class, which is in a folder called GitHub on the Desktop of my laptop.\n\n\nWhile you can technically set your working directory using setwd() and giving R a filepath, in the name of reproducible research I strongly advise an alternative: RStudio projects."
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#projects",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#projects",
-    "title": "Roadmap",
+    "title": "",
     "section": "Projects",
-    "text": "Projects\n\n\n\n\n\n\n\n\nYou can create a project by clicking\n\nFile &gt; New Project…\n in the upper-left corner of RStudio\nthe dropdown menu in the upper-right corner of RStudio and selecting New Project…"
+    "text": "Projects\n\n\n\n\n\n\n\nYou can create a project by clicking\n\n\nFile &gt; New Project…\n\n\n in the upper-left corner of RStudio\nthe dropdown menu in the upper-right corner of RStudio and selecting New Project…"
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#projects-1",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#projects-1",
-    "title": "Roadmap",
+    "title": "",
     "section": "Projects",
-    "text": "Projects\nA “project” is RStudio’s built-in organizational support system which keeps all the files associated with a given project (i.e. data, R scripts, figures, results) together in one directory.\n. . .\nCreating a new project quite basically creates a new folder in a place that you specify. But it also does a few of other extremely useful things:\n. . .\n\n\nCreates a .Rproj file which tracks your command history and all the files in your project folder.\nContains all the files needed to reproduce your work\n\ni.e. you can send a project folder to someone and they will be able to run it on their local machine\n\nFacilitates version control with built-in git/GitHub connection (more on this later in the course)"
+    "text": "Projects\nA “project” is RStudio’s built-in organizational support system which keeps all the files associated with a given project (i.e. data, R scripts, figures, results) together in one directory.\n\nCreating a new project quite basically creates a new folder in a place that you specify. But it also does a few of other extremely useful things:\n\n\n\n\nCreates a .Rproj file which tracks your command history and all the files in your project folder.\nContains all the files needed to reproduce your work\n\ni.e. you can send a project folder to someone and they will be able to run it on their local machine\n\n\nFacilitates version control with built-in git/GitHub connection (more on this later in the course)"
   },
   {
     "objectID": "Lectures/Lecture10/CSSS508_Lecture10.html#topics-for-today",

@@ -340,3 +340,33 @@ Creating a new project quite basically creates a new folder in a place that you 
   * i.e. you can send a project folder to someone and they will be able to run it on their local machine
 * Facilitates version control with built-in git/GitHub connection *(more on this later in the course)*
 :::
+
+
+## Due dates
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+# reading in base due date schedule
+source("../due_dates_schedule.R")
+ 
+base_schedule |> 
+  # adding borders around due dates
+  tab_style(style = cell_borders(sides = c("bottom", "top"),  weight = px(3), color = "#1e4655"),
+            locations = cells_body(rows = Homework == 3)) |> 
+  tab_style(style = cell_borders(sides = "left",  weight = px(3), color = "#1e4655"), 
+            locations = cells_body(rows = Homework == 3, 
+                                   columns = Homework)) |> 
+  tab_style(style = cell_borders(sides = "right",  weight = px(3), color = "#1e4655"), 
+            locations = cells_body(rows = Homework == 3, 
+                                   columns = Peer_Due_Date_AB)) |> 
+  # Adding color to due date row
+  tab_style(style = cell_fill(color = "#c7cdac"),
+            locations = cells_body(columns = c(Due_Date_AA, Due_Date_AB), 
+                                   rows = Homework == 3)) |> 
+  tab_style(style = cell_fill(color = "#99a486"),
+            locations = cells_body(columns = c(Peer_Due_Date_AA, Peer_Due_Date_AB), 
+                                   rows = Homework == 3))
+```
