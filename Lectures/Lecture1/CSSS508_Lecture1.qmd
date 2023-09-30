@@ -1158,40 +1158,93 @@ Take a look at the template provided on our [course website](https://vsass.githu
 :::
 
 ## Grading Rubric
-<br>
-
-0 - Didn't turn anything in.
 
 <br>
 
-. . . 
-
-1 - Turned in but low effort, ignoring many directions.
-
 <br>
 
-. . . 
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(tidyverse)
+library(gt)
 
-2 - Decent effort, followed directions with some minor issues.
+rubric <- tibble(Evaluation = c("Didn't turn anything in.", 
+                                "Turned in but low effort, ignoring many directions.", 
+                                "Decent effort, followed directions with some minor issues.", 
+                                "Nailed it!"), 
+                 Points = 0:3)
 
-<br>
-
-. . . 
-
-3 - Nailed it!
-
-<br>
+rubric |> 
+  gt() |> 
+  tab_options(table.align = "center", table.font.names = c("Quattrocento", "Raleway"), 
+              table.font.size = pct(125), table.border.top.style = "hidden",) |>
+  cols_align(align = "center") |> 
+  # Color each evaluation
+  tab_style(style = cell_fill(color = "#e15759"),
+            locations = cells_body(rows = Points == 0)) |> 
+  tab_style(style = cell_fill(color = "#f28e2c"),
+            locations = cells_body(rows = Points == 1)) |> 
+  tab_style(style = cell_fill(color = "#76b7b2"),
+            locations = cells_body(rows = Points == 2)) |> 
+  tab_style(style = cell_fill(color = "#4e79a7"),
+            locations = cells_body(rows = Points == 3)) |> 
+  # Change label font style
+  cols_label(Evaluation = md("**Evaluation**"), 
+             Points = md("**Points**")) 
+  
+```
 
 ## Due dates
 
-* **Section AA:** 
-  + Homework #1 due Tuesday, October 10th (before lecture)
-  + Peer grading due Sunday, October 15th (by 4:30pm)
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
 
-<br>
+schedule <- tibble(Homework = c(1:9), 
+                   Due_Date_AA = c("10 October", "17 October", "24 October", "31 October", "7 November", "14 November", "21 November", "28 November", "5 December"), 
+                   Peer_Due_Date_AA = c("15 October", "22 October", "29 October", "5 November", "12 November", "19 November", "26 November", "3 November", "10 December"), 
+                   Due_Date_AB = c("12 October", "19 October", "26 October", "2 November", "9 November", "16 November", "23 November", "30 November", "7 December"), 
+                   Peer_Due_Date_AB = c("17 October", "24 October", "31 October", "7 November", "14 November", "21 November", "28 November", "5 November", "12 December"))
 
-* **Section AB: **
-  + Homework #1 due Thursday, October 12th (before lab)
-  + Peer grading due Tuesday, October 17th (before lecture)
+schedule |> 
+  gt() |> 
+  # Group sections AA and AB together
+  tab_spanner(label = md("**Section AA**"),
+              columns = vars(Due_Date_AA, Peer_Due_Date_AA)) |> 
+  tab_spanner(label = md("**Section AB**"),
+              columns = vars(Due_Date_AB, Peer_Due_Date_AB), 
+              id = "AB") |> 
+  cols_align(align = "center") |> 
+  cols_label(Homework = "#",
+             Due_Date_AA = "Homework Due",
+             Peer_Due_Date_AA = "Peer Review Due",
+             Due_Date_AB = "Homework Due",
+             Peer_Due_Date_AB = "Peer Review Due") |> 
+  # Adding color to column names and due date row
+  tab_style(style = cell_fill(color = "#c7cdac"),
+            locations = list(cells_body(columns = c(Due_Date_AA, Due_Date_AB), 
+                                   rows = Homework == 1), 
+                             cells_column_labels(columns = c(Due_Date_AA, Due_Date_AB)))) |> 
+  tab_style(style = cell_fill(color = "#99a486"),
+            locations = list(cells_body(columns = c(Peer_Due_Date_AA, Peer_Due_Date_AB), 
+                                   rows = Homework == 1), 
+                             cells_column_labels(columns = c(Peer_Due_Date_AA, Peer_Due_Date_AB)))) |> 
+  # aligning table on page, picking font, increasing overall table size
+  tab_options(table.align = "center", table.font.names = c("Quattrocento", "Raleway"), 
+              table.font.size = pct(100), table.border.top.style = "hidden",) |>
+  # adding borders around due dates
+  tab_style(style = cell_borders(sides = c("bottom", "top"),  weight = px(4)),
+            locations = cells_body(rows = Homework == 1)) |> 
+  tab_style(style = cell_borders(sides = "left",  weight = px(4)),
+            locations = cells_body(rows = Homework == 1, 
+                                   columns = Homework)) |> 
+  tab_style(style = cell_borders(sides = "right",  weight = px(4)),
+            locations = cells_body(rows = Homework == 1, 
+                                   columns = Peer_Due_Date_AB)) 
+```
+
 
 
