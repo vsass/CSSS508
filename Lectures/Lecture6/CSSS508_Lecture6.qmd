@@ -633,9 +633,9 @@ my_new_list
 
 # Homework{.section-title background-color="#99a486"}
 
-## Homework 4
+## Homework 6
 
-For Homework 4, you will fill in an Quarto template on our [course website](https://vsass.github.io/CSSS508/Homework/HW4/homework4.html) that walks you through the process of creating, accessing, and manipulating R data structures. Enter values in the qmd document and Render it to check your answers!
+For Homework 6, you will fill in an Quarto template on our [course website](https://vsass.github.io/CSSS508/Homework/HW4/homework6.html) that walks you through the process of creating, accessing, and manipulating R data structures. Enter values in the qmd document and Render it to check your answers!
 
 + *Render after entering each answer!!*  If you get an error, check to see if undoing your last edit solves the problem. Coding an assignment to handle all possible mistakes is really hard! 
 
@@ -643,16 +643,31 @@ For Homework 4, you will fill in an Quarto template on our [course website](http
 
 On the due date, I will provide a key for the written answers. You will grade those answers as part of your peer review. In addition, you'll be asked to comment on the style of your peer's code and what you yourself did similarly/different. Please remember to provide a numerical grade (0-3), as always.
 
-## Due Dates
+## Due dates
 
-* **Section AA:** 
-  + Homework #4 due Tuesday, October 31st (before lecture)
-  + Peer grading due Sunday, November 5th (by 4:30pm)
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
 
-<br>
-
-* **Section AB:** 
-  + Homework #4 due Thursday, November 2nd (before lab)
-  + Peer grading due Tuesday, November 7th (before lecture)
-
-
+# reading in base due date schedule
+source("../due_dates_schedule.R")
+ 
+base_schedule |> 
+  # adding borders around due dates
+  tab_style(style = cell_borders(sides = c("bottom", "top"),  weight = px(3), color = "#1e4655"),
+            locations = cells_body(rows = Homework == 6)) |> 
+  tab_style(style = cell_borders(sides = "left",  weight = px(3), color = "#1e4655"), 
+            locations = cells_body(rows = Homework == 6, 
+                                   columns = Homework)) |> 
+  tab_style(style = cell_borders(sides = "right",  weight = px(3), color = "#1e4655"), 
+            locations = cells_body(rows = Homework == 6, 
+                                   columns = Peer_Due_Date_AB)) |> 
+  # Adding color to due date row
+  tab_style(style = cell_fill(color = "#c7cdac"),
+            locations = cells_body(columns = c(Due_Date_AA, Due_Date_AB), 
+                                   rows = Homework == 6)) |> 
+  tab_style(style = cell_fill(color = "#99a486"),
+            locations = cells_body(columns = c(Peer_Due_Date_AA, Peer_Due_Date_AB), 
+                                   rows = Homework == 6))
+```
