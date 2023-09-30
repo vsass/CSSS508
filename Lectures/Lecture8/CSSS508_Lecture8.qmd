@@ -30,7 +30,7 @@ require(xml2)
 require(tidyverse)
 ```
 
-## {#title-slide data-menu-title="Writing Functions" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
+##  {#title-slide data-menu-title="Writing Functions" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
 
 [Writing Functions]{.custom-title}
 
@@ -40,80 +40,80 @@ require(tidyverse)
 
 [Victoria Sass]{.custom-subtitle3}
 
-# Roadmap{.section-title background-color="#99a486"}
+# Roadmap {.section-title background-color="#99a486"}
 
----
+------------------------------------------------------------------------
 
 <br>
 
 Last time, we learned about,
 
-   * Why we use loops
-   * `for()` loops
-   * `while()` loops
+-   Why we use loops
+-   `for()` loops
+-   `while()` loops
 
-. . . 
+. . .
 
 Today, we will cover,
 
-   * Aside: Visualizing the Goal
-   * Building blocks of functions
-   * Simple functions
-   * Using functions with `apply()`
+-   Aside: Visualizing the Goal
+-   Building blocks of functions
+-   Simple functions
+-   Using functions with `apply()`
 
-# Visualizing the Goal{.section-title background-color="#99a486"}
+# Visualizing the Goal {.section-title background-color="#99a486"}
 
----
+------------------------------------------------------------------------
 
 <br>
 
 Before you can write effective code, you need to know *exactly* what you want:
 
-::: {.incremental}
-* **Goal:** Do I want a single value? vector? one observation per person? per year?
-* **Current State:** What do I currently have? matrix, vector? long or wide format?
-* **Translate:** How can I take what I have and turn it into my goal?
-  + Sketch out the steps!
-  + Break it down into little operations
+::: incremental
+-   **Goal:** Do I want a single value? vector? one observation per person? per year?
+-   **Current State:** What do I currently have? matrix, vector? long or wide format?
+-   **Translate:** How can I take what I have and turn it into my goal?
+    -   Sketch out the steps!
+    -   Break it down into little operations
 :::
 
-. . . 
+. . .
 
 **As we become more advanced coders, this concept is key!!**
 
 **Remember:** *When you're stuck, try searching your problem on Google!!*
 
-# Building blocks of functions{.section-title background-color="#99a486"}
+# Building blocks of functions {.section-title background-color="#99a486"}
 
 ## Why Functions?
 
-R (as well as mathematics in general) is full of functions! 
+R (as well as mathematics in general) is full of functions!
 
-. . . 
+. . .
 
 We use functions to:
 
-  * Compute summary statistics (`mean()`, `sd()`, `min()`)
-  * Fit models to data (`lm(Fertility~Agriculture,data=swiss)`)
-  * Load data (`read_csv()`)
-  * Create ggplots (`ggplot()`)
-  * And so much more!!
-  
+-   Compute summary statistics (`mean()`, `sd()`, `min()`)
+-   Fit models to data (`lm(Fertility~Agriculture,data=swiss)`)
+-   Load data (`read_csv()`)
+-   Create ggplots (`ggplot()`)
+-   And so much more!!
+
 ## Examples of Existing Functions
 
-::: {.incremental}
-* `mean()`:
-    + Input: a vector
-    + Output: a single number
-* `dplyr::filter()`:
-    + Input: a data frame, logical conditions
-    + Output: a data frame with rows removed using those conditions
-* `readr::read_csv()`:
-    + Input: a file path, optionally variable names or types
-    + Output: a data frame containing info read in from file
+::: incremental
+-   `mean()`:
+    -   Input: a vector
+    -   Output: a single number
+-   `dplyr::filter()`:
+    -   Input: a data frame, logical conditions
+    -   Output: a data frame with rows removed using those conditions
+-   `readr::read_csv()`:
+    -   Input: a file path, optionally variable names or types
+    -   Output: a data frame containing info read in from file
 :::
-  
-. . . 
+
+. . .
 
 Each function requires **inputs**, and returns **outputs**
 
@@ -121,17 +121,17 @@ Each function requires **inputs**, and returns **outputs**
 
 Functions encapsulate actions you might perform often, such as:
 
-* Given a vector, compute some special summary stats
-* Given a vector and definition of "invalid" values, replace with `NA`
-* Defining a new logical operator
+-   Given a vector, compute some special summary stats
+-   Given a vector and definition of "invalid" values, replace with `NA`
+-   Defining a new logical operator
 
-. . . 
+. . .
 
 Advanced function applications (not covered in this class):
 
-* Parallel processing
-* Generating *other* functions
-* Making custom packages containing your functions
+-   Parallel processing
+-   Generating *other* functions
+-   Making custom packages containing your functions
 
 ## Anatomy of a Function
 
@@ -143,18 +143,18 @@ NAME <- function(ARGUMENT1, ARGUMENT2=DEFAULT){
 }
 ```
 
-::: {.incremental}
-* **Name**: What you call the function so you can use it later
-* **Arguments** (aka inputs, parameters): things the user passes to the function that affect how it works
-    + e.g. `ARGUMENT1`, `ARGUMENT2`
-    + `ARGUMENT2=DEFAULT` is example of setting a default value
-    + In this example, `ARGUMENT1`, `ARGUMENT2` values won't exist outside of the function
-* **Body**: The actual operations inside the function.
-* **Output**: The object inside `return()`. Could be anything (or nothing!)
-    + If unspecified, will be the last thing calculated
+::: incremental
+-   **Name**: What you call the function so you can use it later
+-   **Arguments** (aka inputs, parameters): things the user passes to the function that affect how it works
+    -   e.g. `ARGUMENT1`, `ARGUMENT2`
+    -   `ARGUMENT2=DEFAULT` is example of setting a default value
+    -   In this example, `ARGUMENT1`, `ARGUMENT2` values won't exist outside of the function
+-   **Body**: The actual operations inside the function.
+-   **Output**: The object inside `return()`. Could be anything (or nothing!)
+    -   If unspecified, will be the last thing calculated
 :::
 
-# Simple functions{.section-title background-color="#99a486"}
+# Simple functions {.section-title background-color="#99a486"}
 
 ## Example 1: Doubling A Number
 
@@ -165,7 +165,7 @@ double_x <- function(x){
 }
 ```
 
-. . . 
+. . .
 
 Let's run it!
 
@@ -185,7 +185,7 @@ first_and_last <- function(x) {
 }
 ```
 
-. . . 
+. . .
 
 Test it out:
 
@@ -201,7 +201,7 @@ What if I give `first_and_last()` a vector of length 1?
 first_and_last(7)
 ```
 
-. . . 
+. . .
 
 Of length 0?
 
@@ -209,7 +209,7 @@ Of length 0?
 first_and_last(numeric(0))
 ```
 
-. . . 
+. . .
 
 Maybe we want it to be a little smarter.
 
@@ -241,7 +241,7 @@ smarter_first_and_last(NA)
 smarter_first_and_last(c(4, 3, 1, 8))
 ```
 
-. . . 
+. . .
 
 ## Cracking Open Functions
 
@@ -271,27 +271,27 @@ for(col_index in 1:ncol(swiss)){
 
 Writing loops can be challenging and prone to bugs!!
 
-. . . 
+. . .
 
 The `apply()` can solve this issue:
 
-+ **apply** a function to values in each row or column of a matrix
-+ Doesn't require preallocation
-+ Can take built-in functions or user-created functions.
+-   **apply** a function to values in each row or column of a matrix
+-   Doesn't require preallocation
+-   Can take built-in functions or user-created functions.
 
 ## Structure of `apply()`
 
 `apply()` takes 3 arguments:
 
-1. Data (a matrix or data frame)
-2. Margin (1 applies function to each *row*, 2 applies to each *column*)
-3. Function
+1.  Data (a matrix or data frame)
+2.  Margin (1 applies function to each *row*, 2 applies to each *column*)
+3.  Function
 
 ```{r eval=FALSE}
 apply(DATA, MARGIN, FUNCTION)
 ```
 
-. . . 
+. . .
 
 For example,
 
@@ -312,7 +312,7 @@ head(row_max, 20)
 apply(swiss, 2, summary) # summary of each column
 ```
 
-**Note:* Matrix output!
+\*\*Note:\* Matrix output!
 
 ## Example 3: User-Created Function
 
@@ -327,21 +327,23 @@ apply(scores, 1, my_function)
 
 In Olympic diving, a panel of 7 judges provide scores. After removing the worst and best scores, the mean of the remaining scores is given to the diver. We'll write code to calculate this score!
 
-1. Suppose I get you a vector, `x`, of length 7. Write code that will sort the vector from least to greatest, then keep the 2nd-6th elements^[HINT: Use the `sort()` function and square brackets `[ ]` for subsetting].
+1.  Suppose I get you a vector, `x`, of length 7. Write code that will sort the vector from least to greatest, then keep the 2nd-6th elements[^1].
 
-2. Write a function to calculate a diver's score:
-    * Input: Vector of length 7
-    * Checks: Check that the vector has length 7 (if not, stop!)
-    * Output: Mean score after removing the lowest and greatest scores.
-  
-3. Calculate the diver's score given `x <- c(2, 1:5, 3)`
+2.  Write a function to calculate a diver's score:
+
+    -   Input: Vector of length 7
+    -   Checks: Check that the vector has length 7 (if not, stop!)
+    -   Output: Mean score after removing the lowest and greatest scores.
+
+3.  Calculate the diver's score given `x <- c(2, 1:5, 3)`
+
+[^1]: HINT: Use the `sort()` function and square brackets `[ ]` for subsetting
 
 ## Activity: Solution
 
-1. Sort and extract elements 2 through 6:
-    * **Answer:** Given vector `x`, use `sort(x)[2:6]`
-
-2. Function
+1.  Sort and extract elements 2 through 6:
+    -   **Answer:** Given vector `x`, use `sort(x)[2:6]`
+2.  Function
 
 ```{r}
 divers_score <- function(x){
@@ -354,9 +356,9 @@ divers_score <- function(x){
 }
 ```
 
-. . . 
+. . .
 
-3. Calculate the diver's score given `x <- c(2, 1:5, 3)`
+3.  Calculate the diver's score given `x <- c(2, 1:5, 3)`
 
 ```{r}
 divers_score(x = c(2,1:5,3) )
@@ -366,15 +368,17 @@ divers_score(x = c(2,1:5,3) )
 
 *These are homework questions!!*
 
-1. Preallocate a matrix of NAs with 3 rows and 8 columns, called `double_matrix`. Manually specify the first column equal to the values 1, 2, and 3. Using a nested loop, fill in the matrix, row by row, such that each value is double that to its left.
+1.  Preallocate a matrix of NAs with 3 rows and 8 columns, called `double_matrix`. Manually specify the first column equal to the values 1, 2, and 3. Using a nested loop, fill in the matrix, row by row, such that each value is double that to its left.
 
-2. Write an `apply()` function to take the median value of each column in the `cars` dataset
+2.  Write an `apply()` function to take the median value of each column in the `cars` dataset
 
-2. Using `ggplot`, make a scatterplot of the `speed` and `dist` variables in `cars`. Then, add an appropriate horizontal and vertical line symbolizing the median value of each variable^[*Hint:* Using the layers `geom_vline(xintercept = )` and `geom_hline(yintercept = )`].
+3.  Using `ggplot`, make a scatterplot of the `speed` and `dist` variables in `cars`. Then, add an appropriate horizontal and vertical line symbolizing the median value of each variable[^2].
+
+[^2]: *Hint:* Using the layers `geom_vline(xintercept = )` and `geom_hline(yintercept = )`
 
 ## Answers
 
-1. Preallocate a matrix of NAs with 3 rows and 8 columns, called `double_matrix`. Manually specify the first column equal to the values 1, 2, and 3. Using a nested loop, fill in the matrix, row by row, such that each value is double that to its left.
+1.  Preallocate a matrix of NAs with 3 rows and 8 columns, called `double_matrix`. Manually specify the first column equal to the values 1, 2, and 3. Using a nested loop, fill in the matrix, row by row, such that each value is double that to its left.
 
 ```{r}
 double_matrix <- matrix(NA, nrow = 3,ncol = 8)
@@ -400,9 +404,9 @@ median_cars
 
 3\. Make a ggplot
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ### Code
+
 ```{r}
 #| eval: false
 library(ggplot2)
@@ -413,6 +417,7 @@ ggplot(cars, aes(speed, dist)) +
 ```
 
 ### Plot
+
 ```{r}
 #| echo: false
 #| fig-height: 6
@@ -425,9 +430,9 @@ ggplot(cars,aes(speed,dist)) +
   geom_hline(yintercept = median_cars[2])
 ```
 :::
- 
-# Homework{.section-title background-color="#99a486"}
- 
+
+# Homework {.section-title background-color="#99a486"}
+
 ## Homework 8
 
 Time to work on [Homework 8](https://vsass.github.io/CSSS508/Homework/HW8/homework8.html)!
@@ -442,21 +447,5 @@ Time to work on [Homework 8](https://vsass.github.io/CSSS508/Homework/HW8/homewo
 # reading in base due date schedule
 source("../due_dates_schedule.R")
  
-base_schedule |> 
-  # adding borders around due dates
-  tab_style(style = cell_borders(sides = c("bottom", "top"),  weight = px(3), color = "#1e4655"),
-            locations = cells_body(rows = Homework == 8)) |> 
-  tab_style(style = cell_borders(sides = "left",  weight = px(3), color = "#1e4655"), 
-            locations = cells_body(rows = Homework == 8, 
-                                   columns = Homework)) |> 
-  tab_style(style = cell_borders(sides = "right",  weight = px(3), color = "#1e4655"), 
-            locations = cells_body(rows = Homework == 8, 
-                                   columns = Peer_Due_Date_AB)) |> 
-  # Adding color to due date row
-  tab_style(style = cell_fill(color = "#c7cdac"),
-            locations = cells_body(columns = c(Due_Date_AA, Due_Date_AB), 
-                                   rows = Homework == 8)) |> 
-  tab_style(style = cell_fill(color = "#99a486"),
-            locations = cells_body(columns = c(Peer_Due_Date_AA, Peer_Due_Date_AB), 
-                                   rows = Homework == 8))
+make_due_date_table(8)
 ```

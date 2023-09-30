@@ -27,7 +27,7 @@ make_due_date_table <- function(week){
                Peer_Due_Date_AB = "Peer Review Due") |> 
     # aligning table on page, picking font, increasing overall table size
     tab_options(table.align = "center", table.font.names = c("Quattrocento", "Raleway"), 
-                table.font.size = pct(100), table.border.top.style = "hidden", table.border.bottom.style = "hidden") |>
+                table.font.size = pct(100), table.border.top.style = "hidden") |>
     # Adding color to column names and due date row
     tab_style(style = cell_fill(color = "#c7cdac"),
               locations = list(cells_column_labels(columns = c(Due_Date_AA, Due_Date_AB)), 
