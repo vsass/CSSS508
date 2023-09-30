@@ -1,6 +1,5 @@
 ---
-date-format: long
-highlight-style:  a11y-dark #, oblivion, radical, vim-dark, espresso, zenburn, breezedark, haddock; atom-one-dark-reasonable, # nord
+highlight-style:  a11y-dark
 footnotes-hover: true
 reference-location: margin
 execute: 
@@ -20,7 +19,6 @@ format:
     code-line-numbers: true
     history: false
     progress: true
-    scrollable: true
     #logo: "../../images/csss-white.png" # need to add css for size <https://stackoverflow.com/questions/74083521/how-to-increase-size-logo-in-quarto-reveal-js-presentation>
 ---
 
@@ -32,13 +30,13 @@ require(xml2)
 require(tidyverse)
 ```
 
-## {#title-slide data-menu-title="Workflow & Best Practices" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
+## {#title-slide data-menu-title="Next Steps" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
 
-[Workflow & Best Practices]{.custom-title}
+[Next Steps]{.custom-title}
 
 [CS&SS 508 • Lecture 10]{.custom-subtitle}
 
-[15 December 2023]{.custom-subtitle2}
+[5 December 2023]{.custom-subtitle2}
 
 [Victoria Sass]{.custom-subtitle3}
 
@@ -46,297 +44,1758 @@ require(tidyverse)
 
 ---
 
-<br>
-
-Last time, we learned about,
-
-*
-
-. . . 
-
-Today, we will cover,
+We've learned **SO MUCH** in this class:
 
 * 
-
-# Code Style
-
-## Naming Variables 
-
-It's good practice to name variables using only lowercase letters, numbers, and `_` (to separate words). 
+* 
+* 
+* 
 
 . . . 
 
-Remember to give them descriptive names, even if that means they're longer. 
+Today, we'll look at some of the ways you can extend your learning beyond the scope of this introductory course. 
 
-. . . 
-
-If you have many related variables, try and be consistent with your naming convention. 
-
-* A common prefix is preferable to a common suffix due to RStudio's autocomplete feature. 
+* Version control with Git/GitHub
+* Tidy Modeling
+* Even more visualizations
+* Working with geospatial data
+* Analyzing text data
+* Writing theses/dissertations 
+* Creating slides for presentations (like this one!)
+* Creating a website
 
 ```{r}
-#| eval: false
-# Code goal: 
-short_flights <- flights |> 
-  filter(air_time < 60)
+#| include: false
+library(tidyverse)
+library(pander)
+library(knitr)
+`%!in%` <- Negate(`%in%`)
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  if (!is.null(n <- options$out.lines)) {
+    x = unlist(stringr::str_split(x, '\n'))
+    if (length(x) > n) {
+      # truncate the output
+      x = c(head(x, n), '....\n')
+    }
+    x = paste(x, collapse = '\n') # paste first n lines together
+  }
+  hook_output(x, options)
+})
+opts_chunk$set(out.lines = 20)
 
-# Code foul: 
-SHORTFLIGHTS <- flights |> 
-  filter(air_time < 60)
+ex_dat <- data.frame(num1 = rnorm(200, 1, 2), 
+                     fac1 = sample(c(1, 2, 3), 200, TRUE),
+                     num2 = rnorm(200, 0, 3),
+                     fac2 = sample(c(1, 2))) %>%
+  mutate(yn = num1*0.5 + fac1*1.1 + num2*0.7 + fac2-1.5  + rnorm(200, 0, 2)) %>% 
+  mutate(yb = as.numeric(yn > mean(yn))) %>%
+  mutate(fac1 = factor(fac1, labels=c("A", "B", "C")),
+         fac2 = factor(fac2, labels=c("Yes", "No")))
 ```
 
-## Spacing 
+## Topics for Today
 
-For readability you'll want to put spaces around all mathematical operators^[except for `^`] (i.e. `+`, `-`, `==`, `<`, etc.) as well as the assignment operator (`<-`). 
+### Working with Model Results
+
+* Tidy model output with `broom`
+* Visualizing models with `ggeffects`
+* Tables with `gt`, `modelsummary`, and `gtsummary`
+
+### Reproducible Research
+
+### Best Practices
+   * Organization
+   * Portability
+   * Version Control
+
+### Wrapping up the course
+
+# Working with Model Results
+
+## `broom`
+
+`broom` is a package that "tidies up" the output from models such a `lm()` and `glm()`.
+
+It has a small number of key functions:
+
+* `tidy()` - Creates a dataframe summary of a model.
+* `augment()` - Adds columns—such as fitted values—to the data used in the model.
+* `glance()` - Provides one row of fit statistics for models.
 
 ```{r}
-#| eval: false
-# Code goals: 
-z <- (a + b)^2 / d
-mean(x, na.rm = TRUE)
-
-# Code foul: 
-z<-( a + b ) ^ 2/d
-mean (x ,na.rm=TRUE)
+library(broom)
 ```
 
-. . . 
+## Model Output is a List
 
-To make code easier to skim quickly it's alright to add extra space for better alignment. 
+`lm()` and `summary()` produce lists as output, which cannot go directly into 
+tidyverse functions, particularly those in `ggplot2`.
 
 ```{r}
-#| eval: false
-flights |> 
-  mutate(
-    speed      = distance / air_time,
-    dep_hour   = dep_time %/% 100,
-    dep_minute = dep_time %%  100
-  )
+lm_1 <- lm(yn ~ num1 + fac1, data = ex_dat)
+summary(lm_1)
 ```
 
-## Pipes
+## Model Output Varies!
 
-As you begin to use more functions, sequentially, it can start to get unclear what's happening when, and to what. 
+Each type of model also produces somewhat different output, so you can't just reuse
+the same code to handle output from every model.
+
+```{r, op}
+glm_1 <- glm(yb ~ num1 + fac1, data = ex_dat, family=binomial(link="logit"))
+summary(glm_1)
+```
+
+## `broom::tidy()`
+
+`tidy()` produces similar output, but as a dataframe.
 
 ```{r}
-#| eval: false
-median(sqrt(log(mean(gapminder$pop))))
+lm_1 %>% tidy()
 ```
 
-. . . 
+Each type of model (e.g. `glm`, `lmer`) has a different *method* with its own additional arguments. See `?tidy.lm` for an example.
 
-With nested functions, like those above, you need to read the order of operations inside out, which is a bit awkward. It becomes even more confusing the more function calls you have, especially when they have multiple arguments each. 
+## `broom::tidy()`
 
-. . . 
+This output is also completely identical between different models.
 
-**Enter the pipe^[[Ceci n'est pas une pipe.](https://en.wikipedia.org/wiki/The_Treachery_of_Images)]:** `|>`
-
-Pipes read "left to right" which is much more intuitive! 
+This can be very useful and important if running models with different test statistics... or just running
+a lot of models!
 
 ```{r}
-#| eval: false
-gapminder$pop |> mean() |> log() |> sqrt() |> median()
+glm_1 %>% tidy()
 ```
 
-::: {.incremental}
-* The above code takes what's on the left-hand side of `|>` and gives it as the first **unnamed** argument to the first function (`mean()`). 
-* The result of that function call is then "piped" to the first **unnamed** argument of the second function (`log()`). 
-:::
+## `broom::glance()`
 
-## Pipes
+`glance()` produces dataframes of fit statistics for models.
 
-As you can see, pipes allow us to "chain" many function calls together easily. 
-
-. . . 
-
-The so-called "native pipe" (i.e. built into base `R`) is relatively new. Before this, the pipe was a function from the `magrittr` package that looks like this: `%>%`. 
-
-. . . 
-
-This latter version continues to work and has a different functionality than the new, native pipe. 
-
-. . . 
-
-Most importantly, while both the `magrittr` pipe and the native pipe take the RHS (right-hand side) and "pipe" it to the LHS (left-hand side), they operate differently when it comes to explicitly specifying which argument of the LHS to pipe the RHS into. 
-
-. . . 
+If you run many models, you can compare each model row-by-row in each column... or even plot their different fit statistics to allow holistic comparison.
 
 ```{r}
-#| eval: false
-# magrittr pipe
-a %>% gsub('A', '-', x = .)
-
-# native pipe
-a |> gsub('A','-', x = _) # _ is the placeholder for |> 
-a |> gsub(pattern = 'A', replacement = '-') # leaving the "piped" argument as the only unnamed argument also works 
-a |> (\(.) gsub('A', '-', x = .))() # using an anonymous function call allow you to be explicit while specifying your own placeholder
+glance(lm_1)
 ```
 
-. . . 
+## `broom::augment()`
+
+`augment()` takes values generated by a model and adds them back to the original data. This includes fitted values, residuals, and leverage statistics.
+
+```{r}
+augment(lm_1) %>% 
+  head()
+```
+
+See `?augment.lm` for examples of what `augment()` can do.
+
+## The Power of `broom`
+
+The real advantage of `broom` becomes apparent when running many models at once. Here we run separate models for each level of `fac1`:
+
+```{r}
+ex_dat %>% 
+  nest_by(fac1) %>% #<<
+  mutate(model = list(lm(yn ~  num1 + fac2, data = data))) %>%  
+  summarize(tidy(model), .groups = "drop")
+```
+
 
 ::: aside
-You can read more about the differences between `|>` and `%>%` [here](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/#-vs) and anonymous functions [here](http://adv-r.had.co.nz/Functional-programming.html#anonymous-functions). Code above comes from responses to [this stackoverflow post](https://stackoverflow.com/questions/70598384/piping-second-or-higher-argument-in-native-pipe).
+`nest_by()` nests data into a list column by levels of `fac1`.
 :::
 
-## Pipes
+# Plotting Model Results{.section-title background-color="#99a486"}
 
-Some good syntax practices: 
+## `geom_smooth()`
 
-* You should always put a space before `|>` and it should usually be the last thing on a line.  
-* New functions should be on a new line, indented 2 spaces (RStudio will automatically do this for you)
-* Named arguments within a function should also get their own line
+I have used `geom_smooth()` in many past examples.
+
+`geom_smooth()` generates "smoothed conditional means" including loess curves and generalized additive models (GAMs).
+
+. . . 
+
+Note, however, that most regression models are conditional mean models, such as ordinary least squares and generalized linear models. 
+
+. . . 
+
+We can use `geom_smooth()` to add a layer depicting common bivariate models.
+
+We'll look at this with the `gapminder` data from Week 2.
+
+```{r}
+library(gapminder)
+```
+
+. . . 
+
+## Default `geom_smooth()`
+
+```{r}
+#| fig-height: 2.75
+#| fig-width: 7
+#| fig-align: center
+ggplot(data = gapminder, aes(x = year, y = lifeExp, color = continent)) +
+  geom_point(position = position_jitter(1, 0), size = 0.5) +
+  geom_smooth()
+```
+
+By default, `geom_smooth()` chooses either a loess smoother (N < 1000) or a GAM depending on the number of observations.
+
+## Linear `glm`
+
+```{r}
+#| fig-height: 2.75
+#| fig-width: 7
+#| fig-align: center
+#| code-line-numbers: "|3"
+ggplot(data = gapminder, aes(x = year, y = lifeExp, color = continent)) +
+  geom_point(position = position_jitter(1,0), size = 0.5) +
+  geom_smooth(method = "glm", formula = y ~ x)
+```
+
+We could also fit a standard linear model using either `method = "glm"` or `method = "lm"` and a formula like `y ~ x`.
+
+## Polynomial `glm`
+```{r}
+#| fig-height: 2.75
+#| fig-width: 7
+#| fig-align: center
+#| code-line-numbers: "|3"
+ggplot(data = gapminder, aes(x = year, y = lifeExp, color = continent)) +
+  geom_point(position = position_jitter(1,0), size = 0.5) +
+  geom_smooth(method = "glm", formula = y ~ poly(x, 2)) 
+```
+
+`poly(x, 2)` produces a quadratic model which contains a linear term (`x`) and a quadratic term (`x^2`).
+
+## More Complex Models
+
+What if we want something more complex than a bivariate model?
+
+What if we have a statistically complex model, like nonlinear probability model or multilevel model?
+
+We need to go beyond `geom_smooth()`!
+
+## But first, vocab!
+
+We are often interested in what might happen if some variables take particular values, often ones not seen in the actual data.
+
+. . . 
+
+When we set variables to certain values, we refer to them as **counterfactual values** or just **counterfactuals**.
+
+. . . 
+
+For example, if we know nothing about a new observation, our prediction for that estimate is often based on assuming every variable is at its mean.
+
+. . . 
+
+Sometimes, however, we might have very specific questions which require setting (possibly many) combinations of variables to particular values and making an estimate or prediction.
+
+. . . 
+
+Providing specific estimates, conditional on values of covariates, is a nice way to summarize results, particularly for models with unintuitive parameters (e.g. logit models).
+
+# `ggeffects` {.section-title background-color="#99a486"}
+
+
+## `ggeffects`
+
+If we want to look at more complex models, we can use `ggeffects` to create and plot tidy *marginal effects*.
+
+That is, tidy dataframes of *ranges* of predicted values that can be fed straight into `ggplot2` for plotting model results.
+
+We will focus on two `ggeffects` functions:
+
+* `ggpredict()` - Computes predicted values for the outcome variable at margins of specific variables.
+* `plot.ggeffects()` - A plot method for `ggeffects` objects (like `ggpredict()` output)
+
+```{r}
+library(ggeffects)
+```
+
+## Quick Simulated Data
+
+To best show off `ggeffects`, I need a data frame with numeric and categorical variables with strong relationships. It is easiest to just simulate it:
+
+```{r}
+ex_dat <- data.frame(num1 = rnorm(200, 1, 2), 
+                     fac1 = sample(c(1, 2, 3), 200, TRUE),
+                     num2 = rnorm(200, 0, 3),
+                     fac2 = sample(c(1, 2))) %>%
+  mutate(yn = num1 * 0.5 + fac1 * 1.1 + num2 * 0.7 +
+              fac2 - 1.5  + rnorm(200, 0, 2)) %>% 
+  mutate(yb = as.numeric(yn > mean(yn))) %>%
+  mutate(fac1 = factor(fac1, labels = c("A", "B", "C")),
+         fac2 = factor(fac2, labels = c("Yes", "No")))
+glimpse(ex_dat)
+```
+
+Now we can get `ggpredict`ing!
+
+## `ggpredict()`
+
+When you run  `ggpredict()`, it produces a dataframe with a row for every unique value of a supplied predictor ("independent") variable (`term`). 
+
+Each row contains an expected (estimated) value for the outcome ("dependent") variable, plus confidence intervals. 
+
+```{r}
+lm_1 <- lm(yn ~ num1 + fac1, data = ex_dat)
+lm_1_est <- ggpredict(lm_1, terms = "num1")
+```
+
+If desired, the argument `interval = "prediction"` will give predicted intervals instead.
+
+## `ggpredict()` output
+
+```{r}
+lm_1_est
+```
+
+## `plot()` for `ggpredict()`
+
+`ggeffects` features a `plot()` *method*, `plot.ggeffects()`, which produces a ggplot when you give `plot()` output from `ggpredict()`.
+
+```{r}
+#| fig-height: 4
+plot(lm_1_est)
+```
+
+## Grouping with `ggpredict()`
+
+When using a vector of `terms`, `ggeffects` will plot the first along the x-axis and use others for *grouping*. Note we can pipe a model into `ggpredict()`!
+
+```{r, warning=FALSE, message=FALSE, dev="svg", fig.height=3.5}
+#| fig-height: 3.5
+#| fig-align: center
+glm(yb ~ num1 + fac1 + num2 + fac2, data = ex_dat, family = binomial(link = "logit")) %>%
+  ggpredict(terms = c("num1", "fac1")) %>% 
+  plot()
+```
+
+## Faceting with `ggpredict()`
+
+You can add `facet = TRUE` to the `plot()` call to facet over *grouping terms*.
+
+```{r}
+#| fig-height: 3.5
+#| fig-align: center
+glm(yb ~ num1 + fac1 + num2 + fac2, data = ex_dat, family = binomial(link = "logit")) %>%
+  ggpredict(terms = c("num1", "fac1")) %>% 
+  plot(facet = TRUE)
+```
+
+## Counterfactual Values
+
+You can add values in square brackets in the `terms =` argument to specify counterfactual values.
+
+```{r}
+#| fig-height: 3.5
+#| fig-align: center
+glm(yb ~ num1 + fac1 + num2 + fac2, data = ex_dat, family = binomial(link = "logit")) %>%
+  ggpredict(terms = c("num1 [-1,0,1]", "fac1 [A,B]")) %>% plot(facet = TRUE)
+```
+
+## Representative Values
+
+You can also use `[meansd]` or `[minmax]` to set representative values.
+
+```{r}
+#| fig-height: 3.5
+#| fig-align: center
+glm(yb ~ num1 + fac1 + num2 + fac2, data = ex_dat, family = binomial(link = "logit")) %>%
+  ggpredict(terms = c("num1 [meansd]", "num2 [minmax]")) %>% plot(facet = TRUE)
+```
+
+## Dot plots with `ggpredict()`
+
+`ggpredict` will produce dot plots with error bars for categorical predictors.
+
+```{r}
+#| fig-height: 3.5
+#| fig-align: center
+lm(yn ~ fac1 + fac2, data = ex_dat) %>% 
+  ggpredict(terms = c("fac1", "fac2")) %>% 
+  plot()
+```
+
+## Notes on `ggeffects`
+
+There is a lot more to the `ggeffects` package that you can see in [the package vignette](https://cran.r-project.org/web/packages/ggeffects/vignettes/marginaleffects.html) and the [github repository](https://github.com/strengejacke/ggeffects). This includes, but is not limited to:
+
+* Predicted values for polynomial and interaction terms
+* Getting predictions from models from dozens of other packages
+* Sending `ggeffects` objects to `ggplot2` to freely modify plots
+
+# Making Tables{.section-title background-color="#99a486"}
+
+## `pander` Regression Tables
+
+We've used `pander` to create nice tables for dataframes. But `pander` has *methods* to handle all sort of objects that you might want displayed nicely.
+
+This includes model output, such as from `lm()`, `glm()`, and `summary()`.
+
+
+```{r pander}
+library(pander)
+```
+
+```{r}
+#| include: false
+panderOptions("table.style", "rmarkdown")
+```
+
+## `pander()` and `lm()`
+
+You can send an `lm()` object straight to `pander`:
 
 ```{r}
 #| eval: false
-# code goals
-flights |>  
-  group_by(tailnum) |> 
-  summarize(
-    delay = mean(arr_delay, na.rm = TRUE),
-    n = n()
-  )
-
-# code fouls
-flights |>
-  group_by(
-    tailnum
-  ) |> 
-  summarize(delay = mean(arr_delay, na.rm = TRUE), n = n())
-
-
+pander(lm_1) # this creates an markdown-formatted chunk of text you can add to your qmd document
 ```
 
-## .R scripts
+|     &nbsp;      | Estimate | Std. Error | t value | Pr(>|t|)  |
+|:---------------:|:--------:|:----------:|:-------:|:---------:|
+| **(Intercept)** |  1.003   |   0.3866   |  2.594  |  0.01019  |
+|    **num1**     |  0.6407  |   0.1047   |  6.118  | 5.06e-09  |
+|    **fac1B**    |  1.675   |   0.5341   |  3.137  | 0.001972  |
+|    **fac1C**    |   2.16   |   0.5349   |  4.038  | 7.719e-05 |
 
-We've been working with Quarto documents but you'll sometimes simply want to use an R script, which is basically an entire file that is just a code chunk. 
+Table: Fitting linear model: yn ~ num1 + fac1
 
-::: {.panel-tabset}
-### Why would you prefer an .R file over a .qmd file? 
+## `pander()` and `summary()`
 
-* You just need to run code, without the need for accompanying text output and plots in the same document. Examples include: 
-  * Reading in and cleaning/manipulating your data before analysis
-  * Writing functions you'll use throughout your project 
-  * Getting descriptive statistics/making descriptive plots of data
-  * Running models and generating tables/plots of their results
-  
-### When might you use a .qmd file? 
-
-* Homework assignments (like for this class) that require you to show code, describe your process for arriving at your solution, and include any results (i.e. tables, statistics, visualizations) 
-* Academic articles
-* Presentations for class, conferences, talks, etc. 
-* Theses/dissertations 
-* Interactive visualizations (i.e. widgets)
-* Building your own website
-:::
-
-## File naming
-
-File names should:
-
-* be machine readable: avoid spaces, symbols, and special characters. Don’t rely on case sensitivity to distinguish files.
-* be human readable: use file names to describe what’s in the file.
-* play well with default ordering: start file names with numbers so that alphabetical sorting puts them in the order they get used.
-
-## File naming
-
-::: {.panel-tabset}
-
-### Good Example directory
-```
-01-load-data.R
-02-exploratory-analysis.R
-03-model-approach-1.R
-04-model-approach-2.R
-fig-01.png
-fig-02.png
-report-2022-03-20.qmd
-report-2022-04-02.qmd
-report-draft-notes.txt
-```
-
-<br>
-
-::: {.incremental}
-* Numbering scripts makes it clear in which order they should be run. 
-* Consistent naming scheme makes it easy to see what things are grouped together and what varies. 
-* With many files in one directory you should go a step further and create subfolders for different types of files (i.e. scripts, figures, tables, etc.)
-:::
-
-### Bad Example directory
-```
-alternative model.R
-code for exploratory analysis.r
-finalreport.qmd
-FinalReport.qmd
-fig 1.png
-Figure_02.png
-model_first_try.R
-run-first.r
-temp.txt
-```
-
-<br>
-
-::: {.incremental}
-* Ordering of the files is unclear
-* Inconsistent naming is confusing (which final report is THE final report?)
-* Non-descriptive naming means more work for you in trying to decipher its contents
-:::
-
-:::
-
-## Working directory
-
-Your **working directory** is where R will look for any files that you ask it to load and where it'll put anything you ask it to save. It is literally just a folder somewhere on your computer or the remote server/cloud you're working within. 
-
-. . . 
-
-You can ask R what your current working directory is by running `getwd()` (`get` `w`orking `d`irectory).
-
-. . . 
+You can do this with `summary()` as well, for added information:
 
 ```{r}
-getwd()
+#| eval: false
+pander(summary(lm_1))
 ```
 
-You can see above that this lecture was created in a lecture-specific folder within a lectures folder, in a directory for this class, which is in a folder called `GitHub` on the Desktop of my laptop. 
+|     &nbsp;      | Estimate | Std. Error | t value | Pr(>|t|)  |
+|:---------------:|:--------:|:----------:|:-------:|:---------:|
+| **(Intercept)** |  1.003   |   0.3866   |  2.594  |  0.01019  |
+|    **num1**     |  0.6407  |   0.1047   |  6.118  | 5.06e-09  |
+|    **fac1B**    |  1.675   |   0.5341   |  3.137  | 0.001972  |
+|    **fac1C**    |   2.16   |   0.5349   |  4.038  | 7.719e-05 |
 
-. . . 
 
-While you can technically set your working directory using `setwd()` and giving R a filepath, in the name of reproducible research I strongly advise an alternative: **RStudio projects**. 
 
-## Projects
+| Observations | Residual Std. Error | $R^2$  | Adjusted $R^2$ |
+|:------------:|:-------------------:|:------:|:--------------:|
+|     200      |        3.093        | 0.2126 |     0.2005     |
+
+Table: Fitting linear model: yn ~ num1 + fac1
+
+## Advanced Tables
+
+`pander` tables are great for basic `rmarkdown` documents, but they're not generally publication ready.
+
+We're going to talk about a few different approaches for making nicer tables:
+
+* `gt` from RStudio for general table construction
+
+* `modelsummary` for creating model tables
+
+* `gtsummary` for creating data summaries
+
+## `gt`
+
+If you need to more customizability or different output types, [RStudio's `gt` package](https://gt.rstudio.com/) is a new and powerful system for creating tables from dataframes. We'll use `dplyr`'s built-in `starwars` data for some examples.
+
+```{r}
+library(gt)
+tes_chars <- starwars %>% 
+  unnest(films) %>% 
+  unnest(starships, keep_empty = TRUE) %>% 
+  filter(films == "The Empire Strikes Back") %>% 
+  select(name, species, starships, mass, height) %>%
+  distinct(name, .keep_all = TRUE) %>%
+  mutate(starships = ifelse(name == "Obi-Wan Kenobi" | is.na(starships), 
+                            "No Ship", starships))
+glimpse(tes_chars)
+```
+
+## Initialize
 
 :::: {.columns}
-
-::: {.column width="65%"}
-![](images/new-project.png){fig-align="center"}
+::: {.column width="50%"}
+```{r}
+#| eval: false
+tes_chars %>%
+  gt() 
+```
+`gt()` just renders the dataframe as a table using markdown.
 :::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+tes_chars %>%
+  gt()
+```
+:::
+::::
 
-::: {.column width="35%"}
-You can create a project by clicking
+## Grouping {.scrollable}
 
-* *File* > *New Project...*
-* ![](images/rproject_icon.png){vertical-align="bottom"} in the upper-left corner of RStudio
-* the dropdown menu in the upper-right corner of RStudio and selecting *New Project...*
+:::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| eval: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt()
+```
+
+If we `group_by()` first, the levels of the grouping variable become grouping rows in the table.
+
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt()
+```
+:::
+::::
+
+## Rownames {.scrollable}
+
+:::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| eval: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name")
+```
+
+
+Designating a `rowname_col` removes that column's name and divides the values from the measures to the right.
+
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name")
+```
 
 :::
 ::::
 
+## Header {.scrollable}
 
-## Projects
+:::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| eval: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) 
+```
 
-A "project" is RStudio's built-in organizational support system which keeps all the files associated with a given project (i.e. data, R scripts, figures, results) together in one directory. 
+`tab_header()` can add titles and subtitles.
+
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  )
+```
+
+:::
+::::
+
+## Spanner {.scrollable}
+
+:::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| eval: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) 
+```
+
+A `tab_spanner()` lets us group columns together.
+:::
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  )
+```
+:::
+::::
+
+## Column Labels {.scrollable}
+
+:::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| eval: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  )
+```
+
+
+We can directly change column names with `cols_label()`
+
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  )
+```
+
+:::
+::::
+
+## Number Format {.scrollable}
+
+:::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| eval: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0) 
+```
+
+We can adjust cell formats too.
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  )
+```
+:::
+::::
+
+## Align Columns {.scrollable}
+
+:::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| eval: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  )
+```
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  )
+```
+:::
+::::
+
+## Reorder Groups {.scrollable}
+
+:::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| eval: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  ) %>%
+  row_group_order(
+    groups = c("X-wing", 
+               "Millennium Falcon")
+  )
+```
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  ) %>%
+  row_group_order(
+    groups = c("X-wing", 
+               "Millennium Falcon")
+  )
+```
+:::
+::::
+
+## Big Improvement! {.scrollable}
+
+:::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| echo: false
+tes_chars %>%
+  gt() 
+```
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+tes_chars %>% 
+  group_by(starships) %>%
+  gt(rowname_col = "name") %>%
+  tab_header(
+    title = "Star Wars Characters", 
+    subtitle = "The Empire Strikes Back"
+  ) %>%
+  tab_spanner(
+    label = "Vitals",
+    columns = vars(mass, height)
+  ) %>%
+  cols_label(
+    mass = "Mass (kg)",
+    height = "Height (cm)",
+    species = "Species"
+  ) %>%
+  fmt_number(
+    columns = vars(mass),
+    decimals = 0
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = vars(species, mass, height)
+  ) %>%
+  row_group_order(
+    groups = c("X-wing", 
+               "Millennium Falcon")
+  )
+```
+:::
+::::
+
+## $\LaTeX$ Tables
+
+`gt` is a very new package and is somewhat finicky when used in `.pdf` documents.
+
+For tables in $\LaTeX$—as is needed for `.pdf` files—I recommend also looking into the `kableExtra` or `flextable` packages.
 
 . . . 
 
-Creating a new project quite basically creates a new folder in a place that you specify. But it also does a few of other extremely useful things: 
+Like `gt`, `kableExtra` and `flextable` allow the construction of complex tables in either HTML or $\LaTeX$ using
+additive syntax similar to `ggplot2` and `dplyr`. `flextable` is also great for Word tables.
+
+. . . 
+
+If you want to edit $\LaTeX$ documents, you can do it in R using Sweave documents (.Rnw).
+Alternatively, you may want to work in a dedicated $\LaTeX$ editor. I recommend [Overleaf](http://www.overleaf.com)
+for this purpose.
+
+. . . 
+
+RMarkdown has support for a fair amount of basic $\LaTeX$ syntax if you aren't trying to 
+get too fancy!
+
+## `flextable` {.scrollable}
+
+:::: {.columns}
+::: {.column width="50%"}
+This is a table produced by `flextable` in Word format--including the embedded density images^[Embedding summary plots is a bit complicated and requires [list columns](https://ardata-fr.github.io/flextable-book/cell-content.html#mini-charts)]!
+
+Look into `flextable` if you'll be working in Word or want a table package that handles just about every format.
+
+:::
+::: {.column width="50%"}
+![](images/flextable.png)
+:::
+::::
+
+## `modelsummary`
+
+The `modelsummary` package combines `broom`, `gt`, `flextable`, and `kableExtra` to produce tabular summaries of almost any model fit in R.
+
+An advantage of this package is that it can produce output in every common format: HTML, Markdown, $\LaTeX$, raw text, and even images (`.png` or `.jpg`).
+
+```{r}
+library(modelsummary)
+```
+
+Its key function is `msummary()` or `modelsummary()` which creates summary tables of models.
+
+You can then build on it using `gt`, `flextable`, or `kableExtra` functions, depending on the selected output format.
+
+## `msummary` 
+
+:::: {.columns}
+::: {.column width="50%"}
+Like `pander()`, `msummary()` takes a model as an object to make a table.
+
+```{r}
+#| eval: false
+#| echo: true
+mod_1 <- lm(mpg ~ wt, data = mtcars)
+msummary(mod_1)
+```
+
+Note default `modelsummary` look like `pander` tables because they use Markdown.
+:::
+::: {.column width="50%"}
+```{r}
+#| eval: true
+#| echo: false
+mod_1 <- lm(mpg ~ wt, data = mtcars)
+msummary(mod_1)
+```
+:::
+::::
+
+## `msummary` {.scrollable}
+
+:::: {.columns}
+::: {.column width="50%"}
+You can present multiple models in `msummary` using named lists:
+
+```{r}
+#| eval: false
+#| echo: true
+mod_1 <- lm(mpg ~ wt, data = mtcars)
+mod_2 <- lm(mpg ~ hp + wt, data = mtcars)
+mod_3 <- lm(mpg ~ hp + wt + factor(am), 
+            data = mtcars)
+model_list <- list("Model 1" = mod_1, 
+                   "Model 2" = mod_2, 
+                   "Model 3" = mod_3)
+msummary(model_list)
+```
+
+This allows you to produce the common (and often bad) journal format where one starts with a nonsensical "naive model" then works up to the "full model" justified by the front end of the paper.
+:::
+::: {.column width="50%"}
+```{r}
+#| eval: true
+#| echo: false
+mod_1 <- lm(mpg ~ wt, data = mtcars)
+mod_2 <- lm(mpg ~ hp + wt, data = mtcars)
+mod_3 <- lm(mpg ~ hp + wt + factor(am), 
+            data = mtcars)
+model_list <- list("Model 1" = mod_1, 
+                   "Model 2" = mod_2, 
+                   "Model 3" = mod_3)
+msummary(model_list)
+```
+
+:::
+::::
+
+## PDF Output
+
+`output = "latex"` produces `kableExtra` based output well-suited to PDFs.<sup>1</sup>
+
+```{r}
+#| eval: false
+msummary(model_list, output = "latex")
+```
+
+![](images/ex_table_latex.PNG)
+
+
+For customization, I recommend referring to [`modelsummary`'s documentation](https://modelsummary.com/articles/appearance.html).
+
+## Saving a `modelsummary`
+
+```{r}
+msummary(model_list, output = "ex_table.png")
+```
+
+To save a `modelsummary` object as a file, just provide a path to the `output =` argument.
+
+Specifying a suffix (e.g., `.png` or `.pdf`) will control the output format.
+
+## `modelsummary` and `gt`
+
+:::: {.columns}
+::: {.column width="50%"}
+
+You can select `gt` output to enable modifying summaries with `gt` functions.
+
+```{r}
+#| eval: false
+msummary(model_list, output = "gt") %>%
+  tab_header(
+    title = "Table 1. Linear Models", 
+    subtitle = "DV: Miles per Gallon"
+  )
+```
+
+Note that `gt`'s support for PDF output is immature--this format is better for HTML or image output.
+
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+msummary(model_list, output = "gt") %>%
+  tab_header(
+    title = "Table 1. Linear Models", 
+    subtitle = "DV: Miles per Gallon"
+  )
+```
+:::
+::::
+## `gtsummary`
+
+The `gtsummary` package is similar to `modelsummary` in that it takes advantage of `broom`, `gt`, and `kableExtra` to provide a flexible table-making framework.
+
+While `gtsummary` can also produce model tables like `modelsummary`, it also produces descriptive statistic tables for dataframes^[I prefer `modelsummary`'s syntax (or manual table building) for most model tables.].
+
+```{r}
+library(gtsummary)
+```
+
+## `tbl_summary()`
+
+:::: {.columns}
+::: {.column width="50%"}
+By default, `gtsummary` tables provide:
+
+* Frequencies for categorical and binary variables
+* Quantiles of the form "50% (25%, 75%)" for continuous variables
+* Sample size
+
+```{r}
+#| eval: false
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary() 
+```
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary()
+```
+:::
+::::
+
+## Grouping
+
+:::: {.columns}
+::: {.column width="50%"}
+You can provide a `by = ` argument to do grouped descriptives.
+
+```{r}
+#| eval: FALSE
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary(by = "am") 
+```
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary(by = "am")
+```
+:::
+::::
+
+## Adding `gt`
+:::: {.columns}
+::: {.column width="50%"}
+If you select `gt` output, you can dress it up with `gt` functions.
+
+```{r}
+#| eval: false
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary(by = "am") %>%
+  as_gt() %>%
+  tab_spanner(
+    label = "Transmission", 
+    columns = starts_with("stat_")
+  ) %>%
+  tab_header(
+    title = "Motor Trend Cars", 
+    subtitle = "Descriptive Statistics"
+  )
+```
+
+`starts\_with("stat\_")` here selects the statistic columns created by `tbl_summary()`.
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+mtcars %>% 
+  select(1:9) %>%
+  tbl_summary(by = "am") %>%
+  as_gt() %>%
+  tab_spanner(label = "Transmission", 
+              columns = starts_with("stat_")) %>%
+  tab_header("Motor Trend Cars", 
+             subtitle = "Descriptive Statistics") 
+```
+:::
+::::
+
+## Bonus: `corrplot`
+
+The `corrplot` package has functions for displaying correlograms.
+
+These make interpreting the correlations between variables in a data set easier than conventional correlation tables.
+
+The first argument is a call to `cor()`, the base R function for generating a correlation matrix.
+
+[See the vignette for customization options.](https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html)
+
+```{r}
+#| eval: false
+library(corrplot)
+corrplot(
+  cor(mtcars),
+  addCoef.col = "white",
+  addCoefasPercent=T,
+  type="upper", 
+  order="AOE")
+```
+
+## Correlogram
+
+```{r}
+#| eval: true
+#| echo: false
+#| fig-height: 5
+#| fig-align: center
+library(corrplot)
+corrplot(cor(mtcars), addCoef.col = "white", addCoefasPercent=T, type="upper", order="FPC")
+```
+
+# Reproducible Research{.section-title background-color="#99a486"}
+
+## Why Reproducibility?
+
+Reproducibility is not *replication*.
+
+* **Replication** is running a new study to show if and how results of a prior study hold.
+* **Reproducibility** is about rerunning *the same study* and getting the *same results*.
+
+. . . 
+
+Reproducible studies can still be *wrong*... and in fact reproducibility makes proving a study wrong *much easier*.
+
+. . . 
+
+Reproducibility means:
+
+* Transparent research practices.
+* Minimal barriers to verifying your results.
+
+. . . 
+
+*Any study that isn't reproducible can be trusted only on faith.*
+
+## Reproducibility Definitions
+
+Reproducibility comes in three forms (Stodden 2014):
 
 . . . 
 
 ::: {.incremental}
-* Creates a `.Rproj` file which tracks your command history and all the files in your project folder. 
-* Contains all the files needed to reproduce your work 
-  * i.e. you can send a project folder to someone and they will be able to run it on their local machine
-* Facilitates version control with built-in git/GitHub connection *(more on this later in the course)*
+1. **Empirical:** Repeatability in data collection.
+2. **Statistical:** Verification with alternate methods of inference.
+3. **Computational:** Reproducibility in cleaning, organizing, and presenting data and results.
 :::
+
+. . . 
+
+R is particularly well suited to enabling **computational reproducibility**^[ Python is equally well suited. Julia is an option as well.].
+
+. . . 
+
+They will not fix flawed research design, nor offer a remedy for improper application of statistical methods.
+
+Those are the difficult, non-automatable things you want skills in.
+
+## Computational Reproducibility
+
+Elements of computational reproducibility:
+
+. . . 
+
+* Shared data
+   + Researchers need your original data to verify and replicate your work.
+* Shared code
+   + Your code must be shared to make decisions transparent.
+
+. . . 
+
+* Documentation
+   + The operation of code should be either self-documenting or have written descriptions to make its use clear.
+
+. . . 
+
+* **Version Control**
+   + Documents the research process.
+   + Prevents losing work and facilitates sharing.
+
+## Levels of Reproducibility
+
+For academic papers, degrees of reproducibility vary:
+
+::: {.incremental}
+0. "Read the article"
+1. Shared data with documentation
+2. Shared data and all code
+3. **Interactive document**
+4. **Research compendium**
+5. Docker compendium: Self-contained ecosystem
+:::
+
+## Interactive Documents
+
+**Interactive documents** — like Quarto docs — combine code and text together into a self-contained document.
+
+* Load and process data
+* Run models
+* Generate tables and plots in-line with text
+* In-text values automatically filled in
+
+. . . 
+
+Interactive documents allow a reader to examine your computational methods within the document itself; in effect, they are self-documenting.
+
+. . . 
+
+By re-running the code, they reproduce your results on demand.
+
+. . . 
+
+Common Platforms:
+
+ * **R:** Quarto
+ * **Python:** Jupyter Notebooks
+
+## Research Compendia
+
+A **research compendium** is a portable, reproducible distribution of an article or other project.
+
+. . . 
+
+Research compendia feature:
+
+* An interactive document as the foundation
+
+* Files organized in a recognizable structure (e.g. an R package)
+
+* Clear separation of data, method, and output. *Data are read only*.
+
+* A well-documented or even *preserved* computational environment (e.g. Docker)
+
+. . . 
+
+`rrtools` by UW's [Ben Markwick](https://github.com/benmarwick) provides a simplified workflow to accomplish this in R.
+
+## Bookdown
+
+[`bookdown`](https://bookdown.org/yihui/bookdown/) — which is integrated into `rrtools` — can generate documents in the proper format for articles, theses, books, or dissertations.
+
+. . . 
+
+`bookdown` provides an accessible alternative to writing $\LaTeX$ for typesetting and reference management.
+
+. . . 
+
+You can integrate citations and automate reference page generation using bibtex files (such as produced by Zotero).
+
+. . . 
+
+`bookdown` supports `.html` output for ease and speed and also renders `.pdf` files through $\LaTeX$ for publication-ready documents.
+
+. . . 
+
+For University of Washington theses and dissertations, consider Ben Marwick's [`huskydown` package](https://github.com/benmarwick/huskydown) which uses Markdown but renders via a UW approved $\LaTeX$ template.
+
+# Best Practices{.section-title background-color="#99a486"}
+
+## Organization and Portability
+
+## Organization Systems
+
+Organizing research projects is something you either do accidentally — and badly — or purposefully with some upfront labor.
+
+. . . 
+
+Uniform organization makes switching between or revisiting projects easier.
+
+. . . 
+
+I suggest something like the following:
+
+:::: {.columns}
+::: {.column width="50%"}
+```
+project/
+   readme.md
+   data/
+     derived/
+       processed_data.RData
+     raw/
+       core_data.csv
+   docs/
+     paper.Rmd
+   syntax/
+     functions.R
+     models.R
+```
+:::
+::: {.column width="50%"}
+1. There is a clear hierarchy
+   * Written content is in `docs`
+   * Code is in `syntax`
+   * Data is in `data`
+2. Naming is uniform
+   * All lower case
+   * Words separated by underscores
+3. Names are self-descriptive
+:::
+::::
+
+## Workflow versus Project
+
+To summarize Jenny Bryan, [one should separate workflow from projects.](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)
+
+<br>
+
+. . . 
+
+:::: {.columns}
+::: {.column width="50%"}
+
+### Workflow
+
+* The software you use to write your code (e.g. RStudio)
+
+* The location you store a project
+
+* The specific computer you use
+
+* The code you ran earlier or typed into your console
+
+:::
+::: {.column width="50%"}
+
+### Project
+
+* The raw data
+
+* The code that operates on your raw data
+
+* The packages you use
+
+* The output files or documents
+
+:::
+::::
+
+. . . 
+
+<br>
+
+Projects *should not modify anything outside of the project* nor need to be modified by someone else (or future you) to run.
+
+**Projects *should be independent of your workflow*.**
+
+## Portability
+
+For research to be reproducible, it must also be *portable*. Portable software operates *independently of workflow* such as fixed file locations.
+
+::: {.panel-tabset}
+
+### **Do Not:**
+
+* Use `setwd()` in scripts or .Rmd files.
+* Use *absolute paths* except for *fixed, immovable sources* (secure data).
+  + `read_csv("C:/my_project/data/my_data.csv")`
+* Use `install.packages()` in script or .Rmd files.
+* Use `rm(list=ls())` anywhere but your console.
+
+### **Do:**
+
+* Use RStudio projects (or the [`here` package](https://github.com/jennybc/here_here)) to set directories.
+* Use *relative paths* to load and save files:
+  + `read_csv("./data/my_data.csv")`
+* Load all required packages using `library()`.
+* Clear your workspace when closing RStudio.
+  + Set *Tools > Global Options... > Save workspace...* to **Never**
+
+:::
+
+## Divide and Conquer
+
+Often you do not want to include all code for a project in one `.qmd` file:
+
+   * The code takes too long to knit.
+   * The file is so long it is difficult to read.
+
+. . . 
+
+There are two ways to deal with this:
+
+1. Use separate `.R` scripts or `.qmd` files which save results from complicated parts of a project, then load these results in the main `.qmd` file.
+
+   + This is good for loading and cleaning large data.
+   + Also for running slow models.
+
+. . . 
+
+2. Use `source()` to run external `.R` scripts when the `.qmd` renders
+
+   + This can be used to run large files that aren't impractically slow.
+   + Also good for loading project-specific functions.
+
+## The Way of Many Files
+
+I find it beneficial to break projects into *many* files:
+
+* Scripts with specialized functions.
+* Scripts to load and clean each set of variables.
+* Scripts to run each set of models and make tables and plots.
+* A main .qmd that runs some or all of these to reproduce the entire project.
+
+. . . 
+
+Splitting up a project carries benefits:
+
+* Once a portion of the project is done and in its own file, *it is out of your way.*
+* If you need to make changes, you don't need to search through huge files.
+* Entire sections of the project can be added or removed quickly (e.g. converted to an appendix of an article)
+* **It is the only way to build a proper *2* for a project. **
+
+## Pipelines
+
+Professional researchers and teams design projects as a **pipeline**.
+
+. . . 
+
+A **pipeline** is a series of consecutive processing elements (scripts and functions in R).
+
+. . . 
+
+Each stage of a pipeline...
+
+1. Has clearly defined inputs and outputs
+2. Does not modify its inputs.
+3. Produces the exact same output every time it is re-run.
+
+. . . 
+
+This means...
+
+1. When you modify one stage, you only need to rerun *subsequent stages*.
+2. Different people can work on each stage.
+3. Problems are isolated within stages.
+4. You can depict your project as a *directed graph* of **dependencies**.
+
+## Example Pipeline
+
+Every stage (oval) has an unambiguous input and output. Everything that precedes a given stage is a **dependency** — something required to run it.
+
+![](images/pipeline.svg)
+
+::: aside
+Note: [`targets` is a great package for managing R research pipelines.](https://docs.ropensci.org/targets/)
+:::
+
+# Tools (*some opinionated advice*) {.section-title background-color="#99a486"}
+
+## On Formats
+
+Avoid "closed" or commercial software and file formats except where absolutely necessary.
+
+. . . 
+
+Use open source software and file formats.
+
+. . . 
+
+* It is always better for *science*:
+
+   + People should be able to explore your research without buying commercial software.
+   + You do not want your research to be inaccessible when software is updated.
+
+. . . 
+
+* It is often just *better*.
+
+   + It is usually updated more quickly
+   + It tends to be more secure
+   + It is rarely abandoned
+
+. . . 
+
+**The ideal:** Use software that reads and writes *raw text*.
+
+## Text
+
+Writing and formatting documents are two completely separate jobs.
+
+* Write first
+* Format later
+* [Markdown](https://en.wikipedia.org/wiki/Markdown) was made for this
+
+. . . 
+
+Word processors — like Microsoft Word — try to do both at the same time, usually badly.
+
+They waste time by leading you to format instead of writing.
+
+. . . 
+
+Find a good modular text editor and learn to use it:
+
+* [Atom](https://atom.io/)
+* [Sublime](https://www.sublimetext.com/) (Commercial)
+* Emacs
+* Vim
+
+# Version Control{.section-title background-color="#99a486"}
+
+## Version Control
+
+Version control originates in collaborative software development.
+
+**The Idea:** All changes ever made to a piece of software are documented, saved automatically, and revertible.
+
+. . . 
+
+Version control allows all decisions ever made in a research project to be documented automatically.
+
+. . . 
+
+Version control can:
+
+1. Protect your work from destructive changes
+2. Simplify collaboration by merging changes
+3. Document design decisions
+4. Make your research process transparent
+
+## Git and GitHub
+
+[`git`](https://en.wikipedia.org/wiki/Git) is the dominant platform for version control, and [GitHub](https://github.com/) is a free (and now Microsoft owned) platform for hosting **repositories**.
+
+. . . 
+
+**Repositories** are folders on your computer where all changes are tracked by Git.
+
+. . . 
+
+Once satisfied with changes, you "commit" them then "push" them to a remote repository that stores your project.
+
+. . . 
+
+Others can copy your project ("pull"), and if you permit, make suggestions for changes.
+
+. . . 
+
+Constantly committing and pulling changes automatically generates a running "history" that documents the evolution of a project.
+
+. . . 
+
+`git` is integrated into RStudio under the *Tools* menu. [It requires some setup.](http://happygitwithr.com/)^[You can also use the [GitHub desktop application](https://desktop.github.com/).]
+
+
+## GitHub as a CV
+
+Beyond archiving projects and allowing sharing, GitHub also serves as a sort of curriculum vitae for the programmer.
+
+. . . 
+
+By allowing others to view your projects, you can display competence in programming and research.
+
+. . . 
+
+If you are planning on working in the private sector, an active GitHub profile will give you a leg up on the competition.
+
+. . . 
+
+If you are aiming for academia, a GitHub account signals technical competence and an interest in research transparency.
+
+# Wrapping up the Course{.section-title background-color="#99a486"}
+
+## What You've Learned
+
+A lot!
+
+* How to get data into R from a variety of formats
+* How to do "data custodian" work to manipulate and clean data
+* How to make pretty visualizations
+* How to automate with loops and functions
+* How to combine text, calculations, plots, and tables into dynamic R Markdown reports 
+
+## What Comes Next?
+
+* Statistical inference (e.g. more CSSS courses)
+    + Functions for hypothesis testing, hierarchical/mixed effect models, machine learning, survey design, etc. are straightforward to use... once data are clean
+    + Access output by working with list structures (like from regression models) or using `broom` and `ggeffects`
+* Practice, practice, practice!
+    + Replicate analyses you've done in Excel, SPSS, or Stata
+    + Think about data using `dplyr` verbs, tidy data principles
+    + Quarto for reproducibility
+* More advanced projects
+    + Using version control (git) in RStudio
+    + Interactive Shiny web apps
+    + Write your own functions and put them in a package
+    
+## Course Plugs
+
+If you...
+
+* have no stats background yet - **SOC504: Applied Social Statistics** 
+* have (only) finished SOC506 - **CSSS510: Maximum Likelihood** 
+* want to master visualization - **CSSS569: Visualizing Data**
+* study events or durations - **CSSS544: Event History Analysis**^[Also a great maximum likelihood introduction.] 
+* want to use network data - **CSSS567: Social Network Analysis**
+* want to work with spatial data - **CSSS554: Spatial Statistics**
+* want to work with time series - **CSSS512: Time Series and Panel Data**
+
+# Thank you!{.section-title background-color="#99a486"}
+
+# Supplementary Material{.section-title background-color="#99a486"}
+
+## `sjPlot`
+
+`pander` tables are great for basic `rmarkdown` documents, but they're not generally publication ready.
+
+The `sjPlot` package produces `html` tables that look more like those you may find in journal articles.
+
+```{r table_packages}
+#| results: hide
+library(sjPlot)
+```
+
+## `sjPlot` Tables
+
+`tab_model()` will produce tables for most models.
+
+```{r}
+#| eval: true
+model_1 <- lm(mpg ~ wt, data = mtcars)
+tab_model(model_1)
+```
+
+## Multi-Model Tables with `sjTable`
+
+Often in journal articles you will see a single table that compares multiple models.
+
+Typically, authors will start with a simple model on the left, then add variables, until they have their most complex model on the right.
+
+The `sjPlot` package makes this easy to do: just give `tab_model()` more models!
+
+## Multiple `tab_model()`
+
+```{r}
+model_2 <- lm(mpg ~ hp + wt, data = mtcars)
+model_3 <- lm(mpg ~ hp + wt + factor(am), data = mtcars)
+tab_model(model_1, model_2, model_3)
+```
+
+## `sjPlot` does a lot more
+
+The `sjPlot` package does *a lot* more than just make pretty tables. It is a rabbit holeof *incredibly* powerful and useful functions for displaying descriptive and inferential results.
+
+View the [package website](http://www.strengejacke.de/sjPlot/) for extensive documentation.
+
+`sjPlot` is a bit more complicated than `ggeffects` but can do just about everything it can do as well; they were written by the same author!
+
+`sjPlot` is fairly new but offers a fairly comprehensive solution for `ggplot` based publication-ready social science data visualization. All graphical functions in
+`sjPlot` are based on `ggplot2`, so it should not take terribly long to figure out.
+
+## `sjPlot` Example: Likert plots
+
+```{r}
+#| echo: false
+#| out-width: "600px"
+knitr::include_graphics("images/sjPlot_likert.PNG")
+```
+
+## `sjPlot` Example: Crosstabs
+
+```{r}
+#| echo: false
+#| out-width: "500px"
+knitr::include_graphics("images/sjPlot_crosstab.PNG")
+```

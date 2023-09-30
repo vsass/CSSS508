@@ -2,20 +2,62 @@
 title: "Overview"
 ---
 
-This page contains general instructions for assignments/peer reviews. For homework-specific instructions, deadlines, and templates, go to the specific assignment listed on the left. 
+This page contains general instructions for assignments/peer reviews. For homework-specific instructions and templates go to the specific assignment listed on the left.
 
----
+------------------------------------------------------------------------
+
+### Assignment Due Dates
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-align: left
+
+library(tidyverse)
+library(gt)
+
+schedule <- tibble(Homework = c(1:9), 
+                   Due_Date_AA = c("10 October", "17 October", "24 October", "31 October", "7 November", "14 November", "21 November", "28 November", "5 December"), 
+                   Peer_Due_Date_AA = c("15 October", "22 October", "29 October", "5 November", "12 November", "19 November", "26 November", "3 November", "10 December"), 
+                   Due_Date_AB = c("12 October", "19 October", "26 October", "2 November", "9 November", "16 November", "23 November", "30 November", "7 December"), 
+                   Peer_Due_Date_AB = c("17 October", "24 October", "31 October", "7 November", "14 November", "21 November", "28 November", "5 November", "12 December"))
+
+schedule |> 
+  gt() |> 
+  tab_spanner(label = "Section AA",
+              columns = vars(Due_Date_AA, Peer_Due_Date_AA)) |> 
+  tab_spanner(label = "Section AB",
+              columns = vars(Due_Date_AB, Peer_Due_Date_AB)) |> 
+  #tab_header(title = md("**Homework & Peer Review Due Dates**")) |> 
+  cols_align(align = "center") |> 
+  cols_label(Homework = "#",
+             Due_Date_AA = "Homework Due",
+             Peer_Due_Date_AA = "Peer Review Due",
+             Due_Date_AB = "Homework Due",
+             Peer_Due_Date_AB = "Peer Review Due") |> 
+  tab_style(style = cell_fill(color = "#c7cdac"),
+            locations = cells_body(columns = c(Due_Date_AA, Due_Date_AB))) |> 
+  tab_style(style = cell_fill(color = "#99a486"),
+            locations = cells_body(columns = c(Peer_Due_Date_AA, Peer_Due_Date_AB))) |> 
+  tab_style(style = cell_fill(color = "#f6f7f9"),
+            locations = list(cells_column_spanners(), cells_column_labels(), # cells_title(), 
+                             cells_body(columns = Homework))) |> 
+  tab_options(table.align = "left")
+```
+
+------------------------------------------------------------------------
 
 All assignments should be created using Quarto and uploaded to Canvas as both html and qmd files. Your document should be pleasant for a peer to look at and follow all instructions. Use sections for organization, label figures/tables, and use code chunks (e.g., `echo`, `results`).
 
 ### **Peer Review:**
 
-You are required to **both grade and provide feedback** on a peer's homework each week. Reading/evaluating the work of others is useful and important! Good programmers realize that most problems have been solved by others; the trick is figuring out how to apply existing code to new problems. You will develop this skill by reading others\' code, evaluating their approach to problems, providing suggestions, and pointing out when you learned something new. **Good peer reviews** give constructive, polite, and insightful comments, are specific and concise, use the grading rubric below, and point out what you learned from their code. **Poor peer reviews** are impolite or unprofessional, are generic (i.e., could be applied to anyone\'s homework), or fail to provide useful suggestions.
+You are required to **both grade and provide feedback** on a peer's homework each week. Reading/evaluating the work of others is useful and important! Good programmers realize that most problems have been solved by others; the trick is figuring out how to apply existing code to new problems. You will develop this skill by reading others' code, evaluating their approach to problems, providing suggestions, and pointing out when you learned something new. **Good peer reviews** give constructive, polite, and insightful comments, are specific and concise, use the grading rubric below, and point out what you learned from their code. **Poor peer reviews** are impolite or unprofessional, are generic (i.e., could be applied to anyone's homework), or fail to provide useful suggestions.
 
 ### **Rubric Students Use to Grade Assignments:**
 
 \
-**0:** Didn\'t turn anything in\
+**0:** Didn't turn anything in\
 **1:** Turned in but low effort, ignoring many directions (less than 50% of assignment completed correctly)\
 **2:** Decent effort, followed directions with some minor issues (50-80% of assignment completed correctly)\
 **3:** Nailed it (\>80% of assignment completed correctly)

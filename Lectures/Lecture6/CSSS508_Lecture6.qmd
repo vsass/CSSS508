@@ -1,5 +1,5 @@
 ---
-highlight-style:  a11y-dark
+highlight-style:  a11y-dark #, oblivion, radical, vim-dark, espresso, zenburn, kate, monochrome, breezedark, haddock
 footnotes-hover: true
 reference-location: margin
 execute: 
@@ -28,18 +28,32 @@ format:
 require(downlit)
 require(xml2)
 require(tidyverse)
+options(width = 70)
+# knitr::opts_chunk$set(comment = "##")
 ```
 
-## {#title-slide data-menu-title="Iteration" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
+## {#title-slide data-menu-title="Data Structures & Types" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
 
 
-[Iteration]{.custom-title}
+[Data Structures & Types]{.custom-title}
 
 [CS&SS 508 • Lecture 6]{.custom-subtitle}
 
 [7 November 2023]{.custom-subtitle2}
 
 [Victoria Sass]{.custom-subtitle3}
+
+# Preamble: Data Structures and Types in `R` {.section-title background-color="#99a486"}
+
+--- 
+
+<br>
+
+So far, we've been manipulating, summarizing, and making visuals out of data. That's pretty great!!
+
+But now, we need to get more into the weeds of programming...
+
+Today is all about *types of data* in R.
 
 # Roadmap{.section-title background-color="#99a486"}
 
@@ -49,485 +63,596 @@ require(tidyverse)
 
 Last time, we learned about,
 
-* Importing and exporting data
-* Cleaning and reshaping data
-* Dates and times
+* Logical conditions
+* Subsetting data
+* Modifying data 
+* Summarizing data
+* Merging together data
 
 . . . 
 
 Today, we will cover,
 
-* Why Loops?
-* `for()` loops
-* `while()` loops
+* Types of Data
+* Vectors
+* Matrices
+* Lists
 
-# Why Loops?{.section-title background-color="#99a486"}
+# Types of Data{.section-title background-color="#99a486"}
 
-## Bad Repetition
++ `numeric`
++ `character`
++ `factor`
++ `logical`
++ `NA`, `NaN`, and `Inf`
 
-If someone doesn't know better, they might find the means of variables in the `swiss` data by typing in a line of code for each column:
+## How is my data stored?
 
-```{r goofus, eval=FALSE}
-mean1 <- mean(swiss$Fertility)
-mean2 <- mean(swiss$Agriculture)
-mean3 <- mean(swissExamination)
-mean4 <- mean(swiss$Fertility)
-mean5 <- mean(swiss$Catholic)
-mean5 <- mean(swiss$Infant.Mortality)
-c(mean1, mean2 mean3, mean4, mean5, man6)
-```
-
-Can you spot the problems?
+Under the hood, R stores different types of data in different ways.
 
 . . . 
 
-How upset would they be if the `swiss` data had 200 columns instead of `r ncol(swiss)`?
-
-## Good Repetition
-
-```{r}
-#| include: false
-options(digits = 3)
-```
-
-You will learn a better way to calculate column means today using loops!
-
-```{r}
-means <- rep(NA, ncol(swiss))
-for(i in 1:ncol(swiss)){
-  means[i] <- mean(swiss[,i])
-}
-data.frame(Variable=names(swiss),Mean=means)
-```
-
-Don't worry about the details yet! 
++ e.g., R knows that `4.0` is a number, and that `"Vic"` is not a number.
 
 . . . 
 
-## Don't Repeat Yourself (DRY)!
+So what exactly are the common data types, and how do we know what R is doing?
 
-The **DRY** idea: Computers are much better at doing the same thing over and over again than we are.
+## Data Types
 
-::: {incremental}
-* Writing code to repeat tasks for us reduces the most common human coding mistakes.
-* It also *substantially* reduces the time and effort involved in processing large volumes of data.
-* Lastly, compact code is more readable and easier to troubleshoot.
-:::
-
-# `for()` Loops{.section-title background-color="#99a486"}
-
-## The `for()` Loop
-
-`for()` loops are the most general kind of *loop*, found in pretty much every programming language.
-
-"**For** each of these values -- in order -- **do this**"
+* **numeric**: `c(1, 10*3, 4, -3.14)`
 
 . . . 
 
-Conceptually:
+* **character**: `c("red", "blue", "blue")`
 
-*Given a set of values...*
+. . . 
 
-1. Set an index variable (often `i`) equal to the first value
-2. Do something (perhaps depending on `i`)
-3. Is there a next value?
-   * *YES*: Update to next value, go back to 2.
-   * *NO*: Exit loop
+* **factor**: `factor(c("red", "blue", "blue"))`
 
-We are *looping* through values and repeating some actions.
 
-## `for()` Loop: Diagram
+. . . 
 
-*Given a set of values...*
+* **logical**: `c(FALSE, TRUE, TRUE)`
 
-![](images/loop.svg)
+## Note on Factor Vectors
 
-## `for()` Loop: Example
+Factors are categorical data that encode a (modest) number of **levels**, like for experimental group or geographic region: 
 
 ```{r}
-for(i in 1:5) {
-    # inside for, output won't show up without print()
-    print(i^2) 
-}
+test_group <- factor(c("Treatment", "Placebo", "Placebo", "Treatment"))
+test_group
 ```
 
-Note this runs *5 separate print commands*, which is why each line starts with `[1]`.
+. . . 
 
-## These Do the Same Thing
+Why use `factor` instead of `character`? Because `factor` data can go into a statistical model^[Most R models will automatically convert character data to factors. The default reference is chosen alphabetically.].
 
-:::: {.columns}
+## Note on Logical Vectors
 
-::: {.column width="50%"}
+Remember that `logical` data in R takes on boolean `TRUE` or `FALSE` values.
+
+. . . 
+
+You can do math with logical values, because R makes `TRUE` = 1 and `FALSE` = 0:
+
 ```{r}
-for(i in 1:3) {
-    print(i^2) 
-}
+my_booleans <- c(TRUE, TRUE, FALSE, FALSE, FALSE)
+sum(my_booleans)
+mean(my_booleans)
 ```
-:::
 
-::: {.column width="50%"}
-```{r, results='hold'}
-i <- 1
-print(i^2) 
-i <- 2
-print(i^2)
-i <- 3
-print(i^2)
+## Missing or Infinite Data Types
+
+Your data may otherwise be missing or infinite:
+
+1. **Not Applicable** `NA` 
+
+    + Used when data simply is missing or "not available"
+    
+. . . 
+
+2. **Not a Number** `NaN`
+
+    + Used when you try to perform a bad math operation, e.g., `0 / 0 `
+    
+. . . 
+
+3. **Infinite** `Inf`, `-Inf`
+
+    + Used when you divide by 0, e.g., `-5/0` or `5/0`
+
+## Checking Data Types
+
+`class()` tells us what type of data we have:
+
+```{r}
+class4     <- class(4)
+classAB    <- class(c("A", "B"))
+classABFac <- class(factor("A", "B"))
+classTRUE  <- class(TRUE)
+
+c(class4, classAB, classABFac, classTRUE)
 ```
-:::
-::::
 
-## Iteration Conventions
+## Testing Data Types
+
+There are also functions to **test** for certain data types:
+
+```{r}
+c(is.numeric(5),  is.character("A"))
+
+is.logical(TRUE)
+
+c(is.infinite(-Inf),  is.na(NA),  is.nan(NaN))
+```
+
+Warning: `NA` is not `NaN`!!!
+
+# Vectors{.section-title background-color="#99a486"}
+
++ Creating Vectors
++ Vector Math
++ Subsetting Vectors
+
+## Making Vectors
+
+In R, we call a set of values of the same type a **vector**. We can create vectors using the `c()` function ("c" for **c**ombine or **c**oncatenate).
+
+```{r}
+c(1, 3, 7, -0.5)
+```
+
+. . . 
+
+Vectors have one dimension: **length**
+
+```{r}
+length(c(1, 3, 7, -0.5))
+```
+
+. . . 
+
+All elements of a vector are the same type (e.g. numeric or character)!
+
+If you mix character and numeric data, it will convert everything to *characters*!
+
+## Generating Numeric Vectors
+
+There are shortcuts for generating numeric vectors:
+
+```{r}
+1:10
+```
+
+. . . 
+
+```{r}
+seq(-3, 6, by = 1.75) # Sequence from -3 to 6, increments of 1.75
+```
+
+. . . 
+
+```{r}
+rep(c(0, 1), times = 3) # Repeat c(0,1) 3 times
+rep(c(0, 1), each = 3) # Repeat each element 3 times
+```
+
+## Element-wise Vector Math
+
+When doing arithmetic operations on vectors, R handles these *element-wise*:
+
+```{r}
+c(1, 2, 3) + c(4, 5, 6)
+c(1, 2, 3, 4)^3 # exponentiation with ^
+```
+
+Common operations: `*`, `/`, `exp()` = $e^x$, `log()` = $\log_e(x)$
+
+## Vector Recycling
+
+If we work with vectors of different lengths, R will **recycle** the shorter one by repeating it to make it match up with the longer one:
+```{r}
+c(0.5, 3) * c(1, 2, 3, 4)
+c(0.5, 3, 0.5, 3) * c(1, 2, 3, 4) # same thing
+```
+
+## Scalars as Recycling
+
+A special case of recycling involves arithmetic with **scalars** (a single number). These are vectors of length 1 that are recycled to make a longer vector:
+```{r}
+3 * c(-1, 0, 1, 2) + 1
+```
+
+## Warning on Recycling
+
+Recycling doesn't work so well with vectors of incommensurate lengths:
+
+```{r}
+#| warning: true
+c(1,2) + c(100,200,300)
+```
+
+Be careful!!
+
+## Example: Standardizing Data
+
+Let's say we had some test scores and we wanted to put these on a standardized scale: 
+
+$$z_i = \frac{x_i - \text{mean}(x)}{\text{SD}(x)}$$
+
+. . . 
+
+```{r}
+x <- c(97, 68, 75, 77, 69, 81)
+z <- (x - mean(x)) / sd(x)
+round(z, 2)
+```
+
+
+## Math with Missing Values
+
+Even one `NA` "poisons the well": You'll get `NA` out of your calculations unless you add the extra argument `na.rm = TRUE` (availabe in some functions):
+
+. . . 
+
+```{r}
+vector_w_missing <- c(1, 2, NA, 4, 5, 6, NA)
+mean(vector_w_missing)
+mean(vector_w_missing, na.rm = TRUE)
+```
+
+## Subsetting Vectors
+
+We can **subset** a vector in a number of ways:
+
+* Passing a single index or vector of entries to **keep**:
+
+```{r}
+first_names <- c("Andre", "Brady", "Cecilia", "Danni", "Edgar", "Francie")
+first_names[1]
+first_names[c(1, 2)]
+```
+
+. . . 
+
+* Passing a single index or vector of entries to **drop**:
+
+```{r}
+first_names[-3]
+```
+
+# Matrices{.section-title background-color="#99a486"}
+
+## Matrices: Two Dimensions
+
+**Matrices** extend vectors to two **dimensions**: **rows** and **columns**. We can construct them directly using `matrix`.
+
+R fills in a matrix column-by-column (**not** row-by-row!)
+
+```{r}
+a_matrix <- matrix(first_names, nrow = 2, ncol = 3)
+a_matrix
+```
+
+## Binding Vectors
+
+We can also make matrices by *binding* vectors together with `rbind()` (**r**ow **bind**) and `cbind()` (**c**olumn **bind**).
+
+```{r}
+b_matrix <- cbind(c(1, 2), c(3, 4), c(5, 6))
+b_matrix
+c_matrix <- rbind(c(1, 2, 3), c(4, 5, 6))
+c_matrix
+```
+
+## Subsetting Matrices
+
+We subset matrices using the same methods as with vectors, except we index them with `[rows, columns]`:
+
+```{r}
+a_matrix[1, 2] # row 1, column 2
+a_matrix[1, c(2,3)] # row 1, columns 2 and 3
+```
+
+. . . 
+
+We can obtain the dimensions of a matrix using `dim()`.
+
+```{r}
+dim(a_matrix)
+```
+
+## Matrices Becoming Vectors
+
+If a matrix ends up having just one row or column after subsetting, by default R will make it into a vector. 
+
+```{r}
+a_matrix[, 1] 
+```
+
+. . . 
+
+You can prevent this behavior using `drop = FALSE`.
+
+```{r}
+a_matrix[, 1, drop = FALSE] 
+```
+
+## Matrix Data Type Warning
+
+Matrices can contain numeric, integer, factor, character, or logical. But just like vectors, *all elements must be the same data type*.
+
+```{r}
+bad_matrix <- cbind(1:2, c("Victoria", "Sass"))
+bad_matrix
+```
+
+In this case, everything was converted to characters!
+
+## Matrix Dimension Names
+
+We can access dimension names or name them ourselves:
+
+```{r}
+rownames(bad_matrix) <- c("First", "Last")
+colnames(bad_matrix) <- c("Number", "Name")
+bad_matrix
+bad_matrix[ ,"Name", drop = FALSE]
+```
+
+## Matrix Arithmetic
+
+Matrices of the same dimensions can have math performed entry-wise with the usual arithmetic operators:
+
+```{r}
+matrix(c(2, 4, 6, 8),nrow = 2, ncol = 2) / matrix(c(2, 1, 3, 1),nrow = 2, ncol = 2)
+```
+
+## "Proper" Matrix Math
+
+To do matrix transpositions, use `t()`.
+
+```{r}
+e_matrix <- t(c_matrix)
+e_matrix
+```
+
+. . . 
+
+To do actual matrix multiplication (not entry-wise), use `%*%`.
+
+```{r}
+f_matrix <- c_matrix %*% e_matrix
+f_matrix
+```
+
+## "Proper" Matrix Math (cont.)
+
+To invert an invertible square matrix, use `solve()`.
+
+```{r}
+g_matrix <- solve(f_matrix)
+g_matrix
+```
+
+## Matrices vs. data.frames and tibbles
+
+All of these structures display data in two dimensions
+
++ `matrix`
+
+    + Base R
+    + Single data type allowed
+
+. . . 
+
++ `data.frame`
+
+    + Base R (default for data storage)
+    + Stores multiple data types
+    
+. . . 
+
++ `tibbles`
+
+    + tidyverse
+    + Stores multiple data types
+    + Displays nicely
+
+. . . 
+
+In practice, data.frames and tibbles are very similar!
+
+## Creating `data.frame`s
+
+We create a `data.frame` by specifying the columns separately:
+
+```{r}
+data.frame(Column1Name = c(1,2,3),
+           Column2Name = c("A","B","C"))
+```
+
+*Note:* `data.frame`s allow for **mixed data types!**
+
+# Lists{.section-title background-color="#99a486"}
+
+## What are Lists?
+
+**Lists** are objects that can store multiple types of data.
+
+
+```{r}
+my_list <- list("first_thing"  = 1:5,
+                 "second_thing" = matrix(8:11, nrow = 2))
+my_list
+```
+
+## Accessing List Elements
+
+You can access a list element by its name or number in `[[ ]]`, or a `$` followed by its name:
+
+```{r}
+my_list[["first_thing"]]
+my_list[[1]]
+my_list$first_thing
+```
+
+## Why Two Brackets `[[` `]]`?
+
+Double brackets get *the actual element* — as whatever data type it is stored as, in that location in the list.
+
+```{r}
+str(my_list[[1]])
+```
+
+. . . 
+
+If you use single brackets to access list elements, you get a **list** back. 
+
+```{r}
+str(my_list[1])
+```
+
+## `names()` and List Elements
+
+You can use `names()` to get a vector of list element names:
+
+```{r}
+names(my_list)
+```
+
+## Example: Regression Output
+
+When you perform linear regression in R, the output is a list!
+
+```{r}
+lm_output <- lm(speed ~ dist, data = cars)
+is.list(lm_output)
+names(lm_output)
+lm_output$coefficients
+```
+
+# Summary{.section-title background-color="#99a486"}
+
+1. Types of Data: `numeric`, `character`, `factor`, `logical`, `NA`, `NaN`, `Inf`
+1. Vectors: `c()`
+1. Matrices: `matrix`, `data.frame`, `tibble`
+1. Lists: `list`
+
+*Let's take a 10 minute break, then come back together for some practice!*
+
+## Mini-Check 1: Types of Data
+
+In each case, what will R return?
 
 ::: {.incremental}
-* We call what happens in the loop for a particular value one **iteration**. 
-* Iterating over indices `1:n` is *very* common. `n` might be the length of a vector, the number of rows or columns in a matrix or data frame, or the length of a list.
-* Common notation: `i` is the object that holds the current value inside the loop.
-    + If loops are nested, you will often see `j` and `k` used for the inner loops.
-    + This notation is similar to indexing in mathematical symbols (e.g $\sum\limits_{i=1}^n$)
-* Note `i` (and `j`,`k`, etc) are just normal objects. You can use any other names you want.
-    + Ex: When iterating over rows and/or columns, I often use `row` and/or `col`!
+* `is.numeric(3.14)`
+  + `TRUE`
+* `is.numeric(pi)`
+  + `TRUE`
+* `is.logical(FALSE)`
+  + `TRUE`
+* `is.nan(NA)`
+  + `FALSE`
 :::
-
-## Iterate Over Characters
-
-What we iterate over doesn't have to be numbers `1:n` or numbers at all! You can also iterate over a character vector in R:
-
-```{r}
-for(i in letters[1:3]) {
-    print(i)
-}
-i # in R, this will exist outside of the loop!
-```
-
-## Pre-Allocation
-
-Usually in a `for()` loop, you aren't just printing output, but want to store results from calculations in each iteration somewhere.
-
-. . . 
-
-To do that, figure out what you want to store, and **pre-allocate** an object of the right size as a placeholder (typically with missing values as placeholders).
-
-. . . 
-
-Examples of what to pre-allocate based on what you store:
+    
+## Mini-Check 2: Vectors
 
 ::: {.incremental}
-* Single numeric value per iteration: 
-  + `rep(NA, num_iter_iters)`
-* Numeric vector per iteration: 
-  + `matrix(NA, nrow = num_of_iters, ncol = length_of_vector)`
+* What does `sum(c(1, 2, NA))` output?
+  + `NA`. The code `sum(c(1, 2, NA), na.rm = TRUE)` would output `3`.
 :::
 
-## Pre-Allocation: Numeric
+<br>
+
+::: {.incremental}
+* What does `rep(c(0, 1), times = 2)` output?
+  + `c(0, 1, 0, 1)`
+:::
+
+<br>
+
+::: {.incremental}
+* I want to get the first and second elements of my vector, `a_vector`. What's wrong with the code `a_vector[1, 2]` ?
+  + `a_vector[c(1, 2)]`
+:::
+
+## Activity: Matrices and Lists
+
+1. Write code to create the following matrix:
+
+```{r echo=FALSE}
+matrix(c("A", "B", "C", "D", "E", "F"), nrow = 2, byrow = TRUE)
+```
+
+2. Write a line of code to extract the second column. Ensure the output is still a *matrix*.
+
+```{r echo=FALSE}
+matrix(c("A", "B", "C", "D", "E", "F"), nrow = 2, byrow = TRUE)[ ,2, drop = FALSE]
+```
+
+3. Complete the following sentence: "Lists are to vectors, what data frames are to..."
+
+4. Create a list that contains 3 elements: 
+    i) "ten_numbers" (integers between 1 and 10)
+    ii) "my_name" (your name as a character) 
+    iii) "booleans" (vector of `TRUE` and `FALSE` alternating three times)
+
+## Answers
+
+1\. Write code to create the following matrix:
 
 ```{r}
-iters <- 10 # Set number of interations
-output <- rep(NA,iters) # Pre-allocate numeric vector 
-output
-
-for(i in 1:iters) { # Run code below iters times
-    output[i] <- (i-1)^2 + (i-2)^2
-}
-output # Display output
+mat_test <- matrix(c("A", "B", "C", "D", "E", "F"), nrow = 2, byrow = TRUE)
+mat_test
 ```
-
-Steps:
-
-1. Set a number of iterations
-2. Pre-allocate a numeric vector of that length
-3. Run ten iterations where the output is a mathematical function of each iteration number.
-
-## Pre-Allocation: Numeric Vector per Iteration Matrix
-
-```{r}
-rownums <- 3
-colnums <- 6
-output <- matrix(NA,nrow=rownums,ncol=colnums)
-
-for(i in 1:rownums){
-  for(j in 1:colnums){
-    output[i,j] <- i + j
-  }
-}
-output
-```
-
-## Aside: If/Else Statements
-
-To test a logical statement and then conditionally execute a set of actions, use `if()` and `else`. The structure is:
-
-```{r eval=FALSE}
-if(CONDITION){
-  SOME CALCULATION
-} else{
-  A DIFFERENT CALCULATION
-}
-```
-
-**Warning!** `else` needs to be on same line as the closing brace `}` of previous `if()`.
-
-## If/Else Simple Example
-
-
-```{r}
-if(8  < 10){
-  print("Less than 10!")
-}else{
-  print("Not less than 10!")
-}
-```
-
-## More Complex If/Else
-
-We can nest together multiple if/elses! if we wish:
-
-```{r}
-i <- 13
-if(i <= 10) { 
-  print("i is less than or equal to 10!")
-} else if(i <= 14) {
-  print("i is greater than 10, less than or equal to 14")
-} else {
-  print("i is greater than or equal to 15")
-}
-```
-
-## Loops with If/Else Statements
-
-Suppose we want to take the numbers between 1 and 5, and divide the evens by 2 and multiply the odds by 2. We could do that using a loop with if/else statements!
-
-```{r}
-for(i in 1:5){
-  if(i %% 2 == 0){ #check for even numbers
-    print(i / 2)
-  }else{
-    print(i * 2)
-  }
-}
-```
-
-## Handling Special Cases
-
-Aside from the previous toy example, `if()` statements are useful when you have to handle special cases. 
-
-`if()` statements can be used to make a loop ignore or fix problematic cases.
-
-They are also useful for producing error messages, by generating a message *if* an input value is not what is expected.
-
-# `while()` Loops{.section-title background-color="#99a486"}
-
-## `while()`
-
-A lesser-used looping structure is the `while()` loop.
-
-Rather than iterating over a predefined vector, the loop keeps going until some condition is no longer true.
 
 . . . 
 
-Here is the structure:
-
-```{r eval=FALSE}
-while(COND IS MET){
-  RUN CODE
-}
-```
-
-If you're not careful, the while loop will run **forever!!**
-
-## Simple `while()` loop example:
+2\. Write a line of code to extract the second column. Ensure the output is still a *matrix*.
 
 ```{r}
-x <- 0 
-while(x < 3){
-  x <- x + 1
-  print(x)
-}
+mat_test[ ,2, drop = FALSE]
 ```
 
-What happened in each iteration?
+## Answers
 
-## These Do the Same Thing
+3\. Complete the following sentence: "Lists are to vectors, what data frames are to...**Matrices!**^[*Lists and data frames can contain mixed data types, while vectors and matrices can only contain one data type.*]" 
 
-:::: {.columns}
+. . . 
 
-::: {.column width="50%"}
-```{r}
-x <- 0 
-while(x < 3){
-  x <- x + 1
-  print(x)
-}
-```
-:::
-
-::: {.column width="50%"}
-```{r, results='hold'}
-x <- 0
-x <- x+1
-print(x)
-x <- x+1
-print(x)
-x <- x+1
-print(x)
-```
-:::
-::::
-
-## More Complex Example
-
-Let's see how many times we need to flip a coin to get 4 heads:
+4\. Create a list that contains 3 elements:
 
 ```{r}
-num_heads <- 0
-num_flips <- 0
-
-while(num_heads < 4) {
-  # simulating a coin flip
-  coin_flip <- rbinom(n = 1, size = 1, prob = 0.5) 
-
-  # keep track of heads
-  if (coin_flip == 1) { 
-    num_heads <- num_heads + 1 
-  }
-  
-  # update number of coin flips
-  num_flips <- num_flips + 1 
-}
-
-num_flips # follows negative binomial distribution
+my_new_list <- list("ten_numbers" = 1:10,
+                    "my_name" = "Victoria Sass",
+                    "booleans" = rep(c(TRUE, FALSE), times = 3))
+my_new_list
 ```
-
-## Summary
-
-1. Why Loops?
-  + To make our lives easier!
-2. `for()` loops: 
-  + For iterating over a fixed number of items
-3. `while()` loops: 
-  + For iterating until some condition is met
-  
-*Let's take a 10 minute break, then return for some activities!*
-
-## Activity 1
-
-1. Create a `for` loop to calculate the maximum value of each variable in the `swiss` data. What are the maximum values of each variable?
-2. Using your previous answer as a starting point, create a nested `for` loop to calculate the maximum value for each variable in the `swiss` data (outer loop), and then divide that maximum by 1, 2, and 4 (inner loop). Print the output after each step.
-3. Using your previous answer as a starting point, write a loop that does the same calculations as before but stores the values in a matrix with `ncol(swiss)` columns and 3 rows. How will you "pre-allocate" space for the results?
-
-## Activity 1: Answers
-
-Question 1: 
-
-```{r}
-for(i in 1:ncol(swiss)) {
-  curr_max <- max(swiss[,i])
-  print(curr_max)
-}
-```
-
-## Activity 1: Answers
-
-Question 2: 
-
-```{r}
-for(i in 1:ncol(swiss)) {
-  curr_max <- max(swiss[,i])
-  for(j in c(1,2,4)){
-    print(curr_max/j)
-  }
-}
-```
-
-## Activity 1: Answers
-
-Question 3: 
-
-```{r}
-results <- matrix(NA, ncol=ncol(swiss),nrow=3)
-for(i in 1:ncol(swiss)) {
-  curr_max <- max(swiss[,i])
-  for(j in 1:3){
-    curr_divisor <- c(1,2,4)[j]
-    results[j,i] <- curr_max/curr_divisor
-  }
-}
-results
-```
-
-## Activity 2
-
-
-1\. Consider the vector `vec <- c(1,2,NA,3,NA)`. Write a `for` loop that includes an `if`/`else` function so that for each value `x` in `vec`, we print "Missing!" if `x` is NA, and `x^3` otherwise.
-
-2\. What will happen if I run the following loop:
-
-```{r}
-#| eval: false
-x <- 1
-while(x < 10){
-  print(x + 1)
-}
-```
-
-3\. Write a `while()` loop that starts with `x <- 1` and doubles x each iteration, while `x < 100`. Print `x` after each iteration.
-
-## Activity 2: Answers
-
-1\. 
-
-```{r}
-for(x in c(1,2,NA,3,NA)){
-  if(is.na(x)){
-    print("Missing!")
-  } else{
-    print(x^3)
-  }
-}
-```
-
-## Activity 2: Answers
-
-2\. What will happen if I run the following loop:
-
-```{r}
-#| eval: false
-x <- 1
-while(x < 10){
-  print(x + 1)
-}
-```
-
-  + **Answer:** The while loop will run forever printing `1`, since we are not updating `x`!!
-
-## Activity 2: Answers
-
-3\. Write a `while()` loop that starts with `x <- 1` and doubles x each iteration, while `x < 100`. Print `x` after each iteration.
-
-```{r}
-x <- 1
-while(x <100){
-  x <- x * 2
-  print(x)
-}
-```
-
-*Why does `x` reach 128?!*
 
 # Homework{.section-title background-color="#99a486"}
 
-## Homework 6
+## Homework 4
 
-HW 6 will be posted on the website shortly! Remember that it is a continuation of HW 5!
+For Homework 4, you will fill in an Quarto template on our [course website](https://vsass.github.io/CSSS508/Homework/HW4/homework4.html) that walks you through the process of creating, accessing, and manipulating R data structures. Enter values in the qmd document and Render it to check your answers!
+
++ *Render after entering each answer!!*  If you get an error, check to see if undoing your last edit solves the problem. Coding an assignment to handle all possible mistakes is really hard! 
+
++ This assignment is *long*, so *start early*.
+
+On the due date, I will provide a key for the written answers. You will grade those answers as part of your peer review. In addition, you'll be asked to comment on the style of your peer's code and what you yourself did similarly/different. Please remember to provide a numerical grade (0-3), as always.
 
 ## Due Dates
 
 * **Section AA:** 
-  + Homework #4 due Tuesday, November 14th (before lecture)
-  + Peer grading due Sunday, November 19th (by 4:30pm)
+  + Homework #4 due Tuesday, October 31st (before lecture)
+  + Peer grading due Sunday, November 5th (by 4:30pm)
 
 <br>
 
 * **Section AB:** 
-  + Homework #4 due Thursday, November 16th (before lab)
-  + Peer grading due Tuesday, November 21th (before lecture)
+  + Homework #4 due Thursday, November 2nd (before lab)
+  + Peer grading due Tuesday, November 7th (before lecture)
+
+

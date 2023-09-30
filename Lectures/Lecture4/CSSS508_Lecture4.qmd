@@ -1,5 +1,5 @@
 ---
-highlight-style:  a11y-dark #, oblivion, radical, vim-dark, espresso, zenburn, kate, monochrome, breezedark, haddock
+highlight-style:  a11y-dark
 footnotes-hover: true
 reference-location: margin
 execute: 
@@ -28,32 +28,18 @@ format:
 require(downlit)
 require(xml2)
 require(tidyverse)
-options(width = 70)
-# knitr::opts_chunk$set(comment = "##")
 ```
 
-## {#title-slide data-menu-title="Data Structures" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
+## {#title-slide data-menu-title="Importing, Exporting, and Cleaning Data" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
 
 
-[Data Structures]{.custom-title}
+[Importing, Exporting, and Cleaning Data]{.custom-title}
 
 [CS&SS 508 • Lecture 4]{.custom-subtitle}
 
 [24 October 2023]{.custom-subtitle2}
 
 [Victoria Sass]{.custom-subtitle3}
-
-# Preamble: R Data Structures{.section-title background-color="#99a486"}
-
---- 
-
-<br>
-
-So far, we've been manipulating, summarizing, and making visuals out of data. That's pretty great!!
-
-But now, we need to get more into the weeds of programming...
-
-Today is all about *types of data* in R.
 
 # Roadmap{.section-title background-color="#99a486"}
 
@@ -63,596 +49,482 @@ Today is all about *types of data* in R.
 
 Last time, we learned about,
 
-* Logical conditions
-* Subsetting data
-* Modifying data 
-* Summarizing data
-* Merging together data
-
-. . . 
-
-Today, we will cover,
-
 * Types of Data
 * Vectors
 * Matrices
 * Lists
 
-# Types of Data{.section-title background-color="#99a486"}
+. . . 
 
-+ `numeric`
-+ `character`
-+ `factor`
-+ `logical`
-+ `NA`, `NaN`, and `Inf`
+Today, we will cover,
 
-## How is my data stored?
+* Importing and exporting data
+* Reshaping data
+* Dates and times
 
-Under the hood, R stores different types of data in different ways.
+# Importing and Exporting Data{.section-title background-color="#99a486"}
+
+* Data packages
+* Imporing data with code
+* Importing data by "point-and-click"
+
+## Data Packages
+
+R has a *big* user base.  If you are working with a popular data source, it will often have a devoted R package on *CRAN* or *Github*. 
 
 . . . 
 
-+ e.g., R knows that `4.0` is a number, and that `"Vic"` is not a number.
+Examples:
+
+* `WDI`: World Development Indicators (World Bank)
+* `WHO`: World Health Organization API
+* `tidycensus`: Census and American Community Survey
+* `quantmod`: financial data from Yahoo, FRED, Google
 
 . . . 
 
-So what exactly are the common data types, and how do we know what R is doing?
+If you have an actual data file, you'll have to import it yourself...
 
-## Data Types
+## Delimited Text Files
 
-* **numeric**: `c(1, 10*3, 4, -3.14)`
-
-. . . 
-
-* **character**: `c("red", "blue", "blue")`
+Besides a package, it's easiest when data is stored in a text file. 
 
 . . . 
 
-* **factor**: `factor(c("red", "blue", "blue"))`
+An example of a comma-separated values (**.csv**) file is below:
 
+```
+"Subject","Depression","Sex","Week","HamD","Imipramine"
+101,"Non-endogenous","Second",0,26,NA
+101,"Non-endogenous","Second",1,22,NA
+101,"Non-endogenous","Second",2,18,4.04305
+101,"Non-endogenous","Second",3,7,3.93183
+101,"Non-endogenous","Second",4,4,4.33073
+101,"Non-endogenous","Second",5,3,4.36945
+103,"Non-endogenous","First",0,33,NA
+103,"Non-endogenous","First",1,24,NA
+103,"Non-endogenous","First",2,15,2.77259
+```
+
+## `readr`
+
+R has some built-in functions for importing data, such as `read.table()` and `read.csv()`. 
 
 . . . 
 
-* **logical**: `c(FALSE, TRUE, TRUE)`
+The `readr` package provides similar functions, like `read_csv()`, that have slightly better features:
 
-## Note on Factor Vectors
-
-Factors are categorical data that encode a (modest) number of **levels**, like for experimental group or geographic region: 
+* Faster!
+* Better defaults (e.g. doesn't convert characters to factors)
+* A *little* smarter about dates and times
+* Loading bars for large files
 
 ```{r}
-test_group <- factor(c("Treatment", "Placebo", "Placebo", "Treatment"))
-test_group
+library(readr)
 ```
+
+## `readr` Importing Example
+
+Let's import some data about song ranks on the Billboard Hot 100 in 2000:
+
+```{r}
+billboard_2000_raw <- read_csv(file = "https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture5/data/billboard.csv")
+```
+
+## Did It Load?
+
+```{r}
+library(dplyr)
+dim(billboard_2000_raw)
+names(billboard_2000_raw) %>% 
+  head(20)
+```
+
+## Alternate Solution
+
+Import the data manually!
+
+In the upper right-hand pane of RStudio (make sure you're in the Environment tab), select:
+
+`Import Dataset > From Text (readr)`
 
 . . . 
 
-Why use `factor` instead of `character`? Because `factor` data can go into a statistical model^[Most R models will automatically convert character data to factors. The default reference is chosen alphabetically.].
+**Once you've imported the data, you can `copy/paste` the import code from the console into your file!!**
 
-## Note on Logical Vectors
+This makes the process *reproducible!*
 
-Remember that `logical` data in R takes on boolean `TRUE` or `FALSE` values.
+## Importing Other Data Types
 
-. . . 
+* For Excel files (`.xls` or `.xlsx`), use package `readxl`
+* For Google Docs Spreadsheets, use package `googlesheets4`
+* For Stata, SPSS, and SAS files, use package `haven` (`tidyverse`)
+* For Stata, SPSS, and Minitab, use package `foreign`
 
-You can do math with logical values, because R makes `TRUE` = 1 and `FALSE` = 0:
-
-```{r}
-my_booleans <- c(TRUE, TRUE, FALSE, FALSE, FALSE)
-sum(my_booleans)
-mean(my_booleans)
-```
-
-## Missing or Infinite Data Types
-
-Your data may otherwise be missing or infinite:
-
-1. **Not Applicable** `NA` 
-
-    + Used when data simply is missing or "not available"
-    
-. . . 
-
-2. **Not a Number** `NaN`
-
-    + Used when you try to perform a bad math operation, e.g., `0 / 0 `
-    
-. . . 
-
-3. **Infinite** `Inf`, `-Inf`
-
-    + Used when you divide by 0, e.g., `-5/0` or `5/0`
-
-## Checking Data Types
-
-`class()` tells us what type of data we have:
-
-```{r}
-class4     <- class(4)
-classAB    <- class(c("A", "B"))
-classABFac <- class(factor("A", "B"))
-classTRUE  <- class(TRUE)
-
-c(class4, classAB, classABFac, classTRUE)
-```
-
-## Testing Data Types
-
-There are also functions to **test** for certain data types:
-
-```{r}
-c(is.numeric(5),  is.character("A"))
-
-is.logical(TRUE)
-
-c(is.infinite(-Inf),  is.na(NA),  is.nan(NaN))
-```
-
-Warning: `NA` is not `NaN`!!!
-
-# Vectors{.section-title background-color="#99a486"}
-
-+ Creating Vectors
-+ Vector Math
-+ Subsetting Vectors
-
-## Making Vectors
-
-In R, we call a set of values of the same type a **vector**. We can create vectors using the `c()` function ("c" for **c**ombine or **c**oncatenate).
-
-```{r}
-c(1, 3, 7, -0.5)
-```
-
-. . . 
-
-Vectors have one dimension: **length**
-
-```{r}
-length(c(1, 3, 7, -0.5))
-```
-
-. . . 
-
-All elements of a vector are the same type (e.g. numeric or character)!
-
-If you mix character and numeric data, it will convert everything to *characters*!
-
-## Generating Numeric Vectors
-
-There are shortcuts for generating numeric vectors:
-
-```{r}
-1:10
-```
-
-. . . 
-
-```{r}
-seq(-3, 6, by = 1.75) # Sequence from -3 to 6, increments of 1.75
-```
-
-. . . 
-
-```{r}
-rep(c(0, 1), times = 3) # Repeat c(0,1) 3 times
-rep(c(0, 1), each = 3) # Repeat each element 3 times
-```
-
-## Element-wise Vector Math
-
-When doing arithmetic operations on vectors, R handles these *element-wise*:
-
-```{r}
-c(1, 2, 3) + c(4, 5, 6)
-c(1, 2, 3, 4)^3 # exponentiation with ^
-```
-
-Common operations: `*`, `/`, `exp()` = $e^x$, `log()` = $\log_e(x)$
-
-## Vector Recycling
-
-If we work with vectors of different lengths, R will **recycle** the shorter one by repeating it to make it match up with the longer one:
-```{r}
-c(0.5, 3) * c(1, 2, 3, 4)
-c(0.5, 3, 0.5, 3) * c(1, 2, 3, 4) # same thing
-```
-
-## Scalars as Recycling
-
-A special case of recycling involves arithmetic with **scalars** (a single number). These are vectors of length 1 that are recycled to make a longer vector:
-```{r}
-3 * c(-1, 0, 1, 2) + 1
-```
-
-## Warning on Recycling
-
-Recycling doesn't work so well with vectors of incommensurate lengths:
-
-```{r}
-#| warning: true
-c(1,2) + c(100,200,300)
-```
-
-Be careful!!
-
-## Example: Standardizing Data
-
-Let's say we had some test scores and we wanted to put these on a standardized scale: 
-
-$$z_i = \frac{x_i - \text{mean}(x)}{\text{SD}(x)}$$
-
-. . . 
-
-```{r}
-x <- c(97, 68, 75, 77, 69, 81)
-z <- (x - mean(x)) / sd(x)
-round(z, 2)
-```
-
-
-## Math with Missing Values
-
-Even one `NA` "poisons the well": You'll get `NA` out of your calculations unless you add the extra argument `na.rm = TRUE` (availabe in some functions):
-
-. . . 
-
-```{r}
-vector_w_missing <- c(1, 2, NA, 4, 5, 6, NA)
-mean(vector_w_missing)
-mean(vector_w_missing, na.rm = TRUE)
-```
-
-## Subsetting Vectors
-
-We can **subset** a vector in a number of ways:
-
-* Passing a single index or vector of entries to **keep**:
-
-```{r}
-first_names <- c("Andre", "Brady", "Cecilia", "Danni", "Edgar", "Francie")
-first_names[1]
-first_names[c(1, 2)]
-```
-
-. . . 
-
-* Passing a single index or vector of entries to **drop**:
-
-```{r}
-first_names[-3]
-```
-
-# Matrices{.section-title background-color="#99a486"}
-
-## Matrices: Two Dimensions
-
-**Matrices** extend vectors to two **dimensions**: **rows** and **columns**. We can construct them directly using `matrix`.
-
-R fills in a matrix column-by-column (**not** row-by-row!)
-
-```{r}
-a_matrix <- matrix(first_names, nrow = 2, ncol = 3)
-a_matrix
-```
-
-## Binding Vectors
-
-We can also make matrices by *binding* vectors together with `rbind()` (**r**ow **bind**) and `cbind()` (**c**olumn **bind**).
-
-```{r}
-b_matrix <- cbind(c(1, 2), c(3, 4), c(5, 6))
-b_matrix
-c_matrix <- rbind(c(1, 2, 3), c(4, 5, 6))
-c_matrix
-```
-
-## Subsetting Matrices
-
-We subset matrices using the same methods as with vectors, except we index them with `[rows, columns]`:
-
-```{r}
-a_matrix[1, 2] # row 1, column 2
-a_matrix[1, c(2,3)] # row 1, columns 2 and 3
-```
-
-. . . 
-
-We can obtain the dimensions of a matrix using `dim()`.
-
-```{r}
-dim(a_matrix)
-```
-
-## Matrices Becoming Vectors
-
-If a matrix ends up having just one row or column after subsetting, by default R will make it into a vector. 
-
-```{r}
-a_matrix[, 1] 
-```
-
-. . . 
-
-You can prevent this behavior using `drop = FALSE`.
-
-```{r}
-a_matrix[, 1, drop = FALSE] 
-```
-
-## Matrix Data Type Warning
-
-Matrices can contain numeric, integer, factor, character, or logical. But just like vectors, *all elements must be the same data type*.
-
-```{r}
-bad_matrix <- cbind(1:2, c("Victoria", "Sass"))
-bad_matrix
-```
-
-In this case, everything was converted to characters!
-
-## Matrix Dimension Names
-
-We can access dimension names or name them ourselves:
-
-```{r}
-rownames(bad_matrix) <- c("First", "Last")
-colnames(bad_matrix) <- c("Number", "Name")
-bad_matrix
-bad_matrix[ ,"Name", drop = FALSE]
-```
-
-## Matrix Arithmetic
-
-Matrices of the same dimensions can have math performed entry-wise with the usual arithmetic operators:
-
-```{r}
-matrix(c(2, 4, 6, 8),nrow = 2, ncol = 2) / matrix(c(2, 1, 3, 1),nrow = 2, ncol = 2)
-```
-
-## "Proper" Matrix Math
-
-To do matrix transpositions, use `t()`.
-
-```{r}
-e_matrix <- t(c_matrix)
-e_matrix
-```
-
-. . . 
-
-To do actual matrix multiplication (not entry-wise), use `%*%`.
-
-```{r}
-f_matrix <- c_matrix %*% e_matrix
-f_matrix
-```
-
-## "Proper" Matrix Math (cont.)
-
-To invert an invertible square matrix, use `solve()`.
-
-```{r}
-g_matrix <- solve(f_matrix)
-g_matrix
-```
-
-## Matrices vs. data.frames and tibbles
-
-All of these structures display data in two dimensions
-
-+ `matrix`
-
-    + Base R
-    + Single data type allowed
-
-. . . 
-
-+ `data.frame`
-
-    + Base R (default for data storage)
-    + Stores multiple data types
-    
-. . . 
-
-+ `tibbles`
-
-    + tidyverse
-    + Stores multiple data types
-    + Displays nicely
-
-. . . 
-
-In practice, data.frames and tibbles are very similar!
-
-## Creating `data.frame`s
-
-We create a `data.frame` by specifying the columns separately:
-
-```{r}
-data.frame(Column1Name = c(1,2,3),
-           Column2Name = c("A","B","C"))
-```
-
-*Note:* `data.frame`s allow for **mixed data types!**
-
-# Lists{.section-title background-color="#99a486"}
-
-## What are Lists?
-
-**Lists** are objects that can store multiple types of data.
-
-
-```{r}
-my_list <- list("first_thing"  = 1:5,
-                 "second_thing" = matrix(8:11, nrow = 2))
-my_list
-```
-
-## Accessing List Elements
-
-You can access a list element by its name or number in `[[ ]]`, or a `$` followed by its name:
-
-```{r}
-my_list[["first_thing"]]
-my_list[[1]]
-my_list$first_thing
-```
-
-## Why Two Brackets `[[` `]]`?
-
-Double brackets get *the actual element* — as whatever data type it is stored as, in that location in the list.
-
-```{r}
-str(my_list[[1]])
-```
-
-. . . 
-
-If you use single brackets to access list elements, you get a **list** back. 
-
-```{r}
-str(my_list[1])
-```
-
-## `names()` and List Elements
-
-You can use `names()` to get a vector of list element names:
-
-```{r}
-names(my_list)
-```
-
-## Example: Regression Output
-
-When you perform linear regression in R, the output is a list!
-
-```{r}
-lm_output <- lm(speed ~ dist, data = cars)
-is.list(lm_output)
-names(lm_output)
-lm_output$coefficients
-```
-
-# Summary{.section-title background-color="#99a486"}
-
-1. Types of Data: `numeric`, `character`, `factor`, `logical`, `NA`, `NaN`, `Inf`
-1. Vectors: `c()`
-1. Matrices: `matrix`, `data.frame`, `tibble`
-1. Lists: `list`
-
-*Let's take a 10 minute break, then come back together for some practice!*
-
-## Mini-Check 1: Types of Data
-
-In each case, what will R return?
-
-::: {.incremental}
-* `is.numeric(3.14)`
-  + `TRUE`
-* `is.numeric(pi)`
-  + `TRUE`
-* `is.logical(FALSE)`
-  + `TRUE`
-* `is.nan(NA)`
-  + `FALSE`
-:::
-    
-## Mini-Check 2: Vectors
-
-::: {.incremental}
-* What does `sum(c(1, 2, NA))` output?
-  + `NA`. The code `sum(c(1, 2, NA), na.rm = TRUE)` would output `3`.
+::: aside
+Note: You **won't** keep text formatting, color, comments, or merged cells!!
 :::
 
-<br>
+## Writing Delimited Files
 
-::: {.incremental}
-* What does `rep(c(0, 1), times = 2)` output?
-  + `c(0, 1, 0, 1)`
-:::
-
-<br>
-
-::: {.incremental}
-* I want to get the first and second elements of my vector, `a_vector`. What's wrong with the code `a_vector[1, 2]` ?
-  + `a_vector[c(1, 2)]`
-:::
-
-## Activity: Matrices and Lists
-
-1. Write code to create the following matrix:
-
-```{r echo=FALSE}
-matrix(c("A", "B", "C", "D", "E", "F"), nrow = 2, byrow = TRUE)
-```
-
-2. Write a line of code to extract the second column. Ensure the output is still a *matrix*.
-
-```{r echo=FALSE}
-matrix(c("A", "B", "C", "D", "E", "F"), nrow = 2, byrow = TRUE)[ ,2, drop = FALSE]
-```
-
-3. Complete the following sentence: "Lists are to vectors, what data frames are to..."
-
-4. Create a list that contains 3 elements: 
-    i) "ten_numbers" (integers between 1 and 10)
-    ii) "my_name" (your name as a character) 
-    iii) "booleans" (vector of `TRUE` and `FALSE` alternating three times)
-
-## Answers
-
-1\. Write code to create the following matrix:
+Getting data out of R into a delimited file is very similar to getting it into R:
 
 ```{r}
-mat_test <- matrix(c("A", "B", "C", "D", "E", "F"), nrow = 2, byrow = TRUE)
-mat_test
+write_csv(billboard_2000_raw, path = "billboard_data.csv")
+```
+
+This saved the data we pulled off the web in a file called `billboard_data.csv` in my working directory.
+
+# Reshaping Data {background-image="images/tidyr.png" background-size="contain" background-opacity="0.25" background-position="center" .section-title background-color="#99a486"}
+
+## Initial Spot Checks
+
+
+First things to check after loading new data:
+
+::: {.incremental}
+* Did all the rows/columns from the original file make it in?
+    + Check using `dim()` or `str()`
+* Are the column names in good shape?
+    + Use `names()` to check; fix with `rename()`
+* Are there "decorative" blank rows or columns to remove?
+    + `filter()` or `select()` out those rows/columns
+:::
+
+## Tidy Data
+
+**Tidy data** (aka "long data") are such that:
+
+::: {.incremental}
+1. The values for a single observation are in their own row.
+2. The values for a single variable are in their own column.
+3. There is only one value per cell.
+:::
+
+. . . 
+
+Why do we want tidy data?
+
+* **Easier to understand** many rows than many columns
+* Required for **plotting** in `ggplot2`
+* Required for many types of **statistical procedures** (e.g. hierarchical or mixed effects models)
+* Fewer issues with **missing values and "imbalanced"** repeated measures data
+
+## Slightly "Messy" Data
+
+::::{.columns}
+:::{.column width="60%"}
+
+| **Program**     | **First Year** | **Second Year** |
+|-----------------|-----------:|---------:|
+| Evans School    |     10     |    6    |
+| Arts & Sciences |      5     |    6    |
+| Public Health   |      2     |    3    |
+| Other           |      5     |    1    |
+
+:::
+:::{.column width="40%"}
+
+* What is an **observation**?
+    + A group of students from a program of a given year
+    
+
+* What are the **variables**?
+    + Program, Year
+
+
+* What are the **values**?
+    + Program: Evans School, Arts & Sciences, Public Health, Other
+    + Year: First, Second -- **in column headings. Bad!**
+    + Count: **spread over two columns!**
+:::
+::::
+
+## Tidy Version
+
+::::{.columns}
+:::{.column width="50%"}
+
+| **Program**     | **Year** | **Count** |
+|-----------------|-----------:|---------:|
+| Evans School    |     First |    10   |
+| Evans School    |     Second   |    6    |
+| Arts & Sciences |     First |    5    |
+| Arts & Sciences |     Second   |    6    |
+| Public Health   |     First |    2    |
+| Public Health   |     Second   |    3    |
+| Other           |     First |    5    |
+| Other           |     Second   |    1    |
+:::
+:::{.column width="50%"}
+* Each variable is a column.
+
+* Each observation is a row.
+
+* Each cell has a single value.
+:::
+::::
+
+## Billboard is Just Ugly-Messy
+
+```{r}
+#| echo: false
+billboard_2000_raw %>% 
+  head(10)
+```
+
+::: aside
+Week columns continue up to `wk76`!
+:::
+
+## Billboard
+
+::: {.incremental}
+* What are the **observations** in the data?
+    + Song on the Billboard chart each week
+* What are the **variables** in the data?
+    + Year, artist, track, song length, date entered Hot 100, week since first entered Hot 100 (**spread over many columns**), rank during week (**spread over many columns**)
+* What are the **values** in the data?
+    + e.g. 2000; 3 Doors Down; Kryptonite; 3 minutes 53 seconds; April 8, 2000; Week 3 (**stuck in column headings**); rank 68 (**spread over many columns**)
+:::
+
+## `tidyr`
+
+The `tidyr` package provides functions to tidy up data. 
+
+. . . 
+
+Key functions:
+
+* **`pivot_longer()`**: takes a set of columns and pivots them down ("longer") to make two new columns (which you can name yourself): 
+    * A `name` column that stores the original column names
+    * A `value` with the values in those original columns
+
+. . . 
+
+* **`pivot_wider()`**: inverts `pivot_longer()` by taking two columns and pivoting them up and across ("wider") into multiple columns
+
+. . . 
+
+We're going to focus only on `pivot_longer` here, but know that it can be reversed!
+
+## `pivot_longer()`
+
+This function usually takes three arguments:
+
+1. **cols**: The columns we want to modify
+1. **names_to**: New variable name to store original columns
+1. **values_to**: New variable name to store original values
+
+## Example of `pivot_longer()`
+
+```{r}
+#| code-line-numbers: "|3-5"
+library(tidyr)
+billboard_2000 <- billboard_2000_raw %>%
+  pivot_longer(cols=wk1:wk76,
+               names_to ="week",
+               values_to = "rank")
+billboard_2000 %>% 
+  head(5)
+```
+
+Now we have a single week column!
+
+## Lots of missing values?!
+
+```{r}
+summary(billboard_2000$rank)
+```
+
+We don't want to keep the `r sum(is.na(billboard_2000$rank))` rows with missing ranks.
+
+## Pivoting Better: `values_drop_na`
+
+Adding the argument `values_drop_na = TRUE` to `pivot_longer()` will remove rows with missing ranks.
+
+```{r}
+#| code-line-numbers: "|5"
+billboard_2000 <- billboard_2000_raw %>%
+  pivot_longer(cols = wk1:wk76, 
+               names_to = "week", 
+               values_to = "rank", 
+               values_drop_na = TRUE)
+summary(billboard_2000$rank)
 ```
 
 . . . 
 
-2\. Write a line of code to extract the second column. Ensure the output is still a *matrix*.
+No more `NA` values!
 
 ```{r}
-mat_test[ ,2, drop = FALSE]
+dim(billboard_2000)
 ```
 
-## Answers
+And way fewer rows!
 
-3\. Complete the following sentence: "Lists are to vectors, what data frames are to...**Matrices!**^[*Lists and data frames can contain mixed data types, while vectors and matrices can only contain one data type.*]" 
+## `parse_number()`
+
+The week column is of they type character, but it should be numeric.
+
+```{r}
+head(billboard_2000$week)
+```
 
 . . . 
 
-4\. Create a list that contains 3 elements:
+`parse_number()` grabs just the numeric information from a character string:
 
 ```{r}
-my_new_list <- list("ten_numbers" = 1:10,
-                    "my_name" = "Victoria Sass",
-                    "booleans" = rep(c(TRUE, FALSE), times = 3))
-my_new_list
+#| code-line-numbers: "|2"
+billboard_2000 <- billboard_2000 %>%
+    mutate(week = parse_number(week))
+summary(billboard_2000$week)
 ```
 
-# Homework{.section-title background-color="#99a486"}
+More sophisticated tools for character strings will be covered later in this course!
 
-## Homework 4
+# Dates and Times {background-image="images/lubridate.png" background-size="contain" background-opacity="0.25" background-position="center" .section-title background-color="#99a486"}
 
-For Homework 4, you will fill in an Quarto template on our [course website](https://vsass.github.io/CSSS508/Homework/HW4/homework4.html) that walks you through the process of creating, accessing, and manipulating R data structures. Enter values in the qmd document and Render it to check your answers!
+## `lubridate`
 
-+ *Render after entering each answer!!*  If you get an error, check to see if undoing your last edit solves the problem. Coding an assignment to handle all possible mistakes is really hard! 
+The package `lubridate` (part of the tidyverse!) has a *very large* number of functions you can use!
 
-+ This assignment is *long*, so *start early*.
+. . . 
 
-On the due date, I will provide a key for the written answers. You will grade those answers as part of your peer review. In addition, you'll be asked to comment on the style of your peer's code and what you yourself did similarly/different. Please remember to provide a numerical grade (0-3), as always.
+* Converting dates/times between formats (DD-MM-YY to YY-MM-DD)
+* Extracting dates/times (day of week, month, leap years, etc.)
+* Math with dates/times (time zone conversions, etc.)
+
+. . . 
+
+There's too much to cover all of it, but I'll run through a few examples.
+
+## Dates in `billboard_2000` 
+
+```{r}
+billboard_2000 %>% 
+  select(date.entered) %>% 
+  head(10)
+```
+
+## Extracting Year, Month, or Day
+
+```{r }
+library(lubridate)
+head(billboard_2000$date.entered, 5)
+year(billboard_2000$date.entered) %>% 
+  head(5)
+month(billboard_2000$date.entered) %>% 
+  head(5)
+day(billboard_2000$date.entered) %>% 
+  head(5)
+```
+
+## Extracting Weekday, Quarter, and Leap Year Boolean
+
+```{r}
+wday(billboard_2000$date.entered) %>% 
+  head(5)
+quarter(billboard_2000$date.entered) %>% 
+  head(5)
+leap_year(billboard_2000$date.entered) %>% 
+   head(5)
+```
+
+## Summary
+
+* Importing/Exporting Data: `readr`
+* Reshaping data: `tidyr`
+* Dates and times `lubridate`
+
+*Let's take a 10 minute break, then reconvene for an activity!*
+
+## Activity!
+
+In groups of 2-3, you will use the [Billboard data](https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture5/data/billboard.csv) to investigate a question:
+
+1. Write down a question of interest that could be studied with this data
+     * *Which/how many artists had #1 hits?*
+     * *How does rank for each song change over time?*
+     * *Is there a relationship between highest rank and length of song?*
+2. Make the Billboard data *tidy*, perhaps using the code from this lecture.
+
+3. Perform additional steps (if necessary) to help answer your question:
+    * Perhaps using `filter`, `select`, `group_by`, `mutate`, `summarize`, etc.
+
+4. Make a plot or table that answers your question and write down your answer in a sentence.
+
+5. Send me your question, plot/table, and written answer on Canvas
+
+## Example: Question
+
+**Question:** Do songs that hit #1 have a different trajectory than those that don't?
+
+```{r}
+billboard_2000_question <- billboard_2000 %>%
+    group_by(artist, track) %>%
+    mutate(`Weeks at #1` = sum(rank == 1),
+           `Peak Rank`   = ifelse(any(rank == 1),
+                                  "Hit #1",
+                                  "Didn't hit #1")) 
+```
+
+::: aside
+Note: `any(rank==1)` checks to see if *any* value of `rank` is equal to one for the given `artist` and `track`
+:::
+
+## Example Visualization
+
+::: {.panel-tabset}
+
+### Code
+
+```{r}
+library(ggplot2)
+library(ggthemes)
+billboard_trajectories <- 
+  ggplot(data = billboard_2000_question,
+         aes(x = week, y = rank, group = track,
+             color = `Peak Rank`)) +
+  geom_line(aes(size = `Peak Rank`), alpha = 0.4) +
+  theme_tufte() +
+  xlab("Week") + ylab("Rank") +
+  scale_color_manual(values = c("black", "red")) +
+  scale_size_manual(values = c(0.25, 1)) +
+  theme(legend.position = c(0.90, 0.75),
+        legend.background = element_rect(fill = "transparent"))
+```
+
+### Charts of 2000: Beauty!
+
+```{r}
+#| fig-height: 6
+#| fig-width: 12
+billboard_trajectories
+```
+:::
+
+::: aside
+Songs that reach #1 on the Billboard charts appear to last >20 weeks on the charts, while other songs very rarely make it past that point.
+:::
+
+# Homework
+
+## Homework 5
+
+*On [Course Website!*](https://vsass.github.io/CSSS508/Homework/HW5/homework5.html)
 
 ## Due Dates
 
 * **Section AA:** 
-  + Homework #4 due Tuesday, October 31st (before lecture)
-  + Peer grading due Sunday, November 5th (by 4:30pm)
+  + Homework #4 due Tuesday, November 7th (before lecture)
+  + Peer grading due Sunday, November 12th (by 4:30pm)
 
 <br>
 
 * **Section AB:** 
-  + Homework #4 due Thursday, November 2nd (before lab)
-  + Peer grading due Tuesday, November 7th (before lecture)
-
-
+  + Homework #4 due Thursday, November 9th (before lab)
+  + Peer grading due Tuesday, November 14th (before lecture)
+  
+  

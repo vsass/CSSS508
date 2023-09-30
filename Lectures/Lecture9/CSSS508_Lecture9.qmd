@@ -1,4 +1,533 @@
 ---
-title: "Syllabus and Introduction to R, RStudio, and Quarto"
-format: revealjs
+highlight-style:  a11y-dark
+footnotes-hover: true
+reference-location: margin
+execute: 
+  echo: true
+  message: false
+  warning: false
+  fig-format: "svg"
+format: 
+  revealjs:
+    theme: lecture_styles.scss
+    slide-number: true
+    code-link: true
+    chalkboard: true
+    incremental: false 
+    smaller: true
+    preview-links: true
+    code-line-numbers: true
+    history: false
+    progress: true
+    #logo: "../../images/csss-white.png" # need to add css for size <https://stackoverflow.com/questions/74083521/how-to-increase-size-logo-in-quarto-reveal-js-presentation>
 ---
+
+```{r}
+#| echo: false
+#| cache: false
+require(downlit)
+require(xml2)
+require(tidyverse)
+```
+
+## {#title-slide data-menu-title="Iteration" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
+
+
+[Iteration]{.custom-title}
+
+[CS&SS 508 • Lecture 9]{.custom-subtitle}
+
+[28 November 2023]{.custom-subtitle2}
+
+[Victoria Sass]{.custom-subtitle3}
+
+# Roadmap{.section-title background-color="#99a486"}
+
+---
+
+<br>
+
+Last time, we learned about,
+
+* Importing and exporting data
+* Cleaning and reshaping data
+* Dates and times
+
+. . . 
+
+Today, we will cover,
+
+* Why Loops?
+* `for()` loops
+* `while()` loops
+
+# Why Loops?{.section-title background-color="#99a486"}
+
+## Bad Repetition
+
+If someone doesn't know better, they might find the means of variables in the `swiss` data by typing in a line of code for each column:
+
+```{r goofus, eval=FALSE}
+mean1 <- mean(swiss$Fertility)
+mean2 <- mean(swiss$Agriculture)
+mean3 <- mean(swissExamination)
+mean4 <- mean(swiss$Fertility)
+mean5 <- mean(swiss$Catholic)
+mean5 <- mean(swiss$Infant.Mortality)
+c(mean1, mean2 mean3, mean4, mean5, man6)
+```
+
+Can you spot the problems?
+
+. . . 
+
+How upset would they be if the `swiss` data had 200 columns instead of `r ncol(swiss)`?
+
+## Good Repetition
+
+```{r}
+#| include: false
+options(digits = 3)
+```
+
+You will learn a better way to calculate column means today using loops!
+
+```{r}
+means <- rep(NA, ncol(swiss))
+for(i in 1:ncol(swiss)){
+  means[i] <- mean(swiss[,i])
+}
+data.frame(Variable=names(swiss),Mean=means)
+```
+
+Don't worry about the details yet! 
+
+. . . 
+
+## Don't Repeat Yourself (DRY)!
+
+The **DRY** idea: Computers are much better at doing the same thing over and over again than we are.
+
+::: {incremental}
+* Writing code to repeat tasks for us reduces the most common human coding mistakes.
+* It also *substantially* reduces the time and effort involved in processing large volumes of data.
+* Lastly, compact code is more readable and easier to troubleshoot.
+:::
+
+# `for()` Loops{.section-title background-color="#99a486"}
+
+## The `for()` Loop
+
+`for()` loops are the most general kind of *loop*, found in pretty much every programming language.
+
+"**For** each of these values -- in order -- **do this**"
+
+. . . 
+
+Conceptually:
+
+*Given a set of values...*
+
+1. Set an index variable (often `i`) equal to the first value
+2. Do something (perhaps depending on `i`)
+3. Is there a next value?
+   * *YES*: Update to next value, go back to 2.
+   * *NO*: Exit loop
+
+We are *looping* through values and repeating some actions.
+
+## `for()` Loop: Diagram
+
+*Given a set of values...*
+
+![](images/loop.svg)
+
+## `for()` Loop: Example
+
+```{r}
+for(i in 1:5) {
+    # inside for, output won't show up without print()
+    print(i^2) 
+}
+```
+
+Note this runs *5 separate print commands*, which is why each line starts with `[1]`.
+
+## These Do the Same Thing
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+for(i in 1:3) {
+    print(i^2) 
+}
+```
+:::
+
+::: {.column width="50%"}
+```{r, results='hold'}
+i <- 1
+print(i^2) 
+i <- 2
+print(i^2)
+i <- 3
+print(i^2)
+```
+:::
+::::
+
+## Iteration Conventions
+
+::: {.incremental}
+* We call what happens in the loop for a particular value one **iteration**. 
+* Iterating over indices `1:n` is *very* common. `n` might be the length of a vector, the number of rows or columns in a matrix or data frame, or the length of a list.
+* Common notation: `i` is the object that holds the current value inside the loop.
+    + If loops are nested, you will often see `j` and `k` used for the inner loops.
+    + This notation is similar to indexing in mathematical symbols (e.g $\sum\limits_{i=1}^n$)
+* Note `i` (and `j`,`k`, etc) are just normal objects. You can use any other names you want.
+    + Ex: When iterating over rows and/or columns, I often use `row` and/or `col`!
+:::
+
+## Iterate Over Characters
+
+What we iterate over doesn't have to be numbers `1:n` or numbers at all! You can also iterate over a character vector in R:
+
+```{r}
+for(i in letters[1:3]) {
+    print(i)
+}
+i # in R, this will exist outside of the loop!
+```
+
+## Pre-Allocation
+
+Usually in a `for()` loop, you aren't just printing output, but want to store results from calculations in each iteration somewhere.
+
+. . . 
+
+To do that, figure out what you want to store, and **pre-allocate** an object of the right size as a placeholder (typically with missing values as placeholders).
+
+. . . 
+
+Examples of what to pre-allocate based on what you store:
+
+::: {.incremental}
+* Single numeric value per iteration: 
+  + `rep(NA, num_iter_iters)`
+* Numeric vector per iteration: 
+  + `matrix(NA, nrow = num_of_iters, ncol = length_of_vector)`
+:::
+
+## Pre-Allocation: Numeric
+
+```{r}
+iters <- 10 # Set number of interations
+output <- rep(NA,iters) # Pre-allocate numeric vector 
+output
+
+for(i in 1:iters) { # Run code below iters times
+    output[i] <- (i-1)^2 + (i-2)^2
+}
+output # Display output
+```
+
+Steps:
+
+1. Set a number of iterations
+2. Pre-allocate a numeric vector of that length
+3. Run ten iterations where the output is a mathematical function of each iteration number.
+
+## Pre-Allocation: Numeric Vector per Iteration Matrix
+
+```{r}
+rownums <- 3
+colnums <- 6
+output <- matrix(NA,nrow=rownums,ncol=colnums)
+
+for(i in 1:rownums){
+  for(j in 1:colnums){
+    output[i,j] <- i + j
+  }
+}
+output
+```
+
+## Aside: If/Else Statements
+
+To test a logical statement and then conditionally execute a set of actions, use `if()` and `else`. The structure is:
+
+```{r eval=FALSE}
+if(CONDITION){
+  SOME CALCULATION
+} else{
+  A DIFFERENT CALCULATION
+}
+```
+
+**Warning!** `else` needs to be on same line as the closing brace `}` of previous `if()`.
+
+## If/Else Simple Example
+
+
+```{r}
+if(8  < 10){
+  print("Less than 10!")
+}else{
+  print("Not less than 10!")
+}
+```
+
+## More Complex If/Else
+
+We can nest together multiple if/elses! if we wish:
+
+```{r}
+i <- 13
+if(i <= 10) { 
+  print("i is less than or equal to 10!")
+} else if(i <= 14) {
+  print("i is greater than 10, less than or equal to 14")
+} else {
+  print("i is greater than or equal to 15")
+}
+```
+
+## Loops with If/Else Statements
+
+Suppose we want to take the numbers between 1 and 5, and divide the evens by 2 and multiply the odds by 2. We could do that using a loop with if/else statements!
+
+```{r}
+for(i in 1:5){
+  if(i %% 2 == 0){ #check for even numbers
+    print(i / 2)
+  }else{
+    print(i * 2)
+  }
+}
+```
+
+## Handling Special Cases
+
+Aside from the previous toy example, `if()` statements are useful when you have to handle special cases. 
+
+`if()` statements can be used to make a loop ignore or fix problematic cases.
+
+They are also useful for producing error messages, by generating a message *if* an input value is not what is expected.
+
+# `while()` Loops{.section-title background-color="#99a486"}
+
+## `while()`
+
+A lesser-used looping structure is the `while()` loop.
+
+Rather than iterating over a predefined vector, the loop keeps going until some condition is no longer true.
+
+. . . 
+
+Here is the structure:
+
+```{r eval=FALSE}
+while(COND IS MET){
+  RUN CODE
+}
+```
+
+If you're not careful, the while loop will run **forever!!**
+
+## Simple `while()` loop example:
+
+```{r}
+x <- 0 
+while(x < 3){
+  x <- x + 1
+  print(x)
+}
+```
+
+What happened in each iteration?
+
+## These Do the Same Thing
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+x <- 0 
+while(x < 3){
+  x <- x + 1
+  print(x)
+}
+```
+:::
+
+::: {.column width="50%"}
+```{r, results='hold'}
+x <- 0
+x <- x+1
+print(x)
+x <- x+1
+print(x)
+x <- x+1
+print(x)
+```
+:::
+::::
+
+## More Complex Example
+
+Let's see how many times we need to flip a coin to get 4 heads:
+
+```{r}
+num_heads <- 0
+num_flips <- 0
+
+while(num_heads < 4) {
+  # simulating a coin flip
+  coin_flip <- rbinom(n = 1, size = 1, prob = 0.5) 
+
+  # keep track of heads
+  if (coin_flip == 1) { 
+    num_heads <- num_heads + 1 
+  }
+  
+  # update number of coin flips
+  num_flips <- num_flips + 1 
+}
+
+num_flips # follows negative binomial distribution
+```
+
+## Summary
+
+1. Why Loops?
+  + To make our lives easier!
+2. `for()` loops: 
+  + For iterating over a fixed number of items
+3. `while()` loops: 
+  + For iterating until some condition is met
+  
+*Let's take a 10 minute break, then return for some activities!*
+
+## Activity 1
+
+1. Create a `for` loop to calculate the maximum value of each variable in the `swiss` data. What are the maximum values of each variable?
+2. Using your previous answer as a starting point, create a nested `for` loop to calculate the maximum value for each variable in the `swiss` data (outer loop), and then divide that maximum by 1, 2, and 4 (inner loop). Print the output after each step.
+3. Using your previous answer as a starting point, write a loop that does the same calculations as before but stores the values in a matrix with `ncol(swiss)` columns and 3 rows. How will you "pre-allocate" space for the results?
+
+## Activity 1: Answers
+
+Question 1: 
+
+```{r}
+for(i in 1:ncol(swiss)) {
+  curr_max <- max(swiss[,i])
+  print(curr_max)
+}
+```
+
+## Activity 1: Answers
+
+Question 2: 
+
+```{r}
+for(i in 1:ncol(swiss)) {
+  curr_max <- max(swiss[,i])
+  for(j in c(1,2,4)){
+    print(curr_max/j)
+  }
+}
+```
+
+## Activity 1: Answers
+
+Question 3: 
+
+```{r}
+results <- matrix(NA, ncol=ncol(swiss),nrow=3)
+for(i in 1:ncol(swiss)) {
+  curr_max <- max(swiss[,i])
+  for(j in 1:3){
+    curr_divisor <- c(1,2,4)[j]
+    results[j,i] <- curr_max/curr_divisor
+  }
+}
+results
+```
+
+## Activity 2
+
+
+1\. Consider the vector `vec <- c(1,2,NA,3,NA)`. Write a `for` loop that includes an `if`/`else` function so that for each value `x` in `vec`, we print "Missing!" if `x` is NA, and `x^3` otherwise.
+
+2\. What will happen if I run the following loop:
+
+```{r}
+#| eval: false
+x <- 1
+while(x < 10){
+  print(x + 1)
+}
+```
+
+3\. Write a `while()` loop that starts with `x <- 1` and doubles x each iteration, while `x < 100`. Print `x` after each iteration.
+
+## Activity 2: Answers
+
+1\. 
+
+```{r}
+for(x in c(1,2,NA,3,NA)){
+  if(is.na(x)){
+    print("Missing!")
+  } else{
+    print(x^3)
+  }
+}
+```
+
+## Activity 2: Answers
+
+2\. What will happen if I run the following loop:
+
+```{r}
+#| eval: false
+x <- 1
+while(x < 10){
+  print(x + 1)
+}
+```
+
+  + **Answer:** The while loop will run forever printing `1`, since we are not updating `x`!!
+
+## Activity 2: Answers
+
+3\. Write a `while()` loop that starts with `x <- 1` and doubles x each iteration, while `x < 100`. Print `x` after each iteration.
+
+```{r}
+x <- 1
+while(x <100){
+  x <- x * 2
+  print(x)
+}
+```
+
+*Why does `x` reach 128?!*
+
+# Homework{.section-title background-color="#99a486"}
+
+## Homework 6
+
+HW 6 will be posted on the website shortly! Remember that it is a continuation of HW 5!
+
+## Due Dates
+
+* **Section AA:** 
+  + Homework #4 due Tuesday, November 14th (before lecture)
+  + Peer grading due Sunday, November 19th (by 4:30pm)
+
+<br>
+
+* **Section AB:** 
+  + Homework #4 due Thursday, November 16th (before lab)
+  + Peer grading due Tuesday, November 21th (before lecture)

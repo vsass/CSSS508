@@ -1,5 +1,5 @@
 ---
-highlight-style:  a11y-dark #, oblivion, radical, vim-dark, espresso, zenburn, kate, monochrome, breezedark, haddock
+highlight-style:  a11y-dark
 footnotes-hover: true
 reference-location: margin
 execute: 
@@ -30,9 +30,9 @@ require(xml2)
 require(tidyverse)
 ```
 
-## {#title-slide data-menu-title="Functions" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
+## {#title-slide data-menu-title="Working with Text Data" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
 
-[Functions]{.custom-title}
+[Working with Text Data]{.custom-title}
 
 [CS&SS 508 • Lecture 7]{.custom-subtitle}
 
@@ -48,398 +48,544 @@ require(tidyverse)
 
 Last time, we learned about,
 
-   * Why we use loops
-   * `for()` loops
-   * `while()` loops
+* Aside: Visualizing the Goal
+* Building blocks of functions
+* Simple functions
+* Using functions with `apply()`
 
 . . . 
 
 Today, we will cover,
 
-   * Aside: Visualizing the Goal
-   * Building blocks of functions
-   * Simple functions
-   * Using functions with `apply()`
+* Basics of Strings
+* Strings in Base R
+* Strings in `stringr` (tidyverse)
 
-# Visualizing the Goal{.section-title background-color="#99a486"}
+# Basics of Strings{.section-title background-color="#99a486"}
 
----
-
-<br>
-
-Before you can write effective code, you need to know *exactly* what you want:
+## Basics of Strings
 
 ::: {.incremental}
-* **Goal:** Do I want a single value? vector? one observation per person? per year?
-* **Current State:** What do I currently have? matrix, vector? long or wide format?
-* **Translate:** How can I take what I have and turn it into my goal?
-  + Sketch out the steps!
-  + Break it down into little operations
+* A general programming term for a unit of character data is a **string**
+  + Strings are a *sequence of characters*
+  + In R, "strings" and "character data" are mostly interchangeable.
+  + Some languages have more precise distinctions, but we won't worry about that here!
 :::
-
-. . . 
-
-**As we become more advanced coders, this concept is key!!**
-
-**Remember:** *When you're stuck, try searching your problem on Google!!*
-
-# Building blocks of functions{.section-title background-color="#99a486"}
-
-## Why Functions?
-
-R (as well as mathematics in general) is full of functions! 
-
-. . . 
-
-We use functions to:
-
-  * Compute summary statistics (`mean()`, `sd()`, `min()`)
-  * Fit models to data (`lm(Fertility~Agriculture,data=swiss)`)
-  * Load data (`read_csv()`)
-  * Create ggplots (`ggplot()`)
-  * And so much more!!
-  
-## Examples of Existing Functions
 
 ::: {.incremental}
-* `mean()`:
-    + Input: a vector
-    + Output: a single number
-* `dplyr::filter()`:
-    + Input: a data frame, logical conditions
-    + Output: a data frame with rows removed using those conditions
-* `readr::read_csv()`:
-    + Input: a file path, optionally variable names or types
-    + Output: a data frame containing info read in from file
+* We can create strings by surrounding text, numbers, spaces, or symbols with quotes!
+  + Examples: `"Hello! My name is Vic"` or `"%*$#01234"`
 :::
+
+## Basics of Strings 
+
+R can treat strings in funny ways!
+
+```{r}
+"01" == "1"
+"01" == 1
+"1" == 1
+```
+
+. . . 
+
+*Reminder:* We can check **data types** using the `class()` function!
+
+```{r}
+c(class("1"), class(1))
+```
+
+# Strings in Base R{.section-title background-color="#99a486"}
+
+* `nchar()`
+* `substr()`
+* `paste()`
+
+## Data: King County Restaurant Inspections!
+
+Today we'll study real data on **food safety inspections in King County**, collected from [data.kingcounty.gov](https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5).
+
+Note these data are *fairly large*. The following code can be used to download the data directly from my Github page:
+
+```{r}
+restaurants <- read_csv(file = "https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture8/data/restaurants.csv")
+```
+
+## Quick Examination of the Data
+
+```{r}
+names(restaurants)
+dim(restaurants)
+```
+
+## Quick Examination of the Data
+
+**Good Questions to Ask:**
+
+* What does each row represent?
+* Is the data in long or wide format?
+* What are the key variables?
+* How are the data stored? (*data type*)
+
+## `nchar()`
+
+The `nchar()` function calculates the *number of characters* in a given string. 
+
+* `length()` doesn't work with strings!!
+  * Why not?
+
+. . . 
+
+```{r}
+nchar("Victoria Sass")
+length("Victoria Sass")
+```
+
+. . . 
+
+In our `restaurants` data, let's see how many characters are in each zip code:
+
+```{r nchar_zip}
+length_zip <- nchar(restaurants$`Zip Code`) # notice when a variable name has spaces we need to contain it within backticks so R knows it is a singular entity
+table(length_zip)
+```
+
+. . . 
+
+## `substr()`
+
+The `substr()` function allows us to extract characters from a string.
+
+. . . 
+
+For example, we can extract the third through fifth elements of a string as follows:
+
+```{r}
+substr("98126", 3, 5)
+```
+
+## `substr()`
+
+Let's extract the first five characters from each zip code in the restaurants data, and add it to our dataset.
+
+```{r}
+library(dplyr)
+restaurants$ZIP_5 <- substr(restaurants$`Zip Code`, 1, 5) 
+restaurants %>% 
+  distinct(ZIP_5) %>% 
+  head()
+```
+
+## `paste()`
+
+We combine strings together using `paste()`. By default, it puts a space between different strings.
+
+. . . 
+
+For example, we can combine `"Victoria"` and `"Sass"` as follows:
+
+```{r}
+paste("Victoria", "Sass")
+```
+
+## More complex `paste()` commands
+
+There are two additional common arguments to use with `paste()`:
+
+1. `sep =` controls what separates vectors, entry-wise
+1. `collapse =` controls if/how multiple outputs are collapsed into a single string.
+
+. . . 
+
+Examples:
+
+```{r}
+paste("CSSS", "508", sep = "_")
+paste(c("CSSS", "STAT"), "508", sep = "_")
+paste(c("CSSS", "STAT"), "508", sep = "_", collapse = " , ")
+```
+
+*When do we get one string as output vs. two?*
+
+## `paste()`
+
+Let's use `paste()` to create complete mailing addresses for each restaurant:
+
+. . . 
+
+```{r mailing_address}
+restaurants$mailing_address <- paste(restaurants$Address, ", ", restaurants$City, 
+                                     ", WA ", restaurants$ZIP_5, sep = "")
+restaurants %>% 
+  distinct(mailing_address) %>% 
+  head()
+```
+
+# Strings in `stringr` {.section-title background-color="#99a486"}
+
+* `str_length()`
+* `str_sub()`
+* `str_c()`
+* `str_to_upper()`, `str_to_lower()`, and `str_to_title()`
+* `str_trim()`
+* `str_detect()`
+* `str_replace()`
+
+## `stringr`
+
+`stringr` is yet another R package from the Tidyverse (like `ggplot2`, `dplyr`, `tidyr`, `lubridate`, `readr`).
+
+. . . 
+
+It provides TONS of functions for working with strings:
+
+* Some are equivalent/better versions of Base R functions
+* Some can do *fancier* tricks with strings
   
 . . . 
 
-Each function requires **inputs**, and returns **outputs**
-
-## Why Write Your Own Functions?
-
-Functions encapsulate actions you might perform often, such as:
-
-* Given a vector, compute some special summary stats
-* Given a vector and definition of "invalid" values, replace with `NA`
-* Defining a new logical operator
+*Most* `stringr` functions begin with "`str_`" to make RStudio auto-complete more useful.
 
 . . . 
 
-Advanced function applications (not covered in this class):
+We'll cover the basics today, but know there's much more out there!
+    
+```{r load_stringr}
+library(stringr)
+```
 
-* Parallel processing
-* Generating *other* functions
-* Making custom packages containing your functions
+## Equivalencies: `str_length()`
 
-## Anatomy of a Function
+`str_length()` is equivalent to `nchar()`:
+
+```{r nchar_v_str_length}
+nchar("weasels")
+str_length("weasels")
+```
+
+. . . 
+
+## Equivalencies: `str_sub()`
+
+`str_sub()` is like `substr()`:
+
+```{r}
+str_sub("Washington", 2, 4)
+```
+
+. . . 
+
+`str_sub()` also lets you put in negative values to count backwards from the end (-1 is the end, -3 is third from end):
+
+```{r str_sub_example}
+str_sub("Washington", 4, -3)
+```
+
+## Equivalencies: `str_c()`
+
+`str_c()` ("string combine") is just like `paste()` but where the default is `sep = ""` (no space!)
+
+```{r str_c_example}
+str_c(c("CSSS","STAT"), 508)
+str_c(c("CSSS","STAT"), 508, sep = " ")
+str_c(c("CSSS","STAT"), 508, sep = " ", collapse = ", ")
+```
+
+## Changing Cases
+
+`str_to_upper()`, `str_to_lower()`, `str_to_title()` convert cases, which is often a good idea to do before searching for values:
+
+```{r make_seattle_uppercase}
+unique_cities <- unique(restaurants$City)
+unique_cities %>% 
+  head()
+
+str_to_upper(unique_cities) %>% 
+  head()
+str_to_lower(unique_cities) %>% 
+  head()
+str_to_title(unique_cities) %>% 
+  head()
+```
+
+## Whitespace: `str_trim()`
+
+Extra leading or trailing whitespace is common in text data:
+
+```{r show_whitespace}
+unique_names <- unique(restaurants$Name)
+unique_names %>% 
+  head(3)
+```
+
+We can remove the whitespace using `str_trim()`:
+
+```{r clean_whitespace}
+str_trim(unique_names) %>% 
+  head(3)
+```
+
+## Patterns!
+
+It's common to want to see if a string satisfies a certain *pattern*.
+
+. . . 
+
+We did this with numeric values earlier in this course!
+
+```{r}
+cars %>% 
+  filter(speed < 5 | speed > 24)
+cars %>% 
+  filter(dist > 2 & dist <= 10)
+```
+
+## Patterns: `str_detect()`
+
+We can do similar pattern-checking using `str_detect()`:
 
 ```{r}
 #| eval: false
-NAME <- function(ARGUMENT1, ARGUMENT2=DEFAULT){
-  BODY
-  return(OUTPUT)
-}
+str_detect(string, pattern)
 ```
 
-::: {.incremental}
-* **Name**: What you call the function so you can use it later
-* **Arguments** (aka inputs, parameters): things the user passes to the function that affect how it works
-    + e.g. `ARGUMENT1`, `ARGUMENT2`
-    + `ARGUMENT2=DEFAULT` is example of setting a default value
-    + In this example, `ARGUMENT1`, `ARGUMENT2` values won't exist outside of the function
-* **Body**: The actual operations inside the function.
-* **Output**: The object inside `return()`. Could be anything (or nothing!)
-    + If unspecified, will be the last thing calculated
-:::
-
-# Simple functions{.section-title background-color="#99a486"}
-
-## Example 1: Doubling A Number
-
-```{r}
-double_x <- function(x){
-  double_x <- x * 2
-  return(double_x)
-}
-```
+* `string` is the character string (or vector of strings) we want to examine
+* `pattern` is the pattern that we're checking for inside `string`
+* Output: TRUE/FALSE vector indicating if pattern was found
 
 . . . 
 
-Let's run it!
-
 ```{r}
-double_x(5)
-double_x(NA)
-double_x(1:2)
+str_detect(string = c("Hello", "my middle name", "is Anne"),
+           pattern = "a")
+str_detect(string = c("Hello", "my middle name", "is Anne"),
+           pattern = "A")
 ```
 
-## Example 2: Extract First/Last
+Results are case-sensitive!!
+
+## Patterns: `str_detect()`
+
+Let's see which phone numbers are in the 206 area code:
 
 ```{r}
-first_and_last <- function(x) {
-    first <- x[1]
-    last  <- x[length(x)]
-    return(c("first" = first, "last" = last))
-}
+unique_phones <- unique(restaurants$Phone)
+unique_phones %>% tail(4)
+str_detect(unique_phones, "206") %>% tail(4)
 ```
+
+## Replacement: `str_replace()`
+
+What about if you want to replace a string with something else? Use `str_replace()`!
 
 . . . 
 
-Test it out:
-
-```{r}
-first_and_last(c(4, 3, 1, 8))
-```
-
-## Example 2: Testing `first_and_last`
-
-What if I give `first_and_last()` a vector of length 1?
-
-```{r}
-first_and_last(7)
-```
-
-. . . 
-
-Of length 0?
-
-```{r}
-first_and_last(numeric(0))
-```
-
-. . . 
-
-Maybe we want it to be a little smarter.
-
-## Example 3: Checking Inputs
-
-Let's make sure we get an error message when the vector is too small:
-
-```{r}
-#| code-line-numbers: "|3"
-smarter_first_and_last <- function(x) {
-    if(length(x) < 2){
-      stop("Input is not long enough!")
-    } else{
-      first <- x[1]
-      last  <- x[length(x)]
-      return(c("first" = first, "last" = last))    
-    }
-}
-```
-
-::: aside
-`stop()` ceases running the function and prints the text inside as an error message.
-:::
-
-## Example 3: Testing Smarter Function
-
-```{r, error=TRUE}
-smarter_first_and_last(NA)
-smarter_first_and_last(c(4, 3, 1, 8))
-```
-
-. . . 
-
-## Cracking Open Functions
-
-If you type a function name without any parentheses or arguments, you can see its contents:
-
-```{r}
-smarter_first_and_last
-```
-
-# Using functions with `apply()` {.section-title background-color="#99a486"}
-
-## Applying Functions Multiple Times?
-
-Last week, we saw an example where we wanted to take the mean of each column in the `swiss` data:
-
-```{r}
-for(col_index in 1:ncol(swiss)){
-  mean_swiss_col <- mean(swiss[,col_index])
-  names_swiss_col <- names(swiss)[col_index]
-  print(c(names_swiss_col,round(mean_swiss_col,3)))
-}
-```
-
-*Isn't this kind of complex?!*
-
-## `apply()`, don't loop!
-
-Writing loops can be challenging and prone to bugs!!
-
-. . . 
-
-The `apply()` can solve this issue:
-
-+ **apply** a function to values in each row or column of a matrix
-+ Doesn't require preallocation
-+ Can take built-in functions or user-created functions.
-
-## Structure of `apply()`
-
-`apply()` takes 3 arguments:
-
-1. Data (a matrix or data frame)
-2. Margin (1 applies function to each *row*, 2 applies to each *column*)
-3. Function
+This function works very similarly to `str_detect()`, but with one extra argument:
 
 ```{r eval=FALSE}
-apply(DATA, MARGIN, FUNCTION)
+str_replace(string, pattern, replacement)
+```
+
+* `replacement` is what `pattern` is substituted for.
+
+. . . 
+
+```{r}
+str_replace(string = "Hi, I'm Vic",
+            pattern = "Hi", replacement = "Hello")
+```
+
+## Replacement: `str_replace()`
+
+In the `Date` variable, let's replace each dash ("-") with an underscore ("_")
+
+```{r}
+dates <- restaurants$`Inspection Date`
+dates %>% 
+  tail(3)
+str_replace(dates, "/", "_") %>% 
+  tail(3)
+```
+
+Wait, what?
+
+## Replacement: `str_replace_all()`
+
+`str_replace()` only changes the **first** instance of a pattern in each string! 
+
+. . . 
+
+If we want to replace **all** patterns, use `str_replace_all()`
+
+```{r}
+dates <- restaurants$`Inspection Date`
+dates %>% tail(3)
+str_replace_all(dates, "/", "_") %>% 
+  tail(3)
+```
+
+## Quick Summary
+
+We've seen lots of functions today! 
+
+*Don't try to memorize them!* Instead, use this page as a reference.
+
+* Character Length: `nchar` and `str_length`
+* Subsetting: `substr` and `str_sub`
+* Combining: `paste` and `str_c`
+* Case Changes: `str_to_upper()`, `str_to_lower()`, and `str_to_title()`
+* Removing Whitespace: `str_trim`
+* Pattern Detection/Replacement: `str_detect()` and `str_replace()`
+
+## Activity 1: Base R Functions
+
+The variable `Inspection Date` is in the format "MM/DD/YYYY". In this question, we'll change the format using functions for strings.
+
+1. How long is each character string in this variable?
+2. Use `substr()` to extract the month of each entry and save it to an object called "months"
+3. Use `substr()` to extract the year of each entry and save it to an object called "years"
+4. Use `paste()` to combine each month and year, separated by an underscore (`_`). Save this as a new variable in the data called "Inspection_Date_Formatted"
+
+## Activity: Answers
+
+The variable `Inspection_Date` is in the format "MM/DD/YYYY". In this question, we'll change the format using functions for strings.
+
+1. How long is each character string in this variable?
+
+```{r}
+table(nchar(restaurants$`Inspection Date`))
 ```
 
 . . . 
 
-For example,
+2. Use `substr()` to extract the month of each entry and save it to an object called "months"
 
 ```{r}
-apply(swiss, 2, mean)
+months <- substr(restaurants$`Inspection Date`, 1, 2)
+months |> 
+  head(5)
 ```
 
-## Example 1
+## Activity: Answers
+
+3. Use `substr()` to extract the year of each entry and save it to an object called "years"
 
 ```{r}
-row_max <- apply(swiss,1,max) # maximum in each row
-head(row_max, 20)
-```
-
-## Example 2
-
-```{r}
-apply(swiss, 2, summary) # summary of each column
-```
-
-**Note:* Matrix output!
-
-## Example 3: User-Created Function
-
-```{r}
-scores <- matrix(1:21, nrow=3)
-print(scores)
-my_function <- function(x){ mean(x+10, na.rm = T) }
-apply(scores, 1, my_function)
-```
-
-## Activity: Writing A Function
-
-In Olympic diving, a panel of 7 judges provide scores. After removing the worst and best scores, the mean of the remaining scores is given to the diver. We'll write code to calculate this score!
-
-1. Suppose I get you a vector, `x`, of length 7. Write code that will sort the vector from least to greatest, then keep the 2nd-6th elements^[HINT: Use the `sort()` function and square brackets `[ ]` for subsetting].
-
-2. Write a function to calculate a diver's score:
-    * Input: Vector of length 7
-    * Checks: Check that the vector has length 7 (if not, stop!)
-    * Output: Mean score after removing the lowest and greatest scores.
-  
-3. Calculate the diver's score given `x <- c(2, 1:5, 3)`
-
-## Activity: Solution
-
-1. Sort and extract elements 2 through 6:
-    * **Answer:** Given vector `x`, use `sort(x)[2:6]`
-
-2. Function
-
-```{r}
-divers_score <- function(x){
-  if(length(x) != 7){
-    stop("x is not of length 7!")
-  } else{
-    x_nofirst_nolast <- sort(x)[2:6]
-    return(mean(x_nofirst_nolast))
-  }
-}
+years <- substr(restaurants$`Inspection Date`, 7, 10)
+years |> 
+  head(5)
 ```
 
 . . . 
 
-3. Calculate the diver's score given `x <- c(2, 1:5, 3)`
+4. Use `paste()` to combine each month and year, separated by an underscore (`_`). Save this as a new variable in the data called "Inspection_Date_Formatted"
 
 ```{r}
-divers_score(x = c(2,1:5,3) )
+restaurants$Inspection_Date_Formatted <- paste(months, years, sep = "_")
+
+restaurants %>% 
+  select(Name, `Inspection Date`, Inspection_Date_Formatted) %>%
+  head(5)
 ```
 
-## Activity
+## Activity 2: HW 8
 
-*These are homework questions!!*
+Let's examine the coffee shops of King County!
 
-1. Preallocate a matrix of NAs with 3 rows and 8 columns, called `double_matrix`. Manually specify the first column equal to the values 1, 2, and 3. Using a nested loop, fill in the matrix, row by row, such that each value is double that to its left.
+1. Filter your data to only include rows in which the `Name` includes the word "coffee" (in any case!)
 
-2. Write an `apply()` function to take the median value of each column in the `cars` dataset
+2.. Create a new variable in your data which includes the length of the business name, after removing beginning/trailing whitespace.
 
-2. Using `ggplot`, make a scatterplot of the `speed` and `dist` variables in `cars`. Then, add an appropriate horizontal and vertical line symbolizing the median value of each variable^[*Hint:* Using the layers `geom_vline(xintercept = )` and `geom_hline(yintercept = )`].
+3. Create a new variable in your data for the inspection year, *using a `stringr` function!*
 
-## Answers
+4. Create side-by-side boxplots for the length of business name vs. year.
 
-1. Preallocate a matrix of NAs with 3 rows and 8 columns, called `double_matrix`. Manually specify the first column equal to the values 1, 2, and 3. Using a nested loop, fill in the matrix, row by row, such that each value is double that to its left.
+5. Calculate the maximum `Inspection Score` by business and year.
+
+6. Create a line plot of maximum score ("MaxScore") over time ("Year"), by business ("Name"). That is, you should have a single line for each business. (Don't try to label them, as there are far too many!)
+
+## Activity: Solutions
+
+1\. Filter your data to only include rows in which the `Name` includes the word "coffee" (in any case!)
 
 ```{r}
-double_matrix <- matrix(NA, nrow = 3,ncol = 8)
-double_matrix[ , 1] <- 1:3
-for(row in 1:3){
-  for(col in 2:8){
-    double_matrix[row, col] <- double_matrix[row, col-1] * 2
-  }
-}
-double_matrix
+coffee <- restaurants
+coffee$Name <- str_to_lower(coffee$Name)
+coffee <- coffee %>% 
+  filter(str_detect(Name, "coffee"))
+coffee |> 
+  head(5)
 ```
 
-## Answers
+## Activity: Solutions
 
-2\. Write an `apply()` function to take the median value of each column in the `cars` dataset
+2\.Create a new variable in your data which includes the length of the business name, after removing beginning/trailing whitespace.
 
 ```{r}
-median_cars <- apply(cars, 2, median)
-median_cars
+coffee$NameLength <- str_length(str_trim(coffee$Name))
+coffee |> 
+  select(Name, NameLength) |> 
+  slice(1:10)
 ```
 
-## Answers
+## Activity: Solutions
 
-3\. Make a ggplot
+3\. Create a new variable in your data for the inspection year.
 
-::: {.panel-tabset}
-
-### Code
 ```{r}
-#| eval: false
-library(ggplot2)
-ggplot(cars, aes(speed, dist)) + 
-  geom_point() +
-  geom_vline(xintercept = median_cars[1]) +
-  geom_hline(yintercept = median_cars[2])
+coffee$Year <- str_sub(coffee$`Inspection Date`,-4,-1)
+coffee$Year |> 
+  head(5)
 ```
 
-### Plot
+## Activity: Solutions
+
+4\.  Create side-by-side boxplots for the length of business name vs. year.
+
 ```{r}
-#| echo: false
 #| fig-height: 6
-#| fig-width: 8
+#| fig-width: 12
 #| fig-align: center
 library(ggplot2)
-ggplot(cars,aes(speed,dist)) + 
-  geom_point() +
-  geom_vline(xintercept = median_cars[1]) +
-  geom_hline(yintercept = median_cars[2])
+ggplot(coffee, aes(Year, NameLength)) + 
+  geom_boxplot()
 ```
-:::
- 
-# Homework{.section-title background-color="#99a486"}
- 
-## Homework 7
 
-Time to work on [Homework 7](https://vsass.github.io/CSSS508/Homework/HW7/homework7.html)!
+## Activity: Solutions
+
+5\. Calculate the maximum `Inspection Score` by business and year.
+
+```{r}
+coffee_summary <- coffee %>% 
+  group_by(Name, Year) %>% 
+  summarize(MaxScore = max(`Inspection Score`))
+coffee_summary |> 
+  head(5)
+```
+
+## Activity: Solutions
+
+6\. Create a line plot of maximum score ("MaxScore") over time ("Year"), by business ("Name"). That is, you should have a single line for each business. (Don't try to label them, as there are far too many!)
+```{r}
+#| fig-height: 6
+#| fig-width: 12
+#| fig-align: center
+ggplot(coffee_summary, aes(Year, MaxScore, group = Name)) +
+  geom_line(alpha = .2)
+```
+
+# Homework{.section-title background-color="#99a486"}
+
+## Homework 8
 
 ## Due Dates
 
 * **Section AA:** 
-  + Homework #4 due Tuesday, November 21st (before lecture)
-  + Peer grading due Sunday, November 26th (by 4:30pm)
+  + Homework #4 due Tuesday, November 28st (before lecture)
+  + Peer grading due Sunday, December 3rd (by 4:30pm)
 
 <br>
 
 * **Section AB:** 
-  + Homework #4 due Thursday, November 23rd (before lab)
-  + Peer grading due Tuesday, November 28th (before lecture)
+  + Homework #4 due Thursday, November 30th (before lab)
+  + Peer grading due Tuesday, December 5th (before lecture)
