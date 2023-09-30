@@ -1179,7 +1179,7 @@ rubric <- tibble(Evaluation = c("Didn't turn anything in.",
 rubric |> 
   gt() |> 
   tab_options(table.align = "center", table.font.names = c("Quattrocento", "Raleway"), 
-              table.font.size = pct(125), table.border.top.style = "hidden",) |>
+              table.font.size = pct(125)) |>
   cols_align(align = "center") |> 
   # Color each evaluation
   tab_style(style = cell_fill(color = "#e15759"),
@@ -1192,7 +1192,18 @@ rubric |>
             locations = cells_body(rows = Points == 3)) |> 
   # Change label font style
   cols_label(Evaluation = md("**Evaluation**"), 
-             Points = md("**Points**")) 
+             Points = md("**Points**")) |> 
+  # Adding border around label row
+  tab_style(style = cell_borders(sides = "top",  weight = px(2)),
+            locations = cells_column_labels()) |> 
+  tab_style(style = cell_borders(sides = "left",  weight = px(2)),
+            locations = list(cells_column_labels(columns = "Evaluation"),
+                             cells_body(columns = "Evaluation"))) |> 
+  tab_style(style = cell_borders(sides = "right",  weight = px(2)),
+            locations = list(cells_column_labels(columns = "Points"), 
+                             cells_body(columns = "Points"))) |> 
+  tab_style(style = cell_borders(sides = "bottom",  weight = px(2)),
+            locations = cells_body(rows = Points == 3))
   
 ```
 
@@ -1234,14 +1245,14 @@ schedule |>
                              cells_column_labels(columns = c(Peer_Due_Date_AA, Peer_Due_Date_AB)))) |> 
   # aligning table on page, picking font, increasing overall table size
   tab_options(table.align = "center", table.font.names = c("Quattrocento", "Raleway"), 
-              table.font.size = pct(100), table.border.top.style = "hidden",) |>
+              table.font.size = pct(100), table.border.top.style = "hidden", table.border.bottom.style = "hidden") |>
   # adding borders around due dates
-  tab_style(style = cell_borders(sides = c("bottom", "top"),  weight = px(4)),
+  tab_style(style = cell_borders(sides = c("bottom", "top"),  weight = px(3), color = "#1e4655"),
             locations = cells_body(rows = Homework == 1)) |> 
-  tab_style(style = cell_borders(sides = "left",  weight = px(4)),
+  tab_style(style = cell_borders(sides = "left",  weight = px(3), color = "#1e4655"), 
             locations = cells_body(rows = Homework == 1, 
                                    columns = Homework)) |> 
-  tab_style(style = cell_borders(sides = "right",  weight = px(4)),
+  tab_style(style = cell_borders(sides = "right",  weight = px(3), color = "#1e4655"), 
             locations = cells_body(rows = Homework == 1, 
                                    columns = Peer_Due_Date_AB)) 
 ```
