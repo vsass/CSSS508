@@ -666,7 +666,7 @@ ggplot(subset_gapminder, aes(year, lifeExp, color = country, group = country)) +
 
 # Homework{.section-title background-color="#99a486"}
 
-## Homework 3 {.scrollable}
+## Homework 5 {.scrollable}
 
 Create a qmd file (from scratch this time!) in which you answer each of the following questions. Be sure to display **all your code in the knitted** version (use throughout `echo: false`). 
 
@@ -684,16 +684,31 @@ As always, submit both the .qmd and knitted .html to Canvas.
 
 ## Due dates
 
-* **Section AA:** 
-  + Homework #3 due Tuesday, October 24th (before lecture)
-  + Peer grading due Sunday, October 29nd (by 4:30pm)
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
 
-<br>
-
-* **Section AB:** 
-  + Homework #3 due Thursday, October 26th (before lab)
-  + Peer grading due Tuesday, October 31th (before lecture)
-
-
+# reading in base due date schedule
+source("../due_dates_schedule.R")
+ 
+base_schedule |> 
+  # adding borders around due dates
+  tab_style(style = cell_borders(sides = c("bottom", "top"),  weight = px(3), color = "#1e4655"),
+            locations = cells_body(rows = Homework == 5)) |> 
+  tab_style(style = cell_borders(sides = "left",  weight = px(3), color = "#1e4655"), 
+            locations = cells_body(rows = Homework == 5, 
+                                   columns = Homework)) |> 
+  tab_style(style = cell_borders(sides = "right",  weight = px(3), color = "#1e4655"), 
+            locations = cells_body(rows = Homework == 5, 
+                                   columns = Peer_Due_Date_AB)) |> 
+  # Adding color to due date row
+  tab_style(style = cell_fill(color = "#c7cdac"),
+            locations = cells_body(columns = c(Due_Date_AA, Due_Date_AB), 
+                                   rows = Homework == 5)) |> 
+  tab_style(style = cell_fill(color = "#99a486"),
+            locations = cells_body(columns = c(Peer_Due_Date_AA, Peer_Due_Date_AB), 
+                                   rows = Homework == 5))
+```
 
 
