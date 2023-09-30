@@ -511,20 +511,35 @@ Songs that reach #1 on the Billboard charts appear to last >20 weeks on the char
 
 # Homework
 
-## Homework 5
+## Homework 4
 
-*On [Course Website!*](https://vsass.github.io/CSSS508/Homework/HW5/homework5.html)
+*On [Course Website!*](https://vsass.github.io/CSSS508/Homework/HW5/homework4.html)
 
-## Due Dates
+## Due dates
 
-* **Section AA:** 
-  + Homework #4 due Tuesday, November 7th (before lecture)
-  + Peer grading due Sunday, November 12th (by 4:30pm)
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
 
-<br>
-
-* **Section AB:** 
-  + Homework #4 due Thursday, November 9th (before lab)
-  + Peer grading due Tuesday, November 14th (before lecture)
-  
-  
+# reading in base due date schedule
+source("../due_dates_schedule.R")
+ 
+base_schedule |> 
+  # adding borders around due dates
+  tab_style(style = cell_borders(sides = c("bottom", "top"),  weight = px(3), color = "#1e4655"),
+            locations = cells_body(rows = Homework == 4)) |> 
+  tab_style(style = cell_borders(sides = "left",  weight = px(3), color = "#1e4655"), 
+            locations = cells_body(rows = Homework == 4, 
+                                   columns = Homework)) |> 
+  tab_style(style = cell_borders(sides = "right",  weight = px(3), color = "#1e4655"), 
+            locations = cells_body(rows = Homework == 4, 
+                                   columns = Peer_Due_Date_AB)) |> 
+  # Adding color to due date row
+  tab_style(style = cell_fill(color = "#c7cdac"),
+            locations = cells_body(columns = c(Due_Date_AA, Due_Date_AB), 
+                                   rows = Homework == 4)) |> 
+  tab_style(style = cell_fill(color = "#99a486"),
+            locations = cells_body(columns = c(Peer_Due_Date_AA, Peer_Due_Date_AB), 
+                                   rows = Homework == 4))
+```
