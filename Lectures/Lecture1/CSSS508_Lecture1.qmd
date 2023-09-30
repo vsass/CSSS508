@@ -18,6 +18,7 @@ format:
     code-line-numbers: true
     history: false
     progress: true
+    link-external-icon: true
     #logo: "../../images/csss-white.png" # need to add css for size <https://stackoverflow.com/questions/74083521/how-to-increase-size-logo-in-quarto-reveal-js-presentation>
 ---
 
@@ -48,7 +49,7 @@ require(xml2)
 
 ## Introductions
 
-Let's start by going around the room and sharing our:
+Let's start by getting to know each other a bit better. On your index card write the following: 
 
 * Name and pronouns
 
@@ -58,7 +59,12 @@ Let's start by going around the room and sharing our:
 
 * One word that best describes your feelings about taking this class
 
-* Best meal you've ever eaten
+* Would you rather be able to converse with (nonhuman) animals, or have lifelong fluency in every (human) language?
+
+. . . 
+
+Form a group of 3-5 with the people seated around you and introduce yourself to one another.
+
 
 ## Syllabus
 
@@ -74,39 +80,44 @@ Feel free to follow along online as I run through the syllabus!
 
 ## Course goals
 
-This course is intended to give students a foundational understanding of programming in the statistical language R. General topics include:
+This course is intended to give students a foundational understanding of programming in the statistical language R. This knowledge is intended to be broadly useful wherever you encounter data in your education and career. General topics we will focus on include:
 
 :::{.incremental}
-* Exploring data with graphics and summaries
-* Cleaning, preparing, and linking data for analyses
-* Foundational programming skills such as functions and loops
+* Developing intermediate data management and visualization skills
 * Organizing projects and creating reproducible research
+* Cleaning data
+* Linking multiple data sets together
+* Learning basic programming skills
 :::
- . . . 
 
-We won't really cover any statistics in this course but the goal is for you to increase your coding comprehension and learn the tools you need to be able to focus on <i>statistics instead of coding</i> in any future/current CSSS or STAT courses!
-
+By the end of this course you should feel confident approaching any data you encounter in the future. We will cover almost no statistics, however it is the intention that this course will leave you prepared to progress in CS&SS or STAT courses with the ability to focus on statistics instead of coding. Additionally, the basic concepts you learn will be applicable to other programming languages and research in general, such as logic and algorithmic thinking.
 
 ## Logistics
 
-**Sessions: **
-
-* **Lecture:** *An overview of that week's topic where we'll learn key skills, concepts, and principles.*
+**Lecture:** *An overview of that week's topic where we'll learn fundamental skills, concepts, and principles for learning R. The content from lecture each week will be the basis of the homework assignment due the following week.*
 
   * Tuesdays, 4:30-5:20pm (Gowen 201) 
 
-* **Labs:** *An interactive session where we'll put what we've learned in lecture into practice.*
+**Labs:** *An interactive session where we will practice the skills from lecture. Towards the end of these sections students will work with each other to learn and practice key skills in R, but I will be available to help as well!*
 
   * **Lab AA:** Tuesday, 5:30-6:20pm (Savery 117)
   * **Lab AB:** Thursday, 4:30-5:20pm (Savery 117)
 
-* **Office Hours:** Thursdays, 2-4pm 
-  
-  (on Zoom; link on [Canvas](https://canvas.uw.edu/courses/1665088))
+**Office Hours:** Wednesdays, 10-11am & 4-5pm (on Zoom; link on [Canvas](https://canvas.uw.edu/courses/1665088))
 
 **Course Website:** [https://vsass.github.io/CSSS508](https://vsass.github.io/CSSS508)
 
-**Contact:** Message me on our [Canvas course page](https://canvas.uw.edu/courses/1665088) rather than sending me an email. *I get far too many emails a day and I don't want to miss your message!*
+**Contact:** [Message me](https://uw-csss-508.slack.com/archives/D05TVTE2926) in our [Slack workspace](https://uw-csss-508.slack.com/) rather than sending me an email. *I get far too many emails a day and I don't want to miss your message!*
+
+## Logistics Continued
+
+::: {.callout-note icon=false}
+
+## COMMUNICATION
+
+Using callouts is an effective way to highlight content that your reader give special consideration or attention.
+
+:::
 
 ## Schedule
 
@@ -1157,55 +1168,33 @@ Your document should be pleasant for a peer to look at, with some organization u
 Take a look at the template provided on our [course website](https://vsass.github.io/CSSS508/Homework/HW1/homework1.html) for an idea of what this might look like using a different dataset. 
 :::
 
-## Grading Rubric
+## Grading Rubrics
 
-<br>
+### Homework
 
-<br>
+You'll be assigning one of your fellow students a grade based on the following rubric: 
 
 ```{r}
 #| echo: false
 #| warning: false
 #| message: false
-library(tidyverse)
-library(gt)
 
-rubric <- tibble(Evaluation = c("Didn't turn anything in.", 
-                                "Turned in but low effort, ignoring many directions.", 
-                                "Decent effort, followed directions with some minor issues.", 
-                                "Nailed it!"), 
-                 Points = 0:3)
+source("../../Homework/rubric.R")
 
 rubric |> 
-  gt() |> 
-  tab_options(table.align = "center", table.font.names = c("Quattrocento", "Raleway"), 
-              table.font.size = pct(125)) |>
-  cols_align(align = "center") |> 
-  # Color each evaluation
-  tab_style(style = cell_fill(color = "#e15759"),
-            locations = cells_body(rows = Points == 0)) |> 
-  tab_style(style = cell_fill(color = "#f28e2c"),
-            locations = cells_body(rows = Points == 1)) |> 
-  tab_style(style = cell_fill(color = "#76b7b2"),
-            locations = cells_body(rows = Points == 2)) |> 
-  tab_style(style = cell_fill(color = "#4e79a7"),
-            locations = cells_body(rows = Points == 3)) |> 
-  # Change label font style
-  cols_label(Evaluation = md("**Evaluation**"), 
-             Points = md("**Points**")) |> 
-  # Adding border around label row
-  tab_style(style = cell_borders(sides = "top",  weight = px(2)),
-            locations = cells_column_labels()) |> 
-  tab_style(style = cell_borders(sides = "left",  weight = px(2)),
-            locations = list(cells_column_labels(columns = "Evaluation"),
-                             cells_body(columns = "Evaluation"))) |> 
-  tab_style(style = cell_borders(sides = "right",  weight = px(2)),
-            locations = list(cells_column_labels(columns = "Points"), 
-                             cells_body(columns = "Points"))) |> 
-  tab_style(style = cell_borders(sides = "bottom",  weight = px(2)),
-            locations = cells_body(rows = Points == 3))
+  tab_options(table.align = "center", table.font.size = pct(125))
   
 ```
+
+### Peer-Review
+
+I will be assigning you a grade for your peer-review based on the following rubric: 
+
+```{r}
+peer_review_rubric |> 
+  tab_options(table.align = "center", table.font.size = pct(125))
+```
+
 
 ## Due dates
 
