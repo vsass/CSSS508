@@ -1,13 +1,14 @@
 ---
 title: "CSSS508 Homework 1 Example"
 author: "Victoria Sass"
-date: "October 3, 2023"
 date-modified: "`r Sys.time()`"
+highlight-style:  a11y-dark
 ---
 
-I'm interested in exploring a dataset in the `R` package `datasets. From its documentation I see that
+I'm interested in exploring a dataset from base `R` called `iris`. From its documentation I see that it is data about 50 flowers from each of 3 species of iris and their respective measurements of sepal length, sepal width, petal length, and petal width. 
 
 ```{r}
+#| echo: false
 # load necessary package(s)
 library(gt)
 
@@ -15,3 +16,75 @@ library(gt)
 data(iris)
 ```
 
+I first want to take a look at a preview of the dataset by making a nice table. 
+
+```{r}
+#| echo: false
+gt_preview(iris, 
+           top_n = 5, 
+           bottom_n = 5)
+```
+
+The mean petal length is `r mean(iris$Petal.Length)` but its median petal length is `r median(iris$Petal.Length)`. It's range is `r max(iris$Petal.Length) - min(iris$Petal.Length)` which additionally suggests a certain degree of spread.  
+
+It might be useful to *look* at the distribution to gain a better sense of the variation of this variable. 
+
+```{r}
+#| echo: false
+#| fig-align: center
+# making a histogram of petal length
+hist(iris$Petal.Length, 
+     xlab = "Petal Length", 
+     main = "Univariate distribution of Petal Length")
+
+```
+
+There seems to be a cluster of much smaller petals and then another cluster of average to bigger petals. I wonder how this varies by species...?
+
+```{r}
+#| echo: false
+#| fig-align: center
+# making a scatterplot of petal length by width
+plot(iris$Petal.Length, iris$Petal.Width,
+     pch = 19,
+     col = factor(iris$Species), 
+     xlab = "Petal Length", 
+     ylab = "Petal Width",
+     main = "Relationship between Petal Length and Width by Iris Species")
+# adding a legend to the plot
+legend("topleft",
+       legend = levels(factor(iris$Species)), # levels specifies the names of the variable (Species)
+       pch = 19,
+       col = factor(levels(factor(iris$Species)))) # assigns 3 distinct colors to the 3 values of Species
+```
+We can see from this plot that the overall mean and median of petal length is quite misleading! Only the verisicolor species of iris is close to those values while setosa is much mush smaller and virginica is a bit bigger. 
+
+Is there a similar thing happening for sepal length and width? Let's look at some basic descriptives of the dataset. 
+
+```{r}
+#| echo: false
+gt(as.data.frame.matrix(summary(iris)))
+```
+
+It's interesting to note with the `summary` function that for numerical data it'll calculate the classic 5 statistics used to construct a boxplot plus the mean but for a categorical variable like `iris$Species` it returns the frequency of each value of the variable. 
+
+The distribution of sepal length looks wider than sepal width, similar to how it was for those measurements of the petals. Let's see how sepal length and width relate to one another graphically. 
+
+```{r}
+#| echo: false
+#| fig-align: center
+# making a scatterplot of sepal length by width
+plot(iris$Sepal.Length, iris$Sepal.Width,
+     pch = 19,
+     col = factor(iris$Species), 
+     xlab = "Sepal Length", 
+     ylab = "Sepal Width",
+     main = "Relationship between Sepal Length and Width by Iris Species")
+# adding a legend to the plot
+legend("topleft",
+       legend = levels(factor(iris$Species)), # levels specifies the names of the variable (Species)
+       pch = 19,
+       col = factor(levels(factor(iris$Species)))) # assigns 3 distinct colors to the 3 values of Species
+```
+
+There are still clusters by each species type but for verisicolor and virginica there's much more overlap. Overall, there's tighter clustering by species for the petal length and width than there is for the sepal length and width. 
