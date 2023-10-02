@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -56,7 +56,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -189,12 +190,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Lecture 10</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../Lectures/Lecture11/CSSS508_Lecture11_index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Lecture 11</span></a>
-  </div>
-</li>
     </ul>
     </div>
 </nav>
@@ -206,7 +201,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header">
 <h1 class="title display-7">Lecture 5</h1>
-<p class="subtitle lead">Understanding R Data Structures, Part I</p>
+<p class="subtitle lead">Manipulating and Summarizing Data</p>
 
 <p class="date">October 31, 2023</p>
 </header>
@@ -214,22 +209,33 @@ ul.task-list li input[type="checkbox"] {
 <hr>
 <section id="slides" class="level3">
 <h3 class="anchored" data-anchor-id="slides">Slides</h3>
-<p><a href="../../Lectures/Lecture5/CSSS508_Lecture5.html">HTML slides</a> • PDF Slides • Raw qmd file</p>
+<p>HTML slides • Raw qmd file</p>
 <hr>
 </section>
-<section id="resources" class="level3">
-<h3 class="anchored" data-anchor-id="resources">Resources</h3>
-<ul>
-<li><a href=""></a></li>
-<li><a href=""></a></li>
-<li><a href=""></a></li>
-<li><a href=""></a></li>
-<li><a href=""></a></li>
-<li><a href=""></a></li>
-<li><a href=""></a></li>
-</ul>
+<section id="suggested-reading-from-r-for-data-science-2e" class="level3">
+<h3 class="anchored" data-anchor-id="suggested-reading-from-r-for-data-science-2e">Suggested Reading (from <em>R for Data Science (2e)</em>)</h3>
+<p><a href="https://r4ds.hadley.nz/data-transform">Chapter 4: Data transformation</a></p>
+<hr>
+</section>
+<section id="useful-resources" class="level3">
+<h3 class="anchored" data-anchor-id="useful-resources">Useful Resources</h3>
+<section id="cheatsheets" class="level4">
+<h4 class="anchored" data-anchor-id="cheatsheets">Cheatsheets</h4>
+<p><a href="https://rstudio.github.io/cheatsheets/data-transformation.pdf"><code>dplyr</code></a></p>
+</section>
+<section id="package-website" class="level4">
+<h4 class="anchored" data-anchor-id="package-website">package Website</h4>
+<p><a href="https://dplyr.tidyverse.org/"><code>dplyr</code></a></p>
+</section>
+<section id="other-readings" class="level4">
+<h4 class="anchored" data-anchor-id="other-readings">Other Readings</h4>
+</section>
+<section id="crowdsource-help" class="level4">
+<h4 class="anchored" data-anchor-id="crowdsource-help">Crowdsource Help</h4>
+<p><a href="https://csss-508-fall-2023.slack.com/">CS&amp;SS 508 Slack Workspace</a> • <a href="https://community.rstudio.com/">Posit community</a> • <a href="https://stackoverflow.com/">Stackoverflow</a></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -464,13 +470,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          // default icon
+          link.classList.add("external");
+      }
+    }
 });
 </script>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">Created with <a href="https://quarto.org/">Quarto</a> • <a href="https://creativecommons.org/licenses/by-nc/4.0/">License</a></div>   
-    <div class="nav-footer-center">Copyright © 2023 Victoria Sass</div>
+    <div class="nav-footer-center">Copyright © 2023 Victoria Sass <br> Course content adapted from <a href="https://clanfear.github.io/CSSS508/">Chuck Lanfear</a> and <a href="https://pearce790.github.io/CSSS508/index.html">Michael Pearce</a></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
