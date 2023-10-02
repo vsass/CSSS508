@@ -384,54 +384,6 @@ summary(billboard_2000$week)
 
 More sophisticated tools for character strings will be covered later in this course!
 
-# Dates and Times {background-image="images/lubridate.png" background-size="contain" background-opacity="0.25" background-position="center" .section-title background-color="#99a486"}
-
-## `lubridate`
-
-The package `lubridate` (part of the tidyverse!) has a *very large* number of functions you can use!
-
-. . . 
-
-* Converting dates/times between formats (DD-MM-YY to YY-MM-DD)
-* Extracting dates/times (day of week, month, leap years, etc.)
-* Math with dates/times (time zone conversions, etc.)
-
-. . . 
-
-There's too much to cover all of it, but I'll run through a few examples.
-
-## Dates in `billboard_2000` 
-
-```{r}
-billboard_2000 %>% 
-  select(date.entered) %>% 
-  head(10)
-```
-
-## Extracting Year, Month, or Day
-
-```{r }
-library(lubridate)
-head(billboard_2000$date.entered, 5)
-year(billboard_2000$date.entered) %>% 
-  head(5)
-month(billboard_2000$date.entered) %>% 
-  head(5)
-day(billboard_2000$date.entered) %>% 
-  head(5)
-```
-
-## Extracting Weekday, Quarter, and Leap Year Boolean
-
-```{r}
-wday(billboard_2000$date.entered) %>% 
-  head(5)
-quarter(billboard_2000$date.entered) %>% 
-  head(5)
-leap_year(billboard_2000$date.entered) %>% 
-   head(5)
-```
-
 ## Summary
 
 * Importing/Exporting Data: `readr`
