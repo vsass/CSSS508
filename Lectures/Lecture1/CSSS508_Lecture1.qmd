@@ -104,7 +104,7 @@ By the end of this course you should feel confident approaching any data you enc
 
 * Tuesdays, 4:30-5:20pm (Gowen 201) 
 
-**Labs:** *An interactive session where we will practice the skills from lecture. Towards the end of these sections students will work with each other to learn and practice key skills in R, but I will be available to help as well!*
+**Labs:** *An more interactive session where we will practice the skills from lecture. Towards the end of these sections students will work with each other to learn and practice key skills in R, but I will be available to help as well!*
 
   * **Lab AA:** Tuesday, 5:30-6:20pm (Savery 117)
   * **Lab AB:** Thursday, 4:30-5:20pm (Savery 117)
@@ -117,6 +117,8 @@ By the end of this course you should feel confident approaching any data you enc
 
 ## Logistics: Three Tools for Class
 
+<br>
+
 ::: {.callout-tip icon=false}
 
 ## <span style="color:green">{{< fa brands slack >}}</span> Communication
@@ -127,8 +129,6 @@ Learning is collaborative! In addition to being the place to communicate with me
 
 . . . 
 
-<br>
-
 ::: {.callout-important icon=false}
 
 ## <span style="color:red">{{< fa upload >}}</span> Homework & Peer-Reviews
@@ -138,8 +138,6 @@ We will be using [**Canvas**](https://canvas.uw.edu/courses/1665088) solely for 
 :::
 
 . . . 
-
-<br>
 
 ::: {.callout-note icon=false}
 
@@ -481,7 +479,7 @@ Code chunks that span the page represent *actual R code embedded in the slides*.
 # Sometimes important stuff is highlighted!
 ```
 
-## A Note on How to Use These Slides {.scrollable}
+## A Note on How to Use These Slides <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
 Since the lectures for this class were created using Quarto, there are numerous built-in features meant to facilitate your learning, particularly of `R`.
 
@@ -493,7 +491,9 @@ Since the lectures for this class were created using Quarto, there are numerous 
 4. To get a PDF version of these slides click *File* > *Print* from your internet browser, select *Save as PDF* as the Destination or Printer, and make sure the Layout is set to *Landscape*. (Note: the *PDF Export Mode* in *Tools* actually cuts off content which is why I'm not recommending it)
 5. Clicking on the <span style="color:#1e4655">{{< fa paintbrush >}}</span> in the bottom left-hand corner allows you to draw directly on the slides, in a very Microsoft Paint kind of way. See if it's useful but I make no promises!
 6. Type **?** at any time to see all the available key-board shortcuts. 
+7. Some content may be scrollable (like this page!). If this is the case I will put the <span style="color:#99a486">{{< fa scroll >}}</span> icon in the title to let you know. 
 :::
+
 
 ## Why R?
 
@@ -1322,7 +1322,7 @@ plot(dist ~ speed, data = cars,
      xlab = "Speed (mph)",
      ylab = "Stopping distance (ft)",
      main = "Speeds and stopping distances of cars",
-     pch = 16) # Point size
+     pch = 16) # Point shape
 abline(h = mean(cars$dist), col = "firebrick") # add horizontal line
 abline(v = mean(cars$speed), col = "cornflowerblue") # add vertical line
 ```
@@ -1561,7 +1561,12 @@ Note that we put the `summary(swiss)` function call inside the `as.data.frame.ma
 ```{r}
 #| echo: false
 library(gt) # loads gt, do once in your session
-gt(as.data.frame.matrix(summary(swiss))) |> tab_options(table.align = "center", table.font.size = pct(150)) 
+swiss |> 
+  summary() |> 
+  as.data.frame.matrix() |> 
+  gt() |> 
+  tab_options(table.align = "center", 
+              table.font.size = pct(75)) 
 ```
 :::
 
@@ -1606,23 +1611,26 @@ We no longer need `as.data.frame.matrix()` since `head(swiss)` produces a `data.
 
 <br>
 
-### Reading
-[**Introduction**](https://r4ds.hadley.nz/intro) in *R for Data Science (Second Edition)*
+### **Suggested Reading (from *R for Data Science (2e)*)**
 
-<br>
+[Chapter 1: Introduction](https://r4ds.hadley.nz/intro) • 
+[Chapter 29: Quarto](https://r4ds.hadley.nz/quarto)
 
-### Resources
+### **Resources**
 
 #### Cheatsheets
-* RStudio
-  * [**Website**](https://rstudio.github.io/cheatsheets/html/rstudio-ide.html?_gl=1*1drxtw*_ga*MTY0ODE1MTE3NS4xNjkzNzA5NjI0*_ga_2C0WZ1JHG0*MTY5NjE5ODA1NS43LjAuMTY5NjE5ODA1NS4wLjAuMA..) • [**PDF**](https://rstudio.github.io/cheatsheets/rstudio-ide.pdf)
-* Quarto
-  * [**Website**](https://rstudio.github.io/cheatsheets/html/quarto.html?_gl=1*qigh6d*_ga*MTY0ODE1MTE3NS4xNjkzNzA5NjI0*_ga_2C0WZ1JHG0*MTY5NjE5ODA1NS43LjEuMTY5NjE5ODE1OC4wLjAuMA..) • [**PDF**](https://rstudio.github.io/cheatsheets/quarto.pdf)
-* Base `R`
-  * [**PDF**](https://rstudio.github.io/cheatsheets/base-r.pdf)
+* RStudio: [**Website**](https://rstudio.github.io/cheatsheets/html/rstudio-ide.html?_gl=1*1drxtw*_ga*MTY0ODE1MTE3NS4xNjkzNzA5NjI0*_ga_2C0WZ1JHG0*MTY5NjE5ODA1NS43LjAuMTY5NjE5ODA1NS4wLjAuMA..) • [**PDF**](https://rstudio.github.io/cheatsheets/rstudio-ide.pdf)
+* Quarto: [**Website**](https://rstudio.github.io/cheatsheets/html/quarto.html?_gl=1*qigh6d*_ga*MTY0ODE1MTE3NS4xNjkzNzA5NjI0*_ga_2C0WZ1JHG0*MTY5NjE5ODA1NS43LjEuMTY5NjE5ODE1OC4wLjAuMA..) • [**PDF**](https://rstudio.github.io/cheatsheets/quarto.pdf)
+* Base `R`: [**PDF**](https://rstudio.github.io/cheatsheets/base-r.pdf)
   
 #### Additional Reading
 [Hands-On Programming with R](https://rstudio-education.github.io/hopr/) - *A great book for someone with no experience with `R` or programming*
+
+#### Crowdsource Help
+
+[CS&SS 508 Slack Workspace](https://csss-508-fall-2023.slack.com/) • 
+[Posit community](https://community.rstudio.com/) • 
+[Stackoverflow](https://stackoverflow.com/)
 
 ## Homework #1
 Write up a .qmd file showing some exploratory analyses of the Swiss fertility data. Upload both the `.qmd` file and the `.html` file to Canvas. You must upload **BOTH** for credit.
