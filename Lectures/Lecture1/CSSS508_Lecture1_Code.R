@@ -2,7 +2,7 @@
 ### Lecture 1 R Code ###
 ########################
 
-# Note: Anything behind a # this isn't a comment like this is code that is 
+# Note: Anything behind a # that isn't a comment like this is code that is 
 # interactive or won't fully run. To see what that code does simply remove the 
 # leading # and run it as normal or highlight the code directly and run it 
 # any of the ways we discussed in lecture. 
