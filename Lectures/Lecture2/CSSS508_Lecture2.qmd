@@ -10,6 +10,7 @@ execute:
 format: 
   revealjs:
     theme: lecture_styles.scss
+    controls: true
     slide-number: true
     code-link: true
     chalkboard: true
@@ -20,7 +21,6 @@ format:
     history: false
     progress: true
     link-external-icon: true
-    #logo: "../../images/csss-white.png" # need to add css for size <https://stackoverflow.com/questions/74083521/how-to-increase-size-logo-in-quarto-reveal-js-presentation>
 ---
 
 ```{r}
@@ -47,74 +47,62 @@ require(xml2)
 Last time, we learned about:
 
 1. R and RStudio
-1. Quarto headers, syntax, and chunks
-1. Basics of functions, objects, and vectors
-1. Dataframes and basic plots
+2. Quarto headers, syntax, and chunks
+3. Basics of functions, objects, and vectors
+4. Base `R` and packages
 
 . . . 
 
 Today, we will cover:
 
-1. Useful coding tips: packages, directories, and saving data
-1. Basics of ggplot: layers and aesthetics
-1. Advanced ggplot tools
-
-# Useful Coding Tips{.section-title background-color="#99a486"}
-
-## Packages
-
-Packages are **collections of functions and tools** that make your life easier! The best part of R is the huge number of user-created packages. The `Packages` tab in the bottom-right pane of RStudio lists your installed packages.
-
-. . . 
-
-To install a new package in R, run the line of code:
-
-```{r}
-#| eval: false
-install.packages("gapminder") 
-```
-
-We always install packages in the **console**, because we only want to do it **once**
-
-## Loading Packages
-
-Installing a packages *does not* mean it's loaded in our R session. To do so, we call the package:
-
-```{r}
-#| eval: false
-library(gapminder)
-```
-
-**NOTE:** Use quotes when installing packages, but not when loading packages!
-
-. . . 
-
-We need to run this code every time we open a new R session: **Where should we put this code?**
-
-. . . 
-
-**Answer:** In qmd files, and not the console!
+1. Introducing the `tidyverse`!
+2. Basics of `ggplot2`
+3. Advanced features of `ggplot2`
 
 ## File Types
 
-We mainly work with three types of file in this class:
+We mainly work with three types of files in this class:
 
 . . . 
 
-* `.qmd`: These are **markdown** *syntax* files, where you write code to *make documents*.
-
-. . . 
-
+:::{.incremental}
+* `.qmd`^[Quarto builds on a decade of developments with R Markdown documents, or .Rmd files. .Rmd fils operate very similarly to Quarto documents but there are some differences which you can read more about [here](https://quarto.org/docs/computations/r.html#:~:text=Another%20difference%20between%20R%20Markdown,than%20relying%20on%20external%20packages)]: These are **markdown** *syntax* files, where you write code and prose to *make documents*.
 * `.R`: These are **R** *syntax* files, where you write code to process and analyze data *without making an output document*^[While beyond the scope of this class, you can use the `source()` function to run a `.R` script file inside a `.qmd` or `.R` file. Using this you can break a large project up into multiple files but still run it all at once!].
+* `.html` (or `.pdf`): These are the output documents created when you *Render* a quarto markdown document.
+:::
 
 . . . 
 
-* `.html` or `.pdf`: These are the output documents created when you *Render* a quarto markdown document.
+Make sure you understand the difference between the uses of these file types! Please ask for clarification if needed!
+
+# Introducing the `tidyverse` {.section-title background-color="#99a486"}
+
+## Packages
+
+Last week we discussed Base `R` and the fact that what makes `R` extremely powerful and flexible is the large number of diverse user-created packages. 
 
 . . . 
 
-Make sure you understand the difference between the uses of these file types! Please
-ask for clarification if needed!
+::: {.callout-note icon=false}
+## <span style="color:blue">{{< fa hand >}}</span>  What are packages again?
+Recall that packages are simply **collections of functions and tools** others have already created, that will make your life easier!
+:::
+
+. . . 
+
+::: {.callout-caution icon=false}
+## <span style="color:tomato">{{< fa triangle-exclamation >}}</span> The package 2-step
+Remember that to **install** a new package you use `install.packages("package_name")` in the **console**. You only need to do this once per machine (unless you want to update to a newer version of a package). 
+
+To **load** a package into your current session of `R` you use `library(package_name)`, preferably at the beginning of your `R` script or Quarto document. Every time you open RStudio it's a new session and you'll have to call `library()` on the packages you want to use.
+:::
+
+## Packages
+
+
+The `Packages` tab in the bottom-right pane of RStudio lists your installed packages.
+
+![](images/package_tab.png){fig-align="center"}
 
 ## Gapminder Data
 
@@ -321,7 +309,7 @@ Be sure to **end** each line with the `+`. The code will not run if a new line *
 
 We'll now build up two `ggplot`s together that demonstrate common layers and aesthetics.
 
-## Axis Labels, Points, No Background
+## Axis Labels, Points, No Background{auto-animate="true"}
 
 ### Base `ggplot`
 
@@ -350,7 +338,7 @@ ggplot(data = China,
 Initialize the plot with `ggplot()` and `x` and `y` aesthetics **mapped** to variables. These aesthetics will be accessible to any future layers since they're in the primary layer.
 :::
 
-## Axis Labels, Points, No Background
+## Axis Labels, Points, No Background{auto-animate="true"}
 
 ### Scatterplot
 
@@ -380,7 +368,7 @@ ggplot(data = China,
 Add a scatterplot **layer**.
 :::
 
-## Axis Labels, Points, No Background
+## Axis Labels, Points, No Background{auto-animate="true"}
 
 ### Point Color and Size
 
@@ -410,7 +398,7 @@ ggplot(data = China,
 **Set** aesthetics to make the points larger and red.
 :::
 
-## Axis Labels, Points, No Background
+## Axis Labels, Points, No Background{auto-animate="true"}
 
 ### X-Axis Label
 
@@ -443,7 +431,7 @@ Add a layer to capitalize the x-axis label.
 :::
 
 
-## Axis Labels, Points, No Background
+## Axis Labels, Points, No Background{auto-animate="true"}
 
 ### Y-Axis Label
 
@@ -477,7 +465,7 @@ ggplot(data = China,
 Add a layer to clean up the y-axis label.
 :::
 
-## Axis Labels, Points, No Background
+## Axis Labels, Points, No Background{auto-animate="true"}
 
 ### Title
 
@@ -513,7 +501,7 @@ ggplot(data = China,
 Add a title layer.
 :::
 
-## Axis Labels, Points, No Background
+## Axis Labels, Points, No Background{auto-animate="true"}
 
 ### Theme
 
@@ -551,7 +539,7 @@ ggplot(data = China,
 Pick a nicer theme with a new layer.
 :::
 
-## Axis Labels, Points, No Background
+## Axis Labels, Points, No Background{auto-animate="true"}
 
 ### Text Size
 
@@ -595,7 +583,7 @@ We have a plot we like for China...
 
 ... but what if we want *all the countries*?
 
-## Plotting All Countries
+## Plotting All Countries{auto-animate="true"}
 
 ### A Mess!
 
@@ -633,7 +621,7 @@ ggplot(data = gapminder,
 We can't tell countries apart! Maybe we could follow *lines*?
 :::
 
-## Plotting All Countries
+## Plotting All Countries{auto-animate="true"}
 
 ### Lines
 
@@ -671,7 +659,7 @@ ggplot(data = gapminder,
 `ggplot2` doesn't know how to connect the lines!
 :::
 
-## Plotting All Countries
+## Plotting All Countries{auto-animate="true"}
 
 ### Grouping
 
@@ -711,7 +699,7 @@ ggplot(data = gapminder,
 That looks more reasonable... but the lines are too thick!
 :::
 
-## Plotting All Countries
+## Plotting All Countries{auto-animate="true"}
 
 ### Size
 
@@ -751,7 +739,7 @@ ggplot(data = gapminder,
 Much better... but maybe we can do highlight regional differences?
 :::
 
-## Plotting All Countries
+## Plotting All Countries{auto-animate="true"}
 
 ### Color
 
@@ -793,7 +781,7 @@ ggplot(data = gapminder,
 Patterns are obvious... but it might be even more impactful if we separate continents completely.
 :::
 
-## Plotting All Countries
+## Plotting All Countries{auto-animate="true"}
 
 ### Facets
 
@@ -837,7 +825,7 @@ ggplot(data = gapminder,
 Now the text is too big!
 :::
 
-## Plotting All Countries
+## Plotting All Countries{auto-animate="true"}
 
 ### Text Size
 
@@ -881,7 +869,7 @@ ggplot(data = gapminder,
 Better. Do we even need the legend anymore?
 :::
 
-## Plotting All Countries
+## Plotting All Countries{auto-animate="true"}
 
 ### No Legend
 
@@ -924,7 +912,7 @@ ggplot(data = gapminder,
 ::::
 
 ::: aside
-Looking good!
+Looking pretty good!
 :::
 
 ## Advanced ggplot tools
