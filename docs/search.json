@@ -759,8 +759,8 @@
     "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#layered-grammar-of-graphics",
     "href": "Lectures/Lecture2/CSSS508_Lecture2.html#layered-grammar-of-graphics",
     "title": "",
-    "section": "Layered grammar of graphics",
-    "text": "Layered grammar of graphics"
+    "section": "Layered grammar of graphics1\n",
+    "text": "Layered grammar of graphics1\n\n\n\n\n\nBased on Leland Wilkinson’s book The Grammar of Graphics"
   },
   {
     "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#examples-basic-jargon-in-action",
@@ -1047,7 +1047,7 @@
     "href": "Lectures/Lecture2/CSSS508_Lecture2.html#angled-tick-values",
     "title": "",
     "section": "Angled Tick Values",
-    "text": "Angled Tick Values\n\n\nCode\nPlot\n\n\n\n\nggplot(data = gapminder, \n       aes(x = year, y = lifeExp, group = country)) +\n  geom_line() +\n  geom_line(stat = \"smooth\", \n            method = \"loess\", \n            aes(group = continent)) +\n  facet_wrap(~ continent, \n             nrow = 2) +\n  scale_color_manual(name = \"Life Exp. for:\", \n                     values = c(\"Country\" = \"black\", \"Continent\" = \"blue\")) +\n  scale_size_manual(name = \"Life Exp. for:\", \n                    values = c(\"Country\" = 0.25, \"Continent\" = 3)) +\n  theme_minimal(base_size = 14) + \n  labs(y = \"Years\", \n       x = \"\", \n       title = \"Life Expectancy, 1952-2007\", \n       subtitle = \"By continent and country\") +\n  theme(axis.text.x = element_text(angle = 45)) \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote: Fewer values might be better than angled labels!"
+    "text": "Angled Tick Values\n\n\nCode\nPlot\n\n\n\n\nggplot(data = gapminder, \n       aes(x = year, y = lifeExp, group = country)) +\n  geom_line() +\n  geom_line(stat = \"smooth\", \n            method = \"loess\", \n            aes(group = continent)) +\n  facet_wrap(~ continent, \n             nrow = 2) +\n  scale_color_manual(name = \"Life Exp. for:\", \n                     values = c(\"Country\" = \"black\", \"Continent\" = \"blue\")) +\n  scale_size_manual(name = \"Life Exp. for:\", \n                    values = c(\"Country\" = 0.25, \"Continent\" = 3)) +\n  theme_minimal(base_size = 14) + \n  labs(y = \"Years\", \n       x = \"\", \n       title = \"Life Expectancy, 1952-2007\", \n       subtitle = \"By continent and country\") +\n  theme(axis.text.x = element_text(angle = 45)) \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote: Fewer values might be better than angled labels! Finally, let’s move our legend so it isn’t wasting space."
   },
   {
     "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#legend-position",
@@ -1061,7 +1061,7 @@
     "href": "Lectures/Lecture2/CSSS508_Lecture2.html#summary-1",
     "title": "",
     "section": "Summary",
-    "text": "Summary\nggplot2 can do a LOT! I won’t expect you to memorize all these tools, and neither should you!\n\n\n\nWith time and practice, you’ll start to remember the key tools\nWhen in doubt, Google it! (i.e. “R ggplot ‘whatever issue you need help with’”)\n\nThere are lots of great resources out there:\n\nThe Cookbook for R website\nThe RStudio ggplot Cheatsheets.\nKieran Healy’s book Data Visualization: A Practical Introduction (right) is targeted at social scientists without technical backgrounds and uses the same tools we’ll be learning in this class."
+    "text": "Summary\nggplot2 can do a LOT! I won’t expect you to memorize all these tools, and neither should you! With time and practice, you’ll start to remember the key tools.\n\n\n\nWhen in doubt, Google it! (i.e. “R ggplot ‘whatever issue you need help with’”)\n\nThere are lots of great resources out there:\n\nThe ggplot2 reference page\nThe Cookbook for R website\nThe RStudio ggplot Cheatsheets.\nKieran Healy’s book Data Visualization: A Practical Introduction (right) is targeted at social scientists without technical backgrounds and uses the same tools we’ll be learning in this class."
   },
   {
     "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#exercise-histograms",
@@ -8082,7 +8082,7 @@
     "href": "Lectures/Lecture2/CSSS508_Lecture2.html#annotating-specific-datapoints-for-emphasis",
     "title": "",
     "section": "Annotating specific datapoints for emphasis",
-    "text": "Annotating specific datapoints for emphasis\n\n\nBasic annotation\nOffset annotation\nCode to create outliers data\n\n\n\n\nggplot(gapminder, aes(x = continent, y = lifeExp)) +\n  geom_boxplot(outlier.colour = \"hotpink\") +\n  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 0.25) + \n   geom_text(data = outliers, aes(label = label))\n\n\n\n\n\n\n\n\n\n\nlibrary(ggrepel)\nggplot(gapminder, aes(x = continent, y = lifeExp)) +\n  geom_boxplot(outlier.colour = \"hotpink\") +\n  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 0.25) + \n   geom_label_repel(data = outliers, aes(label = label), color = \"hotpink\")\n\n\n\n\n\n\n\n\n\n\noutliers &lt;- gapminder |&gt; \n  group_by(continent) |&gt; \n  mutate(label = case_when(continent == \"Africa\" & min(lifeExp) == lifeExp ~ country, \n                           continent == \"Africa\" & max(lifeExp) == lifeExp ~ country,\n                           continent == \"Americas\" & min(lifeExp) == lifeExp ~ country,\n                           continent == \"Europe\" & min(lifeExp) == lifeExp ~ country,\n                           .default = NA)) |&gt; \n  filter(!is.na(label))\n\noutliers\n\n# A tibble: 4 × 7\n# Groups:   continent [3]\n  country continent  year lifeExp      pop gdpPercap label  \n  &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;fct&gt;  \n1 Haiti   Americas   1952    37.6  3201488     1840. Haiti  \n2 Reunion Africa     2007    76.4   798094     7670. Reunion\n3 Rwanda  Africa     1992    23.6  7290203      737. Rwanda \n4 Turkey  Europe     1952    43.6 22235677     1969. Turkey"
+    "text": "Annotating specific datapoints for emphasis\n\n\nBasic annotation\nOffset annotation\nCode: outliers\nCode: no outliers\n\n\n\n\nCodeggplot(gapminder, aes(x = continent, y = lifeExp)) +\n  geom_boxplot(outlier.colour = \"hotpink\", outlier.size = 3) +\n  geom_jitter(data = no_outliers, position = position_jitter(width = 0.1, height = 0), alpha = 0.25, size = 3) + \n  geom_text(data = outliers, aes(label = country), size = 8) + \n  theme_minimal(base_size = 18)\n\n\n\n\n\n\n\n\n\n\nCodelibrary(ggrepel)\nggplot(gapminder, aes(x = continent, y = lifeExp)) +\n  geom_boxplot(outlier.colour = \"hotpink\", outlier.size = 3) +\n  geom_jitter(data = no_outliers, position = position_jitter(width = 0.1, height = 0), alpha = 0.25, size = 3) + \n  geom_label_repel(data = outliers, aes(label = country), color = \"hotpink\", size = 8) + \n  theme_minimal(base_size = 18)\n\n\n\n\n\n\n\n\n\n\nCodeoutliers &lt;- gapminder |&gt; \n  group_by(continent) |&gt; \n  mutate(outlier = case_when(quantile(lifeExp, probs = 0.25) - (IQR(lifeExp) * 1.5) &gt; lifeExp ~ \"outlier\", # anything lower than the 1st quartile - 1.5*IQR \n                             quantile(lifeExp, probs = 0.75) + (IQR(lifeExp) * 1.5) &lt; lifeExp ~ \"outlier\", # anything higher than the 3rd quartile + 1.5*IQR\n                             .default = NA)) |&gt; \n  filter(!is.na(outlier)) |&gt; # remove non-outliers\n  ungroup() |&gt; group_by(country) |&gt; # regroup by country\n  filter(lifeExp == min(lifeExp)) # filter just the min for each country\n\nhead(outliers)\n\n# A tibble: 6 × 7\n# Groups:   country [6]\n  country                continent  year lifeExp     pop gdpPercap outlier\n  &lt;fct&gt;                  &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;  \n1 Albania                Europe     1952    55.2 1282697     1601. outlier\n2 Bosnia and Herzegovina Europe     1952    53.8 2791000      974. outlier\n3 Bulgaria               Europe     1952    59.6 7274900     2444. outlier\n4 Haiti                  Americas   1952    37.6 3201488     1840. outlier\n5 Libya                  Africa     2002    72.7 5368585     9535. outlier\n6 Mauritius              Africa     2007    72.8 1250882    10957. outlier\n\n\n\n\n\nCodeno_outliers &lt;- gapminder |&gt; \n  group_by(continent) |&gt; \n  mutate(outlier = case_when(quantile(lifeExp, probs = 0.25) - (IQR(lifeExp) * 1.5) &gt; lifeExp ~ \"outlier\",\n                             quantile(lifeExp, probs = 0.75) + (IQR(lifeExp) * 1.5) &lt; lifeExp ~ \"outlier\", \n                             .default = NA)) |&gt; \n  filter(is.na(outlier)) # remove outliers\n\nhead(no_outliers)\n\n# A tibble: 6 × 7\n# Groups:   continent [1]\n  country     continent  year lifeExp      pop gdpPercap outlier\n  &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;  \n1 Afghanistan Asia       1952    28.8  8425333      779. &lt;NA&gt;   \n2 Afghanistan Asia       1957    30.3  9240934      821. &lt;NA&gt;   \n3 Afghanistan Asia       1962    32.0 10267083      853. &lt;NA&gt;   \n4 Afghanistan Asia       1967    34.0 11537966      836. &lt;NA&gt;   \n5 Afghanistan Asia       1972    36.1 13079460      740. &lt;NA&gt;   \n6 Afghanistan Asia       1977    38.4 14880372      786. &lt;NA&gt;"
   },
   {
     "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#section-3",
@@ -8110,6 +8110,104 @@
     "href": "Lectures/Lecture2/CSSS508_Lecture2.html#mapping-color-size",
     "title": "",
     "section": "Mapping Color & Size",
-    "text": "Mapping Color & Size\n\n\nCode\nPlot\n\n\n\n\nggplot(data = gapminder, \n       aes(x = year, y = lifeExp, group = country)) +\n  geom_line(aes(color = \"Country\", size = \"Country\")) +\n  geom_line(stat = \"smooth\", method = \"loess\", \n            aes(group = continent, color = \"Continent\", size = \"Continent\")) +\n  facet_wrap(~ continent, \n             nrow = 2) +\n  scale_color_manual(name = \"Life Exp. for:\", \n                     values = c(\"Country\" = \"black\", \"Continent\" = \"blue\")) +\n  scale_size_manual(name = \"Life Exp. for:\", \n                    values = c(\"Country\" = 0.25, \"Continent\" = 3))"
+    "text": "Mapping Color & Size\n\n\nCode\nPlot\n\n\n\n\nggplot(data = gapminder, \n       aes(x = year, y = lifeExp, group = country)) +\n  geom_line(aes(color = \"Country\", size = \"Country\")) +\n  geom_line(stat = \"smooth\", method = \"loess\", \n            aes(group = continent, color = \"Continent\", size = \"Continent\")) +\n  facet_wrap(~ continent, \n             nrow = 2) +\n  scale_color_manual(name = \"Life Exp. for:\", \n                     values = c(\"Country\" = \"black\", \"Continent\" = \"blue\")) +\n  scale_size_manual(name = \"Life Exp. for:\", \n                    values = c(\"Country\" = 0.25, \"Continent\" = 3))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHuzzah! Let’s change the transparency on these lines a touch so we can see all our data more easily."
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#geomtextpath-fa-scroll",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#geomtextpath-fa-scroll",
+    "title": "",
+    "section": "\ngeomtextpath \n",
+    "text": "geomtextpath \n\nIf you want your labels to follow along the path of your plot (and maintain proper angles and spacing) try using geomtextpath.\n\nCode# install.packages(\"geomtextpath\") &lt;- run in console first\nlibrary(geomtextpath)\ngapminder |&gt; \n  filter(country %in% c(\"Cuba\", \"Haiti\", \"Dominican Republic\")) |&gt; # restricting data to 3 regionally-specific countries\n  ggplot(aes(x = year, \n             y = lifeExp, \n             color = country, \n             label = country)) + # specify label with text to appear\n  geom_textpath() + # adding textpath geom to put labels within lines\n  theme(legend.position = \"none\") # removing legend"
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#ggridges-fa-scroll",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#ggridges-fa-scroll",
+    "title": "",
+    "section": "\nggridges \n",
+    "text": "ggridges \n\nWe can make visualize the differing distributions of a continuous variable by levels of a categorical variable with ggridges!\n\nCode# install.packages(\"ggridges\") &lt;- run in console first\nlibrary(ggridges)\nggplot(gapminder, \n       aes(x = lifeExp, \n           y = continent, \n           fill = continent, \n           color = continent)) +\n  geom_density_ridges(alpha = 0.5, \n                      show.legend = FALSE) # add ridges, make all a bit transparent, remove legend"
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#correlation-matricies-fa-scroll",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#correlation-matricies-fa-scroll",
+    "title": "",
+    "section": "Correlation Matricies \n",
+    "text": "Correlation Matricies \n\nMake visually appealing & informative correlation plots in GGally or ggcorrplot.\n\n\nGGally\nggcorrplot\nBonus: ggpairs() from GGally\n\n\n\n\nCode# install.packages(\"GGally\") &lt;- run in console first\nlibrary(GGally)\n\nggcorr(swiss, \n       geom = \"circle\", \n       min_size = 25, # specify minimum size of shape \n       max_size = 25, # specify maximum size of shape \n       label = TRUE, # label circles with correlation coefficient\n       label_alpha = TRUE, # less strong correlations have lower alpha\n       label_round = 2, # round correlations coefficients to 2 decimal points\n       legend.position = c(0.15, 0.6), \n       legend.size = 12)\n\n\n\n\n\n\n\n\n\n\nCode# install.packages(\"ggcorrplot\") &lt;- run in console first\nlibrary(ggcorrplot)\n\n# compute correlation matrix\ncorr &lt;- round(cor(swiss), 1)\n# computer matrix of correlation p-values\np_mat &lt;- cor_pmat(swiss)\n\nggcorrplot(corr,\n           hc.order = TRUE, # use hierarchical clustering to group like-correlations together\n           type = \"lower\", # only show lower half of correlation matrix\n           p.mat = p_mat, # give corresponding p-values for correlation matrix\n           insig = \"pch\", # add default shape (an X) to correlations that are insignificant\n           outline.color = \"black\", # outline cells in white\n           ggtheme = ggthemes::theme_tufte(), # using a specific theme I like from ggthemes package \n           colors = c(\"#4e79a7\", \"white\", \"#e15759\")) + # specify custom colors \n  theme(legend.position = c(0.15, 0.67))\n\n\n\n\n\n\n\n\n\n\nCodeggpairs(swiss, \n        lower = list(continuous = wrap(\"smooth\", # specify a smoothing line added to scatterplots\n                                       alpha = 0.5, \n                                       size=0.2))) + \n  ggthemes::theme_tufte() # add nice theme from ggthemes"
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#patchwork-fa-scroll",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#patchwork-fa-scroll",
+    "title": "",
+    "section": "\npatchwork \n",
+    "text": "patchwork \n\nCombine separate plots into the same graphic using patchwork.\n\nCode# install.packages(\"patchwork\") &lt;- run in console first\nlibrary(patchwork)\n\n# Create first plot object\nplot_lifeExp &lt;- ggplot(gapminder, \n                       aes(x = lifeExp, y = continent, fill = continent, color = continent)) +\n  geom_density_ridges(alpha = 0.5, show.legend = FALSE)\n\n# Create second plot object\nplot_boxplot &lt;- ggplot(gapminder, \n                       aes(x = continent, y = lifeExp, color = continent), \n                       alpha = 0.5) +\n  geom_boxplot(outlier.colour = \"black\", varwidth = TRUE) + # change outlier color and make width of boxes relative to N\n  coord_flip() + # flip the coordinates (x & y) to align with first plot\n  geom_jitter(position = position_jitter(width = 0.1, height = 0), # add datapoints to boxplot\n              alpha = 0.25) + \n  geom_label_repel(data = outliers, # add new dataset with just 4 of the outliers\n                   aes(label = country), \n                   color = \"black\") +\n  theme(axis.text.y = element_blank(), # remove y axis text \n        axis.ticks.y = element_blank(), # remove y axis ticks \n        axis.title.y = element_blank(), # remove y axis title \n        legend.position = \"none\")\n\nplot_lifeExp + plot_boxplot # simply add two objects together to place side by side"
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#ggthemes-fa-scroll",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#ggthemes-fa-scroll",
+    "title": "",
+    "section": "\nggthemes \n",
+    "text": "ggthemes \n\n\n\nexcel\neconomist\nfew\nfivethirtyeight\ngdocs\nstata\ntufte\nwsj\n\n\n\n\nCodelibrary(ggthemes)\nplot_lifeExp + theme_excel()\n\n\n\n\n\n\n\n\n\n\nCodeplot_lifeExp + theme_economist()\n\n\n\n\n\n\n\n\n\n\nCodeplot_lifeExp + theme_few()\n\n\n\n\n\n\n\n\n\n\nCodeplot_lifeExp + theme_fivethirtyeight()\n\n\n\n\n\n\n\n\n\n\nCodeplot_lifeExp + theme_gdocs()\n\n\n\n\n\n\n\n\n\n\nCodeplot_lifeExp + theme_stata()\n\n\n\n\n\n\n\n\n\n\nCodeplot_lifeExp + theme_tufte()\n\n\n\n\n\n\n\n\n\n\nCodeplot_lifeExp + theme_wsj()"
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#themes-in-ggplot2-fa-scroll",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#themes-in-ggplot2-fa-scroll",
+    "title": "",
+    "section": "themes in ggplot2 \n",
+    "text": "themes in ggplot2 \n\nThere are several built-in themes within ggplot2.\n\n\nbw\nlight\nclassic\nlinedraw\ndark\nminimal\ngray\nvoid\n\n\n\n\nCodeplot_lifeExp + theme_bw() # reusing plot_lifeExp from previous slide and changing theme\n\n\n\n\n\n\n\n\n\n\nCodeplot_lifeExp + theme_light()\n\n\n\n\n\n\n\n\n\n\nCodeplot_lifeExp + theme_classic()\n\n\n\n\n\n\n\n\n\n\nCodeplot_lifeExp + theme_linedraw()\n\n\n\n\n\n\n\n\n\n\nCodeplot_lifeExp + theme_dark()\n\n\n\n\n\n\n\n\n\n\nCodeplot_lifeExp + theme_minimal()\n\n\n\n\n\n\n\n\n\n\nCodeplot_lifeExp + theme_gray()\n\n\n\n\n\n\n\n\n\n\nCodeplot_lifeExp + theme_void()"
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#other-packages-and-making-your-own",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#other-packages-and-making-your-own",
+    "title": "",
+    "section": "Other packages and making your own!",
+    "text": "Other packages and making your own!\nThese are just a handful of all the ready-made theme options available out there. Some other packages that might be useful/fun to check out:\n\n\n\nhrbrthemes - provides typography-centric themes and theme components for ggplot2\n\n\nurbnthemes a set of tools for creating Urban Institute-themed plots and maps in R\n\n\nbbplot - provides helpful functions for creating and exporting graphics made in ggplot in the style used by the BBC News data team\n\n\nggpomological - A ggplot2 theme based on the USDA Pomological Watercolor Collection\n\n\n\n\nYou are also able to design your own theme using the theme() function and really getting into the weeds with how to specify all the non-data ink in your plot. Once you come up with a theme you like you can save it as an object (i.e. my_theme) and add it to any ggplot you create to maintain your own unique and consistent style."
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#other-theme-packages-and-making-your-own",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#other-theme-packages-and-making-your-own",
+    "title": "",
+    "section": "Other theme packages and making your own!",
+    "text": "Other theme packages and making your own!\nThese are just a handful of all the ready-made theme options available out there. Some other packages that might be useful/fun to check out:\n\n\n\nhrbrthemes - provides typography-centric themes and theme components for ggplot2\n\n\nurbnthemes a set of tools for creating Urban Institute-themed plots and maps in R\n\n\nbbplot - provides helpful functions for creating and exporting graphics made in ggplot in the style used by the BBC News data team\n\n\nggpomological - A ggplot2 theme based on the USDA Pomological Watercolor Collection\n\n\n\n\nYou are also able to design your own theme using the theme() function and really getting into the weeds with how to specify all the non-data ink in your plot. Once you come up with a theme you like you can save it as an object (i.e. my_theme) and add it to any ggplot you create to maintain your own unique and consistent style."
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#check",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#check",
+    "title": "",
+    "section": "check",
+    "text": "check\n\nggcorrplot(corr,\n           hc.order = TRUE, # use hierarchical clustering to group like-correlations together\n           type = \"lower\", # only show lower half of correlation matrix\n           p.mat = p_mat, # give corresponding p-values for correlation matrix\n           insig = \"pch\", # add default shape (an X) to correlations that are insignificant\n           outline.color = \"black\", # outline cells in white\n           ggtheme = ggthemes::theme_tufte(), # using a specific theme I like from ggthemes package \n           colors = c(\"#4e79a7\", \"white\", \"#e15759\")) # specify custom colors"
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#layered-grammar-of-graphics-fa-scroll",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#layered-grammar-of-graphics-fa-scroll",
+    "title": "",
+    "section": "Layered grammar of graphics \n",
+    "text": "Layered grammar of graphics \n\n\n\n\n\n\n\nThis is based on Leland Wilkinson’s book The Grammar of Graphics and extended by Hadley Wickham in his paper “A layered grammar of graphics”."
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#further-customization",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#further-customization",
+    "title": "",
+    "section": "Further customization",
+    "text": "Further customization\nNext, we’ll discuss:\n\nStoring, modifying, and saving ggplots\nAdvanced axis changes (scales, text, ticks)\nLegend changes (scales, colors, locations)\nUsing multiple geoms\nAdding annotation for emphasis"
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#fixed-versus-free-scales",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#fixed-versus-free-scales",
+    "title": "",
+    "section": "Fixed versus Free Scales",
+    "text": "Fixed versus Free Scales\n\n\nUntransformed\nFixed\nFree x\nFree y\nFree x & y\n\n\n\n\nCodegapminder_sub &lt;- gapminder |&gt; \n  filter(year %in% c(1952, 1982, 2002)) \n  \nggplot(data = gapminder_sub, \n       aes(x = lifeExp, y = gdpPercap)) + \n  geom_jitter() + \n  facet_grid(rows = vars(year), \n             cols = vars(continent))\n\n\n\n\n\n\n\nCodegapminder_sub &lt;- gapminder |&gt; \n  filter(year %in% c(1952, 1982, 2002)) \n  \nggplot(data = gapminder_sub, \n       aes(x = lifeExp, y = gdpPercap)) + \n  geom_jitter() + \n  scale_y_log10() +\n  facet_grid(rows = vars(year), \n             cols = vars(continent))\n\n\n\n\n\n\n\nCodegapminder_sub &lt;- gapminder |&gt; \n  filter(year %in% c(1952, 1982, 2002)) \n  \nggplot(data = gapminder_sub, \n       aes(x = lifeExp, y = gdpPercap)) + \n  geom_jitter() + \n  scale_y_log10() +\n  facet_grid(rows = vars(year), \n             cols = vars(continent), \n             scales = \"free_x\")\n\n\n\n\n\n\n\nCodegapminder_sub &lt;- gapminder |&gt; \n  filter(year %in% c(1952, 1982, 2002)) \n  \nggplot(data = gapminder_sub, \n       aes(x = lifeExp, y = gdpPercap)) + \n  geom_jitter() + \n  scale_y_log10() +\n  facet_grid(rows = vars(year), \n             cols = vars(continent), \n             scales = \"free_y\")\n\n\n\n\n\n\n\nCodegapminder_sub &lt;- gapminder |&gt; \n  filter(year %in% c(1952, 1982, 2002)) \n  \nggplot(data = gapminder_sub, \n       aes(x = lifeExp, y = gdpPercap)) + \n  geom_jitter() + \n  scale_y_log10() +\n  facet_grid(rows = vars(year), \n             cols = vars(continent), \n             scales = \"free\")"
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#tidyverse-extended-universe",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#tidyverse-extended-universe",
+    "title": "",
+    "section": "\ntidyverse extended universe",
+    "text": "tidyverse extended universe\nggplot2 can obviously do a lot on its own. But because R allows for anyone and everyone to expand the functionality of what already exists, numerous extensions1. to ggplot2 have been created.\n\nWe’ve already seen one example with ggrepel. But let’s look at a few others…\n\nThe full list can be found here."
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#fixed-versus-free-scales-fa-scroll",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#fixed-versus-free-scales-fa-scroll",
+    "title": "",
+    "section": "Fixed versus Free Scales \n",
+    "text": "Fixed versus Free Scales \n\n\n\nUntransformed\nFixed\nFree x\nFree y\nFree x & y\n\n\n\n\nCodegapminder_sub &lt;- gapminder |&gt; \n  filter(year %in% c(1952, 1982, 2002)) # create subset with only 3 years\n  \nscales_plot &lt;- ggplot(data = gapminder_sub, \n       aes(x = lifeExp, y = gdpPercap, fill = continent)) + \n  geom_jitter(alpha = 0.5, # alpha of points halfway transparent\n              pch = 21, # shape is a circle with fill\n              size = 3, # increase size\n              color = \"black\") + # outline of circle is black \n  scale_fill_viridis_d(option = \"D\") + # circle is filled by colors perceptable for various forms of color-blindness\n  facet_grid(rows = vars(year), # facet by years in the row\n             cols = vars(continent)) + # facet by continent in the columns\n  ggthemes::theme_tufte(base_size = 20) # increase base text size\nscales_plot\n\n\n\n\n\n\n\n\n\n\nCodescales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) # transform the y axis to the logarithm to gain better visualization\n\n\n\n\n\n\n\n\n\n\nCodescales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +\n  facet_grid(rows = vars(year), \n             cols = vars(continent), \n             scales = \"free_x\") # make the x axis vary by data \n\n\n\n\n\n\n\n\n\n\nCodescales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +\n  facet_grid(rows = vars(year), \n             cols = vars(continent), \n             scales = \"free_y\") # make the y axis vary by data \n\n\n\n\n\n\n\n\n\n\nCodescales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +\n  facet_grid(rows = vars(year), \n             cols = vars(continent), \n             scales = \"free\") # make both axes vary by data"
   }
 ]

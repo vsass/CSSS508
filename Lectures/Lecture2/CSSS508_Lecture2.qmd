@@ -60,6 +60,7 @@ Today, we will cover:
 1. Introducing the `tidyverse`!
 2. Basics of `ggplot2`
 3. Advanced features of `ggplot2`
+4. `ggplot2` extensions
 
 ## File Types
 
@@ -299,11 +300,14 @@ The core idea underlying this package is the [**layered grammar of graphics**](h
 * more professional
 * **much** more customizable
 
-## Layered grammar of graphics 
+## Layered grammar of graphics <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
 
 ![](images/gglayers.png){fig-align="center"}
 
+::: aside
+This is based on Leland Wilkinson's book [*The Grammar of Graphics*](https://orbiscascade-washington.primo.exlibrisgroup.com/permalink/01ALLIANCE_UW/1juclfo/alma99145336560001452) and extended by Hadley Wickham in his paper ["A layered grammar of graphics"](https://vita.had.co.nz/papers/layered-grammar.html). 
+:::
 
 ## Structure of a ggplot
 
@@ -406,9 +410,7 @@ ggplot() +
 
 :::
 
-## Examples: Basic Jargon in Action!
-
-We'll now build up two `ggplot`s together that demonstrate common layers and aesthetics.
+# Example: Basic Jargon in Action!
 
 ## Axis Labels, Points, No Background{auto-animate="true"}
 
@@ -1016,9 +1018,9 @@ ggplot(data = gapminder,
 Looking pretty good!
 :::
 
-# Advanced ggplot tools
+# Advanced ggplot tools{.section-title background-color="#99a486"}
 
----
+## Further customization
 
 Next, we'll discuss:
 
@@ -1195,6 +1197,84 @@ This scale argument knows to "map" onto `continent` because it is specified as t
 
 ::::
 
+## Fixed versus Free Scales <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+::: {.panel-tabset}
+
+### Untransformed
+
+```{r}
+#| fig-align: center
+#| code-fold: true
+#| fig-width: 16
+#| fig-height: 8
+gapminder_sub <- gapminder |> 
+  filter(year %in% c(1952, 1982, 2002)) # create subset with only 3 years
+  
+scales_plot <- ggplot(data = gapminder_sub, 
+       aes(x = lifeExp, y = gdpPercap, fill = continent)) + 
+  geom_jitter(alpha = 0.5, # alpha of points halfway transparent
+              pch = 21, # shape is a circle with fill
+              size = 3, # increase size
+              color = "black") + # outline of circle is black 
+  scale_fill_viridis_d(option = "D") + # circle is filled by colors perceptable for various forms of color-blindness
+  facet_grid(rows = vars(year), # facet by years in the row
+             cols = vars(continent)) + # facet by continent in the columns
+  ggthemes::theme_tufte(base_size = 20) # increase base text size
+scales_plot
+```
+
+### Fixed 
+
+```{r}
+#| fig-align: center
+#| code-fold: true
+#| fig-width: 16
+#| fig-height: 8
+scales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) # transform the y axis to the logarithm to gain better visualization
+```
+
+### Free x
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 16
+#| fig-height: 8
+scales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +
+  facet_grid(rows = vars(year), 
+             cols = vars(continent), 
+             scales = "free_x") # make the x axis vary by data 
+```
+
+### Free y
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 16
+#| fig-height: 8
+scales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +
+  facet_grid(rows = vars(year), 
+             cols = vars(continent), 
+             scales = "free_y") # make the y axis vary by data 
+```
+
+### Free x & y
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 16
+#| fig-height: 8
+scales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +
+  facet_grid(rows = vars(year), 
+             cols = vars(continent), 
+             scales = "free") # make both axes vary by data 
+```
+
+:::
+
 ## Using multiple `geoms` {auto-animate="true"}
 
 ```{r}
@@ -1230,12 +1310,19 @@ ggplot(gapminder, aes(x = continent, y = lifeExp)) +
 #| echo: false
 outliers <- gapminder |> 
   group_by(continent) |> 
-  mutate(label = case_when(continent == "Africa" & min(lifeExp) == lifeExp ~ country, 
-                           continent == "Africa" & max(lifeExp) == lifeExp ~ country,
-                           continent == "Americas" & min(lifeExp) == lifeExp ~ country,
-                           continent == "Europe" & min(lifeExp) == lifeExp ~ country,
-                           .default = NA)) |> 
-  filter(!is.na(label))
+  mutate(outlier = case_when(quantile(lifeExp, probs = 0.25) - (IQR(lifeExp) * 1.5) > lifeExp ~ "outlier", # anything lower than the 1st quartile - 1.5*IQR 
+                             quantile(lifeExp, probs = 0.75) + (IQR(lifeExp) * 1.5) < lifeExp ~ "outlier", # anything higher than the 3rd quartile + 1.5*IQR
+                             .default = NA)) |> 
+  filter(!is.na(outlier)) |> # remove non-outliers
+  ungroup() |> group_by(country) |> # regroup by country
+  filter(lifeExp == min(lifeExp)) # filter just the min for each country
+
+no_outliers <- gapminder |> 
+  group_by(continent) |> 
+  mutate(outlier = case_when(quantile(lifeExp, probs = 0.25) - (IQR(lifeExp) * 1.5) > lifeExp ~ "outlier",
+                             quantile(lifeExp, probs = 0.75) + (IQR(lifeExp) * 1.5) < lifeExp ~ "outlier", 
+                             .default = NA)) |> 
+  filter(is.na(outlier)) # remove outliers
 ```
 
 ::: {.panel-tabset}
@@ -1246,10 +1333,14 @@ outliers <- gapminder |>
 #| warning: false
 #| fig-align: center
 #| code-line-numbers: "|4"
+#| code-fold: true
+#| fig-width: 16
+#| fig-height: 8
 ggplot(gapminder, aes(x = continent, y = lifeExp)) +
-  geom_boxplot(outlier.colour = "hotpink") +
-  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 0.25) + 
-   geom_text(data = outliers, aes(label = label))
+  geom_boxplot(outlier.colour = "hotpink", outlier.size = 3) +
+  geom_jitter(data = no_outliers, position = position_jitter(width = 0.1, height = 0), alpha = 0.25, size = 3) + 
+  geom_text(data = outliers, aes(label = country), size = 8) + 
+  theme_minimal(base_size = 18)
 ```
 
 ### Offset annotation
@@ -1258,26 +1349,44 @@ ggplot(gapminder, aes(x = continent, y = lifeExp)) +
 #| warning: false
 #| fig-align: center
 #| code-line-numbers: "|1,5"
+#| code-fold: true
+#| fig-width: 16
+#| fig-height: 8
 library(ggrepel)
 ggplot(gapminder, aes(x = continent, y = lifeExp)) +
-  geom_boxplot(outlier.colour = "hotpink") +
-  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 0.25) + 
-   geom_label_repel(data = outliers, aes(label = label), color = "hotpink")
+  geom_boxplot(outlier.colour = "hotpink", outlier.size = 3) +
+  geom_jitter(data = no_outliers, position = position_jitter(width = 0.1, height = 0), alpha = 0.25, size = 3) + 
+  geom_label_repel(data = outliers, aes(label = country), color = "hotpink", size = 8) + 
+  theme_minimal(base_size = 18)
 ```
 
-### Code to create outliers data
+### Code: outliers
 
 ```{r}
+#| code-fold: true
 outliers <- gapminder |> 
   group_by(continent) |> 
-  mutate(label = case_when(continent == "Africa" & min(lifeExp) == lifeExp ~ country, 
-                           continent == "Africa" & max(lifeExp) == lifeExp ~ country,
-                           continent == "Americas" & min(lifeExp) == lifeExp ~ country,
-                           continent == "Europe" & min(lifeExp) == lifeExp ~ country,
-                           .default = NA)) |> 
-  filter(!is.na(label))
+  mutate(outlier = case_when(quantile(lifeExp, probs = 0.25) - (IQR(lifeExp) * 1.5) > lifeExp ~ "outlier", # anything lower than the 1st quartile - 1.5*IQR 
+                             quantile(lifeExp, probs = 0.75) + (IQR(lifeExp) * 1.5) < lifeExp ~ "outlier", # anything higher than the 3rd quartile + 1.5*IQR
+                             .default = NA)) |> 
+  filter(!is.na(outlier)) |> # remove non-outliers
+  ungroup() |> group_by(country) |> # regroup by country
+  filter(lifeExp == min(lifeExp)) # filter just the min for each country
 
-outliers
+head(outliers)
+```
+
+### Code: no outliers
+```{r}
+#| code-fold: true
+no_outliers <- gapminder |> 
+  group_by(continent) |> 
+  mutate(outlier = case_when(quantile(lifeExp, probs = 0.25) - (IQR(lifeExp) * 1.5) > lifeExp ~ "outlier",
+                             quantile(lifeExp, probs = 0.75) + (IQR(lifeExp) * 1.5) < lifeExp ~ "outlier", 
+                             .default = NA)) |> 
+  filter(is.na(outlier)) # remove outliers
+
+head(no_outliers)
 ```
 
 :::
@@ -1898,58 +2007,335 @@ Voilà!
 
 # `ggplot` Extensions!{.section-title background-color="#99a486"}
 
---- 
+## `tidyverse` extended universe
 
-`ggplo2` can obviously do a lot on its own. But because `R` allows for anyone and everyone to expand the functionality of what already exists, numerous extensions^[The full list can be found [here](https://exts.ggplot2.tidyverse.org/gallery/).]. to `ggplot2` have been created. 
+`ggplot2` can obviously do a lot on its own. But because `R` allows for anyone and everyone to expand the functionality of what already exists, numerous extensions^[The full list can be found [here](https://exts.ggplot2.tidyverse.org/gallery/).]. to `ggplot2` have been created. 
 
 . . . 
 
 We've already seen one example with `ggrepel`. But let's look at a few others...
 
-## `geomtextpath`
+## `geomtextpath` <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+If you want your labels to follow along the path of your plot (and maintain proper angles and spacing) try using [`geomtextpath`](https://allancameron.github.io/geomtextpath/index.html).
 
 ```{r}
+#| code-fold: true
+#| fig-align: center
 # install.packages("geomtextpath") <- run in console first
 library(geomtextpath)
 gapminder |> 
-  filter(country %in% c("United States", "Afghanistan", "Iraq")) |> 
-  ggplot(aes(x = year, y = lifeExp, color = country, label = country)) +
-  geom_textpath() +
-  theme(legend.position = "none")
+  filter(country %in% c("Cuba", "Haiti", "Dominican Republic")) |> # restricting data to 3 regionally-specific countries
+  ggplot(aes(x = year, 
+             y = lifeExp, 
+             color = country, 
+             label = country)) + # specify label with text to appear
+  geom_textpath() + # adding textpath geom to put labels within lines
+  theme(legend.position = "none") # removing legend
 ```
 
-## `ggridges`
+## `ggridges` <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+We can make visualize the differing distributions of a continuous variable by levels of a categorical variable with [ggridges](https://wilkelab.org/ggridges/)!
 
 ```{r}
+#| code-fold: true
+#| fig-align: center
+# install.packages("ggridges") <- run in console first
 library(ggridges)
-ggplot(gapminder, aes(x = lifeExp, y = continent, fill = continent, color = continent)) +
-  geom_density_ridges(alpha = 0.5, show.legend = FALSE)
+ggplot(gapminder, 
+       aes(x = lifeExp, 
+           y = continent, 
+           fill = continent, 
+           color = continent)) +
+  geom_density_ridges(alpha = 0.5, 
+                      show.legend = FALSE) # add ridges, make all a bit transparent, remove legend
 ```
 
-## ggthemes
+## Correlation Matricies <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+Make visually appealing & informative correlation plots in [`GGally`]() or [`ggcorrplot`](). 
+
+::: {.panel-tabset}
+
+### `GGally`
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 6
+#| fig-height: 6
+# install.packages("GGally") <- run in console first
+library(GGally)
+
+ggcorr(swiss, 
+       geom = "circle", 
+       min_size = 25, # specify minimum size of shape 
+       max_size = 25, # specify maximum size of shape 
+       label = TRUE, # label circles with correlation coefficient
+       label_alpha = TRUE, # less strong correlations have lower alpha
+       label_round = 2, # round correlations coefficients to 2 decimal points
+       legend.position = c(0.15, 0.6), 
+       legend.size = 12)
+```
+
+### `ggcorrplot`
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+#| #| fig-width: 6
+#| fig-height: 6
+# install.packages("ggcorrplot") <- run in console first
+library(ggcorrplot)
+
+# compute correlation matrix
+corr <- round(cor(swiss), 1)
+# computer matrix of correlation p-values
+p_mat <- cor_pmat(swiss)
+
+ggcorrplot(corr,
+           hc.order = TRUE, # use hierarchical clustering to group like-correlations together
+           type = "lower", # only show lower half of correlation matrix
+           p.mat = p_mat, # give corresponding p-values for correlation matrix
+           insig = "pch", # add default shape (an X) to correlations that are insignificant
+           outline.color = "black", # outline cells in white
+           ggtheme = ggthemes::theme_tufte(), # using a specific theme I like from ggthemes package 
+           colors = c("#4e79a7", "white", "#e15759")) + # specify custom colors 
+  theme(legend.position = c(0.15, 0.67))
+
+```
+
+### Bonus: `ggpairs()` from `GGally`
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+ggpairs(swiss, 
+        lower = list(continuous = wrap("smooth", # specify a smoothing line added to scatterplots
+                                       alpha = 0.5, 
+                                       size=0.2))) + 
+  ggthemes::theme_tufte() # add nice theme from ggthemes
+```
+
+
+:::
+
+## `patchwork` <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+Combine separate plots into the same graphic using [`patchwork`]().
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+# install.packages("patchwork") <- run in console first
+library(patchwork)
+
+# Create first plot object
+plot_lifeExp <- ggplot(gapminder, 
+                       aes(x = lifeExp, y = continent, fill = continent, color = continent)) +
+  geom_density_ridges(alpha = 0.5, show.legend = FALSE)
+
+# Create second plot object
+plot_boxplot <- ggplot(gapminder, 
+                       aes(x = continent, y = lifeExp, color = continent), 
+                       alpha = 0.5) +
+  geom_boxplot(outlier.colour = "black", varwidth = TRUE) + # change outlier color and make width of boxes relative to N
+  coord_flip() + # flip the coordinates (x & y) to align with first plot
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), # add datapoints to boxplot
+              alpha = 0.25) + 
+  geom_label_repel(data = outliers, # add new dataset with just 4 of the outliers
+                   aes(label = country), 
+                   color = "black") +
+  theme(axis.text.y = element_blank(), # remove y axis text 
+        axis.ticks.y = element_blank(), # remove y axis ticks 
+        axis.title.y = element_blank(), # remove y axis title 
+        legend.position = "none")
+
+plot_lifeExp + plot_boxplot # simply add two objects together to place side by side
+```
+
+
+## themes in `ggplot2` <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+There are several built-in themes within `ggplot2`. 
+
+::: {.panel-tabset}
+
+### bw
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_bw() # reusing plot_lifeExp from previous slide and changing theme
+```
+
+### light
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_light()
+```
+
+### classic
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_classic()
+```
+
+### linedraw
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_linedraw()
+```
+
+### dark
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_dark()
+```
+
+### minimal
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_minimal()
+```
+
+### gray
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_gray()
+```
+
+### void
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_void()
+```
+
+:::
+
+## [`ggthemes`](https://jrnold.github.io/ggthemes/) <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+::: {.panel-tabset}
+
+### excel
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+library(ggthemes)
+plot_lifeExp + theme_excel()
+```
+
+### economist
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_economist()
+```
+
+### few
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_few()
+```
+
+### fivethirtyeight
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_fivethirtyeight()
+```
+
+### gdocs
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_gdocs()
+```
+
+### stata
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_stata()
+```
+
+### tufte
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_tufte()
+```
+
+### wsj
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+plot_lifeExp + theme_wsj()
+```
+
+:::
+
+## Other theme packages and making your own!
+
+These are just a handful of all the ready-made theme options available out there. Some other packages that might be useful/fun to check out: 
+
+:::{.incremental}
+* [`hrbrthemes`](https://hrbrmstr.github.io/hrbrthemes/index.html) - *provides typography-centric themes and theme components for ggplot2*
+* [`urbnthemes`](https://urbaninstitute.github.io/urbnthemes/index.html) *a set of tools for creating Urban Institute-themed plots and maps in R*
+* [`bbplot`](https://github.com/bbc/bbplot/) - *provides helpful functions for creating and exporting graphics made in ggplot in the style used by the BBC News data team*
+* [`ggpomological`](https://www.garrickadenbuie.com/project/ggpomological/) - *A ggplot2 theme based on the USDA Pomological Watercolor Collection*
+:::
+
+. . . 
+
+You are also able to design your own theme using the `theme()` function and really [getting into the weeds](https://ggplot2.tidyverse.org/reference/theme.html) with how to specify all the non-data ink in your plot. Once you come up with a theme you like you can save it as an object (i.e. `my_theme`)  and add it to any `ggplot` you create to maintain your own unique and consistent style. 
 
 
 # Summary{.section-title background-color="#99a486"}
 
 ## Summary
 
-`ggplot2` can do a LOT! I won't expect you to memorize all these tools, and neither should you! 
+`ggplot2` can do a LOT! I won't expect you to memorize all these tools, and neither should you! With time and practice, you'll start to remember the key tools.
 
 ::::{.columns}
-:::{.column width="50%"}
-* With time and practice, you'll start to remember the key tools
-
+:::{.column width="55%"}
 * When in doubt, Google it! (i.e. "*R ggplot 'whatever issue you need help with'*")
 
 * There are lots of great resources out there:
-
-  + The [Cookbook for R website](http://www.cookbook-r.com/Graphs/Legends_%28ggplot2%29)
   
-  + The [RStudio ggplot Cheatsheets](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf).
+  + The [ggplot2 reference page](https://ggplot2.tidyverse.org/reference/index.html)
+
+  + The [Cookbook for R website](http://www.cookbook-r.com/)
+  
+  + The [RStudio ggplot Cheatsheets](https://rstudio.github.io/cheatsheets/data-visualization.pdf).
   
   + Kieran Healy's book [Data Visualization: A Practical Introduction](https://socviz.co/) (right) is targeted at social scientists without technical backgrounds and uses the same tools we'll be learning in this class.
 :::
-:::{.column width="50%"}
+:::{.column width="45%"}
 ![](images/dataviz_kieranhealy.jpeg)
 :::
 ::::
