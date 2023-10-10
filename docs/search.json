@@ -1075,28 +1075,28 @@
     "href": "Lectures/Lecture2/CSSS508_Lecture2.html#solution",
     "title": "",
     "section": "Solution",
-    "text": "Solution\n1: Set Base Layer\n\nggplot(gapminder,aes(x=lifeExp))"
+    "text": "Solution\n1: Set Base Layer\n\n\n# code-line-numbers: \"1\"\nggplot(gapminder, aes(x = lifeExp))"
   },
   {
     "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#solution-1",
     "href": "Lectures/Lecture2/CSSS508_Lecture2.html#solution-1",
     "title": "",
     "section": "Solution",
-    "text": "Solution\n2: Add Histogram Layer\n\nggplot(gapminder,aes(x=lifeExp))+\n  geom_histogram(bins=30)\n\n\n\n\n\n\n\n\n\nSetting the bins aesthetic removes a pesky message!]"
+    "text": "Solution\n2: Add Histogram Layer\n\n\nggplot(gapminder, aes(x = lifeExp)) +\n  geom_histogram(bins = 30)\n\n\n\n\n\n\n\n\n\n\n\nSetting the bins aesthetic tells ggplot how many values to bin by (lower is more fine-grained, higher is less descriptive)."
   },
   {
     "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#solution-2",
     "href": "Lectures/Lecture2/CSSS508_Lecture2.html#solution-2",
     "title": "",
     "section": "Solution",
-    "text": "Solution\n3: Add Label Layers\n\nggplot(gapminder,aes(x=lifeExp))+\n  geom_histogram(bins=30)+\n  xlab(\"Life Expectancy\")+\n  ylab(\"Count\")+\n  ggtitle(\"Histogram of Life Expectancy in Gapminder Data\")"
+    "text": "Solution\n3: Add Label Layers\n\n\nggplot(gapminder, aes(x = lifeExp)) +\n  geom_histogram(bins = 30) +\n  xlab(\"Life Expectancy\") +\n  ylab(\"Count\") +\n  ggtitle(\"Histogram of Life Expectancy in Gapminder Data\")"
   },
   {
     "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#homework-2",
     "href": "Lectures/Lecture2/CSSS508_Lecture2.html#homework-2",
     "title": "",
     "section": "Homework #2",
-    "text": "Homework #2\nIn this homework, you’ll pose a question regarding the Gapminder dataset and investigate it graphically.\n\nAt the beginning of your document, write down a research question that is based on the Gapminder dataset (e.g., “How does population change over time in different countries?”)\nCreate 3-6 plots to answer/investigate your research question. Consider histograms (geom_histogram()), scatterplots (geom_point()), or lineplots (geom_line()).\nBe sure all titles, axes, and legends are clearly labelled (no raw variable names).\nInclude at least one plot with facet_wrap() or facet_grid().\nYou can use other geoms like histograms, bar charts, adding meaningful vertical or horizontal lines, etc. You may find this data visualization cheat sheet helpful.\n\nYour document should be pleasant for a peer to look at, with some organization. You must write up your observations in words as well as showing the graphs. Upload both the .qmd file and the .html file to Canvas."
+    "text": "Homework #2\nIn this homework, you’ll pose a question regarding the Gapminder dataset and investigate it graphically.\n\nAt the beginning of your document, write down a research question that is based on the Gapminder dataset (e.g., “How does population change over time in different countries?”)\nCreate 3-6 plots to answer/investigate your research question. Consider histograms (geom_histogram()), scatterplots (geom_point()), or lineplots (geom_line()).\nBe sure all titles, axes, and legends are clearly labelled (no raw variable names).\nInclude at least one plot with facet_wrap() or facet_grid().\nYou can use other geoms like bar charts, box plots, adding meaningful vertical or horizontal lines, etc. You may find this data visualization cheat sheet helpful.\n\nYour document should be pleasant for a peer to look at, with some organization. You must write up your observations in words as well as showing the graphs. Upload both the .qmd file and the .html file to Canvas."
   },
   {
     "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#due-dates",
@@ -8209,5 +8209,19 @@
     "title": "",
     "section": "Fixed versus Free Scales \n",
     "text": "Fixed versus Free Scales \n\n\n\nUntransformed\nFixed\nFree x\nFree y\nFree x & y\n\n\n\n\nCodegapminder_sub &lt;- gapminder |&gt; \n  filter(year %in% c(1952, 1982, 2002)) # create subset with only 3 years\n  \nscales_plot &lt;- ggplot(data = gapminder_sub, \n       aes(x = lifeExp, y = gdpPercap, fill = continent)) + \n  geom_jitter(alpha = 0.5, # alpha of points halfway transparent\n              pch = 21, # shape is a circle with fill\n              size = 3, # increase size\n              color = \"black\") + # outline of circle is black \n  scale_fill_viridis_d(option = \"D\") + # circle is filled by colors perceptable for various forms of color-blindness\n  facet_grid(rows = vars(year), # facet by years in the row\n             cols = vars(continent)) + # facet by continent in the columns\n  ggthemes::theme_tufte(base_size = 20) # increase base text size\nscales_plot\n\n\n\n\n\n\n\n\n\n\nCodescales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) # transform the y axis to the logarithm to gain better visualization\n\n\n\n\n\n\n\n\n\n\nCodescales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +\n  facet_grid(rows = vars(year), \n             cols = vars(continent), \n             scales = \"free_x\") # make the x axis vary by data \n\n\n\n\n\n\n\n\n\n\nCodescales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +\n  facet_grid(rows = vars(year), \n             cols = vars(continent), \n             scales = \"free_y\") # make the y axis vary by data \n\n\n\n\n\n\n\n\n\n\nCodescales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +\n  facet_grid(rows = vars(year), \n             cols = vars(continent), \n             scales = \"free\") # make both axes vary by data"
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#exercise-1-histogram",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#exercise-1-histogram",
+    "title": "",
+    "section": "Exercise 1: Histogram",
+    "text": "Exercise 1: Histogram\nIn pairs, create a histogram of life expectancy observations in the complete Gapminder dataset.\n\nSet the base layer by specifying the data as gapminder and the x variable as lifeExp\nAdd a second layer to create a histogram using the function geom_histogram()\nCustomize your plot with nice axis labels and a title.\nAdd the color “salmon” to the entire plot (hint: use the fill argument, not color).\nChange this fill setting to an aesthetic and map continent onto it.\nChange the geom to geom_freqpoly. What happened and how might you fix it?\nAdd facets for continent (create only 1 column).\nMove the legend to the bottom of the plot.\nAdd one of the built-in themes from ggplot2."
+  },
+  {
+    "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#solution-3",
+    "href": "Lectures/Lecture2/CSSS508_Lecture2.html#solution-3",
+    "title": "",
+    "section": "Solution",
+    "text": "Solution\n4: Adding fill setting\n\n\nggplot(gapminder, aes(x = lifeExp)) +\n  geom_histogram(bins = 30, fill = \"salmon\") +\n  xlab(\"Life Expectancy\") +\n  ylab(\"Count\") +\n  ggtitle(\"Histogram of Life Expectancy in Gapminder Data\")\n\n\n\n\n\n\n\n\n\n5: Adding fill aesthetic\n\n\nggplot(gapminder, aes(x = lifeExp, fill = continent)) +\n  geom_histogram(bins = 30) +\n  xlab(\"Life Expectancy\") +\n  ylab(\"Count\") +\n  ggtitle(\"Histogram of Life Expectancy in Gapminder Data\")\n\n\n\n\n\n\n\n\n\n6: Changing geometry\n\n\nggplot(gapminder, aes(x = lifeExp, fill = continent)) +\n  geom_freqpoly(bins = 30) +\n  xlab(\"Life Expectancy\") +\n  ylab(\"Count\") +\n  ggtitle(\"Histogram of Life Expectancy in Gapminder Data\")\n\n\n\n\n\n\n\n\n\n6: Changing geometry\n\n\nggplot(gapminder, aes(x = lifeExp, color = continent)) +\n  geom_freqpoly(bins = 30) +\n  xlab(\"Life Expectancy\") +\n  ylab(\"Count\") +\n  ggtitle(\"Histogram of Life Expectancy in Gapminder Data\")\n\n\n\n\n\n\n\n\n\n7: Adding facets\n\n\nggplot(gapminder, aes(x = lifeExp, color = continent)) +\n  geom_freqpoly(bins = 30) +\n  facet_wrap(vars(continent), ncol = 1) +\n  xlab(\"Life Expectancy\") +\n  ylab(\"Count\") +\n  ggtitle(\"Histogram of Life Expectancy in Gapminder Data\")\n\n\n\n\n\n\n\n\n\n8: Repositioning legend\n\n\nggplot(gapminder, aes(x = lifeExp, color = continent)) +\n  geom_freqpoly(bins = 30) +\n  facet_wrap(vars(continent), ncol = 1) +\n  xlab(\"Life Expectancy\") +\n  ylab(\"Count\") +\n  ggtitle(\"Histogram of Life Expectancy in Gapminder Data\") + \n  theme(legend.position = \"bottom\") \n\n\n\n\n\n\n\n\n\n8: Repositioning legend\n\n\nggplot(gapminder, aes(x = lifeExp, color = continent)) +\n  geom_freqpoly(bins = 30) +\n  facet_wrap(vars(continent), ncol = 1) +\n  xlab(\"Life Expectancy\") +\n  ylab(\"Count\") +\n  ggtitle(\"Histogram of Life Expectancy in Gapminder Data\") + \n  theme(legend.position = \"bottom\") +\n  theme_minimal()"
   }
 ]
