@@ -272,7 +272,6 @@ This `ggplot` is made with *many functions* and *fewer arguments* in each.
 #| echo: false
 #| fig-width: 6
 #| fig-height: 6
-library(ggplot2)
 ggplot(data = China, 
        mapping = aes(x = year, y = lifeExp)) +
   geom_point(color = "red", size = 3) +
@@ -410,7 +409,7 @@ ggplot() +
 
 :::
 
-# Example: Basic Jargon in Action!
+# Example: Basic Jargon in Action!{.section-title background-color="#99a486"}
 
 ## Axis Labels, Points, No Background{auto-animate="true"}
 
@@ -2340,7 +2339,9 @@ You are also able to design your own theme using the `theme()` function and real
 :::
 ::::
 
-## Exercise 1: Histogram
+# Lab 2 {.section-title background-color="#99a486"}
+
+## Make a histogram
 
 In pairs, create a histogram of life expectancy observations in the complete Gapminder dataset.
 
@@ -2358,16 +2359,13 @@ In pairs, create a histogram of life expectancy observations in the complete Gap
 
 7. Add facets for `continent` (create only 1 column).
 
-8. Move the legend to the bottom of the plot. 
+8. Add one of the built-in themes from `ggplot2`.
 
-9. Add one of the built-in themes from `ggplot2`.
+9. Remove the legend from the plot. 
 
-## Solution
-
-### 1: Set Base Layer {auto-animate="true"}
+## Solution: 1. Set Base Layer {auto-animate="true" visibility="hidden"}
 
 ```{r}
-#| output-location: column
 #| eval: true
 #| fig-align: center
 #| fig-width: 10
@@ -2376,12 +2374,9 @@ In pairs, create a histogram of life expectancy observations in the complete Gap
 ggplot(gapminder, aes(x = lifeExp))
 ```
 
-## Solution
-
-### 2: Add Histogram Layer {auto-animate="true"}
+## Solution: 2. Add Histogram Layer {auto-animate="true" visibility="hidden"}
 
 ```{r}
-#| output-location: column
 #| eval: true
 #| fig-align: center
 #| fig-width: 10
@@ -2395,12 +2390,9 @@ ggplot(gapminder, aes(x = lifeExp)) +
 Setting the `bins` aesthetic tells ggplot how many values to bin by (lower is more fine-grained, higher is less descriptive).
 :::
 
-## Solution
-
-### 3: Add Label Layers {auto-animate="true"}
+## Solution: 3. Add Label Layers {auto-animate="true" visibility="hidden"}
 
 ```{r}
-#| output-location: column
 #| eval: true
 #| fig-align: center
 #| fig-width: 10
@@ -2413,12 +2405,9 @@ ggplot(gapminder, aes(x = lifeExp)) +
   ggtitle("Histogram of Life Expectancy in Gapminder Data")
 ```
 
-## Solution
-
-### 4: Adding fill setting {auto-animate="true"}
+## Solution: 4. Add fill setting {auto-animate="true" visibility="hidden"}
 
 ```{r}
-#| output-location: column
 #| eval: true
 #| fig-align: center
 #| fig-width: 10
@@ -2431,10 +2420,9 @@ ggplot(gapminder, aes(x = lifeExp)) +
   ggtitle("Histogram of Life Expectancy in Gapminder Data")
 ```
 
-### 5: Adding fill aesthetic {auto-animate="true"}
+## Solution: 5. Add fill aesthetic {auto-animate="true" visibility="hidden"}
 
 ```{r}
-#| output-location: column
 #| eval: true
 #| fig-align: center
 #| fig-width: 10
@@ -2447,10 +2435,9 @@ ggplot(gapminder, aes(x = lifeExp, fill = continent)) +
   ggtitle("Histogram of Life Expectancy in Gapminder Data")
 ```
 
-### 6: Changing geometry {auto-animate="true"}
+## Solution: 6. Change geometry {auto-animate="true" visibility="hidden"}
 
 ```{r}
-#| output-location: column
 #| eval: true
 #| fig-align: center
 #| fig-width: 10
@@ -2463,10 +2450,9 @@ ggplot(gapminder, aes(x = lifeExp, fill = continent)) +
   ggtitle("Histogram of Life Expectancy in Gapminder Data")
 ```
 
-### 6: Changing geometry {auto-animate="true"}
+## Solution: 6. Change geometry {auto-animate="true" visibility="hidden"}
 
 ```{r}
-#| output-location: column
 #| eval: true
 #| fig-align: center
 #| fig-width: 10
@@ -2479,10 +2465,9 @@ ggplot(gapminder, aes(x = lifeExp, color = continent)) +
   ggtitle("Histogram of Life Expectancy in Gapminder Data")
 ```
 
-### 7: Adding facets {auto-animate="true"}
+## Solution: 7. Add facets {auto-animate="true" visibility="hidden"}
 
 ```{r}
-#| output-location: column
 #| eval: true
 #| fig-align: center
 #| fig-width: 10
@@ -2496,41 +2481,40 @@ ggplot(gapminder, aes(x = lifeExp, color = continent)) +
   ggtitle("Histogram of Life Expectancy in Gapminder Data")
 ```
 
-### 8: Repositioning legend {auto-animate="true"}
+## Solution: 8. Add nicer theme {auto-animate="true" visibility="hidden"} 
 
 ```{r}
-#| output-location: column
 #| eval: true
 #| fig-align: center
 #| fig-width: 10
 #| fig-height: 5
-#| code-line-numbers: "3"
+#| code-line-numbers: "7"
 ggplot(gapminder, aes(x = lifeExp, color = continent)) +
   geom_freqpoly(bins = 30) +
   facet_wrap(vars(continent), ncol = 1) +
   xlab("Life Expectancy") +
   ylab("Count") +
-  ggtitle("Histogram of Life Expectancy in Gapminder Data") + 
-  theme(legend.position = "bottom") 
+  ggtitle("Histogram of Life Expectancy in Gapminder Data") +
+  theme_minimal() 
 ```
 
-### 8: Repositioning legend {auto-animate="true"}
+## Solution: 9. Remove legend {auto-animate="true" visibility="hidden"}
 
 ```{r}
-#| output-location: column
 #| eval: true
 #| fig-align: center
 #| fig-width: 10
 #| fig-height: 5
-#| code-line-numbers: "3"
+#| code-line-numbers: "8"
 ggplot(gapminder, aes(x = lifeExp, color = continent)) +
   geom_freqpoly(bins = 30) +
   facet_wrap(vars(continent), ncol = 1) +
   xlab("Life Expectancy") +
   ylab("Count") +
   ggtitle("Histogram of Life Expectancy in Gapminder Data") + 
-  theme(legend.position = "bottom") +
-  theme_minimal()
+  theme_minimal() + 
+  theme(legend.position = "none") 
+  
 ```
 
 # Homework{.section-title background-color="#99a486"}
@@ -2543,7 +2527,7 @@ In this homework, you'll pose a question regarding the Gapminder dataset and inv
 * Create 3-6 plots to answer/investigate your research question. Consider histograms (`geom_histogram()`), scatterplots (`geom_point()`), or lineplots (`geom_line()`).
 * Be sure all titles, axes, and legends are clearly labelled (no raw variable names).
 * Include at least one plot with `facet_wrap()` or `facet_grid()`.
-* You can use other `geoms` like bar charts, box plots, adding meaningful vertical or horizontal lines, etc. [You may find this data visualization cheat sheet helpful](https://rstudio.github.io/cheatsheets/data-visualization.pdf).
+* You can use other `geoms` like bar charts, box plots, add meaningful vertical or horizontal lines, etc. You may find [**this data visualization cheat sheet**](https://rstudio.github.io/cheatsheets/data-visualization.pdf) helpful.
 
 Your document should be pleasant for a peer to look at, with some organization. You must write up your observations in words as well as showing the graphs. Upload both the `.qmd` file and the `.html` file to Canvas. 
 
