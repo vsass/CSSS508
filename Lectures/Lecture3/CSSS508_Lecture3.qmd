@@ -1,6 +1,6 @@
 ---
 date-format: long
-highlight-style:  a11y-dark #, oblivion, radical, vim-dark, espresso, zenburn, breezedark, haddock; atom-one-dark-reasonable, # nord
+highlight-style:  a11y-dark 
 footnotes-hover: true
 reference-location: margin
 execute: 
@@ -11,6 +11,7 @@ execute:
 format: 
   revealjs:
     theme: lecture_styles.scss
+    controls: true
     slide-number: true
     code-link: true
     chalkboard: true
@@ -20,9 +21,7 @@ format:
     code-line-numbers: true
     history: false
     progress: true
-    scrollable: true
     link-external-icon: true
-    #logo: "../../images/csss-white.png" # need to add css for size <https://stackoverflow.com/questions/74083521/how-to-increase-size-logo-in-quarto-reveal-js-presentation>
 ---
 
 ```{r}
@@ -51,15 +50,21 @@ require(tidyverse)
 
 Last time, we learned about,
 
-*
+* The `tidyverse`
+* Basics of `ggplot2`
+* Advanced features of `ggplot2`
+* Extensions of `ggplot2`
 
 . . . 
 
 Today, we will cover,
 
-* 
+* Code Style
+* Workflow 
+* Reproducibility
+* Useful Base `R`
 
-# Code Style
+# Code Style{.section-title background-color="#99a486"}
 
 ## Naming Variables 
 
@@ -158,7 +163,7 @@ This latter version continues to work and has a different functionality than the
 
 . . . 
 
-Most importantly, while both the `magrittr` pipe and the native pipe take the RHS (right-hand side) and "pipe" it to the LHS (left-hand side), they operate differently when it comes to explicitly specifying which argument of the LHS to pipe the RHS into. 
+Most importantly, while both the `magrittr` pipe and the native pipe take the RHS (right-hand side) and "pipe" it to the LHS (left-hand side), they operate differently when it comes to explicitly specifying which argument of the RHS to pipe the LHS into. 
 
 . . . 
 
@@ -170,7 +175,7 @@ a %>% gsub('A', '-', x = .)
 # native pipe
 a |> gsub('A','-', x = _) # _ is the placeholder for |> 
 a |> gsub(pattern = 'A', replacement = '-') # leaving the "piped" argument as the only unnamed argument also works 
-a |> (\(.) gsub('A', '-', x = .))() # using an anonymous function call allow you to be explicit while specifying your own placeholder
+a |> (\(.) gsub('A', '-', x = .))() # using an anonymous function call allows you to be explicit while specifying your own placeholder
 ```
 
 ::: aside
@@ -206,6 +211,40 @@ flights |>
 
 
 ```
+
+## Selecting the native pipe
+
+The `|>`  is recommended over `%>%` simply because it's always available (`%>%` relied on the `magrittr` package which was a dependency of `tidyverse` packages) and it's much simpler to use. 
+
+. . . 
+
+You'll need to specify to `R` that you want to enable its usage by going to *Tools* > *Global Options* > *Code*. Within the "Editing" Tab there is an option to "Use native pipe operator, |>". Check it! <span style="color:#e15759">{{< fa check >}}</span>
+
+![](images/rstudio-pipe-options.png){}
+
+## Other Formatting Options
+
+There are some other useful formatting options I'd suggest setting globally and others you can specify to your preferences. 
+
+#### Rainbow Parentheses & HighLight Function Calls
+
+![](images/rainbow_function.png)
+
+## Styling existing code
+
+Imagine you've inherited a bunch of code from someone else and NOTHING is styled in the `tidyverse` way you've become accustomed. Or, you've dabbled in `R` before and you have some old code that is all over the place, with respect to styling. 
+
+. . . 
+
+Thanks to Lorenz Walthert there's a package for that! Using the [`styler` package](https://styler.r-lib.org/index.html) you can automatically apply the [`tidyverse` style guide](https://style.tidyverse.org/) standards to various filetypes (.R, .qmd, .Rmd, etc.) or even entire projects. 
+
+. . . 
+
+Have a style or variation of the `tidyverse` style that you prefer? You can specify that in the package as well. Use the keyboard shortcut *Cmd*/*Ctl* + *Shift* + *P* and search for "styler" to see all the options available.
+
+![](images/rstudio-styler.png){width=80% fig-align="center"}
+
+# Workflow{.section-title background-color="#99a486"}
 
 ## .R scripts
 
@@ -675,7 +714,7 @@ Splitting up a project carries benefits:
 * Once a portion of the project is done and in its own file, *it is out of your way.*
 * If you need to make changes, you don't need to search through huge files.
 * Entire sections of the project can be added or removed quickly (e.g. converted to an appendix of an article)
-* **It is the only way to build a proper *2* for a project. **
+* **It is the only way to build a proper *pipeline* for a project. **
 
 ## Pipelines
 

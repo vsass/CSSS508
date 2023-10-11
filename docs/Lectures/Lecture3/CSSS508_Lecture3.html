@@ -7,7 +7,9 @@
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.450">
 <title>csss508_lecture3</title>
@@ -309,7 +311,6 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
-      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -402,15 +403,26 @@
 </section><section class="slide level2"><p><br></p>
 <p>Last time, we learned about,</p>
 <ul>
-<li>
-</li></ul>
+<li>The <code>tidyverse</code>
+</li>
+<li>Basics of <code>ggplot2</code>
+</li>
+<li>Advanced features of <code>ggplot2</code>
+</li>
+<li>Extensions of <code>ggplot2</code>
+</li>
+</ul>
 <div class="fragment">
 <p>Today, we will cover,</p>
 <ul>
-<li>
-</li></ul>
+<li>Code Style</li>
+<li>Workflow</li>
+<li>Reproducibility</li>
+<li>Useful Base <code>R</code>
+</li>
+</ul>
 </div>
-</section></section><section><section id="code-style" class="title-slide slide level1 center"><h1>Code Style</h1>
+</section></section><section><section id="code-style" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Code Style</h1>
 
 </section><section id="naming-variables" class="slide level2"><h2>Naming Variables</h2>
 <p>It’s good practice to name variables using only lowercase letters, numbers, and <code>_</code> (to separate words).</p>
@@ -484,7 +496,7 @@
 <p>This latter version continues to work and has a different functionality than the new, native pipe.</p>
 </div>
 <div class="fragment">
-<p>Most importantly, while both the <code>magrittr</code> pipe and the native pipe take the RHS (right-hand side) and “pipe” it to the LHS (left-hand side), they operate differently when it comes to explicitly specifying which argument of the LHS to pipe the RHS into.</p>
+<p>Most importantly, while both the <code>magrittr</code> pipe and the native pipe take the RHS (right-hand side) and “pipe” it to the LHS (left-hand side), they operate differently when it comes to explicitly specifying which argument of the RHS to pipe the LHS into.</p>
 </div>
 <div class="fragment">
 <div class="cell">
@@ -494,7 +506,7 @@
 <span id="cb6-4"><a href="#cb6-4"></a><span class="co"># native pipe</span></span>
 <span id="cb6-5"><a href="#cb6-5"></a>a <span class="sc">|&gt;</span> <span class="fu">gsub</span>(<span class="st">'A'</span>,<span class="st">'-'</span>, <span class="at">x =</span> _) <span class="co"># _ is the placeholder for |&gt; </span></span>
 <span id="cb6-6"><a href="#cb6-6"></a>a <span class="sc">|&gt;</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">'A'</span>, <span class="at">replacement =</span> <span class="st">'-'</span>) <span class="co"># leaving the "piped" argument as the only unnamed argument also works </span></span>
-<span id="cb6-7"><a href="#cb6-7"></a>a <span class="sc">|&gt;</span> (\(.) <span class="fu">gsub</span>(<span class="st">'A'</span>, <span class="st">'-'</span>, <span class="at">x =</span> .))() <span class="co"># using an anonymous function call allow you to be explicit while specifying your own placeholder</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-7"><a href="#cb6-7"></a>a <span class="sc">|&gt;</span> (\(.) <span class="fu">gsub</span>(<span class="st">'A'</span>, <span class="st">'-'</span>, <span class="at">x =</span> .))() <span class="co"># using an anonymous function call allows you to be explicit while specifying your own placeholder</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </div>
@@ -526,6 +538,30 @@
 <span id="cb7-13"><a href="#cb7-13"></a>  ) <span class="sc">|&gt;</span> </span>
 <span id="cb7-14"><a href="#cb7-14"></a>  <span class="fu">summarize</span>(<span class="at">delay =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section><section id="selecting-the-native-pipe" class="slide level2"><h2>Selecting the native pipe</h2>
+<p>The <code>|&gt;</code> is recommended over <code>%&gt;%</code> simply because it’s always available (<code>%&gt;%</code> relied on the <code>magrittr</code> package which was a dependency of <code>tidyverse</code> packages) and it’s much simpler to use.</p>
+<div class="fragment">
+<p>You’ll need to specify to <code>R</code> that you want to enable its usage by going to <em>Tools</em> &gt; <em>Global Options</em> &gt; <em>Code</em>. Within the “Editing” Tab there is an option to “Use native pipe operator, |&gt;”. Check it! <span style="color:#e15759"><i class="fa-solid fa-check" aria-label="check"></i></span></p>
+<p><img data-src="images/rstudio-pipe-options.png"></p>
+</div>
+</section><section id="other-formatting-options" class="slide level2"><h2>Other Formatting Options</h2>
+<p>There are some other useful formatting options I’d suggest setting globally and others you can specify to your preferences.</p>
+<h4 id="rainbow-parentheses-highlight-function-calls">Rainbow Parentheses &amp; HighLight Function Calls</h4>
+
+<img data-src="images/rainbow_function.png" class="r-stretch"></section><section id="styling-existing-code" class="slide level2"><h2>Styling existing code</h2>
+<p>Imagine you’ve inherited a bunch of code from someone else and NOTHING is styled in the <code>tidyverse</code> way you’ve become accustomed. Or, you’ve dabbled in <code>R</code> before and you have some old code that is all over the place, with respect to styling.</p>
+<div class="fragment">
+<p>Thanks to Lorenz Walthert there’s a package for that! Using the <a href="https://styler.r-lib.org/index.html"><code>styler</code> package</a> you can automatically apply the <a href="https://style.tidyverse.org/"><code>tidyverse</code> style guide</a> standards to various filetypes (.R, .qmd, .Rmd, etc.) or even entire projects.</p>
+</div>
+<div class="fragment">
+<p>Have a style or variation of the <code>tidyverse</code> style that you prefer? You can specify that in the package as well. Use the keyboard shortcut <em>Cmd</em>/<em>Ctl</em> + <em>Shift</em> + <em>P</em> and search for “styler” to see all the options available.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="images/rstudio-styler.png" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</section></section><section><section id="workflow" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Workflow</h1>
+
 </section><section id="r-scripts" class="slide level2"><h2>.R scripts</h2>
 <p>We’ve been working with Quarto documents but you’ll sometimes simply want to use an R script, which is basically an entire file that is just a code chunk.</p>
 <div class="fragment">
@@ -896,7 +932,7 @@ temp.txt</code></pre>
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:50%;">
-<h3 id="workflow">Workflow</h3>
+<h3 id="workflow-1">Workflow</h3>
 <ul>
 <li><p>The software you use to write your code (e.g.&nbsp;RStudio)</p></li>
 <li><p>The location you store a project</p></li>
@@ -1008,7 +1044,7 @@ temp.txt</code></pre>
 </li>
 <li>If you need to make changes, you don’t need to search through huge files.</li>
 <li>Entire sections of the project can be added or removed quickly (e.g.&nbsp;converted to an appendix of an article)</li>
-<li><strong>It is the only way to build a proper <em>2</em> for a project. </strong></li>
+<li><strong>It is the only way to build a proper <em>pipeline</em> for a project. </strong></li>
 </ul>
 </div>
 </section><section id="pipelines" class="slide level2"><h2>Pipelines</h2>
@@ -1144,23 +1180,23 @@ temp.txt</code></pre>
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="jicysrpmaf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#jicysrpmaf table {
+<div id="zgerqtcbfc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zgerqtcbfc table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#jicysrpmaf thead, #jicysrpmaf tbody, #jicysrpmaf tfoot, #jicysrpmaf tr, #jicysrpmaf td, #jicysrpmaf th {
+#zgerqtcbfc thead, #zgerqtcbfc tbody, #zgerqtcbfc tfoot, #zgerqtcbfc tr, #zgerqtcbfc td, #zgerqtcbfc th {
   border-style: none;
 }
 
-#jicysrpmaf p {
+#zgerqtcbfc p {
   margin: 0;
   padding: 0;
 }
 
-#jicysrpmaf .gt_table {
+#zgerqtcbfc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1186,12 +1222,12 @@ temp.txt</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#jicysrpmaf .gt_caption {
+#zgerqtcbfc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#jicysrpmaf .gt_title {
+#zgerqtcbfc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1203,7 +1239,7 @@ temp.txt</code></pre>
   border-bottom-width: 0;
 }
 
-#jicysrpmaf .gt_subtitle {
+#zgerqtcbfc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1215,7 +1251,7 @@ temp.txt</code></pre>
   border-top-width: 0;
 }
 
-#jicysrpmaf .gt_heading {
+#zgerqtcbfc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1227,13 +1263,13 @@ temp.txt</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#jicysrpmaf .gt_bottom_border {
+#zgerqtcbfc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jicysrpmaf .gt_col_headings {
+#zgerqtcbfc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1248,7 +1284,7 @@ temp.txt</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#jicysrpmaf .gt_col_heading {
+#zgerqtcbfc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1268,7 +1304,7 @@ temp.txt</code></pre>
   overflow-x: hidden;
 }
 
-#jicysrpmaf .gt_column_spanner_outer {
+#zgerqtcbfc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1280,15 +1316,15 @@ temp.txt</code></pre>
   padding-right: 4px;
 }
 
-#jicysrpmaf .gt_column_spanner_outer:first-child {
+#zgerqtcbfc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jicysrpmaf .gt_column_spanner_outer:last-child {
+#zgerqtcbfc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jicysrpmaf .gt_column_spanner {
+#zgerqtcbfc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1300,11 +1336,11 @@ temp.txt</code></pre>
   width: 100%;
 }
 
-#jicysrpmaf .gt_spanner_row {
+#zgerqtcbfc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#jicysrpmaf .gt_group_heading {
+#zgerqtcbfc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1330,7 +1366,7 @@ temp.txt</code></pre>
   text-align: left;
 }
 
-#jicysrpmaf .gt_empty_group_heading {
+#zgerqtcbfc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1345,15 +1381,15 @@ temp.txt</code></pre>
   vertical-align: middle;
 }
 
-#jicysrpmaf .gt_from_md > :first-child {
+#zgerqtcbfc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jicysrpmaf .gt_from_md > :last-child {
+#zgerqtcbfc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jicysrpmaf .gt_row {
+#zgerqtcbfc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1372,7 +1408,7 @@ temp.txt</code></pre>
   overflow-x: hidden;
 }
 
-#jicysrpmaf .gt_stub {
+#zgerqtcbfc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1385,7 +1421,7 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#jicysrpmaf .gt_stub_row_group {
+#zgerqtcbfc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1399,15 +1435,15 @@ temp.txt</code></pre>
   vertical-align: top;
 }
 
-#jicysrpmaf .gt_row_group_first td {
+#zgerqtcbfc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jicysrpmaf .gt_row_group_first th {
+#zgerqtcbfc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#jicysrpmaf .gt_summary_row {
+#zgerqtcbfc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1417,16 +1453,16 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#jicysrpmaf .gt_first_summary_row {
+#zgerqtcbfc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jicysrpmaf .gt_first_summary_row.thick {
+#zgerqtcbfc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jicysrpmaf .gt_last_summary_row {
+#zgerqtcbfc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1436,7 +1472,7 @@ temp.txt</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#jicysrpmaf .gt_grand_summary_row {
+#zgerqtcbfc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1446,7 +1482,7 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#jicysrpmaf .gt_first_grand_summary_row {
+#zgerqtcbfc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1456,7 +1492,7 @@ temp.txt</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#jicysrpmaf .gt_last_grand_summary_row_top {
+#zgerqtcbfc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1466,11 +1502,11 @@ temp.txt</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#jicysrpmaf .gt_striped {
+#zgerqtcbfc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jicysrpmaf .gt_table_body {
+#zgerqtcbfc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1479,7 +1515,7 @@ temp.txt</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#jicysrpmaf .gt_footnotes {
+#zgerqtcbfc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1493,7 +1529,7 @@ temp.txt</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#jicysrpmaf .gt_footnote {
+#zgerqtcbfc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1502,7 +1538,7 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#jicysrpmaf .gt_sourcenotes {
+#zgerqtcbfc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1516,7 +1552,7 @@ temp.txt</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#jicysrpmaf .gt_sourcenote {
+#zgerqtcbfc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1524,63 +1560,63 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#jicysrpmaf .gt_left {
+#zgerqtcbfc .gt_left {
   text-align: left;
 }
 
-#jicysrpmaf .gt_center {
+#zgerqtcbfc .gt_center {
   text-align: center;
 }
 
-#jicysrpmaf .gt_right {
+#zgerqtcbfc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jicysrpmaf .gt_font_normal {
+#zgerqtcbfc .gt_font_normal {
   font-weight: normal;
 }
 
-#jicysrpmaf .gt_font_bold {
+#zgerqtcbfc .gt_font_bold {
   font-weight: bold;
 }
 
-#jicysrpmaf .gt_font_italic {
+#zgerqtcbfc .gt_font_italic {
   font-style: italic;
 }
 
-#jicysrpmaf .gt_super {
+#zgerqtcbfc .gt_super {
   font-size: 65%;
 }
 
-#jicysrpmaf .gt_footnote_marks {
+#zgerqtcbfc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#jicysrpmaf .gt_asterisk {
+#zgerqtcbfc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jicysrpmaf .gt_indent_1 {
+#zgerqtcbfc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jicysrpmaf .gt_indent_2 {
+#zgerqtcbfc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jicysrpmaf .gt_indent_3 {
+#zgerqtcbfc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jicysrpmaf .gt_indent_4 {
+#zgerqtcbfc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jicysrpmaf .gt_indent_5 {
+#zgerqtcbfc .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1684,7 +1720,7 @@ temp.txt</code></pre>
       // Full list of configuration options available at:
       // https://revealjs.com/config/
       Reveal.initialize({
-'controlsAuto': true,
+'controlsAuto': false,
 'previewLinksAuto': false,
 'smaller': true,
 'pdfSeparateFragments': false,
@@ -1696,7 +1732,7 @@ temp.txt</code></pre>
 'smaller': true,
  
         // Display controls in the bottom right corner
-        controls: false,
+        controls: true,
 
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide

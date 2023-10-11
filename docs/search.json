@@ -5912,7 +5912,7 @@
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#pipes-1",
     "title": "",
     "section": "Pipes",
-    "text": "Pipes\nAs you can see, pipes allow us to “chain” many function calls together easily.\n\nThe so-called “native pipe” (i.e. built into base R) is relatively new. Before this, the pipe was a function from the magrittr package that looks like this: %&gt;%.\n\n\nThis latter version continues to work and has a different functionality than the new, native pipe.\n\n\nMost importantly, while both the magrittr pipe and the native pipe take the RHS (right-hand side) and “pipe” it to the LHS (left-hand side), they operate differently when it comes to explicitly specifying which argument of the LHS to pipe the RHS into.\n\n\n\n# magrittr pipe\na %&gt;% gsub('A', '-', x = .)\n\n# native pipe\na |&gt; gsub('A','-', x = _) # _ is the placeholder for |&gt; \na |&gt; gsub(pattern = 'A', replacement = '-') # leaving the \"piped\" argument as the only unnamed argument also works \na |&gt; (\\(.) gsub('A', '-', x = .))() # using an anonymous function call allow you to be explicit while specifying your own placeholder\n\n\n\n\nYou can read more about the differences between |&gt; and %&gt;% here and anonymous functions here. Code above comes from responses to this stackoverflow post."
+    "text": "Pipes\nAs you can see, pipes allow us to “chain” many function calls together easily.\n\nThe so-called “native pipe” (i.e. built into base R) is relatively new. Before this, the pipe was a function from the magrittr package that looks like this: %&gt;%.\n\n\nThis latter version continues to work and has a different functionality than the new, native pipe.\n\n\nMost importantly, while both the magrittr pipe and the native pipe take the RHS (right-hand side) and “pipe” it to the LHS (left-hand side), they operate differently when it comes to explicitly specifying which argument of the RHS to pipe the LHS into.\n\n\n\n# magrittr pipe\na %&gt;% gsub('A', '-', x = .)\n\n# native pipe\na |&gt; gsub('A','-', x = _) # _ is the placeholder for |&gt; \na |&gt; gsub(pattern = 'A', replacement = '-') # leaving the \"piped\" argument as the only unnamed argument also works \na |&gt; (\\(.) gsub('A', '-', x = .))() # using an anonymous function call allows you to be explicit while specifying your own placeholder\n\n\n\n\nYou can read more about the differences between |&gt; and %&gt;% here and anonymous functions here. Code above comes from responses to this stackoverflow post."
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#pipes-2",
@@ -7907,7 +7907,7 @@
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#the-way-of-many-files",
     "title": "",
     "section": "The Way of Many Files",
-    "text": "The Way of Many Files\nI find it beneficial to break projects into many files:\n\nScripts with specialized functions.\nScripts to load and clean each set of variables.\nScripts to run each set of models and make tables and plots.\nA main .qmd that runs some or all of these to reproduce the entire project.\n\n\nSplitting up a project carries benefits:\n\nOnce a portion of the project is done and in its own file, it is out of your way.\n\nIf you need to make changes, you don’t need to search through huge files.\nEntire sections of the project can be added or removed quickly (e.g. converted to an appendix of an article)\nIt is the only way to build a proper 2 for a project."
+    "text": "The Way of Many Files\nI find it beneficial to break projects into many files:\n\nScripts with specialized functions.\nScripts to load and clean each set of variables.\nScripts to run each set of models and make tables and plots.\nA main .qmd that runs some or all of these to reproduce the entire project.\n\n\nSplitting up a project carries benefits:\n\nOnce a portion of the project is done and in its own file, it is out of your way.\n\nIf you need to make changes, you don’t need to search through huge files.\nEntire sections of the project can be added or removed quickly (e.g. converted to an appendix of an article)\nIt is the only way to build a proper pipeline for a project."
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#pipelines",
@@ -8363,5 +8363,26 @@
     "title": "Roadmap",
     "section": "Solution: 8. Add nicer theme",
     "text": "Solution: 8. Add nicer theme\n\nggplot(gapminder, aes(x = lifeExp, color = continent)) +\n  geom_freqpoly(bins = 30) +\n  facet_wrap(vars(continent), ncol = 1) +\n  xlab(\"Life Expectancy\") +\n  ylab(\"Count\") +\n  ggtitle(\"Histogram of Life Expectancy in Gapminder Data\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#selecting-the-native-pipe",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#selecting-the-native-pipe",
+    "title": "",
+    "section": "Selecting the native pipe",
+    "text": "Selecting the native pipe\nThe |&gt; is recommended over %&gt;% simply because it’s always available (%&gt;% relied on the magrittr package which was a dependency of tidyverse packages) and it’s much simpler to use.\n\nYou’ll need to specify to R that you want to enable its usage by going to Tools &gt; Global Options &gt; Code. Within the “Editing” Tab there is an option to “Use native pipe operator, |&gt;”. Check it!"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#styling-existing-code",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#styling-existing-code",
+    "title": "",
+    "section": "Styling existing code",
+    "text": "Styling existing code\nImagine you’ve inherited a bunch of code from someone else and NOTHING is styled in the tidyverse way you’ve become accustomed. Or, you’ve dabbled in R before and you have some old code that is all over the place, with respect to styling.\n\nThanks to Lorenz Walthert there’s a package for that! Using the styler package you can automatically apply the tidyverse style guide standards to various filetypes (.R, .qmd, .Rmd, etc.) or even entire projects.\n\n\nHave a style or variation of the tidyverse style that you prefer? You can specify that in the package as well. Use the keyboard shortcut Cmd/Ctl + Shift + P and search for “styler” to see all the options available."
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#other-formatting-options",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#other-formatting-options",
+    "title": "",
+    "section": "Other Formatting Options",
+    "text": "Other Formatting Options\nThere are some other useful formatting options I’d suggest setting globally and others you can specify to your preferences.\nRainbow Parentheses & HighLight Function Calls"
   }
 ]
