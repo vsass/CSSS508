@@ -48,7 +48,7 @@ require(tidyverse)
 
 <br>
 
-Last time, we learned about,
+#### Last time, we learned about:
 
 * The `tidyverse`
 * Basics of `ggplot2`
@@ -57,7 +57,7 @@ Last time, we learned about,
 
 . . . 
 
-Today, we will cover,
+#### Today, we will cover:
 
 * Code Style
 * Workflow 
@@ -463,19 +463,21 @@ project/
        data_processed.RData
      raw/
        data_core.csv
+       data_supplementary.csv
    docs/
-     paper-paa.qmd
+     paper-asa.qmd
      paper-journal.qmd
    syntax/
      01-functions.R
      02-cleaning.R
-     03-exploratory.R
-     04-models.R
-     05-visualizations.R
+     03_merging.R
+     04-exploratory.R
+     05-models.R
+     06-visualizations.R
    visuals/ 
      descriptive.png
-     boxplot.png
-     time_series.png
+     heatmap.png
+     predicted_probabilities.png
 ```
 :::
 
@@ -550,10 +552,24 @@ You can see above that this lecture was created in a lecture-specific folder wit
 
 . . . 
 
-While you can technically set your working directory using `setwd()` (`set` `w`orking `d`irectory) and giving `R` a filepath, in the name of reproducible research I strongly advise an alternative: **RStudio projects**. 
-
+While you can *technically* set your working directory using `setwd()` (`set` `w`orking `d`irectory) and giving `R` a filepath, in the name of reproducible research DO NOT DO THIS! I strongly advise an alternative: **RStudio projects**. 
 
 ## Projects
+
+A "project" is RStudio's built-in organizational support system which keeps all the files associated with a given project (i.e. data, R scripts, figures, results) together in one directory. 
+
+. . . 
+
+Creating a new project quite basically creates a new folder in a place that you specify. But it also does a few of other extremely useful things: 
+
+::: {.incremental}
+* Creates a `.Rproj` file which tracks your command history and all the files in your project folder. 
+* Contains all the files needed to reproduce your work 
+  * i.e. you can send a project folder to someone and they will be able to run it on their local machine
+* Facilitates version control with built-in git/GitHub connection *(more on this later in the course)*
+:::
+
+## Creating an RStudio Project
 
 :::: {.columns}
 
@@ -571,25 +587,9 @@ You can create a project by clicking
 :::
 ::::
 
+## Workflow versus Product
 
-## Projects
-
-A "project" is RStudio's built-in organizational support system which keeps all the files associated with a given project (i.e. data, R scripts, figures, results) together in one directory. 
-
-. . . 
-
-Creating a new project quite basically creates a new folder in a place that you specify. But it also does a few of other extremely useful things: 
-
-::: {.incremental}
-* Creates a `.Rproj` file which tracks your command history and all the files in your project folder. 
-* Contains all the files needed to reproduce your work 
-  * i.e. you can send a project folder to someone and they will be able to run it on their local machine
-* Facilitates version control with built-in git/GitHub connection *(more on this later in the course)*
-:::
-
-## Workflow versus Project
-
-To summarize Jenny Bryan, [one should separate workflow from projects.](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)
+To summarize Jenny Bryan, [one should **separate workflow** (i.e. your personal tastes and habits) **from product** (i.e. the logic and output that is the essence of your project).](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)
 
 <br>
 
@@ -611,7 +611,7 @@ To summarize Jenny Bryan, [one should separate workflow from projects.](https://
 :::
 ::: {.column width="50%"}
 
-### Project
+### Product
 
 * The raw data
 
@@ -626,25 +626,28 @@ To summarize Jenny Bryan, [one should separate workflow from projects.](https://
 
 . . . 
 
-<br>
+Each data analysis (*or homework assignment for a class*) should be organized as a [**project**]{.highlight-tableaured}. 
 
-Projects *should NOT modify anything outside of the project* nor need to be modified by someone else (or future you) to run.
-
-**Projects *should be independent of your workflow*.**
+* Projects *should NOT modify anything outside of the project* nor need to be modified by someone else (or future you) to run.
+* **Projects *should be independent of your workflow*.**
 
 ## Portability
 
-For research to be reproducible, it must also be *portable*. Portable software operates *independently of workflow* such as fixed file locations.
+For research to be reproducible, it must also be *portable*. Portable software operates *independently of workflow*.
 
 ::: {.panel-tabset}
 
 ### **Do Not:**
 
-* Use `setwd()` in scripts or .qmd files.
+* Use `setwd()`.
 * Use *absolute paths* except for *fixed, immovable sources* (secure data).
   + `read_csv("C:/my_project/data/my_data.csv")`
 * Use `install.packages()` in script or .qmd files.
 * Use `rm(list=ls())` anywhere but your console.
+
+:::{.fragment}
+
+:::
 
 ### **Do:**
 
@@ -660,14 +663,95 @@ For research to be reproducible, it must also be *portable*. Portable software o
 :::
 
 ::: {.column width="50%"}
-
 ![](images/clean-slate.png){.absolute right=10 bottom=10 height=75%}
-
 :::
 
 ::::
 
 :::
+
+## PSA: `setwd()` and `rm(list=ls())`
+
+<br>
+
+. . . 
+
+::: {.callout-warning icon=false}
+## <span style="color:orange">{{< fa triangle-exclamation >}}</span> `setwd()`
+Setting your working directory using `setwd()` way makes it impossible for your project to be replicated by anyone but you, and only on the exact same computer on which it was created.
+:::
+
+. . . 
+
+<br>
+
+::: {.callout-important icon=false}
+## <span style="color:red">{{< fa circle-exclamation >}}</span> `rm(list=ls())`
+Make sure not to expect `rm(list=ls())` to give you a fresh `R` session. It may feel that way when all the objects in your global environment disappear but there are a host of dependencies (i.e. loaded packages, options set to non-defaults, the working directory) that have not changed. Your script will still be vulnerable to those settings unless you start a fresh `R` session.
+:::
+
+## File paths
+
+A file path specifies the location of a file in a computer’s file system structure. They can be used to locate files and web resources. Some important things to note: 
+
+* For file systems, each level in the hierarchy is a directory
+  * For URLs, each level in the hierarchy is a page.
+* A path is a string of characters which specifies a unique location in a directory or page hierarchy.
+* Different sections of the path are separated by a path separator, such as a forward slash (`/`).
+  * These different sections represent the separate directories or pages in the hierarchy. 
+* In Unix-based operating systems, such as Linux or macOS, the path separator is a forward slash (`/`).
+  * In Windows, the path separator is a back slash (`\`).
+  * URLs follow a standard format that always uses a forward slash (`/`) as the path separator regardless of the operating system.
+
+## Absolute Versus Relative Paths
+
+::: {.panel-tabset}
+### Absolute
+
+Specifies the location of a file from the root directory in the file system structure. They are also called “full file paths” or “full paths.”
+
+```{r}
+#| eval: false
+"/Users/victoriasass/Desktop/GitHub/CSSS508/Lectures/Lecture3/CSSS508_Lecture3.qmd"
+```
+
+<br>
+
+:::{.fragment}
+In Linux, the `~` is commonly used to represent a user's home directory, i.e.:
+
+```{r}
+#| eval: false
+"~/Desktop/GitHub/CSSS508/Lectures/Lecture3/CSSS508_Lecture3.qmd"
+```
+:::
+
+### Relative
+
+Specifies the location of a file in the same folder or on the same server. In other words, a relative file path specifies a location of a file that is relative to the current directory. 
+
+```{r}
+#| eval: false
+"./CSSS508_Lecture3.qmd"` or `"CSSS508_Lecture3.qmd"
+```
+
+<br>
+
+::: {.fragment}
+Relative file paths use a dot notation at the start of the path, followed by a path separator and the location of the file. A single dot (`.`) indicates the current directory (as shown above) and a double dot (`..`) indicates the parent directory. For example, if I wanted to reference the syllabus (which is in the main project folder `CSSS508`) from my current folder `Lecture3` I would write: 
+
+```{r}
+#| eval: false
+"../../syllabus.qmd"
+```
+
+:::
+
+:::
+
+
+
+
 
 ## Divide and Conquer
 
@@ -745,28 +829,6 @@ Every stage (oval) has an unambiguous input and output. Everything that precedes
 Note: [`targets` is a great package for managing R research pipelines.](https://docs.ropensci.org/targets/)
 :::
 
-
-## Getting Help <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
-
-One of the most difficult things as a beginner in `R` (or any language tbh) is not always knowing what to ask to solve your issue. Being in this class is a great first step! Some other useful tools: 
-
-:::{.incremental}
-* **Google** 
-  + Adding `R` to your query is basic but useful and often overlooked. Including the package name, if you're using one, is another. Finally, what is it you want to do? For example "R dplyr create new variable based on value of another." 
-  + Copy and pasting error messages is also helpful! 
-* **StackOverflow**
-  + Many of your Google queries will take you here anyways so you might try going directly to the source! Filter by `R` and make sure to include a `reprex` so people can actually understand what your issue is. 
-* **Reprex**
-  + Short for minimal `repr`oducible `ex`ample this is a version of your code that someone could copy and run on their own machine, making it possible for them to help you troubleshoot your problem. 
-  + You want to strip away everything not pertinent to the issue you're having so that it's simple and straightforward. 
-  + You can use the [`reprex`](https://reprex.tidyverse.org/) package for assistance with this! 
-* **Putting in the work up front**
-  + It's cliché, but investing in your learning right now will pay off down the road.
-  + Learning how to do something, why `R` works in a certain way, and developing practices that keep you organized will make you more efficient and help prevent minor and major frustrations going forward.
-:::
-
-# START OF CHUCK'S SECTION
-
 # Reproducible Research{.section-title background-color="#99a486"}
 
 ## Why Reproducibility?
@@ -795,8 +857,6 @@ Reproducibility means:
 
 Reproducibility comes in three forms (Stodden 2014):
 
-. . . 
-
 ::: {.incremental}
 1. **Empirical:** Repeatability in data collection.
 2. **Statistical:** Verification with alternate methods of inference.
@@ -821,6 +881,9 @@ Elements of computational reproducibility:
 
 * Shared data
    + Researchers need your original data to verify and replicate your work.
+   
+. . .    
+   
 * Shared code
    + Your code must be shared to make decisions transparent.
 
@@ -831,7 +894,7 @@ Elements of computational reproducibility:
 
 . . . 
 
-* **Version Control**
+* Version Control^[We'll come back to this on the last week of class.]
    + Documents the research process.
    + Prevents losing work and facilitates sharing.
 
@@ -843,14 +906,18 @@ For academic papers, degrees of reproducibility vary:
 0. "Read the article"
 1. Shared data with documentation
 2. Shared data and all code
-3. **Interactive document**
-4. **Research compendium**
+3. Interactive document
+4. Research compendium
 5. Docker compendium: Self-contained ecosystem
+:::
+
+::: aside
+We'll briefly discuss research compendiums, such as Docker, during the last lecture of class as well. 
 :::
 
 ## Interactive Documents
 
-**Interactive documents** — like Quarto docs — combine code and text together into a self-contained document.
+Interactive documents — like Quarto docs — combine code and text together into a self-contained document.
 
 * Load and process data
 * Run models
@@ -872,168 +939,9 @@ Common Platforms:
  * **R:** Quarto
  * **Python:** Jupyter Notebooks
 
-## Research Compendia
-
-A **research compendium** is a portable, reproducible distribution of an article or other project.
-
-. . . 
-
-Research compendia feature:
-
-* An interactive document as the foundation
-
-* Files organized in a recognizable structure (e.g. an R package)
-
-* Clear separation of data, method, and output. *Data are read only*.
-
-* A well-documented or even *preserved* computational environment (e.g. Docker)
-
-. . . 
-
-`rrtools` by UW's [Ben Markwick](https://github.com/benmarwick) provides a simplified workflow to accomplish this in R.
-
-## Bookdown
-
-[`bookdown`](https://bookdown.org/yihui/bookdown/) — which is integrated into `rrtools` — can generate documents in the proper format for articles, theses, books, or dissertations.
-
-. . . 
-
-`bookdown` provides an accessible alternative to writing $\LaTeX$ for typesetting and reference management.
-
-. . . 
-
-You can integrate citations and automate reference page generation using bibtex files (such as produced by Zotero).
-
-. . . 
-
-`bookdown` supports `.html` output for ease and speed and also renders `.pdf` files through $\LaTeX$ for publication-ready documents.
-
-. . . 
-
-For University of Washington theses and dissertations, consider Ben Marwick's [`huskydown` package](https://github.com/benmarwick/huskydown) which uses Markdown but renders via a UW approved $\LaTeX$ template.
-
-# Best Practices{.section-title background-color="#99a486"}
-
-
-
-# Tools (*some opinionated advice*) {.section-title background-color="#99a486"}
-
-## On Formats
-
-Avoid "closed" or commercial software and file formats except where absolutely necessary.
-
-. . . 
-
-Use open source software and file formats.
-
-. . . 
-
-* It is always better for *science*:
-
-   + People should be able to explore your research without buying commercial software.
-   + You do not want your research to be inaccessible when software is updated.
-
-. . . 
-
-* It is often just *better*.
-
-   + It is usually updated more quickly
-   + It tends to be more secure
-   + It is rarely abandoned
-
-. . . 
-
-**The ideal:** Use software that reads and writes *raw text*.
-
-## Text
-
-Writing and formatting documents are two completely separate jobs.
-
-* Write first
-* Format later
-* [Markdown](https://en.wikipedia.org/wiki/Markdown) was made for this
-
-. . . 
-
-Word processors — like Microsoft Word — try to do both at the same time, usually badly.
-
-They waste time by leading you to format instead of writing.
-
-. . . 
-
-Find a good modular text editor and learn to use it:
-
-* [Atom](https://atom.io/)
-* [Sublime](https://www.sublimetext.com/) (Commercial)
-* Emacs
-* Vim
-
-# Version Control{.section-title background-color="#99a486"}
-
-## Version Control
-
-Version control originates in collaborative software development.
-
-**The Idea:** All changes ever made to a piece of software are documented, saved automatically, and revertible.
-
-. . . 
-
-Version control allows all decisions ever made in a research project to be documented automatically.
-
-. . . 
-
-Version control can:
-
-1. Protect your work from destructive changes
-2. Simplify collaboration by merging changes
-3. Document design decisions
-4. Make your research process transparent
-
-## Git and GitHub
-
-[`git`](https://en.wikipedia.org/wiki/Git) is the dominant platform for version control, and [GitHub](https://github.com/) is a free (and now Microsoft owned) platform for hosting **repositories**.
-
-. . . 
-
-**Repositories** are folders on your computer where all changes are tracked by Git.
-
-. . . 
-
-Once satisfied with changes, you "commit" them then "push" them to a remote repository that stores your project.
-
-. . . 
-
-Others can copy your project ("pull"), and if you permit, make suggestions for changes.
-
-. . . 
-
-Constantly committing and pulling changes automatically generates a running "history" that documents the evolution of a project.
-
-. . . 
-
-`git` is integrated into RStudio under the *Tools* menu. [It requires some setup.](http://happygitwithr.com/)^[You can also use the [GitHub desktop application](https://desktop.github.com/).]
-
-
-## GitHub as a CV
-
-Beyond archiving projects and allowing sharing, GitHub also serves as a sort of curriculum vitae for the programmer.
-
-. . . 
-
-By allowing others to view your projects, you can display competence in programming and research.
-
-. . . 
-
-If you are planning on working in the private sector, an active GitHub profile will give you a leg up on the competition.
-
-. . . 
-
-If you are aiming for academia, a GitHub account signals technical competence and an interest in research transparency.
-
-
 # Useful Base R {.section-title background-color="#99a486"}
 
-## Selecting from vectors with [ ]
+## Selecting from vectors with `[`
 
 :::: {.columns}
 
@@ -1055,32 +963,42 @@ x <- c(a = "one",
 ::: {.column width="60%"}
 You can select from the vector 
 
+::: {.fragment}
 ```{r}
-# 
+# with positive integers
 x[c(3, 1, 5)]
+# even repeated values
+x[c(3, 1, 1, 5, 3)]
 ```
+:::
 
-...with negative integers:
+::: {.fragment}
 ```{r}
+# with negative integers
 x[c(-2, -6, -7)]
 ```
+:::
 
-...with a logical vector: 
+::: {.fragment}
 ```{r}
+# with a logical vector
 x[!is.na(x)]
 ```
+::: 
 
-...and with a named vector: 
+::: {.fragment}
 ```{r}
+# or with a named vector
 x[c("c", "h")]
 ```
+::: 
 :::
 
 ::::
 
-## Selecting from dataframes with [ ]
+## Selecting from dataframes with `[`
 
-The most important method of selecting from dataframes is selecting rows and columns with `df[rows, cols]`. 
+You can select rows and columns from dataframes with `df[rows, cols]`. 
 
 :::: {.columns}
 
@@ -1091,24 +1009,338 @@ df <- tibble(
   y = c("a", "e", "f"), 
   z = runif(3)
 )
+
+df
 ```
 
 :::
 
 ::: {.column width="60%"}
+
+::: {.fragment}
 ```{r}
 # Select first row and second column
 df[1, 2]
+```
+:::
 
+::: {.fragment}
+```{r}
 # Select all rows and columns x and y
 df[, c("x" , "y")]
+```
+:::
 
+::: {.fragment}
+```{r}
 # Select rows where `x` is greater than 1 and all columns
 df[df$x > 1, ]
 ```
 :::
+:::
+::::
+
+## `data.frame()` vs. `tibble()` <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+Tibbles are the tidyverse version of a base `R` dataframe. Usually you can use them interchangably without issue but they have slightly different behavior that's important to know about when indexing in this way. 
+
+. . . 
+
+If `df` is a data.frame, then `df[, cols]` will return a vector if `col` selects a single column and a data frame if it selects more than one column. 
+
+```{r}
+df1 <- data.frame(x = 1:3)
+df1[, "x"]
+```
+. . . 
+
+If `df` is a tibble, then `[` will always return a tibble.
+
+```{r}
+df2 <- tibble(x = 1:3)
+df2[, "x"]
+```
+
+. . . 
+
+One way to avoid this ambiguity with `data.frames` is to explicitly specify `drop = FALSE`:
+
+```{r}
+df1[, "x" , drop = FALSE]
+```
+
+## Selecting from dataframes with `[[` and `$` <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+`[`, which selects many elements, is paired with `[[` and `$`, which extract a single element.
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+```{r}
+tb <- tibble(
+  x = 1:4,
+  y = c(10, 4, 1, 21)
+)
+
+tb
+```
+:::
+
+::: {.column width="60%"}
+
+::: {.fragment}
+`[[ ]]` can access by position or by name:
+
+```{r}
+# by position
+tb[[1]]
+```
+:::
+
+::: {.fragment}
+```{r}
+# by name
+tb[["x"]]
+```
+
+:::
+
+::: {.fragment}
+`$` is specialized for access by name:
+
+```{r}
+tb$x
+```
+:::
+
+::: {.fragment}
+They can also be used to create new columns. 
+```{r}
+tb$z <- tb$x + tb$y
+tb
+```
+:::
+
+:::
 
 ::::
+
+## Getting Help <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+One of the most difficult things as a beginner in `R` (or any language tbh) is not always knowing what to ask to solve your issue. Being in this class is a great first step! Some other useful tools: 
+
+:::{.incremental}
+* **Google** 
+  + Adding `R` to your query is basic but useful and often overlooked. Including the package name, if you're using one, is another. Finally, what is it you want to do? For example "R dplyr create new variable based on value of another." 
+  + Copy and pasting error messages is also helpful! 
+* **StackOverflow**
+  + Many of your Google queries will take you here anyways so you might try going directly to the source! Filter by `R` and make sure to include a `reprex` so people can actually understand what your issue is. 
+* **Reprex**
+  + Short for minimal `repr`oducible `ex`ample this is a version of your code that someone could copy and run on their own machine, making it possible for them to help you troubleshoot your problem. 
+  + You want to strip away everything not pertinent to the issue you're having so that it's simple and straightforward. 
+  + You can use the [`reprex`](https://reprex.tidyverse.org/) package for assistance with this! 
+* **Putting in the work up front**
+  + It's cliché, but investing in your learning right now will pay off down the road.
+  + Learning how to do something, why `R` works in a certain way, and developing practices that keep you organized will make you more efficient and help prevent minor and major frustrations going forward.
+:::
+
+# Lab 3 {.section-title background-color="#99a486"}
+
+---
+
+1. If you haven't already, go to *Tools* > *Global Options* and adjust your settings (i.e. *General*, *Code* > *Editing*, and *Code* > *Display*) to those recommended in the lecture and any others that you'd like to change (i.e. *Appearance*, *Pane Layout*, or *R Markdown*)
+
+2. Restyle the following pipelines following the guidelines discussed in lecture: 
+
+```{r}
+#| eval: false
+flights|>filter(dest=="IAH")|>group_by(year,month,day)|>summarize(n=n(),
+delay=mean(arr_delay,na.rm=TRUE))|>filter(n>10)
+
+flights|>filter(carrier=="UA",dest%in%c("IAH","HOU"),sched_dep_time>
+0900,sched_arr_time<2000)|>group_by(flight)|>summarize(delay=mean(
+arr_delay,na.rm=TRUE),cancelled=sum(is.na(arr_delay)),n=n())|>filter(n>10)
+```
+
+3. Press *Option* + *Shift* + *K* / *Alt* + *Shift* + *K*. What happens? How can you get to the same place using the menus?
+
+4. Tweak each of the following R commands so that they run correctly:
+
+```{r}
+#| eval: false
+libary(todyverse)
+
+ggplot(dTA = mpg) + 
+  geom_point(maping = aes(x = displ y = hwy)) +
+  geom_smooth(method = "lm)
+```
+
+5. What might be a good way to organize your homework assignments for this class? 
+
+## Solution: 1. Adjust settings 
+
+![Clear .RData, Never save](images/clean-slate.png){fig-align="center" width=50%}
+
+## Solution: 1. Adjust settings
+
+![Native pipe](images/rstudio-pipe-options.png){fig-align="center" width=50%}
+
+## Solution: 1. Adjust settings
+
+![Highlight function calls; preview colors; rainbow parentheses](images/rainbow_function.png){fig-align="center" width=50%}
+
+## Solution: 1. Adjust settings
+
+![Code appearance](images/code_style.png){fig-align="center" width=50%}
+
+## Solution: 1. Adjust settings
+
+![Pane Layout](images/pane_arrangement.png){fig-align="center" width=50%}
+
+## Solution: 1. Adjust settings
+
+![Markdown Preferences](images/markdown_preferences.png){fig-align="center" width=50%}
+
+## Solution: 2. Readable code style
+
+::: {.fragment .semi-fade-out fragment-index=1}
+```{r}
+#| eval: false
+flights|>filter(dest=="IAH")|>group_by(year,month,day)|>summarize(n=n(),
+delay=mean(arr_delay,na.rm=TRUE))|>filter(n>10)
+
+flights|>filter(carrier=="UA",dest%in%c("IAH","HOU"),sched_dep_time>
+0900,sched_arr_time<2000)|>group_by(flight)|>summarize(delay=mean(
+arr_delay,na.rm=TRUE),cancelled=sum(is.na(arr_delay)),n=n())|>filter(n>10)
+```
+:::
+
+::: {.fragment .fade-in fragment-index=1}
+```{r}
+#| eval: false
+flights |> 
+  filter(dest == "IAH") |> 
+  group_by(year, month, day) |> 
+  summarize(
+    n = n(),
+    delay = mean(arr_delay, na.rm = TRUE)
+    ) |> 
+  filter(n > 10)
+
+flights |> 
+  filter(carrier == "UA", dest %in% c("IAH", "HOU"), 
+         sched_dep_time > 0900, sched_arr_time < 2000) |>
+  group_by(flight) |> 
+  summarize(
+    delay = mean(arr_delay, na.rm = TRUE), 
+    cancelled = sum(is.na(arr_delay)), 
+    n = n() 
+    ) |> 
+  filter(n > 10)
+```
+:::
+
+## Solution: 3. *Option* + *Shift* + *K* / *Alt* + *Shift* + *K*
+
+![](images/keyboard_shortcuts.png){fig-align="center" width=80%}
+
+::: aside
+You can find the same quick reference pop-up by clicking *Tools* > *Keyboard Shortcuts Help*. 
+:::
+
+
+## Solution: 4. Keyboard shortcut
+
+::: {.fragment .semi-fade-out fragment-index=1}
+```{r}
+#| eval: false
+libary(todyverse)
+
+ggplot(dTA = mpg) + 
+  geom_point(maping = aes(x = displ y = hwy)) +
+  geom_smooth(method = "lm)
+```
+:::
+
+::: {.fragment .fade-in fragment-index=1}
+```{r}
+#| eval: false
+libary(tidyverse)
+
+ggplot(data = mpg, 
+       mapping = aes(x = displ, y = hwy)) + 
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+:::
+
+## Solution: 5. Organizing a class
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+<br>
+
+::: {.incremental}
+1. Create a folder for this class on a computer/system that gets backed up regularly
+2. Each homework assignment gets a separate RStudio project
+3. Everything within each homework assignment project gets saved into that specific folder (or a subfolder of that folder)
+4. Anything required for each homework assignment (e.g. downloaded data) is saved into its project-specific folder
+:::
+:::
+
+::: {.column width="50%"}
+
+::: {.fragment}
+
+<br>
+
+```
+CSSS508/
+   Homeworks/
+     HW1/
+       homework1.qmd
+       homework1.html
+     HW2/
+       homework2.qmd
+       homework2.html
+     HW3/
+       homework3.qmd
+       homework3.html
+     HW4/
+       homework4.qmd
+       homework4.html
+       data.csv
+     HW5/
+       homework4.qmd
+       homework4.html
+         data/
+           data_raw.csv
+           data_processed.Rdata
+     HW6/
+     HW7/
+     HW8/
+     HW9/
+```
+:::
+
+:::
+
+::::
+
+# Homework{.section-title background-color="#99a486"}
+
+## Homework 3
+
+1. Organize your course files for this class in a way that facilitates reproducible research. 
+  a. For this current homework, begin by first creating a project for "Homework3^[This specific titles used can be whatever you want as long as they're descriptive and consistent in their naming conventions.]"
+  b. Create your .qmd for this homework within that project^[You'll notice that the upper-right hand corner of your RStudio IDE now displays the name of your new project for this homework]. 
+  c. For homeworks 1 and 2, make sure they each have their own folder within a folder for this class. 
+  d. Retroactively turn those folders into projects in RStudio by selecting *File* > *New Project...* > *Existing Directory* and selecting the appropriate folder for each homework. 
+  e. When you're done organizing the folder for this class, write out its current organizational structure (i.e. )
+
 
 ## Due dates
 

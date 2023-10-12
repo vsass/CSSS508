@@ -401,7 +401,7 @@
 </section><section><section id="roadmap" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Roadmap</h1>
 
 </section><section class="slide level2"><p><br></p>
-<p>Last time, we learned about,</p>
+<h4 id="last-time-we-learned-about">Last time, we learned about:</h4>
 <ul>
 <li>The <code>tidyverse</code>
 </li>
@@ -412,17 +412,15 @@
 <li>Extensions of <code>ggplot2</code>
 </li>
 </ul>
-<div class="fragment">
-<p>Today, we will cover,</p>
+<p>. . .</p>
+<h4 id="today-we-will-cover">Today, we will cover:</h4>
 <ul>
 <li>Code Style</li>
 <li>Workflow</li>
 <li>Reproducibility</li>
 <li>Useful Base <code>R</code>
 </li>
-</ul>
-</div>
-</section></section><section><section id="code-style" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Code Style</h1>
+</ul></section></section><section><section id="code-style" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Code Style</h1>
 
 </section><section id="naming-objects-and-variables" class="slide level2"><h2>Naming Objects (and Variables)</h2>
 <p>It’s good practice to name objects (and variables) using only lowercase letters, numbers, and <code>_</code> (to separate words).</p>
@@ -757,19 +755,21 @@
        data_processed.RData
      raw/
        data_core.csv
+       data_supplementary.csv
    docs/
-     paper-paa.qmd
+     paper-asa.qmd
      paper-journal.qmd
    syntax/
      01-functions.R
      02-cleaning.R
-     03-exploratory.R
-     04-models.R
-     05-visualizations.R
+     03_merging.R
+     04-exploratory.R
+     05-models.R
+     06-visualizations.R
    visuals/ 
      descriptive.png
-     boxplot.png
-     time_series.png</code></pre>
+     heatmap.png
+     predicted_probabilities.png</code></pre>
 </div><div class="column" style="width:50%;">
 <div class="small1">
 <ol type="1">
@@ -840,9 +840,26 @@ temp.txt</code></pre>
 <p>You can see above that this lecture was created in a lecture-specific folder within a lectures folder, in a directory for this class, which is in a folder called <code>GitHub</code> on the Desktop of my laptop.</p>
 </div>
 <div class="fragment">
-<p>While you can technically set your working directory using <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> (<code>set</code> <code>w</code>orking <code>d</code>irectory) and giving <code>R</code> a filepath, in the name of reproducible research I strongly advise an alternative: <strong>RStudio projects</strong>.</p>
+<p>While you can <em>technically</em> set your working directory using <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> (<code>set</code> <code>w</code>orking <code>d</code>irectory) and giving <code>R</code> a filepath, in the name of reproducible research DO NOT DO THIS! I strongly advise an alternative: <strong>RStudio projects</strong>.</p>
 </div>
 </section><section id="projects" class="slide level2"><h2>Projects</h2>
+<p>A “project” is RStudio’s built-in organizational support system which keeps all the files associated with a given project (i.e.&nbsp;data, R scripts, figures, results) together in one directory.</p>
+<div class="fragment">
+<p>Creating a new project quite basically creates a new folder in a place that you specify. But it also does a few of other extremely useful things:</p>
+<div>
+<ul>
+<li class="fragment">Creates a <code>.Rproj</code> file which tracks your command history and all the files in your project folder.</li>
+<li class="fragment">Contains all the files needed to reproduce your work
+<ul>
+<li class="fragment">i.e.&nbsp;you can send a project folder to someone and they will be able to run it on their local machine</li>
+</ul>
+</li>
+<li class="fragment">Facilitates version control with built-in git/GitHub connection <em>(more on this later in the course)</em>
+</li>
+</ul>
+</div>
+</div>
+</section><section id="creating-an-rstudio-project" class="slide level2"><h2>Creating an RStudio Project</h2>
 <div class="columns">
 <div class="column" style="width:65%;">
 <div class="quarto-figure quarto-figure-center">
@@ -862,25 +879,8 @@ temp.txt</code></pre>
 </ul>
 </div>
 </div>
-</section><section id="projects-1" class="slide level2"><h2>Projects</h2>
-<p>A “project” is RStudio’s built-in organizational support system which keeps all the files associated with a given project (i.e.&nbsp;data, R scripts, figures, results) together in one directory.</p>
-<div class="fragment">
-<p>Creating a new project quite basically creates a new folder in a place that you specify. But it also does a few of other extremely useful things:</p>
-<div>
-<ul>
-<li class="fragment">Creates a <code>.Rproj</code> file which tracks your command history and all the files in your project folder.</li>
-<li class="fragment">Contains all the files needed to reproduce your work
-<ul>
-<li class="fragment">i.e.&nbsp;you can send a project folder to someone and they will be able to run it on their local machine</li>
-</ul>
-</li>
-<li class="fragment">Facilitates version control with built-in git/GitHub connection <em>(more on this later in the course)</em>
-</li>
-</ul>
-</div>
-</div>
-</section><section id="workflow-versus-project" class="slide level2"><h2>Workflow versus Project</h2>
-<p>To summarize Jenny Bryan, <a href="https://www.tidyverse.org/articles/2017/12/workflow-vs-script/">one should separate workflow from projects.</a></p>
+</section><section id="workflow-versus-product" class="slide level2"><h2>Workflow versus Product</h2>
+<p>To summarize Jenny Bryan, <a href="https://www.tidyverse.org/articles/2017/12/workflow-vs-script/">one should <strong>separate workflow</strong> (i.e.&nbsp;your personal tastes and habits) <strong>from product</strong> (i.e.&nbsp;the logic and output that is the essence of your project).</a></p>
 <p><br></p>
 <div class="fragment">
 <div class="columns">
@@ -893,7 +893,7 @@ temp.txt</code></pre>
 <li><p>The code you ran earlier or typed into your console</p></li>
 </ul>
 </div><div class="column" style="width:50%;">
-<h3 id="project">Project</h3>
+<h3 id="product">Product</h3>
 <ul>
 <li><p>The raw data</p></li>
 <li><p>The code that operates on your raw data</p></li>
@@ -904,12 +904,14 @@ temp.txt</code></pre>
 </div>
 </div>
 <div class="fragment">
-<p><br></p>
-<p>Projects <em>should NOT modify anything outside of the project</em> nor need to be modified by someone else (or future you) to run.</p>
-<p><strong>Projects <em>should be independent of your workflow</em>.</strong></p>
+<p>Each data analysis (<em>or homework assignment for a class</em>) should be organized as a <span class="highlight-tableaured"><strong>project</strong></span>.</p>
+<ul>
+<li>Projects <em>should NOT modify anything outside of the project</em> nor need to be modified by someone else (or future you) to run.</li>
+<li><strong>Projects <em>should be independent of your workflow</em>.</strong></li>
+</ul>
 </div>
 </section><section id="portability" class="slide level2"><h2>Portability</h2>
-<p>For research to be reproducible, it must also be <em>portable</em>. Portable software operates <em>independently of workflow</em> such as fixed file locations.</p>
+<p>For research to be reproducible, it must also be <em>portable</em>. Portable software operates <em>independently of workflow</em>.</p>
 <div class="panel-tabset">
 <ul id="tabset-3" class="panel-tabset-tabby">
 <li><a data-tabby-default="" href="#tabset-3-1"><strong>Do Not:</strong></a></li>
@@ -918,7 +920,7 @@ temp.txt</code></pre>
 <div class="tab-content">
 <div id="tabset-3-1">
 <ul>
-<li>Use <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> in scripts or .qmd files.</li>
+<li>Use <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code>.</li>
 <li>Use <em>absolute paths</em> except for <em>fixed, immovable sources</em> (secure data).
 <ul>
 <li><code>read_csv("C:/my_project/data/my_data.csv")</code></li>
@@ -927,6 +929,9 @@ temp.txt</code></pre>
 <li>Use <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> in script or .qmd files.</li>
 <li>Use <code>rm(list=ls())</code> anywhere but your console.</li>
 </ul>
+<div class="fragment">
+
+</div>
 </div>
 <div id="tabset-3-2">
 <div class="columns">
@@ -948,6 +953,89 @@ temp.txt</code></pre>
 </ul>
 </div><div class="column" style="width:50%;">
 <p><img data-src="images/clean-slate.png" class="absolute" style="bottom: 10px; right: 10px; height: 75%; "></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="psa-setwd-and-rmlistls" class="slide level2"><h2>PSA: <code>setwd()</code> and <code>rm(list=ls())</code>
+</h2>
+<p><br></p>
+<div class="fragment">
+<div class="callout callout-warning no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong><span style="color:orange"><i class="fa-solid fa-triangle-exclamation" aria-label="triangle-exclamation"></i></span> <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code></strong></p>
+</div>
+<div class="callout-content">
+<p>Setting your working directory using <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> way makes it impossible for your project to be replicated by anyone but you, and only on the exact same computer on which it was created.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><br></p>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong><span style="color:red"><i class="fa-solid fa-circle-exclamation" aria-label="circle-exclamation"></i></span> <code>rm(list=ls())</code></strong></p>
+</div>
+<div class="callout-content">
+<p>Make sure not to expect <code>rm(list=ls())</code> to give you a fresh <code>R</code> session. It may feel that way when all the objects in your global environment disappear but there are a host of dependencies (i.e.&nbsp;loaded packages, options set to non-defaults, the working directory) that have not changed. Your script will still be vulnerable to those settings unless you start a fresh <code>R</code> session.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section id="file-paths" class="slide level2"><h2>File paths</h2>
+<p>A file path specifies the location of a file in a computer’s file system structure. They can be used to locate files and web resources. Some important things to note:</p>
+<ul>
+<li>For file systems, each level in the hierarchy is a directory
+<ul>
+<li>For URLs, each level in the hierarchy is a page.</li>
+</ul>
+</li>
+<li>A path is a string of characters which specifies a unique location in a directory or page hierarchy.</li>
+<li>Different sections of the path are separated by a path separator, such as a forward slash (<code>/</code>).
+<ul>
+<li>These different sections represent the separate directories or pages in the hierarchy.</li>
+</ul>
+</li>
+<li>In Unix-based operating systems, such as Linux or macOS, the path separator is a forward slash (<code>/</code>).
+<ul>
+<li>In Windows, the path separator is a back slash (<code>\</code>).</li>
+<li>URLs follow a standard format that always uses a forward slash (<code>/</code>) as the path separator regardless of the operating system.</li>
+</ul>
+</li>
+</ul></section><section id="absolute-versus-relative-paths" class="slide level2"><h2>Absolute Versus Relative Paths</h2>
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby">
+<li><a data-tabby-default="" href="#tabset-4-1">Absolute</a></li>
+<li><a href="#tabset-4-2">Relative</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-4-1">
+<p>Specifies the location of a file from the root directory in the file system structure. They are also called “full file paths” or “full paths.”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="st">"/Users/victoriasass/Desktop/GitHub/CSSS508/Lectures/Lecture3/CSSS508_Lecture3.qmd"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<div class="fragment">
+<p>In Linux, the <code>~</code> is commonly used to represent a user’s home directory, i.e.:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="st">"~/Desktop/GitHub/CSSS508/Lectures/Lecture3/CSSS508_Lecture3.qmd"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div id="tabset-4-2">
+<p>Specifies the location of a file in the same folder or on the same server. In other words, a relative file path specifies a location of a file that is relative to the current directory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="st">"./CSSS508_Lecture3.qmd"`</span><span class="at"> or </span><span class="st">`"CSSS508_Lecture3.qmd"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<div class="fragment">
+<p>Relative file paths use a dot notation at the start of the path, followed by a path separator and the location of the file. A single dot (<code>.</code>) indicates the current directory (as shown above) and a double dot (<code>..</code>) indicates the parent directory. For example, if I wanted to reference the syllabus (which is in the main project folder <code>CSSS508</code>) from my current folder <code>Lecture3</code> I would write:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="st">"../../syllabus.qmd"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1028,7 +1116,367 @@ temp.txt</code></pre>
 
 <aside><div>
 <p>Note: <a href="https://docs.ropensci.org/targets/"><code>targets</code> is a great package for managing R research pipelines.</a></p>
-</div></aside></section><section id="getting-help-fa-scroll" class="slide level2 scrollable"><h2>Getting Help <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
+</div></aside></section></section><section><section id="reproducible-research" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Reproducible Research</h1>
+
+</section><section id="why-reproducibility" class="slide level2"><h2>Why Reproducibility?</h2>
+<p>Reproducibility is not <em>replication</em>.</p>
+<ul>
+<li>
+<strong>Replication</strong> is running a new study to show if and how results of a prior study hold.</li>
+<li>
+<strong>Reproducibility</strong> is about rerunning <em>the same study</em> and getting the <em>same results</em>.</li>
+</ul>
+<div class="fragment">
+<p>Reproducible studies can still be <em>wrong</em>… and in fact reproducibility makes proving a study wrong <em>much easier</em>.</p>
+</div>
+<div class="fragment">
+<p>Reproducibility means:</p>
+<ul>
+<li>Transparent research practices.</li>
+<li>Minimal barriers to verifying your results.</li>
+</ul>
+</div>
+<div class="fragment">
+<p><em>Any study that isn’t reproducible can be trusted only on faith.</em></p>
+</div>
+</section><section id="reproducibility-definitions" class="slide level2"><h2>Reproducibility Definitions</h2>
+<p>Reproducibility comes in three forms (Stodden 2014):</p>
+<div>
+<ol type="1">
+<li class="fragment">
+<strong>Empirical:</strong> Repeatability in data collection.</li>
+<li class="fragment">
+<strong>Statistical:</strong> Verification with alternate methods of inference.</li>
+<li class="fragment">
+<strong>Computational:</strong> Reproducibility in cleaning, organizing, and presenting data and results.</li>
+</ol>
+</div>
+<div class="fragment">
+<p>R is particularly well suited to enabling <strong>computational reproducibility</strong><sup>1</sup>.</p>
+</div>
+<div class="fragment">
+<p>They will not fix flawed research design, nor offer a remedy for improper application of statistical methods.</p>
+<p>Those are the difficult, non-automatable things you want skills in.</p>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn3"><p> Python is equally well suited. Julia is an option as well.</p></li></ol></aside></section><section id="computational-reproducibility" class="slide level2"><h2>Computational Reproducibility</h2>
+<p>Elements of computational reproducibility:</p>
+<div class="fragment">
+<ul>
+<li>Shared data
+<ul>
+<li>Researchers need your original data to verify and replicate your work.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Shared code
+<ul>
+<li>Your code must be shared to make decisions transparent.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Documentation
+<ul>
+<li>The operation of code should be either self-documenting or have written descriptions to make its use clear.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Version Control<sup>1</sup>
+<ul>
+<li>Documents the research process.</li>
+<li>Prevents losing work and facilitates sharing.</li>
+</ul>
+</li>
+</ul>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>We’ll come back to this on the last week of class.</p></li></ol></aside></section><section id="levels-of-reproducibility" class="slide level2"><h2>Levels of Reproducibility</h2>
+<p>For academic papers, degrees of reproducibility vary:</p>
+<div>
+<ol start="0" type="1">
+<li class="fragment">“Read the article”</li>
+<li class="fragment">Shared data with documentation</li>
+<li class="fragment">Shared data and all code</li>
+<li class="fragment">Interactive document</li>
+<li class="fragment">Research compendium</li>
+<li class="fragment">Docker compendium: Self-contained ecosystem</li>
+</ol>
+</div>
+
+<aside><div>
+<p>We’ll briefly discuss research compendiums, such as Docker, during the last lecture of class as well.</p>
+</div></aside></section><section id="interactive-documents" class="slide level2"><h2>Interactive Documents</h2>
+<p>Interactive documents — like Quarto docs — combine code and text together into a self-contained document.</p>
+<ul>
+<li>Load and process data</li>
+<li>Run models</li>
+<li>Generate tables and plots in-line with text</li>
+<li>In-text values automatically filled in</li>
+</ul>
+<div class="fragment">
+<p>Interactive documents allow a reader to examine your computational methods within the document itself; in effect, they are self-documenting.</p>
+</div>
+<div class="fragment">
+<p>By re-running the code, they reproduce your results on demand.</p>
+</div>
+<div class="fragment">
+<p>Common Platforms:</p>
+<ul>
+<li>
+<strong>R:</strong> Quarto</li>
+<li>
+<strong>Python:</strong> Jupyter Notebooks</li>
+</ul>
+</div>
+</section></section><section><section id="useful-base-r" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Useful Base R</h1>
+
+</section><section id="selecting-from-vectors-with" class="slide level2"><h2>Selecting from vectors with <code>[</code>
+</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p>Given a vector of values:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">a =</span> <span class="st">"one"</span>, </span>
+<span id="cb16-2"><a href="#cb16-2"></a>       <span class="at">b =</span> <span class="cn">NA</span>, </span>
+<span id="cb16-3"><a href="#cb16-3"></a>       <span class="at">c =</span> <span class="st">"two"</span>, </span>
+<span id="cb16-4"><a href="#cb16-4"></a>       <span class="at">d =</span> <span class="st">"three"</span>, </span>
+<span id="cb16-5"><a href="#cb16-5"></a>       <span class="at">e =</span> <span class="st">"four"</span>, </span>
+<span id="cb16-6"><a href="#cb16-6"></a>       <span class="at">f =</span> <span class="cn">NA</span>, </span>
+<span id="cb16-7"><a href="#cb16-7"></a>       <span class="at">g =</span> <span class="cn">NA</span>, </span>
+<span id="cb16-8"><a href="#cb16-8"></a>       <span class="at">h =</span> <span class="st">"five"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:60%;">
+<p>You can select from the vector</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># with positive integers</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>x[<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     c      a      e 
+ "two"  "one" "four" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># even repeated values</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>x[<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     c      a      a      e      c 
+ "two"  "one"  "one" "four"  "two" </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># with negative integers</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>x[<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">6</span>, <span class="sc">-</span><span class="dv">7</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      a       c       d       e       h 
+  "one"   "two" "three"  "four"  "five" </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># with a logical vector</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>x[<span class="sc">!</span><span class="fu">is.na</span>(x)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      a       c       d       e       h 
+  "one"   "two" "three"  "four"  "five" </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># or with a named vector</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>x[<span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"h"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     c      h 
+ "two" "five" </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="selecting-from-dataframes-with" class="slide level2"><h2>Selecting from dataframes with <code>[</code>
+</h2>
+<p>You can select rows and columns from dataframes with <code>df[rows, cols]</code>.</p>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, </span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"e"</span>, <span class="st">"f"</span>), </span>
+<span id="cb27-4"><a href="#cb27-4"></a>  <span class="at">z =</span> <span class="fu">runif</span>(<span class="dv">3</span>)</span>
+<span id="cb27-5"><a href="#cb27-5"></a>)</span>
+<span id="cb27-6"><a href="#cb27-6"></a></span>
+<span id="cb27-7"><a href="#cb27-7"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+      x y         z
+  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
+1     1 a     0.598
+2     2 e     0.846
+3     3 f     0.957</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:60%;">
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># Select first row and second column</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>df[<span class="dv">1</span>, <span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  y    
+  &lt;chr&gt;
+1 a    </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># Select all rows and columns x and y</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>df[, <span class="fu">c</span>(<span class="st">"x"</span> , <span class="st">"y"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+      x y    
+  &lt;int&gt; &lt;chr&gt;
+1     1 a    
+2     2 e    
+3     3 f    </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># Select rows where `x` is greater than 1 and all columns</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>df[df<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="dv">1</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+      x y         z
+  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
+1     2 e     0.846
+2     3 f     0.957</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="data.frame-vs.-tibble-fa-scroll" class="slide level2 scrollable"><h2>
+<code>data.frame()</code> vs.&nbsp;<code>tibble()</code> <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
+</h2>
+<p>Tibbles are the tidyverse version of a base <code>R</code> dataframe. Usually you can use them interchangably without issue but they have slightly different behavior that’s important to know about when indexing in this way.</p>
+<div class="fragment">
+<p>If <code>df</code> is a data.frame, then <code>df[, cols]</code> will return a vector if <code>col</code> selects a single column and a data frame if it selects more than one column.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb35-2"><a href="#cb35-2"></a>df1[, <span class="st">"x"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>If <code>df</code> is a tibble, then <code>[</code> will always return a tibble.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb37-2"><a href="#cb37-2"></a>df2[, <span class="st">"x"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 1
+      x
+  &lt;int&gt;
+1     1
+2     2
+3     3</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>One way to avoid this ambiguity with <code>data.frames</code> is to explicitly specify <code>drop = FALSE</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>df1[, <span class="st">"x"</span> , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  x
+1 1
+2 2
+3 3</code></pre>
+</div>
+</div>
+</div>
+</section><section id="selecting-from-dataframes-with-and-fa-scroll" class="slide level2 scrollable"><h2>Selecting from dataframes with <code>[[</code> and <code>$</code> <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
+</h2>
+<p><code>[</code>, which selects many elements, is paired with <code>[[</code> and <code>$</code>, which extract a single element.</p>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb41-3"><a href="#cb41-3"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">21</span>)</span>
+<span id="cb41-4"><a href="#cb41-4"></a>)</span>
+<span id="cb41-5"><a href="#cb41-5"></a></span>
+<span id="cb41-6"><a href="#cb41-6"></a>tb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+      x     y
+  &lt;int&gt; &lt;dbl&gt;
+1     1    10
+2     2     4
+3     3     1
+4     4    21</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:60%;">
+<div class="fragment">
+<p><code>[[ ]]</code> can access by position or by name:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="co"># by position</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a>tb[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co"># by name</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a>tb[[<span class="st">"x"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><code>$</code> is specialized for access by name:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>tb<span class="sc">$</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>They can also be used to create new columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>tb<span class="sc">$</span>z <span class="ot">&lt;-</span> tb<span class="sc">$</span>x <span class="sc">+</span> tb<span class="sc">$</span>y</span>
+<span id="cb49-2"><a href="#cb49-2"></a>tb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+      x     y     z
+  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     1    10    11
+2     2     4     6
+3     3     1     4
+4     4    21    25</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="getting-help-fa-scroll" class="slide level2 scrollable"><h2>Getting Help <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
 </h2>
 <p>One of the most difficult things as a beginner in <code>R</code> (or any language tbh) is not always knowing what to ask to solve your issue. Being in this class is a great first step! Some other useful tools:</p>
 <div>
@@ -1063,345 +1511,143 @@ temp.txt</code></pre>
 </li>
 </ul>
 </div>
-</section></section><section id="start-of-chucks-section" class="title-slide slide level1 center"><h1>START OF CHUCK’S SECTION</h1>
+</section></section><section><section id="lab-3" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Lab 3</h1>
 
-</section><section><section id="reproducible-research" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Reproducible Research</h1>
+</section><section class="slide level2"><ol type="1">
+<li><p>If you haven’t already, go to <em>Tools</em> &gt; <em>Global Options</em> and adjust your settings (i.e.&nbsp;<em>General</em>, <em>Code</em> &gt; <em>Editing</em>, and <em>Code</em> &gt; <em>Display</em>) to those recommended in the lecture and any others that you’d like to change (i.e.&nbsp;<em>Appearance</em>, <em>Pane Layout</em>, or <em>R Markdown</em>)</p></li>
+<li><p>Restyle the following pipelines following the guidelines discussed in lecture:</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>flights<span class="sc">|&gt;</span><span class="fu">filter</span>(dest<span class="sc">==</span><span class="st">"IAH"</span>)<span class="sc">|&gt;</span><span class="fu">group_by</span>(year,month,day)<span class="sc">|&gt;</span><span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(),</span>
+<span id="cb51-2"><a href="#cb51-2"></a><span class="at">delay=</span><span class="fu">mean</span>(arr_delay,<span class="at">na.rm=</span><span class="cn">TRUE</span>))<span class="sc">|&gt;</span><span class="fu">filter</span>(n<span class="sc">&gt;</span><span class="dv">10</span>)</span>
+<span id="cb51-3"><a href="#cb51-3"></a></span>
+<span id="cb51-4"><a href="#cb51-4"></a>flights<span class="sc">|&gt;</span><span class="fu">filter</span>(carrier<span class="sc">==</span><span class="st">"UA"</span>,dest<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"IAH"</span>,<span class="st">"HOU"</span>),sched_dep_time<span class="sc">&gt;</span></span>
+<span id="cb51-5"><a href="#cb51-5"></a><span class="dv">0900</span>,sched_arr_time<span class="sc">&lt;</span><span class="dv">2000</span>)<span class="sc">|&gt;</span><span class="fu">group_by</span>(flight)<span class="sc">|&gt;</span><span class="fu">summarize</span>(<span class="at">delay=</span><span class="fu">mean</span>(</span>
+<span id="cb51-6"><a href="#cb51-6"></a>arr_delay,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="at">cancelled=</span><span class="fu">sum</span>(<span class="fu">is.na</span>(arr_delay)),<span class="at">n=</span><span class="fu">n</span>())<span class="sc">|&gt;</span><span class="fu">filter</span>(n<span class="sc">&gt;</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li><p>Press <em>Option</em> + <em>Shift</em> + <em>K</em> / <em>Alt</em> + <em>Shift</em> + <em>K</em>. What happens? How can you get to the same place using the menus?</p></li>
+<li><p>Tweak each of the following R commands so that they run correctly:</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">libary</span>(todyverse)</span>
+<span id="cb52-2"><a href="#cb52-2"></a></span>
+<span id="cb52-3"><a href="#cb52-3"></a><span class="fu">ggplot</span>(<span class="at">dTA =</span> mpg) <span class="sc">+</span> </span>
+<span id="cb52-4"><a href="#cb52-4"></a>  <span class="fu">geom_point</span>(<span class="at">maping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
+<span id="cb52-5"><a href="#cb52-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="5" type="1">
+<li>What might be a good way to organize your homework assignments for this class?</li>
+</ol></section><section id="solution-1.-adjust-settings" class="slide level2"><h2>Solution: 1. Adjust settings</h2>
 
-</section><section id="why-reproducibility" class="slide level2"><h2>Why Reproducibility?</h2>
-<p>Reproducibility is not <em>replication</em>.</p>
-<ul>
-<li>
-<strong>Replication</strong> is running a new study to show if and how results of a prior study hold.</li>
-<li>
-<strong>Reproducibility</strong> is about rerunning <em>the same study</em> and getting the <em>same results</em>.</li>
-</ul>
-<div class="fragment">
-<p>Reproducible studies can still be <em>wrong</em>… and in fact reproducibility makes proving a study wrong <em>much easier</em>.</p>
+<img data-src="images/clean-slate.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Clear .RData, Never save</p></section><section id="solution-1.-adjust-settings-1" class="slide level2"><h2>Solution: 1. Adjust settings</h2>
+
+<img data-src="images/rstudio-pipe-options.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Native pipe</p></section><section id="solution-1.-adjust-settings-2" class="slide level2"><h2>Solution: 1. Adjust settings</h2>
+
+<img data-src="images/rainbow_function.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Highlight function calls; preview colors; rainbow parentheses</p></section><section id="solution-1.-adjust-settings-3" class="slide level2"><h2>Solution: 1. Adjust settings</h2>
+
+<img data-src="images/code_style.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Code appearance</p></section><section id="solution-1.-adjust-settings-4" class="slide level2"><h2>Solution: 1. Adjust settings</h2>
+
+<img data-src="images/pane_arrangement.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Pane Layout</p></section><section id="solution-1.-adjust-settings-5" class="slide level2"><h2>Solution: 1. Adjust settings</h2>
+
+<img data-src="images/markdown_preferences.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Markdown Preferences</p></section><section id="solution-2.-readable-code-style" class="slide level2"><h2>Solution: 2. Readable code style</h2>
+<div class="fragment semi-fade-out" data-fragment-index="1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>flights<span class="sc">|&gt;</span><span class="fu">filter</span>(dest<span class="sc">==</span><span class="st">"IAH"</span>)<span class="sc">|&gt;</span><span class="fu">group_by</span>(year,month,day)<span class="sc">|&gt;</span><span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(),</span>
+<span id="cb53-2"><a href="#cb53-2"></a><span class="at">delay=</span><span class="fu">mean</span>(arr_delay,<span class="at">na.rm=</span><span class="cn">TRUE</span>))<span class="sc">|&gt;</span><span class="fu">filter</span>(n<span class="sc">&gt;</span><span class="dv">10</span>)</span>
+<span id="cb53-3"><a href="#cb53-3"></a></span>
+<span id="cb53-4"><a href="#cb53-4"></a>flights<span class="sc">|&gt;</span><span class="fu">filter</span>(carrier<span class="sc">==</span><span class="st">"UA"</span>,dest<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"IAH"</span>,<span class="st">"HOU"</span>),sched_dep_time<span class="sc">&gt;</span></span>
+<span id="cb53-5"><a href="#cb53-5"></a><span class="dv">0900</span>,sched_arr_time<span class="sc">&lt;</span><span class="dv">2000</span>)<span class="sc">|&gt;</span><span class="fu">group_by</span>(flight)<span class="sc">|&gt;</span><span class="fu">summarize</span>(<span class="at">delay=</span><span class="fu">mean</span>(</span>
+<span id="cb53-6"><a href="#cb53-6"></a>arr_delay,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="at">cancelled=</span><span class="fu">sum</span>(<span class="fu">is.na</span>(arr_delay)),<span class="at">n=</span><span class="fu">n</span>())<span class="sc">|&gt;</span><span class="fu">filter</span>(n<span class="sc">&gt;</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="fragment">
-<p>Reproducibility means:</p>
-<ul>
-<li>Transparent research practices.</li>
-<li>Minimal barriers to verifying your results.</li>
-</ul>
 </div>
-<div class="fragment">
-<p><em>Any study that isn’t reproducible can be trusted only on faith.</em></p>
+<div class="fragment fade-in" data-fragment-index="1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb54-2"><a href="#cb54-2"></a>  <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">"IAH"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb54-3"><a href="#cb54-3"></a>  <span class="fu">group_by</span>(year, month, day) <span class="sc">|&gt;</span> </span>
+<span id="cb54-4"><a href="#cb54-4"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb54-5"><a href="#cb54-5"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb54-6"><a href="#cb54-6"></a>    <span class="at">delay =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb54-7"><a href="#cb54-7"></a>    ) <span class="sc">|&gt;</span> </span>
+<span id="cb54-8"><a href="#cb54-8"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">10</span>)</span>
+<span id="cb54-9"><a href="#cb54-9"></a></span>
+<span id="cb54-10"><a href="#cb54-10"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb54-11"><a href="#cb54-11"></a>  <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">"UA"</span>, dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"IAH"</span>, <span class="st">"HOU"</span>), </span>
+<span id="cb54-12"><a href="#cb54-12"></a>         sched_dep_time <span class="sc">&gt;</span> <span class="dv">0900</span>, sched_arr_time <span class="sc">&lt;</span> <span class="dv">2000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb54-13"><a href="#cb54-13"></a>  <span class="fu">group_by</span>(flight) <span class="sc">|&gt;</span> </span>
+<span id="cb54-14"><a href="#cb54-14"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb54-15"><a href="#cb54-15"></a>    <span class="at">delay =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb54-16"><a href="#cb54-16"></a>    <span class="at">cancelled =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(arr_delay)), </span>
+<span id="cb54-17"><a href="#cb54-17"></a>    <span class="at">n =</span> <span class="fu">n</span>() </span>
+<span id="cb54-18"><a href="#cb54-18"></a>    ) <span class="sc">|&gt;</span> </span>
+<span id="cb54-19"><a href="#cb54-19"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="reproducibility-definitions" class="slide level2"><h2>Reproducibility Definitions</h2>
-<p>Reproducibility comes in three forms (Stodden 2014):</p>
-<div class="fragment">
+</div>
+</section><section id="solution-3.-option-shift-k-alt-shift-k" class="slide level2"><h2>Solution: 3. <em>Option</em> + <em>Shift</em> + <em>K</em> / <em>Alt</em> + <em>Shift</em> + <em>K</em>
+</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="images/keyboard_shortcuts.png" style="width:80.0%"></p>
+</figure>
+</div>
+
+<aside><div>
+<p>You can find the same quick reference pop-up by clicking <em>Tools</em> &gt; <em>Keyboard Shortcuts Help</em>.</p>
+</div></aside></section><section id="solution-4.-keyboard-shortcut" class="slide level2"><h2>Solution: 4. Keyboard shortcut</h2>
+<div class="fragment semi-fade-out" data-fragment-index="1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">libary</span>(todyverse)</span>
+<span id="cb55-2"><a href="#cb55-2"></a></span>
+<span id="cb55-3"><a href="#cb55-3"></a><span class="fu">ggplot</span>(<span class="at">dTA =</span> mpg) <span class="sc">+</span> </span>
+<span id="cb55-4"><a href="#cb55-4"></a>  <span class="fu">geom_point</span>(<span class="at">maping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
+<span id="cb55-5"><a href="#cb55-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">libary</span>(tidyverse)</span>
+<span id="cb56-2"><a href="#cb56-2"></a></span>
+<span id="cb56-3"><a href="#cb56-3"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg, </span>
+<span id="cb56-4"><a href="#cb56-4"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy)) <span class="sc">+</span> </span>
+<span id="cb56-5"><a href="#cb56-5"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb56-6"><a href="#cb56-6"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section><section id="solution-5.-organizing-a-class" class="slide level2"><h2>Solution: 5. Organizing a class</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><br></p>
 <div>
 <ol type="1">
-<li class="fragment">
-<strong>Empirical:</strong> Repeatability in data collection.</li>
-<li class="fragment">
-<strong>Statistical:</strong> Verification with alternate methods of inference.</li>
-<li class="fragment">
-<strong>Computational:</strong> Reproducibility in cleaning, organizing, and presenting data and results.</li>
+<li class="fragment">Create a folder for this class on a computer/system that gets backed up regularly</li>
+<li class="fragment">Each homework assignment gets a different RStudio project</li>
+<li class="fragment">Everything within each homework assignment project gets saved into that specific folder (or a subfolder of that folder)</li>
+<li class="fragment">Anything required for each homework assignment (e.g.&nbsp;downloaded data) is saved into its project-specific folder</li>
 </ol>
 </div>
-</div>
+</div><div class="column" style="width:50%;">
 <div class="fragment">
-<p>R is particularly well suited to enabling <strong>computational reproducibility</strong><sup>1</sup>.</p>
-</div>
-<div class="fragment">
-<p>They will not fix flawed research design, nor offer a remedy for improper application of statistical methods.</p>
-<p>Those are the difficult, non-automatable things you want skills in.</p>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn3"><p> Python is equally well suited. Julia is an option as well.</p></li></ol></aside></section><section id="computational-reproducibility" class="slide level2"><h2>Computational Reproducibility</h2>
-<p>Elements of computational reproducibility:</p>
-<div class="fragment">
-<ul>
-<li>Shared data
-<ul>
-<li>Researchers need your original data to verify and replicate your work.</li>
-</ul>
-</li>
-<li>Shared code
-<ul>
-<li>Your code must be shared to make decisions transparent.</li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li>Documentation
-<ul>
-<li>The operation of code should be either self-documenting or have written descriptions to make its use clear.</li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li>
-<strong>Version Control</strong>
-<ul>
-<li>Documents the research process.</li>
-<li>Prevents losing work and facilitates sharing.</li>
-</ul>
-</li>
-</ul>
-</div>
-</section><section id="levels-of-reproducibility" class="slide level2"><h2>Levels of Reproducibility</h2>
-<p>For academic papers, degrees of reproducibility vary:</p>
-<div>
-<ol start="0" type="1">
-<li class="fragment">“Read the article”</li>
-<li class="fragment">Shared data with documentation</li>
-<li class="fragment">Shared data and all code</li>
-<li class="fragment"><strong>Interactive document</strong></li>
-<li class="fragment"><strong>Research compendium</strong></li>
-<li class="fragment">Docker compendium: Self-contained ecosystem</li>
-</ol>
-</div>
-</section><section id="interactive-documents" class="slide level2"><h2>Interactive Documents</h2>
-<p><strong>Interactive documents</strong> — like Quarto docs — combine code and text together into a self-contained document.</p>
-<ul>
-<li>Load and process data</li>
-<li>Run models</li>
-<li>Generate tables and plots in-line with text</li>
-<li>In-text values automatically filled in</li>
-</ul>
-<div class="fragment">
-<p>Interactive documents allow a reader to examine your computational methods within the document itself; in effect, they are self-documenting.</p>
-</div>
-<div class="fragment">
-<p>By re-running the code, they reproduce your results on demand.</p>
-</div>
-<div class="fragment">
-<p>Common Platforms:</p>
-<ul>
-<li>
-<strong>R:</strong> Quarto</li>
-<li>
-<strong>Python:</strong> Jupyter Notebooks</li>
-</ul>
-</div>
-</section><section id="research-compendia" class="slide level2"><h2>Research Compendia</h2>
-<p>A <strong>research compendium</strong> is a portable, reproducible distribution of an article or other project.</p>
-<div class="fragment">
-<p>Research compendia feature:</p>
-<ul>
-<li><p>An interactive document as the foundation</p></li>
-<li><p>Files organized in a recognizable structure (e.g.&nbsp;an R package)</p></li>
-<li><p>Clear separation of data, method, and output. <em>Data are read only</em>.</p></li>
-<li><p>A well-documented or even <em>preserved</em> computational environment (e.g.&nbsp;Docker)</p></li>
-</ul>
-</div>
-<div class="fragment">
-<p><code>rrtools</code> by UW’s <a href="https://github.com/benmarwick">Ben Markwick</a> provides a simplified workflow to accomplish this in R.</p>
-</div>
-</section><section id="bookdown" class="slide level2"><h2>Bookdown</h2>
-<p><a href="https://bookdown.org/yihui/bookdown/"><code>bookdown</code></a> — which is integrated into <code>rrtools</code> — can generate documents in the proper format for articles, theses, books, or dissertations.</p>
-<div class="fragment">
-<p><code>bookdown</code> provides an accessible alternative to writing <span class="math inline">\(\LaTeX\)</span> for typesetting and reference management.</p>
-</div>
-<div class="fragment">
-<p>You can integrate citations and automate reference page generation using bibtex files (such as produced by Zotero).</p>
-</div>
-<div class="fragment">
-<p><code>bookdown</code> supports <code>.html</code> output for ease and speed and also renders <code>.pdf</code> files through <span class="math inline">\(\LaTeX\)</span> for publication-ready documents.</p>
-</div>
-<div class="fragment">
-<p>For University of Washington theses and dissertations, consider Ben Marwick’s <a href="https://github.com/benmarwick/huskydown"><code>huskydown</code> package</a> which uses Markdown but renders via a UW approved <span class="math inline">\(\LaTeX\)</span> template.</p>
-</div>
-</section></section><section id="best-practices" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Best Practices</h1>
-
-</section><section><section id="tools-some-opinionated-advice" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Tools (<em>some opinionated advice</em>)</h1>
-
-</section><section id="on-formats" class="slide level2"><h2>On Formats</h2>
-<p>Avoid “closed” or commercial software and file formats except where absolutely necessary.</p>
-<div class="fragment">
-<p>Use open source software and file formats.</p>
-</div>
-<div class="fragment">
-<ul>
-<li>
-<p>It is always better for <em>science</em>:</p>
-<ul>
-<li>People should be able to explore your research without buying commercial software.</li>
-<li>You do not want your research to be inaccessible when software is updated.</li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li>
-<p>It is often just <em>better</em>.</p>
-<ul>
-<li>It is usually updated more quickly</li>
-<li>It tends to be more secure</li>
-<li>It is rarely abandoned</li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="fragment">
-<p><strong>The ideal:</strong> Use software that reads and writes <em>raw text</em>.</p>
-</div>
-</section><section id="text" class="slide level2"><h2>Text</h2>
-<p>Writing and formatting documents are two completely separate jobs.</p>
-<ul>
-<li>Write first</li>
-<li>Format later</li>
-<li>
-<a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> was made for this</li>
-</ul>
-<div class="fragment">
-<p>Word processors — like Microsoft Word — try to do both at the same time, usually badly.</p>
-<p>They waste time by leading you to format instead of writing.</p>
-</div>
-<div class="fragment">
-<p>Find a good modular text editor and learn to use it:</p>
-<ul>
-<li><a href="https://atom.io/">Atom</a></li>
-<li>
-<a href="https://www.sublimetext.com/">Sublime</a> (Commercial)</li>
-<li>Emacs</li>
-<li>Vim</li>
-</ul>
-</div>
-</section></section><section><section id="version-control" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Version Control</h1>
-
-</section><section id="version-control-1" class="slide level2"><h2>Version Control</h2>
-<p>Version control originates in collaborative software development.</p>
-<p><strong>The Idea:</strong> All changes ever made to a piece of software are documented, saved automatically, and revertible.</p>
-<div class="fragment">
-<p>Version control allows all decisions ever made in a research project to be documented automatically.</p>
-</div>
-<div class="fragment">
-<p>Version control can:</p>
-<ol type="1">
-<li>Protect your work from destructive changes</li>
-<li>Simplify collaboration by merging changes</li>
-<li>Document design decisions</li>
-<li>Make your research process transparent</li>
-</ol>
-</div>
-</section><section id="git-and-github" class="slide level2"><h2>Git and GitHub</h2>
-<p><a href="https://en.wikipedia.org/wiki/Git"><code>git</code></a> is the dominant platform for version control, and <a href="https://github.com/">GitHub</a> is a free (and now Microsoft owned) platform for hosting <strong>repositories</strong>.</p>
-<div class="fragment">
-<p><strong>Repositories</strong> are folders on your computer where all changes are tracked by Git.</p>
-</div>
-<div class="fragment">
-<p>Once satisfied with changes, you “commit” them then “push” them to a remote repository that stores your project.</p>
-</div>
-<div class="fragment">
-<p>Others can copy your project (“pull”), and if you permit, make suggestions for changes.</p>
-</div>
-<div class="fragment">
-<p>Constantly committing and pulling changes automatically generates a running “history” that documents the evolution of a project.</p>
-</div>
-<div class="fragment">
-<p><code>git</code> is integrated into RStudio under the <em>Tools</em> menu. <a href="http://happygitwithr.com/">It requires some setup.</a><sup>1</sup></p>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn4"><p>You can also use the <a href="https://desktop.github.com/">GitHub desktop application</a>.</p></li></ol></aside></section><section id="github-as-a-cv" class="slide level2"><h2>GitHub as a CV</h2>
-<p>Beyond archiving projects and allowing sharing, GitHub also serves as a sort of curriculum vitae for the programmer.</p>
-<div class="fragment">
-<p>By allowing others to view your projects, you can display competence in programming and research.</p>
-</div>
-<div class="fragment">
-<p>If you are planning on working in the private sector, an active GitHub profile will give you a leg up on the competition.</p>
-</div>
-<div class="fragment">
-<p>If you are aiming for academia, a GitHub account signals technical competence and an interest in research transparency.</p>
-</div>
-</section></section><section><section id="useful-base-r" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Useful Base R</h1>
-
-</section><section id="selecting-from-vectors-with" class="slide level2"><h2>Selecting from vectors with [ ]</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<p>Given a vector of values:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">a =</span> <span class="st">"one"</span>, </span>
-<span id="cb12-2"><a href="#cb12-2"></a>       <span class="at">b =</span> <span class="cn">NA</span>, </span>
-<span id="cb12-3"><a href="#cb12-3"></a>       <span class="at">c =</span> <span class="st">"two"</span>, </span>
-<span id="cb12-4"><a href="#cb12-4"></a>       <span class="at">d =</span> <span class="st">"three"</span>, </span>
-<span id="cb12-5"><a href="#cb12-5"></a>       <span class="at">e =</span> <span class="st">"four"</span>, </span>
-<span id="cb12-6"><a href="#cb12-6"></a>       <span class="at">f =</span> <span class="cn">NA</span>, </span>
-<span id="cb12-7"><a href="#cb12-7"></a>       <span class="at">g =</span> <span class="cn">NA</span>, </span>
-<span id="cb12-8"><a href="#cb12-8"></a>       <span class="at">h =</span> <span class="st">"five"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div><div class="column" style="width:60%;">
-<p>You can select from the vector</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># </span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>x[<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     c      a      e 
- "two"  "one" "four" </code></pre>
-</div>
-</div>
-<p>…with negative integers:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>x[<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">6</span>, <span class="sc">-</span><span class="dv">7</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      a       c       d       e       h 
-  "one"   "two" "three"  "four"  "five" </code></pre>
-</div>
-</div>
-<p>…with a logical vector:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>x[<span class="sc">!</span><span class="fu">is.na</span>(x)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      a       c       d       e       h 
-  "one"   "two" "three"  "four"  "five" </code></pre>
-</div>
-</div>
-<p>…and with a named vector:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>x[<span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"h"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     c      h 
- "two" "five" </code></pre>
-</div>
-</div>
-</div>
-</div>
-</section><section id="selecting-from-dataframes-with" class="slide level2"><h2>Selecting from dataframes with [ ]</h2>
-<p>The most important method of selecting from dataframes is selecting rows and columns with <code>df[rows, cols]</code>.</p>
-<div class="columns">
-<div class="column" style="width:40%;">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb21-2"><a href="#cb21-2"></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, </span>
-<span id="cb21-3"><a href="#cb21-3"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"e"</span>, <span class="st">"f"</span>), </span>
-<span id="cb21-4"><a href="#cb21-4"></a>  <span class="at">z =</span> <span class="fu">runif</span>(<span class="dv">3</span>)</span>
-<span id="cb21-5"><a href="#cb21-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div><div class="column" style="width:60%;">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># Select first row and second column</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a>df[<span class="dv">1</span>, <span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 1
-  y    
-  &lt;chr&gt;
-1 a    </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Select all rows and columns x and y</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>df[, <span class="fu">c</span>(<span class="st">"x"</span> , <span class="st">"y"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 2
-      x y    
-  &lt;int&gt; &lt;chr&gt;
-1     1 a    
-2     2 e    
-3     3 f    </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># Select rows where `x` is greater than 1 and all columns</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a>df[df<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="dv">1</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 3
-      x y         z
-  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-1     2 e     0.167
-2     3 f     0.992</code></pre>
-</div>
+<p><br></p>
+<pre><code>CSSS508/
+   Homeworks/
+     HW1/
+       homework1.qmd
+       homework1.html
+     HW2/
+       homework2.qmd
+       homework2.html
+     HW3/
+       homework3.qmd
+       homework3.html
+     HW4/
+       homework4.qmd
+       homework4.html
+       data.csv
+     HW5/
+     HW6/
+     HW7/
+     HW8/
+     HW9/</code></pre>
 </div>
 </div>
 </div>
@@ -1410,23 +1656,23 @@ temp.txt</code></pre>
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="ektbrfwsde" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ektbrfwsde table {
+<div id="mbrfdykygh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mbrfdykygh table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ektbrfwsde thead, #ektbrfwsde tbody, #ektbrfwsde tfoot, #ektbrfwsde tr, #ektbrfwsde td, #ektbrfwsde th {
+#mbrfdykygh thead, #mbrfdykygh tbody, #mbrfdykygh tfoot, #mbrfdykygh tr, #mbrfdykygh td, #mbrfdykygh th {
   border-style: none;
 }
 
-#ektbrfwsde p {
+#mbrfdykygh p {
   margin: 0;
   padding: 0;
 }
 
-#ektbrfwsde .gt_table {
+#mbrfdykygh .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1452,12 +1698,12 @@ temp.txt</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#ektbrfwsde .gt_caption {
+#mbrfdykygh .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ektbrfwsde .gt_title {
+#mbrfdykygh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1469,7 +1715,7 @@ temp.txt</code></pre>
   border-bottom-width: 0;
 }
 
-#ektbrfwsde .gt_subtitle {
+#mbrfdykygh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1481,7 +1727,7 @@ temp.txt</code></pre>
   border-top-width: 0;
 }
 
-#ektbrfwsde .gt_heading {
+#mbrfdykygh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1493,13 +1739,13 @@ temp.txt</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ektbrfwsde .gt_bottom_border {
+#mbrfdykygh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ektbrfwsde .gt_col_headings {
+#mbrfdykygh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1514,7 +1760,7 @@ temp.txt</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ektbrfwsde .gt_col_heading {
+#mbrfdykygh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1534,7 +1780,7 @@ temp.txt</code></pre>
   overflow-x: hidden;
 }
 
-#ektbrfwsde .gt_column_spanner_outer {
+#mbrfdykygh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1546,15 +1792,15 @@ temp.txt</code></pre>
   padding-right: 4px;
 }
 
-#ektbrfwsde .gt_column_spanner_outer:first-child {
+#mbrfdykygh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ektbrfwsde .gt_column_spanner_outer:last-child {
+#mbrfdykygh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ektbrfwsde .gt_column_spanner {
+#mbrfdykygh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1566,11 +1812,11 @@ temp.txt</code></pre>
   width: 100%;
 }
 
-#ektbrfwsde .gt_spanner_row {
+#mbrfdykygh .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ektbrfwsde .gt_group_heading {
+#mbrfdykygh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1596,7 +1842,7 @@ temp.txt</code></pre>
   text-align: left;
 }
 
-#ektbrfwsde .gt_empty_group_heading {
+#mbrfdykygh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1611,15 +1857,15 @@ temp.txt</code></pre>
   vertical-align: middle;
 }
 
-#ektbrfwsde .gt_from_md > :first-child {
+#mbrfdykygh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ektbrfwsde .gt_from_md > :last-child {
+#mbrfdykygh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ektbrfwsde .gt_row {
+#mbrfdykygh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1638,7 +1884,7 @@ temp.txt</code></pre>
   overflow-x: hidden;
 }
 
-#ektbrfwsde .gt_stub {
+#mbrfdykygh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1651,7 +1897,7 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#ektbrfwsde .gt_stub_row_group {
+#mbrfdykygh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1665,15 +1911,15 @@ temp.txt</code></pre>
   vertical-align: top;
 }
 
-#ektbrfwsde .gt_row_group_first td {
+#mbrfdykygh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ektbrfwsde .gt_row_group_first th {
+#mbrfdykygh .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ektbrfwsde .gt_summary_row {
+#mbrfdykygh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1683,16 +1929,16 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#ektbrfwsde .gt_first_summary_row {
+#mbrfdykygh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ektbrfwsde .gt_first_summary_row.thick {
+#mbrfdykygh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ektbrfwsde .gt_last_summary_row {
+#mbrfdykygh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1702,7 +1948,7 @@ temp.txt</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ektbrfwsde .gt_grand_summary_row {
+#mbrfdykygh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1712,7 +1958,7 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#ektbrfwsde .gt_first_grand_summary_row {
+#mbrfdykygh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1722,7 +1968,7 @@ temp.txt</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#ektbrfwsde .gt_last_grand_summary_row_top {
+#mbrfdykygh .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1732,11 +1978,11 @@ temp.txt</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ektbrfwsde .gt_striped {
+#mbrfdykygh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ektbrfwsde .gt_table_body {
+#mbrfdykygh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1745,7 +1991,7 @@ temp.txt</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ektbrfwsde .gt_footnotes {
+#mbrfdykygh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1759,7 +2005,7 @@ temp.txt</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ektbrfwsde .gt_footnote {
+#mbrfdykygh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1768,7 +2014,7 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#ektbrfwsde .gt_sourcenotes {
+#mbrfdykygh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1782,7 +2028,7 @@ temp.txt</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ektbrfwsde .gt_sourcenote {
+#mbrfdykygh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1790,63 +2036,63 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#ektbrfwsde .gt_left {
+#mbrfdykygh .gt_left {
   text-align: left;
 }
 
-#ektbrfwsde .gt_center {
+#mbrfdykygh .gt_center {
   text-align: center;
 }
 
-#ektbrfwsde .gt_right {
+#mbrfdykygh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ektbrfwsde .gt_font_normal {
+#mbrfdykygh .gt_font_normal {
   font-weight: normal;
 }
 
-#ektbrfwsde .gt_font_bold {
+#mbrfdykygh .gt_font_bold {
   font-weight: bold;
 }
 
-#ektbrfwsde .gt_font_italic {
+#mbrfdykygh .gt_font_italic {
   font-style: italic;
 }
 
-#ektbrfwsde .gt_super {
+#mbrfdykygh .gt_super {
   font-size: 65%;
 }
 
-#ektbrfwsde .gt_footnote_marks {
+#mbrfdykygh .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ektbrfwsde .gt_asterisk {
+#mbrfdykygh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ektbrfwsde .gt_indent_1 {
+#mbrfdykygh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ektbrfwsde .gt_indent_2 {
+#mbrfdykygh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ektbrfwsde .gt_indent_3 {
+#mbrfdykygh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ektbrfwsde .gt_indent_4 {
+#mbrfdykygh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ektbrfwsde .gt_indent_5 {
+#mbrfdykygh .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
