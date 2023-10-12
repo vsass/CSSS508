@@ -1319,9 +1319,9 @@ temp.txt</code></pre>
 <pre><code># A tibble: 3 × 3
       x y         z
   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-1     1 a     0.598
-2     2 e     0.846
-3     3 f     0.957</code></pre>
+1     1 a     0.496
+2     2 e     0.899
+3     3 f     0.154</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:60%;">
@@ -1359,8 +1359,8 @@ temp.txt</code></pre>
 <pre><code># A tibble: 2 × 3
       x y         z
   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-1     2 e     0.846
-2     3 f     0.957</code></pre>
+1     2 e     0.899
+2     3 f     0.154</code></pre>
 </div>
 </div>
 </div>
@@ -1620,7 +1620,7 @@ temp.txt</code></pre>
 <div>
 <ol type="1">
 <li class="fragment">Create a folder for this class on a computer/system that gets backed up regularly</li>
-<li class="fragment">Each homework assignment gets a different RStudio project</li>
+<li class="fragment">Each homework assignment gets a separate RStudio project</li>
 <li class="fragment">Everything within each homework assignment project gets saved into that specific folder (or a subfolder of that folder)</li>
 <li class="fragment">Anything required for each homework assignment (e.g.&nbsp;downloaded data) is saved into its project-specific folder</li>
 </ol>
@@ -1644,6 +1644,11 @@ temp.txt</code></pre>
        homework4.html
        data.csv
      HW5/
+       homework5.qmd
+       homework5.html
+         data/
+           data_raw.csv
+           data_processed.Rdata
      HW6/
      HW7/
      HW8/
@@ -1651,28 +1656,89 @@ temp.txt</code></pre>
 </div>
 </div>
 </div>
-</section><section id="due-dates" class="slide level2"><h2>Due dates</h2>
+</section></section><section><section id="homework" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Homework</h1>
+
+</section><section id="homework-3" class="slide level2"><h2>Homework 3</h2>
+<ol type="1">
+<li>Organize your files for this class in a way that facilitates reproducible research.
+<ol type="i">
+<li>For this current homework, begin by first creating a project for “Homework3”<sup>1</sup>.</li>
+<li>For homeworks 1 and 2, make sure they each have their own folder within a folder for this class.</li>
+<li>Retroactively turn those folders into projects in RStudio by selecting <em>File</em> &gt; <em>New Project…</em> &gt; <em>Existing Directory</em> and selecting the appropriate folder for each homework. Then close each project.</li>
+<li>Create your .qmd for this homework within this new project<sup>2</sup>.</li>
+<li>When you’re done organizing the folder for this class, write out its current organizational structure (i.e.&nbsp;something similar to the solution to lab question 5 with the specific names for files and folders that <em>you</em> used.</li>
+</ol>
+</li>
+</ol><aside><ol class="aside-footnotes"><li id="fn5"><p>The specific titles used to name your files/folders can be whatever you want as long as they’re descriptive and consistent in their naming conventions.</p></li><li id="fn6"><p>You’ll notice that the upper-right hand corner of your RStudio IDE now displays the name of your new project for this homework. This is your current working directory.</p></li></ol></aside></section><section id="homework-3-1" class="slide level2"><h2>Homework 3</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li>Create the vector above:
+<ol type="i">
+<li>Look at the help file for <code>rnorm</code> and in your own words describe what arguments it takes and what it produces.</li>
+<li>Which arguments are required and which are optional (if any)?</li>
+<li>What does the <code>r</code> in <code>rnorm</code> stand for?</li>
+<li>Using <code>[</code>, select every value except the last one</li>
+<li>Using <code>[</code>, select only values that are greater than 10.</li>
+</ol>
+</li>
+</ol></section><section id="homework-3-2" class="slide level2"><h2>Homework 3</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> class)) <span class="sc">+</span></span>
+<span id="cb59-2"><a href="#cb59-2"></a>  <span class="fu">geom_bar</span>()</span>
+<span id="cb59-3"><a href="#cb59-3"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
+<span id="cb59-4"><a href="#cb59-4"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb59-5"><a href="#cb59-5"></a><span class="fu">ggsave</span>(<span class="st">"mpg-plot.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li>Run the code above.
+<ol type="i">
+<li>Which of the two plots is saved as mpg-plot.png? Why?</li>
+<li>Look at the project folder for this homework and re-write the current organizational structure for this class with any changes that have occurred (i.e.&nbsp;update your answer to 1.v. above).</li>
+</ol>
+</li>
+<li>Go to the <a href="https://twitter.com/rstudiotips">RStudio Tips Twitter account</a> and find one tip that makes sense to you and looks interesting. Describe it, link to it<sup>1</sup> in your qmd, and practice using it!</li>
+</ol><aside><ol class="aside-footnotes"><li id="fn7"><p>See how to link to websites in markdown syntax <a href="https://quarto.org/docs/authoring/markdown-basics.html#links-images">here</a></p></li></ol></aside></section><section id="homework-3-3" class="slide level2"><h2>Homework 3</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>y <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">a =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">2</span>), </span>
+<span id="cb60-2"><a href="#cb60-2"></a>            <span class="at">b =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"strawberry"</span>, <span class="st">"peach"</span>, <span class="st">"mango"</span>), </span>
+<span id="cb60-3"><a href="#cb60-3"></a>            <span class="at">c =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="cn">TRUE</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="5" type="1">
+<li>Create the tibble above.
+<ol type="i">
+<li>In your own words what does <code>seq</code> do and what arguments does it take?</li>
+<li>In your own words what does <code>rep</code> do and what arguments does it take?</li>
+<li>Index using <code>[</code> to arrive at the results: <code># A tibble: 2 × 1       b                &lt;chr&gt;            1 banana           2 mango</code>
+</li>
+<li>Index using <code>$</code> to arrive at the results: <code>[1]  TRUE  TRUE  TRUE FALSE FALSE</code>
+</li>
+<li>What does <code>y[3:5, ]</code> produce? What do you think <code>:</code> does?</li>
+</ol>
+</li>
+</ol></section><section id="due-dates" class="slide level2"><h2>Due dates</h2>
 </section><section id="due-dates-1" class="slide level2"><h2>Due dates</h2>
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="mbrfdykygh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mbrfdykygh table {
+<div id="lnizhriicy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#lnizhriicy table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mbrfdykygh thead, #mbrfdykygh tbody, #mbrfdykygh tfoot, #mbrfdykygh tr, #mbrfdykygh td, #mbrfdykygh th {
+#lnizhriicy thead, #lnizhriicy tbody, #lnizhriicy tfoot, #lnizhriicy tr, #lnizhriicy td, #lnizhriicy th {
   border-style: none;
 }
 
-#mbrfdykygh p {
+#lnizhriicy p {
   margin: 0;
   padding: 0;
 }
 
-#mbrfdykygh .gt_table {
+#lnizhriicy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1698,12 +1764,12 @@ temp.txt</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#mbrfdykygh .gt_caption {
+#lnizhriicy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mbrfdykygh .gt_title {
+#lnizhriicy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1715,7 +1781,7 @@ temp.txt</code></pre>
   border-bottom-width: 0;
 }
 
-#mbrfdykygh .gt_subtitle {
+#lnizhriicy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1727,7 +1793,7 @@ temp.txt</code></pre>
   border-top-width: 0;
 }
 
-#mbrfdykygh .gt_heading {
+#lnizhriicy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1739,13 +1805,13 @@ temp.txt</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#mbrfdykygh .gt_bottom_border {
+#lnizhriicy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mbrfdykygh .gt_col_headings {
+#lnizhriicy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1760,7 +1826,7 @@ temp.txt</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#mbrfdykygh .gt_col_heading {
+#lnizhriicy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1780,7 +1846,7 @@ temp.txt</code></pre>
   overflow-x: hidden;
 }
 
-#mbrfdykygh .gt_column_spanner_outer {
+#lnizhriicy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1792,15 +1858,15 @@ temp.txt</code></pre>
   padding-right: 4px;
 }
 
-#mbrfdykygh .gt_column_spanner_outer:first-child {
+#lnizhriicy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mbrfdykygh .gt_column_spanner_outer:last-child {
+#lnizhriicy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mbrfdykygh .gt_column_spanner {
+#lnizhriicy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1812,11 +1878,11 @@ temp.txt</code></pre>
   width: 100%;
 }
 
-#mbrfdykygh .gt_spanner_row {
+#lnizhriicy .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mbrfdykygh .gt_group_heading {
+#lnizhriicy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1842,7 +1908,7 @@ temp.txt</code></pre>
   text-align: left;
 }
 
-#mbrfdykygh .gt_empty_group_heading {
+#lnizhriicy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1857,15 +1923,15 @@ temp.txt</code></pre>
   vertical-align: middle;
 }
 
-#mbrfdykygh .gt_from_md > :first-child {
+#lnizhriicy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mbrfdykygh .gt_from_md > :last-child {
+#lnizhriicy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mbrfdykygh .gt_row {
+#lnizhriicy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1884,7 +1950,7 @@ temp.txt</code></pre>
   overflow-x: hidden;
 }
 
-#mbrfdykygh .gt_stub {
+#lnizhriicy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1897,7 +1963,7 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#mbrfdykygh .gt_stub_row_group {
+#lnizhriicy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1911,15 +1977,15 @@ temp.txt</code></pre>
   vertical-align: top;
 }
 
-#mbrfdykygh .gt_row_group_first td {
+#lnizhriicy .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mbrfdykygh .gt_row_group_first th {
+#lnizhriicy .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mbrfdykygh .gt_summary_row {
+#lnizhriicy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1929,16 +1995,16 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#mbrfdykygh .gt_first_summary_row {
+#lnizhriicy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mbrfdykygh .gt_first_summary_row.thick {
+#lnizhriicy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mbrfdykygh .gt_last_summary_row {
+#lnizhriicy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1948,7 +2014,7 @@ temp.txt</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#mbrfdykygh .gt_grand_summary_row {
+#lnizhriicy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1958,7 +2024,7 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#mbrfdykygh .gt_first_grand_summary_row {
+#lnizhriicy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1968,7 +2034,7 @@ temp.txt</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#mbrfdykygh .gt_last_grand_summary_row_top {
+#lnizhriicy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1978,11 +2044,11 @@ temp.txt</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#mbrfdykygh .gt_striped {
+#lnizhriicy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mbrfdykygh .gt_table_body {
+#lnizhriicy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1991,7 +2057,7 @@ temp.txt</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#mbrfdykygh .gt_footnotes {
+#lnizhriicy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2005,7 +2071,7 @@ temp.txt</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#mbrfdykygh .gt_footnote {
+#lnizhriicy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2014,7 +2080,7 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#mbrfdykygh .gt_sourcenotes {
+#lnizhriicy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2028,7 +2094,7 @@ temp.txt</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#mbrfdykygh .gt_sourcenote {
+#lnizhriicy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2036,63 +2102,63 @@ temp.txt</code></pre>
   padding-right: 5px;
 }
 
-#mbrfdykygh .gt_left {
+#lnizhriicy .gt_left {
   text-align: left;
 }
 
-#mbrfdykygh .gt_center {
+#lnizhriicy .gt_center {
   text-align: center;
 }
 
-#mbrfdykygh .gt_right {
+#lnizhriicy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mbrfdykygh .gt_font_normal {
+#lnizhriicy .gt_font_normal {
   font-weight: normal;
 }
 
-#mbrfdykygh .gt_font_bold {
+#lnizhriicy .gt_font_bold {
   font-weight: bold;
 }
 
-#mbrfdykygh .gt_font_italic {
+#lnizhriicy .gt_font_italic {
   font-style: italic;
 }
 
-#mbrfdykygh .gt_super {
+#lnizhriicy .gt_super {
   font-size: 65%;
 }
 
-#mbrfdykygh .gt_footnote_marks {
+#lnizhriicy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mbrfdykygh .gt_asterisk {
+#lnizhriicy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mbrfdykygh .gt_indent_1 {
+#lnizhriicy .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mbrfdykygh .gt_indent_2 {
+#lnizhriicy .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mbrfdykygh .gt_indent_3 {
+#lnizhriicy .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mbrfdykygh .gt_indent_4 {
+#lnizhriicy .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mbrfdykygh .gt_indent_5 {
+#lnizhriicy .gt_indent_5 {
   text-indent: 25px;
 }
 </style>

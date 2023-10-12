@@ -1362,7 +1362,7 @@
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#homework-3",
     "title": "",
     "section": "Homework 3",
-    "text": "Homework 3\nCreate a qmd file (from scratch this time!) in which you answer each of the following questions. Be sure to display all your code in the knitted version (use throughout echo: false).\nRemember, the package nycflights13 contains data on flights originating in NYC during the year 2013. There are three airports servicing NYC: JFK, LGA (“LaGuardia”), and EWR (“Newark”).\n\nChoose an airport outside New York, and count how many flights went to that airport from NYC in 2013. How many of those flights started at JFK, LGA, and EWR? (Hint: Use filter, group_by, and summarize)\nThe variable arr_delay contains arrival delays in minutes (negative values represent early arrivals). Make a ggplot histogram displaying arrival delays for 2013 flights from NYC to the airport you chose.\nUse left_join to add weather data at departure to the subsetted data1. Calculate the mean temperature by month at departure (temp) across all flights2.\nInvestigate if there is a relationship between departure delay (dep_delay) and wind speed (wind_speed). Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation.\n\nAs always, submit both the .qmd and knitted .html to Canvas.\n\nHint 1: Match on origin, year, month, day, and hour!!Hint 2: Use mean(temp, na.rm=T) to have R calculate an average after ignoring missing data values"
+    "text": "Homework 3\n\nOrganize your files for this class in a way that facilitates reproducible research.\n\nFor this current homework, begin by first creating a project for “Homework3”1.\nFor homeworks 1 and 2, make sure they each have their own folder within a folder for this class.\nRetroactively turn those folders into projects in RStudio by selecting File &gt; New Project… &gt; Existing Directory and selecting the appropriate folder for each homework. Then close each project.\nCreate your .qmd for this homework within this new project2.\nWhen you’re done organizing the folder for this class, write out its current organizational structure (i.e. something similar to the solution to lab question 5 with the specific names for files and folders that you used.\n\n\nThe specific titles used to name your files/folders can be whatever you want as long as they’re descriptive and consistent in their naming conventions.You’ll notice that the upper-right hand corner of your RStudio IDE now displays the name of your new project for this homework. This is your current working directory."
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#due-dates",
@@ -8467,7 +8467,7 @@
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#selecting-from-dataframes-with",
     "title": "",
     "section": "Selecting from dataframes with [\n",
-    "text": "Selecting from dataframes with [\n\nYou can select rows and columns from dataframes with df[rows, cols].\n\n\n\ndf &lt;- tibble(\n  x = 1:3, \n  y = c(\"a\", \"e\", \"f\"), \n  z = runif(3)\n)\n\ndf\n\n# A tibble: 3 × 3\n      x y         z\n  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;\n1     1 a     0.598\n2     2 e     0.846\n3     3 f     0.957\n\n\n\n\n\n# Select first row and second column\ndf[1, 2]\n\n# A tibble: 1 × 1\n  y    \n  &lt;chr&gt;\n1 a    \n\n\n\n\n\n# Select all rows and columns x and y\ndf[, c(\"x\" , \"y\")]\n\n# A tibble: 3 × 2\n      x y    \n  &lt;int&gt; &lt;chr&gt;\n1     1 a    \n2     2 e    \n3     3 f    \n\n\n\n\n\n# Select rows where `x` is greater than 1 and all columns\ndf[df$x &gt; 1, ]\n\n# A tibble: 2 × 3\n      x y         z\n  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;\n1     2 e     0.846\n2     3 f     0.957"
+    "text": "Selecting from dataframes with [\n\nYou can select rows and columns from dataframes with df[rows, cols].\n\n\n\ndf &lt;- tibble(\n  x = 1:3, \n  y = c(\"a\", \"e\", \"f\"), \n  z = runif(3)\n)\n\ndf\n\n# A tibble: 3 × 3\n      x y         z\n  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;\n1     1 a     0.496\n2     2 e     0.899\n3     3 f     0.154\n\n\n\n\n\n# Select first row and second column\ndf[1, 2]\n\n# A tibble: 1 × 1\n  y    \n  &lt;chr&gt;\n1 a    \n\n\n\n\n\n# Select all rows and columns x and y\ndf[, c(\"x\" , \"y\")]\n\n# A tibble: 3 × 2\n      x y    \n  &lt;int&gt; &lt;chr&gt;\n1     1 a    \n2     2 e    \n3     3 f    \n\n\n\n\n\n# Select rows where `x` is greater than 1 and all columns\ndf[df$x &gt; 1, ]\n\n# A tibble: 2 × 3\n      x y         z\n  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;\n1     2 e     0.899\n2     3 f     0.154"
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#creating-an-rstudio-project",
@@ -8649,6 +8649,27 @@
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#solution-5.-organizing-a-class",
     "title": "",
     "section": "Solution: 5. Organizing a class",
-    "text": "Solution: 5. Organizing a class\n\n\n\n\n\nCreate a folder for this class on a computer/system that gets backed up regularly\nEach homework assignment gets a different RStudio project\nEverything within each homework assignment project gets saved into that specific folder (or a subfolder of that folder)\nAnything required for each homework assignment (e.g. downloaded data) is saved into its project-specific folder\n\n\n\n\n\nCSSS508/\n   Homeworks/\n     HW1/\n       homework1.qmd\n       homework1.html\n     HW2/\n       homework2.qmd\n       homework2.html\n     HW3/\n       homework3.qmd\n       homework3.html\n     HW4/\n       homework4.qmd\n       homework4.html\n       data.csv\n     HW5/\n     HW6/\n     HW7/\n     HW8/\n     HW9/"
+    "text": "Solution: 5. Organizing a class\n\n\n\n\n\nCreate a folder for this class on a computer/system that gets backed up regularly\nEach homework assignment gets a separate RStudio project\nEverything within each homework assignment project gets saved into that specific folder (or a subfolder of that folder)\nAnything required for each homework assignment (e.g. downloaded data) is saved into its project-specific folder\n\n\n\n\n\nCSSS508/\n   Homeworks/\n     HW1/\n       homework1.qmd\n       homework1.html\n     HW2/\n       homework2.qmd\n       homework2.html\n     HW3/\n       homework3.qmd\n       homework3.html\n     HW4/\n       homework4.qmd\n       homework4.html\n       data.csv\n     HW5/\n       homework5.qmd\n       homework5.html\n         data/\n           data_raw.csv\n           data_processed.Rdata\n     HW6/\n     HW7/\n     HW8/\n     HW9/"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#homework-3-1",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#homework-3-1",
+    "title": "",
+    "section": "Homework 3",
+    "text": "Homework 3\n\nx &lt;- rnorm(20, 10, 5)\n\n\nCreate the vector above:\n\nLook at the help file for rnorm and in your own words describe what arguments it takes and what it produces.\nWhich arguments are required and which are optional (if any)?\nWhat does the r in rnorm stand for?\nUsing [, select every value except the last one\nUsing [, select only values that are greater than 10."
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#homework-3-2",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#homework-3-2",
+    "title": "",
+    "section": "Homework 3",
+    "text": "Homework 3\n\nggplot(mpg, aes(x = class)) +\n  geom_bar()\nggplot(mpg, aes(x = cty, y = hwy)) +\n  geom_point()\nggsave(\"mpg-plot.png\")\n\n\nRun the code above.\n\nWhich of the two plots is saved as mpg-plot.png? Why?\nLook at the project folder for this homework and re-write the current organizational structure for this class with any changes that have occurred (i.e. update your answer to 1.v. above).\n\n\nGo to the RStudio Tips Twitter account and find one tip that makes sense to you and looks interesting. Describe it, link to it1 in your qmd, and practice using it!\nSee how to link to websites in markdown syntax here"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#homework-3-3",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#homework-3-3",
+    "title": "",
+    "section": "Homework 3",
+    "text": "Homework 3\n\ny &lt;- tibble(a = seq(1, 10, 2), \n            b = c(\"apple\", \"banana\", \"strawberry\", \"peach\", \"mango\"), \n            c = c(rep(TRUE, 3), rep(FALSE, 2)))\n\n\nCreate the tibble above.\n\nIn your own words what does seq do and what arguments does it take?\nIn your own words what does rep do and what arguments does it take?\nIndex using [ to arrive at the results: # A tibble: 2 × 1       b                &lt;chr&gt;            1 banana           2 mango\n\nIndex using $ to arrive at the results: [1]  TRUE  TRUE  TRUE FALSE FALSE\n\nWhat does y[3:5, ] produce? What do you think : does?"
   }
 ]
