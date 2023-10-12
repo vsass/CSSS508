@@ -66,9 +66,9 @@ Today, we will cover,
 
 # Code Style{.section-title background-color="#99a486"}
 
-## Naming Variables 
+## Naming Objects (and Variables)
 
-It's good practice to name variables using only lowercase letters, numbers, and `_` (to separate words). 
+It's good practice to name objects (and variables) using only lowercase letters, numbers, and `_` (to separate words). 
 
 . . . 
 
@@ -220,15 +220,174 @@ The `|>`  is recommended over `%>%` simply because it's always available (`%>%` 
 
 You'll need to specify to `R` that you want to enable its usage by going to *Tools* > *Global Options* > *Code*. Within the "Editing" Tab there is an option to "Use native pipe operator, `|>`". Check it! <span style="color:#e15759">{{< fa check >}}</span>
 
-![](images/rstudio-pipe-options.png){fig-align="center" width=80%}
+![](images/rstudio-pipe-options.png){fig-align="center" width=70%}
 
 ## Other Formatting Options
 
-There are some other useful formatting options I'd suggest setting globally and others you can specify to your preferences. 
+:::: {.columns}
+::: {.column width="40%"}
 
-#### Rainbow Parentheses & HighLight Function Calls
+<br>
+
+There are some other useful formatting options I'd suggest setting globally and others you can specify to your preferences.
+
+<br>
+
+#### Suggested: 
+* Highlight Function Calls
+* Enable preview of colors\
+* Rainbow parentheses
+
+::: 
+::: {.column width="60%"}
 
 ![](images/rainbow_function.png)
+
+:::
+::::
+
+
+## Other Formatting Options
+
+:::: {.columns}
+::: {.column width="40%"}
+
+<br>
+
+There are some other useful formatting options I'd suggest setting globally and others you can specify to your preferences.
+
+<br>
+
+#### Suggested: 
+* [Highlight Function Calls]{.highlight-tableaured}
+* Enable preview of colors\
+* Rainbow parentheses
+
+![](images/function_colors.png){fig-align="center"}
+
+::: 
+::: {.column width="60%"}
+
+![](images/rainbow_function.png){fig-align="center"}
+
+:::
+::::
+
+## Other Formatting Options
+
+:::: {.columns}
+::: {.column width="40%"}
+
+<br>
+
+There are some other useful formatting options I'd suggest setting globally and others you can specify to your preferences.
+
+<br>
+
+#### Suggested: 
+* Highlight Function Calls 
+* [Enable preview of colors]{.highlight-tableaured}
+* Rainbow parentheses
+
+![](images/colors.png){fig-align="center" width=55%}
+:::
+::: {.column width="60%"}
+![](images/rainbow_function.png){fig-align="center"}
+:::
+::::
+
+## Other Formatting Options
+:::: {.columns}
+::: {.column width="40%"}
+
+<br>
+
+There are some other useful formatting options I'd suggest setting globally and others you can specify to your preferences.
+
+<br>
+
+#### Suggested: 
+* Highlight Function Calls
+* Enable preview of colors
+* [Rainbow parentheses]{.highlight-tableaured}
+
+![](images/parentheses.png){fig-align="center" width=75%}
+:::
+::: {.column width="60%"}
+![](images/rainbow_function.png){fig-align="center"}
+:::
+::::
+
+## Other Formatting Options
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+<br>
+
+There are some other useful formatting options I'd suggest setting globally and others you can specify to your preferences.
+
+<br>
+
+#### Up to you: 
+* Code highlight style
+
+:::
+
+::: {.column width="60%"}
+![](images/code_style.png)
+:::
+
+::::
+
+## Other Formatting Options
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+<br>
+
+There are some other useful formatting options I'd suggest setting globally and others you can specify to your preferences.
+
+<br>
+
+#### Up to you: 
+* Pane layout
+
+:::
+
+::: {.column width="60%"}
+![](images/pane_arrangement.png)
+:::
+
+::::
+
+## Other Formatting Options
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+<br>
+
+There are some other useful formatting options I'd suggest setting globally and others you can specify to your preferences.
+
+<br>
+
+#### Up to you: 
+* Markdown options
+  * Output preview
+  * Inline output 
+
+:::
+
+::: {.column width="60%"}
+![](images/markdown_preferences.png)
+:::
+
+::::
 
 ## Styling existing code
 
@@ -242,7 +401,7 @@ Thanks to Lorenz Walthert there's a package for that! Using the [`styler` packag
 
 Have a style or variation of the `tidyverse` style that you prefer? You can specify that in the package as well. Use the keyboard shortcut *Cmd*/*Ctl* + *Shift* + *P* and search for "styler" to see all the options available.
 
-![](images/rstudio-styler.png){width=80% fig-align="center"}
+![](images/rstudio-styler.png){width=70% fig-align="center"}
 
 # Workflow{.section-title background-color="#99a486"}
 
@@ -279,32 +438,73 @@ File names should:
 * be human readable: use file names to describe what’s in the file.
 * play well with default ordering: start file names with numbers so that alphabetical sorting puts them in the order they get used.
 
-## File naming
+## Organization and Portability
+
+Organizing research projects is something you either do accidentally — and badly — or purposefully with some upfront labor.
+
+. . . 
+
+Uniform organization makes switching between or revisiting projects easier.
+
+. . . 
 
 ::: {.panel-tabset}
 
 ### Good Example directory
-```
-01-load-data.R
-02-exploratory-analysis.R
-03-model-approach-1.R
-04-model-approach-2.R
-fig-01.png
-fig-02.png
-report-2022-03-20.qmd
-report-2022-04-02.qmd
-report-draft-notes.txt
-```
 
-<br>
+:::: {.columns}
 
-::: {.incremental}
-* Numbering scripts makes it clear in which order they should be run. 
-* Consistent naming scheme makes it easy to see what things are grouped together and what varies. 
-* With many files in one directory you should go a step further and create subfolders for different types of files (i.e. scripts, figures, tables, etc.)
+::: {.column width="50%"}
+```
+project/
+   readme.md
+   data/
+     derived/
+       data_processed.RData
+     raw/
+       data_core.csv
+   docs/
+     paper-paa.qmd
+     paper-journal.qmd
+   syntax/
+     01-functions.R
+     02-cleaning.R
+     03-exploratory.R
+     04-models.R
+     05-visualizations.R
+   visuals/ 
+     descriptive.png
+     boxplot.png
+     time_series.png
+```
 :::
 
+::: {.column width="50%"}
+
+::: {.incremental .small1}
+1. There is a clear hierarchy
+   * Written content is in `docs`
+   * Code is in `syntax`
+   * Data is in `data`
+   * Visualizations are in `visuals`
+   * The `readme.md` describes the project
+2. Naming is uniform
+   * All lower case
+   * Words separated by underscores
+3. Names are self-descriptive
+4. Numbering scripts makes it clear in which order they should be run.
+
+:::
+
+:::
+
+::::
+
 ### Bad Example directory
+
+:::: {.columns}
+
+::: {.column width="40%"}
 ```
 alternative model.R
 code for exploratory analysis.r
@@ -316,8 +516,9 @@ model_first_try.R
 run-first.r
 temp.txt
 ```
+:::
 
-<br>
+::: {.column width="60%"}
 
 ::: {.incremental}
 * Ordering of the files is unclear
@@ -326,6 +527,10 @@ temp.txt
 :::
 
 :::
+
+::::
+
+::: 
 
 ## Working directory
 
@@ -346,6 +551,7 @@ You can see above that this lecture was created in a lecture-specific folder wit
 . . . 
 
 While you can technically set your working directory using `setwd()` (`set` `w`orking `d`irectory) and giving `R` a filepath, in the name of reproducible research I strongly advise an alternative: **RStudio projects**. 
+
 
 ## Projects
 
@@ -381,23 +587,183 @@ Creating a new project quite basically creates a new folder in a place that you 
 * Facilitates version control with built-in git/GitHub connection *(more on this later in the course)*
 :::
 
-## Getting Help
+## Workflow versus Project
+
+To summarize Jenny Bryan, [one should separate workflow from projects.](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)
+
+<br>
+
+. . . 
+
+:::: {.columns}
+::: {.column width="50%"}
+
+### Workflow
+
+* The software you use to write your code (e.g. RStudio)
+
+* The location you store a project
+
+* The specific computer you use
+
+* The code you ran earlier or typed into your console
+
+:::
+::: {.column width="50%"}
+
+### Project
+
+* The raw data
+
+* The code that operates on your raw data
+
+* The packages you use
+
+* The output files or documents
+
+:::
+::::
+
+. . . 
+
+<br>
+
+Projects *should NOT modify anything outside of the project* nor need to be modified by someone else (or future you) to run.
+
+**Projects *should be independent of your workflow*.**
+
+## Portability
+
+For research to be reproducible, it must also be *portable*. Portable software operates *independently of workflow* such as fixed file locations.
+
+::: {.panel-tabset}
+
+### **Do Not:**
+
+* Use `setwd()` in scripts or .qmd files.
+* Use *absolute paths* except for *fixed, immovable sources* (secure data).
+  + `read_csv("C:/my_project/data/my_data.csv")`
+* Use `install.packages()` in script or .qmd files.
+* Use `rm(list=ls())` anywhere but your console.
+
+### **Do:**
+
+:::: {.columns}
+
+::: {.column width="50%"}
+* Use RStudio projects (or the [`here` package](https://github.com/jennybc/here_here)) to set directories.
+* Use *relative paths* to load and save files:
+  + `read_csv("./data/my_data.csv")`
+* Load all required packages using `library()`.
+* Clear your workspace when closing RStudio.
+  + Set *Tools > Global Options... > Save workspace...* to **Never**
+:::
+
+::: {.column width="50%"}
+
+![](images/clean-slate.png){.absolute right=10 bottom=10 height=75%}
+
+:::
+
+::::
+
+:::
+
+## Divide and Conquer
+
+Often you do not want to include all code for a project in one `.qmd` file:
+
+   * The code takes too long to knit.
+   * The file is so long it is difficult to read.
+
+. . . 
+
+There are two ways to deal with this:
+
+1. Use separate `.R` scripts or `.qmd` files which save results from complicated parts of a project, then load these results in the main `.qmd` file.
+
+   + This is good for loading and cleaning large data.
+   + Also for running slow models.
+
+. . . 
+
+2. Use `source()` to run external `.R` scripts when the `.qmd` renders
+
+   + This can be used to run large files that aren't impractically slow.
+   + Also good for loading project-specific functions.
+
+## The Way of Many Files
+
+I find it beneficial to break projects into *many* files:
+
+* Scripts with specialized functions.
+* Scripts to load and clean each set of variables.
+* Scripts to run each set of models and make tables and plots.
+* A main .qmd that runs some or all of these to reproduce the entire project.
+
+. . . 
+
+Splitting up a project carries benefits:
+
+* Once a portion of the project is done and in its own file, *it is out of your way.*
+* If you need to make changes, you don't need to search through huge files.
+* Entire sections of the project can be added or removed quickly (e.g. converted to an appendix of an article)
+* **It is the only way to build a proper *pipeline* for a project. **
+
+## Pipelines
+
+Professional researchers and teams design projects as a **pipeline**.
+
+. . . 
+
+A **pipeline** is a series of consecutive processing elements (scripts and functions in R).
+
+. . . 
+
+Each stage of a pipeline...
+
+1. Has clearly defined inputs and outputs
+2. Does not modify its inputs.
+3. Produces the exact same output every time it is re-run.
+
+. . . 
+
+This means...
+
+1. When you modify one stage, you only need to rerun *subsequent stages*.
+2. Different people can work on each stage.
+3. Problems are isolated within stages.
+4. You can depict your project as a *directed graph* of **dependencies**.
+
+## Example Pipeline
+
+Every stage (oval) has an unambiguous input and output. Everything that precedes a given stage is a **dependency** — something required to run it.
+
+![](images/pipeline.svg)
+
+::: aside
+Note: [`targets` is a great package for managing R research pipelines.](https://docs.ropensci.org/targets/)
+:::
+
+
+## Getting Help <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
 One of the most difficult things as a beginner in `R` (or any language tbh) is not always knowing what to ask to solve your issue. Being in this class is a great first step! Some other useful tools: 
 
-- **Google** 
-  - Adding `R` to your query is basic but useful and often overlooked. Including the package name, if you're using one, is another. Finally, what is it you want to do? For example "R dplyr create new variable based on value of another." 
-  - Copy and pasting error messages is also helpful! 
-- **StackOverflow**
-  - Many of your Google queries will take you here anyways so you might try going directly to the source! Filter by `R` and make sure to include a `reprex` so people can actually understand what your issue is. 
-- **Reprex**
-  - Short for minimal `repr`oducible `ex`ample this is a version of your code that someone could copy and run on their own machine, making it possible for them to help you troubleshoot your problem. 
-  - You want to strip away everything not pertinent to the issue you're having so that it's simple and straightforward. 
-  - You can use the [`reprex`](https://reprex.tidyverse.org/) package for assitance with this! 
-- **Putting in the work up front**
-  - It's cliché but investing in your learning right now will pay off down the road
-  - Learning how to do something, why `R` works in a certain way, and developing practices that keep you organized will make you more efficient and help prevent minor and major frustrations
-
+:::{.incremental}
+* **Google** 
+  + Adding `R` to your query is basic but useful and often overlooked. Including the package name, if you're using one, is another. Finally, what is it you want to do? For example "R dplyr create new variable based on value of another." 
+  + Copy and pasting error messages is also helpful! 
+* **StackOverflow**
+  + Many of your Google queries will take you here anyways so you might try going directly to the source! Filter by `R` and make sure to include a `reprex` so people can actually understand what your issue is. 
+* **Reprex**
+  + Short for minimal `repr`oducible `ex`ample this is a version of your code that someone could copy and run on their own machine, making it possible for them to help you troubleshoot your problem. 
+  + You want to strip away everything not pertinent to the issue you're having so that it's simple and straightforward. 
+  + You can use the [`reprex`](https://reprex.tidyverse.org/) package for assistance with this! 
+* **Putting in the work up front**
+  + It's cliché, but investing in your learning right now will pay off down the road.
+  + Learning how to do something, why `R` works in a certain way, and developing practices that keep you organized will make you more efficient and help prevent minor and major frustrations going forward.
+:::
 
 # START OF CHUCK'S SECTION
 
@@ -548,208 +914,7 @@ For University of Washington theses and dissertations, consider Ben Marwick's [`
 
 # Best Practices{.section-title background-color="#99a486"}
 
-## Organization and Portability
 
-## Organization Systems
-
-Organizing research projects is something you either do accidentally — and badly — or purposefully with some upfront labor.
-
-. . . 
-
-Uniform organization makes switching between or revisiting projects easier.
-
-. . . 
-
-I suggest something like the following:
-
-:::: {.columns}
-::: {.column width="50%"}
-```
-project/
-   readme.md
-   data/
-     derived/
-       processed_data.RData
-     raw/
-       core_data.csv
-   docs/
-     paper.Rmd
-   syntax/
-     functions.R
-     models.R
-```
-:::
-::: {.column width="50%"}
-1. There is a clear hierarchy
-   * Written content is in `docs`
-   * Code is in `syntax`
-   * Data is in `data`
-2. Naming is uniform
-   * All lower case
-   * Words separated by underscores
-3. Names are self-descriptive
-:::
-::::
-
-## Workflow versus Project
-
-To summarize Jenny Bryan, [one should separate workflow from projects.](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)
-
-<br>
-
-. . . 
-
-:::: {.columns}
-::: {.column width="50%"}
-
-### Workflow
-
-* The software you use to write your code (e.g. RStudio)
-
-* The location you store a project
-
-* The specific computer you use
-
-* The code you ran earlier or typed into your console
-
-:::
-::: {.column width="50%"}
-
-### Project
-
-* The raw data
-
-* The code that operates on your raw data
-
-* The packages you use
-
-* The output files or documents
-
-:::
-::::
-
-. . . 
-
-<br>
-
-Projects *should not modify anything outside of the project* nor need to be modified by someone else (or future you) to run.
-
-**Projects *should be independent of your workflow*.**
-
-## Portability
-
-For research to be reproducible, it must also be *portable*. Portable software operates *independently of workflow* such as fixed file locations.
-
-::: {.panel-tabset}
-
-### **Do Not:**
-
-* Use `setwd()` in scripts or .Rmd files.
-* Use *absolute paths* except for *fixed, immovable sources* (secure data).
-  + `read_csv("C:/my_project/data/my_data.csv")`
-* Use `install.packages()` in script or .Rmd files.
-* Use `rm(list=ls())` anywhere but your console.
-
-### **Do:**
-
-:::: {.columns}
-
-::: {.column width="50%"}
-* Use RStudio projects (or the [`here` package](https://github.com/jennybc/here_here)) to set directories.
-* Use *relative paths* to load and save files:
-  + `read_csv("./data/my_data.csv")`
-* Load all required packages using `library()`.
-* Clear your workspace when closing RStudio.
-  + Set *Tools > Global Options... > Save workspace...* to **Never**
-:::
-
-::: {.column width="50%"}
-
-![](images/clean-slate.png){.absolute right=10 bottom=10 height=75%}
-
-:::
-
-::::
-
-
-
-:::
-
-## Divide and Conquer
-
-Often you do not want to include all code for a project in one `.qmd` file:
-
-   * The code takes too long to knit.
-   * The file is so long it is difficult to read.
-
-. . . 
-
-There are two ways to deal with this:
-
-1. Use separate `.R` scripts or `.qmd` files which save results from complicated parts of a project, then load these results in the main `.qmd` file.
-
-   + This is good for loading and cleaning large data.
-   + Also for running slow models.
-
-. . . 
-
-2. Use `source()` to run external `.R` scripts when the `.qmd` renders
-
-   + This can be used to run large files that aren't impractically slow.
-   + Also good for loading project-specific functions.
-
-## The Way of Many Files
-
-I find it beneficial to break projects into *many* files:
-
-* Scripts with specialized functions.
-* Scripts to load and clean each set of variables.
-* Scripts to run each set of models and make tables and plots.
-* A main .qmd that runs some or all of these to reproduce the entire project.
-
-. . . 
-
-Splitting up a project carries benefits:
-
-* Once a portion of the project is done and in its own file, *it is out of your way.*
-* If you need to make changes, you don't need to search through huge files.
-* Entire sections of the project can be added or removed quickly (e.g. converted to an appendix of an article)
-* **It is the only way to build a proper *pipeline* for a project. **
-
-## Pipelines
-
-Professional researchers and teams design projects as a **pipeline**.
-
-. . . 
-
-A **pipeline** is a series of consecutive processing elements (scripts and functions in R).
-
-. . . 
-
-Each stage of a pipeline...
-
-1. Has clearly defined inputs and outputs
-2. Does not modify its inputs.
-3. Produces the exact same output every time it is re-run.
-
-. . . 
-
-This means...
-
-1. When you modify one stage, you only need to rerun *subsequent stages*.
-2. Different people can work on each stage.
-3. Problems are isolated within stages.
-4. You can depict your project as a *directed graph* of **dependencies**.
-
-## Example Pipeline
-
-Every stage (oval) has an unambiguous input and output. Everything that precedes a given stage is a **dependency** — something required to run it.
-
-![](images/pipeline.svg)
-
-::: aside
-Note: [`targets` is a great package for managing R research pipelines.](https://docs.ropensci.org/targets/)
-:::
 
 # Tools (*some opinionated advice*) {.section-title background-color="#99a486"}
 
@@ -864,6 +1029,86 @@ If you are planning on working in the private sector, an active GitHub profile w
 . . . 
 
 If you are aiming for academia, a GitHub account signals technical competence and an interest in research transparency.
+
+
+# Useful Base R {.section-title background-color="#99a486"}
+
+## Selecting from vectors with [ ]
+
+:::: {.columns}
+
+::: {.column width="40%"}
+Given a vector of values: 
+
+```{r}
+x <- c(a = "one", 
+       b = NA, 
+       c = "two", 
+       d = "three", 
+       e = "four", 
+       f = NA, 
+       g = NA, 
+       h = "five")
+```
+:::
+
+::: {.column width="60%"}
+You can select from the vector 
+
+```{r}
+# 
+x[c(3, 1, 5)]
+```
+
+...with negative integers:
+```{r}
+x[c(-2, -6, -7)]
+```
+
+...with a logical vector: 
+```{r}
+x[!is.na(x)]
+```
+
+...and with a named vector: 
+```{r}
+x[c("c", "h")]
+```
+:::
+
+::::
+
+## Selecting from dataframes with [ ]
+
+The most important method of selecting from dataframes is selecting rows and columns with `df[rows, cols]`. 
+
+:::: {.columns}
+
+::: {.column width="40%"}
+```{r}
+df <- tibble(
+  x = 1:3, 
+  y = c("a", "e", "f"), 
+  z = runif(3)
+)
+```
+
+:::
+
+::: {.column width="60%"}
+```{r}
+# Select first row and second column
+df[1, 2]
+
+# Select all rows and columns x and y
+df[, c("x" , "y")]
+
+# Select rows where `x` is greater than 1 and all columns
+df[df$x > 1, ]
+```
+:::
+
+::::
 
 ## Due dates
 
