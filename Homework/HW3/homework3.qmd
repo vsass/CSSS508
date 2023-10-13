@@ -10,13 +10,13 @@ library(tidyverse)
 ```
 
 ### Instructions
-For this assignment, include all code and relevant output. 
+For this assignment, include all code and relevant output in your rendered html document. 
 
 ### Exercises
 
 1. Organize your files for this class in a way that facilitates reproducible research. 
-    i) Start with your homeworks 1 and 2: make sure they each have their own folder within a folder for this class.
-    ii) Retroactively turn those homework folders into projects in RStudio by selecting *File* > *New Project...* > *Existing Directory* and selecting the appropriate folder for each homework. Then close each project.
+    i) Start with homeworks 1 and 2: make sure the qmds and htmls for each have their own folder within a folder for this class.
+    ii) Retroactively turn those homework folders into RStudio Projects by selecting *File* > *New Project...* > *Existing Directory* and selecting the appropriate folder for each homework. Then close each project.
     iii) For the current homework, begin by first creating a project for "Homework3"^[The specific titles used to name your files/folders can be whatever you want as long as they're descriptive and consistent in their naming conventions.].
     iv) Create your .qmd for this homework within this new project^[You'll notice that the upper-right hand corner of your RStudio IDE now displays the name of your new project for this homework. This is your current working directory.]. 
     v) When you're done organizing the folder for this class, write out its current organizational structure (i.e. something similar to the solution to lab question 5[^longnote] with the specific names for files and folders that *you* used). 
@@ -27,7 +27,7 @@ For this assignment, include all code and relevant output.
     ```
     CSSS 508
       Homework1/
-      
+      ...etc...
     ```
     ````
 
@@ -56,10 +56,12 @@ ggsave("mpg-plot.png")
 ```
 
 3. Run the code above. 
-   i) Which of the two plots is saved as mpg-plot.png? Why?
-   ii) Look at the project folder for this homework and re-write the current organizational structure for this class with any changes that have occurred (i.e. update your answer to question 1.v.). 
+   i) Which of the two plots is saved as mpg-plot.png? Why?^[Hint: Check out the help page!]
+   ii) In the files tab of the lower-left pane of your RStudio, look at the project folder for this homework and re-write the current organizational structure for this class with any changes that have occurred (i.e. update your answer to question 1.v.). 
 
-4. Go to the [RStudio Tips Twitter account](https://twitter.com/rstudiotips) and find one tip that makes sense to you and looks interesting. Describe it, link to it^[See how to link to websites in markdown syntax [here](https://quarto.org/docs/authoring/markdown-basics.html#links-images)] in your qmd, and practice using it!
+---
+
+4. Go to the [RStudio Tips Twitter account](https://twitter.com/rstudiotips) and find one tip that makes sense to you and looks interesting. Describe it and link to it^[See how to link to websites in markdown syntax [here](https://quarto.org/docs/authoring/markdown-basics.html#links-images)] in your qmd. Maybe practice using it!^[No need to demonstrate this in your qmd.]
 
 ---
 
@@ -69,22 +71,40 @@ y <- tibble(a = seq(1, 10, 2),
             c = c(rep(TRUE, 3), rep(FALSE, 2)))
 ```
 
+```{r}
+#| echo: false
+# seq takes arguments `from`, `to`, and `by` in that order. It creates a vector of numeric values starting with the value input `from`, ending with the value input `by`, in increments of the value input `by`. 
+
+# rep takes a value as its first argument and a integer value, `times` as its default second argument. It repeats the first argument by the specified number of times in the second argument. 
+```
+
+
 5. Create the tibble above. 
-   i) In your own words what does `seq` do and what arguments does it take? 
-   ii) In your own words what does `rep` do and what arguments does it take?
+   i) What does `seq` do in this example and what arguments does it take? 
+   ii) What does `rep` do in this example and what arguments does it take?
    iii) Index `y` using `[` to arrive at the results: 
-       ```
-       # A tibble: 2 × 1
-         b         
-         <chr>     
-         1 banana    
-         2 mango
-       ```
-    iv) Index `y` using `$` to arrive at the results: 
-       ```
-       [1]  TRUE  TRUE  TRUE FALSE FALSE
-       ```
-     v) What does `y[3:5, ]` produce? What do you think `:` does?
+   
+```{r}
+#| echo: false
+y[c(2, 5), 2]
+```
+    
+<span>&emsp;&emsp;</span> iv) Index `y` using `$` to arrive at the results: 
+   
+```{r}
+#| echo: false
+y$c
+```
+   
+<span>&emsp;&emsp;</span> v) What does `y[3:5, ]` produce? What does `:` do?
+
+```{r}
+#| echo: false
+#| eval: false 
+y[3:5, ] # Prints out the 3rd, 4th, and 5th rows
+# : is a shortcut for giving a sequence from the first number (on the left) to the second number (on the right) in increments of 1 or -1
+```
+
 
 ### Due Dates
 
