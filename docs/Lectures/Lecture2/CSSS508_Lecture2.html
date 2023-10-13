@@ -2380,7 +2380,104 @@
 <li><p>Add facets for <code>continent</code> (create only 1 column).</p></li>
 <li><p>Add one of the built-in themes from <code>ggplot2</code>.</p></li>
 <li><p>Remove the legend from the plot.</p></li>
-</ol></section></section><section><section id="homework" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Homework</h1>
+</ol></section><section id="solution-1.-set-base-layer" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Solution: 1. Set Base Layer</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb82" data-code-line-numbers="1"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb82-1" class="hljs-ln-code"><a href="#cb82-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-112-1.svg" class="r-stretch quarto-figure-center"></section><section id="solution-2.-add-histogram-layer" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Solution: 2. Add Histogram Layer</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb83" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb83-1" class="hljs-ln-code"><a href="#cb83-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb83-2" class="hljs-ln-code"><a href="#cb83-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-113-1.svg"></p>
+</figure>
+</div>
+</div>
+</div>
+
+<aside><div>
+<p>Setting the <code>bins</code> aesthetic tells ggplot how many values to bin by (lower is more fine-grained, higher is less descriptive).</p>
+</div></aside></section><section id="solution-3.-add-label-layers" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Solution: 3. Add Label Layers</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb84" data-code-line-numbers="3-5"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb84-1" class="hljs-ln-code"><a href="#cb84-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb84-2" class="hljs-ln-code"><a href="#cb84-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb84-3" class="hljs-ln-code"><a href="#cb84-3"></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb84-4" class="hljs-ln-code"><a href="#cb84-4"></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb84-5" class="hljs-ln-code"><a href="#cb84-5"></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-114-1.svg" class="r-stretch quarto-figure-center"></section><section id="solution-4.-add-fill-setting" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Solution: 4. Add fill setting</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb85" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb85-1" class="hljs-ln-code"><a href="#cb85-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb85-2" class="hljs-ln-code"><a href="#cb85-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"salmon"</span>) <span class="sc">+</span></span>
+<span id="cb85-3" class="hljs-ln-code"><a href="#cb85-3"></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb85-4" class="hljs-ln-code"><a href="#cb85-4"></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb85-5" class="hljs-ln-code"><a href="#cb85-5"></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-115-1.svg" class="r-stretch quarto-figure-center"></section><section id="solution-5.-add-fill-aesthetic" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Solution: 5. Add fill aesthetic</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb86" data-code-line-numbers="1"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb86-1" class="hljs-ln-code"><a href="#cb86-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">fill =</span> continent)) <span class="sc">+</span></span>
+<span id="cb86-2" class="hljs-ln-code"><a href="#cb86-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb86-3" class="hljs-ln-code"><a href="#cb86-3"></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb86-4" class="hljs-ln-code"><a href="#cb86-4"></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb86-5" class="hljs-ln-code"><a href="#cb86-5"></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-116-1.svg" class="r-stretch quarto-figure-center"></section><section id="solution-6.-change-geometry" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Solution: 6. Change geometry</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb87" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb87-1" class="hljs-ln-code"><a href="#cb87-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">fill =</span> continent)) <span class="sc">+</span></span>
+<span id="cb87-2" class="hljs-ln-code"><a href="#cb87-2"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb87-3" class="hljs-ln-code"><a href="#cb87-3"></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb87-4" class="hljs-ln-code"><a href="#cb87-4"></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb87-5" class="hljs-ln-code"><a href="#cb87-5"></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-117-1.svg" class="r-stretch quarto-figure-center"></section><section id="solution-6.-change-geometry-1" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Solution: 6. Change geometry</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb88" data-code-line-numbers="2|1"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb88-1" class="hljs-ln-code"><a href="#cb88-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb88-2" class="hljs-ln-code"><a href="#cb88-2"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb88-3" class="hljs-ln-code"><a href="#cb88-3"></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb88-4" class="hljs-ln-code"><a href="#cb88-4"></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb88-5" class="hljs-ln-code"><a href="#cb88-5"></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-118-1.svg" class="r-stretch quarto-figure-center"></section><section id="solution-7.-add-facets" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Solution: 7. Add facets</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb89" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb89-1" class="hljs-ln-code"><a href="#cb89-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb89-2" class="hljs-ln-code"><a href="#cb89-2"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb89-3" class="hljs-ln-code"><a href="#cb89-3"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(continent), <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb89-4" class="hljs-ln-code"><a href="#cb89-4"></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb89-5" class="hljs-ln-code"><a href="#cb89-5"></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb89-6" class="hljs-ln-code"><a href="#cb89-6"></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-119-1.svg" class="r-stretch quarto-figure-center"></section><section id="solution-8.-add-nicer-theme" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Solution: 8. Add nicer theme</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb90" data-code-line-numbers="7"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb90-1" class="hljs-ln-code"><a href="#cb90-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb90-2" class="hljs-ln-code"><a href="#cb90-2"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb90-3" class="hljs-ln-code"><a href="#cb90-3"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(continent), <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb90-4" class="hljs-ln-code"><a href="#cb90-4"></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb90-5" class="hljs-ln-code"><a href="#cb90-5"></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb90-6" class="hljs-ln-code"><a href="#cb90-6"></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>) <span class="sc">+</span></span>
+<span id="cb90-7" class="hljs-ln-code"><a href="#cb90-7"></a>  <span class="fu">theme_minimal</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-120-1.svg" class="r-stretch quarto-figure-center"></section><section id="solution-9.-remove-legend" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Solution: 9. Remove legend</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb91" data-code-line-numbers="8"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb91-1" class="hljs-ln-code"><a href="#cb91-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb91-2" class="hljs-ln-code"><a href="#cb91-2"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb91-3" class="hljs-ln-code"><a href="#cb91-3"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(continent), <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb91-4" class="hljs-ln-code"><a href="#cb91-4"></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb91-5" class="hljs-ln-code"><a href="#cb91-5"></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb91-6" class="hljs-ln-code"><a href="#cb91-6"></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>) <span class="sc">+</span> </span>
+<span id="cb91-7" class="hljs-ln-code"><a href="#cb91-7"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb91-8" class="hljs-ln-code"><a href="#cb91-8"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-121-1.svg" class="r-stretch quarto-figure-center"></section></section><section><section id="homework" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Homework</h1>
 
 </section><section id="homework-2" class="slide level2"><h2>Homework #2</h2>
 <p>In this homework, you’ll pose a question regarding the Gapminder dataset and investigate it graphically.</p>
@@ -2396,23 +2493,23 @@
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="jivxzsbxcw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#jivxzsbxcw table {
+<div id="qgzkgycyqx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qgzkgycyqx table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#jivxzsbxcw thead, #jivxzsbxcw tbody, #jivxzsbxcw tfoot, #jivxzsbxcw tr, #jivxzsbxcw td, #jivxzsbxcw th {
+#qgzkgycyqx thead, #qgzkgycyqx tbody, #qgzkgycyqx tfoot, #qgzkgycyqx tr, #qgzkgycyqx td, #qgzkgycyqx th {
   border-style: none;
 }
 
-#jivxzsbxcw p {
+#qgzkgycyqx p {
   margin: 0;
   padding: 0;
 }
 
-#jivxzsbxcw .gt_table {
+#qgzkgycyqx .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2438,12 +2535,12 @@
   border-left-color: #D3D3D3;
 }
 
-#jivxzsbxcw .gt_caption {
+#qgzkgycyqx .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#jivxzsbxcw .gt_title {
+#qgzkgycyqx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2455,7 +2552,7 @@
   border-bottom-width: 0;
 }
 
-#jivxzsbxcw .gt_subtitle {
+#qgzkgycyqx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2467,7 +2564,7 @@
   border-top-width: 0;
 }
 
-#jivxzsbxcw .gt_heading {
+#qgzkgycyqx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2479,13 +2576,13 @@
   border-right-color: #D3D3D3;
 }
 
-#jivxzsbxcw .gt_bottom_border {
+#qgzkgycyqx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jivxzsbxcw .gt_col_headings {
+#qgzkgycyqx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2500,7 +2597,7 @@
   border-right-color: #D3D3D3;
 }
 
-#jivxzsbxcw .gt_col_heading {
+#qgzkgycyqx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2520,7 +2617,7 @@
   overflow-x: hidden;
 }
 
-#jivxzsbxcw .gt_column_spanner_outer {
+#qgzkgycyqx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2532,15 +2629,15 @@
   padding-right: 4px;
 }
 
-#jivxzsbxcw .gt_column_spanner_outer:first-child {
+#qgzkgycyqx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jivxzsbxcw .gt_column_spanner_outer:last-child {
+#qgzkgycyqx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jivxzsbxcw .gt_column_spanner {
+#qgzkgycyqx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2552,11 +2649,11 @@
   width: 100%;
 }
 
-#jivxzsbxcw .gt_spanner_row {
+#qgzkgycyqx .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#jivxzsbxcw .gt_group_heading {
+#qgzkgycyqx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2582,7 +2679,7 @@
   text-align: left;
 }
 
-#jivxzsbxcw .gt_empty_group_heading {
+#qgzkgycyqx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2597,15 +2694,15 @@
   vertical-align: middle;
 }
 
-#jivxzsbxcw .gt_from_md > :first-child {
+#qgzkgycyqx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jivxzsbxcw .gt_from_md > :last-child {
+#qgzkgycyqx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jivxzsbxcw .gt_row {
+#qgzkgycyqx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2624,7 +2721,7 @@
   overflow-x: hidden;
 }
 
-#jivxzsbxcw .gt_stub {
+#qgzkgycyqx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2637,7 +2734,7 @@
   padding-right: 5px;
 }
 
-#jivxzsbxcw .gt_stub_row_group {
+#qgzkgycyqx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2651,15 +2748,15 @@
   vertical-align: top;
 }
 
-#jivxzsbxcw .gt_row_group_first td {
+#qgzkgycyqx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jivxzsbxcw .gt_row_group_first th {
+#qgzkgycyqx .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#jivxzsbxcw .gt_summary_row {
+#qgzkgycyqx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2669,16 +2766,16 @@
   padding-right: 5px;
 }
 
-#jivxzsbxcw .gt_first_summary_row {
+#qgzkgycyqx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jivxzsbxcw .gt_first_summary_row.thick {
+#qgzkgycyqx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jivxzsbxcw .gt_last_summary_row {
+#qgzkgycyqx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2688,7 +2785,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#jivxzsbxcw .gt_grand_summary_row {
+#qgzkgycyqx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2698,7 +2795,7 @@
   padding-right: 5px;
 }
 
-#jivxzsbxcw .gt_first_grand_summary_row {
+#qgzkgycyqx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2708,7 +2805,7 @@
   border-top-color: #D3D3D3;
 }
 
-#jivxzsbxcw .gt_last_grand_summary_row_top {
+#qgzkgycyqx .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2718,11 +2815,11 @@
   border-bottom-color: #D3D3D3;
 }
 
-#jivxzsbxcw .gt_striped {
+#qgzkgycyqx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jivxzsbxcw .gt_table_body {
+#qgzkgycyqx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2731,7 +2828,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#jivxzsbxcw .gt_footnotes {
+#qgzkgycyqx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2745,7 +2842,7 @@
   border-right-color: #D3D3D3;
 }
 
-#jivxzsbxcw .gt_footnote {
+#qgzkgycyqx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2754,7 +2851,7 @@
   padding-right: 5px;
 }
 
-#jivxzsbxcw .gt_sourcenotes {
+#qgzkgycyqx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2768,7 +2865,7 @@
   border-right-color: #D3D3D3;
 }
 
-#jivxzsbxcw .gt_sourcenote {
+#qgzkgycyqx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2776,63 +2873,63 @@
   padding-right: 5px;
 }
 
-#jivxzsbxcw .gt_left {
+#qgzkgycyqx .gt_left {
   text-align: left;
 }
 
-#jivxzsbxcw .gt_center {
+#qgzkgycyqx .gt_center {
   text-align: center;
 }
 
-#jivxzsbxcw .gt_right {
+#qgzkgycyqx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jivxzsbxcw .gt_font_normal {
+#qgzkgycyqx .gt_font_normal {
   font-weight: normal;
 }
 
-#jivxzsbxcw .gt_font_bold {
+#qgzkgycyqx .gt_font_bold {
   font-weight: bold;
 }
 
-#jivxzsbxcw .gt_font_italic {
+#qgzkgycyqx .gt_font_italic {
   font-style: italic;
 }
 
-#jivxzsbxcw .gt_super {
+#qgzkgycyqx .gt_super {
   font-size: 65%;
 }
 
-#jivxzsbxcw .gt_footnote_marks {
+#qgzkgycyqx .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#jivxzsbxcw .gt_asterisk {
+#qgzkgycyqx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jivxzsbxcw .gt_indent_1 {
+#qgzkgycyqx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jivxzsbxcw .gt_indent_2 {
+#qgzkgycyqx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jivxzsbxcw .gt_indent_3 {
+#qgzkgycyqx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jivxzsbxcw .gt_indent_4 {
+#qgzkgycyqx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jivxzsbxcw .gt_indent_5 {
+#qgzkgycyqx .gt_indent_5 {
   text-indent: 25px;
 }
 </style>

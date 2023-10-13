@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -209,28 +243,91 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="instructions" class="level3">
+<h3 class="anchored" data-anchor-id="instructions">Instructions</h3>
+<p>For this assignment, include all code and relevant output.</p>
+</section>
+<section id="exercises" class="level3">
+<h3 class="anchored" data-anchor-id="exercises">Exercises</h3>
+<ol type="1">
+<li>Organize your files for this class in a way that facilitates reproducible research.
+<ol type="i">
+<li>Start with your homeworks 1 and 2: make sure they each have their own folder within a folder for this class.</li>
+<li>Retroactively turn those homework folders into projects in RStudio by selecting <em>File</em> &gt; <em>New Project…</em> &gt; <em>Existing Directory</em> and selecting the appropriate folder for each homework. Then close each project.</li>
+<li>For the current homework, begin by first creating a project for “Homework3”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</li>
+<li>Create your .qmd for this homework within this new project<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</li>
+<li>When you’re done organizing the folder for this class, write out its current organizational structure (i.e.&nbsp;something similar to the solution to lab question 5<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> with the specific names for files and folders that <em>you</em> used).</li>
+</ol></li>
+</ol>
+<hr>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li>Create the vector above:
+<ol type="i">
+<li>Look at the help file for <code>rnorm</code> and in your own words describe what arguments it takes and what it produces.</li>
+<li>Which arguments are required and which are optional (if any)?</li>
+<li>What does the <code>r</code> in <code>rnorm</code> stand for?</li>
+<li>Using <code>[</code>, select every value except the last one</li>
+<li>Using <code>[</code>, select only values that are greater than 10.</li>
+</ol></li>
+</ol>
+<hr>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> class)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"mpg-plot.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li>Run the code above.
+<ol type="i">
+<li>Which of the two plots is saved as mpg-plot.png? Why?</li>
+<li>Look at the project folder for this homework and re-write the current organizational structure for this class with any changes that have occurred (i.e.&nbsp;update your answer to question 1.v.).</li>
+</ol></li>
+<li>Go to the <a href="https://twitter.com/rstudiotips">RStudio Tips Twitter account</a> and find one tip that makes sense to you and looks interesting. Describe it, link to it<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> in your qmd, and practice using it!</li>
+</ol>
+<hr>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">a =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">2</span>), </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">b =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"strawberry"</span>, <span class="st">"peach"</span>, <span class="st">"mango"</span>), </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">c =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="cn">TRUE</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="5" type="1">
+<li>Create the tibble above.
+<ol type="i">
+<li>In your own words what does <code>seq</code> do and what arguments does it take?</li>
+<li>In your own words what does <code>rep</code> do and what arguments does it take?</li>
+<li>Index <code>y</code> using <code>[</code> to arrive at the results: <code># A tibble: 2 × 1       b                &lt;chr&gt;            1 banana           2 mango</code></li>
+<li>Index <code>y</code> using <code>$</code> to arrive at the results: <code>[1]  TRUE  TRUE  TRUE FALSE FALSE</code></li>
+<li>What does <code>y[3:5, ]</code> produce? What do you think <code>:</code> does?</li>
+</ol></li>
+</ol>
+</section>
 <section id="due-dates" class="level3">
 <h3 class="anchored" data-anchor-id="due-dates">Due Dates</h3>
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="ultqmvaohs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ultqmvaohs table {
+<div id="sdqdlsfcus" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#sdqdlsfcus table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ultqmvaohs thead, #ultqmvaohs tbody, #ultqmvaohs tfoot, #ultqmvaohs tr, #ultqmvaohs td, #ultqmvaohs th {
+#sdqdlsfcus thead, #sdqdlsfcus tbody, #sdqdlsfcus tfoot, #sdqdlsfcus tr, #sdqdlsfcus td, #sdqdlsfcus th {
   border-style: none;
 }
 
-#ultqmvaohs p {
+#sdqdlsfcus p {
   margin: 0;
   padding: 0;
 }
 
-#ultqmvaohs .gt_table {
+#sdqdlsfcus .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -256,12 +353,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#ultqmvaohs .gt_caption {
+#sdqdlsfcus .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ultqmvaohs .gt_title {
+#sdqdlsfcus .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -273,7 +370,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#ultqmvaohs .gt_subtitle {
+#sdqdlsfcus .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -285,7 +382,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#ultqmvaohs .gt_heading {
+#sdqdlsfcus .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -297,13 +394,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#ultqmvaohs .gt_bottom_border {
+#sdqdlsfcus .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ultqmvaohs .gt_col_headings {
+#sdqdlsfcus .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -318,7 +415,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#ultqmvaohs .gt_col_heading {
+#sdqdlsfcus .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -338,7 +435,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#ultqmvaohs .gt_column_spanner_outer {
+#sdqdlsfcus .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -350,15 +447,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#ultqmvaohs .gt_column_spanner_outer:first-child {
+#sdqdlsfcus .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ultqmvaohs .gt_column_spanner_outer:last-child {
+#sdqdlsfcus .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ultqmvaohs .gt_column_spanner {
+#sdqdlsfcus .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -370,11 +467,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#ultqmvaohs .gt_spanner_row {
+#sdqdlsfcus .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ultqmvaohs .gt_group_heading {
+#sdqdlsfcus .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -400,7 +497,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#ultqmvaohs .gt_empty_group_heading {
+#sdqdlsfcus .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -415,15 +512,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#ultqmvaohs .gt_from_md > :first-child {
+#sdqdlsfcus .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ultqmvaohs .gt_from_md > :last-child {
+#sdqdlsfcus .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ultqmvaohs .gt_row {
+#sdqdlsfcus .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -442,7 +539,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#ultqmvaohs .gt_stub {
+#sdqdlsfcus .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -455,7 +552,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#ultqmvaohs .gt_stub_row_group {
+#sdqdlsfcus .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -469,15 +566,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#ultqmvaohs .gt_row_group_first td {
+#sdqdlsfcus .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ultqmvaohs .gt_row_group_first th {
+#sdqdlsfcus .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ultqmvaohs .gt_summary_row {
+#sdqdlsfcus .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -487,16 +584,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#ultqmvaohs .gt_first_summary_row {
+#sdqdlsfcus .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ultqmvaohs .gt_first_summary_row.thick {
+#sdqdlsfcus .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ultqmvaohs .gt_last_summary_row {
+#sdqdlsfcus .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -506,7 +603,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#ultqmvaohs .gt_grand_summary_row {
+#sdqdlsfcus .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -516,7 +613,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#ultqmvaohs .gt_first_grand_summary_row {
+#sdqdlsfcus .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -526,7 +623,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#ultqmvaohs .gt_last_grand_summary_row_top {
+#sdqdlsfcus .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -536,11 +633,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#ultqmvaohs .gt_striped {
+#sdqdlsfcus .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ultqmvaohs .gt_table_body {
+#sdqdlsfcus .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -549,7 +646,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#ultqmvaohs .gt_footnotes {
+#sdqdlsfcus .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -563,7 +660,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#ultqmvaohs .gt_footnote {
+#sdqdlsfcus .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -572,7 +669,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#ultqmvaohs .gt_sourcenotes {
+#sdqdlsfcus .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -586,7 +683,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#ultqmvaohs .gt_sourcenote {
+#sdqdlsfcus .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -594,63 +691,63 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#ultqmvaohs .gt_left {
+#sdqdlsfcus .gt_left {
   text-align: left;
 }
 
-#ultqmvaohs .gt_center {
+#sdqdlsfcus .gt_center {
   text-align: center;
 }
 
-#ultqmvaohs .gt_right {
+#sdqdlsfcus .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ultqmvaohs .gt_font_normal {
+#sdqdlsfcus .gt_font_normal {
   font-weight: normal;
 }
 
-#ultqmvaohs .gt_font_bold {
+#sdqdlsfcus .gt_font_bold {
   font-weight: bold;
 }
 
-#ultqmvaohs .gt_font_italic {
+#sdqdlsfcus .gt_font_italic {
   font-style: italic;
 }
 
-#ultqmvaohs .gt_super {
+#sdqdlsfcus .gt_super {
   font-size: 65%;
 }
 
-#ultqmvaohs .gt_footnote_marks {
+#sdqdlsfcus .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ultqmvaohs .gt_asterisk {
+#sdqdlsfcus .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ultqmvaohs .gt_indent_1 {
+#sdqdlsfcus .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ultqmvaohs .gt_indent_2 {
+#sdqdlsfcus .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ultqmvaohs .gt_indent_3 {
+#sdqdlsfcus .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ultqmvaohs .gt_indent_4 {
+#sdqdlsfcus .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ultqmvaohs .gt_indent_5 {
+#sdqdlsfcus .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -730,7 +827,22 @@ ul.task-list li input[type="checkbox"] {
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>The specific titles used to name your files/folders can be whatever you want as long as they’re descriptive and consistent in their naming conventions.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>You’ll notice that the upper-right hand corner of your RStudio IDE now displays the name of your new project for this homework. This is your current working directory.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>You can embed output-looking text like this example by using a code chunk without the <code>{r}</code> like so:</p>
+<pre><code>```
+CSSS 508
+  Homework1/
+
+```</code></pre>
+<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn4"><p>See how to link to websites in markdown syntax <a href="https://quarto.org/docs/authoring/markdown-basics.html#links-images">here</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
