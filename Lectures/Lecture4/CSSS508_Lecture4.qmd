@@ -49,10 +49,11 @@ require(tidyverse)
 
 Last time, we learned about,
 
-* Types of Data
-* Vectors
-* Matrices
-* Lists
+* Best Prectices
+  * Code Style
+  * Workflow
+* Reproducible Research
+* Indexing vectors & dataframes in Base `R`
 
 . . . 
 
@@ -60,13 +61,9 @@ Today, we will cover,
 
 * Importing and exporting data
 * Reshaping data
-* Dates and times
+* Merging dataframes
 
 # Importing and Exporting Data{.section-title background-color="#99a486"}
-
-* Data packages
-* Imporing data with code
-* Importing data by "point-and-click"
 
 ## Data Packages
 
@@ -76,10 +73,11 @@ R has a *big* user base.  If you are working with a popular data source, it will
 
 Examples:
 
-* `WDI`: World Development Indicators (World Bank)
-* `WHO`: World Health Organization API
-* `tidycensus`: Census and American Community Survey
-* `quantmod`: financial data from Yahoo, FRED, Google
+* [`WDI`](https://vincentarelbundock.github.io/WDI/): World Development Indicators (World Bank)
+* [`tidycensus`](https://walker-data.com/tidycensus/): Census and American Community Survey
+* [`quantmod`](https://walker-data.com/tidycensus/): financial data from Yahoo, FRED, Google
+* [`gssr`](https://kjhealy.github.io/gssr/): The General Social Survey Cumulative Data (1972-2021) and Three Wave Panel Data
+* [`psidR`](https://github.com/floswald/psidR): Panel Study of Income Dynamics (basic & public datasets)
 
 . . . 
 
@@ -87,11 +85,11 @@ If you have an actual data file, you'll have to import it yourself...
 
 ## Delimited Text Files
 
-Besides a package, it's easiest when data is stored in a text file. 
+Besides a package, it's easiest when data is stored in a text file. The most commonly encountered delimitd file is a **.csv**.
 
 . . . 
 
-An example of a comma-separated values (**.csv**) file is below:
+A comma-separated values (.csv) file looks like the following: 
 
 ```
 "Subject","Depression","Sex","Week","HamD","Imipramine"
@@ -114,12 +112,27 @@ R has some built-in functions for importing data, such as `read.table()` and `re
 
 The `readr` package provides similar functions, like `read_csv()`, that have slightly better features:
 
+::: {.incremental}
 * Faster!
-* Better defaults (e.g. doesn't convert characters to factors)
-* A *little* smarter about dates and times
-* Loading bars for large files
+* Better defaults (e.g. doesn't automatically convert characters to factors)
+* A *bit* smarter about dates and times
+* Loading progress bars for large files
+:::
+
+. . . 
+
+`readr` is one of the core `tidyverse packages so if you load the tidyverse you will have access to it:
 
 ```{r}
+library(tidyverse)
+```
+
+. . . 
+
+Alternatively, you can simply load just `readr` like so:
+
+```{r}
+#| eval: false
 library(readr)
 ```
 
@@ -131,13 +144,16 @@ Let's import some data about song ranks on the Billboard Hot 100 in 2000:
 billboard_2000_raw <- read_csv(file = "https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture4/data/billboard.csv")
 ```
 
-## Did It Load?
+. . . 
+
+How do we know it loaded? 
+
+. . . 
+
+Let's look at it!
 
 ```{r}
-library(dplyr)
-dim(billboard_2000_raw)
-names(billboard_2000_raw) %>% 
-  head(20)
+head(billboard_2000_raw)
 ```
 
 ## Alternate Solution
