@@ -7,6 +7,9 @@
 # leading # and run it as normal or highlight the code directly and run it 
 # any of the ways we discussed in lecture. 
 
+
+# Introduction to R, RStudio, and Quarto ----------------------------------
+
 7 * 49
 # Sometimes important stuff is highlighted! 
 
@@ -39,9 +42,13 @@ new.object
 
 sqrt(new.object)
 
+# Quarto ------------------------------------------------------------------
+
 summary(cars)
 
 x <- sqrt(77) 
+
+# Base R and Packages -----------------------------------------------------
 
 head(cars, 5) # prints first 5 rows, see tail() too
 

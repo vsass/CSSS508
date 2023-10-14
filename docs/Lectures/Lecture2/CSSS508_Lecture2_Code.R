@@ -7,7 +7,7 @@
 # leading # and run it as normal or highlight the code directly and run it 
 # any of the ways we discussed in lecture. 
 
-# Introducing the Tidyverse! (Slide 5)
+# Introducing the Tidyverse! ----------------------------------------------
 
 library(gapminder)
 library(tidyverse)
@@ -32,7 +32,7 @@ ggplot(data = China,
        y = "Life expectancy") +
   theme_bw(base_size = 18)
 
-# Example: Basic Jargon in Action! (Slide 24)
+# Example: Basic Jargon in Action! ----------------------------------------
 
 ggplot(data = China,  
        aes(x = year, y = lifeExp)) 
@@ -157,7 +157,8 @@ ggplot(data = gapminder,
   facet_wrap(vars(continent)) + 
   theme(legend.position = "none")
 
-# Advanced ggplot tools (slide 42)
+
+# Advanced ggplot tools ---------------------------------------------------
 
 lifeExp_by_year <- 
   ggplot(data = gapminder, 
@@ -275,7 +276,7 @@ ggplot(gapminder, aes(x = continent, y = lifeExp)) +
   geom_label_repel(data = outliers, aes(label = country), color = "hotpink", size = 8) + 
   theme_minimal(base_size = 18)
 
-# Bonus: Advanced Example! (slide 59)
+# Bonus: Advanced Example! ------------------------------------------------
 
 ggplot(data = gapminder, 
        aes(x = year, y = lifeExp, group = country)) 
@@ -423,7 +424,7 @@ ggplot(data = gapminder,
   theme(legend.position = c(0.82, 0.15), 
         axis.text.x = element_text(angle = 45))
 
-# ggplot Extensions! (slide 73)
+# ggplot Extensions! ------------------------------------------------------
 
 # install.packages("geomtextpath") <- run in console first
 library(geomtextpath)
