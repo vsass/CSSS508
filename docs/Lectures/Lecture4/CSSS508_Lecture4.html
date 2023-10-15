@@ -385,6 +385,7 @@
       margin-right: 0; 
     }
   </style>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script><script src="../../site_libs/quarto-diagram/mermaid-init.js"></script><link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -415,8 +416,9 @@
 <p>Today, we will cover,</p>
 <ul>
 <li>Importing and exporting data</li>
-<li>Reshaping data</li>
-<li>Merging dataframes</li>
+<li>Cleaning and reshaping data</li>
+<li>Dealing with dates &amp; times</li>
+<li>Controlling factor variables</li>
 </ul>
 </div>
 </section></section><section><section id="importing-and-exporting-data" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Importing and Exporting Data</h1>
@@ -433,7 +435,7 @@
 <li>
 <a href="https://walker-data.com/tidycensus/"><code>quantmod</code></a>: financial data from Yahoo, FRED, Google</li>
 <li>
-<a href="https://kjhealy.github.io/gssr/"><code>gssr</code></a>: The General Social Survey Cumulative Data (1972-2021) and Three Wave Panel Data</li>
+<a href="https://kjhealy.github.io/gssr/"><code>gssr</code></a>: The General Social Survey Cumulative Data (1972-2021)</li>
 <li>
 <a href="https://github.com/floswald/psidR"><code>psidR</code></a>: Panel Study of Income Dynamics (basic &amp; public datasets)</li>
 </ul>
@@ -459,6 +461,8 @@
 </section><section id="readr" class="slide level2"><h2><code>readr</code></h2>
 <p>R has some built-in functions for importing data, such as <code><a href="https://rdrr.io/r/utils/read.table.html">read.table()</a></code> and <code><a href="https://rdrr.io/r/utils/read.table.html">read.csv()</a></code>.</p>
 <div class="fragment">
+<div class="columns">
+<div class="column" style="width:60%;">
 <p>The <code>readr</code> package provides similar functions, like <code>read_csv()</code>, that have slightly better features:</p>
 <div>
 <ul>
@@ -468,15 +472,19 @@
 <li class="fragment">Loading progress bars for large files</li>
 </ul>
 </div>
+</div><div class="column" style="width:40%;">
+<p><img data-src="images/readr.png"></p>
+</div>
+</div>
 </div>
 <div class="fragment">
-<p><code>readr</code> is one of the core `tidyverse packages so if you load the tidyverse you will have access to it:</p>
+<p><code>readr</code> is one of the core <code>tidyverse</code> packages so loading <code>tidyverse</code> will load it too:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
-<p>Alternatively, you can simply load just <code>readr</code> like so:</p>
+<p>Alternatively, you can just load <code>readr</code> like so:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(readr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -485,7 +493,7 @@
 <code>readr</code> Importing Example</h2>
 <p>Let’s import some data about song ranks on the Billboard Hot 100 in 2000:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture4/data/billboard.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>How do we know it loaded?</p>
@@ -493,52 +501,507 @@
 <div class="fragment">
 <p>Let’s look at it!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">head</span>(billboard_2000_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">glimpse</span>(billboard_2000_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 81
-   year artist      track time  date.entered   wk1   wk2   wk3   wk4   wk5   wk6
-  &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;tim&gt; &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1  2000 2 Pac       Baby… 04:22 2000-02-26      87    82    72    77    87    94
-2  2000 2Ge+her     The … 03:15 2000-09-02      91    87    92    NA    NA    NA
-3  2000 3 Doors Do… Kryp… 03:53 2000-04-08      81    70    68    67    66    57
-4  2000 3 Doors Do… Loser 04:24 2000-10-21      76    76    72    69    67    65
-5  2000 504 Boyz    Wobb… 03:35 2000-04-15      57    34    25    17    17    31
-6  2000 98^0        Give… 03:24 2000-08-19      51    39    34    26    26    19
-# ℹ 70 more variables: wk7 &lt;dbl&gt;, wk8 &lt;dbl&gt;, wk9 &lt;dbl&gt;, wk10 &lt;dbl&gt;, wk11 &lt;dbl&gt;,
-#   wk12 &lt;dbl&gt;, wk13 &lt;dbl&gt;, wk14 &lt;dbl&gt;, wk15 &lt;dbl&gt;, wk16 &lt;dbl&gt;, wk17 &lt;dbl&gt;,
-#   wk18 &lt;dbl&gt;, wk19 &lt;dbl&gt;, wk20 &lt;dbl&gt;, wk21 &lt;dbl&gt;, wk22 &lt;dbl&gt;, wk23 &lt;dbl&gt;,
-#   wk24 &lt;dbl&gt;, wk25 &lt;dbl&gt;, wk26 &lt;dbl&gt;, wk27 &lt;dbl&gt;, wk28 &lt;dbl&gt;, wk29 &lt;dbl&gt;,
-#   wk30 &lt;dbl&gt;, wk31 &lt;dbl&gt;, wk32 &lt;dbl&gt;, wk33 &lt;dbl&gt;, wk34 &lt;dbl&gt;, wk35 &lt;dbl&gt;,
-#   wk36 &lt;dbl&gt;, wk37 &lt;dbl&gt;, wk38 &lt;dbl&gt;, wk39 &lt;dbl&gt;, wk40 &lt;dbl&gt;, wk41 &lt;dbl&gt;,
-#   wk42 &lt;dbl&gt;, wk43 &lt;dbl&gt;, wk44 &lt;dbl&gt;, wk45 &lt;dbl&gt;, wk46 &lt;dbl&gt;, wk47 &lt;dbl&gt;, …</code></pre>
+<pre><code>Rows: 317
+Columns: 81
+$ year         &lt;dbl&gt; 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 200…
+$ artist       &lt;chr&gt; "2 Pac", "2Ge+her", "3 Doors Down", "3 Doors Down", "504 …
+$ track        &lt;chr&gt; "Baby Don't Cry (Keep...", "The Hardest Part Of ...", "Kr…
+$ time         &lt;time&gt; 04:22:00, 03:15:00, 03:53:00, 04:24:00, 03:35:00, 03:24:…
+$ date.entered &lt;date&gt; 2000-02-26, 2000-09-02, 2000-04-08, 2000-10-21, 2000-04-…
+$ wk1          &lt;dbl&gt; 87, 91, 81, 76, 57, 51, 97, 84, 59, 76, 84, 57, 50, 71, 7…
+$ wk2          &lt;dbl&gt; 82, 87, 70, 76, 34, 39, 97, 62, 53, 76, 84, 47, 39, 51, 6…
+$ wk3          &lt;dbl&gt; 72, 92, 68, 72, 25, 34, 96, 51, 38, 74, 75, 45, 30, 28, 5…
+$ wk4          &lt;dbl&gt; 77, NA, 67, 69, 17, 26, 95, 41, 28, 69, 73, 29, 28, 18, 4…
+$ wk5          &lt;dbl&gt; 87, NA, 66, 67, 17, 26, 100, 38, 21, 68, 73, 23, 21, 13, …
+$ wk6          &lt;dbl&gt; 94, NA, 57, 65, 31, 19, NA, 35, 18, 67, 69, 18, 19, 13, 3…
+$ wk7          &lt;dbl&gt; 99, NA, 54, 55, 36, 2, NA, 35, 16, 61, 68, 11, 20, 11, 34…
+$ wk8          &lt;dbl&gt; NA, NA, 53, 59, 49, 2, NA, 38, 14, 58, 65, 9, 17, 1, 29, …
+$ wk9          &lt;dbl&gt; NA, NA, 51, 62, 53, 3, NA, 38, 12, 57, 73, 9, 17, 1, 27, …
+$ wk10         &lt;dbl&gt; NA, NA, 51, 61, 57, 6, NA, 36, 10, 59, 83, 11, 17, 2, 30,…
+$ wk11         &lt;dbl&gt; NA, NA, 51, 61, 64, 7, NA, 37, 9, 66, 92, 1, 17, 2, 36, N…
+$ wk12         &lt;dbl&gt; NA, NA, 51, 59, 70, 22, NA, 37, 8, 68, NA, 1, 3, 3, 37, N…
+$ wk13         &lt;dbl&gt; NA, NA, 47, 61, 75, 29, NA, 38, 6, 61, NA, 1, 3, 3, 39, N…
+$ wk14         &lt;dbl&gt; NA, NA, 44, 66, 76, 36, NA, 49, 1, 67, NA, 1, 7, 4, 49, N…
+$ wk15         &lt;dbl&gt; NA, NA, 38, 72, 78, 47, NA, 61, 2, 59, NA, 4, 10, 12, 57,…
+$ wk16         &lt;dbl&gt; NA, NA, 28, 76, 85, 67, NA, 63, 2, 63, NA, 8, 17, 11, 63,…
+$ wk17         &lt;dbl&gt; NA, NA, 22, 75, 92, 66, NA, 62, 2, 67, NA, 12, 25, 13, 65…
+$ wk18         &lt;dbl&gt; NA, NA, 18, 67, 96, 84, NA, 67, 2, 71, NA, 22, 29, 15, 68…
+$ wk19         &lt;dbl&gt; NA, NA, 18, 73, NA, 93, NA, 83, 3, 79, NA, 23, 29, 18, 79…
+$ wk20         &lt;dbl&gt; NA, NA, 14, 70, NA, 94, NA, 86, 4, 89, NA, 43, 40, 20, 86…
+$ wk21         &lt;dbl&gt; NA, NA, 12, NA, NA, NA, NA, NA, 5, NA, NA, 44, 43, 30, NA…
+$ wk22         &lt;dbl&gt; NA, NA, 7, NA, NA, NA, NA, NA, 5, NA, NA, NA, 50, 40, NA,…
+$ wk23         &lt;dbl&gt; NA, NA, 6, NA, NA, NA, NA, NA, 6, NA, NA, NA, NA, 39, NA,…
+$ wk24         &lt;dbl&gt; NA, NA, 6, NA, NA, NA, NA, NA, 9, NA, NA, NA, NA, 44, NA,…
+$ wk25         &lt;dbl&gt; NA, NA, 6, NA, NA, NA, NA, NA, 13, NA, NA, NA, NA, NA, NA…
+$ wk26         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, 14, NA, NA, NA, NA, NA, NA…
+$ wk27         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, 16, NA, NA, NA, NA, NA, NA…
+$ wk28         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 23, NA, NA, NA, NA, NA, NA…
+$ wk29         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 22, NA, NA, NA, NA, NA, NA…
+$ wk30         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 33, NA, NA, NA, NA, NA, NA…
+$ wk31         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 36, NA, NA, NA, NA, NA, NA…
+$ wk32         &lt;dbl&gt; NA, NA, 3, NA, NA, NA, NA, NA, 43, NA, NA, NA, NA, NA, NA…
+$ wk33         &lt;dbl&gt; NA, NA, 3, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wk34         &lt;dbl&gt; NA, NA, 3, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wk35         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wk36         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wk37         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wk38         &lt;dbl&gt; NA, NA, 9, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wk39         &lt;dbl&gt; NA, NA, 9, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wk40         &lt;dbl&gt; NA, NA, 15, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk41         &lt;dbl&gt; NA, NA, 14, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk42         &lt;dbl&gt; NA, NA, 13, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk43         &lt;dbl&gt; NA, NA, 14, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk44         &lt;dbl&gt; NA, NA, 16, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk45         &lt;dbl&gt; NA, NA, 17, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk46         &lt;dbl&gt; NA, NA, 21, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk47         &lt;dbl&gt; NA, NA, 22, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk48         &lt;dbl&gt; NA, NA, 24, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk49         &lt;dbl&gt; NA, NA, 28, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk50         &lt;dbl&gt; NA, NA, 33, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk51         &lt;dbl&gt; NA, NA, 42, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk52         &lt;dbl&gt; NA, NA, 42, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk53         &lt;dbl&gt; NA, NA, 49, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk54         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk55         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk56         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk57         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk58         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk59         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk60         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk61         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk62         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk63         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk64         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk65         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk66         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk67         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk68         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk69         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk70         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk71         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk72         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk73         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk74         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk75         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</code></pre>
 </div>
 </div>
 </div>
 </section><section id="alternate-solution" class="slide level2"><h2>Alternate Solution</h2>
-<p>Import the data manually!</p>
+<p>When you import data from an external file you’ll also see it in the Global Environment tab in the upper-right pane of RStudio:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="fragment">
+<p>You can also import the data manually!</p>
 <p>In the upper right-hand pane of RStudio (make sure you’re in the Environment tab), select:</p>
-<p><code>Import Dataset &gt; From Text (readr)</code></p>
+<p><code>Import Dataset &gt; From Text (readr)</code> and browse to the file on your computer<sup>1</sup>.</p>
+</div>
 <div class="fragment">
 <p><strong>Once you’ve imported the data, you can <code>copy/paste</code> the import code from the console into your file!!</strong></p>
 <p>This makes the process <em>reproducible!</em></p>
 </div>
-</section><section id="importing-other-data-types" class="slide level2"><h2>Importing Other Data Types</h2>
+</div><div class="column" style="width:50%;">
+<p><img data-src="images/data_global_env.png"></p>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Ideally you’ve saved it in your project folder! 😌</p></li></ol></aside></section><section id="manual-data-import" class="slide level2"><h2>Manual data import</h2>
+
+<img data-src="images/data_import_manual.png" class="r-stretch quarto-figure-center"></section><section id="specifying-nas" class="slide level2"><h2>Specifying <code>NA</code>s</h2>
+<p><code>NA</code>s are technically logical (boolean) variables<sup>1</sup> that indicate a missing value.</p>
+<div class="fragment">
+<p>Sometimes a particular dataset or file read from a different software will code <code>NA</code>s differently than <code>R</code>. If that’s the case, you can add additional specifications to <code>read_csv</code> for what to read in as <code>NA</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard.csv"</span>, </span>
+<span id="cb7-2"><a href="#cb7-2"></a>                               <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"N/A"</span>, <span class="st">"999"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>We’ll cover these more in depth in a couple of weeks.</p></li></ol></aside></section><section id="skipping-lines" class="slide level2"><h2>Skipping lines</h2>
+<p>Depending on how the data were input, there may be several lines that precede the beginning of the data table you’re interested in importing. You can skip these lines of metadata with the <code>skip</code> argument:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard.csv"</span>, </span>
+<span id="cb8-2"><a href="#cb8-2"></a>                               <span class="at">skip =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="variable-names" class="slide level2"><h2>Variable names</h2>
+<p><code>read_csv</code> will automatically take the first row as column names. If you want to rename them you can save yourself some time recoding later on if you specify your preferred variable names upfront with the <code>col_names</code> argument.</p>
+<div class="fragment">
+<p>It takes a character vector to be used as column names (in their order of appearance).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard.csv"</span>, </span>
+<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2"></a>                               <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"artist"</span>, <span class="st">"track"</span>, <span class="st">"time"</span>, <span class="st">"date_entered"</span>, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3"></a>                                             <span class="fu">paste</span>(<span class="st">"wk"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">76</span>, <span class="at">sep =</span> <span class="st">"_"</span>)))</span>
+<span id="annotated-cell-8-4"><a href="#annotated-cell-8-4"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2">2</button><span id="annotated-cell-8-5" class="code-annotation-target"><a href="#annotated-cell-8-5"></a>billboard_renamed <span class="sc">|&gt;</span>  <span class="fu">names</span>() <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">10</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="3" data-code-annotation="1"><code>paste</code> “pastes” together the first argument to the second argument (separated by whatever is specified in the <code>sep</code> argument) as character strings. Since the first argument here is a singular value, it is repeated for the entire length of the vector in the second argument. The first several values of <code>paste("wk", 1:76, sep = "_")</code> are: wk_1, wk_2, wk_3, wk_4, wk_5, wk_6</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="5" data-code-annotation="2">Our first official usage of the pipe! <code>names</code> here returns the column names of our data frame. . . .</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>If you don’t have any variable names you can specify that instead.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard.csv"</span>, </span>
+<span id="cb9-2"><a href="#cb9-2"></a>                               <span class="at">col_names =</span> <span class="cn">FALSE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section><section id="snake-case" class="slide level2"><h2>Snake Case</h2>
+<p>If you simply want to change your variables to snake case (all lower case; words separated by <code>_</code>), you can use the function <code>clean_names()</code> from the <code>janitor</code> package which replaces other punctuation separators with <code>_</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-1" class="code-annotation-target"><a href="#annotated-cell-10-1"></a><span class="co"># install.packages("janitor")</span></span>
+<span id="annotated-cell-10-2"><a href="#annotated-cell-10-2"></a>billboard_renamed <span class="ot">&lt;-</span> billboard_2000_raw <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="2">2</button><span id="annotated-cell-10-3" class="code-annotation-target"><a href="#annotated-cell-10-3"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>(<span class="at">numerals =</span> <span class="st">"right"</span>)</span>
+<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4"></a></span>
+<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5"></a>billboard_renamed <span class="sc">|&gt;</span>  <span class="fu">names</span>() <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">10</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-lines="1" data-code-annotation="1">Run in the console first.</span>
+</dd>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-lines="3" data-code-annotation="2">You can call a function without loading its package by specifying its package name followed by <code>::</code> before it; <br> The <code>numerals</code> argument specifies if you additionally want to put a separator before a number.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "year"         "artist"       "track"        "time"         "date_entered"
+ [6] "wk_1"         "wk_2"         "wk_3"         "wk_4"         "wk_5"        </code></pre>
+</div>
+</div>
+</section><section id="other-data-file-types-with-readr" class="slide level2"><h2>Other Data File Types with <code>readr</code>
+</h2>
+<p>The other functions in <code>readr</code> employ as similar approach to <code>read_csv</code> so the trick is just knowing which to use for what data type.</p>
+<div>
 <ul>
-<li>For Excel files (<code>.xls</code> or <code>.xlsx</code>), use package <code>readxl</code>
-</li>
-<li>For Google Docs Spreadsheets, use package <code>googlesheets4</code>
-</li>
-<li>For Stata, SPSS, and SAS files, use package <code>haven</code> (<code>tidyverse</code>)</li>
-<li>For Stata, SPSS, and Minitab, use package <code>foreign</code>
+<li class="fragment">
+<code>read_csv2</code> is separated by semicolons (instead of commas)</li>
+<li class="fragment">
+<code>read_tsv</code> is separated by tabs</li>
+<li class="fragment">
+<code>read_delim</code> guesses the delimiter</li>
+<li class="fragment">
+<code>read_fwf</code> reads in fixed-width-files</li>
+<li class="fragment">
+<code>read_table</code> is a variation of <code>fwf</code> where columns are separated by white space</li>
+<li class="fragment">
+<code>read_log</code> reads in Apache-style log files</li>
+</ul>
+</div>
+</section><section id="other-packages-to-read-in-data" class="slide level2"><h2>Other Packages to Read in Data</h2>
+<p>There are a range of other ways, besides delimited files, that data are stored.</p>
+<p>The following packages are part of the extended <code>tidyverse</code> and therefore operate with similar syntax and logic as <code>readr</code>.</p>
+</section><section id="other-packages-to-read-in-data-1" class="slide level2"><h2>Other Packages to Read in Data</h2>
+<p>There are a range of other ways, besides delimited files, that data are stored.</p>
+<p>The following packages are part of the extended <code>tidyverse</code> and therefore operate with similar syntax and logic as <code>readr</code>.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="images/readxl.png" class="absolute" style="top: 185px; left: 135px; "></p>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>For Excel files (<code>.xls</code> or <code>.xlsx</code>), use package <a href="https://readxl.tidyverse.org/"><code>readxl</code></a><sup>1</sup>
 </li>
 </ul>
+</div>
+</div>
 
 <aside><div>
-<p>Note: You <strong>won’t</strong> keep text formatting, color, comments, or merged cells!!</p>
-</div></aside></section><section id="writing-delimited-files" class="slide level2"><h2>Writing Delimited Files</h2>
+<p>Note: For Excel files and Googlesheets You <strong>won’t</strong> keep text formatting, color, comments, or merged cells. See the <a href="https://ycphs.github.io/openxlsx/"><code>openxlsx</code></a> package for those capabilities. Also, <a href="https://github.com/nacnudus/tidyxl"><code>tidyxl</code></a> can help import non-tabular data from Excel.</p>
+</div><ol class="aside-footnotes"><li id="fn3"><p>Functions have additional arguments to read in specific sheets or a range of cells.</p></li></ol></aside></section><section id="other-packages-to-read-in-data-2" class="slide level2"><h2>Other Packages to Read in Data</h2>
+<p>There are a range of other ways, besides delimited files, that data are stored.</p>
+<p>The following packages are part of the extended <code>tidyverse</code> and therefore operate with similar syntax and logic as <code>readr</code>.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="images/googlesheets4.png" class="absolute" style="top: 185px; left: 135px; "></p>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>For Excel files (<code>.xls</code> or <code>.xlsx</code>), use package <a href="https://readxl.tidyverse.org/"><code>readxl</code></a><sup>1</sup>
+</li>
+<li>For Google Docs Spreadsheets, use package <a href="https://googlesheets4.tidyverse.org/"><code>googlesheets4</code></a><sup>2</sup>
+</li>
+</ul>
+</div>
+</div>
+
+<aside><div>
+<p>Note: For Excel files and Googlesheets You <strong>won’t</strong> keep text formatting, color, comments, or merged cells. See the <a href="https://ycphs.github.io/openxlsx/"><code>openxlsx</code></a> package for those capabilities. Also, <a href="https://github.com/nacnudus/tidyxl"><code>tidyxl</code></a> can help import non-tabular data from Excel.</p>
+</div><ol class="aside-footnotes"><li id="fn4"><p>Functions have additional arguments to read in specific sheets or a range of cells.</p></li><li id="fn5"><p>Very similar to <code>readxl</code> with some slight variations you can read about <a href="https://r4ds.hadley.nz/spreadsheets.html#google-sheets">here</a>.</p></li></ol></aside></section><section id="other-packages-to-read-in-data-3" class="slide level2"><h2>Other Packages to Read in Data</h2>
+<p>There are a range of other ways, besides delimited files, that data are stored.</p>
+<p>The following packages are part of the extended <code>tidyverse</code> and therefore operate with similar syntax and logic as <code>readr</code>.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="images/haven.png" class="absolute" style="top: 185px; left: 135px; "></p>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>For Excel files (<code>.xls</code> or <code>.xlsx</code>), use package <a href="https://readxl.tidyverse.org/"><code>readxl</code></a><sup>1</sup>
+</li>
+<li>For Google Docs Spreadsheets, use package <a href="https://googlesheets4.tidyverse.org/"><code>googlesheets4</code></a><sup>2</sup>
+</li>
+<li>For Stata, SPSS, and SAS files, use package <a href="https://haven.tidyverse.org/"><code>haven</code></a><sup>3</sup>
+</li>
+</ul>
+</div>
+</div>
+
+<aside><div>
+<p>Note: For Excel files and Googlesheets You <strong>won’t</strong> keep text formatting, color, comments, or merged cells. See the <a href="https://ycphs.github.io/openxlsx/"><code>openxlsx</code></a> package for those capabilities. Also, <a href="https://github.com/nacnudus/tidyxl"><code>tidyxl</code></a> can help import non-tabular data from Excel.</p>
+</div><ol class="aside-footnotes"><li id="fn6"><p>Functions have additional arguments to read in specific sheets or a range of cells.</p></li><li id="fn7"><p>Very similar to <code>readxl</code> with some slight variations you can read about <a href="https://r4ds.hadley.nz/spreadsheets.html#google-sheets">here</a>.</p></li><li id="fn8"><p>SAS, SPSS, and Stata have so-called “labelled” vectors for which <code>haven</code> provides a <a href="https://haven.tidyverse.org/reference/index.html#labelled-vectors">class</a> to represent in <code>R</code>. Alternatively, you can get rid of them with <a href="https://haven.tidyverse.org/reference/index.html#remove-attributes">these functions</a>.</p></li></ol></aside></section><section id="how-does-readr-parse-different-data-types" class="slide level2"><h2>How does <code>readr</code> parse different data types?</h2>
+<p>For each column in a data frame, <code>readr</code> functions pull the first 1000 rows and checks:</p>
+<div class="cell" data-reveal="true" data-fig-width="11" data-fig-height="5.5" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    id1(Variable)==&gt;A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==&gt;id2(Logical)
+    id1(Variable)==&gt;B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==&gt;id3(Number)
+    id1(Variable)==&gt;C["3. Does it match the ISO8601 standard?"]==&gt;id4(Date/Date-time)
+    id1(Variable)==&gt;D["4. None of the above"]==&gt;id5(String)
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style A fill:#FFFFFF,color:#000000,stroke:#000000
+    style B fill:#FFFFFF,color:#000000,stroke:#000000
+    style C fill:#FFFFFF,color:#000000,stroke:#000000
+    style D fill:#FFFFFF,color:#000000,stroke:#000000
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</section><section id="how-does-readr-parse-different-data-types-1" class="slide level2"><h2>How does <code>readr</code> parse different data types?</h2>
+<p>For each column in a data frame, <code>readr</code> functions pull the first 1000 rows and checks:</p>
+<div class="cell" data-reveal="true" data-fig-width="11" data-fig-height="5.5" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    id1(Variable)==&gt;A["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"]==&gt;id2(Logical)
+    id1(Variable)==&gt;B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==&gt;id3(Number)
+    id1(Variable)==&gt;C["3. Does it match the ISO8601 standard?"]==&gt;id4(Date/Date-time)
+    id1(Variable)==&gt;D["4. None of the above"]==&gt;id5(String)
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style A fill:#ffa07a,color:#000000,stroke:#000000
+    style B fill:#FFFFFF,color:#000000,stroke:#000000
+    style C fill:#FFFFFF,color:#000000,stroke:#000000
+    style D fill:#FFFFFF,color:#000000,stroke:#000000
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</section><section id="how-does-readr-parse-different-data-types-2" class="slide level2"><h2>How does <code>readr</code> parse different data types?</h2>
+<p>For each column in a data frame, <code>readr</code> functions pull the first 1000 rows and checks:</p>
+<div class="cell" data-reveal="true" data-fig-width="11" data-fig-height="5.5" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    id1(Variable)==&gt;A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==&gt;id2(Logical)
+    id1(Variable)==&gt;B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==&gt;id3(Number)
+    id1(Variable)==&gt;C["3. Does it match the ISO8601 standard?"]==&gt;id4(Date/Date-time)
+    id1(Variable)==&gt;D["4. None of the above"]==&gt;id5(String)
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style A fill:#FFFFFF,color:#000000,stroke:#000000
+    style B fill:#ffa07a,color:#000000,stroke:#000000
+    style C fill:#FFFFFF,color:#000000,stroke:#000000
+    style D fill:#FFFFFF,color:#000000,stroke:#000000
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</section><section id="how-does-readr-parse-different-data-types-3" class="slide level2"><h2>How does <code>readr</code> parse different data types?</h2>
+<p>For each column in a data frame, <code>readr</code> functions pull the first 1000 rows and checks:</p>
+<div class="cell" data-reveal="true" data-fig-width="11" data-fig-height="5.5" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    id1(Variable)==&gt;A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==&gt;id2(Logical)
+    id1(Variable)==&gt;B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==&gt;id3(Number)
+    id1(Variable)==&gt;C["3. Does it match the ISO8601 standard?"]==&gt;id4(Date/Date-time)
+    id1(Variable)==&gt;D["4. None of the above"]==&gt;id5(String)
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style A fill:#FFFFFF,color:#000000,stroke:#000000
+    style B fill:#FFFFFF,color:#000000,stroke:#000000
+    style C fill:#ffa07a,color:#000000,stroke:#000000
+    style D fill:#FFFFFF,color:#000000,stroke:#000000
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</section><section id="how-does-readr-parse-different-data-types-4" class="slide level2"><h2>How does <code>readr</code> parse different data types?</h2>
+<p>For each column in a data frame, <code>readr</code> functions pull the first 1000 rows and checks:</p>
+<div class="cell" data-reveal="true" data-fig-width="11" data-fig-height="5.5" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    id1(Variable)==&gt;A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==&gt;id2(Logical)
+    id1(Variable)==&gt;B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==&gt;id3(Number)
+    id1(Variable)==&gt;C["3. Does it match the ISO8601 standard?"]==&gt;id4(Date/Date-time)
+    id1(Variable)==&gt;D["4. None of the above"]==&gt;id5(String)
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style A fill:#FFFFFF,color:#000000,stroke:#000000
+    style B fill:#FFFFFF,color:#000000,stroke:#000000
+    style C fill:#FFFFFF,color:#000000,stroke:#000000
+    style D fill:#ffa07a,color:#000000,stroke:#000000
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</section><section id="most-common-issue-with-reading-in-data" class="slide level2"><h2>Most Common Issue with Reading in Data</h2>
+<p>The most common problem that occurs when reading in data is having mixed data. Most often, given the heuristic provided in the last slide, will parse a variable as a character string to preserve whatever it contains.</p>
+<div class="fragment">
+<p>Let’s actually look at how the billboard data was read in:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">glimpse</span>(billboard_2000_raw) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 317
+Columns: 81
+$ year         &lt;dbl&gt; 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 200…
+$ artist       &lt;chr&gt; "2 Pac", "2Ge+her", "3 Doors Down", "3 Doors Down", "504 …
+$ track        &lt;chr&gt; "Baby Don't Cry (Keep...", "The Hardest Part Of ...", "Kr…
+$ time         &lt;time&gt; 04:22:00, 03:15:00, 03:53:00, 04:24:00, 03:35:00, 03:24:…
+$ date.entered &lt;date&gt; 2000-02-26, 2000-09-02, 2000-04-08, 2000-10-21, 2000-04-…
+$ wk1          &lt;dbl&gt; 87, 91, 81, 76, 57, 51, 97, 84, 59, 76, 84, 57, 50, 71, 7…
+$ wk2          &lt;dbl&gt; 82, 87, 70, 76, 34, 39, 97, 62, 53, 76, 84, 47, 39, 51, 6…
+$ wk3          &lt;dbl&gt; 72, 92, 68, 72, 25, 34, 96, 51, 38, 74, 75, 45, 30, 28, 5…
+$ wk4          &lt;dbl&gt; 77, NA, 67, 69, 17, 26, 95, 41, 28, 69, 73, 29, 28, 18, 4…
+$ wk5          &lt;dbl&gt; 87, NA, 66, 67, 17, 26, 100, 38, 21, 68, 73, 23, 21, 13, …
+$ wk6          &lt;dbl&gt; 94, NA, 57, 65, 31, 19, NA, 35, 18, 67, 69, 18, 19, 13, 3…
+$ wk7          &lt;dbl&gt; 99, NA, 54, 55, 36, 2, NA, 35, 16, 61, 68, 11, 20, 11, 34…
+$ wk8          &lt;dbl&gt; NA, NA, 53, 59, 49, 2, NA, 38, 14, 58, 65, 9, 17, 1, 29, …
+$ wk9          &lt;dbl&gt; NA, NA, 51, 62, 53, 3, NA, 38, 12, 57, 73, 9, 17, 1, 27, …
+$ wk10         &lt;dbl&gt; NA, NA, 51, 61, 57, 6, NA, 36, 10, 59, 83, 11, 17, 2, 30,…
+$ wk11         &lt;dbl&gt; NA, NA, 51, 61, 64, 7, NA, 37, 9, 66, 92, 1, 17, 2, 36, N…
+$ wk12         &lt;dbl&gt; NA, NA, 51, 59, 70, 22, NA, 37, 8, 68, NA, 1, 3, 3, 37, N…
+$ wk13         &lt;dbl&gt; NA, NA, 47, 61, 75, 29, NA, 38, 6, 61, NA, 1, 3, 3, 39, N…
+$ wk14         &lt;dbl&gt; NA, NA, 44, 66, 76, 36, NA, 49, 1, 67, NA, 1, 7, 4, 49, N…
+$ wk15         &lt;dbl&gt; NA, NA, 38, 72, 78, 47, NA, 61, 2, 59, NA, 4, 10, 12, 57,…
+$ wk16         &lt;dbl&gt; NA, NA, 28, 76, 85, 67, NA, 63, 2, 63, NA, 8, 17, 11, 63,…
+$ wk17         &lt;dbl&gt; NA, NA, 22, 75, 92, 66, NA, 62, 2, 67, NA, 12, 25, 13, 65…
+$ wk18         &lt;dbl&gt; NA, NA, 18, 67, 96, 84, NA, 67, 2, 71, NA, 22, 29, 15, 68…
+$ wk19         &lt;dbl&gt; NA, NA, 18, 73, NA, 93, NA, 83, 3, 79, NA, 23, 29, 18, 79…
+$ wk20         &lt;dbl&gt; NA, NA, 14, 70, NA, 94, NA, 86, 4, 89, NA, 43, 40, 20, 86…
+$ wk21         &lt;dbl&gt; NA, NA, 12, NA, NA, NA, NA, NA, 5, NA, NA, 44, 43, 30, NA…
+$ wk22         &lt;dbl&gt; NA, NA, 7, NA, NA, NA, NA, NA, 5, NA, NA, NA, 50, 40, NA,…
+$ wk23         &lt;dbl&gt; NA, NA, 6, NA, NA, NA, NA, NA, 6, NA, NA, NA, NA, 39, NA,…
+$ wk24         &lt;dbl&gt; NA, NA, 6, NA, NA, NA, NA, NA, 9, NA, NA, NA, NA, 44, NA,…
+$ wk25         &lt;dbl&gt; NA, NA, 6, NA, NA, NA, NA, NA, 13, NA, NA, NA, NA, NA, NA…
+$ wk26         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, 14, NA, NA, NA, NA, NA, NA…
+$ wk27         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, 16, NA, NA, NA, NA, NA, NA…
+$ wk28         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 23, NA, NA, NA, NA, NA, NA…
+$ wk29         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 22, NA, NA, NA, NA, NA, NA…
+$ wk30         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 33, NA, NA, NA, NA, NA, NA…
+$ wk31         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 36, NA, NA, NA, NA, NA, NA…
+$ wk32         &lt;dbl&gt; NA, NA, 3, NA, NA, NA, NA, NA, 43, NA, NA, NA, NA, NA, NA…
+$ wk33         &lt;dbl&gt; NA, NA, 3, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wk34         &lt;dbl&gt; NA, NA, 3, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wk35         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wk36         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wk37         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wk38         &lt;dbl&gt; NA, NA, 9, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wk39         &lt;dbl&gt; NA, NA, 9, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wk40         &lt;dbl&gt; NA, NA, 15, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk41         &lt;dbl&gt; NA, NA, 14, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk42         &lt;dbl&gt; NA, NA, 13, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk43         &lt;dbl&gt; NA, NA, 14, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk44         &lt;dbl&gt; NA, NA, 16, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk45         &lt;dbl&gt; NA, NA, 17, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk46         &lt;dbl&gt; NA, NA, 21, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk47         &lt;dbl&gt; NA, NA, 22, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk48         &lt;dbl&gt; NA, NA, 24, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk49         &lt;dbl&gt; NA, NA, 28, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk50         &lt;dbl&gt; NA, NA, 33, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk51         &lt;dbl&gt; NA, NA, 42, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk52         &lt;dbl&gt; NA, NA, 42, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk53         &lt;dbl&gt; NA, NA, 49, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk54         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk55         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk56         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk57         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk58         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk59         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk60         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk61         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk62         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk63         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk64         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk65         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk66         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk67         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk68         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk69         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk70         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk71         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk72         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk73         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk74         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk75         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</code></pre>
+</div>
+</div>
+</div>
+</section><section id="what-went-wrong" class="slide level2"><h2>What Went Wrong?</h2>
+<p>Since <code>readr</code> uses the values in the first 1000 rows to guess the type of the column (integer, logical, numeric, character), if the first 1000 rows don’t have any data, they will be coded as logical variables.</p>
+<div class="fragment">
+<p>There are not many songs in the data that charted for 60+ weeks—and none in the first 1000 that charted for 66+ weeks!</p>
+</div>
+<div class="fragment">
+<p><code>NA</code> is logical?<sup>1</sup></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-1" class="code-annotation-target"><a href="#annotated-cell-12-1"></a><span class="fu">class</span>(<span class="cn">NA</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="1" data-code-annotation="1"><code>class</code> returns the data type of its first argument.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "logical"</code></pre>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn9"><p>More on this in a couple of weeks.</p></li></ol></aside></section><section id="writing-delimited-files" class="slide level2"><h2>Writing Delimited Files</h2>
 <p>Getting data out of R into a delimited file is very similar to getting it into R:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">write_csv</span>(billboard_2000_raw, <span class="at">path =</span> <span class="st">"billboard_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">write_csv</span>(billboard_2000_raw, <span class="at">path =</span> <span class="st">"billboard_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This saved the data we pulled off the web in a file called <code>billboard_data.csv</code> in my working directory.</p>
 </section></section><section><section id="reshaping-data" class="title-slide slide level1 section-title center" data-background-image="images/tidyr.png" data-background-size="contain" data-background-opacity="0.25" data-background-position="center" data-background-color="#99a486"><h1>Reshaping Data</h1>
@@ -786,13 +1249,13 @@
 </ol></section><section id="example-of-pivot_longer" class="slide level2"><h2>Example of <code>pivot_longer()</code>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" data-code-line-numbers="|3-5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb9-2"><a href="#cb9-2"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_2000_raw <span class="sc">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span>wk1<span class="sc">:</span>wk76,</span>
-<span id="cb9-4"><a href="#cb9-4"></a>               <span class="at">names_to =</span><span class="st">"week"</span>,</span>
-<span id="cb9-5"><a href="#cb9-5"></a>               <span class="at">values_to =</span> <span class="st">"rank"</span>)</span>
-<span id="cb9-6"><a href="#cb9-6"></a>billboard_2000 <span class="sc">%&gt;%</span> </span>
-<span id="cb9-7"><a href="#cb9-7"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16" data-code-line-numbers="|3-5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_2000_raw <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span>wk1<span class="sc">:</span>wk76,</span>
+<span id="cb16-4"><a href="#cb16-4"></a>               <span class="at">names_to =</span><span class="st">"week"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5"></a>               <span class="at">values_to =</span> <span class="st">"rank"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6"></a>billboard_2000 <span class="sc">%&gt;%</span> </span>
+<span id="cb16-7"><a href="#cb16-7"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 7
    year artist track                   time   date.entered week   rank
@@ -807,7 +1270,7 @@
 <p>Now we have a single week column!</p>
 </section><section id="lots-of-missing-values" class="slide level2"><h2>Lots of missing values?!</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
    1.00   26.00   51.00   51.05   76.00  100.00   18785 </code></pre>
@@ -818,12 +1281,12 @@
 </h2>
 <p>Adding the argument <code>values_drop_na = TRUE</code> to <code>pivot_longer()</code> will remove rows with missing ranks.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_2000_raw <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> wk1<span class="sc">:</span>wk76, </span>
-<span id="cb13-3"><a href="#cb13-3"></a>               <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
-<span id="cb13-4"><a href="#cb13-4"></a>               <span class="at">values_to =</span> <span class="st">"rank"</span>, </span>
-<span id="cb13-5"><a href="#cb13-5"></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-6"><a href="#cb13-6"></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20" data-code-line-numbers="|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_2000_raw <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> wk1<span class="sc">:</span>wk76, </span>
+<span id="cb20-3"><a href="#cb20-3"></a>               <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
+<span id="cb20-4"><a href="#cb20-4"></a>               <span class="at">values_to =</span> <span class="st">"rank"</span>, </span>
+<span id="cb20-5"><a href="#cb20-5"></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
    1.00   26.00   51.00   51.05   76.00  100.00 </code></pre>
@@ -832,7 +1295,7 @@
 <div class="fragment">
 <p>No more <code>NA</code> values!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">dim</span>(billboard_2000)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">dim</span>(billboard_2000)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5307    7</code></pre>
 </div>
@@ -842,7 +1305,7 @@
 </section><section id="parse_number" class="slide level2"><h2><code>parse_number()</code></h2>
 <p>The week column is of they type character, but it should be numeric.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">head</span>(billboard_2000<span class="sc">$</span>week)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">head</span>(billboard_2000<span class="sc">$</span>week)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "wk1" "wk2" "wk3" "wk4" "wk5" "wk6"</code></pre>
 </div>
@@ -850,9 +1313,9 @@
 <div class="fragment">
 <p><code>parse_number()</code> grabs just the numeric information from a character string:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_2000 <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a>    <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">parse_number</span>(week))</span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>week)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_2000 <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>    <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">parse_number</span>(week))</span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>week)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
    1.00    5.00   10.00   11.47   16.00   65.00 </code></pre>
@@ -893,12 +1356,12 @@
 </ol></section><section id="example-question" class="slide level2"><h2>Example: Question</h2>
 <p><strong>Question:</strong> Do songs that hit #1 have a different trajectory than those that don’t?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>billboard_2000_question <span class="ot">&lt;-</span> billboard_2000 <span class="sc">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a>    <span class="fu">group_by</span>(artist, track) <span class="sc">%&gt;%</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a>    <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Weeks at #1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(rank <span class="sc">==</span> <span class="dv">1</span>),</span>
-<span id="cb21-4"><a href="#cb21-4"></a>           <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">ifelse</span>(<span class="fu">any</span>(rank <span class="sc">==</span> <span class="dv">1</span>),</span>
-<span id="cb21-5"><a href="#cb21-5"></a>                                  <span class="st">"Hit #1"</span>,</span>
-<span id="cb21-6"><a href="#cb21-6"></a>                                  <span class="st">"Didn't hit #1"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>billboard_2000_question <span class="ot">&lt;-</span> billboard_2000 <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>    <span class="fu">group_by</span>(artist, track) <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a>    <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Weeks at #1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(rank <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb28-4"><a href="#cb28-4"></a>           <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">ifelse</span>(<span class="fu">any</span>(rank <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb28-5"><a href="#cb28-5"></a>                                  <span class="st">"Hit #1"</span>,</span>
+<span id="cb28-6"><a href="#cb28-6"></a>                                  <span class="st">"Didn't hit #1"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <aside><div>
@@ -912,26 +1375,26 @@
 <div class="tab-content">
 <div id="tabset-1-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">library</span>(ggthemes)</span>
-<span id="cb22-3"><a href="#cb22-3"></a>billboard_trajectories <span class="ot">&lt;-</span> </span>
-<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> billboard_2000_question,</span>
-<span id="cb22-5"><a href="#cb22-5"></a>         <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> rank, <span class="at">group =</span> track,</span>
-<span id="cb22-6"><a href="#cb22-6"></a>             <span class="at">color =</span> <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>)) <span class="sc">+</span></span>
-<span id="cb22-7"><a href="#cb22-7"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">size =</span> <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb22-8"><a href="#cb22-8"></a>  <span class="fu">theme_tufte</span>() <span class="sc">+</span></span>
-<span id="cb22-9"><a href="#cb22-9"></a>  <span class="fu">xlab</span>(<span class="st">"Week"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Rank"</span>) <span class="sc">+</span></span>
-<span id="cb22-10"><a href="#cb22-10"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
-<span id="cb22-11"><a href="#cb22-11"></a>  <span class="fu">scale_size_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb22-12"><a href="#cb22-12"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.90</span>, <span class="fl">0.75</span>),</span>
-<span id="cb22-13"><a href="#cb22-13"></a>        <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"transparent"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb29-3"><a href="#cb29-3"></a>billboard_trajectories <span class="ot">&lt;-</span> </span>
+<span id="cb29-4"><a href="#cb29-4"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> billboard_2000_question,</span>
+<span id="cb29-5"><a href="#cb29-5"></a>         <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> rank, <span class="at">group =</span> track,</span>
+<span id="cb29-6"><a href="#cb29-6"></a>             <span class="at">color =</span> <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb29-7"><a href="#cb29-7"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">size =</span> <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb29-8"><a href="#cb29-8"></a>  <span class="fu">theme_tufte</span>() <span class="sc">+</span></span>
+<span id="cb29-9"><a href="#cb29-9"></a>  <span class="fu">xlab</span>(<span class="st">"Week"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Rank"</span>) <span class="sc">+</span></span>
+<span id="cb29-10"><a href="#cb29-10"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb29-11"><a href="#cb29-11"></a>  <span class="fu">scale_size_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb29-12"><a href="#cb29-12"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.90</span>, <span class="fl">0.75</span>),</span>
+<span id="cb29-13"><a href="#cb29-13"></a>        <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"transparent"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-1-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>billboard_trajectories</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>billboard_trajectories</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img data-src="CSSS508_Lecture4_files/figure-revealjs/unnamed-chunk-16-1.svg"></p>
+<p><img data-src="CSSS508_Lecture4_files/figure-revealjs/unnamed-chunk-28-1.svg"></p>
 </div>
 </div>
 </div>
@@ -948,23 +1411,23 @@
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="aykyyupzqc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#aykyyupzqc table {
+<div id="pvjfcajxbn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pvjfcajxbn table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#aykyyupzqc thead, #aykyyupzqc tbody, #aykyyupzqc tfoot, #aykyyupzqc tr, #aykyyupzqc td, #aykyyupzqc th {
+#pvjfcajxbn thead, #pvjfcajxbn tbody, #pvjfcajxbn tfoot, #pvjfcajxbn tr, #pvjfcajxbn td, #pvjfcajxbn th {
   border-style: none;
 }
 
-#aykyyupzqc p {
+#pvjfcajxbn p {
   margin: 0;
   padding: 0;
 }
 
-#aykyyupzqc .gt_table {
+#pvjfcajxbn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -990,12 +1453,12 @@
   border-left-color: #D3D3D3;
 }
 
-#aykyyupzqc .gt_caption {
+#pvjfcajxbn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#aykyyupzqc .gt_title {
+#pvjfcajxbn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1007,7 +1470,7 @@
   border-bottom-width: 0;
 }
 
-#aykyyupzqc .gt_subtitle {
+#pvjfcajxbn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1019,7 +1482,7 @@
   border-top-width: 0;
 }
 
-#aykyyupzqc .gt_heading {
+#pvjfcajxbn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1031,13 +1494,13 @@
   border-right-color: #D3D3D3;
 }
 
-#aykyyupzqc .gt_bottom_border {
+#pvjfcajxbn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#aykyyupzqc .gt_col_headings {
+#pvjfcajxbn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1052,7 +1515,7 @@
   border-right-color: #D3D3D3;
 }
 
-#aykyyupzqc .gt_col_heading {
+#pvjfcajxbn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1072,7 +1535,7 @@
   overflow-x: hidden;
 }
 
-#aykyyupzqc .gt_column_spanner_outer {
+#pvjfcajxbn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1084,15 +1547,15 @@
   padding-right: 4px;
 }
 
-#aykyyupzqc .gt_column_spanner_outer:first-child {
+#pvjfcajxbn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#aykyyupzqc .gt_column_spanner_outer:last-child {
+#pvjfcajxbn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#aykyyupzqc .gt_column_spanner {
+#pvjfcajxbn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1104,11 +1567,11 @@
   width: 100%;
 }
 
-#aykyyupzqc .gt_spanner_row {
+#pvjfcajxbn .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#aykyyupzqc .gt_group_heading {
+#pvjfcajxbn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1134,7 +1597,7 @@
   text-align: left;
 }
 
-#aykyyupzqc .gt_empty_group_heading {
+#pvjfcajxbn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1149,15 +1612,15 @@
   vertical-align: middle;
 }
 
-#aykyyupzqc .gt_from_md > :first-child {
+#pvjfcajxbn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#aykyyupzqc .gt_from_md > :last-child {
+#pvjfcajxbn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#aykyyupzqc .gt_row {
+#pvjfcajxbn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1176,7 +1639,7 @@
   overflow-x: hidden;
 }
 
-#aykyyupzqc .gt_stub {
+#pvjfcajxbn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1189,7 +1652,7 @@
   padding-right: 5px;
 }
 
-#aykyyupzqc .gt_stub_row_group {
+#pvjfcajxbn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1203,15 +1666,15 @@
   vertical-align: top;
 }
 
-#aykyyupzqc .gt_row_group_first td {
+#pvjfcajxbn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#aykyyupzqc .gt_row_group_first th {
+#pvjfcajxbn .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#aykyyupzqc .gt_summary_row {
+#pvjfcajxbn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1221,16 +1684,16 @@
   padding-right: 5px;
 }
 
-#aykyyupzqc .gt_first_summary_row {
+#pvjfcajxbn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#aykyyupzqc .gt_first_summary_row.thick {
+#pvjfcajxbn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#aykyyupzqc .gt_last_summary_row {
+#pvjfcajxbn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1240,7 +1703,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#aykyyupzqc .gt_grand_summary_row {
+#pvjfcajxbn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1250,7 +1713,7 @@
   padding-right: 5px;
 }
 
-#aykyyupzqc .gt_first_grand_summary_row {
+#pvjfcajxbn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1260,7 +1723,7 @@
   border-top-color: #D3D3D3;
 }
 
-#aykyyupzqc .gt_last_grand_summary_row_top {
+#pvjfcajxbn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1270,11 +1733,11 @@
   border-bottom-color: #D3D3D3;
 }
 
-#aykyyupzqc .gt_striped {
+#pvjfcajxbn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#aykyyupzqc .gt_table_body {
+#pvjfcajxbn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1283,7 +1746,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#aykyyupzqc .gt_footnotes {
+#pvjfcajxbn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1297,7 +1760,7 @@
   border-right-color: #D3D3D3;
 }
 
-#aykyyupzqc .gt_footnote {
+#pvjfcajxbn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1306,7 +1769,7 @@
   padding-right: 5px;
 }
 
-#aykyyupzqc .gt_sourcenotes {
+#pvjfcajxbn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1320,7 +1783,7 @@
   border-right-color: #D3D3D3;
 }
 
-#aykyyupzqc .gt_sourcenote {
+#pvjfcajxbn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1328,63 +1791,63 @@
   padding-right: 5px;
 }
 
-#aykyyupzqc .gt_left {
+#pvjfcajxbn .gt_left {
   text-align: left;
 }
 
-#aykyyupzqc .gt_center {
+#pvjfcajxbn .gt_center {
   text-align: center;
 }
 
-#aykyyupzqc .gt_right {
+#pvjfcajxbn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#aykyyupzqc .gt_font_normal {
+#pvjfcajxbn .gt_font_normal {
   font-weight: normal;
 }
 
-#aykyyupzqc .gt_font_bold {
+#pvjfcajxbn .gt_font_bold {
   font-weight: bold;
 }
 
-#aykyyupzqc .gt_font_italic {
+#pvjfcajxbn .gt_font_italic {
   font-style: italic;
 }
 
-#aykyyupzqc .gt_super {
+#pvjfcajxbn .gt_super {
   font-size: 65%;
 }
 
-#aykyyupzqc .gt_footnote_marks {
+#pvjfcajxbn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#aykyyupzqc .gt_asterisk {
+#pvjfcajxbn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#aykyyupzqc .gt_indent_1 {
+#pvjfcajxbn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#aykyyupzqc .gt_indent_2 {
+#pvjfcajxbn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#aykyyupzqc .gt_indent_3 {
+#pvjfcajxbn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#aykyyupzqc .gt_indent_4 {
+#pvjfcajxbn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#aykyyupzqc .gt_indent_5 {
+#pvjfcajxbn .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1817,6 +2280,157 @@
           return note.innerHTML;
         });
       }
+          let selectedAnnoteEl;
+          const selectorForAnnotation = ( cell, annotation) => {
+            let cellAttr = 'data-code-cell="' + cell + '"';
+            let lineAttr = 'data-code-annotation="' +  annotation + '"';
+            const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+            return selector;
+          }
+          const selectCodeLines = (annoteEl) => {
+            const doc = window.document;
+            const targetCell = annoteEl.getAttribute("data-target-cell");
+            const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+            const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+            const lineIds = lines.map((line) => {
+              return targetCell + "-" + line;
+            })
+            let top = null;
+            let height = null;
+            let parent = null;
+            if (lineIds.length > 0) {
+                //compute the position of the single el (top and bottom and make a div)
+                const el = window.document.getElementById(lineIds[0]);
+                top = el.offsetTop;
+                height = el.offsetHeight;
+                parent = el.parentElement.parentElement;
+              if (lineIds.length > 1) {
+                const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+                const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+                height = bottom - top;
+              }
+              if (top !== null && height !== null && parent !== null) {
+                // cook up a div (if necessary) and position it 
+                let div = window.document.getElementById("code-annotation-line-highlight");
+                if (div === null) {
+                  div = window.document.createElement("div");
+                  div.setAttribute("id", "code-annotation-line-highlight");
+                  div.style.position = 'absolute';
+                  parent.appendChild(div);
+                }
+                div.style.top = top - 2 + "px";
+                div.style.height = height + 4 + "px";
+                let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+                if (gutterDiv === null) {
+                  gutterDiv = window.document.createElement("div");
+                  gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                  gutterDiv.style.position = 'absolute';
+                  const codeCell = window.document.getElementById(targetCell);
+                  const gutter = codeCell.querySelector('.code-annotation-gutter');
+                  gutter.appendChild(gutterDiv);
+                }
+                gutterDiv.style.top = top - 2 + "px";
+                gutterDiv.style.height = height + 4 + "px";
+              }
+              selectedAnnoteEl = annoteEl;
+            }
+          };
+          const unselectCodeLines = () => {
+            const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+            elementsIds.forEach((elId) => {
+              const div = window.document.getElementById(elId);
+              if (div) {
+                div.remove();
+              }
+            });
+            selectedAnnoteEl = undefined;
+          };
+          // Handle positioning of the toggle
+          window.addEventListener(
+          "resize",
+          throttle(() => {
+            elRect = undefined;
+            if (selectedAnnoteEl) {
+              selectCodeLines(selectedAnnoteEl);
+            }
+          }, 10)
+          );
+          function throttle(fn, ms) {
+          let throttle = false;
+          let timer;
+            return (...args) => {
+              if(!throttle) { // first call gets through
+                  fn.apply(this, args);
+                  throttle = true;
+              } else { // all the others get throttled
+                  if(timer) clearTimeout(timer); // cancel #2
+                  timer = setTimeout(() => {
+                    fn.apply(this, args);
+                    timer = throttle = false;
+                  }, ms);
+              }
+            };
+          }
+          const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+          for (let i=0; i<annoteTargets.length; i++) {
+            const annoteTarget = annoteTargets[i];
+            const targetCell = annoteTarget.getAttribute("data-target-cell");
+            const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+            const contentFn = () => {
+              const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+              if (content) {
+                const tipContent = content.cloneNode(true);
+                tipContent.classList.add("code-annotation-tip-content");
+                return tipContent.outerHTML;
+              }
+            }
+            const config = {
+              allowHTML: true,
+              content: contentFn,
+              onShow: (instance) => {
+                selectCodeLines(instance.reference);
+                instance.reference.classList.add('code-annotation-active');
+                window.tippy.hideAll();
+              },
+              onHide: (instance) => {
+                unselectCodeLines();
+                instance.reference.classList.remove('code-annotation-active');
+              },
+              maxWidth: 300,
+              delay: [50, 0],
+              duration: [200, 0],
+              offset: [5, 10],
+              arrow: true,
+              appendTo: function(el) {
+                return el.parentElement.parentElement.parentElement;
+              },
+              interactive: true,
+              interactiveBorder: 10,
+              theme: 'light-border',
+              placement: 'right',
+              popperOptions: {
+                modifiers: [
+                {
+                  name: 'flip',
+                  options: {
+                    flipVariations: false, // true by default
+                    allowedAutoPlacements: ['right'],
+                    fallbackPlacements: ['right', 'top', 'top-start', 'top-end'],
+                  },
+                },
+                {
+                  name: 'preventOverflow',
+                  options: {
+                    mainAxis: false,
+                    altAxis: false
+                  }
+                }
+                ]        
+              }      
+            };
+            window.tippy(annoteTarget, config); 
+          }
       const findCites = (el) => {
         const parentEl = el.parentElement;
         if (parentEl) {

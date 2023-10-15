@@ -19,6 +19,7 @@ format:
     history: false
     progress: true
     link-external-icon: true
+    code-annotations: hover
 ---
 
 ```{r}
@@ -59,8 +60,9 @@ Last time, we learned about,
 Today, we will cover,
 
 * Importing and exporting data
-* Reshaping data
-* Merging dataframes
+* Cleaning and reshaping data
+* Dealing with dates & times
+* Controlling factor variables
 
 # Importing and Exporting Data{.section-title background-color="#99a486"}
 
@@ -75,7 +77,7 @@ Examples:
 * [`WDI`](https://vincentarelbundock.github.io/WDI/): World Development Indicators (World Bank)
 * [`tidycensus`](https://walker-data.com/tidycensus/): Census and American Community Survey
 * [`quantmod`](https://walker-data.com/tidycensus/): financial data from Yahoo, FRED, Google
-* [`gssr`](https://kjhealy.github.io/gssr/): The General Social Survey Cumulative Data (1972-2021) and Three Wave Panel Data
+* [`gssr`](https://kjhealy.github.io/gssr/): The General Social Survey Cumulative Data (1972-2021)
 * [`psidR`](https://github.com/floswald/psidR): Panel Study of Income Dynamics (basic & public datasets)
 
 . . . 
@@ -109,6 +111,9 @@ R has some built-in functions for importing data, such as `read.table()` and `re
 
 . . . 
 
+:::: {.columns}
+
+::: {.column width="60%"}
 The `readr` package provides similar functions, like `read_csv()`, that have slightly better features:
 
 ::: {.incremental}
@@ -117,10 +122,16 @@ The `readr` package provides similar functions, like `read_csv()`, that have sli
 * A *bit* smarter about dates and times
 * Loading progress bars for large files
 :::
+:::
 
+::: {.column width="40%"}
+![](images/readr.png)
+:::
+
+::::
 . . . 
 
-`readr` is one of the core `tidyverse packages so if you load the tidyverse you will have access to it:
+`readr` is one of the core `tidyverse` packages so loading `tidyverse` will load it too:
 
 ```{r}
 library(tidyverse)
@@ -128,7 +139,7 @@ library(tidyverse)
 
 . . . 
 
-Alternatively, you can simply load just `readr` like so:
+Alternatively, you can just load `readr` like so:
 
 ```{r}
 #| eval: false
@@ -140,7 +151,7 @@ library(readr)
 Let's import some data about song ranks on the Billboard Hot 100 in 2000:
 
 ```{r}
-billboard_2000_raw <- read_csv(file = "https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture4/data/billboard.csv")
+billboard_2000_raw <- read_csv(file = "data/billboard.csv")
 ```
 
 . . . 
@@ -152,33 +163,356 @@ How do we know it loaded?
 Let's look at it!
 
 ```{r}
-head(billboard_2000_raw)
+glimpse(billboard_2000_raw)
 ```
 
 ## Alternate Solution
 
-Import the data manually!
+When you import data from an external file you'll also see it in the Global Environment tab in the upper-right pane of RStudio: 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+::: {.fragment}
+You can also import the data manually!
 
 In the upper right-hand pane of RStudio (make sure you're in the Environment tab), select:
 
-`Import Dataset > From Text (readr)`
+`Import Dataset > From Text (readr)` and browse to the file on your computer^[Ideally you've saved it in your project folder! 😌].
+:::
 
-. . . 
-
+::: {.fragment}
 **Once you've imported the data, you can `copy/paste` the import code from the console into your file!!**
 
 This makes the process *reproducible!*
+:::
+:::
+::: {.column width="50%"}
+![](images/data_global_env.png)
 
-## Importing Other Data Types
+:::
 
-* For Excel files (`.xls` or `.xlsx`), use package `readxl`
-* For Google Docs Spreadsheets, use package `googlesheets4`
-* For Stata, SPSS, and SAS files, use package `haven` (`tidyverse`)
-* For Stata, SPSS, and Minitab, use package `foreign`
+::::
+
+## Manual data import
+
+![](images/data_import_manual.png){fig-align="center"}
+
+## Specifying `NA`s 
+
+`NA`s are technically logical (boolean) variables^[We'll cover these more in depth in a couple of weeks.] that indicate a missing value. 
+
+. . . 
+
+Sometimes a particular dataset or file read from a different software will code `NA`s differently than `R`. If that's the case, you can add additional specifications to `read_csv` for what to read in as `NA`.  
+
+
+```{r}
+#| eval: false
+billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+                               na = c("N/A", "999"))
+```
+
+## Skipping lines
+
+Depending on how the data were input, there may be several lines that precede the beginning of the data table you're interested in importing. You can skip these lines of metadata with the `skip` argument:
+
+```{r}
+#| eval: false
+billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+                               skip = 1)
+```
+
+## Variable names
+
+`read_csv` will automatically take the first row as column names. If you want to rename them you can save yourself some time recoding later on if you specify your preferred variable names upfront with the `col_names` argument. 
+
+. . . 
+
+It takes a character vector to be used as column names (in their order of appearance). 
+
+```{r}
+#| eval: false
+billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+                               col_names = c("year", "artist", "track", "time", "date_entered", 
+                                             paste("wk", 1:76, sep = "_"))) # <1>
+
+billboard_renamed |>  names() |> head(10) # <2>
+```
+
+1. `paste` "pastes" together the first argument to the second argument (separated by whatever is specified in the `sep` argument) as character strings. Since the first argument here is a singular value, it is repeated for the entire length of the vector in the second argument. The first several values of `paste("wk", 1:76, sep = "_")` are: `r head(paste("wk", 1:76, sep = "_"))`
+2. Our first official usage of the pipe! `names` here returns the column names of our data frame.
+. . . 
+
+If you don't have any variable names you can specify that instead. 
+
+```{r}
+#| eval: false
+billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+                               col_names = FALSE) 
+```
+
+## Snake Case
+
+If you simply want to change your variables to snake case (all lower case; words separated by `_`), you can use the function `clean_names()` from the `janitor` package which replaces other punctuation separators with `_`. 
+
+```{r}
+
+# install.packages("janitor") # <1> 
+billboard_renamed <- billboard_2000_raw |> 
+  janitor::clean_names(numerals = "right") # <2>
+
+billboard_renamed |>  names() |> head(10)
+```
+
+1. Run in the console first. 
+2. You can call a function without loading its package by specifying its package name followed by `::` before it; <br> The `numerals` argument specifies if you additionally want to put a separator before a number. 
+
+## Other Data File Types with `readr`
+
+The other functions in `readr` employ as similar approach to `read_csv` so the trick is just knowing which to use for what data type. 
+
+::: {.incremental}
+* `read_csv2` is separated by semicolons (instead of commas)
+* `read_tsv` is separated by tabs
+* `read_delim` guesses the delimiter
+* `read_fwf` reads in fixed-width-files
+* `read_table` is a variation of `fwf` where columns are separated by white space
+* `read_log` reads in Apache-style log files
+:::
+
+## Other Packages to Read in Data
+
+There are a range of other ways, besides delimited files, that data are stored. 
+
+The following packages are part of the extended `tidyverse` and therefore operate with similar syntax and logic as `readr`.
+
+## Other Packages to Read in Data
+
+There are a range of other ways, besides delimited files, that data are stored. 
+
+The following packages are part of the extended `tidyverse` and therefore operate with similar syntax and logic as `readr`.
+
+:::: {.columns}
+::: {.column width="50%"}
+![](images/readxl.png){.absolute top=185 left=135}
+:::
+::: {.column width="50%"}
+* For Excel files (`.xls` or `.xlsx`), use package [`readxl`](https://readxl.tidyverse.org/)^[Functions have additional arguments to read in specific sheets or a range of cells.]
+:::
+::::
 
 ::: aside
-Note: You **won't** keep text formatting, color, comments, or merged cells!!
+Note: For Excel files and Googlesheets You **won't** keep text formatting, color, comments, or merged cells. See the [`openxlsx`](https://ycphs.github.io/openxlsx/) package for those capabilities. Also, [`tidyxl`](https://github.com/nacnudus/tidyxl) can help import non-tabular data from Excel. 
 :::
+
+## Other Packages to Read in Data
+
+There are a range of other ways, besides delimited files, that data are stored. 
+
+The following packages are part of the extended `tidyverse` and therefore operate with similar syntax and logic as `readr`.
+
+:::: {.columns}
+::: {.column width="50%"}
+![](images/googlesheets4.png){.absolute top=185 left=135}
+:::
+::: {.column width="50%"}
+* For Excel files (`.xls` or `.xlsx`), use package [`readxl`](https://readxl.tidyverse.org/)^[Functions have additional arguments to read in specific sheets or a range of cells.]
+* For Google Docs Spreadsheets, use package [`googlesheets4`](https://googlesheets4.tidyverse.org/)^[Very similar to `readxl` with some slight variations you can read about [here](https://r4ds.hadley.nz/spreadsheets.html#google-sheets).]
+:::
+::::
+
+::: aside
+Note: For Excel files and Googlesheets You **won't** keep text formatting, color, comments, or merged cells. See the [`openxlsx`](https://ycphs.github.io/openxlsx/) package for those capabilities. Also, [`tidyxl`](https://github.com/nacnudus/tidyxl) can help import non-tabular data from Excel. 
+:::
+
+## Other Packages to Read in Data
+
+There are a range of other ways, besides delimited files, that data are stored. 
+
+The following packages are part of the extended `tidyverse` and therefore operate with similar syntax and logic as `readr`.
+
+:::: {.columns}
+::: {.column width="50%"}
+![](images/haven.png){.absolute top=185 left=135}
+:::
+::: {.column width="50%"}
+* For Excel files (`.xls` or `.xlsx`), use package [`readxl`](https://readxl.tidyverse.org/)^[Functions have additional arguments to read in specific sheets or a range of cells.]
+* For Google Docs Spreadsheets, use package [`googlesheets4`](https://googlesheets4.tidyverse.org/)^[Very similar to `readxl` with some slight variations you can read about [here](https://r4ds.hadley.nz/spreadsheets.html#google-sheets).]
+* For Stata, SPSS, and SAS files, use package [`haven`](https://haven.tidyverse.org/)^[SAS, SPSS, and Stata have so-called "labelled" vectors for which `haven` provides a [class](https://haven.tidyverse.org/reference/index.html#labelled-vectors) to represent in `R`. Alternatively, you can get rid of them with [these functions](https://haven.tidyverse.org/reference/index.html#remove-attributes).]
+:::
+::::
+
+::: aside
+Note: For Excel files and Googlesheets You **won't** keep text formatting, color, comments, or merged cells. See the [`openxlsx`](https://ycphs.github.io/openxlsx/) package for those capabilities. Also, [`tidyxl`](https://github.com/nacnudus/tidyxl) can help import non-tabular data from Excel. 
+:::
+
+## How does `readr` parse different data types?
+
+For each column in a data frame, `readr` functions pull the first 1000 rows and checks:
+
+```{mermaid}
+%%| echo: false
+%%| fig-width: 11
+%%| fig-height: 5.5
+%%| fig-align: center
+flowchart LR
+    id1(Variable)==>A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==>id2(Logical)
+    id1(Variable)==>B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==>id3(Number)
+    id1(Variable)==>C["3. Does it match the ISO8601 standard?"]==>id4(Date/Date-time)
+    id1(Variable)==>D["4. None of the above"]==>id5(String)
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style A fill:#FFFFFF,color:#000000,stroke:#000000
+    style B fill:#FFFFFF,color:#000000,stroke:#000000
+    style C fill:#FFFFFF,color:#000000,stroke:#000000
+    style D fill:#FFFFFF,color:#000000,stroke:#000000
+
+```
+
+## How does `readr` parse different data types?
+
+For each column in a data frame, `readr` functions pull the first 1000 rows and checks: 
+
+```{mermaid}
+%%| echo: false
+%%| fig-width: 11
+%%| fig-height: 5.5
+%%| fig-align: center
+flowchart LR
+    id1(Variable)==>A["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"]==>id2(Logical)
+    id1(Variable)==>B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==>id3(Number)
+    id1(Variable)==>C["3. Does it match the ISO8601 standard?"]==>id4(Date/Date-time)
+    id1(Variable)==>D["4. None of the above"]==>id5(String)
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style A fill:#ffa07a,color:#000000,stroke:#000000
+    style B fill:#FFFFFF,color:#000000,stroke:#000000
+    style C fill:#FFFFFF,color:#000000,stroke:#000000
+    style D fill:#FFFFFF,color:#000000,stroke:#000000
+
+```
+
+## How does `readr` parse different data types?
+
+For each column in a data frame, `readr` functions pull the first 1000 rows and checks:
+
+```{mermaid}
+%%| echo: false
+%%| fig-width: 11
+%%| fig-height: 5.5
+%%| fig-align: center
+flowchart LR
+    id1(Variable)==>A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==>id2(Logical)
+    id1(Variable)==>B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==>id3(Number)
+    id1(Variable)==>C["3. Does it match the ISO8601 standard?"]==>id4(Date/Date-time)
+    id1(Variable)==>D["4. None of the above"]==>id5(String)
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style A fill:#FFFFFF,color:#000000,stroke:#000000
+    style B fill:#ffa07a,color:#000000,stroke:#000000
+    style C fill:#FFFFFF,color:#000000,stroke:#000000
+    style D fill:#FFFFFF,color:#000000,stroke:#000000
+
+```
+
+## How does `readr` parse different data types?
+
+For each column in a data frame, `readr` functions pull the first 1000 rows and checks:
+
+```{mermaid}
+%%| echo: false
+%%| fig-width: 11
+%%| fig-height: 5.5
+%%| fig-align: center
+flowchart LR
+    id1(Variable)==>A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==>id2(Logical)
+    id1(Variable)==>B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==>id3(Number)
+    id1(Variable)==>C["3. Does it match the ISO8601 standard?"]==>id4(Date/Date-time)
+    id1(Variable)==>D["4. None of the above"]==>id5(String)
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style A fill:#FFFFFF,color:#000000,stroke:#000000
+    style B fill:#FFFFFF,color:#000000,stroke:#000000
+    style C fill:#ffa07a,color:#000000,stroke:#000000
+    style D fill:#FFFFFF,color:#000000,stroke:#000000
+
+```
+
+## How does `readr` parse different data types?
+
+For each column in a data frame, `readr` functions pull the first 1000 rows and checks:
+
+```{mermaid}
+%%| echo: false
+%%| fig-width: 11
+%%| fig-height: 5.5
+%%| fig-align: center
+flowchart LR
+    id1(Variable)==>A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==>id2(Logical)
+    id1(Variable)==>B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==>id3(Number)
+    id1(Variable)==>C["3. Does it match the ISO8601 standard?"]==>id4(Date/Date-time)
+    id1(Variable)==>D["4. None of the above"]==>id5(String)
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style A fill:#FFFFFF,color:#000000,stroke:#000000
+    style B fill:#FFFFFF,color:#000000,stroke:#000000
+    style C fill:#FFFFFF,color:#000000,stroke:#000000
+    style D fill:#ffa07a,color:#000000,stroke:#000000
+
+```
+
+## Most Common Issue with Reading in Data
+
+The most common problem that occurs when reading in data is having mixed data. Most often, given the heuristic provided in the last slide, will parse a variable as a character string to preserve whatever it contains. 
+
+. . . 
+
+Let's actually look at how the billboard data was read in: 
+
+```{r}
+glimpse(billboard_2000_raw) 
+```
+
+## What Went Wrong? 
+
+Since `readr` uses the values in the first 1000 rows to guess the type of the column (integer, logical, numeric, character), if the first 1000 rows don't have any data, they will be coded as logical variables. 
+
+. . . 
+
+There are not many songs in the data that charted for 60+ weeks—and none in the first 1000 that charted for 66+ weeks!
+
+. . . 
+
+`NA` is logical?^[More on this in a couple of weeks.]
+
+```{r}
+class(NA) # <1>
+```
+
+1. `class` returns the data type of its first argument. 
+
+
+
+
+
+
+
 
 ## Writing Delimited Files
 
