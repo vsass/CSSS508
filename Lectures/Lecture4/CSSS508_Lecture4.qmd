@@ -1115,11 +1115,10 @@ Here's an example of data that we probably want to pivot wider (unless we want t
 
 ```{r}
 #| echo: false
-library(gt)
 long_stats <- tibble(Group = c(rep("A", 3), rep("B", 3)),
                      Statistic = rep(c("Mean", "Median", "SD"), 2),
                      Value = c(1.28, 1.0, 0.72, 2.81, 2, 1.33))
-gt(long_stats)
+long_stats
 ```
 
 . . . 
@@ -1154,9 +1153,52 @@ If there are multiple rows in the input that correspond to one cell in the outpu
 
 # Merging Data {background-image="images/dplyr.png" background-size="contain" background-opacity="0.25" background-position="center" .section-title background-color="#99a486"}
 
-## 
+## Joining Data
 
+Oftentimes our data will be spread across multiple datasets. To properly analyze these data we'll need to join them together into one dataframe. 
 
+. . . 
+
+To do this we'll be using the various **join** functions from the `dplyr` package. 
+
+. . . 
+
+There are two types of joins: 
+
+* Mutating joins: *add new variables to one data frame from matching observations in another.*
+* Filtering joins: *filter observations from one data frame based on whether or not they match an observation in another.*
+
+. . . 
+
+To demonstrate these we'll be using data from the `nycflights13` dataset which you'll need to download and load into `R`
+
+```{r}
+# Download and load data
+# install.packages("nycflights13") # <1>
+library(nycflights13) # <2>
+```
+
+1. Run in console. 
+2. Load into `R` session. 
+
+## Joining in Concept
+
+We need to think about the following when we want to merge data frames A and B:
+
+::: {.fragment}
+* Which rows are we keeping from each data frame?
+:::
+
+::: {.fragment}
+* Which columns are we keeping from each data frame?
+:::
+
+::: {.fragment .fade-in}
+::: {.fragment .highlight-tableaured}
+* Which variables determine whether rows match?
+
+:::
+:::
 
 
 
