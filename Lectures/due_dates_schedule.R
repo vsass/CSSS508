@@ -15,9 +15,9 @@ make_due_date_table <- function(week){
     gt() |> 
     # Group sections AA and AB together
     tab_spanner(label = md("**Section AA**"),
-                columns = vars(Due_Date_AA, Peer_Due_Date_AA)) |> 
+                columns = c(Due_Date_AA, Peer_Due_Date_AA)) |> 
     tab_spanner(label = md("**Section AB**"),
-                columns = vars(Due_Date_AB, Peer_Due_Date_AB), 
+                columns = c(Due_Date_AB, Peer_Due_Date_AB), 
                 id = "AB") |> 
     cols_align(align = "center") |> 
     cols_label(Homework = "#",

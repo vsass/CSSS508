@@ -1194,15 +1194,104 @@ We need to think about the following when we want to merge data frames A and B:
 :::
 
 ::: {.fragment .fade-in}
-::: {.fragment .highlight-tableaured}
+::: {.fragment .highlight-red}
 * Which variables determine whether rows match?
-
 :::
 :::
 
+## Keys
+
+Keys are the way that two datasets are connected to one another. The two types of keys are: 
+
+. . . 
+
+::: {.incremental}
+1. **Primary**: a variable or set of variables that uniquely identifies each observation.
+    i) When more than one variable makes up the primary key it's called a **compound key**
+2. **Foreign**: a variable (or set of variables) that corresponds to a primary key in another table.
+:::
+
+## Primary Keys <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+Let's look at our data to gain a better sense of what this all means. 
+
+::: {.panel-tabset}
+
+### `airlines` 
+
+::: {.smaller-font}
+`airlines` records two pieces of data about each airline: its carrier code and its full name. You can identify an airline with its two letter carrier code, making `carrier` the primary key.
+:::
+
+```{r}
+airlines 
+```
+
+### `airports`
+
+::: {.smaller-font}
+`airports` records data about each airport. You can identify each airport by its three letter airport code, making `faa` the primary key.
+:::
+
+```{r}
+airports
+```
 
 
+### `planes`
 
+::: {.smaller-font}
+`planes` records data about each plane. You can identify a plane by its tail number, making `tailnum` the primary key.
+:::
+
+```{r}
+planes
+```
+
+
+### `weather`
+
+::: {.smaller-font}
+`weather` records data about the weather at the origin airports. You can identify each observation by the combination of location and time, making `origin` and `time_hour` the compound primary key.
+:::
+
+```{r}
+weather
+```
+
+:::
+
+## Foreign Keys
+
+```{r}
+flights
+```
+
+<br>
+
+. . . 
+
+`flights` contains foreign keys that correspond to the primary keys of the other datasets. 
+
+## Foreign Keys
+
+. . . 
+
+![](images/relational.png){fig-align="center"}
+
+::: {.incremental}
+* `flights$origin` --> `airports$faa`.
+* `flights$dest` --> `airports$faa`.
+* `flights$origin`-`flights$time_hour` --> `weather$origin`-`weather$time_hour`.
+* `flights$tailnum` --> `planes$tailnum`
+* `flights$carrier` --> `airlines$carrier`.
+:::
+
+## Checking Keys
+
+A nice feature of these data are that the primary and foreign keys have the same name almost every variable name used across multiple tables has the same meaning.^[With the exception of `year`: it means year of departure in `flights` and year of manufacture in `planes`. ] This isn't always the case!^[We'll cover how to handle this shortly.]
+
+. . . 
 
 
 
