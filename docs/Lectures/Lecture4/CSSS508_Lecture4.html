@@ -7,7 +7,9 @@
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.450">
 <title>csss508_lecture4</title>
@@ -415,10 +417,9 @@
 <div class="fragment">
 <p>Today, we will cover,</p>
 <ul>
-<li>Importing and exporting data</li>
-<li>Cleaning and reshaping data</li>
-<li>Dealing with dates &amp; times</li>
-<li>Controlling factor variables</li>
+<li>Importing and Exporting Data</li>
+<li>Tidying Data</li>
+<li>Merging Data</li>
 </ul>
 </div>
 </section></section><section><section id="importing-and-exporting-data" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Importing and Exporting Data</h1>
@@ -502,6 +503,8 @@
 <p>Let’s look at it!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">glimpse</span>(billboard_2000_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 317
 Columns: 81
@@ -655,23 +658,28 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 </section><section id="snake-case" class="slide level2"><h2>Snake Case</h2>
 <p>If you simply want to change your variables to snake case (all lower case; words separated by <code>_</code>), you can use the function <code>clean_names()</code> from the <code>janitor</code> package which replaces other punctuation separators with <code>_</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-1" class="code-annotation-target"><a href="#annotated-cell-10-1"></a><span class="co"># install.packages("janitor")</span></span>
-<span id="annotated-cell-10-2"><a href="#annotated-cell-10-2"></a>billboard_renamed <span class="ot">&lt;-</span> billboard_2000_raw <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="2">2</button><span id="annotated-cell-10-3" class="code-annotation-target"><a href="#annotated-cell-10-3"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>(<span class="at">numerals =</span> <span class="st">"right"</span>)</span>
-<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4"></a></span>
-<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5"></a>billboard_renamed <span class="sc">|&gt;</span>  <span class="fu">names</span>() <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">10</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1"></a><span class="co"># Download pacakge first</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-2" class="code-annotation-target"><a href="#annotated-cell-10-2"></a><span class="co"># install.packages("janitor")</span></span>
+<span id="annotated-cell-10-3"><a href="#annotated-cell-10-3"></a></span>
+<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4"></a><span class="co"># Create new object for renamed data</span></span>
+<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5"></a>billboard_renamed <span class="ot">&lt;-</span> billboard_2000_raw <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="2">2</button><span id="annotated-cell-10-6" class="code-annotation-target"><a href="#annotated-cell-10-6"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>(<span class="at">numerals =</span> <span class="st">"right"</span>)</span>
+<span id="annotated-cell-10-7"><a href="#annotated-cell-10-7"></a></span>
+<span id="annotated-cell-10-8"><a href="#annotated-cell-10-8"></a>billboard_renamed <span class="sc">|&gt;</span>  <span class="fu">names</span>() <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">10</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-10" data-code-lines="1" data-code-annotation="1">Run in the console first.</span>
+<span data-code-cell="annotated-cell-10" data-code-lines="2" data-code-annotation="1">Run in the console first.</span>
 </dd>
 <dt data-target-cell="annotated-cell-10" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-10" data-code-lines="3" data-code-annotation="2">You can call a function without loading its package by specifying its package name followed by <code>::</code> before it; <br> The <code>numerals</code> argument specifies if you additionally want to put a separator before a number.</span>
+<span data-code-cell="annotated-cell-10" data-code-lines="6" data-code-annotation="2">You can call a function without loading its package by specifying its package name followed by <code>::</code> before it; <br> The <code>numerals</code> argument specifies if you additionally want to put a separator before a number.</span>
 </dd>
 </dl>
 </div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "year"         "artist"       "track"        "time"         "date_entered"
  [6] "wk_1"         "wk_2"         "wk_3"         "wk_4"         "wk_5"        </code></pre>
@@ -760,10 +768,10 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-    id1(Variable)==&gt;A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==&gt;id2(Logical)
-    id1(Variable)==&gt;B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==&gt;id3(Number)
-    id1(Variable)==&gt;C["3. Does it match the ISO8601 standard?"]==&gt;id4(Date/Date-time)
-    id1(Variable)==&gt;D["4. None of the above"]==&gt;id5(String)
+    id1((Variable))==&gt;A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==&gt;id2{{Logical}}
+    id1((Variable))==&gt;B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==&gt;id3{{Number}}
+    id1((Variable))==&gt;C(["3. Does it match the ISO8601 standard?"])==&gt;id4{{Date/Date-time}}
+    id1((Variable))==&gt;D(["4. None of the above"])==&gt;id5{{String}}
     style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
@@ -786,12 +794,12 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-    id1(Variable)==&gt;A["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"]==&gt;id2(Logical)
-    id1(Variable)==&gt;B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==&gt;id3(Number)
-    id1(Variable)==&gt;C["3. Does it match the ISO8601 standard?"]==&gt;id4(Date/Date-time)
-    id1(Variable)==&gt;D["4. None of the above"]==&gt;id5(String)
+    id1((Variable))==&gt;A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==&gt;id2{{Logical}}
+    id1((Variable))==&gt;B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==&gt;id3{{Number}}
+    id1((Variable))==&gt;C(["3. Does it match the ISO8601 standard?"])==&gt;id4{{Date/Date-time}}
+    id1((Variable))==&gt;D(["4. None of the above"])==&gt;id5{{String}}
     style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
-    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id2 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
@@ -812,13 +820,13 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-    id1(Variable)==&gt;A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==&gt;id2(Logical)
-    id1(Variable)==&gt;B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==&gt;id3(Number)
-    id1(Variable)==&gt;C["3. Does it match the ISO8601 standard?"]==&gt;id4(Date/Date-time)
-    id1(Variable)==&gt;D["4. None of the above"]==&gt;id5(String)
+    id1((Variable))==&gt;A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==&gt;id2{{Logical}}
+    id1((Variable))==&gt;B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==&gt;id3{{Number}}
+    id1((Variable))==&gt;C(["3. Does it match the ISO8601 standard?"])==&gt;id4{{Date/Date-time}}
+    id1((Variable))==&gt;D(["4. None of the above"])==&gt;id5{{String}}
     style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
-    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style A fill:#FFFFFF,color:#000000,stroke:#000000
@@ -838,14 +846,14 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-    id1(Variable)==&gt;A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==&gt;id2(Logical)
-    id1(Variable)==&gt;B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==&gt;id3(Number)
-    id1(Variable)==&gt;C["3. Does it match the ISO8601 standard?"]==&gt;id4(Date/Date-time)
-    id1(Variable)==&gt;D["4. None of the above"]==&gt;id5(String)
+    id1((Variable))==&gt;A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==&gt;id2{{Logical}}
+    id1((Variable))==&gt;B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==&gt;id3{{Number}}
+    id1((Variable))==&gt;C(["3. Does it match the ISO8601 standard?"])==&gt;id4{{Date/Date-time}}
+    id1((Variable))==&gt;D(["4. None of the above"])==&gt;id5{{String}}
     style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
-    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style A fill:#FFFFFF,color:#000000,stroke:#000000
     style B fill:#FFFFFF,color:#000000,stroke:#000000
@@ -864,15 +872,15 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-    id1(Variable)==&gt;A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==&gt;id2(Logical)
-    id1(Variable)==&gt;B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==&gt;id3(Number)
-    id1(Variable)==&gt;C["3. Does it match the ISO8601 standard?"]==&gt;id4(Date/Date-time)
-    id1(Variable)==&gt;D["4. None of the above"]==&gt;id5(String)
+    id1((Variable))==&gt;A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==&gt;id2{{Logical}}
+    id1((Variable))==&gt;B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==&gt;id3{{Number}}
+    id1((Variable))==&gt;C(["3. Does it match the ISO8601 standard?"])==&gt;id4{{Date/Date-time}}
+    id1((Variable))==&gt;D(["4. None of the above"])==&gt;id5{{String}}
     style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
-    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style A fill:#FFFFFF,color:#000000,stroke:#000000
     style B fill:#FFFFFF,color:#000000,stroke:#000000
     style C fill:#FFFFFF,color:#000000,stroke:#000000
@@ -889,6 +897,8 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <p>Let’s actually look at how the billboard data was read in:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">glimpse</span>(billboard_2000_raw) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 317
 Columns: 81
@@ -977,34 +987,311 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 </div>
 </section><section id="what-went-wrong" class="slide level2"><h2>What Went Wrong?</h2>
-<p>Since <code>readr</code> uses the values in the first 1000 rows to guess the type of the column (integer, logical, numeric, character), if the first 1000 rows don’t have any data, they will be coded as logical variables.</p>
+<p>Since <code>readr</code> uses the values in the first 1000 rows to guess the type of the column (logical, numeric, date/date-time, character), if the first 1000 rows don’t have any data, they will be coded as logical variables.</p>
 <div class="fragment">
 <p>There are not many songs in the data that charted for 60+ weeks—and none in the first 1000 that charted for 66+ weeks!</p>
 </div>
 <div class="fragment">
-<p><code>NA</code> is logical?<sup>1</sup></p>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong><span style="color:blue"><i class="fa-solid fa-circle-info" aria-label="circle-info"></i></span> &nbsp;<code>NA</code> is logical<sup>1</sup>?</strong></p>
+</div>
+<div class="callout-content">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-1" class="code-annotation-target"><a href="#annotated-cell-12-1"></a><span class="fu">class</span>(<span class="cn">NA</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1"></a><span class="fu">class</span>(<span class="fu">c</span>(T, F, <span class="cn">NA</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>))</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2"></a><span class="fu">class</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="fl">17.5</span>, <span class="fl">5.3</span>, <span class="cn">NA</span>))</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-3" class="code-annotation-target"><a href="#annotated-cell-1-3"></a><span class="fu">class</span>(<span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"2023-10-31"</span>, <span class="st">"1986-06-21"</span>, <span class="st">"1997-01-15"</span>), <span class="at">tz =</span> <span class="st">"America/Los_Angeles"</span>))</span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4"></a><span class="fu">class</span>(<span class="fu">c</span>(<span class="st">"apple"</span>, <span class="cn">NA</span>, <span class="st">"mango"</span>, <span class="st">"blackberry"</span>, <span class="st">"plum"</span>)) </span>
+<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5"></a><span class="fu">class</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="2" data-code-annotation="1"><code>class</code> returns the data type of its first argument.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="3" data-code-annotation="2"><code>as.Date</code> turns a character string of dates into an official date class in Base <code>R</code>. If we had an accompanying time stamp we would need to use <code>as.POSIXct</code> which turns a character string of dates and times into an official date-time class in Base <code>R</code>.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "logical"
+[1] "numeric"
+[1] "Date"
+[1] "character"
+[1] "logical"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<aside><div>
+<p>Technically, <code>NA</code>s can be any data type depending upon what they are grouped with. However, by themselves they are a logical indicator of missing data, so their class is logical.</p>
+</div><ol class="aside-footnotes"><li id="fn9"><p>More on this in a couple of weeks.</p></li></ol></aside></section><section id="column-types" class="slide level2"><h2>Column types</h2>
+<p>Since the <code>wk*</code> variables should all be read in as integers, we can specify this explicitly with the <code>col_types</code> argument.</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1"></a><span class="co"># Create character string of shortcode column types</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-2" class="code-annotation-target"><a href="#annotated-cell-12-2"></a>bb_types <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">c</span>(<span class="st">"icctD"</span>, <span class="fu">rep</span>(<span class="st">"i"</span>, <span class="dv">76</span>)), <span class="at">collapse=</span><span class="st">""</span>)</span>
+<span id="annotated-cell-12-3"><a href="#annotated-cell-12-3"></a>bb_types </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-12" data-code-lines="1" data-code-annotation="1"><code>class</code> returns the data type of its first argument.</span>
+<span data-code-cell="annotated-cell-12" data-code-lines="2" data-code-annotation="1">You can short-code column types with <code>i</code> = integer, <code>c</code> = character, <code>t</code> = time, <code>D</code> = date. <br> The <code>collapse</code> argument collapses the first two arguments into one complete character string.</span>
 </dd>
 </dl>
 </div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "logical"</code></pre>
+<pre><code>[1] "icctDiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"</code></pre>
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn9"><p>More on this in a couple of weeks.</p></li></ol></aside></section><section id="writing-delimited-files" class="slide level2"><h2>Writing Delimited Files</h2>
+<div class="fragment">
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1"></a><span class="co"># re-read in data with column types specified</span></span>
+<span id="annotated-cell-13-2"><a href="#annotated-cell-13-2"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard.csv"</span>, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="2">2</button><span id="annotated-cell-13-3" class="code-annotation-target"><a href="#annotated-cell-13-3"></a>                               <span class="at">col_types =</span> bb_types)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-13" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-lines="3" data-code-annotation="2">This string now specifies the data type for each column of our data frame. Visit <a href="https://readr.tidyverse.org/reference/cols.html">this reference page</a> to see all available column types and their short codes.</span>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</section><section id="column-types-1" class="slide level2"><h2>Column types</h2>
+<p>To specify a default column type you can use <code>.default</code> like so:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard.csv"</span>, </span>
+<span id="cb15-2"><a href="#cb15-2"></a>                               <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>())) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p><br></p>
+<p>Another useful helper is <code>cols_only()</code> for when you only want to read in a subset of all available variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard.csv"</span>, </span>
+<span id="cb16-2"><a href="#cb16-2"></a>                               <span class="at">col_types =</span> <span class="fu">cols_only</span>(<span class="at">x =</span> col_character)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<p><br></p>
+<p>In summary, the <code>col-types</code> argument gives you greater control over how your data are read in and can save you recoding time down the road and/or point out where your data are behaving differently than you expect.</p>
+</div>
+</section><section id="reading-in-multiple-files" class="slide level2"><h2>Reading in Multiple Files</h2>
+<p>If you data are split across multiple files you can read them in all at once by specifying the <code>id</code> argument.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Create list of files manually</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>sales_files <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"data/01-sales.csv"</span>, <span class="st">"data/02-sales.csv"</span>, <span class="st">"data/03-sales.csv"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="fu">read_csv</span>(sales_files, <span class="at">id =</span> <span class="st">"file"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19 × 6
+   file              month     year brand  item     n
+   &lt;chr&gt;             &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 data/01-sales.csv January   2019     1  1234     3
+ 2 data/01-sales.csv January   2019     1  8721     9
+ 3 data/01-sales.csv January   2019     1  1822     2
+ 4 data/01-sales.csv January   2019     2  3333     1
+ 5 data/01-sales.csv January   2019     2  2156     9
+ 6 data/01-sales.csv January   2019     2  3987     6
+ 7 data/01-sales.csv January   2019     2  3827     6
+ 8 data/02-sales.csv February  2019     1  1234     8
+ 9 data/02-sales.csv February  2019     1  8721     2
+10 data/02-sales.csv February  2019     1  1822     3
+11 data/02-sales.csv February  2019     2  3333     1
+12 data/02-sales.csv February  2019     2  2156     3
+13 data/02-sales.csv February  2019     2  3987     6
+14 data/03-sales.csv March     2019     1  1234     3
+15 data/03-sales.csv March     2019     1  3627     1
+16 data/03-sales.csv March     2019     1  8820     3
+17 data/03-sales.csv March     2019     2  7253     1
+18 data/03-sales.csv March     2019     2  8766     3
+19 data/03-sales.csv March     2019     2  8288     6</code></pre>
+</div>
+</div>
+</section><section id="reading-in-multiple-files-1" class="slide level2"><h2>Reading in Multiple Files</h2>
+<p>If you have too many files to reasonable type out all their names you can also use the base <code>r</code> function <code>list.files</code> to list the files for you.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-17-1"><a href="#annotated-cell-17-1"></a><span class="co"># Create list of files with pattern-matching</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="1">1</button><span id="annotated-cell-17-2" class="code-annotation-target"><a href="#annotated-cell-17-2"></a>sales_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"data"</span>, <span class="at">pattern =</span> <span class="st">"sales</span><span class="sc">\\</span><span class="st">.csv$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="annotated-cell-17-3"><a href="#annotated-cell-17-3"></a>sales_files</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-17" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-17" data-code-lines="2" data-code-annotation="1">We will discuss pattern-matching more in a couple of weeks; if all your data was in one folder without anything else in it, you wouldn’t need to specify this argument. Sometimes, however, you may be searching through larger directories that you did not organize and that’s when pattern-matching is really powerful.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data/01-sales.csv" "data/02-sales.csv" "data/03-sales.csv"</code></pre>
+</div>
+</div>
+</section><section id="data-entry" class="slide level2"><h2>Data Entry</h2>
+<p>Sometimes you’ll need to create a data set in your code. You can do this two ways:</p>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby">
+<li><a data-tabby-default="" href="#tabset-1-1"><code>tibble()</code></a></li>
+<li><a href="#tabset-1-2"><code>tribble()</code></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<p>Tibbles lay out the data by columns (i.e.&nbsp;a dataframe transposed).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># Creating data with tibble</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="fu">tibble</span>( </span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>), </span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"h"</span>, <span class="st">"m"</span>, <span class="st">"g"</span>),</span>
+<span id="cb20-5"><a href="#cb20-5"></a>  <span class="at">z =</span> <span class="fu">c</span>(<span class="fl">0.08</span>, <span class="fl">0.83</span>, <span class="fl">0.60</span>)</span>
+<span id="cb20-6"><a href="#cb20-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+      x y         z
+  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+1     1 h      0.08
+2     2 m      0.83
+3     5 g      0.6 </code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-2">
+<p>Tibbles (<code>tr</code>ansposed ti<code>bble</code>) lay out the data by rows (i.e.&nbsp;the way a dataframe looks) which is much more intuitive.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># Creating data with tribble</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">tribble</span>( </span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="sc">~</span>x, <span class="sc">~</span>y, <span class="sc">~</span>z,</span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="dv">1</span>, <span class="st">"h"</span>, <span class="fl">0.08</span>,</span>
+<span id="cb22-5"><a href="#cb22-5"></a>  <span class="dv">2</span>, <span class="st">"m"</span>, <span class="fl">0.83</span>,</span>
+<span id="cb22-6"><a href="#cb22-6"></a>  <span class="dv">5</span>, <span class="st">"g"</span>, <span class="fl">0.60</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+      x y         z
+  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+1     1 h      0.08
+2     2 m      0.83
+3     5 g      0.6 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="writing-delimited-files" class="slide level2"><h2>Writing Delimited Files</h2>
 <p>Getting data out of R into a delimited file is very similar to getting it into R:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">write_csv</span>(billboard_2000_raw, <span class="at">path =</span> <span class="st">"billboard_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">write_csv</span>(billboard_2000_raw, <span class="at">path =</span> <span class="st">"data/billboard_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This saved the data we pulled off the web in a file called <code>billboard_data.csv</code> in my working directory.</p>
-</section></section><section><section id="reshaping-data" class="title-slide slide level1 section-title center" data-background-image="images/tidyr.png" data-background-size="contain" data-background-opacity="0.25" data-background-position="center" data-background-color="#99a486"><h1>Reshaping Data</h1>
+<p>This saved the data we pulled off the web in a file called <code>billboard_data.csv</code> in the <code>data</code> folder of my working directory.</p>
+<div class="fragment">
+<p>However, saving data in this way will not preserve <code>R</code> data types since delimited files code everything as a character string.</p>
+</div>
+<div class="fragment">
+<p>To save <code>R</code> objects and all associated metadata you have two options:</p>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby">
+<li><a data-tabby-default="" href="#tabset-2-1"><code>.Rds</code> format:</a></li>
+<li><a href="#tabset-2-2"><code>.Rdata</code> or <code>.Rda</code> format:</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<ul>
+<li>Used for single objects, doesn’t save original the object name</li>
+<li>Save: <code>write_rds(old_object_name, "path.Rds")</code>
+</li>
+<li>Load: <code>new_object_name &lt;- read_rds("path.Rds")</code>
+</li>
+</ul>
+</div>
+<div id="tabset-2-2">
+<ul>
+<li>Used for saving multiple files where the original object names are preserved</li>
+<li>Save: <code>save(object1, object2, ... , file = "path.Rdata")</code>
+</li>
+<li>Load: <code>load("path.Rdata")</code> without assignment operator</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section><section id="writing-other-file-types" class="slide level2"><h2>Writing Other File-Types</h2>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby">
+<li><a data-tabby-default="" href="#tabset-3-1"><code>writexl</code></a></li>
+<li><a href="#tabset-3-2"><code>googlesheets4</code></a></li>
+<li><a href="#tabset-3-3"><code>haven</code></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>
+<code>write_xlsx()</code> writes to an xlsx file</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<p><img data-src="images/writexl.png" style="width:50.0%"></p>
+</div>
+</div>
+</div>
+<div id="tabset-3-2">
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>
+<code>sheet_write()</code> or <code>write_sheet()</code> (over)writes new data into a Sheet</li>
+<li>
+<code>gs4_create()</code> creates a new Sheet</li>
+<li>
+<code>sheet_append()</code> appends rows to a sheet</li>
+<li>
+<code>range_write()</code> (over)writes new data into a range</li>
+<li>
+<code>range_flood()</code> floods a range of cells</li>
+<li>`<code>range_clear()</code> clears a range of cells</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<p><img data-src="images/googlesheets4.png" style="width:50.0%"></p>
+</div>
+</div>
+</div>
+<div id="tabset-3-3">
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>
+<code>write_dta()</code> writes Stata DTA files</li>
+<li>
+<code>write_sav()</code> writes SPSS files</li>
+<li>
+<code>write_xpt()</code> writes SAS transport files</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<p><img data-src="images/haven.png" style="width:50.0%"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></section><section><section id="tidying-data" class="title-slide slide level1 section-title center" data-background-image="images/tidyr.png" data-background-size="contain" data-background-opacity="0.25" data-background-position="center" data-background-color="#99a486"><h1>Tidying Data</h1>
 
 </section><section id="initial-spot-checks" class="slide level2"><h2>Initial Spot Checks</h2>
 <p>First things to check after loading new data:</p>
@@ -1018,20 +1305,36 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 </li>
 <li class="fragment">Are the column names in good shape?
 <ul>
-<li class="fragment">Use <code><a href="https://rdrr.io/r/base/names.html">names()</a></code> to check; fix with <code>rename()</code>
+<li class="fragment">Use <code><a href="https://rdrr.io/r/base/names.html">names()</a></code> to check; fix with <code>rename()</code><sup>1</sup>
 </li>
 </ul>
 </li>
 <li class="fragment">Are there “decorative” blank rows or columns to remove?
 <ul>
 <li class="fragment">
-<code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> or <code>select()</code> out those rows/columns</li>
+<code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> or <code>select()</code> out those rows/columns<sup>2</sup>
+</li>
+</ul>
+</li>
+<li class="fragment">How are missing values represented: <code>NA</code>, <code>" "</code> (blank), <code>.</code> (period), <code>999</code>?
+<ul>
+<li class="fragment">Read in the data again specifying <code>NA</code>s with the <code>na</code> argument</li>
+</ul>
+</li>
+<li class="fragment">Are there character data (e.g.&nbsp;ZIP codes with leading zeroes) being incorrectly represented as numeric or vice versa?
+<ul>
+<li class="fragment">Read in the data again specifying desired <code>col_types</code>
+</li>
 </ul>
 </li>
 </ul>
 </div>
-</section><section id="tidy-data" class="slide level2"><h2>Tidy Data</h2>
-<p><strong>Tidy data</strong> (aka “long data”) are such that:</p>
+<aside><ol class="aside-footnotes"><li id="fn10"><p>More on this function from <code>dplyr</code> next week!</p></li><li id="fn11"><p>Also next week!</p></li></ol></aside></section><section id="what-is-tidy-data" class="slide level2"><h2>What is Tidy Data</h2>
+<p><strong>Tidy data<sup>1</sup></strong> (aka “long data”) are such that:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="images/tidy-1.png"></p>
+</figure>
+</div>
 <div>
 <ol type="1">
 <li class="fragment">The values for a single observation are in their own row.</li>
@@ -1039,18 +1342,23 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <li class="fragment">There is only one value per cell.</li>
 </ol>
 </div>
-<div class="fragment">
-<p>Why do we want tidy data?</p>
+<aside><ol class="aside-footnotes"><li id="fn12"><p>Read the original article <a href="https://www.jstatsoft.org/article/view/v059i10">here</a>.</p></li></ol></aside></section><section id="why-do-we-want-tidy-data" class="slide level2"><h2>Why do we Want Tidy Data?</h2>
+<div>
 <ul>
-<li>
-<strong>Easier to understand</strong> many rows than many columns</li>
-<li>Required for <strong>plotting</strong> in <code>ggplot2</code>
+<li class="fragment">
+<strong>Easier to understand</strong> many rows than many columns<sup>1</sup>
 </li>
-<li>Required for many types of <strong>statistical procedures</strong> (e.g.&nbsp;hierarchical or mixed effects models)</li>
-<li>Fewer issues with <strong>missing values and “imbalanced”</strong> repeated measures data</li>
+<li class="fragment">Required for <strong>plotting</strong> in <code>ggplot2</code><sup>2</sup>
+</li>
+<li class="fragment">Required for many types of <strong>statistical procedures</strong> (e.g.&nbsp;hierarchical or mixed effects models)</li>
+<li class="fragment">Fewer issues with <strong>missing values and “imbalanced”</strong> repeated measures data</li>
+<li class="fragment">Having a consistent method for storing data means it’s easier to learn the tools to work with it since there’s an underlying uniformity.</li>
 </ul>
 </div>
-</section><section id="slightly-messy-data" class="slide level2"><h2>Slightly “Messy” Data</h2>
+<div class="fragment">
+<p>Most real-world data is not tidy because data are often organized for goals other than analysis (i.e.&nbsp;data entry) and most people aren’t familiar with the principles of tidy data.</p>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn13"><p>Placing variable sin columns also leverages <code>R</code>’s vectorized nature, i.e.&nbsp;most built-in <code>R</code> functions work with values of vectors.</p></li><li id="fn14"><p>In fact, all tidyverse functions are designed to work with tidy data.</p></li></ol></aside></section><section id="slightly-messy-data" class="slide level2"><h2>Slightly “Messy” Data</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <table>
@@ -1171,7 +1479,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 81
     year artist     track time  date.entered   wk1   wk2   wk3   wk4   wk5   wk6
-   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt; &lt;tim&gt; &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+   &lt;int&gt; &lt;chr&gt;      &lt;chr&gt; &lt;tim&gt; &lt;date&gt;       &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
  1  2000 2 Pac      Baby… 04:22 2000-02-26      87    82    72    77    87    94
  2  2000 2Ge+her    The … 03:15 2000-09-02      91    87    92    NA    NA    NA
  3  2000 3 Doors D… Kryp… 03:53 2000-04-08      81    70    68    67    66    57
@@ -1182,13 +1490,13 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
  8  2000 Aaliyah    I Do… 04:15 2000-01-29      84    62    51    41    38    35
  9  2000 Aaliyah    Try … 04:03 2000-03-18      59    53    38    28    21    18
 10  2000 Adams, Yo… Open… 05:30 2000-08-26      76    76    74    69    68    67
-# ℹ 70 more variables: wk7 &lt;dbl&gt;, wk8 &lt;dbl&gt;, wk9 &lt;dbl&gt;, wk10 &lt;dbl&gt;, wk11 &lt;dbl&gt;,
-#   wk12 &lt;dbl&gt;, wk13 &lt;dbl&gt;, wk14 &lt;dbl&gt;, wk15 &lt;dbl&gt;, wk16 &lt;dbl&gt;, wk17 &lt;dbl&gt;,
-#   wk18 &lt;dbl&gt;, wk19 &lt;dbl&gt;, wk20 &lt;dbl&gt;, wk21 &lt;dbl&gt;, wk22 &lt;dbl&gt;, wk23 &lt;dbl&gt;,
-#   wk24 &lt;dbl&gt;, wk25 &lt;dbl&gt;, wk26 &lt;dbl&gt;, wk27 &lt;dbl&gt;, wk28 &lt;dbl&gt;, wk29 &lt;dbl&gt;,
-#   wk30 &lt;dbl&gt;, wk31 &lt;dbl&gt;, wk32 &lt;dbl&gt;, wk33 &lt;dbl&gt;, wk34 &lt;dbl&gt;, wk35 &lt;dbl&gt;,
-#   wk36 &lt;dbl&gt;, wk37 &lt;dbl&gt;, wk38 &lt;dbl&gt;, wk39 &lt;dbl&gt;, wk40 &lt;dbl&gt;, wk41 &lt;dbl&gt;,
-#   wk42 &lt;dbl&gt;, wk43 &lt;dbl&gt;, wk44 &lt;dbl&gt;, wk45 &lt;dbl&gt;, wk46 &lt;dbl&gt;, wk47 &lt;dbl&gt;, …</code></pre>
+# ℹ 70 more variables: wk7 &lt;int&gt;, wk8 &lt;int&gt;, wk9 &lt;int&gt;, wk10 &lt;int&gt;, wk11 &lt;int&gt;,
+#   wk12 &lt;int&gt;, wk13 &lt;int&gt;, wk14 &lt;int&gt;, wk15 &lt;int&gt;, wk16 &lt;int&gt;, wk17 &lt;int&gt;,
+#   wk18 &lt;int&gt;, wk19 &lt;int&gt;, wk20 &lt;int&gt;, wk21 &lt;int&gt;, wk22 &lt;int&gt;, wk23 &lt;int&gt;,
+#   wk24 &lt;int&gt;, wk25 &lt;int&gt;, wk26 &lt;int&gt;, wk27 &lt;int&gt;, wk28 &lt;int&gt;, wk29 &lt;int&gt;,
+#   wk30 &lt;int&gt;, wk31 &lt;int&gt;, wk32 &lt;int&gt;, wk33 &lt;int&gt;, wk34 &lt;int&gt;, wk35 &lt;int&gt;,
+#   wk36 &lt;int&gt;, wk37 &lt;int&gt;, wk38 &lt;int&gt;, wk39 &lt;int&gt;, wk40 &lt;int&gt;, wk41 &lt;int&gt;,
+#   wk42 &lt;int&gt;, wk43 &lt;int&gt;, wk44 &lt;int&gt;, wk45 &lt;int&gt;, wk46 &lt;int&gt;, wk47 &lt;int&gt;, …</code></pre>
 </div>
 </div>
 
@@ -1217,7 +1525,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 </section><section id="tidyr" class="slide level2"><h2><code>tidyr</code></h2>
 <p>The <code>tidyr</code> package provides functions to tidy up data.</p>
 <div class="fragment">
-<p>Key functions:</p>
+<p><strong>Key functions:</strong></p>
 <ul>
 <li>
 <strong><code>pivot_longer()</code></strong>: takes a set of columns and pivots them down (“longer”) to make two new columns (which you can name yourself):
@@ -1234,59 +1542,133 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <strong><code>pivot_wider()</code></strong>: inverts <code>pivot_longer()</code> by taking two columns and pivoting them up and across (“wider”) into multiple columns</li>
 </ul>
 </div>
-<div class="fragment">
-<p>We’re going to focus only on <code>pivot_longer</code> here, but know that it can be reversed!</p>
-</div>
 </section><section id="pivot_longer" class="slide level2"><h2><code>pivot_longer()</code></h2>
+<p>This function usually takes three arguments:</p>
+<div>
+<ol type="1">
+<li class="fragment">
+<code>cols</code>: The columns that need to be pivoted (are not variables)</li>
+<li class="fragment">
+<code>names_to</code>: Names the new variable that is stored in multiple columns</li>
+<li class="fragment">
+<code>values_to</code>: Names the variable stored in the cell values</li>
+</ol>
+</div>
+</section><section id="pivot_longer-1" class="slide level2"><h2><code>pivot_longer()</code></h2>
 <p>This function usually takes three arguments:</p>
 <ol type="1">
 <li>
-<strong>cols</strong>: The columns we want to modify</li>
+<code>cols</code>: The columns that need to be pivoted (are not variables)</li>
+<li><strong><code>names_to</code>: Names the new variable that is stored in multiple columns</strong></li>
 <li>
-<strong>names_to</strong>: New variable name to store original columns</li>
+<code>values_to</code>: Names the variable stored in the cell values</li>
+</ol>
+
+<img data-src="images/pivot_longer2_column_names.png" class="r-stretch quarto-figure-center"></section><section id="pivot_longer-2" class="slide level2"><h2><code>pivot_longer()</code></h2>
+<p>This function usually takes three arguments:</p>
+<ol type="1">
 <li>
-<strong>values_to</strong>: New variable name to store original values</li>
-</ol></section><section id="example-of-pivot_longer" class="slide level2"><h2>Example of <code>pivot_longer()</code>
-</h2>
+<code>cols</code>: The columns that need to be pivoted (are not variables)</li>
+<li>
+<code>names_to</code>: Names the new variable that is stored in multiple columns</li>
+<li><strong><code>values_to</code>: Names the variable stored in the cell values</strong></li>
+</ol>
+
+<img data-src="images/pivot_longer3_cell_values.png" class="r-stretch quarto-figure-center"></section><section id="pivot_longer-3" class="slide level2"><h2><code>pivot_longer()</code></h2>
+<p>This function usually takes three arguments:</p>
+<ol type="1">
+<li>
+<code>cols</code>: The columns that need to be pivoted (are not variables)</li>
+<li>
+<code>names_to</code>: Names the new variable that is stored in multiple columns</li>
+<li>
+<code>values_to</code>: Names the variable stored in the cell values</li>
+</ol>
+
+<img data-src="images/pivot_longer1_variables.png" class="r-stretch quarto-figure-center"></section><section id="pivot_longer-example" class="slide level2"><h2>
+<code>pivot_longer()</code> Example</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" data-code-line-numbers="|3-5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb16-2"><a href="#cb16-2"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_2000_raw <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span>wk1<span class="sc">:</span>wk76,</span>
-<span id="cb16-4"><a href="#cb16-4"></a>               <span class="at">names_to =</span><span class="st">"week"</span>,</span>
-<span id="cb16-5"><a href="#cb16-5"></a>               <span class="at">values_to =</span> <span class="st">"rank"</span>)</span>
-<span id="cb16-6"><a href="#cb16-6"></a>billboard_2000 <span class="sc">%&gt;%</span> </span>
-<span id="cb16-7"><a href="#cb16-7"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-19"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-19-1"><a href="#annotated-cell-19-1"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_2000_raw <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="1">1</button><span id="annotated-cell-19-2" class="code-annotation-target"><a href="#annotated-cell-19-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"wk"</span>),</span>
+<span id="annotated-cell-19-3"><a href="#annotated-cell-19-3"></a>               <span class="at">names_to =</span><span class="st">"week"</span>,</span>
+<span id="annotated-cell-19-4"><a href="#annotated-cell-19-4"></a>               <span class="at">values_to =</span> <span class="st">"rank"</span>)</span>
+<span id="annotated-cell-19-5"><a href="#annotated-cell-19-5"></a></span>
+<span id="annotated-cell-19-6"><a href="#annotated-cell-19-6"></a>billboard_2000 <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">10</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-19" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-19" data-code-lines="2" data-code-annotation="1"><code>starts_with()</code> is a helper function from <a href="https://tidyselect.r-lib.org/index.html"><code>tidyselect</code></a> that helps select certain common patterns. We could have also used <code>cols = wk1:wk76</code>.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 7
-   year artist track                   time   date.entered week   rank
-  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;                   &lt;time&gt; &lt;date&gt;       &lt;chr&gt; &lt;dbl&gt;
-1  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk1      87
-2  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk2      82
-3  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk3      72
-4  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk4      77
-5  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk5      87</code></pre>
+<pre><code># A tibble: 10 × 7
+    year artist track                   time   date.entered week   rank
+   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;                   &lt;time&gt; &lt;date&gt;       &lt;chr&gt; &lt;int&gt;
+ 1  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk1      87
+ 2  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk2      82
+ 3  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk3      72
+ 4  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk4      77
+ 5  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk5      87
+ 6  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk6      94
+ 7  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk7      99
+ 8  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk8      NA
+ 9  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk9      NA
+10  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26   wk10     NA</code></pre>
 </div>
 </div>
+<div class="fragment">
 <p>Now we have a single week column!</p>
-</section><section id="lots-of-missing-values" class="slide level2"><h2>Lots of missing values?!</h2>
+</div>
+</section><section id="lots-of-missing-values" class="slide level2"><h2>Lots of Missing Values?!</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">glimpse</span>(billboard_2000)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 24,092
+Columns: 7
+$ year         &lt;int&gt; 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 200…
+$ artist       &lt;chr&gt; "2 Pac", "2 Pac", "2 Pac", "2 Pac", "2 Pac", "2 Pac", "2 …
+$ track        &lt;chr&gt; "Baby Don't Cry (Keep...", "Baby Don't Cry (Keep...", "Ba…
+$ time         &lt;time&gt; 04:22:00, 04:22:00, 04:22:00, 04:22:00, 04:22:00, 04:22:…
+$ date.entered &lt;date&gt; 2000-02-26, 2000-02-26, 2000-02-26, 2000-02-26, 2000-02-…
+$ week         &lt;chr&gt; "wk1", "wk2", "wk3", "wk4", "wk5", "wk6", "wk7", "wk8", "…
+$ rank         &lt;int&gt; 87, 82, 72, 77, 87, 94, 99, NA, NA, NA, NA, NA, NA, NA, N…</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>It looks like 2 Pac’s song “Baby Don’t Cry” was only on the Billboard Hot 100 for 7 weeks and then dropped off the charts.</p>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
    1.00   26.00   51.00   51.05   76.00  100.00   18785 </code></pre>
 </div>
 </div>
+<div class="fragment">
 <p>We don’t want to keep the 18785 rows with missing ranks.</p>
+</div>
+</div>
 </section><section id="pivoting-better-values_drop_na" class="slide level2"><h2>Pivoting Better: <code>values_drop_na</code>
 </h2>
-<p>Adding the argument <code>values_drop_na = TRUE</code> to <code>pivot_longer()</code> will remove rows with missing ranks.</p>
+<p>Adding the argument <code>values_drop_na = TRUE</code> to <code>pivot_longer()</code> will remove rows with missing ranks. Since these <code>NA</code>s don’t really represent unknown observations (i.e.&nbsp;they were forced to exist by the structure of the dataset) this is an appropriate approach here.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20" data-code-line-numbers="|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_2000_raw <span class="sc">%&gt;%</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> wk1<span class="sc">:</span>wk76, </span>
-<span id="cb20-3"><a href="#cb20-3"></a>               <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
-<span id="cb20-4"><a href="#cb20-4"></a>               <span class="at">values_to =</span> <span class="st">"rank"</span>, </span>
-<span id="cb20-5"><a href="#cb20-5"></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-6"><a href="#cb20-6"></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31" data-code-line-numbers="|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_2000_raw <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> wk1<span class="sc">:</span>wk76, </span>
+<span id="cb31-3"><a href="#cb31-3"></a>               <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
+<span id="cb31-4"><a href="#cb31-4"></a>               <span class="at">values_to =</span> <span class="st">"rank"</span>, </span>
+<span id="cb31-5"><a href="#cb31-5"></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb31-6"><a href="#cb31-6"></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
    1.00   26.00   51.00   51.05   76.00  100.00 </code></pre>
@@ -1295,7 +1677,9 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="fragment">
 <p>No more <code>NA</code> values!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">dim</span>(billboard_2000)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">dim</span>(billboard_2000)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5307    7</code></pre>
 </div>
@@ -1303,9 +1687,11 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <p>And way fewer rows!</p>
 </div>
 </section><section id="parse_number" class="slide level2"><h2><code>parse_number()</code></h2>
-<p>The week column is of they type character, but it should be numeric.</p>
+<p>The week column is of the type <code>character</code>, but it should be <code>numeric.</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">head</span>(billboard_2000<span class="sc">$</span>week)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">head</span>(billboard_2000<span class="sc">$</span>week)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "wk1" "wk2" "wk3" "wk4" "wk5" "wk6"</code></pre>
 </div>
@@ -1313,26 +1699,763 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="fragment">
 <p><code>parse_number()</code> grabs just the numeric information from a character string:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_2000 <span class="sc">%&gt;%</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a>    <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">parse_number</span>(week))</span>
-<span id="cb26-3"><a href="#cb26-3"></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>week)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-25"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-25-1"><a href="#annotated-cell-25-1"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_2000 <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-25" data-target-annotation="2">2</button><span id="annotated-cell-25-2" class="code-annotation-target"><a href="#annotated-cell-25-2"></a>    <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">parse_number</span>(week))</span>
+<span id="annotated-cell-25-3"><a href="#annotated-cell-25-3"></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>week)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-25" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-25" data-code-lines="2" data-code-annotation="2"><code>mutate()</code> creates a new (or overwrites an existing) column. We will cover it in-depth next week.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
    1.00    5.00   10.00   11.47   16.00   65.00 </code></pre>
 </div>
 </div>
+</div>
+<div class="fragment">
 <p>More sophisticated tools for character strings will be covered later in this course!</p>
 </div>
-</section><section id="summary" class="slide level2"><h2>Summary</h2>
+</section><section id="use-pivot_longer-arguments" class="slide level2"><h2>Use <code>pivot_longer</code> arguments</h2>
+<p>Alternatively (and more efficiently), there are a number of optional arguments for <code>pivot_longer</code> that are meant to help deal with naming issues.</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-26"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-26-1"><a href="#annotated-cell-26-1"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_2000_raw <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-26-2"><a href="#annotated-cell-26-2"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"wk"</span>), </span>
+<span id="annotated-cell-26-3"><a href="#annotated-cell-26-3"></a>               <span class="at">names_to        =</span> <span class="st">"week"</span>, </span>
+<span id="annotated-cell-26-4"><a href="#annotated-cell-26-4"></a>               <span class="at">values_to       =</span> <span class="st">"rank"</span>,</span>
+<span id="annotated-cell-26-5"><a href="#annotated-cell-26-5"></a>               <span class="at">values_drop_na  =</span> <span class="cn">TRUE</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="1">1</button><span id="annotated-cell-26-6" class="code-annotation-target"><a href="#annotated-cell-26-6"></a>               <span class="at">names_prefix    =</span> <span class="st">"wk"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="2">2</button><span id="annotated-cell-26-7" class="code-annotation-target"><a href="#annotated-cell-26-7"></a>               <span class="at">names_transform =</span> <span class="fu">list</span>(<span class="at">week =</span> as.integer))</span>
+<span id="annotated-cell-26-8"><a href="#annotated-cell-26-8"></a></span>
+<span id="annotated-cell-26-9"><a href="#annotated-cell-26-9"></a><span class="fu">head</span>(billboard_2000, <span class="dv">5</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-26" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-26" data-code-lines="6" data-code-annotation="1"><code>names_prefix</code> is used to remove “wk” from the values of <code>week</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-26" data-code-lines="7" data-code-annotation="2"><code>names_transform</code> converts <code>week</code> into an integer number.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 7
+   year artist track                   time   date.entered  week  rank
+  &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;                   &lt;time&gt; &lt;date&gt;       &lt;int&gt; &lt;int&gt;
+1  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       1    87
+2  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       2    82
+3  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       3    72
+4  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       4    77
+5  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       5    87</code></pre>
+</div>
+</div>
+</div>
+</section><section id="multiple-variables-in-column-names" class="slide level2"><h2>Multiple Variables in Column Names</h2>
+<p>A more challenging situation occurs when you have multiple pieces of information crammed into the column names, and you would like to store these in separate new variables.</p>
+<div class="fragment">
+<p>This dataset contains tuberculosis diagnoses collected by the World Health Organization.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>who2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7,240 × 58
+   country      year sp_m_014 sp_m_1524 sp_m_2534 sp_m_3544 sp_m_4554 sp_m_5564
+   &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Afghanistan  1980       NA        NA        NA        NA        NA        NA
+ 2 Afghanistan  1981       NA        NA        NA        NA        NA        NA
+ 3 Afghanistan  1982       NA        NA        NA        NA        NA        NA
+ 4 Afghanistan  1983       NA        NA        NA        NA        NA        NA
+ 5 Afghanistan  1984       NA        NA        NA        NA        NA        NA
+ 6 Afghanistan  1985       NA        NA        NA        NA        NA        NA
+ 7 Afghanistan  1986       NA        NA        NA        NA        NA        NA
+ 8 Afghanistan  1987       NA        NA        NA        NA        NA        NA
+ 9 Afghanistan  1988       NA        NA        NA        NA        NA        NA
+10 Afghanistan  1989       NA        NA        NA        NA        NA        NA
+# ℹ 7,230 more rows
+# ℹ 50 more variables: sp_m_65 &lt;dbl&gt;, sp_f_014 &lt;dbl&gt;, sp_f_1524 &lt;dbl&gt;,
+#   sp_f_2534 &lt;dbl&gt;, sp_f_3544 &lt;dbl&gt;, sp_f_4554 &lt;dbl&gt;, sp_f_5564 &lt;dbl&gt;,
+#   sp_f_65 &lt;dbl&gt;, sn_m_014 &lt;dbl&gt;, sn_m_1524 &lt;dbl&gt;, sn_m_2534 &lt;dbl&gt;,
+#   sn_m_3544 &lt;dbl&gt;, sn_m_4554 &lt;dbl&gt;, sn_m_5564 &lt;dbl&gt;, sn_m_65 &lt;dbl&gt;,
+#   sn_f_014 &lt;dbl&gt;, sn_f_1524 &lt;dbl&gt;, sn_f_2534 &lt;dbl&gt;, sn_f_3544 &lt;dbl&gt;,
+#   sn_f_4554 &lt;dbl&gt;, sn_f_5564 &lt;dbl&gt;, sn_f_65 &lt;dbl&gt;, ep_m_014 &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>The first two columns are self explanatory but what’s going on with the rest?</p>
+</div>
+</section><section id="multiple-variables-in-column-names-1" class="slide level2"><h2>Multiple Variables in Column Names</h2>
+<p>Data documentation and some minor investigation would lead you to figure out that the three elements in each of these column names are actually data!</p>
 <ul>
-<li>Importing/Exporting Data: <code>readr</code>
-</li>
-<li>Reshaping data: <code>tidyr</code>
-</li>
-<li>Dates and times <code>lubridate</code>
-</li>
+<li>The first piece, <code>sp</code>/<code>sn</code>/<code>rel</code>/<code>ep</code>, describes the method used for the diagnosis</li>
+<li>The second piece, <code>m</code>/<code>f</code> is the gender (coded as a binary variable in this dataset)</li>
+<li>The third piece, <code>014</code>/<code>1524</code>/<code>2534</code>/<code>3544</code>/<code>4554</code>/<code>5564</code>/<code>65</code> is the age range (014 represents 0-14, for example)</li>
 </ul>
-<p><em>Let’s take a 10 minute break, then reconvene for an activity!</em></p>
+<div class="fragment">
+<p>To organize the six pieces of information in this dataset into six separate columns, we use <code>pivot_longer()</code> with a vector of column names for <code>names_to</code> and instructors for splitting the original variable names into pieces for <code>names_sep</code> as well as a column name for <code>values_to</code>!</p>
+</div>
+</section><section id="multiple-variables-in-column-names-2" class="slide level2"><h2>Multiple Variables in Column Names</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-28"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-28-1"><a href="#annotated-cell-28-1"></a>who2 <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-28-2"><a href="#annotated-cell-28-2"></a>  <span class="fu">pivot_longer</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-28" data-target-annotation="1">1</button><span id="annotated-cell-28-3" class="code-annotation-target"><a href="#annotated-cell-28-3"></a>    <span class="at">cols =</span> <span class="sc">!</span>(country<span class="sc">:</span>year),</span>
+<span id="annotated-cell-28-4"><a href="#annotated-cell-28-4"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"diagnosis"</span>, <span class="st">"gender"</span>, <span class="st">"age"</span>), </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-28" data-target-annotation="2">2</button><span id="annotated-cell-28-5" class="code-annotation-target"><a href="#annotated-cell-28-5"></a>    <span class="at">names_sep =</span> <span class="st">"_"</span>,</span>
+<span id="annotated-cell-28-6"><a href="#annotated-cell-28-6"></a>    <span class="at">values_to =</span> <span class="st">"count"</span></span>
+<span id="annotated-cell-28-7"><a href="#annotated-cell-28-7"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-28" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-28" data-code-lines="3" data-code-annotation="1">Putting an <code>!</code> before a condition negates it. This says: NOT columns <code>country:year</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-28" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-28" data-code-lines="5" data-code-annotation="2">You can use <code>names_pattern</code> instead of <code>names_sep</code> to extract variables from more complicated naming scenarios once you’ve learned regular expressions in a few weeks.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 405,440 × 6
+   country      year diagnosis gender age   count
+   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;
+ 1 Afghanistan  1980 sp        m      014      NA
+ 2 Afghanistan  1980 sp        m      1524     NA
+ 3 Afghanistan  1980 sp        m      2534     NA
+ 4 Afghanistan  1980 sp        m      3544     NA
+ 5 Afghanistan  1980 sp        m      4554     NA
+ 6 Afghanistan  1980 sp        m      5564     NA
+ 7 Afghanistan  1980 sp        m      65       NA
+ 8 Afghanistan  1980 sp        f      014      NA
+ 9 Afghanistan  1980 sp        f      1524     NA
+10 Afghanistan  1980 sp        f      2534     NA
+# ℹ 405,430 more rows</code></pre>
+</div>
+</div>
+</section><section id="variable-values-in-column-names" class="slide level2"><h2>Variable &amp; Values in Column Names</h2>
+<p>This dataset contains data about five families, with the names and dates of birth of up to two children.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>household</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  family dob_child1 dob_child2 name_child1 name_child2
+   &lt;int&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;       &lt;chr&gt;      
+1      1 1998-11-26 2000-01-29 Susan       Jose       
+2      2 1996-06-22 NA         Mark        &lt;NA&gt;       
+3      3 2002-07-11 2004-04-05 Sam         Seth       
+4      4 2004-10-10 2009-08-27 Craig       Khai       
+5      5 2000-12-05 2005-02-28 Parker      Gracie     </code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>The new challenge in this dataset is that the column names contain the names of two variables (<code>dob</code>, <code>name</code>) and the values of another (<code>child</code>, with values <code>1</code> or <code>2</code>).</p>
+</div>
+</section><section id="variable-values-in-column-names-1" class="slide level2"><h2>Variable &amp; Values in Column Names</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="annotated-cell-30"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-30-1"><a href="#annotated-cell-30-1"></a>household <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-30-2"><a href="#annotated-cell-30-2"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="annotated-cell-30-3"><a href="#annotated-cell-30-3"></a>    <span class="at">cols =</span> <span class="sc">!</span>family, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-30" data-target-annotation="1">1</button><span id="annotated-cell-30-4" class="code-annotation-target"><a href="#annotated-cell-30-4"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"child"</span>),</span>
+<span id="annotated-cell-30-5"><a href="#annotated-cell-30-5"></a>    <span class="at">names_sep =</span> <span class="st">"_"</span>, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-30" data-target-annotation="2">2</button><span id="annotated-cell-30-6" class="code-annotation-target"><a href="#annotated-cell-30-6"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span></span>
+<span id="annotated-cell-30-7"><a href="#annotated-cell-30-7"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="column fragment">
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-30" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-30" data-code-lines="4" data-code-annotation="1"><code>.value</code> isn’t the name of a variable but a unique value that tells <code>pivot_longer</code> to use the first component of the pivoted column name as a variable name in the output.</span>
+</dd>
+<dt data-target-cell="annotated-cell-30" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-30" data-code-lines="6" data-code-annotation="2">Using <code>values_drop_na = TRUE</code> again since not every family has 2 children.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 4
+  family child  dob        name  
+   &lt;int&gt; &lt;chr&gt;  &lt;date&gt;     &lt;chr&gt; 
+1      1 child1 1998-11-26 Susan 
+2      1 child2 2000-01-29 Jose  
+3      2 child1 1996-06-22 Mark  
+4      3 child1 2002-07-11 Sam   
+5      3 child2 2004-04-05 Seth  
+6      4 child1 2004-10-10 Craig 
+7      4 child2 2009-08-27 Khai  
+8      5 child1 2000-12-05 Parker
+9      5 child2 2005-02-28 Gracie</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="images/pivot_longer5_names-and-values.png" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+</section><section id="pivot_wider" class="slide level2"><h2><code>pivot_wider</code></h2>
+<p><code>pivot_wider()</code> is the opposite of <code>pivot_longer()</code>, which you use if you have data for the same observation taking up multiple rows.</p>
+<div class="fragment">
+<p>Here’s an example of data that we probably want to pivot wider (unless we want to plot each statistic in its own facet):</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<div id="ffebovcwwn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ffebovcwwn table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ffebovcwwn thead, #ffebovcwwn tbody, #ffebovcwwn tfoot, #ffebovcwwn tr, #ffebovcwwn td, #ffebovcwwn th {
+  border-style: none;
+}
+
+#ffebovcwwn p {
+  margin: 0;
+  padding: 0;
+}
+
+#ffebovcwwn .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ffebovcwwn .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ffebovcwwn .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ffebovcwwn .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ffebovcwwn .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ffebovcwwn .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ffebovcwwn .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ffebovcwwn .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ffebovcwwn .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ffebovcwwn .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ffebovcwwn .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ffebovcwwn .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ffebovcwwn .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ffebovcwwn .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ffebovcwwn .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ffebovcwwn .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ffebovcwwn .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ffebovcwwn .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ffebovcwwn .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ffebovcwwn .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ffebovcwwn .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ffebovcwwn .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ffebovcwwn .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ffebovcwwn .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ffebovcwwn .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ffebovcwwn .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ffebovcwwn .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ffebovcwwn .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ffebovcwwn .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ffebovcwwn .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ffebovcwwn .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ffebovcwwn .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ffebovcwwn .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ffebovcwwn .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ffebovcwwn .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ffebovcwwn .gt_left {
+  text-align: left;
+}
+
+#ffebovcwwn .gt_center {
+  text-align: center;
+}
+
+#ffebovcwwn .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ffebovcwwn .gt_font_normal {
+  font-weight: normal;
+}
+
+#ffebovcwwn .gt_font_bold {
+  font-weight: bold;
+}
+
+#ffebovcwwn .gt_font_italic {
+  font-style: italic;
+}
+
+#ffebovcwwn .gt_super {
+  font-size: 65%;
+}
+
+#ffebovcwwn .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ffebovcwwn .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ffebovcwwn .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ffebovcwwn .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ffebovcwwn .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ffebovcwwn .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ffebovcwwn .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Group">Group</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Statistic">Statistic</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Value">Value</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="Group" class="gt_row gt_left">A</td>
+<td headers="Statistic" class="gt_row gt_left">Mean</td>
+<td headers="Value" class="gt_row gt_right">1.28</td>
+</tr>
+<tr>
+<td headers="Group" class="gt_row gt_left">A</td>
+<td headers="Statistic" class="gt_row gt_left">Median</td>
+<td headers="Value" class="gt_row gt_right">1.00</td>
+</tr>
+<tr>
+<td headers="Group" class="gt_row gt_left">A</td>
+<td headers="Statistic" class="gt_row gt_left">SD</td>
+<td headers="Value" class="gt_row gt_right">0.72</td>
+</tr>
+<tr>
+<td headers="Group" class="gt_row gt_left">B</td>
+<td headers="Statistic" class="gt_row gt_left">Mean</td>
+<td headers="Value" class="gt_row gt_right">2.81</td>
+</tr>
+<tr>
+<td headers="Group" class="gt_row gt_left">B</td>
+<td headers="Statistic" class="gt_row gt_left">Median</td>
+<td headers="Value" class="gt_row gt_right">2.00</td>
+</tr>
+<tr>
+<td headers="Group" class="gt_row gt_left">B</td>
+<td headers="Statistic" class="gt_row gt_left">SD</td>
+<td headers="Value" class="gt_row gt_right">1.33</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>A common cue to use <code>pivot_wider()</code> is having measurements of different quantities in the same column.</p>
+</div>
+</section><section id="pivot_wider-example" class="slide level2"><h2>
+<code>pivot_wider</code> Example</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-31"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-31-1"><a href="#annotated-cell-31-1"></a>wide_stats <span class="ot">&lt;-</span> long_stats <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-31" data-target-annotation="1">1</button><span id="annotated-cell-31-2" class="code-annotation-target"><a href="#annotated-cell-31-2"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> Group,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-31" data-target-annotation="2">2</button><span id="annotated-cell-31-3" class="code-annotation-target"><a href="#annotated-cell-31-3"></a>              <span class="at">names_from =</span> Statistic,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-31" data-target-annotation="3">3</button><span id="annotated-cell-31-4" class="code-annotation-target"><a href="#annotated-cell-31-4"></a>              <span class="at">values_from =</span> Value)</span>
+<span id="annotated-cell-31-5"><a href="#annotated-cell-31-5"></a>wide_stats</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-31" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-31" data-code-lines="2" data-code-annotation="1"><code>id_cols</code> is the column that uniquely identifies each row in the new dataset. Default is everything not in <code>names_from</code> and <code>values_from</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-31" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-31" data-code-lines="3" data-code-annotation="2"><code>names_from</code> provides the names that will be used for the new columns</span>
+</dd>
+<dt data-target-cell="annotated-cell-31" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-31" data-code-lines="4" data-code-annotation="3"><code>values_from</code> provides the values that will be used to populate the cells of the new columns.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  Group  Mean Median    SD
+  &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 A      1.28      1  0.72
+2 B      2.81      2  1.33</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html"><code>pivot_wider()</code></a> also has a number of optional <code>names_*</code> and <code>values_*</code> arguments for more complicated transformations.</p>
+</div>
+<div class="fragment">
+<div class="callout callout-warning no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong><span style="color:tomato"><i class="fa-solid fa-triangle-exclamation" aria-label="triangle-exclamation"></i></span> Nested Data</strong></p>
+</div>
+<div class="callout-content">
+<p>If there are multiple rows in the input that correspond to one cell in the output you’ll get a list-column. This means that you 1) need to fix something in your code/data because it shouldn’t be nested in this way or 2) need to use <code>unnest_wider()</code> or <code>unnest_longer()</code> in order to access this column of data. More on this <a href="https://r4ds.hadley.nz/rectangling.html#unnesting">here</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</section></section><section><section id="merging-data" class="title-slide slide level1 section-title center" data-background-image="images/dplyr.png" data-background-size="contain" data-background-opacity="0.25" data-background-position="center" data-background-color="#99a486"><h1>Merging Data</h1>
+
+</section><section id="section" class="slide level2"><h2></h2>
 </section><section id="activity" class="slide level2"><h2>Activity!</h2>
 <p>In groups of 2-3, you will use the <a href="https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture5/data/billboard.csv">Billboard data</a> to investigate a question:</p>
 <ol type="1">
@@ -1356,45 +2479,45 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 </ol></section><section id="example-question" class="slide level2"><h2>Example: Question</h2>
 <p><strong>Question:</strong> Do songs that hit #1 have a different trajectory than those that don’t?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>billboard_2000_question <span class="ot">&lt;-</span> billboard_2000 <span class="sc">%&gt;%</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a>    <span class="fu">group_by</span>(artist, track) <span class="sc">%&gt;%</span></span>
-<span id="cb28-3"><a href="#cb28-3"></a>    <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Weeks at #1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(rank <span class="sc">==</span> <span class="dv">1</span>),</span>
-<span id="cb28-4"><a href="#cb28-4"></a>           <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">ifelse</span>(<span class="fu">any</span>(rank <span class="sc">==</span> <span class="dv">1</span>),</span>
-<span id="cb28-5"><a href="#cb28-5"></a>                                  <span class="st">"Hit #1"</span>,</span>
-<span id="cb28-6"><a href="#cb28-6"></a>                                  <span class="st">"Didn't hit #1"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>billboard_2000_question <span class="ot">&lt;-</span> billboard_2000 <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a>    <span class="fu">group_by</span>(artist, track) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a>    <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Weeks at #1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(rank <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb46-4"><a href="#cb46-4"></a>           <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">ifelse</span>(<span class="fu">any</span>(rank <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb46-5"><a href="#cb46-5"></a>                                  <span class="st">"Hit #1"</span>,</span>
+<span id="cb46-6"><a href="#cb46-6"></a>                                  <span class="st">"Didn't hit #1"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <aside><div>
 <p>Note: <code>any(rank==1)</code> checks to see if <em>any</em> value of <code>rank</code> is equal to one for the given <code>artist</code> and <code>track</code></p>
 </div></aside></section><section id="example-visualization" class="slide level2"><h2>Example Visualization</h2>
 <div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby">
-<li><a data-tabby-default="" href="#tabset-1-1">Code</a></li>
-<li><a href="#tabset-1-2">Charts of 2000: Beauty!</a></li>
+<ul id="tabset-4" class="panel-tabset-tabby">
+<li><a data-tabby-default="" href="#tabset-4-1">Code</a></li>
+<li><a href="#tabset-4-2">Charts of 2000: Beauty!</a></li>
 </ul>
 <div class="tab-content">
-<div id="tabset-1-1">
+<div id="tabset-4-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">library</span>(ggthemes)</span>
-<span id="cb29-3"><a href="#cb29-3"></a>billboard_trajectories <span class="ot">&lt;-</span> </span>
-<span id="cb29-4"><a href="#cb29-4"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> billboard_2000_question,</span>
-<span id="cb29-5"><a href="#cb29-5"></a>         <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> rank, <span class="at">group =</span> track,</span>
-<span id="cb29-6"><a href="#cb29-6"></a>             <span class="at">color =</span> <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>)) <span class="sc">+</span></span>
-<span id="cb29-7"><a href="#cb29-7"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">size =</span> <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb29-8"><a href="#cb29-8"></a>  <span class="fu">theme_tufte</span>() <span class="sc">+</span></span>
-<span id="cb29-9"><a href="#cb29-9"></a>  <span class="fu">xlab</span>(<span class="st">"Week"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Rank"</span>) <span class="sc">+</span></span>
-<span id="cb29-10"><a href="#cb29-10"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
-<span id="cb29-11"><a href="#cb29-11"></a>  <span class="fu">scale_size_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb29-12"><a href="#cb29-12"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.90</span>, <span class="fl">0.75</span>),</span>
-<span id="cb29-13"><a href="#cb29-13"></a>        <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"transparent"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb47-2"><a href="#cb47-2"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb47-3"><a href="#cb47-3"></a>billboard_trajectories <span class="ot">&lt;-</span> </span>
+<span id="cb47-4"><a href="#cb47-4"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> billboard_2000_question,</span>
+<span id="cb47-5"><a href="#cb47-5"></a>         <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> rank, <span class="at">group =</span> track,</span>
+<span id="cb47-6"><a href="#cb47-6"></a>             <span class="at">color =</span> <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb47-7"><a href="#cb47-7"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">size =</span> <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb47-8"><a href="#cb47-8"></a>  <span class="fu">theme_tufte</span>() <span class="sc">+</span></span>
+<span id="cb47-9"><a href="#cb47-9"></a>  <span class="fu">xlab</span>(<span class="st">"Week"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Rank"</span>) <span class="sc">+</span></span>
+<span id="cb47-10"><a href="#cb47-10"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb47-11"><a href="#cb47-11"></a>  <span class="fu">scale_size_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb47-12"><a href="#cb47-12"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.90</span>, <span class="fl">0.75</span>),</span>
+<span id="cb47-13"><a href="#cb47-13"></a>        <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"transparent"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div id="tabset-1-2">
+<div id="tabset-4-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>billboard_trajectories</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>billboard_trajectories</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img data-src="CSSS508_Lecture4_files/figure-revealjs/unnamed-chunk-28-1.svg"></p>
+<p><img data-src="CSSS508_Lecture4_files/figure-revealjs/unnamed-chunk-44-1.svg"></p>
 </div>
 </div>
 </div>
@@ -1411,23 +2534,23 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="pvjfcajxbn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#pvjfcajxbn table {
+<div id="hwrfmlayfx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hwrfmlayfx table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#pvjfcajxbn thead, #pvjfcajxbn tbody, #pvjfcajxbn tfoot, #pvjfcajxbn tr, #pvjfcajxbn td, #pvjfcajxbn th {
+#hwrfmlayfx thead, #hwrfmlayfx tbody, #hwrfmlayfx tfoot, #hwrfmlayfx tr, #hwrfmlayfx td, #hwrfmlayfx th {
   border-style: none;
 }
 
-#pvjfcajxbn p {
+#hwrfmlayfx p {
   margin: 0;
   padding: 0;
 }
 
-#pvjfcajxbn .gt_table {
+#hwrfmlayfx .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1453,12 +2576,12 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   border-left-color: #D3D3D3;
 }
 
-#pvjfcajxbn .gt_caption {
+#hwrfmlayfx .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#pvjfcajxbn .gt_title {
+#hwrfmlayfx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1470,7 +2593,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   border-bottom-width: 0;
 }
 
-#pvjfcajxbn .gt_subtitle {
+#hwrfmlayfx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1482,7 +2605,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   border-top-width: 0;
 }
 
-#pvjfcajxbn .gt_heading {
+#hwrfmlayfx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1494,13 +2617,13 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   border-right-color: #D3D3D3;
 }
 
-#pvjfcajxbn .gt_bottom_border {
+#hwrfmlayfx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pvjfcajxbn .gt_col_headings {
+#hwrfmlayfx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1515,7 +2638,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   border-right-color: #D3D3D3;
 }
 
-#pvjfcajxbn .gt_col_heading {
+#hwrfmlayfx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1535,7 +2658,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   overflow-x: hidden;
 }
 
-#pvjfcajxbn .gt_column_spanner_outer {
+#hwrfmlayfx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1547,15 +2670,15 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   padding-right: 4px;
 }
 
-#pvjfcajxbn .gt_column_spanner_outer:first-child {
+#hwrfmlayfx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pvjfcajxbn .gt_column_spanner_outer:last-child {
+#hwrfmlayfx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pvjfcajxbn .gt_column_spanner {
+#hwrfmlayfx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1567,11 +2690,11 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   width: 100%;
 }
 
-#pvjfcajxbn .gt_spanner_row {
+#hwrfmlayfx .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#pvjfcajxbn .gt_group_heading {
+#hwrfmlayfx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1597,7 +2720,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   text-align: left;
 }
 
-#pvjfcajxbn .gt_empty_group_heading {
+#hwrfmlayfx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1612,15 +2735,15 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   vertical-align: middle;
 }
 
-#pvjfcajxbn .gt_from_md > :first-child {
+#hwrfmlayfx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pvjfcajxbn .gt_from_md > :last-child {
+#hwrfmlayfx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pvjfcajxbn .gt_row {
+#hwrfmlayfx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1639,7 +2762,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   overflow-x: hidden;
 }
 
-#pvjfcajxbn .gt_stub {
+#hwrfmlayfx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1652,7 +2775,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   padding-right: 5px;
 }
 
-#pvjfcajxbn .gt_stub_row_group {
+#hwrfmlayfx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1666,15 +2789,15 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   vertical-align: top;
 }
 
-#pvjfcajxbn .gt_row_group_first td {
+#hwrfmlayfx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#pvjfcajxbn .gt_row_group_first th {
+#hwrfmlayfx .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#pvjfcajxbn .gt_summary_row {
+#hwrfmlayfx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1684,16 +2807,16 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   padding-right: 5px;
 }
 
-#pvjfcajxbn .gt_first_summary_row {
+#hwrfmlayfx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#pvjfcajxbn .gt_first_summary_row.thick {
+#hwrfmlayfx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#pvjfcajxbn .gt_last_summary_row {
+#hwrfmlayfx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1703,7 +2826,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   border-bottom-color: #D3D3D3;
 }
 
-#pvjfcajxbn .gt_grand_summary_row {
+#hwrfmlayfx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1713,7 +2836,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   padding-right: 5px;
 }
 
-#pvjfcajxbn .gt_first_grand_summary_row {
+#hwrfmlayfx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1723,7 +2846,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   border-top-color: #D3D3D3;
 }
 
-#pvjfcajxbn .gt_last_grand_summary_row_top {
+#hwrfmlayfx .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1733,11 +2856,11 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   border-bottom-color: #D3D3D3;
 }
 
-#pvjfcajxbn .gt_striped {
+#hwrfmlayfx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pvjfcajxbn .gt_table_body {
+#hwrfmlayfx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1746,7 +2869,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   border-bottom-color: #D3D3D3;
 }
 
-#pvjfcajxbn .gt_footnotes {
+#hwrfmlayfx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1760,7 +2883,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   border-right-color: #D3D3D3;
 }
 
-#pvjfcajxbn .gt_footnote {
+#hwrfmlayfx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1769,7 +2892,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   padding-right: 5px;
 }
 
-#pvjfcajxbn .gt_sourcenotes {
+#hwrfmlayfx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1783,7 +2906,7 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   border-right-color: #D3D3D3;
 }
 
-#pvjfcajxbn .gt_sourcenote {
+#hwrfmlayfx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1791,63 +2914,63 @@ $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
   padding-right: 5px;
 }
 
-#pvjfcajxbn .gt_left {
+#hwrfmlayfx .gt_left {
   text-align: left;
 }
 
-#pvjfcajxbn .gt_center {
+#hwrfmlayfx .gt_center {
   text-align: center;
 }
 
-#pvjfcajxbn .gt_right {
+#hwrfmlayfx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pvjfcajxbn .gt_font_normal {
+#hwrfmlayfx .gt_font_normal {
   font-weight: normal;
 }
 
-#pvjfcajxbn .gt_font_bold {
+#hwrfmlayfx .gt_font_bold {
   font-weight: bold;
 }
 
-#pvjfcajxbn .gt_font_italic {
+#hwrfmlayfx .gt_font_italic {
   font-style: italic;
 }
 
-#pvjfcajxbn .gt_super {
+#hwrfmlayfx .gt_super {
   font-size: 65%;
 }
 
-#pvjfcajxbn .gt_footnote_marks {
+#hwrfmlayfx .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#pvjfcajxbn .gt_asterisk {
+#hwrfmlayfx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#pvjfcajxbn .gt_indent_1 {
+#hwrfmlayfx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#pvjfcajxbn .gt_indent_2 {
+#hwrfmlayfx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#pvjfcajxbn .gt_indent_3 {
+#hwrfmlayfx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#pvjfcajxbn .gt_indent_4 {
+#hwrfmlayfx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#pvjfcajxbn .gt_indent_5 {
+#hwrfmlayfx .gt_indent_5 {
   text-indent: 25px;
 }
 </style>

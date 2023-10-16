@@ -22,6 +22,8 @@ format:
     code-annotations: hover
 ---
 
+## {#title-slide data-menu-title="Importing, Exporting, and Cleaning Data" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
+
 ```{r}
 #| echo: false
 #| cache: false
@@ -29,9 +31,6 @@ require(downlit)
 require(xml2)
 require(tidyverse)
 ```
-
-## {#title-slide data-menu-title="Importing, Exporting, and Cleaning Data" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
-
 
 [Importing, Exporting, and Cleaning Data]{.custom-title}
 
@@ -59,10 +58,9 @@ Last time, we learned about,
 
 Today, we will cover,
 
-* Importing and exporting data
-* Cleaning and reshaping data
-* Dealing with dates & times
-* Controlling factor variables
+* Importing and Exporting Data
+* Tidying Data
+* Merging Data
 
 # Importing and Exporting Data{.section-title background-color="#99a486"}
 
@@ -163,6 +161,7 @@ How do we know it loaded?
 Let's look at it!
 
 ```{r}
+#| output-location: fragment
 glimpse(billboard_2000_raw)
 ```
 
@@ -257,8 +256,11 @@ billboard_2000_raw <- read_csv(file = "data/billboard.csv",
 If you simply want to change your variables to snake case (all lower case; words separated by `_`), you can use the function `clean_names()` from the `janitor` package which replaces other punctuation separators with `_`. 
 
 ```{r}
-
+#| output-location: fragment
+# Download pacakge first
 # install.packages("janitor") # <1> 
+
+# Create new object for renamed data
 billboard_renamed <- billboard_2000_raw |> 
   janitor::clean_names(numerals = "right") # <2>
 
@@ -357,10 +359,10 @@ For each column in a data frame, `readr` functions pull the first 1000 rows and 
 %%| fig-height: 5.5
 %%| fig-align: center
 flowchart LR
-    id1(Variable)==>A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==>id2(Logical)
-    id1(Variable)==>B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==>id3(Number)
-    id1(Variable)==>C["3. Does it match the ISO8601 standard?"]==>id4(Date/Date-time)
-    id1(Variable)==>D["4. None of the above"]==>id5(String)
+    id1((Variable))==>A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==>id2{{Logical}}
+    id1((Variable))==>B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==>id3{{Number}}
+    id1((Variable))==>C(["3. Does it match the ISO8601 standard?"])==>id4{{Date/Date-time}}
+    id1((Variable))==>D(["4. None of the above"])==>id5{{String}}
     style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
@@ -383,12 +385,12 @@ For each column in a data frame, `readr` functions pull the first 1000 rows and 
 %%| fig-height: 5.5
 %%| fig-align: center
 flowchart LR
-    id1(Variable)==>A["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"]==>id2(Logical)
-    id1(Variable)==>B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==>id3(Number)
-    id1(Variable)==>C["3. Does it match the ISO8601 standard?"]==>id4(Date/Date-time)
-    id1(Variable)==>D["4. None of the above"]==>id5(String)
+    id1((Variable))==>A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==>id2{{Logical}}
+    id1((Variable))==>B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==>id3{{Number}}
+    id1((Variable))==>C(["3. Does it match the ISO8601 standard?"])==>id4{{Date/Date-time}}
+    id1((Variable))==>D(["4. None of the above"])==>id5{{String}}
     style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
-    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id2 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
@@ -409,13 +411,13 @@ For each column in a data frame, `readr` functions pull the first 1000 rows and 
 %%| fig-height: 5.5
 %%| fig-align: center
 flowchart LR
-    id1(Variable)==>A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==>id2(Logical)
-    id1(Variable)==>B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==>id3(Number)
-    id1(Variable)==>C["3. Does it match the ISO8601 standard?"]==>id4(Date/Date-time)
-    id1(Variable)==>D["4. None of the above"]==>id5(String)
+    id1((Variable))==>A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==>id2{{Logical}}
+    id1((Variable))==>B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==>id3{{Number}}
+    id1((Variable))==>C(["3. Does it match the ISO8601 standard?"])==>id4{{Date/Date-time}}
+    id1((Variable))==>D(["4. None of the above"])==>id5{{String}}
     style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
-    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style A fill:#FFFFFF,color:#000000,stroke:#000000
@@ -435,14 +437,14 @@ For each column in a data frame, `readr` functions pull the first 1000 rows and 
 %%| fig-height: 5.5
 %%| fig-align: center
 flowchart LR
-    id1(Variable)==>A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==>id2(Logical)
-    id1(Variable)==>B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==>id3(Number)
-    id1(Variable)==>C["3. Does it match the ISO8601 standard?"]==>id4(Date/Date-time)
-    id1(Variable)==>D["4. None of the above"]==>id5(String)
+    id1((Variable))==>A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==>id2{{Logical}}
+    id1((Variable))==>B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==>id3{{Number}}
+    id1((Variable))==>C(["3. Does it match the ISO8601 standard?"])==>id4{{Date/Date-time}}
+    id1((Variable))==>D(["4. None of the above"])==>id5{{String}}
     style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
-    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style A fill:#FFFFFF,color:#000000,stroke:#000000
     style B fill:#FFFFFF,color:#000000,stroke:#000000
@@ -461,15 +463,15 @@ For each column in a data frame, `readr` functions pull the first 1000 rows and 
 %%| fig-height: 5.5
 %%| fig-align: center
 flowchart LR
-    id1(Variable)==>A["1. Does it contain only F, T, FALSE, TRUE, or NA, (ignoring case)?"]==>id2(Logical)
-    id1(Variable)==>B["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"]==>id3(Number)
-    id1(Variable)==>C["3. Does it match the ISO8601 standard?"]==>id4(Date/Date-time)
-    id1(Variable)==>D["4. None of the above"]==>id5(String)
+    id1((Variable))==>A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==>id2{{Logical}}
+    id1((Variable))==>B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==>id3{{Number}}
+    id1((Variable))==>C(["3. Does it match the ISO8601 standard?"])==>id4{{Date/Date-time}}
+    id1((Variable))==>D(["4. None of the above"])==>id5{{String}}
     style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
     style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
-    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
     style A fill:#FFFFFF,color:#000000,stroke:#000000
     style B fill:#FFFFFF,color:#000000,stroke:#000000
     style C fill:#FFFFFF,color:#000000,stroke:#000000
@@ -486,12 +488,13 @@ The most common problem that occurs when reading in data is having mixed data. M
 Let's actually look at how the billboard data was read in: 
 
 ```{r}
+#| output-location: fragment
 glimpse(billboard_2000_raw) 
 ```
 
 ## What Went Wrong? 
 
-Since `readr` uses the values in the first 1000 rows to guess the type of the column (integer, logical, numeric, character), if the first 1000 rows don't have any data, they will be coded as logical variables. 
+Since `readr` uses the values in the first 1000 rows to guess the type of the column (logical, numeric, date/date-time, character), if the first 1000 rows don't have any data, they will be coded as logical variables. 
 
 . . . 
 
@@ -499,32 +502,235 @@ There are not many songs in the data that charted for 60+ weeks—and none in th
 
 . . . 
 
-`NA` is logical?^[More on this in a couple of weeks.]
+::: {.callout-note icon=false}
+
+## <span style="color:blue">{{< fa circle-info >}}</span> \ `NA` is logical^[More on this in a couple of weeks.]?
 
 ```{r}
-class(NA) # <1>
+#| output-location: fragment
+class(c(T, F, NA, FALSE, TRUE))
+class(c(1, NA, 17.5, 5.3, NA)) # <1>
+class(as.Date(c(NA, "2023-10-31", "1986-06-21", "1997-01-15"), tz = "America/Los_Angeles")) # <2>
+class(c("apple", NA, "mango", "blackberry", "plum")) 
+class(c(NA, NA, NA, NA, NA))
 ```
 
 1. `class` returns the data type of its first argument. 
+2. `as.Date` turns a character string of dates into an official date class in Base `R`. If we had an accompanying time stamp we would need to use `as.POSIXct` which turns a character string of dates and times into an official date-time class in Base `R`. 
+:::
 
+::: aside
+Technically, `NA`s can be any data type depending upon what they are grouped with. However, by themselves they are a logical indicator of missing data, so their class is logical. 
+:::
 
+## Column types
 
+Since the `wk*` variables should all be read in as integers, we can specify this explicitly with the `col_types` argument. 
 
+. . . 
 
+```{r}
+#| output-location: fragment
+# Create character string of shortcode column types
+bb_types <- paste(c("icctD", rep("i", 76)), collapse="") # <1>
+bb_types 
+```
 
+1. You can short-code column types with `i` = integer, `c` = character, `t` = time, `D` = date. <br> The `collapse` argument collapses the first two arguments into one complete character string.
 
+. . . 
+
+<br>
+
+```{r}
+# re-read in data with column types specified
+billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+                               col_types = bb_types) # <2> 
+```
+
+2. This string now specifies the data type for each column of our data frame. Visit [this reference page](https://readr.tidyverse.org/reference/cols.html) to see all available column types and their short codes. 
+
+## Column types
+
+To specify a default column type you can use `.default` like so: 
+
+```{r}
+#| eval: false
+billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+                               col_types = cols(.default = col_character())) 
+```
+
+. . . 
+
+<br>
+
+Another useful helper is `cols_only()` for when you only want to read in a subset of all available variables.
+
+```{r}
+#| eval: false
+billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+                               col_types = cols_only(x = col_character)) 
+```
+
+. . . 
+
+<br>
+
+In summary, the `col-types` argument gives you greater control over how your data are read in and can save you recoding time down the road and/or point out where your data are behaving differently than you expect. 
+
+## Reading in Multiple Files 
+
+If you data are split across multiple files you can read them in all at once by specifying the `id` argument. 
+
+```{r}
+#| output-location: fragment
+# Create list of files manually
+sales_files <- c("data/01-sales.csv", "data/02-sales.csv", "data/03-sales.csv")
+read_csv(sales_files, id = "file")
+```
+
+## Reading in Multiple Files 
+
+If you have too many files to reasonable type out all their names you can also use the base `r` function `list.files` to list the files for you. 
+
+```{r}
+#| output-location: fragment
+# Create list of files with pattern-matching
+sales_files <- list.files("data", pattern = "sales\\.csv$", full.names = TRUE) # <1>
+sales_files
+```
+
+1. We will discuss pattern-matching more in a couple of weeks; if all your data was in one folder without anything else in it, you wouldn't need to specify this argument. Sometimes, however, you may be searching through larger directories that you did not organize and that's when pattern-matching is really powerful. 
+
+## Data Entry
+
+Sometimes you'll need to create a data set in your code. You can do this two ways: 
+
+::: {.panel-tabset}
+
+### `tibble()`
+
+Tibbles lay out the data by columns (i.e. a dataframe transposed).
+
+```{r}
+#| output-location: fragment
+# Creating data with tibble
+tibble( 
+  x = c(1, 2, 5), 
+  y = c("h", "m", "g"),
+  z = c(0.08, 0.83, 0.60)
+)
+```
+
+### `tribble()`
+
+Tibbles (`tr`ansposed ti`bble`) lay out the data by rows (i.e. the way a dataframe looks) which is much more intuitive.
+
+```{r}
+#| output-location: fragment
+# Creating data with tribble
+tribble( 
+  ~x, ~y, ~z,
+  1, "h", 0.08,
+  2, "m", 0.83,
+  5, "g", 0.60
+)
+```
+
+:::
 
 ## Writing Delimited Files
 
 Getting data out of R into a delimited file is very similar to getting it into R:
 
 ```{r}
-write_csv(billboard_2000_raw, path = "billboard_data.csv")
+#| eval: false
+write_csv(billboard_2000_raw, path = "data/billboard_data.csv")
 ```
 
-This saved the data we pulled off the web in a file called `billboard_data.csv` in my working directory.
+This saved the data we pulled off the web in a file called `billboard_data.csv` in the `data` folder of my working directory.
 
-# Reshaping Data {background-image="images/tidyr.png" background-size="contain" background-opacity="0.25" background-position="center" .section-title background-color="#99a486"}
+. . . 
+
+However, saving data in this way will not preserve `R` data types since delimited files code everything as a character string. 
+
+. . . 
+
+To save `R` objects and all associated metadata you have two options: 
+
+::: {.panel-tabset}
+
+### `.Rds` format:
+
+* Used for single objects, doesn't save original the object name
+* Save: `write_rds(old_object_name, "path.Rds")`
+* Load: `new_object_name <- read_rds("path.Rds")`
+
+### `.Rdata` or `.Rda` format:
+
+* Used for saving multiple files where the original object names are preserved
+* Save: `save(object1, object2, ... , file = "path.Rdata")`
+* Load: `load("path.Rdata")` without assignment operator
+
+:::
+
+## Writing Other File-Types
+
+::: {.panel-tabset}
+
+### `writexl`
+
+:::: {.columns}
+
+::: {.column width="60%"}
+* `write_xlsx()` writes to an xlsx file
+:::
+
+::: {.column width="40%"}
+![](images/writexl.png){width=50%}
+:::
+
+::::
+
+### `googlesheets4`
+
+:::: {.columns}
+
+::: {.column width="60%"}
+* `sheet_write()` or `write_sheet()` (over)writes new data into a Sheet
+* `gs4_create()` creates a new Sheet
+* `sheet_append()` appends rows to a sheet
+* `range_write()` (over)writes new data into a range
+* `range_flood()` floods a range of cells
+* ``range_clear()` clears a range of cells
+:::
+
+::: {.column width="40%"}
+![](images/googlesheets4.png){width=50%}
+:::
+
+::::
+
+### `haven`
+
+:::: {.columns}
+
+::: {.column width="60%"}
+* `write_dta()` writes Stata DTA files
+* `write_sav()` writes SPSS files
+* `write_xpt()` writes SAS transport files
+:::
+
+::: {.column width="40%"}
+![](images/haven.png){width=50%}
+:::
+
+::::
+
+:::
+
+
+# Tidying Data {background-image="images/tidyr.png" background-size="contain" background-opacity="0.25" background-position="center" .section-title background-color="#99a486"}
 
 ## Initial Spot Checks
 
@@ -535,14 +741,21 @@ First things to check after loading new data:
 * Did all the rows/columns from the original file make it in?
     + Check using `dim()` or `str()`
 * Are the column names in good shape?
-    + Use `names()` to check; fix with `rename()`
+    + Use `names()` to check; fix with `rename()`^[More on this function from `dplyr` next week!]
 * Are there "decorative" blank rows or columns to remove?
-    + `filter()` or `select()` out those rows/columns
+    + `filter()` or `select()` out those rows/columns^[Also next week!]
+* How are missing values represented: `NA`, `" "` (blank), `.` (period), `999`?
+    + Read in the data again specifying `NA`s with the `na` argument
+* Are there character data (e.g. ZIP codes with leading zeroes) being incorrectly represented as numeric or vice versa?
+    + Read in the data again specifying desired `col_types`
+
 :::
 
-## Tidy Data
+## What is Tidy Data
 
-**Tidy data** (aka "long data") are such that:
+**Tidy data^[Read the original article [here](https://www.jstatsoft.org/article/view/v059i10).]** (aka "long data") are such that:
+
+![](images/tidy-1.png){fig-align="center"}
 
 ::: {.incremental}
 1. The values for a single observation are in their own row.
@@ -550,14 +763,19 @@ First things to check after loading new data:
 3. There is only one value per cell.
 :::
 
-. . . 
+## Why do we Want Tidy Data?
 
-Why do we want tidy data?
-
-* **Easier to understand** many rows than many columns
-* Required for **plotting** in `ggplot2`
+::: {.incremental}
+* **Easier to understand** many rows than many columns^[Placing variable sin columns also leverages `R`'s vectorized nature, i.e. most built-in `R` functions work with values of vectors.]
+* Required for **plotting** in `ggplot2`^[In fact, all tidyverse functions are designed to work with tidy data.]
 * Required for many types of **statistical procedures** (e.g. hierarchical or mixed effects models)
 * Fewer issues with **missing values and "imbalanced"** repeated measures data
+* Having a consistent method for storing data means it's easier to learn the tools to work with it since there's an underlying uniformity.
+:::
+
+. . . 
+
+Most real-world data is not tidy because data are often organized for goals other than analysis (i.e. data entry) and most people aren't familiar with the principles of tidy data. 
 
 ## Slightly "Messy" Data
 
@@ -643,7 +861,7 @@ The `tidyr` package provides functions to tidy up data.
 
 . . . 
 
-Key functions:
+**Key functions:**
 
 * **`pivot_longer()`**: takes a set of columns and pivots them down ("longer") to make two new columns (which you can name yourself): 
     * A `name` column that stores the original column names
@@ -653,46 +871,91 @@ Key functions:
 
 * **`pivot_wider()`**: inverts `pivot_longer()` by taking two columns and pivoting them up and across ("wider") into multiple columns
 
-. . . 
+## `pivot_longer()`
 
-We're going to focus only on `pivot_longer` here, but know that it can be reversed!
+This function usually takes three arguments:
+
+::: {.incremental}
+1. `cols`: The columns that need to be pivoted (are not variables)
+2. `names_to`: Names the new variable that is stored in multiple columns
+3. `values_to`: Names the variable stored in the cell values
+:::
 
 ## `pivot_longer()`
 
 This function usually takes three arguments:
 
-1. **cols**: The columns we want to modify
-1. **names_to**: New variable name to store original columns
-1. **values_to**: New variable name to store original values
+1. `cols`: The columns that need to be pivoted (are not variables)
+2. **`names_to`: Names the new variable that is stored in multiple columns**
+3. `values_to`: Names the variable stored in the cell values
 
-## Example of `pivot_longer()`
+![](images/pivot_longer2_column_names.png){fig-align="center"}
+
+## `pivot_longer()`
+
+This function usually takes three arguments:
+
+1. `cols`: The columns that need to be pivoted (are not variables)
+2. `names_to`: Names the new variable that is stored in multiple columns
+3. **`values_to`: Names the variable stored in the cell values**
+
+![](images/pivot_longer3_cell_values.png){fig-align="center"}
+
+## `pivot_longer()`
+
+This function usually takes three arguments:
+
+1. `cols`: The columns that need to be pivoted (are not variables)
+2. `names_to`: Names the new variable that is stored in multiple columns
+3. `values_to`: Names the variable stored in the cell values
+
+![](images/pivot_longer1_variables.png){fig-align="center"}
+
+## `pivot_longer()` Example
 
 ```{r}
-#| code-line-numbers: "|3-5"
-library(tidyr)
-billboard_2000 <- billboard_2000_raw %>%
-  pivot_longer(cols=wk1:wk76,
+#| output-location: fragment 
+billboard_2000 <- billboard_2000_raw |> 
+  pivot_longer(cols = starts_with("wk"), # <1>
                names_to ="week",
                values_to = "rank")
-billboard_2000 %>% 
-  head(5)
+
+billboard_2000 |> head(10)
 ```
+
+1. `starts_with()` is a helper function from [`tidyselect`](https://tidyselect.r-lib.org/index.html) that helps select certain common patterns. We could have also used `cols = wk1:wk76`. 
+
+. . . 
 
 Now we have a single week column!
 
-## Lots of missing values?!
+## Lots of Missing Values?!
 
 ```{r}
+#| output-location: fragment 
+glimpse(billboard_2000)
+```
+
+::: {.fragment}
+It looks like 2 Pac's song "Baby Don't Cry" was only on the Billboard Hot 100 for 7 weeks and then dropped off the charts. 
+:::
+. . . 
+
+```{r}
+#| output-location: fragment 
 summary(billboard_2000$rank)
 ```
 
+::: {.fragment}
 We don't want to keep the `r sum(is.na(billboard_2000$rank))` rows with missing ranks.
+:::
 
 ## Pivoting Better: `values_drop_na`
 
-Adding the argument `values_drop_na = TRUE` to `pivot_longer()` will remove rows with missing ranks.
+Adding the argument `values_drop_na = TRUE` to `pivot_longer()` will remove rows with missing ranks. Since these `NA`s don’t really represent unknown observations (i.e. they were forced to exist by the structure of the dataset) this is an appropriate approach here. 
 
 ```{r}
+#| output-location: fragment 
 #| code-line-numbers: "|5"
 billboard_2000 <- billboard_2000_raw %>%
   pivot_longer(cols = wk1:wk76, 
@@ -707,6 +970,7 @@ summary(billboard_2000$rank)
 No more `NA` values!
 
 ```{r}
+#| output-location: fragment 
 dim(billboard_2000)
 ```
 
@@ -714,9 +978,10 @@ And way fewer rows!
 
 ## `parse_number()`
 
-The week column is of they type character, but it should be numeric.
+The week column is of the type `character`, but it should be `numeric.`
 
 ```{r}
+#| output-location: fragment 
 head(billboard_2000$week)
 ```
 
@@ -725,21 +990,176 @@ head(billboard_2000$week)
 `parse_number()` grabs just the numeric information from a character string:
 
 ```{r}
-#| code-line-numbers: "|2"
-billboard_2000 <- billboard_2000 %>%
-    mutate(week = parse_number(week))
+#| output-location: fragment 
+billboard_2000 <- billboard_2000 |> 
+    mutate(week = parse_number(week)) # <2>
 summary(billboard_2000$week)
 ```
+2. `mutate()` creates a new (or overwrites an existing) column. We will cover it in-depth next week. 
+
+. . . 
 
 More sophisticated tools for character strings will be covered later in this course!
 
-## Summary
+## Use `pivot_longer` arguments
 
-* Importing/Exporting Data: `readr`
-* Reshaping data: `tidyr`
-* Dates and times `lubridate`
+Alternatively (and more efficiently), there are a number of optional arguments for `pivot_longer` that are meant to help deal with naming issues.
 
-*Let's take a 10 minute break, then reconvene for an activity!*
+. . . 
+
+```{r}
+#| output-location: fragment
+billboard_2000 <- billboard_2000_raw %>%
+  pivot_longer(starts_with("wk"), 
+               names_to        = "week", 
+               values_to       = "rank",
+               values_drop_na  = TRUE,
+               names_prefix    = "wk", # <1>
+               names_transform = list(week = as.integer)) # <2>
+
+head(billboard_2000, 5)
+```
+
+1. `names_prefix` is used to remove "wk" from the values of `week`
+2. `names_transform` converts `week` into an integer number.
+
+## Multiple Variables in Column Names
+
+A more challenging situation occurs when you have multiple pieces of information crammed into the column names, and you would like to store these in separate new variables.
+
+. . . 
+
+This dataset contains tuberculosis diagnoses collected by the World Health Organization. 
+
+```{r}
+#| output-location: fragment
+who2
+```
+
+. . . 
+
+The first two columns are self explanatory but what's going on with the rest?
+
+## Multiple Variables in Column Names
+
+Data documentation and some minor investigation would lead you to figure out that the three elements in each of these column names are actually data!
+
+* The first piece, `sp`/`sn`/`rel`/`ep`, describes the method used for the diagnosis
+* The second piece, `m`/`f` is the gender (coded as a binary variable in this dataset)
+* The third piece, `014`/`1524`/`2534`/`3544`/`4554`/`5564`/`65` is the age range (014 represents 0-14, for example)
+
+. . . 
+
+To organize the six pieces of information in this dataset into six separate columns, we use `pivot_longer()` with a vector of column names for `names_to` and instructors for splitting the original variable names into pieces for `names_sep` as well as a column name for `values_to`!
+
+## Multiple Variables in Column Names
+
+```{r}
+#| output-location: fragment
+who2 |> 
+  pivot_longer(
+    cols = !(country:year), # <1>
+    names_to = c("diagnosis", "gender", "age"), 
+    names_sep = "_", # <2>
+    values_to = "count"
+  )
+```
+
+1. Putting an `!` before a condition negates it. This says: NOT columns `country:year`.
+2. You can use `names_pattern` instead of `names_sep` to extract variables from more complicated naming scenarios once you've learned regular expressions in a few weeks. 
+
+## Variable & Values in Column Names
+
+This dataset contains data about five families, with the names and dates of birth of up to two children. 
+
+```{r}
+#| output-location: fragment
+household
+```
+
+. . . 
+
+The new challenge in this dataset is that the column names contain the names of two variables (`dob`, `name`) and the values of another (`child`, with values `1` or `2`).
+
+## Variable & Values in Column Names
+
+```{r}
+#| output-location: column-fragment
+household |> 
+  pivot_longer(
+    cols = !family, 
+    names_to = c(".value", "child"), # <1>
+    names_sep = "_", 
+    values_drop_na = TRUE # <2> 
+  )
+```
+
+1. `.value` isn’t the name of a variable but a unique value that tells `pivot_longer` to use the first component of the pivoted column name as a variable name in the output. 
+2. Using `values_drop_na = TRUE` again since not every family has 2 children.
+
+. . . 
+
+![](images/pivot_longer5_names-and-values.png){width=75% fig-align="center"}
+
+## `pivot_wider`
+
+`pivot_wider()` is the opposite of `pivot_longer()`, which you use if you have data for the same observation taking up multiple rows.
+
+. . . 
+
+Here's an example of data that we probably want to pivot wider (unless we want to plot each statistic in its own facet):
+
+```{r}
+#| echo: false
+library(gt)
+long_stats <- tibble(Group = c(rep("A", 3), rep("B", 3)),
+                     Statistic = rep(c("Mean", "Median", "SD"), 2),
+                     Value = c(1.28, 1.0, 0.72, 2.81, 2, 1.33))
+gt(long_stats)
+```
+
+. . . 
+
+A common cue to use `pivot_wider()` is having measurements of different quantities in the same column.
+
+## `pivot_wider` Example 
+
+```{r}
+#| output-location: fragment
+wide_stats <- long_stats |> 
+  pivot_wider(id_cols = Group, # <1>
+              names_from = Statistic, # <2>
+              values_from = Value) # <3>
+wide_stats
+```
+
+1. `id_cols` is the column that uniquely identifies each row in the new dataset. Default is everything not in `names_from` and `values_from`.
+2. `names_from` provides the names that will be used for the new columns
+3. `values_from` provides the values that will be used to populate the cells of the new columns.
+
+. . . 
+
+[`pivot_wider()`](https://tidyr.tidyverse.org/reference/pivot_wider.html) also has a number of optional `names_*` and `values_*` arguments for more complicated transformations. 
+
+. . . 
+
+::: {.callout-warning icon=false}
+## <span style="color:orange">{{< fa triangle-exclamation >}}</span> Nested Data
+If there are multiple rows in the input that correspond to one cell in the output you'll get a list-column. This means that you 1) need to fix something in your code/data because it shouldn't be nested in this way or 2) need to use `unnest_wider()` or `unnest_longer()` in order to access this column of data. More on this [here](https://r4ds.hadley.nz/rectangling.html#unnesting). 
+:::
+
+# Merging Data {background-image="images/dplyr.png" background-size="contain" background-opacity="0.25" background-position="center" .section-title background-color="#99a486"}
+
+## 
+
+
+
+
+
+
+
+
+
 
 ## Activity!
 
@@ -828,3 +1248,5 @@ source("../due_dates_schedule.R")
 
 make_due_date_table(4)
 ```
+
+
