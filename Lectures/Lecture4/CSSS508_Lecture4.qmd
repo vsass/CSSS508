@@ -19,6 +19,7 @@ format:
     history: false
     progress: true
     link-external-icon: true
+    code-annotations: hover
     pointer:
       color: "#b18eb1"
 revealjs-plugins:
@@ -31,6 +32,7 @@ revealjs-plugins:
 require(downlit)
 require(xml2)
 require(tidyverse)
+library(gapminder)
 #options(width = 90)
 ```
 
@@ -85,8 +87,6 @@ require(tidyverse)
 
 Tools like *Excel* or *Google Sheets* let you manipulate spreadsheets using functions.
 
-. . . 
-
 ::: {.incremental}
 * Spreadsheets are *not reproducible*: It's hard to know how someone changed the raw data!
 * It's hard to catch mistakes when you use spreadsheets^[Don't be the next sad Research Assistant who makes headlines with an Excel error! ([Reinhart & Rogoff, 2010](http://www.bloomberg.com/news/articles/2013-04-18/faq-reinhart-rogoff-and-the-excel-error-that-changed-history))].
@@ -128,7 +128,7 @@ The simplest data type is a boolean, or binary, variable: `TRUE` or `FALSE`^[or 
 
 . . . 
 
-More often than not our data don't actually have a variable with this data type, but they are definitely produced in the data manipulation and summarizing process. 
+More often than not our data don't actually have a variable with this data type, but they are definitely created and evalutated in the data manipulation and summarizing process. 
 
 . . . 
 
@@ -147,87 +147,252 @@ For example, we may test
 Naturally, these types of expressions produce a binary outcome of `T` or `F` which enables us to transform our data in a variety of ways!
 
 ## Logical Operators in `R`
+  
+#### Comparing objects
+:::: {.columns}
 
-* `==`: is equal to (note: there are TWO equal signs here!)
+::: {.column width="19%"}
+::: {.fragment}
+* `==`: 
+* `!=`: 
+* `>`, `>=`, `<`, `<=`: 
+* `%in%`: 
+:::
+:::
+
+::: {.column width="81%"}
+
+::: {.fragment}
+* is equal to^[Note: there are TWO equal signs here!]
+* not equal to
+* less than, less than or equal to, etc.
+* used when checking if equal to one of several values
+:::
+:::
+
+::::
+
+:::{.fragment}
+#### Combining comparisons
+:::
+
+:::: {.columns}
+
+::: {.column width="19%"}
+::: {.fragment}
+* `&`: 
+* `|`: 
+* `!`: 
+* `xor()`:
+:::
+:::
+
+::: {.column width="81%"}
+
+::: {.fragment .bullet-spacing}
+* **both** conditions need to hold (AND)\
+* **at least one** condition needs to hold (OR)\
+* **inverts** a logical condition (`TRUE` becomes `FALSE`, vice versa)\
+* **exclusive OR** (i.e. x or y but NOT both)
+:::
+:::
+
+::::
+
+::: aside
+You may also see `&&` and `||` but they are what's known as short-circuiting operators and are not to be used in `dplyr` functions (used for programming not data manipulation); they'll only ever return a single `TRUE` or `FALSE`.
+:::
+
+## Unexpected Behavior
+
+Be careful using `==` with numbers: 
 
 . . . 
 
-* `!=`: not equal to
+```{r}
+x <- c(1 / 49 * 49, sqrt(2) ^ 2)
+x
+x == c(1, 2) # <1> 
+print(x, digits = 16) # <2>
+```
+
+1. Computers store numbers with a fixed number of decimal places so there’s no way to *precisely* represent decimals. 
+2. `dplyr::near()` is a useful alternative which ignores small differences. 
 
 . . . 
 
-* `>`, `>=`, `<`, `<=`: less than, less than or equal to, etc.
+Similarly mysterious, missing values (`NA`) represent the unknown. Almost anything conditional involving `NA`s will also be unknown:
 
-. . . 
+```{r}
+NA > 5
+10 == NA
+NA == NA # <3> 
+```
 
-* `%in%`: used with checking equal to one of several values
+3. The logic here: if you have one unknown and a second unknown, you don't actually know if they equal one another!
+
+. . .  
+
+This is the reason we use `is.na()` to check for missingness. 
+
+```{r}
+is.na(c(NA, 5))
+```
 
 ## Examples of Logical Operators
 
 Let's create two objects, `A` and `B`
 
 ```{r}
-A <- c(5,10,15)
-B <- c(5,15,25)
+A <- c(5, 10, 15)
+B <- c(5, 15, 25)
 ```
 
 . . . 
+
+Comparisons:
 
 ```{r}
 A == B
-A >  B
-A %in% B
+A > B
+A %in% B # <1>
 ```
-
-## Combining Logical Operators
-
-We have three main ways to combine logical operators:
-
-* `&`: **both** conditions need to hold (AND)
+1. Will return a vector the length of `A` that is `TRUE` whenever a value in `A` is anywhere in `B`. <br> **Note**: You CAN use `%in%` to search for `NA`s.
 
 . . . 
 
-* `|`: **at least one** condition needs to hold (OR)
-
-. . . 
-
-* `!`: **inverts** a logical condition (`TRUE` becomes `FALSE`, `FALSE` becomes `TRUE`)
-
-## Examples
+Combinations: 
 
 ```{r}
-A <- c(5,10,15)
-B <- c(5,15,25)
-```
-
-. . . 
-
-```{r}
-A > 5 & A <= B
-B < 10 | B > 20
+A > 5 & A <= B 
+B < 10 | B > 20 # <2>
 !(A == 10)
 ```
+2. Be sure not to cut corners (i.e. writing <br> `B < 10 | > 20`). The code won't technically error but it won't evaluate the way you expect it to. Read more about the confusing logic behind this [here](https://r4ds.hadley.nz/logicals#order-of-operations). 
 
-# Aside: `dplyr`{.section-title background-color="#99a486"}
+## Logical Summaries
 
----
+:::: {.columns}
+
+::: {.column width="19%"}
+::: {.fragment}
+* `any()`: 
+* `all()`: 
+:::
+:::
+
+::: {.column width="81%"}
+
+::: {.fragment}
+* the equivalent of `|`; it’ll return `TRUE` if there are any `TRUE`’s in x
+* the equivalent of `&`; it’ll return `TRUE` only if all values of x are `TRUE`’s
+:::
+:::
+
+::::
+
+. . .
+
+```{r}
+C <- c(5, 10, NA, 10, 20, NA)
+any(C <= 10) # <1> 
+all(C <= 20)
+all(C <= 20, na.rm = TRUE) # <2>
+mean(C, na.rm = TRUE) # <3> 
+
+```
+
+1. Like other summary functions, they'll return `NA` if there are any missing values present and it's `FALSE`. 
+2. Use `na.rm = TRUE` to remove `NA`s prior to evaluation. 
+3. When you evaluate a logical vector numerically, `TRUE` = 1 and `FALSE` = 0. This makes `sum()` and `mean()` useful when summarizing logical functions (sum gives number of `TRUE`s and mean gives the proportion). 
+
+## Conditional transformations
+
+<ins>**`if_else()`**</ins>
+
+If you want to use one value when a condition is `TRUE` and another value when it’s `FALSE`.
+
+. . . 
+
+```{r}
+#| eval: false
+if_else(condition = "A logical vector", 
+        true = "Output when condition is true", 
+        false = "Output when condition is false")
+```
+
+. . . 
+
+```{r}
+x <- c(-3:3, NA)
+if_else(x > 0, "+ve", "-ve", "???") # <1> 
+```
+1. There’s an optional fourth argument, `missing` which will be used if the input is `NA`.
+
+. . . 
+
+<ins>**`case_when()`**</ins>
+
+A very useful extension of `if_else()` for multiple conditions^[Note that if multiple conditions match in `case_when()`, only the first will be used. 
+]. 
+
+. . . 
+
+```{r}
+case_when(
+  x == 0   ~ "0",
+  x < 0    ~ "-ve", 
+  x > 0    ~ "+ve",
+  is.na(x) ~ "???" # <2>
+) # <3> 
+```
+
+2. Use `.default` if you want to create a “default”/catch all value. 
+3. Both functions require compatible types: i.e. numerical and logical, strings and factors, dates and datetimes, `NA` and everything. 
+
+# {data-menu-title="`dplyr`" background-image="images/dplyr.png" background-size="contain" background-position="center" .section-title background-color="#1e4655"}
+
+## `dplyr`
 
 Today, we'll use tools from the `dplyr` package to manipulate data! 
 
-+ Like `ggplot2`, `dplyr` is part of the *Tidyverse*, a modern collection of data science tools introduced by Hadley Wickham.
+* Like `ggplot2`, `dplyr` is part of the *Tidyverse*, and included in the `tidyverse` package. 
 
-+ You can read more about the tidyverse on its [website](http://tidyverse.org/).
+```{r}
+library(tidyverse)
+```
 
 . . . 
 
-To get started, let's install (in the console) and load (in an R/qmd file) dplyr. (We also load `gapminder`!)
+To demonstrate data transformations we're going to use the `nycflights13` dataset, which you'll need to download and load into `R`
 
 ```{r}
-# install.packages("dplyr") 
-library(dplyr)
-
-library(gapminder)
+# Download and load data
+# install.packages("nycflights13") # <1>
+library(nycflights13) # <2>
 ```
+
+1. Run in console. 
+2. Load into `R` session. 
+
+. . . 
+
+`nycflights13` includes five dataframes^[Note these are separate data frames, each needing to be loaded separately:], some of which contain missing data (`NA`):
+
+```{r}
+#| eval: false
+data(flights) # <1> 
+data(airlines) # <2>
+data(airports) # <3>
+data(planes) # <4>
+data(weather) # <5>
+```
+
+1. flights leaving JFK, LGA, or EWR in 2013
+2. airline abbreviations
+3. airport metadata
+4. airplane metadata
+5. hourly weather data for JFK, LGA, and EWR
 
 ## Building Block of `dplyr`: Pipes
 
@@ -428,10 +593,556 @@ US_and_Canada |> group_by(year) |>
 
 Because we did `group_by()` with `year` then used `summarize()`, we get *one row per value of `year`*!
 
-# Merging together data{.section-title background-color="#99a486"}
+# Merging Data {background-image="images/dplyr.png" background-size="contain" background-opacity="0.25" background-position="center" .section-title background-color="#99a486"}
 
-+ `left_join()`
-+ `full_join()`
+## Joining Data
+
+Oftentimes our data will be spread across multiple datasets. To properly analyze these data we'll need to join them together into one dataframe. 
+
+. . . 
+
+To do this we'll be using the various **join** functions from the `dplyr` package. 
+
+. . . 
+
+
+
+## Joining in Concept
+
+We need to think about the following when we want to merge data frames A and B:
+
+::: {.fragment}
+* Which rows are we keeping from each data frame?
+:::
+
+::: {.fragment}
+* Which columns are we keeping from each data frame?
+:::
+
+::: {.fragment .fade-in}
+::: {.fragment .highlight-red}
+* Which variables determine whether rows match?
+:::
+:::
+
+## Keys
+
+Keys are the way that two datasets are connected to one another. The two types of keys are: 
+
+::: {.incremental}
+1. **Primary**: a variable or set of variables that uniquely identifies each observation.
+    i) When more than one variable makes up the primary key it's called a **compound key**
+2. **Foreign**: a variable (or set of variables) that corresponds to a primary key in another table.
+:::
+
+## Primary Keys <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+Let's look at our data to gain a better sense of what this all means. 
+
+::: {.panel-tabset}
+
+### `airlines` 
+
+::: {.smaller-font}
+`airlines` records two pieces of data about each airline: its carrier code and its full name. You can identify an airline with its two letter carrier code, making `carrier` the primary key.
+:::
+
+```{r}
+airlines 
+```
+
+### `airports`
+
+::: {.smaller-font}
+`airports` records data about each airport. You can identify each airport by its three letter airport code, making `faa` the primary key.
+:::
+
+```{r}
+airports
+```
+
+
+### `planes`
+
+::: {.smaller-font}
+`planes` records data about each plane. You can identify a plane by its tail number, making `tailnum` the primary key.
+:::
+
+```{r}
+planes
+```
+
+
+### `weather`
+
+::: {.smaller-font}
+`weather` records data about the weather at the origin airports. You can identify each observation by the combination of location and time, making `origin` and `time_hour` the compound primary key.
+:::
+
+```{r}
+weather
+```
+
+### `flights`
+
+::: {.smaller-font}
+`flights` actually contains **foreign keys** that correspond to the primary keys of the other datasets.
+:::
+
+```{r}
+flights
+```
+
+:::
+
+
+## Foreign Keys
+
+![Note: grey shading indicates the primary key for that particular dataset.](images/relational.png){fig-align="center"}
+
+::: {.incremental}
+* `flights$origin` --> `airports$faa`
+* `flights$dest` --> `airports$faa`
+* `flights$origin`-`flights$time_hour` --> `weather$origin`-`weather$time_hour`.
+* `flights$tailnum` --> `planes$tailnum`
+* `flights$carrier` --> `airlines$carrier`
+:::
+
+## Checking Keys
+
+A nice feature of these data are that the primary and foreign keys have the same name and almost every variable name used across multiple tables has the same meaning.^[With the exception of `year`: it means year of departure in `flights` and year of manufacture in `planes`. ] This isn't always the case!^[We'll cover how to handle this shortly.]
+
+. . . 
+
+It is good practice to make sure your primary keys actually uniquely identify an observation and that they don't have any missing values. 
+
+. . . 
+
+```{r}
+#| output-location: fragment
+planes |> 
+  count(tailnum) |> # <1>
+  filter(n > 1) # <1> 
+```
+
+1. If your primary keys uniquely identify each observation you'll get an empty tibble in return. 
+
+. . . 
+
+```{r}
+planes |> 
+  filter(is.na(tailnum)) # <2>
+```
+
+2. If none of your primary keys are missing you'll get an empty tibble in return here too. 
+
+## Surrogate Keys
+
+Sometimes you'll want to create an index of your observations to serve as a surrogate key because the compound primary key is not particlarly easy to reference. 
+
+. . . 
+
+For example, our `flights` dataset has three variables that uniquely identify each observation: `time_hour`, `carrier`, `flight`.
+
+. . . 
+
+```{r}
+#| output-location: fragment
+flights2 <- flights |> 
+  mutate(id = row_number(), .before = 1) # <1> 
+flights2
+```
+
+1. `row_number()` simply specifies the row number of the dataframe and `.before = 1` puts it as the first column. 
+
+## Basic (Equi-) Joins
+
+All join functions have the same basic interface: they take a **pair** of data frames and return **one** data frame. 
+
+. . . 
+
+The order of the rows and columns is primarily going to be determined by the first data frame. 
+
+. . . 
+
+`dplyr` has two types of joins: *mutating* and *filtering.* 
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+::: {.fragment}
+#### Mutating Joins 
+Add new variables to one data frame from matching observations from another data frame. 
+
+* `left_join()`
+* `right_join()`
+* `inner_join()`
+* `full_join()`
+:::
+
+:::
+
+::: {.column width="50%"}
+
+::: {.fragment}
+#### Filtering Joins 
+Filter observations from one data frame based on whether or not they match an observation in another data frame. 
+
+* `semi_join()`
+* `anti-join()`
+:::
+
+:::
+
+::::
+
+## `Mutating Joins`
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+<br>
+
+::: {.fragment}
+![](images/joins_setup.png)
+:::
+:::
+
+::: {.column width="50%"}
+
+<br>
+
+::: {.fragment}
+![](images/joins_setup2.png)
+:::
+:::
+
+::::
+
+## `left_join()` <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+![](images/joins_left.png){fig-align="center"}
+
+::: aside
+::: {.incremental}
+* The most common type of join
+* Appends columns from `y` to `x` by the rows in `x`
+    + `NA` added if there is nothing from `y`
+* Natural join: when all variables that appear in both datasets are used as the join key
+    + If the join_by() argument is not specified, `left_join()` will automatically join by all columns that have names and values in common. 
+:::
+:::
+
+## `left_join` in `nycflights13`
+
+```{r}
+flights2 <- flights |> 
+  select(year, time_hour, origin, dest, tailnum, carrier)
+```
+
+With only the pertinent variables from the `flights` dataset, we can see how a `left_join` works with the `airlines` dataset. 
+
+```{r}
+#| output-location: fragment
+#| message: true
+flights2 |>
+  left_join(airlines)
+```
+
+## Different variable meanings
+
+```{r}
+#| output-location: fragment
+#| message: true
+flights2 |> 
+  left_join(planes)
+```
+
+. . . 
+
+When we try to do this, however, we get a bunch of `NA`s. Why? 
+
+## Different variable meanings
+
+```{r}
+#| message: true
+flights2 |> 
+  left_join(planes)
+```
+
+*Join is trying to use tailnum and year as a compound key.* While both datasets have `year` as a variable, they mean different things. Therefore, we need to be explicit here about what to join by. 
+
+## Different variable meanings
+
+```{r}
+#| output-location: fragment
+flights2 |> 
+  left_join(planes, join_by(tailnum)) # <1>
+```
+
+1. `join_by(tailnum)` is short for `join_by(tailnum == tailnum)` making these types of basic joins equi joins. 
+
+::: aside
+When you have the same variable name but they mean different things you can specify a particular suffix with the `suffix` argument.
+:::
+
+## Different variable names
+
+If you have keys that have the same meaning (values) but are named different things in their respective datasets you'd also specify that with `join_by()`
+
+. . . 
+
+```{r}
+#| output-location: fragment
+flights2 |> 
+  left_join(airports, join_by(dest == faa)) # <1>
+```
+
+1. This used to be `by = c("dest" = "faa")` which you still might see in older code. 
+
+. . . 
+
+This will match `dest` to `faa` for the join and then drop `faa`. 
+
+## Different variable names
+
+You can request dplyr to keep both keys with `keep = TRUE` argument. 
+
+. . . 
+
+```{r}
+#| output-location: fragment
+flights2 |> 
+  left_join(airports, join_by(dest == faa), keep = TRUE) 
+```
+
+## `right_join()`
+
+![Has the same interface as a left_join but keeps all rows in `y` instead of `x`](images/joins_right.png){fig-align="center"}
+
+## `inner_join()`
+
+![Has the same interface as a left_join but only keeps rows that occur in both x and y](images/joins_inner.png){fig-align="center"}
+
+## `full_join()`
+
+![Has the same interface as a left_join but keeps all rows in either x or y](images/joins_full.png){fig-align="center"}
+
+## `Filtering Joins`
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+<br>
+
+::: {.fragment}
+![](images/joins_setup.png)
+:::
+:::
+
+::: {.column width="50%"}
+
+<br>
+
+::: {.fragment}
+![](images/joins_setup2.png)
+:::
+:::
+
+::::
+
+## `semi_join()`
+
+![Keeps all rows in x that have a match in y](images/joins_semi.png){fig-align="center"}
+
+
+## `semi_join()` in `nycflights13`
+
+We could use a semi-join to filter the airports dataset to show just the origin airports.
+
+. . . 
+
+```{r}
+#| output-location: fragment
+airports |> 
+  semi_join(flights2, join_by(faa == origin))
+```
+
+
+## `anti_join()`
+
+![Returns all rows in x that don’t have a match in y](images/joins_anti.png){fig-align="center"}
+
+## `anti_join()` in `nycflights13`
+
+We can find rows that are missing from airports by looking for flights that don’t have a matching destination airport.
+
+. . . 
+
+```{r}
+#| output-location: fragment
+airports |> 
+  semi_join(flights2, join_by(faa == origin))
+```
+
+::: aside
+This type of join is useful for finding missing values that are implicit in the data (i.e. `NA`s that don't show up in the data but only exist as an absence.)
+:::
+
+## More Than One Match
+
+![](images/joins_match-types.png){fig-align="center"}
+
+. . . 
+
+There are three possible outcomes for a row in x:
+
+::: {.incremental}
+* If it doesn’t match anything, it’s dropped.
+* If it matches 1 row in y, it’s preserved.
+* If it matches more than 1 row in y, it’s duplicated once for each match.
+:::
+
+. . . 
+
+What happens if we match on more than one row? 
+
+## More Than One Match
+
+```{r}
+#| output-location: fragment
+#| message: true
+df1 <- tibble(key = c(1, 2, 2), val_x = c("x1", "x2", "x3"))
+df2 <- tibble(key = c(1, 2, 2), val_y = c("y1", "y2", "y3"))
+
+df1 |> 
+  inner_join(df2, join_by(key))
+```
+
+
+. . . 
+
+If you are doing this deliberately, you can set relationship = "many-to-many", as the warning suggests.
+
+::: aside
+Given their nature, filtering joins never duplicate rows like mutating joins do. They will only ever return a subset of the datasets.
+:::
+
+## Non-Equi Joins
+
+The joins we've discussed thus far have all been equi-joins, where the rows match if the x key equals the y key. But you can also specify other types of relationships. 
+
+. . . 
+
+`dplyr` has four different types of non-equi joins: 
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+* **Cross joins** match every pair of rows.
+:::
+
+::: {.column width="50%"}
+
+![](images/joins_cross.png){width=25% .absolute top=150 right=150}
+
+:::
+::::
+
+::: aside
+Cross joins, aka self-joins, are useful when generating permutations (e.g. creating every possible combination of values). This comes in handy when creating datasets of predicted probabilities for plotting in ggplot. 
+:::
+
+## Non-Equi Joins
+
+The joins we've discussed thus far have all been equi-joins, where the rows match if the x key equals the y key. But you can also specify other types of relationships. 
+
+`dplyr` has four different types of non-equi joins: 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+* **Cross joins** match every pair of rows.
+* **Inequality joins** use <, <=, >, and >= instead of ==.
+    * **Overlap joins** are a special type of inequality join designed to work with ranges^[Overlap joins provide three helpers that use inequality joins to make it easier to work with intervals: `between()`, `within()`, `overlaps()`. Read more about their functionality and specifications [here](https://dplyr.tidyverse.org/reference/join_by.html?q=within#overlap-joins).].
+
+:::
+
+::: {.column width="50%"}
+![](images/joins_inequality.png){width=30% .absolute top=158 right=120}
+:::
+::::
+
+::: aside
+Inequality joins can be used to restrict the cross join so that instead of generating all permutations, we generate all combinations.
+:::
+
+## Non-Equi Joins
+
+The joins we've discussed thus far have all been equi-joins, where the rows match if the x key equals the y key. But you can also specify other types of relationships. 
+
+`dplyr` has four different types of non-equi joins: 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+* **Cross joins** match every pair of rows.
+* **Inequality joins** use <, <=, >, and >= instead of ==.
+    * **Overlap joins** are a special type of inequality join designed to work with ranges.
+* **Rolling joins** are similar to inequality joins but only find the closest match.
+
+:::
+
+::: {.column width="50%"}
+![](images/joins_rolling.png){width=42% .absolute top=155 right=35}
+:::
+::::
+
+::: aside
+Rolling joins are a special type of inequality join where instead of getting every row that satisfies the inequality, you get just the closest row. You can turn any inequality join into a rolling join by adding closest().
+:::
+
+# Lab{.section-title background-color="#99a486"}
+
+1. Find the 48 hours (over the course of the whole year) that have the worst delays. Cross-reference it with the weather data. Can you see any patterns?
+
+```{r}
+worst_delays <- flights |> 
+  select(dep_delay, origin, time_hour) |> 
+  left_join(weather, join_by(origin, time_hour))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Why merge?!
 
