@@ -399,8 +399,10 @@
 <p><span class="custom-subtitle3">Victoria Sass</span></p>
 </section><section><section id="roadmap" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Roadmap</h1>
 
-</section><section class="slide level2"><p><br></p>
-<p>Last time, we learned about,</p>
+</section><section class="slide level2"><div class="columns">
+<div class="column" style="width:50%;">
+<p><br></p>
+<h3 id="last-time-we-learned">Last time, we learned:</h3>
 <ul>
 <li>Best Practices
 <ul>
@@ -412,23 +414,34 @@
 <li>Indexing vectors &amp; dataframes in Base <code>R</code>
 </li>
 </ul>
+</div><div class="column" style="width:50%;">
+<p><br></p>
 <div class="fragment">
-<p>Today, we will cover,</p>
+<!-- -->
+<h3 id="today-we-will-cover">Today, we will cover:</h3>
 <ul>
-<li>Building blocks</li>
+<li>Logical Operators</li>
 <li>Subsetting data</li>
 <li>Modifying data</li>
 <li>Summarizing data</li>
 <li>Merging data</li>
 </ul>
 </div>
+</div>
+</div>
 </section><section id="death-to-spreadsheets" class="slide level2"><h2>Death to Spreadsheets</h2>
 <p>Tools like <em>Excel</em> or <em>Google Sheets</em> let you manipulate spreadsheets using functions.</p>
+<div class="fragment">
+<div>
 <ul>
-<li>Spreadsheets are <em>not reproducible</em>: It’s hard to know how someone changed the raw data!</li>
-<li>It’s hard to catch mistakes when you use spreadsheets<sup>1</sup>.</li>
+<li class="fragment">Spreadsheets are <em>not reproducible</em>: It’s hard to know how someone changed the raw data!</li>
+<li class="fragment">It’s hard to catch mistakes when you use spreadsheets<sup>1</sup>.</li>
 </ul>
+</div>
+</div>
+<div class="fragment">
 <p>Today, we’ll use <code>R</code> to manipulate data more <em>transparently</em> and <em>reproducibly</em>.</p>
+</div>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>Don’t be the next sad Research Assistant who makes headlines with an Excel error! (<a href="http://www.bloomberg.com/news/articles/2013-04-18/faq-reinhart-rogoff-and-the-excel-error-that-changed-history">Reinhart &amp; Rogoff, 2010</a>)</p></li></ol></aside></section></section><section><section id="logical-operators" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Logical Operators</h1>
 
 </section><section id="data-types-in-r" class="slide level2"><h2>Data types in <code>R</code>
@@ -436,17 +449,32 @@
 <p>Going back to our list of data types in <code>R</code>:</p>
 <div class="fragment">
 <ul>
-<li><sub>Factors</sub></li>
-<li>
-<sub>Date/Date-time</sub> ::: {.fragment .highlight-red}</li>
-<li>Logical :::</li>
+<li><del>Factors</del></li>
+<li><del>Date/Date-time</del></li>
+<li>Logical</li>
 <li>Numeric</li>
 <li>Missing Values</li>
 <li>Strings</li>
 </ul>
 </div>
-</section><section id="logical-operators-1" class="slide level2"><h2>Logical Operators</h2>
-<p>Logical operators refer to base functions which allow us to <strong>test a connection</strong> between two objects.</p>
+</section><section id="data-types-in-r-1" class="slide level2"><h2>Data types in <code>R</code>
+</h2>
+<p>Going back to our list of data types in <code>R</code>:</p>
+<ul>
+<li><del>Factors</del></li>
+<li><del>Date/Date-time</del></li>
+<li><span style="color:#e15759">Logical</span></li>
+<li>Numeric</li>
+<li>Missing Values</li>
+<li>Strings</li>
+</ul></section><section id="booleans" class="slide level2"><h2>Booleans</h2>
+<p>The simplest data type is a boolean, or binary, variable: <code>TRUE</code> or <code>FALSE</code><sup>1</sup>.</p>
+<div class="fragment">
+<p>More often than not our data don’t actually have a variable with this data type, but they are definitely produced in the data manipulation and summarizing process.</p>
+</div>
+<div class="fragment">
+<p>Logical operators refer to base functions which allow us to <strong>test if a condition</strong> is present between two objects.</p>
+</div>
 <div class="fragment">
 <p>For example, we may test</p>
 <ul>
@@ -454,9 +482,12 @@
 <li>Is A greater than B?</li>
 <li>Is A within B?</li>
 </ul>
-<p>and many others!</p>
 </div>
-</section><section id="logical-operators-in-code" class="slide level2"><h2>Logical Operators in Code</h2>
+<div class="fragment">
+<p>Naturally, these types of expressions produce a binary outcome of <code>T</code> or <code>F</code> which enables us to transform our data in a variety of ways!</p>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>or <code>NA</code></p></li></ol></aside></section><section id="logical-operators-in-r" class="slide level2"><h2>Logical Operators in <code>R</code>
+</h2>
 <ul>
 <li>
 <code>==</code>: is equal to (note: there are TWO equal signs here!)</li>
@@ -870,7 +901,7 @@
 <ul>
 <li><p><code>A |&gt; left_join(B)</code>: keeps <code>A</code> and adds variables from <code>B</code> after matching.</p></li>
 <li><p><code>A |&gt; full_join(B)</code>: keeps all of <code>A</code> and <code>B</code>, but combines rows when possible.</p></li>
-</ul><aside><ol class="aside-footnotes"><li id="fn2"><p>Other types include <code>right_join</code>, <code>inner_join</code>, <code>semi_join</code>, and <code>anti_join</code>, but we won’t study those here.</p></li></ol></aside></section><section id="matching-criteria" class="slide level2"><h2>Matching Criteria</h2>
+</ul><aside><ol class="aside-footnotes"><li id="fn3"><p>Other types include <code>right_join</code>, <code>inner_join</code>, <code>semi_join</code>, and <code>anti_join</code>, but we won’t study those here.</p></li></ol></aside></section><section id="matching-criteria" class="slide level2"><h2>Matching Criteria</h2>
 <p>We have to tell R <strong>which variables</strong> to use when merging datasets! Rows are matched when the values in matching variables are equivalent.</p>
 <div class="fragment">
 <ul>
@@ -1212,27 +1243,27 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
 </ol>
 <p>As always, submit both the .qmd and knitted .html to Canvas.</p>
 <p><br><br></p>
-<aside><ol class="aside-footnotes"><li id="fn3"><p>Hint 1: Match on <code>origin</code>, <code>year</code>, <code>month</code>, <code>day</code>, <strong>and</strong> <code>hour</code>!!</p></li><li id="fn4"><p>Hint 2: Use <code>mean(temp, na.rm=T)</code> to have R calculate an average after ignoring missing data values</p></li></ol></aside></section><section id="due-dates" class="slide level2"><h2>Due dates</h2>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>Hint 1: Match on <code>origin</code>, <code>year</code>, <code>month</code>, <code>day</code>, <strong>and</strong> <code>hour</code>!!</p></li><li id="fn5"><p>Hint 2: Use <code>mean(temp, na.rm=T)</code> to have R calculate an average after ignoring missing data values</p></li></ol></aside></section><section id="due-dates" class="slide level2"><h2>Due dates</h2>
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="imgebwuozg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#imgebwuozg table {
+<div id="pzkyzqhjin" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pzkyzqhjin table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#imgebwuozg thead, #imgebwuozg tbody, #imgebwuozg tfoot, #imgebwuozg tr, #imgebwuozg td, #imgebwuozg th {
+#pzkyzqhjin thead, #pzkyzqhjin tbody, #pzkyzqhjin tfoot, #pzkyzqhjin tr, #pzkyzqhjin td, #pzkyzqhjin th {
   border-style: none;
 }
 
-#imgebwuozg p {
+#pzkyzqhjin p {
   margin: 0;
   padding: 0;
 }
 
-#imgebwuozg .gt_table {
+#pzkyzqhjin .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1258,12 +1289,12 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   border-left-color: #D3D3D3;
 }
 
-#imgebwuozg .gt_caption {
+#pzkyzqhjin .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#imgebwuozg .gt_title {
+#pzkyzqhjin .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1275,7 +1306,7 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   border-bottom-width: 0;
 }
 
-#imgebwuozg .gt_subtitle {
+#pzkyzqhjin .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1287,7 +1318,7 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   border-top-width: 0;
 }
 
-#imgebwuozg .gt_heading {
+#pzkyzqhjin .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1299,13 +1330,13 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   border-right-color: #D3D3D3;
 }
 
-#imgebwuozg .gt_bottom_border {
+#pzkyzqhjin .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#imgebwuozg .gt_col_headings {
+#pzkyzqhjin .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1320,7 +1351,7 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   border-right-color: #D3D3D3;
 }
 
-#imgebwuozg .gt_col_heading {
+#pzkyzqhjin .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1340,7 +1371,7 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   overflow-x: hidden;
 }
 
-#imgebwuozg .gt_column_spanner_outer {
+#pzkyzqhjin .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1352,15 +1383,15 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   padding-right: 4px;
 }
 
-#imgebwuozg .gt_column_spanner_outer:first-child {
+#pzkyzqhjin .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#imgebwuozg .gt_column_spanner_outer:last-child {
+#pzkyzqhjin .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#imgebwuozg .gt_column_spanner {
+#pzkyzqhjin .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1372,11 +1403,11 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   width: 100%;
 }
 
-#imgebwuozg .gt_spanner_row {
+#pzkyzqhjin .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#imgebwuozg .gt_group_heading {
+#pzkyzqhjin .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1402,7 +1433,7 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   text-align: left;
 }
 
-#imgebwuozg .gt_empty_group_heading {
+#pzkyzqhjin .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1417,15 +1448,15 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   vertical-align: middle;
 }
 
-#imgebwuozg .gt_from_md > :first-child {
+#pzkyzqhjin .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#imgebwuozg .gt_from_md > :last-child {
+#pzkyzqhjin .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#imgebwuozg .gt_row {
+#pzkyzqhjin .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1444,7 +1475,7 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   overflow-x: hidden;
 }
 
-#imgebwuozg .gt_stub {
+#pzkyzqhjin .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1457,7 +1488,7 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   padding-right: 5px;
 }
 
-#imgebwuozg .gt_stub_row_group {
+#pzkyzqhjin .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1471,15 +1502,15 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   vertical-align: top;
 }
 
-#imgebwuozg .gt_row_group_first td {
+#pzkyzqhjin .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#imgebwuozg .gt_row_group_first th {
+#pzkyzqhjin .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#imgebwuozg .gt_summary_row {
+#pzkyzqhjin .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1489,16 +1520,16 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   padding-right: 5px;
 }
 
-#imgebwuozg .gt_first_summary_row {
+#pzkyzqhjin .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#imgebwuozg .gt_first_summary_row.thick {
+#pzkyzqhjin .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#imgebwuozg .gt_last_summary_row {
+#pzkyzqhjin .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1508,7 +1539,7 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   border-bottom-color: #D3D3D3;
 }
 
-#imgebwuozg .gt_grand_summary_row {
+#pzkyzqhjin .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1518,7 +1549,7 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   padding-right: 5px;
 }
 
-#imgebwuozg .gt_first_grand_summary_row {
+#pzkyzqhjin .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1528,7 +1559,7 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   border-top-color: #D3D3D3;
 }
 
-#imgebwuozg .gt_last_grand_summary_row_top {
+#pzkyzqhjin .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1538,11 +1569,11 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   border-bottom-color: #D3D3D3;
 }
 
-#imgebwuozg .gt_striped {
+#pzkyzqhjin .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#imgebwuozg .gt_table_body {
+#pzkyzqhjin .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1551,7 +1582,7 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   border-bottom-color: #D3D3D3;
 }
 
-#imgebwuozg .gt_footnotes {
+#pzkyzqhjin .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1565,7 +1596,7 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   border-right-color: #D3D3D3;
 }
 
-#imgebwuozg .gt_footnote {
+#pzkyzqhjin .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1574,7 +1605,7 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   padding-right: 5px;
 }
 
-#imgebwuozg .gt_sourcenotes {
+#pzkyzqhjin .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1588,7 +1619,7 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   border-right-color: #D3D3D3;
 }
 
-#imgebwuozg .gt_sourcenote {
+#pzkyzqhjin .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1596,63 +1627,63 @@ $ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58
   padding-right: 5px;
 }
 
-#imgebwuozg .gt_left {
+#pzkyzqhjin .gt_left {
   text-align: left;
 }
 
-#imgebwuozg .gt_center {
+#pzkyzqhjin .gt_center {
   text-align: center;
 }
 
-#imgebwuozg .gt_right {
+#pzkyzqhjin .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#imgebwuozg .gt_font_normal {
+#pzkyzqhjin .gt_font_normal {
   font-weight: normal;
 }
 
-#imgebwuozg .gt_font_bold {
+#pzkyzqhjin .gt_font_bold {
   font-weight: bold;
 }
 
-#imgebwuozg .gt_font_italic {
+#pzkyzqhjin .gt_font_italic {
   font-style: italic;
 }
 
-#imgebwuozg .gt_super {
+#pzkyzqhjin .gt_super {
   font-size: 65%;
 }
 
-#imgebwuozg .gt_footnote_marks {
+#pzkyzqhjin .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#imgebwuozg .gt_asterisk {
+#pzkyzqhjin .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#imgebwuozg .gt_indent_1 {
+#pzkyzqhjin .gt_indent_1 {
   text-indent: 5px;
 }
 
-#imgebwuozg .gt_indent_2 {
+#pzkyzqhjin .gt_indent_2 {
   text-indent: 10px;
 }
 
-#imgebwuozg .gt_indent_3 {
+#pzkyzqhjin .gt_indent_3 {
   text-indent: 15px;
 }
 
-#imgebwuozg .gt_indent_4 {
+#pzkyzqhjin .gt_indent_4 {
   text-indent: 20px;
 }
 
-#imgebwuozg .gt_indent_5 {
+#pzkyzqhjin .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
