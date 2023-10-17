@@ -1,5 +1,4 @@
 ---
-
 execute: 
   echo: true
   message: false
@@ -7,7 +6,7 @@ execute:
   fig-format: "svg"
 format: 
   revealjs:
-    highlight-style:  a11y-dark
+    highlight-style: a11y-dark
     reference-location: margin
     theme: lecture_styles.scss
     slide-number: true
@@ -20,11 +19,14 @@ format:
     history: false
     progress: true
     link-external-icon: true
+    code-annotations: hover
     pointer:
       color: "#b18eb1"
 revealjs-plugins:
   - pointer
 ---
+
+## {#title-slide data-menu-title="Importing, Exporting, and Cleaning Data" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
 
 ```{r}
 #| echo: false
@@ -32,12 +34,9 @@ revealjs-plugins:
 require(downlit)
 require(xml2)
 require(tidyverse)
-#options(width = 90)
 ```
 
-## {#title-slide data-menu-title="Manipulating and Summarizing Data" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
-
-[Manipulating and Summarizing Data]{.custom-title}
+[Importing, Exporting, and Cleaning Data]{.custom-title}
 
 [CS&SS 508 • Lecture 5]{.custom-subtitle}
 
@@ -53,638 +52,1748 @@ require(tidyverse)
 
 Last time, we learned about,
 
-* Useful coding tips: packages, directories, and saving data
-* Basics of ggplot: layers and aesthetics
-* Advanced ggplot tools
+* Best Practices
+  * Code Style
+  * Workflow
+* Reproducible Research
+* Indexing vectors & dataframes in Base `R`
 
 . . . 
 
 Today, we will cover,
 
-* Building blocks
-* Subsetting data
-* Modifying data 
-* Summarizing data
-* Merging together data
+* Importing and Exporting Data
+* Tidying Data
+* Merging Data
 
-## Death to Spreadsheets
+# Importing and Exporting Data{.section-title background-color="#99a486"}
 
-Tools like *Excel* or *Google Sheets* lets you manipulate spreadsheets using functions.
+## Data Packages
 
-* Spreadsheets are *not reproducible*: It's hard to know how someone changed the raw data!
-* It's hard to catch mistakes when you use spreadsheets. Don't be the next sad Research Assistant who makes headlines with an Excel error! ([Reinhart & Rogoff, 2010](http://www.bloomberg.com/news/articles/2013-04-18/faq-reinhart-rogoff-and-the-excel-error-that-changed-history))
-
-Today, we'll use R to manipulate data more *transparently* and *reproducibly*.
-
-# Building Blocks{.section-title background-color="#99a486"}
-
-1. Logical Operators (`!=`, `==`, `>`, `<=`, etc. )
-1. Combining Logical Operators (`&`, `|`)
-
-## Logical Operators
-
-Logical operators refer to base functions which allow us to **test a connection** between two objects.
+R has a *big* user base.  If you are working with a popular data source, it will often have a devoted R package on *CRAN* or *Github*. 
 
 . . . 
 
-For example, we may test
+Examples:
 
-+ Is A equal to B?
-+ Is A greater than B?
-+ Is A within B?
-
-and many others!
-
-## Logical Operators in Code
-
-* `==`: is equal to (note: there are TWO equal signs here!)
+* [`WDI`](https://vincentarelbundock.github.io/WDI/): World Development Indicators (World Bank)
+* [`tidycensus`](https://walker-data.com/tidycensus/): Census and American Community Survey
+* [`quantmod`](https://walker-data.com/tidycensus/): financial data from Yahoo, FRED, Google
+* [`gssr`](https://kjhealy.github.io/gssr/): The General Social Survey Cumulative Data (1972-2021)
+* [`psidR`](https://github.com/floswald/psidR): Panel Study of Income Dynamics (basic & public datasets)
 
 . . . 
 
-* `!=`: not equal to
+If you have an actual data file, you'll have to import it yourself...
+
+## Delimited Text Files
+
+Besides a package, it's easiest when data is stored in a text file. The most commonly encountered delimitd file is a **.csv**.
 
 . . . 
 
-* `>`, `>=`, `<`, `<=`: less than, less than or equal to, etc.
+A comma-separated values (.csv) file looks like the following: 
 
-. . . 
-
-* `%in%`: used with checking equal to one of several values
-
-## Examples of Logical Operators
-
-Let's create two objects, `A` and `B`
-
-```{r}
-A <- c(5,10,15)
-B <- c(5,15,25)
+```
+"Subject","Depression","Sex","Week","HamD","Imipramine"
+101,"Non-endogenous","Second",0,26,NA
+101,"Non-endogenous","Second",1,22,NA
+101,"Non-endogenous","Second",2,18,4.04305
+101,"Non-endogenous","Second",3,7,3.93183
+101,"Non-endogenous","Second",4,4,4.33073
+101,"Non-endogenous","Second",5,3,4.36945
+103,"Non-endogenous","First",0,33,NA
+103,"Non-endogenous","First",1,24,NA
+103,"Non-endogenous","First",2,15,2.77259
 ```
 
-. . . 
+## `readr`
 
-```{r}
-A == B
-A >  B
-A %in% B
-```
-
-## Combining Logical Operators
-
-We have three main ways to combine logical operators:
-
-* `&`: **both** conditions need to hold (AND)
+R has some built-in functions for importing data, such as `read.table()` and `read.csv()`. 
 
 . . . 
 
-* `|`: **at least one** condition needs to hold (OR)
+:::: {.columns}
 
-. . . 
+::: {.column width="60%"}
+The `readr` package provides similar functions, like `read_csv()`, that have slightly better features:
 
-* `!`: **inverts** a logical condition (`TRUE` becomes `FALSE`, `FALSE` becomes `TRUE`)
-
-## Examples
-
-```{r}
-A <- c(5,10,15)
-B <- c(5,15,25)
-```
-
-. . . 
-
-```{r}
-A > 5 & A <= B
-B < 10 | B > 20
-!(A == 10)
-```
-
-# Aside: `dplyr`{.section-title background-color="#99a486"}
-
----
-
-Today, we'll use tools from the `dplyr` package to manipulate data! 
-
-+ Like `ggplot2`, `dplyr` is part of the *Tidyverse*, a modern collection of data science tools introduced by Hadley Wickham.
-
-+ You can read more about the tidyverse on its [website](http://tidyverse.org/).
-
-. . . 
-
-To get started, let's install (in the console) and load (in an R/qmd file) dplyr. (We also load `gapminder`!)
-
-```{r}
-# install.packages("dplyr") 
-library(dplyr)
-
-library(gapminder)
-```
-
-## Building Block of `dplyr`: Pipes
-
-`dplyr` allows us to "pipe" data between functions using the (`%>%`) operator. So instead of nesting functions like this:
-
-```{r}
-log(mean(gapminder$pop))
-```
-
-. . . 
-
-We can **pipe** them like this:
-
-```{r}
-gapminder$pop %>% mean() %>% log()
-```
-
-. . . 
-
-+ Pipes read "left to right." (intuitive)
-+ Nested functions read "inside to out." (kinda weird; gets unwieldy the more nested your code becomes)
-
-# Subsetting data{.section-title background-color="#99a486"}
-
-+ `filter()`
-+ `select()`
-+ `distinct()`
-
-## Subset Rows: `filter`
-
-We often get *big* datasets, and we only want some of the entries. We can subset rows using `filter`.
-
-. . . 
-
-```{r}
-gapminder |> 
-  filter(country == "China") |>
-  head(4) # display first four rows
-China <- gapminder |> 
-  filter(country == "China")
-```
-
-(Now, `China` is an object in our environment which contains rows corresponding to China.)
-
-## Subset Columns: `select`
-
-What if we want to keep each entry, but only use certain variables? Use `select`!
-
-. . . 
-
-```{r}
-gapminder |> 
-  select(country,continent,year,lifeExp) |> 
-  head(4)
-```
-
-## Dropping columns with `select`
-
-Alternatively, we can use `select()` to drop variables using a `-` sign: 
-
-```{r}
-gapminder |> 
-  select(-continent, -pop, -lifeExp) |> 
-  head(4)
-```
-
-## Finding Unique Rows: `distinct`
-
-You may want to find the unique combinations of variables in a dataset.  Use `distinct`
-
-. . . 
-
-```{r}
-gapminder |> 
-  distinct(continent, year) |> 
-  head(6)
-```
-
-## `distinct` drops variables!
-
-By default, `distinct()` drops unused variables. If you don't want to drop them, add the argument `.keep_all = TRUE`:
-
-```{r}
-gapminder |> 
-  distinct(continent, year, .keep_all=TRUE) |> 
-  head(6)
-```
-
-# Modifying data{.section-title background-color="#99a486"}
-
-+ `arrange()`
-+ `rename()`
-+ `mutate()`
-
-## Sorting data by rows: `arrange`
-
-Sometimes it's useful to sort rows in your data, in ascending (low to high) or descending (high to low) order. We do that with `arrange`.
-
-. . . 
-
-```{r}
-US_and_Canada <- gapminder |> 
-  filter(country %in% c("United States","Canada"))
-US_and_Canada |> 
-  arrange(year,lifeExp) |> 
-  head(4)
-```
-
-## Sorting data by rows: `arrange`
-
-To sort in descending order, using `desc()` within `arrange`
-
-```{r}
-US_and_Canada |> 
-  arrange(desc(pop)) |> 
-  head(4)
-```
-
-## Rename variables: `rename`
-
-You may receive data with unintuitive variable names. You can change them using `rename()`.
-
-. . . 
-
-```{r}
-US_and_Canada |> 
-  rename(life_expectancy = lifeExp) |>
-  head(4)
-```
-
-::: aside
-\* NOTE 1: I did *not* re-save the object `US_and_Canada`, so the name change is *not* permanent!
-
-\* NOTE 2: I recommend **against** using spaces in a name! It makes things *really hard* sometimes!!
+::: {.incremental}
+* Faster!
+* Better defaults (e.g. doesn't automatically convert characters to factors)
+* A *bit* smarter about dates and times
+* Loading progress bars for large files
+:::
 :::
 
-## Create new columns: `mutate`
+::: {.column width="40%"}
+![](images/readr.png)
+:::
 
-You can add new columns to a data frame using `mutate()`. 
-
+::::
 . . . 
 
-For example, perhaps we wish to state the population in millions:
+`readr` is one of the core `tidyverse` packages so loading `tidyverse` will load it too:
 
 ```{r}
-#| code-line-numbers: "3"
-US_and_Canada |> 
-  select(country, year, pop) |>
-  mutate(pop_millions = pop / 1000000) |> 
-  head(5)
-```
-
-# Summarizing data{.section-title background-color="#99a486"}
-
-+ `summarize()`
-+ `group_by()`
-
-## Summarizing data: `summarize`
-
-**`summarize()`** calculates summaries of variables in your data:
-
-* Count the number of rows
-* Calculate the mean
-* Calculate the sum
-* Find the minimum or maximum value
-
-You can use any function inside `summarize()` that aggregates *multiple values* into a *single value* (like `sd()`, `mean()`, or `max()`).
-
-## `summarize()` Example
-
-For the year 1982, let's summarize some values in `gapminder`
-
-```{r}
-gapminder |> 
-  filter(year == 1982) |>
-  summarize(number_observations = n(),
-            max_lifeexp = max(lifeExp),
-            mean_pop = mean(pop),
-            sd_pop = sd(pop))
-```
-
-## Summarizing data by groups: `group_by`
-
-What if we want to summarize data by category? Use `group_by` **and** `summarize`
-
-. . . 
-
-Functions after `group_by()` are computed *within each group* as defined by variables given, rather than over all rows at once.
-
-## `group_by()` Example
-
-```{r}
-#| code-line-numbers: "1-2"
-US_and_Canada |> group_by(year) |>  
-  summarize(total_pop = sum(pop)) |> 
-  head(4)
-```
-
-Because we did `group_by()` with `year` then used `summarize()`, we get *one row per value of `year`*!
-
-# Merging together data{.section-title background-color="#99a486"}
-
-+ `left_join()`
-+ `full_join()`
-
-## Why merge?!
-
-In practice, we often collect data from different sources. To analyze the data, we usually must first combine (merge) them.
-
-. . . 
-
-For example, imagine you would like to study county-level patterns with respect to age and grocery spending. However, you can only find,
-
-* County level age data from the US Census, and 
-* County level grocery spending data from the US Department of Agriculture
-
-. . . 
-
-Merge the data!!
-
-## Merging in Concept
-
-When merging datasets `A` and `B`, ask yourself the following two questions:
-  
-. . . 
-
-* Which **rows** do I want to keep?
-
-  + All rows in `A`?
-  + All rows in both `A` and `B`?
-  
-. . . 
-
-* How do my datasets **connect**?
-
-  + Is there a specific variable they have in common?
-  + Multiple variables they have in common?
-  
-## Which Rows to Keep:
-
-
-We'll focus on two types of joins^[Other types include `right_join`, `inner_join`, `semi_join`, and `anti_join`, but we won't study those here.]:
-
-* `A |> left_join(B)`: keeps `A` and adds variables from `B` after matching.
-
-* `A |> full_join(B)`: keeps all of `A` and `B`, but combines rows when possible.
-
-## Matching Criteria
-
-We have to tell R **which variables** to use when merging datasets! Rows are matched when the values in matching variables are equivalent.
-
-. . . 
-
-* `by = c("County")`: Both datasets have a `County` variable, match on this!
-
-. . . 
-
-* `by = c("CountyName" = "County_Name")`: Match `CountyName` in `A` with `County_Name` in `B`
-
-## Example: `nycflights13` Data
-
-The `nycflights13` package includes five data frames, some of which contain missing data (`NA`):
-
-* `flights`: flights leaving JFK, LGA, or EWR in 2013
-* `airlines`: airline abbreviations
-* `airports`: airport metadata
-* `planes`: airplane metadata
-* `weather`: hourly weather data for JFK, LGA, and EWR
-
-```{r}
-# install.packages("nycflights13") # remember to do this in the console, not in your .R or .qmd document
-library(nycflights13)
-```
-
-## Join Example 1
-
-`flights` has one row per flight, with abbreviated airline names.
-
-```{r}
-flights |> 
-  select(flight,origin,dest,carrier) |> 
-  head(2)
+library(tidyverse)
 ```
 
 . . . 
 
-`airlines` has one row per airline, with airline abbreviations *and* full names
+Alternatively, you can just load `readr` like so:
 
 ```{r}
-airlines |> 
-  head(2)
+#| eval: false
+library(readr)
 ```
 
-## Join Example 1 (continued)
+## `readr` Importing Example
 
-Let's left join `flights` with `airlines` to add full airline name to each flight record!
-
-```{r}
-#| code-line-numbers: "3"
-flights |> 
-  select(flight,origin,dest,carrier) |>
-  left_join(airlines, by = "carrier")  |> 
-  head(5)
-```
- 
-We now have one row per flight, with both carrier abbreviations and full names!
-
-## Join Example #2
-
-`flights` also includes a `tailnum` variable for each plane's tail number.
+Let's import some data about song ranks on the Billboard Hot 100 in 2000:
 
 ```{r}
-flights |> 
-  select(flight,origin,dest,tailnum) |> 
-  head(2)
+billboard_2000_raw <- read_csv(file = "data/billboard.csv")
 ```
 
 . . . 
 
-`planes` includes a row for each plane type, including the manufacturer.
+How do we know it loaded? 
+
+. . . 
+
+Let's look at it!
 
 ```{r}
-planes |> 
-  select(tailnum,year,manufacturer,model) |> 
-  head(2)
+#| output-location: fragment
+glimpse(billboard_2000_raw)
 ```
 
-## Join Example 2 (continued)
+## Alternate Solution
 
-Let's left join `flights` with `planes` to add manufacture to each flight record!
+When you import data from an external file you'll also see it in the Global Environment tab in the upper-right pane of RStudio: 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+::: {.fragment}
+You can also import the data manually!
+
+In the upper right-hand pane of RStudio (make sure you're in the Environment tab), select:
+
+`Import Dataset > From Text (readr)` and browse to the file on your computer^[Ideally you've saved it in your project folder! 😌].
+:::
+
+::: {.fragment}
+**Once you've imported the data, you can `copy/paste` the import code from the console into your file!!**
+
+This makes the process *reproducible!*
+:::
+:::
+::: {.column width="50%"}
+![](images/data_global_env.png)
+
+:::
+
+::::
+
+## Manual data import
+
+![](images/data_import_manual.png){fig-align="center"}
+
+## Specifying `NA`s 
+
+`NA`s are technically logical (boolean) variables^[We'll cover these more in depth in a couple of weeks.] that indicate a missing value. 
+
+. . . 
+
+Sometimes a particular dataset or file read from a different software will code `NA`s differently than `R`. If that's the case, you can add additional specifications to `read_csv` for what to read in as `NA`.  
+
 
 ```{r}
-#| code-line-numbers: "3"
-flights |> 
-  select(flight,origin,dest,tailnum) |>
-  left_join(planes, by = "tailnum")  |> 
-  head(5)
+#| eval: false
+billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+                               na = c("N/A", "999"))
 ```
 
-A bunch of columns from `planes` are now in the dataset!
+## Skipping lines
 
-## Join Example 2 (continued)
-
-Let's remove some of the "spare" columns
+Depending on how the data were input, there may be several lines that precede the beginning of the data table you're interested in importing. You can skip these lines of metadata with the `skip` argument:
 
 ```{r}
-#| code-line-numbers: "4"
-flights |> 
-  select(flight, origin, dest, tailnum) |>
-  left_join(planes, by = "tailnum")  |> 
-  select(flight, origin, dest, manufacturer, model) |>
-  head(5)
+#| eval: false
+billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+                               skip = 1)
 ```
 
-# Summary{.section-title background-color="#99a486"}
+## Variable names
 
-* Logical Operators (`&, |, ==, <, %in%,` etc.)
-* Subsetting (`filter, select, distinct`)
-* Modifying (`arrange, rename, mutate`)
-* Summarizing (`summarize, group_by`)
-* Merging (`left_join, full_join`)
+`read_csv` will automatically take the first row as column names. If you want to rename them you can save yourself some time recoding later on if you specify your preferred variable names upfront with the `col_names` argument. 
 
-Let's take a 10-minute break, then come back together to practice!
+. . . 
 
-## Activity
-
-1. Create a new object that contains `gapminder` (1) observations from China, India, and United States after 1980, and (2) variables corresponding to country, year, population, and life expectancy. 
-1. How many rows and columns does the object contain?
-1. Save over your object after sorting the rows by year (ascending order) and population (descending order). Print the first 6 rows.
-1. Add a new variable that contains population in billions.
-1. By year, calculate the total population (in billions) across these three countries
-1. In ggplot, create a line plot showing life expectancy over time by country. Make the plot visually appealing!
-
-## Answers
-
-Question 1:
+It takes a character vector to be used as column names (in their order of appearance). 
 
 ```{r}
-subset_gapminder <- gapminder |> 
-  filter(country %in% c("China","India","United States"),  year > 1980 ) |>
-  select(country, year, pop, lifeExp)
-subset_gapminder |> head(n = 5)
+#| eval: false
+billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+                               col_names = c("year", "artist", "track", "time", "date_entered", 
+                                             paste("wk", 1:76, sep = "_"))) # <1>
+
+billboard_renamed |>  names() |> head(10) # <2>
 ```
 
-## Answers
+1. `paste` "pastes" together the first argument to the second argument (separated by whatever is specified in the `sep` argument) as character strings. Since the first argument here is a singular value, it is repeated for the entire length of the vector in the second argument. The first several values of `paste("wk", 1:76, sep = "_")` are: `r head(paste("wk", 1:76, sep = "_"))`
+2. Our first official usage of the pipe! `names` here returns the column names of our data frame.
+. . . 
 
-Question 2: 
+If you don't have any variable names you can specify that instead. 
+
 ```{r}
-# Option 1
-c(nrow(subset_gapminder), ncol(subset_gapminder))
-# Option 2
-glimpse(subset_gapminder)
-# Option 3
-dim(subset_gapminder)
+#| eval: false
+billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+                               col_names = FALSE) 
+```
+
+## Snake Case
+
+If you simply want to change your variables to snake case (all lower case; words separated by `_`), you can use the function `clean_names()` from the `janitor` package which replaces other punctuation separators with `_`. 
+
+```{r}
+#| output-location: fragment
+# Download pacakge first
+# install.packages("janitor") # <1> 
+
+# Create new object for renamed data
+billboard_renamed <- billboard_2000_raw |> 
+  janitor::clean_names(numerals = "right") # <2>
+
+billboard_renamed |>  names() |> head(10)
+```
+
+1. Run in the console first. 
+2. You can call a function without loading its package by specifying its package name followed by `::` before it; <br> The `numerals` argument specifies if you additionally want to put a separator before a number. 
+
+## Other Data File Types with `readr`
+
+The other functions in `readr` employ as similar approach to `read_csv` so the trick is just knowing which to use for what data type. 
+
+::: {.incremental}
+* `read_csv2` is separated by semicolons (instead of commas)
+* `read_tsv` is separated by tabs
+* `read_delim` guesses the delimiter
+* `read_fwf` reads in fixed-width-files
+* `read_table` is a variation of `fwf` where columns are separated by white space
+* `read_log` reads in Apache-style log files
+:::
+
+## Other Packages to Read in Data
+
+There are a range of other ways, besides delimited files, that data are stored. 
+
+The following packages are part of the extended `tidyverse` and therefore operate with similar syntax and logic as `readr`.
+
+## Other Packages to Read in Data
+
+There are a range of other ways, besides delimited files, that data are stored. 
+
+The following packages are part of the extended `tidyverse` and therefore operate with similar syntax and logic as `readr`.
+
+:::: {.columns}
+::: {.column width="50%"}
+![](images/readxl.png){.absolute top=185 left=135}
+:::
+::: {.column width="50%"}
+* For Excel files (`.xls` or `.xlsx`), use package [`readxl`](https://readxl.tidyverse.org/)^[Functions have additional arguments to read in specific sheets or a range of cells.]
+:::
+::::
+
+::: aside
+Note: For Excel files and Googlesheets You **won't** keep text formatting, color, comments, or merged cells. See the [`openxlsx`](https://ycphs.github.io/openxlsx/) package for those capabilities. Also, [`tidyxl`](https://github.com/nacnudus/tidyxl) can help import non-tabular data from Excel. 
+:::
+
+## Other Packages to Read in Data
+
+There are a range of other ways, besides delimited files, that data are stored. 
+
+The following packages are part of the extended `tidyverse` and therefore operate with similar syntax and logic as `readr`.
+
+:::: {.columns}
+::: {.column width="50%"}
+![](images/googlesheets4.png){.absolute top=185 left=135}
+:::
+::: {.column width="50%"}
+* For Excel files (`.xls` or `.xlsx`), use package [`readxl`](https://readxl.tidyverse.org/)^[Functions have additional arguments to read in specific sheets or a range of cells.]
+* For Google Docs Spreadsheets, use package [`googlesheets4`](https://googlesheets4.tidyverse.org/)^[Very similar to `readxl` with some slight variations you can read about [here](https://r4ds.hadley.nz/spreadsheets.html#google-sheets).]
+:::
+::::
+
+::: aside
+Note: For Excel files and Googlesheets You **won't** keep text formatting, color, comments, or merged cells. See the [`openxlsx`](https://ycphs.github.io/openxlsx/) package for those capabilities. Also, [`tidyxl`](https://github.com/nacnudus/tidyxl) can help import non-tabular data from Excel. 
+:::
+
+## Other Packages to Read in Data
+
+There are a range of other ways, besides delimited files, that data are stored. 
+
+The following packages are part of the extended `tidyverse` and therefore operate with similar syntax and logic as `readr`.
+
+:::: {.columns}
+::: {.column width="50%"}
+![](images/haven.png){.absolute top=185 left=135}
+:::
+::: {.column width="50%"}
+* For Excel files (`.xls` or `.xlsx`), use package [`readxl`](https://readxl.tidyverse.org/)^[Functions have additional arguments to read in specific sheets or a range of cells.]
+* For Google Docs Spreadsheets, use package [`googlesheets4`](https://googlesheets4.tidyverse.org/)^[Very similar to `readxl` with some slight variations you can read about [here](https://r4ds.hadley.nz/spreadsheets.html#google-sheets).]
+* For Stata, SPSS, and SAS files, use package [`haven`](https://haven.tidyverse.org/)^[SAS, SPSS, and Stata have so-called "labelled" vectors for which `haven` provides a [class](https://haven.tidyverse.org/reference/index.html#labelled-vectors) to represent in `R`. Alternatively, you can get rid of them with [these functions](https://haven.tidyverse.org/reference/index.html#remove-attributes).]
+:::
+::::
+
+::: aside
+Note: For Excel files and Googlesheets You **won't** keep text formatting, color, comments, or merged cells. See the [`openxlsx`](https://ycphs.github.io/openxlsx/) package for those capabilities. Also, [`tidyxl`](https://github.com/nacnudus/tidyxl) can help import non-tabular data from Excel. 
+:::
+
+## How does `readr` parse different data types?
+
+For each column in a data frame, `readr` functions pull the first 1000 rows and checks:
+
+```{mermaid}
+%%| echo: false
+%%| fig-width: 11
+%%| fig-height: 5.5
+%%| fig-align: center
+flowchart LR
+    id1((Variable))==>A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==>id2{{Logical}}
+    id1((Variable))==>B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==>id3{{Number}}
+    id1((Variable))==>C(["3. Does it match the ISO8601 standard?"])==>id4{{Date/Date-time}}
+    id1((Variable))==>D(["4. None of the above"])==>id5{{String}}
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style A fill:#FFFFFF,color:#000000,stroke:#000000
+    style B fill:#FFFFFF,color:#000000,stroke:#000000
+    style C fill:#FFFFFF,color:#000000,stroke:#000000
+    style D fill:#FFFFFF,color:#000000,stroke:#000000
+
+```
+
+## How does `readr` parse different data types?
+
+For each column in a data frame, `readr` functions pull the first 1000 rows and checks: 
+
+```{mermaid}
+%%| echo: false
+%%| fig-width: 11
+%%| fig-height: 5.5
+%%| fig-align: center
+flowchart LR
+    id1((Variable))==>A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==>id2{{Logical}}
+    id1((Variable))==>B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==>id3{{Number}}
+    id1((Variable))==>C(["3. Does it match the ISO8601 standard?"])==>id4{{Date/Date-time}}
+    id1((Variable))==>D(["4. None of the above"])==>id5{{String}}
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style A fill:#ffa07a,color:#000000,stroke:#000000
+    style B fill:#FFFFFF,color:#000000,stroke:#000000
+    style C fill:#FFFFFF,color:#000000,stroke:#000000
+    style D fill:#FFFFFF,color:#000000,stroke:#000000
+
+```
+
+## How does `readr` parse different data types?
+
+For each column in a data frame, `readr` functions pull the first 1000 rows and checks:
+
+```{mermaid}
+%%| echo: false
+%%| fig-width: 11
+%%| fig-height: 5.5
+%%| fig-align: center
+flowchart LR
+    id1((Variable))==>A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==>id2{{Logical}}
+    id1((Variable))==>B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==>id3{{Number}}
+    id1((Variable))==>C(["3. Does it match the ISO8601 standard?"])==>id4{{Date/Date-time}}
+    id1((Variable))==>D(["4. None of the above"])==>id5{{String}}
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style A fill:#FFFFFF,color:#000000,stroke:#000000
+    style B fill:#ffa07a,color:#000000,stroke:#000000
+    style C fill:#FFFFFF,color:#000000,stroke:#000000
+    style D fill:#FFFFFF,color:#000000,stroke:#000000
+
+```
+
+## How does `readr` parse different data types?
+
+For each column in a data frame, `readr` functions pull the first 1000 rows and checks:
+
+```{mermaid}
+%%| echo: false
+%%| fig-width: 11
+%%| fig-height: 5.5
+%%| fig-align: center
+flowchart LR
+    id1((Variable))==>A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==>id2{{Logical}}
+    id1((Variable))==>B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==>id3{{Number}}
+    id1((Variable))==>C(["3. Does it match the ISO8601 standard?"])==>id4{{Date/Date-time}}
+    id1((Variable))==>D(["4. None of the above"])==>id5{{String}}
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id5 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style A fill:#FFFFFF,color:#000000,stroke:#000000
+    style B fill:#FFFFFF,color:#000000,stroke:#000000
+    style C fill:#ffa07a,color:#000000,stroke:#000000
+    style D fill:#FFFFFF,color:#000000,stroke:#000000
+
+```
+
+## How does `readr` parse different data types?
+
+For each column in a data frame, `readr` functions pull the first 1000 rows and checks:
+
+```{mermaid}
+%%| echo: false
+%%| fig-width: 11
+%%| fig-height: 5.5
+%%| fig-align: center
+flowchart LR
+    id1((Variable))==>A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==>id2{{Logical}}
+    id1((Variable))==>B(["2. Does it contain only numbers (e.g., 1, -4.5, 5e6, Inf?)"])==>id3{{Number}}
+    id1((Variable))==>C(["3. Does it match the ISO8601 standard?"])==>id4{{Date/Date-time}}
+    id1((Variable))==>D(["4. None of the above"])==>id5{{String}}
+    style id1 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style id2 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id3 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id4 fill:#c7cdac,color:#1e4655,stroke:#1e4655
+    style id5 fill:#1e4655,color:#c7cdac,stroke:#c7cdac
+    style A fill:#FFFFFF,color:#000000,stroke:#000000
+    style B fill:#FFFFFF,color:#000000,stroke:#000000
+    style C fill:#FFFFFF,color:#000000,stroke:#000000
+    style D fill:#ffa07a,color:#000000,stroke:#000000
+
+```
+
+## Most Common Issue with Reading in Data
+
+The most common problem that occurs when reading in data is having mixed data. Most often, given the heuristic provided in the last slide, will parse a variable as a character string to preserve whatever it contains. 
+
+. . . 
+
+Let's actually look at how the billboard data was read in: 
+
+```{r}
+#| output-location: fragment
+glimpse(billboard_2000_raw) 
+```
+
+## What Went Wrong? 
+
+Since `readr` uses the values in the first 1000 rows to guess the type of the column (logical, numeric, date/date-time, character), if the first 1000 rows don't have any data, they will be coded as logical variables. 
+
+. . . 
+
+There are not many songs in the data that charted for 60+ weeks—and none in the first 1000 that charted for 66+ weeks!
+
+. . . 
+
+::: {.callout-note icon=false}
+
+## <span style="color:blue">{{< fa circle-info >}}</span> \ `NA` is logical^[More on this in a couple of weeks.]?
+
+```{r}
+#| output-location: fragment
+class(c(T, F, NA, FALSE, TRUE))
+class(c(1, NA, 17.5, 5.3, NA)) # <1>
+class(as.Date(c(NA, "2023-10-31", "1986-06-21", "1997-01-15"), tz = "America/Los_Angeles")) # <2>
+class(c("apple", NA, "mango", "blackberry", "plum")) 
+class(c(NA, NA, NA, NA, NA))
+```
+
+1. `class` returns the data type of its first argument. 
+2. `as.Date` turns a character string of dates into an official date class in Base `R`. If we had an accompanying time stamp we would need to use `as.POSIXct` which turns a character string of dates and times into an official date-time class in Base `R`. 
+:::
+
+::: aside
+Technically, `NA`s can be any data type depending upon what they are grouped with. However, by themselves they are a logical indicator of missing data, so their class is logical. 
+:::
+
+## Column types
+
+Since the `wk*` variables should all be read in as integers, we can specify this explicitly with the `col_types` argument. 
+
+. . . 
+
+```{r}
+#| output-location: fragment
+# Create character string of shortcode column types
+bb_types <- paste(c("icctD", rep("i", 76)), collapse="") # <1>
+bb_types 
+```
+
+1. You can short-code column types with `i` = integer, `c` = character, `t` = time, `D` = date. <br> The `collapse` argument collapses the first two arguments into one complete character string.
+
+. . . 
+
+<br>
+
+```{r}
+# re-read in data with column types specified
+billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+                               col_types = bb_types) # <2> 
+```
+
+2. This string now specifies the data type for each column of our data frame. Visit [this reference page](https://readr.tidyverse.org/reference/cols.html) to see all available column types and their short codes. 
+
+## Column types
+
+To specify a default column type you can use `.default` like so: 
+
+```{r}
+#| eval: false
+billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+                               col_types = cols(.default = col_character())) 
 ```
 
 . . . 
 
-## Answers
+<br>
 
-Question 3:
+Another useful helper is `cols_only()` for when you only want to read in a subset of all available variables.
+
 ```{r}
-subset_gapminder <- subset_gapminder |> 
-  arrange(year, desc(pop))
-
-subset_gapminder |> head(6)
+#| eval: false
+billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+                               col_types = cols_only(x = col_character)) 
 ```
 
-## Answers
+. . . 
 
-Question 4:
+<br>
+
+In summary, the `col-types` argument gives you greater control over how your data are read in and can save you recoding time down the road and/or point out where your data are behaving differently than you expect. 
+
+## Reading in Multiple Files 
+
+If you data are split across multiple files you can read them in all at once by specifying the `id` argument. 
+
 ```{r}
-subset_gapminder <- subset_gapminder |> 
-  mutate(pop_billions = pop/1000000000)
-
-subset_gapminder |> head(n = 5)
+#| output-location: fragment
+# Create list of files manually
+sales_files <- c("data/01-sales.csv", "data/02-sales.csv", "data/03-sales.csv")
+read_csv(sales_files, id = "file")
 ```
 
-## Answers
+## Reading in Multiple Files 
 
-Question 5:
+If you have too many files to reasonable type out all their names you can also use the base `r` function `list.files` to list the files for you. 
+
+```{r}
+#| output-location: fragment
+# Create list of files with pattern-matching
+sales_files <- list.files("data", pattern = "sales\\.csv$", full.names = TRUE) # <1>
+sales_files
+```
+
+1. We will discuss pattern-matching more in a couple of weeks; if all your data was in one folder without anything else in it, you wouldn't need to specify this argument. Sometimes, however, you may be searching through larger directories that you did not organize and that's when pattern-matching is really powerful. 
+
+## Data Entry
+
+Sometimes you'll need to create a data set in your code. You can do this two ways: 
 
 ::: {.panel-tabset}
 
-### Classic syntax
+### `tibble()`
+
+Tibbles lay out the data by columns (i.e. a dataframe transposed).
 
 ```{r}
-subset_gapminder |> 
-  group_by(year) |> 
-  summarize(TotalPop_Billions = sum(pop_billions))
+#| output-location: fragment
+# Creating data with tibble
+tibble( 
+  x = c(1, 2, 5), 
+  y = c("h", "m", "g"),
+  z = c(0.08, 0.83, 0.60)
+)
 ```
 
-### New syntax (dplyr 1.1.0)
+### `tribble()`
+
+Tibbles (`tr`ansposed ti`bble`) lay out the data by rows (i.e. the way a dataframe looks) which is much more intuitive.
 
 ```{r}
-subset_gapminder |> 
-  summarize(TotalPop_Billions = sum(pop_billions), 
-            .by = year)
+#| output-location: fragment
+# Creating data with tribble
+tribble( 
+  ~x, ~y, ~z,
+  1, "h", 0.08,
+  2, "m", 0.83,
+  5, "g", 0.60
+)
 ```
-
-This new syntax allows for per-operation grouping which means it is only active within a single verb at a time (as opposed to being applied to the entire tibble until `ungroup()` is called). You can more about this new feature [here](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/))
 
 :::
 
-## Answers
+## Writing Delimited Files
 
-Question 6:
+Getting data out of R into a delimited file is very similar to getting it into R:
+
+```{r}
+#| eval: false
+write_csv(billboard_2000_raw, path = "data/billboard_data.csv")
+```
+
+This saved the data we pulled off the web in a file called `billboard_data.csv` in the `data` folder of my working directory.
+
+. . . 
+
+However, saving data in this way will not preserve `R` data types since delimited files code everything as a character string. 
+
+. . . 
+
+To save `R` objects and all associated metadata you have two options: 
+
+::: {.panel-tabset}
+
+### `.Rds` format:
+
+* Used for single objects, doesn't save original the object name
+* Save: `write_rds(old_object_name, "path.Rds")`
+* Load: `new_object_name <- read_rds("path.Rds")`
+
+### `.Rdata` or `.Rda` format:
+
+* Used for saving multiple files where the original object names are preserved
+* Save: `save(object1, object2, ... , file = "path.Rdata")`
+* Load: `load("path.Rdata")` without assignment operator
+
+:::
+
+## Writing Other File-Types
+
+::: {.panel-tabset}
+
+### `writexl`
+
+:::: {.columns}
+
+::: {.column width="60%"}
+* `write_xlsx()` writes to an xlsx file
+:::
+
+::: {.column width="40%"}
+![](images/writexl.png){width=50%}
+:::
+
+::::
+
+### `googlesheets4`
+
+:::: {.columns}
+
+::: {.column width="60%"}
+* `sheet_write()` or `write_sheet()` (over)writes new data into a Sheet
+* `gs4_create()` creates a new Sheet
+* `sheet_append()` appends rows to a sheet
+* `range_write()` (over)writes new data into a range
+* `range_flood()` floods a range of cells
+* ``range_clear()` clears a range of cells
+:::
+
+::: {.column width="40%"}
+![](images/googlesheets4.png){width=50%}
+:::
+
+::::
+
+### `haven`
+
+:::: {.columns}
+
+::: {.column width="60%"}
+* `write_dta()` writes Stata DTA files
+* `write_sav()` writes SPSS files
+* `write_xpt()` writes SAS transport files
+:::
+
+::: {.column width="40%"}
+![](images/haven.png){width=50%}
+:::
+
+::::
+
+:::
+
+
+# Tidying Data {background-image="images/tidyr.png" background-size="contain" background-opacity="0.25" background-position="center" .section-title background-color="#99a486"}
+
+## Initial Spot Checks
+
+
+First things to check after loading new data:
+
+::: {.incremental}
+* Did all the rows/columns from the original file make it in?
+    + Check using `dim()` or `str()`
+* Are the column names in good shape?
+    + Use `names()` to check; fix with `rename()`^[More on this function from `dplyr` next week!]
+* Are there "decorative" blank rows or columns to remove?
+    + `filter()` or `select()` out those rows/columns^[Also next week!]
+* How are missing values represented: `NA`, `" "` (blank), `.` (period), `999`?
+    + Read in the data again specifying `NA`s with the `na` argument
+* Are there character data (e.g. ZIP codes with leading zeroes) being incorrectly represented as numeric or vice versa?
+    + Read in the data again specifying desired `col_types`
+
+:::
+
+## What is Tidy Data
+
+**Tidy data^[Read the original article [here](https://www.jstatsoft.org/article/view/v059i10).]** (aka "long data") are such that:
+
+![](images/tidy-1.png){fig-align="center"}
+
+::: {.incremental}
+1. The values for a single observation are in their own row.
+2. The values for a single variable are in their own column.
+3. There is only one value per cell.
+:::
+
+## Why do we Want Tidy Data?
+
+::: {.incremental}
+* **Easier to understand** many rows than many columns^[Placing variable sin columns also leverages `R`'s vectorized nature, i.e. most built-in `R` functions work with values of vectors.]
+* Required for **plotting** in `ggplot2`^[In fact, all tidyverse functions are designed to work with tidy data.]
+* Required for many types of **statistical procedures** (e.g. hierarchical or mixed effects models)
+* Fewer issues with **missing values and "imbalanced"** repeated measures data
+* Having a consistent method for storing data means it's easier to learn the tools to work with it since there's an underlying uniformity.
+:::
+
+. . . 
+
+Most real-world data is not tidy because data are often organized for goals other than analysis (i.e. data entry) and most people aren't familiar with the principles of tidy data. 
+
+## Slightly "Messy" Data
+
+::::{.columns}
+:::{.column width="60%"}
+
+| **Program**     | **First Year** | **Second Year** |
+|-----------------|-----------:|---------:|
+| Evans School    |     10     |    6    |
+| Arts & Sciences |      5     |    6    |
+| Public Health   |      2     |    3    |
+| Other           |      5     |    1    |
+
+:::
+:::{.column width="40%"}
+
+* What is an **observation**?
+    + A group of students from a program of a given year
+    
+
+* What are the **variables**?
+    + Program, Year
+
+
+* What are the **values**?
+    + Program: Evans School, Arts & Sciences, Public Health, Other
+    + Year: First, Second -- **in column headings. Bad!**
+    + Count: **spread over two columns!**
+:::
+::::
+
+## Tidy Version
+
+::::{.columns}
+:::{.column width="50%"}
+
+| **Program**     | **Year** | **Count** |
+|-----------------|-----------:|---------:|
+| Evans School    |     First |    10   |
+| Evans School    |     Second   |    6    |
+| Arts & Sciences |     First |    5    |
+| Arts & Sciences |     Second   |    6    |
+| Public Health   |     First |    2    |
+| Public Health   |     Second   |    3    |
+| Other           |     First |    5    |
+| Other           |     Second   |    1    |
+:::
+:::{.column width="50%"}
+* Each variable is a column.
+
+* Each observation is a row.
+
+* Each cell has a single value.
+:::
+::::
+
+## Billboard is Just Ugly-Messy
+
+```{r}
+#| echo: false
+billboard_2000_raw %>% 
+  head(10)
+```
+
+::: aside
+Week columns continue up to `wk76`!
+:::
+
+## Billboard
+
+::: {.incremental}
+* What are the **observations** in the data?
+    + Song on the Billboard chart each week
+* What are the **variables** in the data?
+    + Year, artist, track, song length, date entered Hot 100, week since first entered Hot 100 (**spread over many columns**), rank during week (**spread over many columns**)
+* What are the **values** in the data?
+    + e.g. 2000; 3 Doors Down; Kryptonite; 3 minutes 53 seconds; April 8, 2000; Week 3 (**stuck in column headings**); rank 68 (**spread over many columns**)
+:::
+
+## `tidyr`
+
+The `tidyr` package provides functions to tidy up data. 
+
+. . . 
+
+**Key functions:**
+
+* **`pivot_longer()`**: takes a set of columns and pivots them down ("longer") to make two new columns (which you can name yourself): 
+    * A `name` column that stores the original column names
+    * A `value` with the values in those original columns
+
+. . . 
+
+* **`pivot_wider()`**: inverts `pivot_longer()` by taking two columns and pivoting them up and across ("wider") into multiple columns
+
+## `pivot_longer()`
+
+This function usually takes three arguments:
+
+::: {.incremental}
+1. `cols`: The columns that need to be pivoted (are not variables)
+2. `names_to`: Names the new variable that is stored in multiple columns
+3. `values_to`: Names the variable stored in the cell values
+:::
+
+## `pivot_longer()`
+
+This function usually takes three arguments:
+
+1. `cols`: The columns that need to be pivoted (are not variables)
+2. **`names_to`: Names the new variable that is stored in multiple columns**
+3. `values_to`: Names the variable stored in the cell values
+
+![](images/pivot_longer2_column_names.png){fig-align="center"}
+
+## `pivot_longer()`
+
+This function usually takes three arguments:
+
+1. `cols`: The columns that need to be pivoted (are not variables)
+2. `names_to`: Names the new variable that is stored in multiple columns
+3. **`values_to`: Names the variable stored in the cell values**
+
+![](images/pivot_longer3_cell_values.png){fig-align="center"}
+
+## `pivot_longer()`
+
+This function usually takes three arguments:
+
+1. `cols`: The columns that need to be pivoted (are not variables)
+2. `names_to`: Names the new variable that is stored in multiple columns
+3. `values_to`: Names the variable stored in the cell values
+
+![](images/pivot_longer1_variables.png){fig-align="center"}
+
+## `pivot_longer()` Example
+
+```{r}
+#| output-location: fragment 
+billboard_2000 <- billboard_2000_raw |> 
+  pivot_longer(cols = starts_with("wk"), # <1>
+               names_to ="week",
+               values_to = "rank")
+
+billboard_2000 |> head(10)
+```
+
+1. `starts_with()` is a helper function from [`tidyselect`](https://tidyselect.r-lib.org/index.html) that helps select certain common patterns. We could have also used `cols = wk1:wk76`. 
+
+. . . 
+
+Now we have a single week column!
+
+## Lots of Missing Values?!
+
+```{r}
+#| output-location: fragment 
+glimpse(billboard_2000)
+```
+
+::: {.fragment}
+It looks like 2 Pac's song "Baby Don't Cry" was only on the Billboard Hot 100 for 7 weeks and then dropped off the charts. 
+:::
+. . . 
+
+```{r}
+#| output-location: fragment 
+summary(billboard_2000$rank)
+```
+
+::: {.fragment}
+We don't want to keep the `r sum(is.na(billboard_2000$rank))` rows with missing ranks.
+:::
+
+## Pivoting Better: `values_drop_na`
+
+Adding the argument `values_drop_na = TRUE` to `pivot_longer()` will remove rows with missing ranks. Since these `NA`s don’t really represent unknown observations (i.e. they were forced to exist by the structure of the dataset) this is an appropriate approach here. 
+
+```{r}
+#| output-location: fragment 
+#| code-line-numbers: "|5"
+billboard_2000 <- billboard_2000_raw %>%
+  pivot_longer(cols = wk1:wk76, 
+               names_to = "week", 
+               values_to = "rank", 
+               values_drop_na = TRUE)
+summary(billboard_2000$rank)
+```
+
+. . . 
+
+No more `NA` values!
+
+```{r}
+#| output-location: fragment 
+dim(billboard_2000)
+```
+
+And way fewer rows!
+
+## `parse_number()`
+
+The week column is of the type `character`, but it should be `numeric.`
+
+```{r}
+#| output-location: fragment 
+head(billboard_2000$week)
+```
+
+. . . 
+
+`parse_number()` grabs just the numeric information from a character string:
+
+```{r}
+#| output-location: fragment 
+billboard_2000 <- billboard_2000 |> 
+    mutate(week = parse_number(week)) # <2>
+summary(billboard_2000$week)
+```
+2. `mutate()` creates a new (or overwrites an existing) column. We will cover it in-depth next week. 
+
+. . . 
+
+More sophisticated tools for character strings will be covered later in this course!
+
+## Use `pivot_longer` arguments
+
+Alternatively (and more efficiently), there are a number of optional arguments for `pivot_longer` that are meant to help deal with naming issues.
+
+. . . 
+
+```{r}
+#| output-location: fragment
+billboard_2000 <- billboard_2000_raw %>%
+  pivot_longer(starts_with("wk"), 
+               names_to        = "week", 
+               values_to       = "rank",
+               values_drop_na  = TRUE,
+               names_prefix    = "wk", # <1>
+               names_transform = list(week = as.integer)) # <2>
+
+head(billboard_2000, 5)
+```
+
+1. `names_prefix` is used to remove "wk" from the values of `week`
+2. `names_transform` converts `week` into an integer number.
+
+## Multiple Variables in Column Names
+
+A more challenging situation occurs when you have multiple pieces of information crammed into the column names, and you would like to store these in separate new variables.
+
+. . . 
+
+This dataset contains tuberculosis diagnoses collected by the World Health Organization. 
+
+```{r}
+#| output-location: fragment
+who2
+```
+
+. . . 
+
+The first two columns are self explanatory but what's going on with the rest?
+
+## Multiple Variables in Column Names
+
+Data documentation and some minor investigation would lead you to figure out that the three elements in each of these column names are actually data!
+
+* The first piece, `sp`/`sn`/`rel`/`ep`, describes the method used for the diagnosis
+* The second piece, `m`/`f` is the gender (coded as a binary variable in this dataset)
+* The third piece, `014`/`1524`/`2534`/`3544`/`4554`/`5564`/`65` is the age range (014 represents 0-14, for example)
+
+. . . 
+
+To organize the six pieces of information in this dataset into six separate columns, we use `pivot_longer()` with a vector of column names for `names_to` and instructors for splitting the original variable names into pieces for `names_sep` as well as a column name for `values_to`!
+
+## Multiple Variables in Column Names
+
+```{r}
+#| output-location: fragment
+who2 |> 
+  pivot_longer(
+    cols = !(country:year), # <1>
+    names_to = c("diagnosis", "gender", "age"), 
+    names_sep = "_", # <2>
+    values_to = "count"
+  )
+```
+
+1. Putting an `!` before a condition negates it. This says: NOT columns `country:year`.
+2. You can use `names_pattern` instead of `names_sep` to extract variables from more complicated naming scenarios once you've learned regular expressions in a few weeks. 
+
+## Variable & Values in Column Names
+
+This dataset contains data about five families, with the names and dates of birth of up to two children. 
+
+```{r}
+#| output-location: fragment
+household
+```
+
+. . . 
+
+The new challenge in this dataset is that the column names contain the names of two variables (`dob`, `name`) and the values of another (`child`, with values `1` or `2`).
+
+## Variable & Values in Column Names
+
+```{r}
+#| output-location: column-fragment
+household |> 
+  pivot_longer(
+    cols = !family, 
+    names_to = c(".value", "child"), # <1>
+    names_sep = "_", 
+    values_drop_na = TRUE # <2> 
+  )
+```
+
+1. `.value` isn’t the name of a variable but a unique value that tells `pivot_longer` to use the first component of the pivoted column name as a variable name in the output. 
+2. Using `values_drop_na = TRUE` again since not every family has 2 children.
+
+. . . 
+
+![](images/pivot_longer5_names-and-values.png){width=75% fig-align="center"}
+
+## `pivot_wider`
+
+`pivot_wider()` is the opposite of `pivot_longer()`, which you use if you have data for the same observation taking up multiple rows.
+
+. . . 
+
+Here's an example of data that we probably want to pivot wider (unless we want to plot each statistic in its own facet):
+
+```{r}
+#| echo: false
+long_stats <- tibble(Group = c(rep("A", 3), rep("B", 3)),
+                     Statistic = rep(c("Mean", "Median", "SD"), 2),
+                     Value = c(1.28, 1.0, 0.72, 2.81, 2, 1.33))
+long_stats
+```
+
+. . . 
+
+A common cue to use `pivot_wider()` is having measurements of different quantities in the same column.
+
+## `pivot_wider` Example 
+
+```{r}
+#| output-location: fragment
+wide_stats <- long_stats |> 
+  pivot_wider(id_cols = Group, # <1>
+              names_from = Statistic, # <2>
+              values_from = Value) # <3>
+wide_stats
+```
+
+1. `id_cols` is the column that uniquely identifies each row in the new dataset. Default is everything not in `names_from` and `values_from`.
+2. `names_from` provides the names that will be used for the new columns
+3. `values_from` provides the values that will be used to populate the cells of the new columns.
+
+. . . 
+
+[`pivot_wider()`](https://tidyr.tidyverse.org/reference/pivot_wider.html) also has a number of optional `names_*` and `values_*` arguments for more complicated transformations. 
+
+. . . 
+
+::: {.callout-warning icon=false}
+## <span style="color:orange">{{< fa triangle-exclamation >}}</span> Nested Data
+If there are multiple rows in the input that correspond to one cell in the output you'll get a list-column. This means that you 1) need to fix something in your code/data because it shouldn't be nested in this way or 2) need to use `unnest_wider()` or `unnest_longer()` in order to access this column of data. More on this [here](https://r4ds.hadley.nz/rectangling.html#unnesting). 
+:::
+
+# Merging Data {background-image="images/dplyr.png" background-size="contain" background-opacity="0.25" background-position="center" .section-title background-color="#99a486"}
+
+## Joining Data
+
+Oftentimes our data will be spread across multiple datasets. To properly analyze these data we'll need to join them together into one dataframe. 
+
+. . . 
+
+To do this we'll be using the various **join** functions from the `dplyr` package. 
+
+. . . 
+
+To demonstrate these we'll be using data from the `nycflights13` dataset which you'll need to download and load into `R`
+
+```{r}
+# Download and load data
+# install.packages("nycflights13") # <1>
+library(nycflights13) # <2>
+```
+
+1. Run in console. 
+2. Load into `R` session. 
+
+. . . 
+
+`nycflights13` includes five dataframes^[Note these are separate data frames, each needing to be loaded separately:], some of which contain missing data (`NA`):
+
+```{r}
+#| eval: false
+data(flights) # <1> 
+data(airlines) # <2>
+data(airports) # <3>
+data(planes) # <4>
+data(weather) # <5>
+```
+
+1. flights leaving JFK, LGA, or EWR in 2013
+2. airline abbreviations
+3. airport metadata
+4. airplane metadata
+5. hourly weather data for JFK, LGA, and EWR
+
+## Joining in Concept
+
+We need to think about the following when we want to merge data frames A and B:
+
+::: {.fragment}
+* Which rows are we keeping from each data frame?
+:::
+
+::: {.fragment}
+* Which columns are we keeping from each data frame?
+:::
+
+::: {.fragment .fade-in}
+::: {.fragment .highlight-red}
+* Which variables determine whether rows match?
+:::
+:::
+
+## Keys
+
+Keys are the way that two datasets are connected to one another. The two types of keys are: 
+
+::: {.incremental}
+1. **Primary**: a variable or set of variables that uniquely identifies each observation.
+    i) When more than one variable makes up the primary key it's called a **compound key**
+2. **Foreign**: a variable (or set of variables) that corresponds to a primary key in another table.
+:::
+
+## Primary Keys <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+Let's look at our data to gain a better sense of what this all means. 
+
+::: {.panel-tabset}
+
+### `airlines` 
+
+::: {.smaller-font}
+`airlines` records two pieces of data about each airline: its carrier code and its full name. You can identify an airline with its two letter carrier code, making `carrier` the primary key.
+:::
+
+```{r}
+airlines 
+```
+
+### `airports`
+
+::: {.smaller-font}
+`airports` records data about each airport. You can identify each airport by its three letter airport code, making `faa` the primary key.
+:::
+
+```{r}
+airports
+```
+
+
+### `planes`
+
+::: {.smaller-font}
+`planes` records data about each plane. You can identify a plane by its tail number, making `tailnum` the primary key.
+:::
+
+```{r}
+planes
+```
+
+
+### `weather`
+
+::: {.smaller-font}
+`weather` records data about the weather at the origin airports. You can identify each observation by the combination of location and time, making `origin` and `time_hour` the compound primary key.
+:::
+
+```{r}
+weather
+```
+
+### `flights`
+
+::: {.smaller-font}
+`flights` actually contains **foreign keys** that correspond to the primary keys of the other datasets.
+:::
+
+```{r}
+flights
+```
+
+:::
+
+
+## Foreign Keys
+
+![Note: grey shading indicates the primary key for that particular dataset.](images/relational.png){fig-align="center"}
+
+::: {.incremental}
+* `flights$origin` --> `airports$faa`
+* `flights$dest` --> `airports$faa`
+* `flights$origin`-`flights$time_hour` --> `weather$origin`-`weather$time_hour`.
+* `flights$tailnum` --> `planes$tailnum`
+* `flights$carrier` --> `airlines$carrier`
+:::
+
+## Checking Keys
+
+A nice feature of these data are that the primary and foreign keys have the same name and almost every variable name used across multiple tables has the same meaning.^[With the exception of `year`: it means year of departure in `flights` and year of manufacture in `planes`. ] This isn't always the case!^[We'll cover how to handle this shortly.]
+
+. . . 
+
+It is good practice to make sure your primary keys actually uniquely identify an observation and that they don't have any missing values. 
+
+. . . 
+
+```{r}
+#| output-location: fragment
+planes |> 
+  count(tailnum) |> # <1>
+  filter(n > 1) # <1> 
+```
+
+1. If your primary keys uniquely identify each observation you'll get an empty tibble in return. 
+
+. . . 
+
+```{r}
+planes |> 
+  filter(is.na(tailnum)) # <2>
+```
+
+2. If none of your primary keys are missing you'll get an empty tibble in return here too. 
+
+## Surrogate Keys
+
+Sometimes you'll want to create an index of your observations to serve as a surrogate key because the compound primary key is not particlarly easy to reference. 
+
+. . . 
+
+For example, our `flights` dataset has three variables that uniquely identify each observation: `time_hour`, `carrier`, `flight`.
+
+. . . 
+
+```{r}
+#| output-location: fragment
+flights2 <- flights |> 
+  mutate(id = row_number(), .before = 1) # <1> 
+flights2
+```
+
+1. `row_number()` simply specifies the row number of the dataframe and `.before = 1` puts it as the first column. 
+
+## Basic (Equi-) Joins
+
+All join functions have the same basic interface: they take a **pair** of data frames and return **one** data frame. 
+
+. . . 
+
+The order of the rows and columns is primarily going to be determined by the first data frame. 
+
+. . . 
+
+`dplyr` has two types of joins: *mutating* and *filtering.* 
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+::: {.fragment}
+#### Mutating Joins 
+Add new variables to one data frame from matching observations from another data frame. 
+
+* `left_join()`
+* `right_join()`
+* `inner_join()`
+* `full_join()`
+:::
+
+:::
+
+::: {.column width="50%"}
+
+::: {.fragment}
+#### Filtering Joins 
+Filter observations from one data frame based on whether or not they match an observation in another data frame. 
+
+* `semi_join()`
+* `anti-join()`
+:::
+
+:::
+
+::::
+
+## `Mutating Joins`
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+<br>
+
+::: {.fragment}
+![](images/joins_setup.png)
+:::
+:::
+
+::: {.column width="50%"}
+
+<br>
+
+::: {.fragment}
+![](images/joins_setup2.png)
+:::
+:::
+
+::::
+
+## `left_join()` <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+![](images/joins_left.png){fig-align="center"}
+
+::: aside
+::: {.incremental}
+* The most common type of join
+* Appends columns from `y` to `x` by the rows in `x`
+    + `NA` added if there is nothing from `y`
+* Natural join: when all variables that appear in both datasets are used as the join key
+    + If the join_by() argument is not specified, `left_join()` will automatically join by all columns that have names and values in common. 
+:::
+:::
+
+## `left_join` in `nycflights13`
+
+```{r}
+flights2 <- flights |> 
+  select(year, time_hour, origin, dest, tailnum, carrier)
+```
+
+With only the pertinent variables from the `flights` dataset, we can see how a `left_join` works with the `airlines` dataset. 
+
+```{r}
+#| output-location: fragment
+#| message: true
+flights2 |>
+  left_join(airlines)
+```
+
+## Different variable meanings
+
+```{r}
+#| output-location: fragment
+#| message: true
+flights2 |> 
+  left_join(planes)
+```
+
+. . . 
+
+When we try to do this, however, we get a bunch of `NA`s. Why? 
+
+## Different variable meanings
+
+```{r}
+#| message: true
+flights2 |> 
+  left_join(planes)
+```
+
+*Join is trying to use tailnum and year as a compound key.* While both datasets have `year` as a variable, they mean different things. Therefore, we need to be explicit here about what to join by. 
+
+## Different variable meanings
+
+```{r}
+#| output-location: fragment
+flights2 |> 
+  left_join(planes, join_by(tailnum)) # <1>
+```
+
+1. `join_by(tailnum)` is short for `join_by(tailnum == tailnum)` making these types of basic joins equi joins. 
+
+::: aside
+When you have the same variable name but they mean different things you can specify a particular suffix with the `suffix` argument.
+:::
+
+## Different variable names
+
+If you have keys that have the same meaning (values) but are named different things in their respective datasets you'd also specify that with `join_by()`
+
+. . . 
+
+```{r}
+#| output-location: fragment
+flights2 |> 
+  left_join(airports, join_by(dest == faa)) # <1>
+```
+
+1. This used to be `by = c("dest" = "faa")` which you still might see in older code. 
+
+. . . 
+
+This will match `dest` to `faa` for the join and then drop `faa`. 
+
+## Different variable names
+
+You can request dplyr to keep both keys with `keep = TRUE` argument. 
+
+. . . 
+
+```{r}
+#| output-location: fragment
+flights2 |> 
+  left_join(airports, join_by(dest == faa), keep = TRUE) 
+```
+
+## `right_join()`
+
+![Has the same interface as a left_join but keeps all rows in `y` instead of `x`](images/joins_right.png){fig-align="center"}
+
+## `inner_join()`
+
+![Has the same interface as a left_join but only keeps rows that occur in both x and y](images/joins_inner.png){fig-align="center"}
+
+## `full_join()`
+
+![Has the same interface as a left_join but keeps all rows in either x or y](images/joins_full.png){fig-align="center"}
+
+## `Filtering Joins`
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+<br>
+
+::: {.fragment}
+![](images/joins_setup.png)
+:::
+:::
+
+::: {.column width="50%"}
+
+<br>
+
+::: {.fragment}
+![](images/joins_setup2.png)
+:::
+:::
+
+::::
+
+## `semi_join()`
+
+![Keeps all rows in x that have a match in y](images/joins_semi.png){fig-align="center"}
+
+
+## `semi_join()` in `nycflights13`
+
+We could use a semi-join to filter the airports dataset to show just the origin airports.
+
+. . . 
+
+```{r}
+#| output-location: fragment
+airports |> 
+  semi_join(flights2, join_by(faa == origin))
+```
+
+
+## `anti_join()`
+
+![Returns all rows in x that don’t have a match in y](images/joins_anti.png){fig-align="center"}
+
+## `anti_join()` in `nycflights13`
+
+We can find rows that are missing from airports by looking for flights that don’t have a matching destination airport.
+
+. . . 
+
+```{r}
+#| output-location: fragment
+airports |> 
+  semi_join(flights2, join_by(faa == origin))
+```
+
+::: aside
+This type of join is useful for finding missing values that are implicit in the data (i.e. `NA`s that don't show up in the data but only exist as an absence.)
+:::
+
+## More Than One Match
+
+![](images/joins_match-types.png){fig-align="center"}
+
+. . . 
+
+There are three possible outcomes for a row in x:
+
+::: {.incremental}
+* If it doesn’t match anything, it’s dropped.
+* If it matches 1 row in y, it’s preserved.
+* If it matches more than 1 row in y, it’s duplicated once for each match.
+:::
+
+. . . 
+
+What happens if we match on more than one row? 
+
+## More Than One Match
+
+```{r}
+#| output-location: fragment
+#| message: true
+df1 <- tibble(key = c(1, 2, 2), val_x = c("x1", "x2", "x3"))
+df2 <- tibble(key = c(1, 2, 2), val_y = c("y1", "y2", "y3"))
+
+df1 |> 
+  inner_join(df2, join_by(key))
+```
+
+
+. . . 
+
+If you are doing this deliberately, you can set relationship = "many-to-many", as the warning suggests.
+
+::: aside
+Given their nature, filtering joins never duplicate rows like mutating joins do. They will only ever return a subset of the datasets.
+:::
+
+## Non-Equi Joins
+
+The joins we've discussed thus far have all been equi-joins, where the rows match if the x key equals the y key. But you can also specify other types of relationships. 
+
+. . . 
+
+`dplyr` has four different types of non-equi joins: 
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+* **Cross joins** match every pair of rows.
+:::
+
+::: {.column width="50%"}
+
+![](images/joins_cross.png){width=25% .absolute top=150 right=150}
+
+:::
+::::
+
+::: aside
+Cross joins, aka self-joins, are useful when generating permutations (e.g. creating every possible combination of values). This comes in handy when creating datasets of predicted probabilities for plotting in ggplot. 
+:::
+
+## Non-Equi Joins
+
+The joins we've discussed thus far have all been equi-joins, where the rows match if the x key equals the y key. But you can also specify other types of relationships. 
+
+`dplyr` has four different types of non-equi joins: 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+* **Cross joins** match every pair of rows.
+* **Inequality joins** use <, <=, >, and >= instead of ==.
+    * **Overlap joins** are a special type of inequality join designed to work with ranges^[Overlap joins provide three helpers that use inequality joins to make it easier to work with intervals: `between()`, `within()`, `overlaps()`. Read more about their functionality and specifications [here](https://dplyr.tidyverse.org/reference/join_by.html?q=within#overlap-joins).].
+
+:::
+
+::: {.column width="50%"}
+![](images/joins_inequality.png){width=30% .absolute top=158 right=120}
+:::
+::::
+
+::: aside
+Inequality joins can be used to restrict the cross join so that instead of generating all permutations, we generate all combinations.
+:::
+
+## Non-Equi Joins
+
+The joins we've discussed thus far have all been equi-joins, where the rows match if the x key equals the y key. But you can also specify other types of relationships. 
+
+`dplyr` has four different types of non-equi joins: 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+* **Cross joins** match every pair of rows.
+* **Inequality joins** use <, <=, >, and >= instead of ==.
+    * **Overlap joins** are a special type of inequality join designed to work with ranges.
+* **Rolling joins** are similar to inequality joins but only find the closest match.
+
+:::
+
+::: {.column width="50%"}
+![](images/joins_rolling.png){width=42% .absolute top=155 right=35}
+:::
+::::
+
+::: aside
+Rolling joins are a special type of inequality join where instead of getting every row that satisfies the inequality, you get just the closest row. You can turn any inequality join into a rolling join by adding closest().
+:::
+
+# Lab{.section-title background-color="#99a486"}
+
+1. Find the 48 hours (over the course of the whole year) that have the worst delays. Cross-reference it with the weather data. Can you see any patterns?
+
+```{r}
+worst_delays <- flights |> 
+  select(dep_delay, origin, time_hour) |> 
+  left_join(weather, join_by(origin, time_hour))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Activity!
+
+In groups of 2-3, you will use the [Billboard data](https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture5/data/billboard.csv) to investigate a question:
+
+1. Write down a question of interest that could be studied with this data
+     * *Which/how many artists had #1 hits?*
+     * *How does rank for each song change over time?*
+     * *Is there a relationship between highest rank and length of song?*
+2. Make the Billboard data *tidy*, perhaps using the code from this lecture.
+
+3. Perform additional steps (if necessary) to help answer your question:
+    * Perhaps using `filter`, `select`, `group_by`, `mutate`, `summarize`, etc.
+
+4. Make a plot or table that answers your question and write down your answer in a sentence.
+
+5. Send me your question, plot/table, and written answer on Canvas
+
+## Example: Question
+
+**Question:** Do songs that hit #1 have a different trajectory than those that don't?
+
+```{r}
+billboard_2000_question <- billboard_2000 %>%
+    group_by(artist, track) %>%
+    mutate(`Weeks at #1` = sum(rank == 1),
+           `Peak Rank`   = ifelse(any(rank == 1),
+                                  "Hit #1",
+                                  "Didn't hit #1")) 
+```
+
+::: aside
+Note: `any(rank==1)` checks to see if *any* value of `rank` is equal to one for the given `artist` and `track`
+:::
+
+## Example Visualization
 
 ::: {.panel-tabset}
 
 ### Code
 
 ```{r}
-#| eval: false
-#| code-line-numbers: "|2,3,5|"
-library(ggplot2) 
-# install.packages("ggthemes") # run in console
+library(ggplot2)
 library(ggthemes)
-ggplot(subset_gapminder, aes(year, lifeExp, color = country, group = country)) +
-  theme_tufte(base_size = 20) + 
-  geom_point() + 
-  geom_line() +
-  xlab("Year") + 
-  ylab("Life Expectancy (years)") +
-  ggtitle("Life Expectancy (1982-2007)","China, India, and United States") +
-  scale_x_continuous(breaks = c(1982, 1987, 1992, 1997, 2002, 2007), minor_breaks = c()) +
-  ylim(c(50, 80)) + 
-  scale_color_discrete(name = "Country") + 
-  theme(legend.position = "bottom")
+billboard_trajectories <- 
+  ggplot(data = billboard_2000_question,
+         aes(x = week, y = rank, group = track,
+             color = `Peak Rank`)) +
+  geom_line(aes(size = `Peak Rank`), alpha = 0.4) +
+  theme_tufte() +
+  xlab("Week") + ylab("Rank") +
+  scale_color_manual(values = c("black", "red")) +
+  scale_size_manual(values = c(0.25, 1)) +
+  theme(legend.position = c(0.90, 0.75),
+        legend.background = element_rect(fill = "transparent"))
 ```
 
-### Plot
+### Charts of 2000: Beauty!
 
 ```{r}
 #| fig-height: 6
 #| fig-width: 12
-#| fig-align: center
-#| echo: false
-library(ggplot2)
-# install.packages("ggthemes") # run in console
-library(ggthemes)
-ggplot(subset_gapminder, aes(year, lifeExp, color = country, group = country)) +
-  theme_tufte(base_size = 20) + geom_point() + geom_line() +
-  xlab("Year") + ylab("Life Expectancy (years)") +
-  ggtitle("Life Expectancy (1982-2007)","China, India, and United States") +
-  scale_x_continuous(breaks = c(1982, 1987, 1992, 1997, 2002, 2007), minor_breaks = c()) +
-  ylim(c(50, 80)) + scale_color_discrete(name = "Country") + theme(legend.position = "bottom")
+billboard_trajectories
 ```
-
 :::
 
-# Homework{.section-title background-color="#99a486"}
+::: aside
+Songs that reach #1 on the Billboard charts appear to last >20 weeks on the charts, while other songs very rarely make it past that point.
+:::
 
-## Homework 5 {.scrollable}
+# Homework
 
-Create a qmd file (from scratch this time!) in which you answer each of the following questions. Be sure to display **all your code in the knitted** version (use throughout `echo: false`). 
+## Homework 4
 
-Remember, the package `nycflights13` contains data on flights originating in NYC during the year 2013. There are three airports servicing NYC: JFK, LGA ("LaGuardia"), and EWR ("Newark").
-
-1. Choose an airport outside New York, and count how many flights went to that airport from NYC in 2013. How many of those flights started at JFK, LGA, and EWR? (Hint: Use `filter`, `group_by`, and `summarize`)
-2. The variable `arr_delay` contains arrival delays in minutes (negative values represent early arrivals). Make a `ggplot` histogram displaying arrival delays for 2013 flights from NYC to the airport you chose.
-3. Use `left_join` to add weather data at departure to the subsetted data^[Hint 1: Match on `origin`, `year`, `month`, `day`, **and** `hour`!!]. Calculate the mean temperature by month at departure (`temp`) across all flights^[Hint 2: Use `mean(temp, na.rm=T)` to have R calculate an average after ignoring missing data values].
-4. Investigate if there is a relationship between departure delay (`dep_delay`) and wind speed (`wind_speed`). Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation.
-
-As always, submit both the .qmd and knitted .html to Canvas.
-
-<br>
-<br>
+*On [Course Website!*](https://vsass.github.io/CSSS508/Homework/HW5/homework4.html)
 
 ## Due dates
 
@@ -696,7 +1805,7 @@ As always, submit both the .qmd and knitted .html to Canvas.
 # reading in base due date schedule
 source("../due_dates_schedule.R")
 
-make_due_date_table(5)
+make_due_date_table(4)
 ```
 
 
