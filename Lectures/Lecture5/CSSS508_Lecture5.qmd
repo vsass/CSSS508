@@ -48,23 +48,38 @@ require(tidyverse)
 
 ---
 
+:::: {.columns}
+
+::: {.column width="50%"}
+
 <br>
 
-Last time, we learned about,
+### Last time, we learned:
 
-* Best Practices
-  * Code Style
-  * Workflow
-* Reproducible Research
-* Indexing vectors & dataframes in Base `R`
+* Logical Operators
+* Using `dplyr` to:
+    * Subset data
+    * Modify data 
+    * Summarize data
+    * Merge data
+:::
 
-. . . 
+::: {.column width="50%"}
 
-Today, we will cover,
+<br> 
+
+::: {.fragment}
+### Today, we will cover:
 
 * Importing and Exporting Data
-* Tidying Data
-* Merging Data
+* Tidying and Reshaping Data
+* Wrangling Date/Date-Time Data
+* Working with Factors
+:::
+
+:::
+
+::::
 
 # Importing and Exporting Data{.section-title background-color="#99a486"}
 
@@ -107,15 +122,14 @@ A comma-separated values (.csv) file looks like the following:
 103,"Non-endogenous","First",2,15,2.77259
 ```
 
+# {data-menu-title="`readr``" background-image="images/readr.png" background-size="contain" background-position="center" .section-title background-color="#1e4655"}
+
 ## `readr`
 
 R has some built-in functions for importing data, such as `read.table()` and `read.csv()`. 
 
 . . . 
 
-:::: {.columns}
-
-::: {.column width="60%"}
 The `readr` package provides similar functions, like `read_csv()`, that have slightly better features:
 
 ::: {.incremental}
@@ -124,13 +138,7 @@ The `readr` package provides similar functions, like `read_csv()`, that have sli
 * A *bit* smarter about dates and times
 * Loading progress bars for large files
 :::
-:::
 
-::: {.column width="40%"}
-![](images/readr.png)
-:::
-
-::::
 . . . 
 
 `readr` is one of the core `tidyverse` packages so loading `tidyverse` will load it too:
@@ -197,7 +205,7 @@ This makes the process *reproducible!*
 
 ::::
 
-## Manual data import
+## Manual Data Import
 
 ![](images/data_import_manual.png){fig-align="center"}
 
@@ -734,7 +742,7 @@ To save `R` objects and all associated metadata you have two options:
 :::
 
 
-# Tidying Data {.section-title background-color="#99a486"}
+# Tidying and Reshaping Data {.section-title background-color="#99a486"}
 
 # {data-menu-title="`tidyr`" background-image="images/tidyr.png" background-size="contain" background-position="center" .section-title background-color="#1e4655"}
 
@@ -746,9 +754,9 @@ First things to check after loading new data:
 * Did all the rows/columns from the original file make it in?
     + Check using `dim()` or `str()`
 * Are the column names in good shape?
-    + Use `names()` to check; fix with `rename()`^[More on this function from `dplyr` next week!]
+    + Use `names()` to check; fix with `rename()`
 * Are there "decorative" blank rows or columns to remove?
-    + `filter()` or `select()` out those rows/columns^[Also next week!]
+    + `filter()` or `select()` out those rows/columns
 * How are missing values represented: `NA`, `" "` (blank), `.` (period), `999`?
     + Read in the data again specifying `NA`s with the `na` argument
 * Are there character data (e.g. ZIP codes with leading zeroes) being incorrectly represented as numeric or vice versa?
@@ -771,7 +779,7 @@ First things to check after loading new data:
 ## Why do we Want Tidy Data?
 
 ::: {.incremental}
-* **Easier to understand** many rows than many columns^[Placing variable sin columns also leverages `R`'s vectorized nature, i.e. most built-in `R` functions work with values of vectors.]
+* **Easier to understand** many rows than many columns^[Placing variables in columns also leverages `R`'s vectorized nature, i.e. most built-in `R` functions work with values of vectors.]
 * Required for **plotting** in `ggplot2`^[In fact, all tidyverse functions are designed to work with tidy data.]
 * Required for many types of **statistical procedures** (e.g. hierarchical or mixed effects models)
 * Fewer issues with **missing values and "imbalanced"** repeated measures data
@@ -928,7 +936,7 @@ billboard_2000 <- billboard_2000_raw |>
 billboard_2000 |> head(10)
 ```
 
-1. `starts_with()` is a helper function from [`tidyselect`](https://tidyselect.r-lib.org/index.html) that helps select certain common patterns. We could have also used `cols = wk1:wk76`. 
+1. `starts_with()` is one of the helper functions from [`tidyselect`](https://tidyselect.r-lib.org/index.html) that helps select certain common patterns. We could have also used `cols = wk1:wk76`. 
 
 . . . 
 
@@ -979,6 +987,8 @@ No more `NA` values!
 dim(billboard_2000)
 ```
 
+. . . 
+
 And way fewer rows!
 
 ## `parse_number()`
@@ -1000,7 +1010,7 @@ billboard_2000 <- billboard_2000 |>
     mutate(week = parse_number(week)) # <2>
 summary(billboard_2000$week)
 ```
-2. `mutate()` creates a new (or overwrites an existing) column. We will cover it in-depth next week. 
+2. You can use `mutate()` to overwrite existing columns. 
 
 . . . 
 
@@ -1019,14 +1029,14 @@ billboard_2000 <- billboard_2000_raw %>%
                names_to        = "week", 
                values_to       = "rank",
                values_drop_na  = TRUE,
-               names_prefix    = "wk", # <1>
-               names_transform = list(week = as.integer)) # <2>
+               names_prefix    = "wk", # <3>
+               names_transform = list(week = as.integer)) # <4>
 
 head(billboard_2000, 5)
 ```
 
-1. `names_prefix` is used to remove "wk" from the values of `week`
-2. `names_transform` converts `week` into an integer number.
+3. `names_prefix` is used to remove "wk" from the values of `week`
+4. `names_transform` converts `week` into an integer number.
 
 ## Multiple Variables in Column Names
 
@@ -1063,15 +1073,14 @@ To organize the six pieces of information in this dataset into six separate colu
 #| output-location: fragment
 who2 |> 
   pivot_longer(
-    cols = !(country:year), # <1>
+    cols = !(country:year),
     names_to = c("diagnosis", "gender", "age"), 
-    names_sep = "_", # <2>
+    names_sep = "_", # <5>
     values_to = "count"
   )
 ```
 
-1. Putting an `!` before a condition negates it. This says: NOT columns `country:year`.
-2. You can use `names_pattern` instead of `names_sep` to extract variables from more complicated naming scenarios once you've learned regular expressions in a few weeks. 
+5. You can use `names_pattern` instead of `names_sep` to extract variables from more complicated naming scenarios once you've learned regular expressions in a few weeks. 
 
 ## Variable & Values in Column Names
 
@@ -1093,14 +1102,14 @@ The new challenge in this dataset is that the column names contain the names of 
 household |> 
   pivot_longer(
     cols = !family, 
-    names_to = c(".value", "child"), # <1>
+    names_to = c(".value", "child"), # <6>
     names_sep = "_", 
-    values_drop_na = TRUE # <2> 
+    values_drop_na = TRUE # <7> 
   )
 ```
 
-1. `.value` isn’t the name of a variable but a unique value that tells `pivot_longer` to use the first component of the pivoted column name as a variable name in the output. 
-2. Using `values_drop_na = TRUE` again since not every family has 2 children.
+6. `.value` isn’t the name of a variable but a unique value that tells `pivot_longer` to use the first component of the pivoted column name as a variable name in the output. 
+7. Using `values_drop_na = TRUE` again since not every family has 2 children.
 
 . . . 
 
@@ -1131,15 +1140,15 @@ A common cue to use `pivot_wider()` is having measurements of different quantiti
 ```{r}
 #| output-location: fragment
 wide_stats <- long_stats |> 
-  pivot_wider(id_cols = Group, # <1>
-              names_from = Statistic, # <2>
-              values_from = Value) # <3>
+  pivot_wider(id_cols = Group, # <8>
+              names_from = Statistic, # <9>
+              values_from = Value) # <10>
 wide_stats
 ```
 
-1. `id_cols` is the column that uniquely identifies each row in the new dataset. Default is everything not in `names_from` and `values_from`.
-2. `names_from` provides the names that will be used for the new columns
-3. `values_from` provides the values that will be used to populate the cells of the new columns.
+8. `id_cols` is the column that uniquely identifies each row in the new dataset. Default is everything not in `names_from` and `values_from`.
+9. `names_from` provides the names that will be used for the new columns
+10. `values_from` provides the values that will be used to populate the cells of the new columns.
 
 . . . 
 
@@ -1251,7 +1260,7 @@ Songs that reach #1 on the Billboard charts appear to last >20 weeks on the char
 # reading in base due date schedule
 source("../due_dates_schedule.R")
 
-make_due_date_table(4)
+make_due_date_table(5)
 ```
 
 
