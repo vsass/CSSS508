@@ -1371,9 +1371,9 @@ temp.txt</code></pre>
 <pre><code># A tibble: 3 × 3
       x y         z
   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-1     1 a     0.721
-2     2 e     0.470
-3     3 f     0.518</code></pre>
+1     1 a     0.113
+2     2 e     0.222
+3     3 f     0.320</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:60%;">
@@ -1417,8 +1417,8 @@ temp.txt</code></pre>
 <pre><code># A tibble: 2 × 3
       x y         z
   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-1     2 e     0.470
-2     3 f     0.518</code></pre>
+1     2 e     0.222
+2     3 f     0.320</code></pre>
 </div>
 </div>
 </div>
@@ -1614,125 +1614,7 @@ temp.txt</code></pre>
 </div>
 <ol start="5" type="1">
 <li>What might be a good way to organize your homework assignments for this class?</li>
-</ol></section><section id="solution-1.-adjust-settings" class="slide level2"><h2>Solution: 1. Adjust settings</h2>
-
-<img data-src="images/clean-slate.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Clear .RData, Never save</p></section><section id="solution-1.-adjust-settings-1" class="slide level2"><h2>Solution: 1. Adjust settings</h2>
-
-<img data-src="images/rstudio-pipe-options.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Native pipe</p></section><section id="solution-1.-adjust-settings-2" class="slide level2"><h2>Solution: 1. Adjust settings</h2>
-
-<img data-src="images/rainbow_function.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Highlight function calls; preview colors; rainbow parentheses</p></section><section id="solution-1.-adjust-settings-3" class="slide level2"><h2>Solution: 1. Adjust settings</h2>
-
-<img data-src="images/code_style.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Code appearance</p></section><section id="solution-1.-adjust-settings-4" class="slide level2"><h2>Solution: 1. Adjust settings</h2>
-
-<img data-src="images/pane_arrangement.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Pane Layout</p></section><section id="solution-1.-adjust-settings-5" class="slide level2"><h2>Solution: 1. Adjust settings</h2>
-
-<img data-src="images/markdown_preferences.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Markdown Preferences</p></section><section id="solution-2.-readable-code-style" class="slide level2"><h2>Solution: 2. Readable code style</h2>
-<div class="fragment semi-fade-out" data-fragment-index="1">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>flights<span class="sc">|&gt;</span><span class="fu">filter</span>(dest<span class="sc">==</span><span class="st">"IAH"</span>)<span class="sc">|&gt;</span><span class="fu">group_by</span>(year,month,day)<span class="sc">|&gt;</span><span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(),</span>
-<span id="cb53-2"><a href="#cb53-2"></a><span class="at">delay=</span><span class="fu">mean</span>(arr_delay,<span class="at">na.rm=</span><span class="cn">TRUE</span>))<span class="sc">|&gt;</span><span class="fu">filter</span>(n<span class="sc">&gt;</span><span class="dv">10</span>)</span>
-<span id="cb53-3"><a href="#cb53-3"></a></span>
-<span id="cb53-4"><a href="#cb53-4"></a>flights<span class="sc">|&gt;</span><span class="fu">filter</span>(carrier<span class="sc">==</span><span class="st">"UA"</span>,dest<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"IAH"</span>,<span class="st">"HOU"</span>),sched_dep_time<span class="sc">&gt;</span></span>
-<span id="cb53-5"><a href="#cb53-5"></a><span class="dv">0900</span>,sched_arr_time<span class="sc">&lt;</span><span class="dv">2000</span>)<span class="sc">|&gt;</span><span class="fu">group_by</span>(flight)<span class="sc">|&gt;</span><span class="fu">summarize</span>(<span class="at">delay=</span><span class="fu">mean</span>(</span>
-<span id="cb53-6"><a href="#cb53-6"></a>arr_delay,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="at">cancelled=</span><span class="fu">sum</span>(<span class="fu">is.na</span>(arr_delay)),<span class="at">n=</span><span class="fu">n</span>())<span class="sc">|&gt;</span><span class="fu">filter</span>(n<span class="sc">&gt;</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div class="fragment fade-in" data-fragment-index="1">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>flights <span class="sc">|&gt;</span> </span>
-<span id="cb54-2"><a href="#cb54-2"></a>  <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">"IAH"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb54-3"><a href="#cb54-3"></a>  <span class="fu">group_by</span>(year, month, day) <span class="sc">|&gt;</span> </span>
-<span id="cb54-4"><a href="#cb54-4"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb54-5"><a href="#cb54-5"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb54-6"><a href="#cb54-6"></a>    <span class="at">delay =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb54-7"><a href="#cb54-7"></a>    ) <span class="sc">|&gt;</span> </span>
-<span id="cb54-8"><a href="#cb54-8"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">10</span>)</span>
-<span id="cb54-9"><a href="#cb54-9"></a></span>
-<span id="cb54-10"><a href="#cb54-10"></a>flights <span class="sc">|&gt;</span> </span>
-<span id="cb54-11"><a href="#cb54-11"></a>  <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">"UA"</span>, dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"IAH"</span>, <span class="st">"HOU"</span>), </span>
-<span id="cb54-12"><a href="#cb54-12"></a>         sched_dep_time <span class="sc">&gt;</span> <span class="dv">0900</span>, sched_arr_time <span class="sc">&lt;</span> <span class="dv">2000</span>) <span class="sc">|&gt;</span></span>
-<span id="cb54-13"><a href="#cb54-13"></a>  <span class="fu">group_by</span>(flight) <span class="sc">|&gt;</span> </span>
-<span id="cb54-14"><a href="#cb54-14"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb54-15"><a href="#cb54-15"></a>    <span class="at">delay =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb54-16"><a href="#cb54-16"></a>    <span class="at">cancelled =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(arr_delay)), </span>
-<span id="cb54-17"><a href="#cb54-17"></a>    <span class="at">n =</span> <span class="fu">n</span>() </span>
-<span id="cb54-18"><a href="#cb54-18"></a>    ) <span class="sc">|&gt;</span> </span>
-<span id="cb54-19"><a href="#cb54-19"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</section><section id="solution-3.-option-shift-k-alt-shift-k" class="slide level2"><h2>Solution: 3. <em>Option</em> + <em>Shift</em> + <em>K</em> / <em>Alt</em> + <em>Shift</em> + <em>K</em>
-</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="images/keyboard_shortcuts.png" style="width:80.0%"></p>
-</figure>
-</div>
-
-<aside><div>
-<p>You can find the same quick reference pop-up by clicking <em>Tools</em> &gt; <em>Keyboard Shortcuts Help</em>.</p>
-</div></aside></section><section id="solution-4.-keyboard-shortcut" class="slide level2"><h2>Solution: 4. Keyboard shortcut</h2>
-<div class="fragment semi-fade-out" data-fragment-index="1">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">libary</span>(todyverse)</span>
-<span id="cb55-2"><a href="#cb55-2"></a></span>
-<span id="cb55-3"><a href="#cb55-3"></a><span class="fu">ggplot</span>(<span class="at">dTA =</span> mpg) <span class="sc">+</span> </span>
-<span id="cb55-4"><a href="#cb55-4"></a>  <span class="fu">geom_point</span>(<span class="at">maping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
-<span id="cb55-5"><a href="#cb55-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div class="fragment fade-in" data-fragment-index="1">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">libary</span>(tidyverse)</span>
-<span id="cb56-2"><a href="#cb56-2"></a></span>
-<span id="cb56-3"><a href="#cb56-3"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg, </span>
-<span id="cb56-4"><a href="#cb56-4"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy)) <span class="sc">+</span> </span>
-<span id="cb56-5"><a href="#cb56-5"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb56-6"><a href="#cb56-6"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</section><section id="solution-5.-organizing-a-class" class="slide level2"><h2>Solution: 5. Organizing a class</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><br></p>
-<div>
-<ol type="1">
-<li class="fragment">Create a folder for this class on a computer/system that gets backed up regularly</li>
-<li class="fragment">Each homework assignment gets a separate RStudio project</li>
-<li class="fragment">Everything within each homework assignment project gets saved into that specific folder (or a subfolder of that folder)</li>
-<li class="fragment">Anything required for each homework assignment (e.g.&nbsp;downloaded data) is saved into its project-specific folder</li>
-</ol>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="fragment">
-<p><br></p>
-<pre><code>CSSS508/
-   Homeworks/
-     HW1/
-       homework1.qmd
-       homework1.html
-     HW2/
-       homework2.qmd
-       homework2.html
-     HW3/
-       homework3.qmd
-       homework3.html
-     HW4/
-       homework4.qmd
-       homework4.html
-       data.csv
-     HW5/
-       homework5.qmd
-       homework5.html
-         data/
-           data_raw.csv
-           data_processed.Rdata
-     HW6/
-     HW7/
-     HW8/
-     HW9/</code></pre>
-</div>
-</div>
-</div>
-</section></section><section><section id="homework" class="title-slide slide level1 section-title center" data-background-color="#1e4655"><h1>Homework</h1>
+</ol></section></section><section><section id="homework" class="title-slide slide level1 section-title center" data-background-color="#1e4655"><h1>Homework</h1>
 
 </section><section id="homework-3-fa-scroll" class="slide level2 scrollable"><h2>Homework 3 <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
 </h2>
@@ -1823,23 +1705,23 @@ CSSS 508
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="pqvatobanq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#pqvatobanq table {
+<div id="npslcgfbry" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#npslcgfbry table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#pqvatobanq thead, #pqvatobanq tbody, #pqvatobanq tfoot, #pqvatobanq tr, #pqvatobanq td, #pqvatobanq th {
+#npslcgfbry thead, #npslcgfbry tbody, #npslcgfbry tfoot, #npslcgfbry tr, #npslcgfbry td, #npslcgfbry th {
   border-style: none;
 }
 
-#pqvatobanq p {
+#npslcgfbry p {
   margin: 0;
   padding: 0;
 }
 
-#pqvatobanq .gt_table {
+#npslcgfbry .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1865,12 +1747,12 @@ CSSS 508
   border-left-color: #D3D3D3;
 }
 
-#pqvatobanq .gt_caption {
+#npslcgfbry .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#pqvatobanq .gt_title {
+#npslcgfbry .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1882,7 +1764,7 @@ CSSS 508
   border-bottom-width: 0;
 }
 
-#pqvatobanq .gt_subtitle {
+#npslcgfbry .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1894,7 +1776,7 @@ CSSS 508
   border-top-width: 0;
 }
 
-#pqvatobanq .gt_heading {
+#npslcgfbry .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1906,13 +1788,13 @@ CSSS 508
   border-right-color: #D3D3D3;
 }
 
-#pqvatobanq .gt_bottom_border {
+#npslcgfbry .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pqvatobanq .gt_col_headings {
+#npslcgfbry .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1927,7 +1809,7 @@ CSSS 508
   border-right-color: #D3D3D3;
 }
 
-#pqvatobanq .gt_col_heading {
+#npslcgfbry .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1947,7 +1829,7 @@ CSSS 508
   overflow-x: hidden;
 }
 
-#pqvatobanq .gt_column_spanner_outer {
+#npslcgfbry .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1959,15 +1841,15 @@ CSSS 508
   padding-right: 4px;
 }
 
-#pqvatobanq .gt_column_spanner_outer:first-child {
+#npslcgfbry .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pqvatobanq .gt_column_spanner_outer:last-child {
+#npslcgfbry .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pqvatobanq .gt_column_spanner {
+#npslcgfbry .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1979,11 +1861,11 @@ CSSS 508
   width: 100%;
 }
 
-#pqvatobanq .gt_spanner_row {
+#npslcgfbry .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#pqvatobanq .gt_group_heading {
+#npslcgfbry .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2009,7 +1891,7 @@ CSSS 508
   text-align: left;
 }
 
-#pqvatobanq .gt_empty_group_heading {
+#npslcgfbry .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2024,15 +1906,15 @@ CSSS 508
   vertical-align: middle;
 }
 
-#pqvatobanq .gt_from_md > :first-child {
+#npslcgfbry .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pqvatobanq .gt_from_md > :last-child {
+#npslcgfbry .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pqvatobanq .gt_row {
+#npslcgfbry .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2051,7 +1933,7 @@ CSSS 508
   overflow-x: hidden;
 }
 
-#pqvatobanq .gt_stub {
+#npslcgfbry .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2064,7 +1946,7 @@ CSSS 508
   padding-right: 5px;
 }
 
-#pqvatobanq .gt_stub_row_group {
+#npslcgfbry .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2078,15 +1960,15 @@ CSSS 508
   vertical-align: top;
 }
 
-#pqvatobanq .gt_row_group_first td {
+#npslcgfbry .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#pqvatobanq .gt_row_group_first th {
+#npslcgfbry .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#pqvatobanq .gt_summary_row {
+#npslcgfbry .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2096,16 +1978,16 @@ CSSS 508
   padding-right: 5px;
 }
 
-#pqvatobanq .gt_first_summary_row {
+#npslcgfbry .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#pqvatobanq .gt_first_summary_row.thick {
+#npslcgfbry .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#pqvatobanq .gt_last_summary_row {
+#npslcgfbry .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2115,7 +1997,7 @@ CSSS 508
   border-bottom-color: #D3D3D3;
 }
 
-#pqvatobanq .gt_grand_summary_row {
+#npslcgfbry .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2125,7 +2007,7 @@ CSSS 508
   padding-right: 5px;
 }
 
-#pqvatobanq .gt_first_grand_summary_row {
+#npslcgfbry .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2135,7 +2017,7 @@ CSSS 508
   border-top-color: #D3D3D3;
 }
 
-#pqvatobanq .gt_last_grand_summary_row_top {
+#npslcgfbry .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2145,11 +2027,11 @@ CSSS 508
   border-bottom-color: #D3D3D3;
 }
 
-#pqvatobanq .gt_striped {
+#npslcgfbry .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pqvatobanq .gt_table_body {
+#npslcgfbry .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2158,7 +2040,7 @@ CSSS 508
   border-bottom-color: #D3D3D3;
 }
 
-#pqvatobanq .gt_footnotes {
+#npslcgfbry .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2172,7 +2054,7 @@ CSSS 508
   border-right-color: #D3D3D3;
 }
 
-#pqvatobanq .gt_footnote {
+#npslcgfbry .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2181,7 +2063,7 @@ CSSS 508
   padding-right: 5px;
 }
 
-#pqvatobanq .gt_sourcenotes {
+#npslcgfbry .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2195,7 +2077,7 @@ CSSS 508
   border-right-color: #D3D3D3;
 }
 
-#pqvatobanq .gt_sourcenote {
+#npslcgfbry .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2203,63 +2085,63 @@ CSSS 508
   padding-right: 5px;
 }
 
-#pqvatobanq .gt_left {
+#npslcgfbry .gt_left {
   text-align: left;
 }
 
-#pqvatobanq .gt_center {
+#npslcgfbry .gt_center {
   text-align: center;
 }
 
-#pqvatobanq .gt_right {
+#npslcgfbry .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pqvatobanq .gt_font_normal {
+#npslcgfbry .gt_font_normal {
   font-weight: normal;
 }
 
-#pqvatobanq .gt_font_bold {
+#npslcgfbry .gt_font_bold {
   font-weight: bold;
 }
 
-#pqvatobanq .gt_font_italic {
+#npslcgfbry .gt_font_italic {
   font-style: italic;
 }
 
-#pqvatobanq .gt_super {
+#npslcgfbry .gt_super {
   font-size: 65%;
 }
 
-#pqvatobanq .gt_footnote_marks {
+#npslcgfbry .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#pqvatobanq .gt_asterisk {
+#npslcgfbry .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#pqvatobanq .gt_indent_1 {
+#npslcgfbry .gt_indent_1 {
   text-indent: 5px;
 }
 
-#pqvatobanq .gt_indent_2 {
+#npslcgfbry .gt_indent_2 {
   text-indent: 10px;
 }
 
-#pqvatobanq .gt_indent_3 {
+#npslcgfbry .gt_indent_3 {
   text-indent: 15px;
 }
 
-#pqvatobanq .gt_indent_4 {
+#npslcgfbry .gt_indent_4 {
   text-indent: 20px;
 }
 
-#pqvatobanq .gt_indent_5 {
+#npslcgfbry .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
