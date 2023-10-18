@@ -1372,11 +1372,11 @@ temp.txt</code></pre>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
-      x y         z
-  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-1     1 a     0.313
-2     2 e     0.551
-3     3 f     0.700</code></pre>
+      x y          z
+  &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt;
+1     1 a     0.0589
+2     2 e     0.165 
+3     3 f     0.180 </code></pre>
 </div>
 </div>
 </div><div class="column" style="width:60%;">
@@ -1420,8 +1420,8 @@ temp.txt</code></pre>
 <pre><code># A tibble: 2 × 3
       x y         z
   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-1     2 e     0.551
-2     3 f     0.700</code></pre>
+1     2 e     0.165
+2     3 f     0.180</code></pre>
 </div>
 </div>
 </div>
@@ -1622,18 +1622,32 @@ temp.txt</code></pre>
 </section><section id="homework-3-fa-scroll" class="slide level2 scrollable"><h2>Homework 3 <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
 </h2>
 <h3 id="instructions">Instructions</h3>
-<p>For this assignment, include all code and relevant output in your rendered html document.</p>
+<p>For this assignment, include all code and relevant output in your rendered html document<sup>1</sup>.</p>
 <ol type="1">
 <li>Organize your files for this class in a way that facilitates reproducible research.
 <ol type="i">
-<li>Start with homeworks 1 and 2: make sure the qmds and htmls for each have their own folder within a folder for this class.</li>
-<li>Retroactively turn those homework folders into RStudio Projects by selecting <em>File</em> &gt; <em>New Project…</em> &gt; <em>Existing Directory</em> and selecting the appropriate folder for each homework. Then close each project.</li>
-<li>For the current homework, begin by first creating a project for “Homework3”<sup>1</sup>.</li>
-<li>Create your .qmd for this homework within this new project<sup>2</sup>.</li>
-<li>When you’re done organizing the folder for this class, write out its current organizational structure (i.e.&nbsp;something similar to the solution to lab question 5<sup>3</sup> with the specific names for files and folders that <em>you</em> used).</li>
+<li>You can do this any number of ways, such as:
+<ol type="a">
+<li>Create a project for this class. If you already have a folder for this class you can retoractively turn it into a project by selecting <em>File</em> &gt; <em>New Project…</em> &gt; <em>Existing Directory</em> and browsing to that folder.</li>
+<li>Creating a folder for this class and making weekly subfolders which are each, themselves, projects. You would need to retroactively make week 1 and 2 folders projects by using the method above. For any new weekly folders you can directly create that directory by selecting <em>File</em> &gt; <em>New Project…</em> &gt; <em>New Directory</em>
+</li>
 </ol>
 </li>
-</ol><aside><ol class="aside-footnotes"><li id="fn6"><p>The specific titles used to name your files/folders can be whatever you want as long as they’re descriptive and consistent in their naming conventions.</p></li><li id="fn7"><p>You’ll notice that the upper-right hand corner of your RStudio IDE now displays the name of your new project for this homework. This is your current working directory.</p></li><li id="fn8">
+<li>Create your .qmd for this homework within your new project<sup>2</sup>.</li>
+<li>When you’re done organizing the folder for this class, write out its current organizational structure (i.e.&nbsp;something similar to the solution to lab question 5<sup>3</sup> with the specific names for files and folders that <em>you</em> used). Write a one-sentence description of how you’ve organized your project/projects for this class.</li>
+</ol>
+</li>
+</ol><aside><ol class="aside-footnotes"><li id="fn6">
+<p>You can set the <code>echo: false</code> (and other) code chunk option(s) globally (will set it as the document default) by specifying it in your YAML header like so:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb58-1"><a href="#cb58-1"></a><span class="pp">---</span></span>
+<span id="cb58-2"><a href="#cb58-2"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Document"</span></span>
+<span id="cb58-3"><a href="#cb58-3"></a><span class="fu">execute</span><span class="kw">:</span></span>
+<span id="cb58-4"><a href="#cb58-4"></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb58-5"><a href="#cb58-5"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</li><li id="fn7"><p>You’ll notice that the upper-right hand corner of your RStudio IDE now displays the name of that new project. This is your current working directory.</p></li><li id="fn8">
 <p>You can embed output-looking text like this example by using a code chunk without the <code>{r}</code> like so:</p>
 <pre><code>```
 CSSS 508
@@ -1643,7 +1657,7 @@ CSSS 508
 
 </li></ol></aside></section><section id="homework-3" class="slide level2"><h2>Homework 3</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="1">
 <li>Create the vector above:
@@ -1657,27 +1671,29 @@ CSSS 508
 </li>
 </ol></section><section id="homework-3-1" class="slide level2"><h2>Homework 3</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> class)) <span class="sc">+</span></span>
-<span id="cb60-2"><a href="#cb60-2"></a>  <span class="fu">geom_bar</span>()</span>
-<span id="cb60-3"><a href="#cb60-3"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
-<span id="cb60-4"><a href="#cb60-4"></a>  <span class="fu">geom_point</span>()</span>
-<span id="cb60-5"><a href="#cb60-5"></a><span class="fu">ggsave</span>(<span class="st">"mpg-plot.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> class)) <span class="sc">+</span></span>
+<span id="cb61-2"><a href="#cb61-2"></a>  <span class="fu">geom_bar</span>()</span>
+<span id="cb61-3"><a href="#cb61-3"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
+<span id="cb61-4"><a href="#cb61-4"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb61-5"><a href="#cb61-5"></a><span class="fu">ggsave</span>(<span class="st">"mpg-plot.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="3" type="1">
 <li>Run the code above.
 <ol type="i">
 <li>Which of the two plots is saved as mpg-plot.png? Why?<sup>1</sup>
 </li>
-<li>In the files tab of the lower-left pane of your RStudio, look at the project folder for this homework and re-write the current organizational structure for this class with any changes that have occurred (i.e.&nbsp;update your answer to question 1.v.).</li>
+<li>In the files tab of the lower-left pane of your RStudio, look at the project folder for this homework and re-write the current organizational structure for this class with any changes that have occurred (i.e.&nbsp;update your answer to question 1.iii.).</li>
 </ol>
 </li>
-<li>Go to the <a href="https://twitter.com/rstudiotips">RStudio Tips Twitter account</a> and find one tip that makes sense to you and looks interesting. Describe it and link to it<sup>2</sup> in your qmd. Maybe practice using it!<sup>3</sup>
+</ol><aside><ol class="aside-footnotes"><li id="fn9"><p>Hint: Check out the help page!</p></li></ol></aside></section><section id="homework-3-2" class="slide level2"><h2>Homework 3</h2>
+<ol start="4" type="1">
+<li>Go to the <a href="https://twitter.com/rstudiotips">RStudio Tips Twitter account</a> and find one tip that makes sense to you and looks interesting. Describe it and link to it<sup>1</sup> in your qmd. Maybe practice using it!<sup>2</sup>
 </li>
-</ol><aside><ol class="aside-footnotes"><li id="fn9"><p>Hint: Check out the help page!</p></li><li id="fn10"><p>See how to link to websites in markdown syntax <a href="https://quarto.org/docs/authoring/markdown-basics.html#links-images">here</a></p></li><li id="fn11"><p>No need to demonstrate this in your qmd.</p></li></ol></aside></section><section id="homework-3-2" class="slide level2"><h2>Homework 3</h2>
+</ol><aside><ol class="aside-footnotes"><li id="fn10"><p>See how to link to websites in markdown syntax <a href="https://quarto.org/docs/authoring/markdown-basics.html#links-images">here</a></p></li><li id="fn11"><p>No need to demonstrate this in your qmd.</p></li></ol></aside></section><section id="homework-3-3" class="slide level2"><h2>Homework 3</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>y <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">a =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">2</span>), </span>
-<span id="cb61-2"><a href="#cb61-2"></a>            <span class="at">b =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"strawberry"</span>, <span class="st">"peach"</span>, <span class="st">"mango"</span>), </span>
-<span id="cb61-3"><a href="#cb61-3"></a>            <span class="at">c =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="cn">TRUE</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>y <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">a =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">2</span>), </span>
+<span id="cb62-2"><a href="#cb62-2"></a>            <span class="at">b =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"strawberry"</span>, <span class="st">"peach"</span>, <span class="st">"mango"</span>), </span>
+<span id="cb62-3"><a href="#cb62-3"></a>            <span class="at">c =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="cn">TRUE</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="5" type="1">
 <li>Create the tibble above.
@@ -1708,23 +1724,23 @@ CSSS 508
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="kaddfnirsv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#kaddfnirsv table {
+<div id="gprqnpzrqg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gprqnpzrqg table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#kaddfnirsv thead, #kaddfnirsv tbody, #kaddfnirsv tfoot, #kaddfnirsv tr, #kaddfnirsv td, #kaddfnirsv th {
+#gprqnpzrqg thead, #gprqnpzrqg tbody, #gprqnpzrqg tfoot, #gprqnpzrqg tr, #gprqnpzrqg td, #gprqnpzrqg th {
   border-style: none;
 }
 
-#kaddfnirsv p {
+#gprqnpzrqg p {
   margin: 0;
   padding: 0;
 }
 
-#kaddfnirsv .gt_table {
+#gprqnpzrqg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1750,12 +1766,12 @@ CSSS 508
   border-left-color: #D3D3D3;
 }
 
-#kaddfnirsv .gt_caption {
+#gprqnpzrqg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#kaddfnirsv .gt_title {
+#gprqnpzrqg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1767,7 +1783,7 @@ CSSS 508
   border-bottom-width: 0;
 }
 
-#kaddfnirsv .gt_subtitle {
+#gprqnpzrqg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1779,7 +1795,7 @@ CSSS 508
   border-top-width: 0;
 }
 
-#kaddfnirsv .gt_heading {
+#gprqnpzrqg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1791,13 +1807,13 @@ CSSS 508
   border-right-color: #D3D3D3;
 }
 
-#kaddfnirsv .gt_bottom_border {
+#gprqnpzrqg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#kaddfnirsv .gt_col_headings {
+#gprqnpzrqg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1812,7 +1828,7 @@ CSSS 508
   border-right-color: #D3D3D3;
 }
 
-#kaddfnirsv .gt_col_heading {
+#gprqnpzrqg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1832,7 +1848,7 @@ CSSS 508
   overflow-x: hidden;
 }
 
-#kaddfnirsv .gt_column_spanner_outer {
+#gprqnpzrqg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1844,15 +1860,15 @@ CSSS 508
   padding-right: 4px;
 }
 
-#kaddfnirsv .gt_column_spanner_outer:first-child {
+#gprqnpzrqg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#kaddfnirsv .gt_column_spanner_outer:last-child {
+#gprqnpzrqg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#kaddfnirsv .gt_column_spanner {
+#gprqnpzrqg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1864,11 +1880,11 @@ CSSS 508
   width: 100%;
 }
 
-#kaddfnirsv .gt_spanner_row {
+#gprqnpzrqg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#kaddfnirsv .gt_group_heading {
+#gprqnpzrqg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1894,7 +1910,7 @@ CSSS 508
   text-align: left;
 }
 
-#kaddfnirsv .gt_empty_group_heading {
+#gprqnpzrqg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1909,15 +1925,15 @@ CSSS 508
   vertical-align: middle;
 }
 
-#kaddfnirsv .gt_from_md > :first-child {
+#gprqnpzrqg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kaddfnirsv .gt_from_md > :last-child {
+#gprqnpzrqg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kaddfnirsv .gt_row {
+#gprqnpzrqg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1936,7 +1952,7 @@ CSSS 508
   overflow-x: hidden;
 }
 
-#kaddfnirsv .gt_stub {
+#gprqnpzrqg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1949,7 +1965,7 @@ CSSS 508
   padding-right: 5px;
 }
 
-#kaddfnirsv .gt_stub_row_group {
+#gprqnpzrqg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1963,15 +1979,15 @@ CSSS 508
   vertical-align: top;
 }
 
-#kaddfnirsv .gt_row_group_first td {
+#gprqnpzrqg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#kaddfnirsv .gt_row_group_first th {
+#gprqnpzrqg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#kaddfnirsv .gt_summary_row {
+#gprqnpzrqg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1981,16 +1997,16 @@ CSSS 508
   padding-right: 5px;
 }
 
-#kaddfnirsv .gt_first_summary_row {
+#gprqnpzrqg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#kaddfnirsv .gt_first_summary_row.thick {
+#gprqnpzrqg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#kaddfnirsv .gt_last_summary_row {
+#gprqnpzrqg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2000,7 +2016,7 @@ CSSS 508
   border-bottom-color: #D3D3D3;
 }
 
-#kaddfnirsv .gt_grand_summary_row {
+#gprqnpzrqg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2010,7 +2026,7 @@ CSSS 508
   padding-right: 5px;
 }
 
-#kaddfnirsv .gt_first_grand_summary_row {
+#gprqnpzrqg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2020,7 +2036,7 @@ CSSS 508
   border-top-color: #D3D3D3;
 }
 
-#kaddfnirsv .gt_last_grand_summary_row_top {
+#gprqnpzrqg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2030,11 +2046,11 @@ CSSS 508
   border-bottom-color: #D3D3D3;
 }
 
-#kaddfnirsv .gt_striped {
+#gprqnpzrqg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#kaddfnirsv .gt_table_body {
+#gprqnpzrqg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2043,7 +2059,7 @@ CSSS 508
   border-bottom-color: #D3D3D3;
 }
 
-#kaddfnirsv .gt_footnotes {
+#gprqnpzrqg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2057,7 +2073,7 @@ CSSS 508
   border-right-color: #D3D3D3;
 }
 
-#kaddfnirsv .gt_footnote {
+#gprqnpzrqg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2066,7 +2082,7 @@ CSSS 508
   padding-right: 5px;
 }
 
-#kaddfnirsv .gt_sourcenotes {
+#gprqnpzrqg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2080,7 +2096,7 @@ CSSS 508
   border-right-color: #D3D3D3;
 }
 
-#kaddfnirsv .gt_sourcenote {
+#gprqnpzrqg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2088,63 +2104,63 @@ CSSS 508
   padding-right: 5px;
 }
 
-#kaddfnirsv .gt_left {
+#gprqnpzrqg .gt_left {
   text-align: left;
 }
 
-#kaddfnirsv .gt_center {
+#gprqnpzrqg .gt_center {
   text-align: center;
 }
 
-#kaddfnirsv .gt_right {
+#gprqnpzrqg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kaddfnirsv .gt_font_normal {
+#gprqnpzrqg .gt_font_normal {
   font-weight: normal;
 }
 
-#kaddfnirsv .gt_font_bold {
+#gprqnpzrqg .gt_font_bold {
   font-weight: bold;
 }
 
-#kaddfnirsv .gt_font_italic {
+#gprqnpzrqg .gt_font_italic {
   font-style: italic;
 }
 
-#kaddfnirsv .gt_super {
+#gprqnpzrqg .gt_super {
   font-size: 65%;
 }
 
-#kaddfnirsv .gt_footnote_marks {
+#gprqnpzrqg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#kaddfnirsv .gt_asterisk {
+#gprqnpzrqg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#kaddfnirsv .gt_indent_1 {
+#gprqnpzrqg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#kaddfnirsv .gt_indent_2 {
+#gprqnpzrqg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#kaddfnirsv .gt_indent_3 {
+#gprqnpzrqg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#kaddfnirsv .gt_indent_4 {
+#gprqnpzrqg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#kaddfnirsv .gt_indent_5 {
+#gprqnpzrqg .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
