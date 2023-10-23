@@ -736,89 +736,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-</section>
-<section id="dates-and-times" class="level1 section-title" data-background-image="images/lubridate.png" data-background-size="contain" data-background-opacity="0.25" data-background-position="center" data-background-color="#99a486">
-<h1 class="section-title" data-background-image="images/lubridate.png" data-background-size="contain" data-background-opacity="0.25" data-background-position="center" data-background-color="#99a486">Dates and Times</h1>
-<section id="lubridate" class="level2">
-<h2 class="anchored" data-anchor-id="lubridate"><code>lubridate</code></h2>
-<p>The package <code>lubridate</code> (part of the tidyverse!) has a <em>very large</em> number of functions you can use!</p>
-<p>. . .</p>
-<ul>
-<li>Converting dates/times between formats (DD-MM-YY to YY-MM-DD)</li>
-<li>Extracting dates/times (day of week, month, leap years, etc.)</li>
-<li>Math with dates/times (time zone conversions, etc.)</li>
-</ul>
-<p>. . .</p>
-<p>There’s too much to cover all of it, but I’ll run through a few examples.</p>
-</section>
-<section id="dates-in-billboard_2000" class="level2">
-<h2 class="anchored" data-anchor-id="dates-in-billboard_2000">Dates in <code>billboard_2000</code></h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>billboard_2000 <span class="sc">%&gt;%</span> </span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date.entered) <span class="sc">%&gt;%</span> </span>
-<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 1
-   date.entered
-   &lt;date&gt;      
- 1 2000-02-26  
- 2 2000-02-26  
- 3 2000-02-26  
- 4 2000-02-26  
- 5 2000-02-26  
- 6 2000-02-26  
- 7 2000-02-26  
- 8 2000-02-26  
- 9 2000-02-26  
-10 2000-02-26  </code></pre>
-</div>
-</div>
-</section>
-<section id="extracting-year-month-or-day" class="level2">
-<h2 class="anchored" data-anchor-id="extracting-year-month-or-day">Extracting Year, Month, or Day</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(billboard_2000<span class="sc">$</span>date.entered, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "2000-02-26" "2000-02-26" "2000-02-26" "2000-02-26" "2000-02-26"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">year</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
-<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2000 2000 2000 2000 2000</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">month</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
-<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2 2 2 2 2</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">day</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
-<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 26 26 26 26 26</code></pre>
-</div>
-</div>
-</section>
-<section id="extracting-weekday-quarter-and-leap-year-boolean" class="level2">
-<h2 class="anchored" data-anchor-id="extracting-weekday-quarter-and-leap-year-boolean">Extracting Weekday, Quarter, and Leap Year Boolean</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
-<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 7 7 7 7 7</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quarter</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
-<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1 1 1 1 1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leap_year</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
-<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE TRUE TRUE TRUE TRUE</code></pre>
-</div>
-</div>
-</section>
 <section id="activity-2-hw-8" class="level2">
 <h2 class="anchored" data-anchor-id="activity-2-hw-8">Activity 2: HW 8</h2>
 <p>Let’s examine the coffee shops of King County!</p>
@@ -837,12 +754,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="activity-solutions">Activity: Solutions</h2>
 <p>1. Filter your data to only include rows in which the <code>Name</code> includes the word “coffee” (in any case!)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>coffee <span class="ot">&lt;-</span> restaurants</span>
-<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>coffee<span class="sc">$</span>Name <span class="ot">&lt;-</span> <span class="fu">str_to_lower</span>(coffee<span class="sc">$</span>Name)</span>
-<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>coffee <span class="ot">&lt;-</span> coffee <span class="sc">%&gt;%</span> </span>
-<span id="cb109-4"><a href="#cb109-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Name, <span class="st">"coffee"</span>))</span>
-<span id="cb109-5"><a href="#cb109-5" aria-hidden="true" tabindex="-1"></a>coffee <span class="sc">|&gt;</span> </span>
-<span id="cb109-6"><a href="#cb109-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>coffee <span class="ot">&lt;-</span> restaurants</span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>coffee<span class="sc">$</span>Name <span class="ot">&lt;-</span> <span class="fu">str_to_lower</span>(coffee<span class="sc">$</span>Name)</span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>coffee <span class="ot">&lt;-</span> coffee <span class="sc">%&gt;%</span> </span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Name, <span class="st">"coffee"</span>))</span>
+<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a>coffee <span class="sc">|&gt;</span> </span>
+<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 25
   Name          `Program Identifier` `Inspection Date` Description Address City 
@@ -866,10 +783,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="activity-solutions-1">Activity: Solutions</h2>
 <p>2.Create a new variable in your data which includes the length of the business name, after removing beginning/trailing whitespace.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>coffee<span class="sc">$</span>NameLength <span class="ot">&lt;-</span> <span class="fu">str_length</span>(<span class="fu">str_trim</span>(coffee<span class="sc">$</span>Name))</span>
-<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>coffee <span class="sc">|&gt;</span> </span>
-<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, NameLength) <span class="sc">|&gt;</span> </span>
-<span id="cb111-4"><a href="#cb111-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>coffee<span class="sc">$</span>NameLength <span class="ot">&lt;-</span> <span class="fu">str_length</span>(<span class="fu">str_trim</span>(coffee<span class="sc">$</span>Name))</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>coffee <span class="sc">|&gt;</span> </span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, NameLength) <span class="sc">|&gt;</span> </span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 2
    Name                          NameLength
@@ -891,9 +808,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="activity-solutions-2">Activity: Solutions</h2>
 <p>3. Create a new variable in your data for the inspection year.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>coffee<span class="sc">$</span>Year <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(coffee<span class="sc">$</span><span class="st">`</span><span class="at">Inspection Date</span><span class="st">`</span>,<span class="sc">-</span><span class="dv">4</span>,<span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>coffee<span class="sc">$</span>Year <span class="sc">|&gt;</span> </span>
-<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>coffee<span class="sc">$</span>Year <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(coffee<span class="sc">$</span><span class="st">`</span><span class="at">Inspection Date</span><span class="st">`</span>,<span class="sc">-</span><span class="dv">4</span>,<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>coffee<span class="sc">$</span>Year <span class="sc">|&gt;</span> </span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2023" "2023" "2022" "2021" "2020"</code></pre>
 </div>
@@ -903,13 +820,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="activity-solutions-3">Activity: Solutions</h2>
 <p>4. Create side-by-side boxplots for the length of business name vs.&nbsp;year.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coffee, <span class="fu">aes</span>(Year, NameLength)) <span class="sc">+</span> </span>
-<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coffee, <span class="fu">aes</span>(Year, NameLength)) <span class="sc">+</span> </span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="CSSS508_Lecture7_files/figure-html/unnamed-chunk-31-1.svg" class="img-fluid figure-img"></p>
+<p><img src="CSSS508_Lecture7_files/figure-html/unnamed-chunk-27-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -919,11 +836,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="activity-solutions-4">Activity: Solutions</h2>
 <p>5. Calculate the maximum <code>Inspection Score</code> by business and year.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>coffee_summary <span class="ot">&lt;-</span> coffee <span class="sc">%&gt;%</span> </span>
-<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Name, Year) <span class="sc">%&gt;%</span> </span>
-<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">MaxScore =</span> <span class="fu">max</span>(<span class="st">`</span><span class="at">Inspection Score</span><span class="st">`</span>))</span>
-<span id="cb116-4"><a href="#cb116-4" aria-hidden="true" tabindex="-1"></a>coffee_summary <span class="sc">|&gt;</span> </span>
-<span id="cb116-5"><a href="#cb116-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>coffee_summary <span class="ot">&lt;-</span> coffee <span class="sc">%&gt;%</span> </span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Name, Year) <span class="sc">%&gt;%</span> </span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">MaxScore =</span> <span class="fu">max</span>(<span class="st">`</span><span class="at">Inspection Score</span><span class="st">`</span>))</span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>coffee_summary <span class="sc">|&gt;</span> </span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
 # Groups:   Name [1]
@@ -941,12 +858,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="activity-solutions-5">Activity: Solutions</h2>
 <p>6. Create a line plot of maximum score (“MaxScore”) over time (“Year”), by business (“Name”). That is, you should have a single line for each business. (Don’t try to label them, as there are far too many!)</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coffee_summary, <span class="fu">aes</span>(Year, MaxScore, <span class="at">group =</span> Name)) <span class="sc">+</span></span>
-<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> .<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coffee_summary, <span class="fu">aes</span>(Year, MaxScore, <span class="at">group =</span> Name)) <span class="sc">+</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> .<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="CSSS508_Lecture7_files/figure-html/unnamed-chunk-33-1.svg" class="img-fluid figure-img"></p>
+<p><img src="CSSS508_Lecture7_files/figure-html/unnamed-chunk-29-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -963,23 +880,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="ohqmcahlgs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ohqmcahlgs table {
+<div id="srolavtwji" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#srolavtwji table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ohqmcahlgs thead, #ohqmcahlgs tbody, #ohqmcahlgs tfoot, #ohqmcahlgs tr, #ohqmcahlgs td, #ohqmcahlgs th {
+#srolavtwji thead, #srolavtwji tbody, #srolavtwji tfoot, #srolavtwji tr, #srolavtwji td, #srolavtwji th {
   border-style: none;
 }
 
-#ohqmcahlgs p {
+#srolavtwji p {
   margin: 0;
   padding: 0;
 }
 
-#ohqmcahlgs .gt_table {
+#srolavtwji .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1005,12 +922,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#ohqmcahlgs .gt_caption {
+#srolavtwji .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ohqmcahlgs .gt_title {
+#srolavtwji .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1022,7 +939,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#ohqmcahlgs .gt_subtitle {
+#srolavtwji .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1034,7 +951,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#ohqmcahlgs .gt_heading {
+#srolavtwji .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1046,13 +963,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#ohqmcahlgs .gt_bottom_border {
+#srolavtwji .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ohqmcahlgs .gt_col_headings {
+#srolavtwji .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1067,7 +984,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#ohqmcahlgs .gt_col_heading {
+#srolavtwji .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1087,7 +1004,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#ohqmcahlgs .gt_column_spanner_outer {
+#srolavtwji .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1099,15 +1016,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#ohqmcahlgs .gt_column_spanner_outer:first-child {
+#srolavtwji .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ohqmcahlgs .gt_column_spanner_outer:last-child {
+#srolavtwji .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ohqmcahlgs .gt_column_spanner {
+#srolavtwji .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1119,11 +1036,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#ohqmcahlgs .gt_spanner_row {
+#srolavtwji .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ohqmcahlgs .gt_group_heading {
+#srolavtwji .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1149,7 +1066,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#ohqmcahlgs .gt_empty_group_heading {
+#srolavtwji .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1164,15 +1081,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#ohqmcahlgs .gt_from_md > :first-child {
+#srolavtwji .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ohqmcahlgs .gt_from_md > :last-child {
+#srolavtwji .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ohqmcahlgs .gt_row {
+#srolavtwji .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1191,7 +1108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#ohqmcahlgs .gt_stub {
+#srolavtwji .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1204,7 +1121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#ohqmcahlgs .gt_stub_row_group {
+#srolavtwji .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1218,15 +1135,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#ohqmcahlgs .gt_row_group_first td {
+#srolavtwji .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ohqmcahlgs .gt_row_group_first th {
+#srolavtwji .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ohqmcahlgs .gt_summary_row {
+#srolavtwji .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1236,16 +1153,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#ohqmcahlgs .gt_first_summary_row {
+#srolavtwji .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ohqmcahlgs .gt_first_summary_row.thick {
+#srolavtwji .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ohqmcahlgs .gt_last_summary_row {
+#srolavtwji .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1255,7 +1172,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#ohqmcahlgs .gt_grand_summary_row {
+#srolavtwji .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1265,7 +1182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#ohqmcahlgs .gt_first_grand_summary_row {
+#srolavtwji .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1275,7 +1192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#ohqmcahlgs .gt_last_grand_summary_row_top {
+#srolavtwji .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1285,11 +1202,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#ohqmcahlgs .gt_striped {
+#srolavtwji .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ohqmcahlgs .gt_table_body {
+#srolavtwji .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1298,7 +1215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#ohqmcahlgs .gt_footnotes {
+#srolavtwji .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1312,7 +1229,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#ohqmcahlgs .gt_footnote {
+#srolavtwji .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1321,7 +1238,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#ohqmcahlgs .gt_sourcenotes {
+#srolavtwji .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1335,7 +1252,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#ohqmcahlgs .gt_sourcenote {
+#srolavtwji .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1343,63 +1260,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#ohqmcahlgs .gt_left {
+#srolavtwji .gt_left {
   text-align: left;
 }
 
-#ohqmcahlgs .gt_center {
+#srolavtwji .gt_center {
   text-align: center;
 }
 
-#ohqmcahlgs .gt_right {
+#srolavtwji .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ohqmcahlgs .gt_font_normal {
+#srolavtwji .gt_font_normal {
   font-weight: normal;
 }
 
-#ohqmcahlgs .gt_font_bold {
+#srolavtwji .gt_font_bold {
   font-weight: bold;
 }
 
-#ohqmcahlgs .gt_font_italic {
+#srolavtwji .gt_font_italic {
   font-style: italic;
 }
 
-#ohqmcahlgs .gt_super {
+#srolavtwji .gt_super {
   font-size: 65%;
 }
 
-#ohqmcahlgs .gt_footnote_marks {
+#srolavtwji .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ohqmcahlgs .gt_asterisk {
+#srolavtwji .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ohqmcahlgs .gt_indent_1 {
+#srolavtwji .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ohqmcahlgs .gt_indent_2 {
+#srolavtwji .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ohqmcahlgs .gt_indent_3 {
+#srolavtwji .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ohqmcahlgs .gt_indent_4 {
+#srolavtwji .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ohqmcahlgs .gt_indent_5 {
+#srolavtwji .gt_indent_5 {
   text-indent: 25px;
 }
 </style>

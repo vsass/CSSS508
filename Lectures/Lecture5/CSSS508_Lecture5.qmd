@@ -73,8 +73,9 @@ require(tidyverse)
 
 * Importing and Exporting Data
 * Tidying and Reshaping Data
-* Wrangling Date/Date-Time Data
 * Working with Factors
+* Wrangling Date/Date-Time Data
+
 :::
 
 :::
@@ -1161,62 +1162,520 @@ wide_stats
 If there are multiple rows in the input that correspond to one cell in the output you'll get a list-column. This means that you 1) need to fix something in your code/data because it shouldn't be nested in this way or 2) need to use `unnest_wider()` or `unnest_longer()` in order to access this column of data. More on this [here](https://r4ds.hadley.nz/rectangling.html#unnesting). 
 :::
 
-# Data types in `R` {.section-title background-color="#99a486"}
+## Data types in `R`
 
-## How is my data stored?
-
-Under the hood, R stores different types of data in different ways.
+Going back to our list of data types in `R`: 
 
 . . . 
 
-* e.g., R knows that `4.0` is a number, and that `"Vic"` is not a number.
+* ~~Logical~~
+* Factors
+* Date/Date-time
+* Numeric
+* Missing Values
+* Strings
+
+## Data types in `R`
+
+Going back to our list of data types in `R`: 
+
+* ~~Logical~~
+* <span style="color:#e15759">Factors</span>
+* <span style="color:#e15759">Date/Date-time</span>
+* Numeric
+* Missing Values
+* Strings
+
+# Working with Factors {.section-title background-color="#99a486"}
+
+## {data-menu-title="Forcats" background-image="images/forcats.png" background-size="contain" background-position="center" .section-title background-color="#1e4655"}
+
+## Why Use Factors? 
+
+Factors are a special class of data specifically for categorical variables^[<span style="color:#e15759">For</span> <span style="color:#e15759">cat</span>egorical<span style="color:#e15759">s</span>; forcats is also an anagram of factors.] which have a fixed, known, and mutually exclusive set of possible values^[Factors can also be created from character strings that you want to display in non-alphabetical order].
 
 . . . 
 
-So what exactly are the common data types, and how do we know what R is doing?
+Imagine we have a variable that records the month that an event occurred. 
+
+```{r}
+month <- c("Dec", "Apr", "Jan", "Mar")
+```
 
 . . . 
 
-<br>
+The two main issues with coding this simply as a character string are that 
+
+1) It doesn't help catch *spelling errors* and that
+
+```{r}
+#| eval: false
+month <- c("Dec", "Apr", "Jam", "Mar")
+```
+
+. . . 
+
+2) Characters are *sorted alphabetically*, which is not necessarily intuitive or useful for your variable. 
+
+```{r}
+sort(month)
+```
+
+## Factors
+
+Factors have an additional specification called levels. These are the categories of the categorical variable. We can create a vector of the levels first: 
+
+```{r}
+month_levels <- c(
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+)
+```
+
+. . . 
+
+And then we can create a factor like so: 
+
+```{r}
+month_factor <- factor(month, levels = month_levels)
+month_factor
+```
+
+. . . 
+
+We can see that the levels specify in which order the categories should be displayed:
+
+```{r}
+sort(month_factor)
+```
+
+## Creating Factors
+
+`factor` is Base `R`'s function for creating factors while `fct` is `forcats` function for making factors. A couple of things to note about their differences: 
+
+. . . 
 
 :::: {.columns}
 
 ::: {.column width="50%"}
-* Factors (`factor`)
-* Date/Date-time (`Date`, `POSIXct`, `POSIXt`)
-* Logical (`logical`)
-* Numeric (`integer`, `double`)
-* Missing Values (`NA`, `NaN`, `Inf`)
-* Character Strings (`character`)
+#### <u>`factor`</u>
+
+* Any values not specified as a level will be **silently** converted to `NA`
+* Without specified levels, they'll be created from the data in **alphabetical** order^[This is risky to rely on since not every computer will sort strings the same way.]
+
 :::
 
 ::: {.column width="50%"}
+#### <u>`fct`</u>
 
-::: {.fragment}
-* `factor(c("red", "blue"))`
-* `as_Date(c("2018-10-04"))`
-* `c(FALSE, TRUE, TRUE)`
-* `c(1, 10*3, 4, -3.14)`
-* `c(NA, NA, NA, NaN, NaN, NA)`
-* `c("red", "blue", "blue")`
-:::
+* Will send a **error message** if a value exists outside the specified levels
+* Without specified levels, they'll be created from the data in **order of first appearance**
 :::
 
 ::::
 
-## Data types 
+. . . 
+
+You can create a factor by specifying `col_factor()` when reading in data with `readr`: 
+
+```{r}
+#| eval: false
+df <- read_csv(csv, col_types = cols(month = col_factor(month_levels)))
+```
+
+. . . 
+
+If you need to access the levels directly you can use the Base `R` function `levels()`.
+
+```{r}
+levels(month_factor)
+```
+
+## Changing the Order of Levels
+One of the more common data manipulations you'll want to do with factors is to change the ordering of the levels. This could be to put them in a more intuitive order but also to make a visualization clearer and more impactful. 
+
+. . . 
+
+Let's use a subset of the General Social Survey^[Once you've loaded `forcats` you can run `?gss_cat` to learn more.] data to see what this might look like. 
+
+```{r}
+gss_cat
+```
+
+## Changing the Order of Levels
+
+There are four related functions to change the level ordering in `forcats`. 
+
+. . . 
+
+**`fct_reorder()`**
+
+```{r}
+#| eval: false
+fct_reorder(.f = factor, # <1>
+            .x = ordering_vector, # <2>
+            .fun = optional_function) # <3>
+```
+1. `factor` is the factor to reorder (or a character string to be turned into a factor)
+2. `ordering_vector` specifies how to reorder `factor` 
+3. `optional_function` is applied if there are multiple values of `ordering_vector` for each value of `factor` (the default is to take the median)
+
+. . . 
+
+**`fct_relevel()`**
+```{r}
+#| eval: false
+fct_relevel(.f = factor, 
+            ... = value, # <4>
+            after = placement) # <5>
+```
+4. `value` is either a function (i.e. `sort`) or a character level (default is to move it to the front of the vector)
+5. `placement` is an optional vector index where the level should be placed
+
+. . . 
+
+**`fct_reorder2()`**
+```{r}
+#| eval: false
+fct_reorder2(.f = factor, 
+            .x = vector1, # <6>
+            .y = vector2) # <6>
+```
+
+6. `fct_reorder2` reorders `factor` by the values of `vector2` associated with the largest values of `vector1.`
+
+. . . 
+
+**`fct_infreq()`**
+```{r}
+#| eval: false
+fct_infreq(.f = factor) # <7> 
+```
+
+7. `fct_infreq` reorders `factor` in decreasing frequency. See other variations [here](https://forcats.tidyverse.org/reference/fct_inorder.html). Use with `fct_rev()` for increasing frequency. 
+
+<br>
+
+## Changing the Order of Levels <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+There are four related functions to change the level ordering in `forcats`. 
+
+::: {.panel-tabset}
+
+### <span style="color:#e15759; font-family:Roboto Mono">fct_reorder^[Use `fct_reorder` and `fct_reorder2` for categorical variables where ordering is arbitary.]</span> 
+
+**Without `fct_reorder()`**
+
+```{r}
+#| fig-width: 12
+#| fig-height: 6
+#| fig-align: center
+#| code-fold: show
+relig_summary <- gss_cat |>
+  group_by(relig) |>
+  summarize(
+    tvhours = mean(tvhours, na.rm = TRUE),
+    n = n()
+  )
+
+ggplot(relig_summary, aes(x = tvhours, y = relig)) + # <7>
+  geom_point()
+```
+
+**With `fct_reorder()`**
+
+```{r}
+#| fig-width: 12
+#| fig-height: 6
+#| fig-align: center
+#| code-fold: show
+relig_summary |>
+  mutate(
+    relig = fct_reorder(relig, tvhours)
+  ) |>
+  ggplot(aes(x = tvhours, y = relig)) +
+  geom_point()
+```
+
+### <span style="color:#4e79a7; font-family:Roboto Mono">fct_relevel^[Use `fct_relevel` for categorical variables that already have an inherent ordering.]</span>
+
+**Without `fct_relevel()`**
+
+```{r}
+#| fig-width: 12
+#| fig-height: 6
+#| fig-align: center
+#| code-fold: show
+rincome_summary <- gss_cat |>
+  group_by(rincome) |>
+  summarize(
+    age = mean(age, na.rm = TRUE),
+    n = n()
+  )
+
+ggplot(rincome_summary, aes(x = age, y = rincome)) + 
+  geom_point()
+```
+
+**With `fct_relevel()`**
+
+```{r}
+#| fig-width: 12
+#| fig-height: 6
+#| fig-align: center
+#| code-fold: show
+ggplot(rincome_summary, aes(x = age, y = fct_relevel(rincome, "Not applicable"))) +
+  geom_point()
+```
+
+### <span style="color:#f28e2c; font-family:Roboto Mono">fct_reorder2</span>
+
+**Without `fct_reorder2()`**
+
+```{r}
+#| fig-width: 12
+#| fig-height: 6
+#| fig-align: center
+#| code-fold: show
+by_age <- gss_cat |>
+  filter(!is.na(age)) |> 
+  count(age, marital) |>
+  group_by(age) |>
+  mutate(
+    prop = n / sum(n)
+  )
+
+ggplot(by_age, aes(x = age, y = prop, color = marital)) +
+  geom_line(linewidth = 1) + 
+  scale_color_brewer(palette = "Set1")
+```
+
+**With `fct_reorder()`**
+
+```{r}
+#| fig-width: 12
+#| fig-height: 6
+#| fig-align: center
+#| code-fold: show
+ggplot(by_age, aes(x = age, y = prop, color = fct_reorder2(marital, age, prop))) +
+  geom_line(linewidth = 1) +
+  scale_color_brewer(palette = "Set1") + 
+  labs(color = "marital") 
+```
+
+### <span style="color:#76b7b2; font-family:Roboto Mono">fct_infreq</span>
+
+**Without `fct_infreq()`**
+
+```{r}
+#| fig-width: 12
+#| fig-height: 6
+#| fig-align: center
+#| code-fold: show
+gss_cat |>
+  mutate(marital = marital) |> 
+  ggplot(aes(x = marital)) + 
+  geom_bar()
+```
+
+**With `fct_infreq()`**
+
+```{r}
+#| fig-width: 12
+#| fig-height: 6
+#| fig-align: center
+#| code-fold: show
+gss_cat |>
+  mutate(marital = marital |> fct_infreq() |> fct_rev()) |>
+  ggplot(aes(x = marital)) +
+  geom_bar()
+```
+
+:::
+
+## Changing the Value of Levels
+
+You may also want to change the actual values of your factor levels. The main way to do this is `fct_recode()`. 
+
+. . . 
+
+```{r}
+gss_cat |> count(partyid) # <8> 
+```
+
+8. You can use `count()` to get the full list of levels for a variable and their respective counts. 
+
+## `fct_recode()`
+
+:::: {.columns}
+
+::: {.column width="60%"}
+```{r}
+#| eval: false
+gss_cat |>
+  mutate(
+    partyid = fct_recode(partyid,
+      "Republican, strong" = "Strong republican",
+      "Republican, weak" = "Not str republican",
+      "Independent, near rep" = "Ind,near rep",
+      "Independent, near dem" = "Ind,near dem",
+      "Democrat, weak" = "Not str democrat",
+      "Democrat, strong" = "Strong democrat"
+    )
+  ) |>
+  count(partyid)
+```
+:::
+
+::: {.column width="40%"}
+```{r}
+#| echo: false
+gss_cat |>
+  mutate(
+    partyid = fct_recode(partyid,
+      "Republican, strong" = "Strong republican",
+      "Republican, weak" = "Not str republican",
+      "Independent, near rep" = "Ind,near rep",
+      "Independent, near dem" = "Ind,near dem",
+      "Democrat, weak" = "Not str democrat",
+      "Democrat, strong" = "Strong democrat"
+    )
+  ) |>
+  count(partyid)
+```
+:::
+
+::::
+
+. . . 
+
+Some features of `fct_recode()`: 
+
+::: {.incremental}
+* Will leave the levels that aren’t explicitly mentioned, as is.
+* Will warn you if you accidentally refer to a level that doesn’t exist.
+* You can combine groups by assigning multiple old levels to the same new level.
+:::
+
+## `fct_collapse()`
+
+A useful variant of `fct_recode()` is `fct_collapse()` which will allow you to collapse a lot of levels at once. 
+
+. . . 
+
+```{r}
+gss_cat |>
+  mutate(
+    partyid = fct_collapse(partyid,
+      "other" = c("No answer", "Don't know", "Other party"),
+      "rep" = c("Strong republican", "Not str republican"),
+      "ind" = c("Ind,near rep", "Independent", "Ind,near dem"),
+      "dem" = c("Not str democrat", "Strong democrat")
+    )
+  ) |>
+  count(partyid)
+```
+
+## `fct_lump_*`
+
+Sometimes you'll have several levels of a variable that have a small enough `N` to warrant grouping them together into an `other` category. The family of `fct_lump_*` functions are designed to help with this. 
+
+. . . 
+
+```{r}
+gss_cat |>
+  mutate(relig = fct_lump_n(relig, n = 10)) |>
+  count(relig, sort = TRUE)
+```
+
+9. Other functions include: `fct_lump_min()`, `fct_lump_prop()`, `fct_lump_lowfreq()`. Read more about them [here](https://forcats.tidyverse.org/reference/fct_lump.html). 
+
+## Ordered Factors
+
+So far we've mostly been discussing how to code nominal variables, or categorical variables that have no inherent ordering. 
+
+. . . 
+
+If you want to specify that your factor has a strict order you can classify it as a ordered factor. 
+
+```{r}
+ordered(c("a", "b", "c")) # <9>
+```
+
+9. Ordered factors imply a strict ordering and equal distance between levels: the first level is “less than” the second level by the same amount that the second level is “less than” the third level, and so on.
+
+<br> 
+
+. . . 
+
+In practice there are only two ways in which ordered factors are different than factors: 
+
+:::{.incremental}
+1) `scale_color_viridis()`/`scale_fill_viridis()` will be used automatically when mapping an ordered factored in `ggplot2` because it implies an ordered ranking
+2) If you use an ordered function in a linear model, it will use “polygonal contrasts”. You can learn more about what this means [here](https://debruine.github.io/faux/articles/contrasts.html).
+:::
+
+# Wrangling Date/Date-Time Data {.section-title background-color="#99a486"}
+
+# Dates and Times {background-image="images/lubridate.png" background-size="contain" background-position="center" .section-title background-color="#1e4655"}
+
+## `lubridate`
+
+The package `lubridate` (part of the tidyverse!) has a *very large* number of functions you can use!
+
+. . . 
+
+* Converting dates/times between formats (DD-MM-YY to YY-MM-DD)
+* Extracting dates/times (day of week, month, leap years, etc.)
+* Math with dates/times (time zone conversions, etc.)
+
+. . . 
+
+There's too much to cover all of it, but I'll run through a few examples.
+
+## Dates in `billboard_2000` 
+
+```{r}
+#| echo: false
+billboard_2000_raw <- read_csv(file = "https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture5/data/billboard.csv")
+billboard_2000 <- billboard_2000_raw %>%
+  pivot_longer(cols=wk1:wk76,
+               names_to ="week",
+               values_to = "rank")
+```
 
 
+```{r}
+billboard_2000 %>% 
+  select(date.entered) %>% 
+  head(10)
+```
+
+## Extracting Year, Month, or Day
+
+```{r }
+library(lubridate)
+head(billboard_2000$date.entered, 5)
+year(billboard_2000$date.entered) %>% 
+  head(5)
+month(billboard_2000$date.entered) %>% 
+  head(5)
+day(billboard_2000$date.entered) %>% 
+  head(5)
+```
+
+## Extracting Weekday, Quarter, and Leap Year Boolean
+
+```{r}
+wday(billboard_2000$date.entered) %>% 
+  head(5)
+quarter(billboard_2000$date.entered) %>% 
+  head(5)
+leap_year(billboard_2000$date.entered) %>% 
+   head(5)
+```
 
 
-
-
-
-
-
-# Wrangling Date/Date-Time Data
-
-# Working with Factors
 
 
 

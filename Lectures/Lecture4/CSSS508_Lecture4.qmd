@@ -96,31 +96,48 @@ Tools like *Excel* or *Google Sheets* let you manipulate spreadsheets using func
  
 Today, we'll use `R` to manipulate data more *transparently* and *reproducibly*.
 
-# Logical Operators{.section-title background-color="#99a486"}
+## How is data stored in `R`?
 
-## Data types in `R`
-
-Going back to our list of data types in `R`: 
+Under the hood, R stores different types of data in different ways.
 
 . . . 
 
-* ~~Factors~~
-* ~~Date/Date-time~~
-* Logical
-* Numeric
-* Missing Values
-* Strings
+* e.g., R knows that `4.0` is a number, and that `"Vic"` is not a number.
 
-## Data types in `R`
+. . . 
 
-Going back to our list of data types in `R`: 
+So what exactly are the common data types, and how do we know what R is doing?
 
-* ~~Factors~~
-* ~~Date/Date-time~~
-* <span style="color:#e15759">Logical</span>
-* Numeric
-* Missing Values
-* Strings
+. . . 
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="50%"}
+* Logical (`logical`)
+* Factors (`factor`)
+* Date/Date-time (`Date`, `POSIXct`, `POSIXt`)
+* Numeric (`integer`, `double`)
+* Missing Values (`NA`, `NaN`, `Inf`)
+* Character Strings (`character`)
+:::
+
+::: {.column width="50%"}
+
+::: {.fragment}
+* `c(FALSE, TRUE, TRUE)`
+* `factor(c("red", "blue"))`
+* `as_Date(c("2018-10-04"))`
+* `c(1, 10*3, 4, -3.14)`
+* `c(NA, NA, NA, NaN, NaN, NA)`
+* `c("red", "blue", "blue")`
+:::
+:::
+
+::::
+
+# Logical Operators{.section-title background-color="#99a486"}
 
 ## Booleans
 
@@ -212,11 +229,14 @@ Be careful using `==` with numbers:
 ```{r}
 x <- c(1 / 49 * 49, sqrt(2) ^ 2)
 x
-x == c(1, 2) # <1> 
+```
+
+```{r}
+x == c(1, 2)# <1>
 print(x, digits = 16) # <2>
 ```
 
-1. Computers store numbers with a fixed number of decimal places so there’s no way to *precisely* represent decimals. 
+1. Computers store numbers with a fixed number of decimal places so there’s no way to *precisely* represent decimals.
 2. `dplyr::near()` is a useful alternative which ignores small differences. 
 
 . . . 
@@ -255,9 +275,10 @@ Comparisons:
 ```{r}
 A == B
 A > B
-A %in% B # <1>
+A %in% B # <4>
 ```
-1. Will return a vector the length of `A` that is `TRUE` whenever a value in `A` is anywhere in `B`. <br> **Note**: You CAN use `%in%` to search for `NA`s.
+
+4. Will return a vector the length of `A` that is `TRUE` whenever a value in `A` is anywhere in `B`. <br> **Note**: You CAN use `%in%` to search for `NA`s.
 
 . . . 
 
@@ -265,10 +286,10 @@ Combinations:
 
 ```{r}
 A > 5 & A <= B 
-B < 10 | B > 20 # <2>
+B < 10 | B > 20 # <5>
 !(A == 10)
 ```
-2. Be sure not to cut corners (i.e. writing <br> `B < 10 | > 20`). The code won't technically error but it won't evaluate the way you expect it to. Read more about the confusing logic behind this [here](https://r4ds.hadley.nz/logicals#order-of-operations). 
+5. Be sure not to cut corners (i.e. writing <br> `B < 10 | > 20`). The code won't technically error but it won't evaluate the way you expect it to. Read more about the confusing logic behind this [here](https://r4ds.hadley.nz/logicals#order-of-operations). 
 
 ## Logical Summaries
 
@@ -295,16 +316,16 @@ B < 10 | B > 20 # <2>
 
 ```{r}
 C <- c(5, 10, NA, 10, 20, NA)
-any(C <= 10) # <1> 
+any(C <= 10) # <6> 
 all(C <= 20)
-all(C <= 20, na.rm = TRUE) # <2>
-mean(C, na.rm = TRUE) # <3> 
+all(C <= 20, na.rm = TRUE) # <7>
+mean(C, na.rm = TRUE) # <8> 
 
 ```
 
-1. Like other summary functions, they'll return `NA` if there are any missing values present and it's `FALSE`. 
-2. Use `na.rm = TRUE` to remove `NA`s prior to evaluation. 
-3. When you evaluate a logical vector numerically, `TRUE` = 1 and `FALSE` = 0. This makes `sum()` and `mean()` useful when summarizing logical functions (sum gives number of `TRUE`s and mean gives the proportion). 
+6. Like other summary functions, they'll return `NA` if there are any missing values present and it's `FALSE`. 
+7. Use `na.rm = TRUE` to remove `NA`s prior to evaluation. 
+8. When you evaluate a logical vector numerically, `TRUE` = 1 and `FALSE` = 0. This makes `sum()` and `mean()` useful when summarizing logical functions (sum gives number of `TRUE`s and mean gives the proportion). 
 
 ## Conditional transformations
 
@@ -325,9 +346,9 @@ if_else(condition = "A logical vector",
 
 ```{r}
 x <- c(-3:3, NA)
-if_else(x > 0, "+ve", "-ve", "???") # <1> 
+if_else(x > 0, "+ve", "-ve", "???") # <9> 
 ```
-1. There’s an optional fourth argument, `missing` which will be used if the input is `NA`.
+9. There’s an optional fourth argument, `missing` which will be used if the input is `NA`.
 
 . . . 
 
@@ -343,12 +364,12 @@ case_when(
   x == 0   ~ "0",
   x < 0    ~ "-ve", 
   x > 0    ~ "+ve",
-  is.na(x) ~ "???" # <2>
-) # <3> 
+  is.na(x) ~ "???" # <10>
+) # <11> 
 ```
 
-2. Use `.default` if you want to create a “default”/catch all value. 
-3. Both functions require compatible types: i.e. numerical and logical, strings and factors, dates and datetimes, `NA` and everything. 
+10. Use `.default` if you want to create a “default”/catch all value. 
+11. Both functions require compatible types: i.e. numerical and logical, strings and factors, dates and datetimes, `NA` and everything. 
 
 # {data-menu-title="`dplyr`" background-image="images/dplyr.png" background-size="contain" background-position="center" .section-title background-color="#1e4655"}
 
@@ -368,12 +389,12 @@ To demonstrate data transformations we're going to use the `nycflights13` datase
 
 ```{r}
 # Download and load data
-# install.packages("nycflights13") # <1>
-library(nycflights13) # <2>
+# install.packages("nycflights13") # <12>
+library(nycflights13) # <13>
 ```
 
-1. Run in console. 
-2. Load into `R` session. 
+12. Run in console. 
+13. Load into `R` session. 
 
 . . . 
 
@@ -381,18 +402,18 @@ library(nycflights13) # <2>
 
 ```{r}
 #| eval: false
-data(flights) # <1> 
-data(airlines) # <2>
-data(airports) # <3>
-data(planes) # <4>
-data(weather) # <5>
+data(flights) # <14> 
+data(airlines) # <15>
+data(airports) # <16>
+data(planes) # <17>
+data(weather) # <18>
 ```
 
-1. flights leaving JFK, LGA, or EWR in 2013
-2. airline abbreviations
-3. airport metadata
-4. airplane metadata
-5. hourly weather data for JFK, LGA, and EWR
+14. flights leaving JFK, LGA, or EWR in 2013
+15. airline abbreviations
+16. airport metadata
+17. airplane metadata
+18. hourly weather data for JFK, LGA, and EWR
 
 ## `dplyr` Basics
 
@@ -510,7 +531,7 @@ flights |>
 
 # Modifying data{.section-title background-color="#99a486"}
 
-## Sorting Rata by Rows: `arrange()`
+## Sorting Data by Rows: `arrange()`
 
 Sometimes it's useful to sort rows in your data, in ascending (low to high) or descending (high to low) order. We do that with `arrange()`.
 
@@ -1156,7 +1177,7 @@ We can find rows that are missing from airports by looking for flights that don�
 ```{r}
 #| output-location: fragment
 airports |> 
-  semi_join(flights2, join_by(faa == origin))
+  anti_join(flights2, join_by(faa == origin))
 ```
 
 ::: aside
@@ -1378,11 +1399,11 @@ Question 6:
 ```{r}
 #| eval: false
 library(ggplot2) 
-# install.packages("ggthemes") # <2>
 library(ggthemes)
+library(geomtextpath)
 ggplot(subset_gapminder, aes(year, lifeExp, color = country, group = country)) +
   geom_point() + 
-  geom_line() +
+  geom_textpath(aes(label = country)) +
   xlab("Year") + 
   ylab("Life Expectancy (years)") +
   ggtitle("Life Expectancy (1982-2007)","China, India, and United States") +
@@ -1393,7 +1414,6 @@ ggplot(subset_gapminder, aes(year, lifeExp, color = country, group = country)) +
   theme(legend.position = "bottom")
 ```
 
-2. Run in console (if using). 
 
 ### Plot
 
@@ -1403,21 +1423,25 @@ ggplot(subset_gapminder, aes(year, lifeExp, color = country, group = country)) +
 #| fig-align: center
 #| echo: false
 library(ggplot2)
-# install.packages("ggthemes") # run in console
 library(ggthemes)
+library(geomtextpath)
 ggplot(subset_gapminder, aes(year, lifeExp, color = country, group = country)) +
-  theme_tufte(base_size = 20) + geom_point() + geom_line() +
-  xlab("Year") + ylab("Life Expectancy (years)") +
+  theme_tufte(base_size = 20) + 
+  geom_point() + 
+  geom_textpath(aes(label = country)) +
+  xlab("Year") + 
+  ylab("Life Expectancy (years)") +
   ggtitle("Life Expectancy (1982-2007)","China, India, and United States") +
   scale_x_continuous(breaks = c(1982, 1987, 1992, 1997, 2002, 2007), minor_breaks = c()) +
-  ylim(c(50, 80)) + scale_color_discrete(name = "Country") + theme(legend.position = "bottom")
+  ylim(c(50, 80)) + scale_color_discrete(name = "Country") + 
+  theme(legend.position = "bottom")
 ```
 
 :::
 
 # Homework{.section-title background-color="#1e4655"}
 
-## Homework 5 {.scrollable}
+## Homework 4 <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
 Answer each of the following questions. Be sure to display **all your code in the knitted** version (use `echo: false` throughout[^longnote]). 
 
