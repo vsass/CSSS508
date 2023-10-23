@@ -3,6 +3,89 @@ title: "Homework 4"
 highlight-style: a11y-dark
 ---
 
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+library(nycflights13)
+```
+
+### Instructions
+Answer each of the following questions. Be sure to display **all your code in the knitted** version (use `echo: true` throughout[^longnote]). 
+
+[^longnote]: You can make this a global option for your whole document by putting it directly in the YAML of your qmd:
+
+    ```{YAML}
+    ---
+    title: "My Document"
+    execute:
+      echo: true
+    ---
+    ```
+    
+Remember, the package `nycflights13` contains data on flights originating in NYC during the year 2013. There are three airports servicing NYC: JFK, LGA ("LaGuardia"), and EWR ("Newark").
+
+### Exercises
+
+1. Choose an airport outside New York, and count how many flights went to that airport from NYC in 2013. How many of those flights started at JFK, LGA, and EWR respectively?
+
+```{r}
+#| echo: false
+#| eval: false
+library(nycflights13)
+library(tidyverse)
+
+sd_flights <- flights |> 
+  filter(dest == "SAN") |> 
+  summarize(n = n(), 
+            .by = origin)
+
+# There were `r sum(sd_flights$n)` total flights from New York to San Diego. `r sd_flights$n[sd_flights$origin == "JFK"]` of those flights originated from `r sd_flights$origin[1]` and `r sd_flights$n[sd_flights$origin == "EWR"]` from `r sd_flights$origin[2]`. 
+```
+
+2. The variable `arr_delay` contains arrival delays in minutes (negative values represent early arrivals). Make a `ggplot` histogram displaying arrival delays for 2013 flights from NYC to the airport you chose.
+
+```{r}
+#| echo: false
+#| eval: false
+flights |> 
+  filter(dest == "SAN") |> 
+  ggplot(aes(x = arr_delay)) +
+  geom_histogram() + 
+  geom_vline(xintercept = 0, color = "red")
+```
+
+
+3. Use `left_join` to add weather data at departure to the subsetted data^[Hint: What variables could you match on that equal `time_hour`?]. Calculate the mean temperature by `month` at departure (`temp`) across all flights.
+
+```{r}
+#| echo: false
+#| eval: false
+flights |> 
+  filter(dest == "SAN") |> 
+  left_join(weather, by = join_by(origin, year, month, day, hour)) |> 
+  summarize(avg_temp = mean(temp, na.rm = TRUE), 
+            .by = month) |> 
+  arrange(month)
+```
+
+
+4. Investigate if there is a relationship between departure delay (`dep_delay`) and precipitation (`precip`) in the full dataset. Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation.
+
+```{r}
+#| echo: false
+#| eval: false
+flights |> 
+  left_join(weather, by = join_by(origin, year, month, day, hour)) |> 
+  ggplot(aes(x = precip, y = dep_delay)) + 
+  geom_jitter() + 
+  geom_smooth(method = "lm")
+
+# It looks like there is a slightly positive relationship between precipitation and the length of a departure delay. 
+```
+
+As always, submit both the .qmd and knitted .html to Canvas.
+
 ### Due Dates
 
 ```{r}
