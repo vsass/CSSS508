@@ -245,7 +245,7 @@ It takes a character vector to be used as column names (in their order of appear
 
 ```{r}
 #| eval: false
-billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+billboard_renamed <- read_csv(file = "data/billboard.csv", 
                                col_names = c("year", "artist", "track", "time", "date_entered", 
                                              paste("wk", 1:76, sep = "_"))) # <1>
 
@@ -560,6 +560,14 @@ bb_types
 billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
                                col_types = bb_types) # <2> 
 ```
+
+```{r}
+#| echo: false
+billboard_renamed <- read_csv(file = "data/billboard.csv",
+                              col_types = bb_types) |> 
+  janitor::clean_names(numerals = "right")
+```
+
 
 2. This string now specifies the data type for each column of our data frame. Visit [this reference page](https://readr.tidyverse.org/reference/cols.html) to see all available column types and their short codes. 
 
@@ -929,15 +937,16 @@ This function usually takes three arguments:
 
 ```{r}
 #| output-location: fragment 
-billboard_2000 <- billboard_2000_raw |> 
-  pivot_longer(cols = starts_with("wk"), # <1>
+billboard_2000 <- billboard_renamed |> # <1>
+  pivot_longer(cols = starts_with("wk_"), # <2>
                names_to ="week",
                values_to = "rank")
 
 billboard_2000 |> head(10)
 ```
 
-1. `starts_with()` is one of the helper functions from [`tidyselect`](https://tidyselect.r-lib.org/index.html) that helps select certain common patterns. We could have also used `cols = wk1:wk76`. 
+1. `billboard_renamed` here has snake_case variable names and correctly specified column types
+2. `starts_with()` is one of the helper functions from [`tidyselect`](https://tidyselect.r-lib.org/index.html) that helps select certain common patterns. We could have also used `cols = wk1:wk76`. 
 
 . . . 
 
@@ -971,8 +980,8 @@ Adding the argument `values_drop_na = TRUE` to `pivot_longer()` will remove rows
 ```{r}
 #| output-location: fragment 
 #| code-line-numbers: "|5"
-billboard_2000 <- billboard_2000_raw %>%
-  pivot_longer(cols = wk1:wk76, 
+billboard_2000 <- billboard_renamed %>%
+  pivot_longer(cols = wk_1:wk_76, 
                names_to = "week", 
                values_to = "rank", 
                values_drop_na = TRUE)
@@ -1008,10 +1017,10 @@ head(billboard_2000$week)
 ```{r}
 #| output-location: fragment 
 billboard_2000 <- billboard_2000 |> 
-    mutate(week = parse_number(week)) # <2>
+    mutate(week = parse_number(week)) # <3>
 summary(billboard_2000$week)
 ```
-2. You can use `mutate()` to overwrite existing columns. 
+3. You can use `mutate()` to overwrite existing columns. 
 
 . . . 
 
@@ -1025,19 +1034,19 @@ Alternatively (and more efficiently), there are a number of optional arguments f
 
 ```{r}
 #| output-location: fragment
-billboard_2000 <- billboard_2000_raw %>%
-  pivot_longer(starts_with("wk"), 
+billboard_2000 <- billboard_renamed %>%
+  pivot_longer(starts_with("wk_"), 
                names_to        = "week", 
                values_to       = "rank",
                values_drop_na  = TRUE,
-               names_prefix    = "wk", # <3>
-               names_transform = list(week = as.integer)) # <4>
+               names_prefix    = "wk_", # <4>
+               names_transform = list(week = as.integer)) # <5>
 
 head(billboard_2000, 5)
 ```
 
-3. `names_prefix` is used to remove "wk" from the values of `week`
-4. `names_transform` converts `week` into an integer number.
+4. `names_prefix` is used to remove "wk" from the values of `week`
+5. `names_transform` converts `week` into an integer number.
 
 ## Multiple Variables in Column Names
 
@@ -1619,9 +1628,217 @@ In practice there are only two ways in which ordered factors are different than 
 
 # {data-menu-title=`lubridate` background-image="images/lubridate.png" background-size="contain" background-position="center" .section-title background-color="#1e4655"}
 
-## `lubridate`
+## Date and Date-Time
 
-The package `lubridate` (part of the tidyverse!) has a *very large* number of functions you can use!
+While they may look like character strings, Dates, Date-Times and Times^[The `hms` package can be used to deal with times but they're not very common.] are each separate classes of data. 
+
+. . . 
+
+:::: {.columns}
+::: {.column width="33%"}
+::: {.fragment}
+**Data Type**
+
+* Date
+* Date
+* Date-Time
+* Date-Time
+* Time
+:::
+:::
+
+::: {.column width="34%"}
+::: {.fragment}
+**Package**
+
+* `base`
+* `lubridate`
+* `base`
+* `lubridate`
+* `hms`
+:::
+:::
+
+::: {.column width="33%"}
+::: {.fragment}
+**Reference in `R`**
+
+* `POSIXct`
+* `date`
+* `POSIXlt`
+* `dttm`
+* `time`
+:::
+:::
+::::
+
+## Creating Dates/Date-Times <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+::: {.panel-tabset}
+
+### On Import
+
+If your data is in `ISO8601` date or date-time format^[The international standard for writing dates.] `readr` will automatically recognize it and read it in as a date/date-time. 
+
+::: {.fragment}
+If you're reading in a different date/date-time format you can use `col_types` plus `col_date()` or `col_datetime()` along with a date-time format.
+:::
+
+::: {.fragment}
+
+<br>
+
+| Type  | Code  | Meaning                        | Example         |
+|-------|-------|--------------------------------|-----------------|
+| Year  | `%Y`  | 4 digit year                   | 2021            |
+|       | `%y`  | 2 digit year                   | 21              |
+| Month | `%m`  | Number                         | 2               |
+|       | `%b`  | Abbreviated name               | Feb             |
+|       | `%B`^[If you're using either `%b` or `%B` and working with non-English dates, you’ll also need to provide a locale(). See [these functions](https://readr.tidyverse.org/reference/date_names.html) for more information.]  | Full name                      | February        |
+| Day   | `%d`  | Two digits                     | 02              |
+|       | `%e`  | One or two digits              | 2               |
+| Time  | `%H`  | 24-hour hour                   | 13              |
+|       | `%I`  | 12-hour hour                   | 1               |
+|       | `%p`  | AM/PM                          | pm              |
+|       | `%M`  | Minutes                        | 35              |
+|       | `%S`  | Seconds                        | 45              |
+|       | `%OS` | Seconds with decimal component | 45.35           |
+|       | `%Z`  | Time zone name                 | America/Chicago |
+|       | `%z`  | Offset from UTC                | +0800           |
+| Other | `%.`  | Skip one non-digit             | :               |
+|       | `%*`  | Skip any number of non-digits  |                 |
+
+: All date formats understood by readr^[Note that no matter how you specify the date format, it’s always displayed the same way once you get it into R: `%Y-%m-%d`]
+
+<br>
+:::
+
+::: {.fragment}
+```{r}
+csv <- "
+  date
+  05/22/23
+"
+
+read_csv(csv, col_types = cols(date = col_date("%m/%d/%y")))
+```
+
+<br>
+:::
+
+
+### String
+
+You can also use lubridate's helper functions to specify a date format automatically. 
+
+```{r}
+#| output-location: fragment
+ymd("2017-01-31")
+mdy("January 31st, 2017")
+dmy("31-Jan-2017")
+```
+
+::: {.fragment}
+If you need to specify a date-time you can use these helper functions: 
+```{r}
+#| output-location: fragment
+ymd_hms("2017-01-31 20:11:59")
+mdy_hm("01/31/2017 08:01")
+```
+
+<br>
+:::
+
+::: {.fragment}
+If you provide a date object with a timezone it'll automatically be converted to a date-time object. 
+```{r}
+#| output-location: fragment
+ymd("2017-01-31", tz = "UTC")
+```
+
+<br>
+:::
+
+### Individual Components
+
+If you have time elements in separate variables, like in the `flights` dataset...
+
+```{r}
+#| output-location: fragment
+library(nycflights13)
+flights |> 
+  select(year, month, day, hour, minute)
+```
+
+::: {.fragment}
+...you can use `make_date` or `make_datetime` to create your date/time object. 
+
+```{r}
+#| output-location: fragment
+flights2 <- flights |> 
+  select(year, month, day, hour, minute) |> 
+  mutate(departure = make_datetime(year, month, day, hour, minute))
+```
+
+<br>
+::: 
+
+::: {.fragment}
+Note that when you use date-times in a numeric context (like in a histogram), 1 means 1 second, so a `binwidth` of 86400 means one day. 
+
+```{r}
+ggplot(flights2, aes(x = departure)) + 
+  geom_freqpoly(binwidth = 86400)
+```
+
+<br>
+:::
+
+::: {.fragment}
+For dates, 1 means 1 day. 
+
+```{r}
+#| eval: false
+billboard_2000 |> 
+  mutate(date = ifelse(week == 1, 
+                       date_entered, 
+                       date_entered + weeks(x = week)))
+
+ggplot(, aes(x = date_entered, y = rank, group = track)) + 
+  geom_point() + 
+  geom_line()
+```
+
+:::
+
+### Existing Object
+
+
+
+:::
+
+
+
+. . . 
+
+## NExt
+
+Dates and times are challenging data types because there are physical properties but also additional geopolitical definitions that don't always neatly align with physical reality.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The package `lubridate` (part of the tidyverse) has a *very large* number of functions you can use!
 
 . . . 
 
