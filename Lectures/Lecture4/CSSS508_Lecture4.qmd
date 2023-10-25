@@ -1317,7 +1317,7 @@ Rolling joins are a special type of inequality join where instead of getting eve
 
 
 
-## Answers {visibility="hidden"}
+## Answers 
 
 Question 1:
 
@@ -1325,10 +1325,10 @@ Question 1:
 subset_gapminder <- gapminder |> 
   filter(country %in% c("China","India","United States"),  year > 1980 ) |>
   select(country, year, pop, lifeExp)
-subset_gapminder |> head(n = 5)
+subset_gapminder
 ```
 
-## Answers {visibility="hidden"}
+## Answers 
 
 Question 2: 
 ```{r}
@@ -1342,27 +1342,46 @@ dim(subset_gapminder)
 
 . . . 
 
-## Answers {visibility="hidden"}
+## Answers 
 
 Question 3:
 ```{r}
 subset_gapminder <- subset_gapminder |> 
   arrange(year, desc(pop))
+```
 
+<br>
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
 subset_gapminder |> head(6)
 ```
 
-## Answers {visibility="hidden"}
+:::
+
+::: {.column width="50%"}
+```{r}
+print(subset_gapminder[1:6, ])
+```
+:::
+
+::::
+
+## Answers 
 
 Question 4:
 ```{r}
 subset_gapminder <- subset_gapminder |> 
   mutate(pop_billions = pop/1000000000)
 
-subset_gapminder |> head(n = 5)
+subset_gapminder
 ```
 
-## Answers {visibility="hidden"}
+## Answers 
 
 Question 5:
 
@@ -1388,7 +1407,7 @@ subset_gapminder |>
 
 :::
 
-## Answers {visibility="hidden"}
+## Answers 
 
 Question 6:
 
@@ -1457,10 +1476,10 @@ Answer each of the following questions. Be sure to display **all your code in th
     
 Remember, the package `nycflights13` contains data on flights originating in NYC during the year 2013. There are three airports servicing NYC: JFK, LGA ("LaGuardia"), and EWR ("Newark").
 
-1. Choose an airport outside New York, and count how many flights went to that airport from NYC in 2013. How many of those flights started at JFK, LGA, and EWR? (Hint: Use `filter`, `group_by`, and `summarize`)
+1. Choose an airport outside New York, and count how many flights went to that airport from NYC in 2013. How many of those flights started at JFK, LGA, and EWR respectively?
 2. The variable `arr_delay` contains arrival delays in minutes (negative values represent early arrivals). Make a `ggplot` histogram displaying arrival delays for 2013 flights from NYC to the airport you chose.
-3. Use `left_join` to add weather data at departure to the subsetted data^[Hint 1: Match on `origin`, `year`, `month`, `day`, **and** `hour`!!]. Calculate the mean temperature by month at departure (`temp`) across all flights^[Hint 2: Use `mean(temp, na.rm=T)` to have R calculate an average after ignoring missing data values].
-4. Investigate if there is a relationship between departure delay (`dep_delay`) and wind speed (`wind_speed`). Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation.
+3. Use `left_join` to add weather data at departure to the subsetted data^[Hint: What variables could you match on that equal `time_hour`?]. Calculate the mean temperature by `month` at departure (`temp`) across all flights.
+4. Investigate if there is a relationship between departure delay (`dep_delay`) and precipitation (`precip`) in the full dataset. Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation.
 
 As always, submit both the .qmd and knitted .html to Canvas.
 
@@ -1478,6 +1497,9 @@ As always, submit both the .qmd and knitted .html to Canvas.
 source("../due_dates_schedule.R")
 
 make_due_date_table(4)
+
+
+
 ```
 
 

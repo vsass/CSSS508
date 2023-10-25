@@ -1688,6 +1688,7 @@ If you're reading in a different date/date-time format you can use `col_types` p
 
 <br>
 
+::: {.custom-small}
 | Type  | Code  | Meaning                        | Example         |
 |-------|-------|--------------------------------|-----------------|
 | Year  | `%Y`  | 4 digit year                   | 2021            |
@@ -1709,6 +1710,8 @@ If you're reading in a different date/date-time format you can use `col_types` p
 |       | `%*`  | Skip any number of non-digits  |                 |
 
 : All date formats understood by readr^[Note that no matter how you specify the date format, it’s always displayed the same way once you get it into R: `%Y-%m-%d`]
+:::
+
 
 <br>
 :::
@@ -1732,16 +1735,16 @@ read_csv(csv, col_types = cols(date = col_date("%m/%d/%y")))
 You can also use lubridate's helper functions to specify a date format automatically. 
 
 ```{r}
-#| output-location: fragment
 ymd("2017-01-31")
 mdy("January 31st, 2017")
 dmy("31-Jan-2017")
 ```
 
+<br>
+
 ::: {.fragment}
 If you need to specify a date-time you can use these helper functions: 
 ```{r}
-#| output-location: fragment
 ymd_hms("2017-01-31 20:11:59")
 mdy_hm("01/31/2017 08:01")
 ```
@@ -1752,7 +1755,6 @@ mdy_hm("01/31/2017 08:01")
 ::: {.fragment}
 If you provide a date object with a timezone it'll automatically be converted to a date-time object. 
 ```{r}
-#| output-location: fragment
 ymd("2017-01-31", tz = "UTC")
 ```
 
@@ -1778,15 +1780,19 @@ flights |>
 flights2 <- flights |> 
   select(year, month, day, hour, minute) |> 
   mutate(departure = make_datetime(year, month, day, hour, minute))
+flights2
 ```
 
 <br>
 ::: 
 
 ::: {.fragment}
-Note that when you use date-times in a numeric context (like in a histogram), 1 means 1 second, so a `binwidth` of 86400 means one day. 
+Note that when you use date-times in a numeric context (like in a histogram), 1 means 1 second, so a `binwidth` of 86400 means one day. For dates, 1 means 1 day. 
 
 ```{r}
+#| fig-align: center
+#| fig-width: 12
+#| fig-height: 6
 ggplot(flights2, aes(x = departure)) + 
   geom_freqpoly(binwidth = 86400)
 ```
@@ -1794,32 +1800,103 @@ ggplot(flights2, aes(x = departure)) +
 <br>
 :::
 
-::: {.fragment}
-For dates, 1 means 1 day. 
-
 ```{r}
 #| eval: false
-billboard_2000 |> 
-  mutate(date = ifelse(week == 1, 
-                       date_entered, 
-                       date_entered + weeks(x = week)))
+#| echo: false
+`Weeks at #1` = sum(rank == 1)
 
-ggplot(, aes(x = date_entered, y = rank, group = track)) + 
+billboard_2000 |> 
+  mutate(date = if_else(week == 1, 
+                       date_entered, 
+                       date_entered %m+% weeks(x = week))) |> 
+  mutate(top10_weeks = sum(rank <= 10), 
+         .by = track) |> 
+  filter(top10_weeks > 0) |> 
+  ggplot(aes(x = date, y = rank, group = track, color = top10_weeks)) + 
+  geom_point() + 
+  geom_line() + 
+  scale_color_manual(palette = "Viridis")
+
+billboard_2000 |> filter(track == "Try Again") |> 
+  mutate(date = if_else(week == 1, 
+                       date_entered, 
+                       date_entered %m+% weeks(x = week))) |> 
+  ggplot(aes(x = date, y = rank, group = track)) + 
   geom_point() + 
   geom_line()
 ```
 
-:::
 
 ### Existing Object
 
+`as_datetime()` and `as_date()` are used to coerce existing date/time objects into their counterpart. 
 
+```{r}
+as_datetime(today())
+as_date(now())
+```
+
+<br>
+
+::: {.fragment}
+While `ISO8601` format is read in as a string of human-readable date/times, another common date/time format, `Unix` time, is represented by the number of seconds that have elapsed since 1 January 1970 at 0:00:00 UTC. 
+:::
+
+::: {.fragment}
+If the offset is in seconds you'll want to use `as_date_time()` and if it's in days use `as_date()` for the conversion. 
+
+```{r}
+as_datetime(1)
+as_datetime(5057)
+as_date(1)
+as_date(5057)
+```
+
+<br>
+:::
 
 :::
 
+## Extracting Time Components
 
+We've discussed how to make a date/time object from individual components using `make_date()` and `make_datetime()` but what if you need to extract an element from a date/time? 
 
 . . . 
+
+There are a number of accessor functions that allow you to do just that. 
+
+```{r}
+datetime <- ymd_hms("2020-01-30 08:05:00")
+
+year(datetime)
+month(datetime) # <1>
+mday(datetime) # <2> 
+yday(datetime) # <3>
+wday(datetime) # <4>
+hour(datetime)
+minute(datetime)
+second(datetime)
+```
+1. You can set `label = TRUE` to return the abbreviated name and `abbr = FALSE` to return the full name (i.e. `month(datetime, label = TRUE)` returns  **<span style="color:#76b7b2">`r month(datetime, label = TRUE)`</span>** and `month(datetime, label = TRUE, abbr = FALSE)` returns **<span style="color:#76b7b2">`r month(datetime, label = TRUE, abbr = FALSE)`</span>**)
+2. Day of the month.
+3. Day of the year.
+4. Day of the week. You can set `label = TRUE` to return the abbreviated name and `abbr = FALSE` to return the full name (i.e. `wday(datetime, label = TRUE)` returns  **<span style="color:#76b7b2">`r wday(datetime, label = TRUE)`</span>** and `wday(datetime, label = TRUE, abbr = FALSE)` returns **<span style="color:#76b7b2">`r wday(datetime, label = TRUE, abbr = FALSE)`</span>**)
+
+## Rounding Dates
+
+Alternatively, you can round your date/time objects to a nearby unit with these three functions: `floor_date()`, `round_date()`, and `ceiling_date()`.
+
+. . . 
+
+```{r}
+datetime <- ymd_hms("2023-05-22 06:20:00")
+
+floor_date() # <5>
+round_date() # <5>
+ceiling_date() # <5>
+```
+
+5. These functions take 3 arguments: a date/time vector, a unit of time to round by (valid base units include `second`, `minute`, `hour`, `day`, `week`, `month`, `bimonth`, `quarter`, `season`, `halfyear` and `year`), and the day of the week that the week starts (default is 7, or Sunday). 
 
 ## NExt
 

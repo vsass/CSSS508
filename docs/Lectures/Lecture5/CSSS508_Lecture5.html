@@ -2573,6 +2573,7 @@ Levels: a &lt; b &lt; c</code></pre>
 </div>
 <div class="fragment">
 <p><br></p>
+<div class="custom-small">
 <table>
 <caption>All date formats understood by readr<sup>2</sup>
 </caption>
@@ -2689,6 +2690,7 @@ Levels: a &lt; b &lt; c</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
 <p><br></p>
 </div>
 <div class="fragment">
@@ -2713,8 +2715,6 @@ Levels: a &lt; b &lt; c</code></pre>
 <p>You can also use lubridate’s helper functions to specify a date format automatically.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a><span class="fu">ymd</span>(<span class="st">"2017-01-31"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2017-01-31"</code></pre>
 </div>
@@ -2727,12 +2727,11 @@ Levels: a &lt; b &lt; c</code></pre>
 <pre><code>[1] "2017-01-31"</code></pre>
 </div>
 </div>
+<p><br></p>
 <div class="fragment">
 <p>If you need to specify a date-time you can use these helper functions:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="fu">ymd_hms</span>(<span class="st">"2017-01-31 20:11:59"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2017-01-31 20:11:59 UTC"</code></pre>
 </div>
@@ -2747,8 +2746,6 @@ Levels: a &lt; b &lt; c</code></pre>
 <p>If you provide a date object with a timezone it’ll automatically be converted to a date-time object.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a><span class="fu">ymd</span>(<span class="st">"2017-01-31"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2017-01-31 UTC"</code></pre>
 </div>
@@ -2786,44 +2783,119 @@ Levels: a &lt; b &lt; c</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1"></a>flights2 <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
 <span id="cb92-2"><a href="#cb92-2"></a>  <span class="fu">select</span>(year, month, day, hour, minute) <span class="sc">|&gt;</span> </span>
-<span id="cb92-3"><a href="#cb92-3"></a>  <span class="fu">mutate</span>(<span class="at">departure =</span> <span class="fu">make_datetime</span>(year, month, day, hour, minute))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb92-3"><a href="#cb92-3"></a>  <span class="fu">mutate</span>(<span class="at">departure =</span> <span class="fu">make_datetime</span>(year, month, day, hour, minute))</span>
+<span id="cb92-4"><a href="#cb92-4"></a>flights2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
-
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 6
+    year month   day  hour minute departure          
+   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dttm&gt;             
+ 1  2013     1     1     5     15 2013-01-01 05:15:00
+ 2  2013     1     1     5     29 2013-01-01 05:29:00
+ 3  2013     1     1     5     40 2013-01-01 05:40:00
+ 4  2013     1     1     5     45 2013-01-01 05:45:00
+ 5  2013     1     1     6      0 2013-01-01 06:00:00
+ 6  2013     1     1     5     58 2013-01-01 05:58:00
+ 7  2013     1     1     6      0 2013-01-01 06:00:00
+ 8  2013     1     1     6      0 2013-01-01 06:00:00
+ 9  2013     1     1     6      0 2013-01-01 06:00:00
+10  2013     1     1     6      0 2013-01-01 06:00:00
+# ℹ 336,766 more rows</code></pre>
+</div>
 </div>
 <p><br></p>
 </div>
 <div class="fragment">
-<p>Note that when you use date-times in a numeric context (like in a histogram), 1 means 1 second, so a <code>binwidth</code> of 86400 means one day.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a><span class="fu">ggplot</span>(flights2, <span class="fu">aes</span>(<span class="at">x =</span> departure)) <span class="sc">+</span> </span>
-<span id="cb93-2"><a href="#cb93-2"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">binwidth =</span> <span class="dv">86400</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that when you use date-times in a numeric context (like in a histogram), 1 means 1 second, so a <code>binwidth</code> of 86400 means one day. For dates, 1 means 1 day.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1"></a><span class="fu">ggplot</span>(flights2, <span class="fu">aes</span>(<span class="at">x =</span> departure)) <span class="sc">+</span> </span>
+<span id="cb94-2"><a href="#cb94-2"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">binwidth =</span> <span class="dv">86400</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-76-1.svg"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-76-1.svg"></p>
+</figure>
+</div>
 </div>
 </div>
 <p><br></p>
-</div>
-<div class="fragment">
-<p>For dates, 1 means 1 day.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1"></a>billboard_2000 <span class="sc">|&gt;</span> </span>
-<span id="cb94-2"><a href="#cb94-2"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">ifelse</span>(week <span class="sc">==</span> <span class="dv">1</span>, </span>
-<span id="cb94-3"><a href="#cb94-3"></a>                       date_entered, </span>
-<span id="cb94-4"><a href="#cb94-4"></a>                       date_entered <span class="sc">+</span> <span class="fu">weeks</span>(<span class="at">x =</span> week)))</span>
-<span id="cb94-5"><a href="#cb94-5"></a></span>
-<span id="cb94-6"><a href="#cb94-6"></a><span class="fu">ggplot</span>(, <span class="fu">aes</span>(<span class="at">x =</span> date_entered, <span class="at">y =</span> rank, <span class="at">group =</span> track)) <span class="sc">+</span> </span>
-<span id="cb94-7"><a href="#cb94-7"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb94-8"><a href="#cb94-8"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </div>
 </div>
 <div id="tabset-5-4">
-
+<p><code>as_datetime()</code> and <code>as_date()</code> are used to coerce existing date/time objects into their counterpart.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a><span class="fu">as_datetime</span>(<span class="fu">today</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2023-10-24 UTC"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a><span class="fu">as_date</span>(<span class="fu">now</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2023-10-24"</code></pre>
+</div>
+</div>
+<p><br></p>
+<div class="fragment">
+<p>While <code>ISO8601</code> format is read in as a string of human-readable date/times, another common date/time format, <code>Unix</code> time, is represented by the number of seconds that have elapsed since 1 January 1970 at 0:00:00 UTC.</p>
+</div>
+<div class="fragment">
+<p>If the offset is in seconds you’ll want to use <code>as_date_time()</code> and if it’s in days use <code>as_date()</code> for the conversion.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a><span class="fu">as_datetime</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1970-01-01 00:00:01 UTC"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1"></a><span class="fu">as_datetime</span>(<span class="dv">5057</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1970-01-01 01:24:17 UTC"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1"></a><span class="fu">as_date</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1970-01-02"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1"></a><span class="fu">as_date</span>(<span class="dv">5057</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1983-11-06"</code></pre>
+</div>
+</div>
+<p><br></p>
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn20"><p>The international standard for writing dates.</p></li><li id="fn21"><p>Note that no matter how you specify the date format, it’s always displayed the same way once you get it into R: <code>%Y-%m-%d</code></p></li><li id="fn22"><p>If you’re using either <code>%b</code> or <code>%B</code> and working with non-English dates, you’ll also need to provide a locale(). See <a href="https://readr.tidyverse.org/reference/date_names.html">these functions</a> for more information.</p></li></ol></aside></section><section id="next" class="slide level2"><h2>NExt</h2>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn20"><p>The international standard for writing dates.</p></li><li id="fn21"><p>Note that no matter how you specify the date format, it’s always displayed the same way once you get it into R: <code>%Y-%m-%d</code></p></li><li id="fn22"><p>If you’re using either <code>%b</code> or <code>%B</code> and working with non-English dates, you’ll also need to provide a locale(). See <a href="https://readr.tidyverse.org/reference/date_names.html">these functions</a> for more information.</p></li></ol></aside></section><section id="extracting-time-components" class="slide level2"><h2>Extracting Time Components</h2>
+<p>We’ve discussed how to make a date/time object from individual components but what if you need to extract an element from a date/time?</p>
+<div class="fragment">
+<p>There are a number of accessor functions that allow you to do just that.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-49"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-49-1"><a href="#annotated-cell-49-1"></a>datetime <span class="ot">&lt;-</span> <span class="fu">ymd_hms</span>(<span class="st">"2020-01-30 08:05:00"</span>)</span>
+<span id="annotated-cell-49-2"><a href="#annotated-cell-49-2"></a></span>
+<span id="annotated-cell-49-3"><a href="#annotated-cell-49-3"></a><span class="fu">year</span>(datetime)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-49" data-target-annotation="1">1</button><span id="annotated-cell-49-4" class="code-annotation-target"><a href="#annotated-cell-49-4"></a><span class="fu">month</span>(datetime)</span>
+<span id="annotated-cell-49-5"><a href="#annotated-cell-49-5"></a><span class="fu">mday</span>(datetime)</span>
+<span id="annotated-cell-49-6"><a href="#annotated-cell-49-6"></a><span class="fu">yday</span>(datetime)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-49" data-target-annotation="2">2</button><span id="annotated-cell-49-7" class="code-annotation-target"><a href="#annotated-cell-49-7"></a><span class="fu">wday</span>(datetime)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-49" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-49" data-code-lines="4" data-code-annotation="1">You can set <code>label = TRUE</code> to return the abbreviated name and <code>abbr = FALSE</code> to return the full name (i.e.&nbsp;<code>month(datetime, label = TRUE)</code> returns <strong><span style="color:#76b7b2">Jan</span></strong> and <code>month(datetime, label = TRUE, abbr = FALSE)</code> returns <strong><span style="color:#76b7b2">January</span></strong>)</span>
+</dd>
+<dt data-target-cell="annotated-cell-49" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-49" data-code-lines="7" data-code-annotation="2">You can set <code>label = TRUE</code> to return the abbreviated name and <code>abbr = FALSE</code> to return the full name (i.e.&nbsp;<code>wday(datetime, label = TRUE)</code> returns <strong><span style="color:#76b7b2">Thu</span></strong> and <code>wday(datetime, label = TRUE, abbr = FALSE)</code> returns <strong><span style="color:#76b7b2">Thursday</span></strong>)</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2020
+[1] 1
+[1] 30
+[1] 30
+[1] 5</code></pre>
+</div>
+</div>
+</div>
+</section><section id="next" class="slide level2"><h2>NExt</h2>
 <p>Dates and times are challenging data types because there are physical properties but also additional geopolitical definitions that don’t always neatly align with physical reality.</p>
 <p>The package <code>lubridate</code> (part of the tidyverse) has a <em>very large</em> number of functions you can use!</p>
 <div class="fragment">
@@ -2839,9 +2911,9 @@ Levels: a &lt; b &lt; c</code></pre>
 </section><section id="dates-in-billboard_2000" class="slide level2"><h2>Dates in <code>billboard_2000</code>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a>billboard_2000 <span class="sc">%&gt;%</span> </span>
-<span id="cb95-2"><a href="#cb95-2"></a>  <span class="fu">select</span>(date.entered) <span class="sc">%&gt;%</span> </span>
-<span id="cb95-3"><a href="#cb95-3"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1"></a>billboard_2000 <span class="sc">%&gt;%</span> </span>
+<span id="cb108-2"><a href="#cb108-2"></a>  <span class="fu">select</span>(date.entered) <span class="sc">%&gt;%</span> </span>
+<span id="cb108-3"><a href="#cb108-3"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 1
    date.entered
@@ -2860,41 +2932,41 @@ Levels: a &lt; b &lt; c</code></pre>
 </div>
 </section><section id="extracting-year-month-or-day" class="slide level2"><h2>Extracting Year, Month, or Day</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb97-2"><a href="#cb97-2"></a><span class="fu">head</span>(billboard_2000<span class="sc">$</span>date.entered, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb110-2"><a href="#cb110-2"></a><span class="fu">head</span>(billboard_2000<span class="sc">$</span>date.entered, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2000-02-26" "2000-02-26" "2000-02-26" "2000-02-26" "2000-02-26"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a><span class="fu">year</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
-<span id="cb99-2"><a href="#cb99-2"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a><span class="fu">year</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
+<span id="cb112-2"><a href="#cb112-2"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2000 2000 2000 2000 2000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1"></a><span class="fu">month</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
-<span id="cb101-2"><a href="#cb101-2"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1"></a><span class="fu">month</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
+<span id="cb114-2"><a href="#cb114-2"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2 2 2 2 2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1"></a><span class="fu">day</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
-<span id="cb103-2"><a href="#cb103-2"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1"></a><span class="fu">day</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
+<span id="cb116-2"><a href="#cb116-2"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 26 26 26 26 26</code></pre>
 </div>
 </div>
 </section><section id="extracting-weekday-quarter-and-leap-year-boolean" class="slide level2"><h2>Extracting Weekday, Quarter, and Leap Year Boolean</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1"></a><span class="fu">wday</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
-<span id="cb105-2"><a href="#cb105-2"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1"></a><span class="fu">wday</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
+<span id="cb118-2"><a href="#cb118-2"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7 7 7 7 7</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1"></a><span class="fu">quarter</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
-<span id="cb107-2"><a href="#cb107-2"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1"></a><span class="fu">quarter</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
+<span id="cb120-2"><a href="#cb120-2"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 1 1 1 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1"></a><span class="fu">leap_year</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
-<span id="cb109-2"><a href="#cb109-2"></a>   <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1"></a><span class="fu">leap_year</span>(billboard_2000<span class="sc">$</span>date.entered) <span class="sc">%&gt;%</span> </span>
+<span id="cb122-2"><a href="#cb122-2"></a>   <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE TRUE TRUE TRUE TRUE</code></pre>
 </div>
@@ -2922,12 +2994,12 @@ Levels: a &lt; b &lt; c</code></pre>
 </ol></section><section id="example-question" class="slide level2"><h2>Example: Question</h2>
 <p><strong>Question:</strong> Do songs that hit #1 have a different trajectory than those that don’t?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1"></a>billboard_2000_question <span class="ot">&lt;-</span> billboard_2000 <span class="sc">%&gt;%</span></span>
-<span id="cb111-2"><a href="#cb111-2"></a>    <span class="fu">group_by</span>(artist, track) <span class="sc">%&gt;%</span></span>
-<span id="cb111-3"><a href="#cb111-3"></a>    <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Weeks at #1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(rank <span class="sc">==</span> <span class="dv">1</span>),</span>
-<span id="cb111-4"><a href="#cb111-4"></a>           <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">ifelse</span>(<span class="fu">any</span>(rank <span class="sc">==</span> <span class="dv">1</span>),</span>
-<span id="cb111-5"><a href="#cb111-5"></a>                                  <span class="st">"Hit #1"</span>,</span>
-<span id="cb111-6"><a href="#cb111-6"></a>                                  <span class="st">"Didn't hit #1"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1"></a>billboard_2000_question <span class="ot">&lt;-</span> billboard_2000 <span class="sc">%&gt;%</span></span>
+<span id="cb124-2"><a href="#cb124-2"></a>    <span class="fu">group_by</span>(artist, track) <span class="sc">%&gt;%</span></span>
+<span id="cb124-3"><a href="#cb124-3"></a>    <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Weeks at #1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(rank <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb124-4"><a href="#cb124-4"></a>           <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">ifelse</span>(<span class="fu">any</span>(rank <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb124-5"><a href="#cb124-5"></a>                                  <span class="st">"Hit #1"</span>,</span>
+<span id="cb124-6"><a href="#cb124-6"></a>                                  <span class="st">"Didn't hit #1"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <aside><div>
@@ -2941,26 +3013,26 @@ Levels: a &lt; b &lt; c</code></pre>
 <div class="tab-content">
 <div id="tabset-6-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb112-2"><a href="#cb112-2"></a><span class="fu">library</span>(ggthemes)</span>
-<span id="cb112-3"><a href="#cb112-3"></a>billboard_trajectories <span class="ot">&lt;-</span> </span>
-<span id="cb112-4"><a href="#cb112-4"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> billboard_2000_question,</span>
-<span id="cb112-5"><a href="#cb112-5"></a>         <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> rank, <span class="at">group =</span> track,</span>
-<span id="cb112-6"><a href="#cb112-6"></a>             <span class="at">color =</span> <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>)) <span class="sc">+</span></span>
-<span id="cb112-7"><a href="#cb112-7"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">size =</span> <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb112-8"><a href="#cb112-8"></a>  <span class="fu">theme_tufte</span>() <span class="sc">+</span></span>
-<span id="cb112-9"><a href="#cb112-9"></a>  <span class="fu">xlab</span>(<span class="st">"Week"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Rank"</span>) <span class="sc">+</span></span>
-<span id="cb112-10"><a href="#cb112-10"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
-<span id="cb112-11"><a href="#cb112-11"></a>  <span class="fu">scale_size_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb112-12"><a href="#cb112-12"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.90</span>, <span class="fl">0.75</span>),</span>
-<span id="cb112-13"><a href="#cb112-13"></a>        <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"transparent"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb125-2"><a href="#cb125-2"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb125-3"><a href="#cb125-3"></a>billboard_trajectories <span class="ot">&lt;-</span> </span>
+<span id="cb125-4"><a href="#cb125-4"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> billboard_2000_question,</span>
+<span id="cb125-5"><a href="#cb125-5"></a>         <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> rank, <span class="at">group =</span> track,</span>
+<span id="cb125-6"><a href="#cb125-6"></a>             <span class="at">color =</span> <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb125-7"><a href="#cb125-7"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">size =</span> <span class="st">`</span><span class="at">Peak Rank</span><span class="st">`</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb125-8"><a href="#cb125-8"></a>  <span class="fu">theme_tufte</span>() <span class="sc">+</span></span>
+<span id="cb125-9"><a href="#cb125-9"></a>  <span class="fu">xlab</span>(<span class="st">"Week"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Rank"</span>) <span class="sc">+</span></span>
+<span id="cb125-10"><a href="#cb125-10"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb125-11"><a href="#cb125-11"></a>  <span class="fu">scale_size_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb125-12"><a href="#cb125-12"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.90</span>, <span class="fl">0.75</span>),</span>
+<span id="cb125-13"><a href="#cb125-13"></a>        <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"transparent"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-6-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1"></a>billboard_trajectories</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1"></a>billboard_trajectories</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-84-1.svg"></p>
+<p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-87-1.svg"></p>
 </div>
 </div>
 </div>
@@ -2977,23 +3049,23 @@ Levels: a &lt; b &lt; c</code></pre>
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="jutptqvcto" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#jutptqvcto table {
+<div id="fcqzmqttpz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fcqzmqttpz table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#jutptqvcto thead, #jutptqvcto tbody, #jutptqvcto tfoot, #jutptqvcto tr, #jutptqvcto td, #jutptqvcto th {
+#fcqzmqttpz thead, #fcqzmqttpz tbody, #fcqzmqttpz tfoot, #fcqzmqttpz tr, #fcqzmqttpz td, #fcqzmqttpz th {
   border-style: none;
 }
 
-#jutptqvcto p {
+#fcqzmqttpz p {
   margin: 0;
   padding: 0;
 }
 
-#jutptqvcto .gt_table {
+#fcqzmqttpz .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3019,12 +3091,12 @@ Levels: a &lt; b &lt; c</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#jutptqvcto .gt_caption {
+#fcqzmqttpz .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#jutptqvcto .gt_title {
+#fcqzmqttpz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3036,7 +3108,7 @@ Levels: a &lt; b &lt; c</code></pre>
   border-bottom-width: 0;
 }
 
-#jutptqvcto .gt_subtitle {
+#fcqzmqttpz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3048,7 +3120,7 @@ Levels: a &lt; b &lt; c</code></pre>
   border-top-width: 0;
 }
 
-#jutptqvcto .gt_heading {
+#fcqzmqttpz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3060,13 +3132,13 @@ Levels: a &lt; b &lt; c</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#jutptqvcto .gt_bottom_border {
+#fcqzmqttpz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jutptqvcto .gt_col_headings {
+#fcqzmqttpz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3081,7 +3153,7 @@ Levels: a &lt; b &lt; c</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#jutptqvcto .gt_col_heading {
+#fcqzmqttpz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3101,7 +3173,7 @@ Levels: a &lt; b &lt; c</code></pre>
   overflow-x: hidden;
 }
 
-#jutptqvcto .gt_column_spanner_outer {
+#fcqzmqttpz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3113,15 +3185,15 @@ Levels: a &lt; b &lt; c</code></pre>
   padding-right: 4px;
 }
 
-#jutptqvcto .gt_column_spanner_outer:first-child {
+#fcqzmqttpz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jutptqvcto .gt_column_spanner_outer:last-child {
+#fcqzmqttpz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jutptqvcto .gt_column_spanner {
+#fcqzmqttpz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3133,11 +3205,11 @@ Levels: a &lt; b &lt; c</code></pre>
   width: 100%;
 }
 
-#jutptqvcto .gt_spanner_row {
+#fcqzmqttpz .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#jutptqvcto .gt_group_heading {
+#fcqzmqttpz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3163,7 +3235,7 @@ Levels: a &lt; b &lt; c</code></pre>
   text-align: left;
 }
 
-#jutptqvcto .gt_empty_group_heading {
+#fcqzmqttpz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3178,15 +3250,15 @@ Levels: a &lt; b &lt; c</code></pre>
   vertical-align: middle;
 }
 
-#jutptqvcto .gt_from_md > :first-child {
+#fcqzmqttpz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jutptqvcto .gt_from_md > :last-child {
+#fcqzmqttpz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jutptqvcto .gt_row {
+#fcqzmqttpz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3205,7 +3277,7 @@ Levels: a &lt; b &lt; c</code></pre>
   overflow-x: hidden;
 }
 
-#jutptqvcto .gt_stub {
+#fcqzmqttpz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3218,7 +3290,7 @@ Levels: a &lt; b &lt; c</code></pre>
   padding-right: 5px;
 }
 
-#jutptqvcto .gt_stub_row_group {
+#fcqzmqttpz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3232,15 +3304,15 @@ Levels: a &lt; b &lt; c</code></pre>
   vertical-align: top;
 }
 
-#jutptqvcto .gt_row_group_first td {
+#fcqzmqttpz .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jutptqvcto .gt_row_group_first th {
+#fcqzmqttpz .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#jutptqvcto .gt_summary_row {
+#fcqzmqttpz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3250,16 +3322,16 @@ Levels: a &lt; b &lt; c</code></pre>
   padding-right: 5px;
 }
 
-#jutptqvcto .gt_first_summary_row {
+#fcqzmqttpz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jutptqvcto .gt_first_summary_row.thick {
+#fcqzmqttpz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jutptqvcto .gt_last_summary_row {
+#fcqzmqttpz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3269,7 +3341,7 @@ Levels: a &lt; b &lt; c</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#jutptqvcto .gt_grand_summary_row {
+#fcqzmqttpz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3279,7 +3351,7 @@ Levels: a &lt; b &lt; c</code></pre>
   padding-right: 5px;
 }
 
-#jutptqvcto .gt_first_grand_summary_row {
+#fcqzmqttpz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3289,7 +3361,7 @@ Levels: a &lt; b &lt; c</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#jutptqvcto .gt_last_grand_summary_row_top {
+#fcqzmqttpz .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3299,11 +3371,11 @@ Levels: a &lt; b &lt; c</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#jutptqvcto .gt_striped {
+#fcqzmqttpz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jutptqvcto .gt_table_body {
+#fcqzmqttpz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3312,7 +3384,7 @@ Levels: a &lt; b &lt; c</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#jutptqvcto .gt_footnotes {
+#fcqzmqttpz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3326,7 +3398,7 @@ Levels: a &lt; b &lt; c</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#jutptqvcto .gt_footnote {
+#fcqzmqttpz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3335,7 +3407,7 @@ Levels: a &lt; b &lt; c</code></pre>
   padding-right: 5px;
 }
 
-#jutptqvcto .gt_sourcenotes {
+#fcqzmqttpz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3349,7 +3421,7 @@ Levels: a &lt; b &lt; c</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#jutptqvcto .gt_sourcenote {
+#fcqzmqttpz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3357,63 +3429,63 @@ Levels: a &lt; b &lt; c</code></pre>
   padding-right: 5px;
 }
 
-#jutptqvcto .gt_left {
+#fcqzmqttpz .gt_left {
   text-align: left;
 }
 
-#jutptqvcto .gt_center {
+#fcqzmqttpz .gt_center {
   text-align: center;
 }
 
-#jutptqvcto .gt_right {
+#fcqzmqttpz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jutptqvcto .gt_font_normal {
+#fcqzmqttpz .gt_font_normal {
   font-weight: normal;
 }
 
-#jutptqvcto .gt_font_bold {
+#fcqzmqttpz .gt_font_bold {
   font-weight: bold;
 }
 
-#jutptqvcto .gt_font_italic {
+#fcqzmqttpz .gt_font_italic {
   font-style: italic;
 }
 
-#jutptqvcto .gt_super {
+#fcqzmqttpz .gt_super {
   font-size: 65%;
 }
 
-#jutptqvcto .gt_footnote_marks {
+#fcqzmqttpz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#jutptqvcto .gt_asterisk {
+#fcqzmqttpz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jutptqvcto .gt_indent_1 {
+#fcqzmqttpz .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jutptqvcto .gt_indent_2 {
+#fcqzmqttpz .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jutptqvcto .gt_indent_3 {
+#fcqzmqttpz .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jutptqvcto .gt_indent_4 {
+#fcqzmqttpz .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jutptqvcto .gt_indent_5 {
+#fcqzmqttpz .gt_indent_5 {
   text-indent: 25px;
 }
 </style>

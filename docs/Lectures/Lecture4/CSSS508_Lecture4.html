@@ -2487,12 +2487,233 @@
 <li>In <code>ggplot</code>, create a line plot showing life expectancy over time by country. Make the plot visually appealing!</li>
 </ol>
 </section>
-
-
-
-
-
+<section id="answers" class="slide level2">
+<h2>Answers</h2>
+<p>Question 1:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a>subset_gapminder <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb75-2"><a href="#cb75-2"></a>  <span class="fu">filter</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"China"</span>,<span class="st">"India"</span>,<span class="st">"United States"</span>),  year <span class="sc">&gt;</span> <span class="dv">1980</span> ) <span class="sc">|&gt;</span></span>
+<span id="cb75-3"><a href="#cb75-3"></a>  <span class="fu">select</span>(country, year, pop, lifeExp)</span>
+<span id="cb75-4"><a href="#cb75-4"></a>subset_gapminder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 4
+   country        year        pop lifeExp
+   &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;
+ 1 China          1982 1000281000    65.5
+ 2 China          1987 1084035000    67.3
+ 3 China          1992 1164970000    68.7
+ 4 China          1997 1230075000    70.4
+ 5 China          2002 1280400000    72.0
+ 6 China          2007 1318683096    73.0
+ 7 India          1982  708000000    56.6
+ 8 India          1987  788000000    58.6
+ 9 India          1992  872000000    60.2
+10 India          1997  959000000    61.8
+11 India          2002 1034172547    62.9
+12 India          2007 1110396331    64.7
+13 United States  1982  232187835    74.6
+14 United States  1987  242803533    75.0
+15 United States  1992  256894189    76.1
+16 United States  1997  272911760    76.8
+17 United States  2002  287675526    77.3
+18 United States  2007  301139947    78.2</code></pre>
+</div>
+</div>
 </section>
+<section id="answers-1" class="slide level2">
+<h2>Answers</h2>
+<p>Question 2:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1"></a><span class="co"># Option 1</span></span>
+<span id="cb77-2"><a href="#cb77-2"></a><span class="fu">c</span>(<span class="fu">nrow</span>(subset_gapminder), <span class="fu">ncol</span>(subset_gapminder))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 18  4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a><span class="co"># Option 2</span></span>
+<span id="cb79-2"><a href="#cb79-2"></a><span class="fu">glimpse</span>(subset_gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 18
+Columns: 4
+$ country &lt;fct&gt; "China", "China", "China", "China", "China", "China", "India",…
+$ year    &lt;int&gt; 1982, 1987, 1992, 1997, 2002, 2007, 1982, 1987, 1992, 1997, 20…
+$ pop     &lt;int&gt; 1000281000, 1084035000, 1164970000, 1230075000, 1280400000, 13…
+$ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58.553…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a><span class="co"># Option 3</span></span>
+<span id="cb81-2"><a href="#cb81-2"></a><span class="fu">dim</span>(subset_gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 18  4</code></pre>
+</div>
+</div>
+</section>
+<section id="answers-2" class="slide level2">
+<h2>Answers</h2>
+<p>Question 3:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a>subset_gapminder <span class="ot">&lt;-</span> subset_gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb83-2"><a href="#cb83-2"></a>  <span class="fu">arrange</span>(year, <span class="fu">desc</span>(pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a>subset_gapminder <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country        year        pop lifeExp
+  &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;
+1 China          1982 1000281000    65.5
+2 India          1982  708000000    56.6
+3 United States  1982  232187835    74.6
+4 China          1987 1084035000    67.3
+5 India          1987  788000000    58.6
+6 United States  1987  242803533    75.0</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a><span class="fu">print</span>(subset_gapminder[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country        year        pop lifeExp
+  &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;
+1 China          1982 1000281000    65.5
+2 India          1982  708000000    56.6
+3 United States  1982  232187835    74.6
+4 China          1987 1084035000    67.3
+5 India          1987  788000000    58.6
+6 United States  1987  242803533    75.0</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="answers-3" class="slide level2">
+<h2>Answers</h2>
+<p>Question 4:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a>subset_gapminder <span class="ot">&lt;-</span> subset_gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb88-2"><a href="#cb88-2"></a>  <span class="fu">mutate</span>(<span class="at">pop_billions =</span> pop<span class="sc">/</span><span class="dv">1000000000</span>)</span>
+<span id="cb88-3"><a href="#cb88-3"></a></span>
+<span id="cb88-4"><a href="#cb88-4"></a>subset_gapminder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 5
+   country        year        pop lifeExp pop_billions
+   &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;        &lt;dbl&gt;
+ 1 China          1982 1000281000    65.5        1.00 
+ 2 India          1982  708000000    56.6        0.708
+ 3 United States  1982  232187835    74.6        0.232
+ 4 China          1987 1084035000    67.3        1.08 
+ 5 India          1987  788000000    58.6        0.788
+ 6 United States  1987  242803533    75.0        0.243
+ 7 China          1992 1164970000    68.7        1.16 
+ 8 India          1992  872000000    60.2        0.872
+ 9 United States  1992  256894189    76.1        0.257
+10 China          1997 1230075000    70.4        1.23 
+11 India          1997  959000000    61.8        0.959
+12 United States  1997  272911760    76.8        0.273
+13 China          2002 1280400000    72.0        1.28 
+14 India          2002 1034172547    62.9        1.03 
+15 United States  2002  287675526    77.3        0.288
+16 China          2007 1318683096    73.0        1.32 
+17 India          2007 1110396331    64.7        1.11 
+18 United States  2007  301139947    78.2        0.301</code></pre>
+</div>
+</div>
+</section>
+<section id="answers-4" class="slide level2">
+<h2>Answers</h2>
+<p>Question 5:</p>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Classic syntax</a></li><li><a href="#tabset-2-2">New syntax (dplyr 1.1.0)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a>subset_gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb90-2"><a href="#cb90-2"></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span> </span>
+<span id="cb90-3"><a href="#cb90-3"></a>  <span class="fu">summarize</span>(<span class="at">TotalPop_Billions =</span> <span class="fu">sum</span>(pop_billions))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+   year TotalPop_Billions
+  &lt;int&gt;             &lt;dbl&gt;
+1  1982              1.94
+2  1987              2.11
+3  1992              2.29
+4  1997              2.46
+5  2002              2.60
+6  2007              2.73</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1"></a>subset_gapminder <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-1-2"><a href="#annotated-cell-1-2"></a>  <span class="fu">summarize</span>(<span class="at">TotalPop_Billions =</span> <span class="fu">sum</span>(pop_billions), </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-3" class="code-annotation-target"><a href="#annotated-cell-1-3"></a>            <span class="at">.by =</span> year)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-lines="3" data-code-cell="annotated-cell-1" data-code-annotation="1">This new syntax allows for per-operation grouping which means it is only active within a single verb at a time (as opposed to being applied to the entire tibble until <code>ungroup()</code> is called). Learn more about this new feature <a href="https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/">here</a>)</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+   year TotalPop_Billions
+  &lt;int&gt;             &lt;dbl&gt;
+1  1982              1.94
+2  1987              2.11
+3  1992              2.29
+4  1997              2.46
+5  2002              2.60
+6  2007              2.73</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="answers-5" class="slide level2">
+<h2>Answers</h2>
+<p>Question 6:</p>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Code</a></li><li><a href="#tabset-3-2">Plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a><span class="fu">library</span>(ggplot2) </span>
+<span id="cb93-2"><a href="#cb93-2"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb93-3"><a href="#cb93-3"></a><span class="fu">library</span>(geomtextpath)</span>
+<span id="cb93-4"><a href="#cb93-4"></a><span class="fu">ggplot</span>(subset_gapminder, <span class="fu">aes</span>(year, lifeExp, <span class="at">color =</span> country, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="cb93-5"><a href="#cb93-5"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb93-6"><a href="#cb93-6"></a>  <span class="fu">geom_textpath</span>(<span class="fu">aes</span>(<span class="at">label =</span> country)) <span class="sc">+</span></span>
+<span id="cb93-7"><a href="#cb93-7"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> </span>
+<span id="cb93-8"><a href="#cb93-8"></a>  <span class="fu">ylab</span>(<span class="st">"Life Expectancy (years)"</span>) <span class="sc">+</span></span>
+<span id="cb93-9"><a href="#cb93-9"></a>  <span class="fu">ggtitle</span>(<span class="st">"Life Expectancy (1982-2007)"</span>,<span class="st">"China, India, and United States"</span>) <span class="sc">+</span></span>
+<span id="cb93-10"><a href="#cb93-10"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1982</span>, <span class="dv">1987</span>, <span class="dv">1992</span>, <span class="dv">1997</span>, <span class="dv">2002</span>, <span class="dv">2007</span>), <span class="at">minor_breaks =</span> <span class="fu">c</span>()) <span class="sc">+</span></span>
+<span id="cb93-11"><a href="#cb93-11"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">80</span>)) <span class="sc">+</span> </span>
+<span id="cb93-12"><a href="#cb93-12"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">"Country"</span>) <span class="sc">+</span> </span>
+<span id="cb93-13"><a href="#cb93-13"></a>  <span class="fu">theme_tufte</span>(<span class="at">base_size =</span> <span class="dv">20</span>) <span class="sc">+</span> </span>
+<span id="cb93-14"><a href="#cb93-14"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-3-2">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="CSSS508_Lecture4_files/figure-revealjs/unnamed-chunk-65-1.svg"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></section>
 <section>
 <section id="homework" class="title-slide slide level1 section-title center" data-background-color="#1e4655">
 <h1>Homework</h1>
@@ -2503,44 +2724,44 @@
 <p>Answer each of the following questions. Be sure to display <strong>all your code in the knitted</strong> version (use <code>echo: true</code> throughout<sup>1</sup>).</p>
 <p>Remember, the package <code>nycflights13</code> contains data on flights originating in NYC during the year 2013. There are three airports servicing NYC: JFK, LGA (“LaGuardia”), and EWR (“Newark”).</p>
 <ol type="1">
-<li>Choose an airport outside New York, and count how many flights went to that airport from NYC in 2013. How many of those flights started at JFK, LGA, and EWR? (Hint: Use <code>filter</code>, <code>group_by</code>, and <code>summarize</code>)</li>
+<li>Choose an airport outside New York, and count how many flights went to that airport from NYC in 2013. How many of those flights started at JFK, LGA, and EWR respectively?</li>
 <li>The variable <code>arr_delay</code> contains arrival delays in minutes (negative values represent early arrivals). Make a <code>ggplot</code> histogram displaying arrival delays for 2013 flights from NYC to the airport you chose.</li>
-<li>Use <code>left_join</code> to add weather data at departure to the subsetted data<sup>2</sup>. Calculate the mean temperature by month at departure (<code>temp</code>) across all flights<sup>3</sup>.</li>
-<li>Investigate if there is a relationship between departure delay (<code>dep_delay</code>) and wind speed (<code>wind_speed</code>). Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation.</li>
+<li>Use <code>left_join</code> to add weather data at departure to the subsetted data<sup>2</sup>. Calculate the mean temperature by <code>month</code> at departure (<code>temp</code>) across all flights.</li>
+<li>Investigate if there is a relationship between departure delay (<code>dep_delay</code>) and precipitation (<code>precip</code>) in the full dataset. Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation.</li>
 </ol>
 <p>As always, submit both the .qmd and knitted .html to Canvas.</p>
 <p><br> <br></p>
 <aside><ol class="aside-footnotes"><li id="fn9"><p>You can make this a global option for your whole document by putting it directly in the YAML of your qmd:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb91-1"><a href="#cb91-1"></a><span class="pp">---</span></span>
-<span id="cb91-2"><a href="#cb91-2"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Document"</span></span>
-<span id="cb91-3"><a href="#cb91-3"></a><span class="fu">execute</span><span class="kw">:</span></span>
-<span id="cb91-4"><a href="#cb91-4"></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb91-5"><a href="#cb91-5"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb94-1"><a href="#cb94-1"></a><span class="pp">---</span></span>
+<span id="cb94-2"><a href="#cb94-2"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Document"</span></span>
+<span id="cb94-3"><a href="#cb94-3"></a><span class="fu">execute</span><span class="kw">:</span></span>
+<span id="cb94-4"><a href="#cb94-4"></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb94-5"><a href="#cb94-5"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</li><li id="fn10"><p>Hint 1: Match on <code>origin</code>, <code>year</code>, <code>month</code>, <code>day</code>, <strong>and</strong> <code>hour</code>!!</p></li><li id="fn11"><p>Hint 2: Use <code>mean(temp, na.rm=T)</code> to have R calculate an average after ignoring missing data values</p></li></ol></aside></section>
+</li><li id="fn10"><p>Hint: What variables could you match on that equal <code>time_hour</code>?</p></li></ol></aside></section>
 <section id="due-dates" class="slide level2">
 <h2>Due dates</h2>
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="ppakucdwfz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ppakucdwfz table {
+<div id="fyolbybjkc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fyolbybjkc table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ppakucdwfz thead, #ppakucdwfz tbody, #ppakucdwfz tfoot, #ppakucdwfz tr, #ppakucdwfz td, #ppakucdwfz th {
+#fyolbybjkc thead, #fyolbybjkc tbody, #fyolbybjkc tfoot, #fyolbybjkc tr, #fyolbybjkc td, #fyolbybjkc th {
   border-style: none;
 }
 
-#ppakucdwfz p {
+#fyolbybjkc p {
   margin: 0;
   padding: 0;
 }
 
-#ppakucdwfz .gt_table {
+#fyolbybjkc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2566,12 +2787,12 @@
   border-left-color: #D3D3D3;
 }
 
-#ppakucdwfz .gt_caption {
+#fyolbybjkc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ppakucdwfz .gt_title {
+#fyolbybjkc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2583,7 +2804,7 @@
   border-bottom-width: 0;
 }
 
-#ppakucdwfz .gt_subtitle {
+#fyolbybjkc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2595,7 +2816,7 @@
   border-top-width: 0;
 }
 
-#ppakucdwfz .gt_heading {
+#fyolbybjkc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2607,13 +2828,13 @@
   border-right-color: #D3D3D3;
 }
 
-#ppakucdwfz .gt_bottom_border {
+#fyolbybjkc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ppakucdwfz .gt_col_headings {
+#fyolbybjkc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2628,7 +2849,7 @@
   border-right-color: #D3D3D3;
 }
 
-#ppakucdwfz .gt_col_heading {
+#fyolbybjkc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2648,7 +2869,7 @@
   overflow-x: hidden;
 }
 
-#ppakucdwfz .gt_column_spanner_outer {
+#fyolbybjkc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2660,15 +2881,15 @@
   padding-right: 4px;
 }
 
-#ppakucdwfz .gt_column_spanner_outer:first-child {
+#fyolbybjkc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ppakucdwfz .gt_column_spanner_outer:last-child {
+#fyolbybjkc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ppakucdwfz .gt_column_spanner {
+#fyolbybjkc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2680,11 +2901,11 @@
   width: 100%;
 }
 
-#ppakucdwfz .gt_spanner_row {
+#fyolbybjkc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ppakucdwfz .gt_group_heading {
+#fyolbybjkc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2710,7 +2931,7 @@
   text-align: left;
 }
 
-#ppakucdwfz .gt_empty_group_heading {
+#fyolbybjkc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2725,15 +2946,15 @@
   vertical-align: middle;
 }
 
-#ppakucdwfz .gt_from_md > :first-child {
+#fyolbybjkc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ppakucdwfz .gt_from_md > :last-child {
+#fyolbybjkc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ppakucdwfz .gt_row {
+#fyolbybjkc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2752,7 +2973,7 @@
   overflow-x: hidden;
 }
 
-#ppakucdwfz .gt_stub {
+#fyolbybjkc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2765,7 +2986,7 @@
   padding-right: 5px;
 }
 
-#ppakucdwfz .gt_stub_row_group {
+#fyolbybjkc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2779,15 +3000,15 @@
   vertical-align: top;
 }
 
-#ppakucdwfz .gt_row_group_first td {
+#fyolbybjkc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ppakucdwfz .gt_row_group_first th {
+#fyolbybjkc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ppakucdwfz .gt_summary_row {
+#fyolbybjkc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2797,16 +3018,16 @@
   padding-right: 5px;
 }
 
-#ppakucdwfz .gt_first_summary_row {
+#fyolbybjkc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ppakucdwfz .gt_first_summary_row.thick {
+#fyolbybjkc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ppakucdwfz .gt_last_summary_row {
+#fyolbybjkc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2816,7 +3037,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#ppakucdwfz .gt_grand_summary_row {
+#fyolbybjkc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2826,7 +3047,7 @@
   padding-right: 5px;
 }
 
-#ppakucdwfz .gt_first_grand_summary_row {
+#fyolbybjkc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2836,7 +3057,7 @@
   border-top-color: #D3D3D3;
 }
 
-#ppakucdwfz .gt_last_grand_summary_row_top {
+#fyolbybjkc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2846,11 +3067,11 @@
   border-bottom-color: #D3D3D3;
 }
 
-#ppakucdwfz .gt_striped {
+#fyolbybjkc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ppakucdwfz .gt_table_body {
+#fyolbybjkc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2859,7 +3080,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#ppakucdwfz .gt_footnotes {
+#fyolbybjkc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2873,7 +3094,7 @@
   border-right-color: #D3D3D3;
 }
 
-#ppakucdwfz .gt_footnote {
+#fyolbybjkc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2882,7 +3103,7 @@
   padding-right: 5px;
 }
 
-#ppakucdwfz .gt_sourcenotes {
+#fyolbybjkc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2896,7 +3117,7 @@
   border-right-color: #D3D3D3;
 }
 
-#ppakucdwfz .gt_sourcenote {
+#fyolbybjkc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2904,63 +3125,63 @@
   padding-right: 5px;
 }
 
-#ppakucdwfz .gt_left {
+#fyolbybjkc .gt_left {
   text-align: left;
 }
 
-#ppakucdwfz .gt_center {
+#fyolbybjkc .gt_center {
   text-align: center;
 }
 
-#ppakucdwfz .gt_right {
+#fyolbybjkc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ppakucdwfz .gt_font_normal {
+#fyolbybjkc .gt_font_normal {
   font-weight: normal;
 }
 
-#ppakucdwfz .gt_font_bold {
+#fyolbybjkc .gt_font_bold {
   font-weight: bold;
 }
 
-#ppakucdwfz .gt_font_italic {
+#fyolbybjkc .gt_font_italic {
   font-style: italic;
 }
 
-#ppakucdwfz .gt_super {
+#fyolbybjkc .gt_super {
   font-size: 65%;
 }
 
-#ppakucdwfz .gt_footnote_marks {
+#fyolbybjkc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ppakucdwfz .gt_asterisk {
+#fyolbybjkc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ppakucdwfz .gt_indent_1 {
+#fyolbybjkc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ppakucdwfz .gt_indent_2 {
+#fyolbybjkc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ppakucdwfz .gt_indent_3 {
+#fyolbybjkc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ppakucdwfz .gt_indent_4 {
+#fyolbybjkc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ppakucdwfz .gt_indent_5 {
+#fyolbybjkc .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
