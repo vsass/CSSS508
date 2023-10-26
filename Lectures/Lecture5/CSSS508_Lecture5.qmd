@@ -34,6 +34,16 @@ revealjs-plugins:
 require(downlit)
 require(xml2)
 require(tidyverse)
+
+knitr::opts_chunk$set(
+  comment = ">"
+  # collapse = TRUE,
+  # cache = TRUE,
+  # fig.retina = 2,
+  # fig.width = 6,
+  # fig.asp = 2/3,
+  # fig.show = "hold"
+)
 ```
 
 [Importing, Exporting, and Cleaning Data]{.custom-title}
@@ -1672,6 +1682,10 @@ While they may look like character strings, Dates, Date-Times and Times^[The `hm
 :::
 ::::
 
+. . . 
+
+Dates and times are challenging data types because there are physical properties but also additional geopolitical definitions that don't always neatly align with physical reality.
+   
 ## Creating Dates/Date-Times <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
 ::: {.panel-tabset}
@@ -1866,12 +1880,13 @@ We've discussed how to make a date/time object from individual components using 
 There are a number of accessor functions that allow you to do just that. 
 
 ```{r}
-datetime <- ymd_hms("2020-01-30 08:05:00")
+#| output-location: fragment
+datetime <- ymd_hms("2020-01-30 12:30:45")
 
 year(datetime)
 month(datetime) # <1>
 mday(datetime) # <2> 
-yday(datetime) # <3>
+yday(datetime) # <3> 
 wday(datetime) # <4>
 hour(datetime)
 minute(datetime)
@@ -1882,6 +1897,42 @@ second(datetime)
 3. Day of the year.
 4. Day of the week. You can set `label = TRUE` to return the abbreviated name and `abbr = FALSE` to return the full name (i.e. `wday(datetime, label = TRUE)` returns  **<span style="color:#76b7b2">`r wday(datetime, label = TRUE)`</span>** and `wday(datetime, label = TRUE, abbr = FALSE)` returns **<span style="color:#76b7b2">`r wday(datetime, label = TRUE, abbr = FALSE)`</span>**)
 
+## Changing Date/Times
+
+While less common, you may need to recode a date/time variable which you can also do with these accessor functions. 
+
+. . . 
+
+```{r}
+datetime <- ymd_hms("2020-01-30 08:05:35")
+
+year(datetime) <- 2030
+hour(datetime) <- hour(datetime) + 1
+
+datetime
+```
+
+. . . 
+
+An alternative^[And more efficient when needing to specify multiple aspects of a date/time variable.] way to do this is by using `update()`:
+
+. . . 
+
+```{r}
+update(datetime, year = 2030, month = 2, mday = 2, hour = 2)
+```
+
+. . . 
+
+A nice feature of this function is that if values are too big for the unit in question, they will automatically roll over:
+
+. . . 
+
+```{r}
+update(ymd("2023-02-01"), mday = 30)
+```
+
+
 ## Rounding Dates
 
 Alternatively, you can round your date/time objects to a nearby unit with these three functions: `floor_date()`, `round_date()`, and `ceiling_date()`.
@@ -1889,91 +1940,260 @@ Alternatively, you can round your date/time objects to a nearby unit with these 
 . . . 
 
 ```{r}
-datetime <- ymd_hms("2023-05-22 06:20:00")
+#| output-location: fragment
+datetime <- ymd_hms("2020-01-30 08:05:35")
 
-floor_date() # <5>
-round_date() # <5>
-ceiling_date() # <5>
+floor_date(datetime, unit = "week") # <5>
+round_date(datetime, unit = "week", week_start = 1) # <5>
+ceiling_date(datetime, unit = "hour") # <5>
 ```
 
 5. These functions take 3 arguments: a date/time vector, a unit of time to round by (valid base units include `second`, `minute`, `hour`, `day`, `week`, `month`, `bimonth`, `quarter`, `season`, `halfyear` and `year`), and the day of the week that the week starts (default is 7, or Sunday). 
 
-## NExt
+## Spans of time
 
-Dates and times are challenging data types because there are physical properties but also additional geopolitical definitions that don't always neatly align with physical reality.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-The package `lubridate` (part of the tidyverse) has a *very large* number of functions you can use!
+There are three different timespan classes in `lubridate`, which reflect the complexity of date/time data.
 
 . . . 
 
-* Converting dates/times between formats (DD-MM-YY to YY-MM-DD)
-* Extracting dates/times (day of week, month, leap years, etc.)
-* Math with dates/times (time zone conversions, etc.)
+![](images/timespans.png){fig-align="center"}
+
+
+## Durations
+
+Durations represent precise physical time. When you subtract two dates, you'll get a `difftime` object. 
 
 . . . 
 
-There's too much to cover all of it, but I'll run through a few examples.
+```{r}
+s_age <- today() - ymd("2023-05-28")
+s_age # <6>    
+as.duration(s_age) # <7> 
+```
 
-## Dates in `billboard_2000` 
+6. `difftime` objects record time spans in seconds, minutes, hours, days, or weeks. This is fairly ambiguous so `lubridate` provides a more consistent alternative: the `duration`, which always uses seconds. 
+7. Larger units are created by converting minutes, hours, days, weeks, and years to seconds. 
+
+. . . 
+
+There are a variety of constructors to create durations: 
+
+```{r}
+dseconds(15)
+dminutes(10)
+dhours(c(12, 24))
+ddays(0:5)
+dweeks(3)
+dyears(1) # <8> 
+```
+
+8. Aggregating to larger time units is more problematic. A year uses the “average” number of days in a year, i.e. 365.25. There’s no way to convert a month to a duration, because there’s just too much variation.
+
+## Math with Durations
+
+You can add and multiply durations:
+
+```{r}
+2 * dyears(1)
+dyears(1) + dweeks(12) + dhours(15)
+```
+
+. . . 
+
+Sometimes you'll get an unexpected results though: 
+
+```{r}
+one_am <- ymd_hms("2026-03-08 01:00:00", tz = "America/New_York")
+one_am
+one_am + ddays(1) # <9> 
+```
+
+9. Daylight Savings Time is a human construction so March 8th only has 23 hours because it’s when DST starts. If we add a full days worth of seconds we end up with a different time and a different time zone. 
+
+. . . 
+
+For this reason, `lubridate` also has `periods`. 
+
+## Periods
+
+Periods represent "human" times like days and months and therefore do not have a fixed length in seconds. 
+
+. . . 
+
+```{r}
+one_am
+one_am + days(1)
+```
+
+. . . 
+
+<br> 
+
+Periods also have their own constructor functions: 
+
+. . . 
+
+```{r}
+hours(c(12, 24))
+days(7)
+months(1:6)
+```
+
+## Math with Periods
+
+We can add and multiply periods: 
+
+```{r}
+10 * (months(6) + days(1))
+days(50) + hours(25) + minutes(2)
+```
+
+. . . 
+
+<br>
+
+And also add them to dates. 
+
+```{r}
+# A leap year
+ymd("2024-01-01") + dyears(1)
+ymd("2024-01-01") + years(1)
+
+# Daylight saving time
+one_am + ddays(1)
+one_am + days(1) # <10>
+```
+
+10. Periods are more likely than durations to do what you expect. 
+
+## Intervals
+
+Intervals represent the length of a time span in human units. You can think of it as a duration with a starting point. 
+
+. . . 
+
+Imagine we wanted to know how many days are in a year? 
+
+```{r}
+years(1) / days(1) # <11>
+dyears(1) / ddays(365) # <12>
+```
+
+11. Since this value changed depending on the year in question, lubridate gives an estimate (or the average) for the number of days in *any* given year. 
+12. A similar thing happens for durations. 
+
+. . . 
+
+To be more accurate we need to give the specific range of time in questions. 
+
+. . . 
+
+```{r}
+y2023 <- ymd("2023-01-01") %--% ymd("2024-01-01") # <13>
+y2024 <- ymd("2024-01-01") %--% ymd("2025-01-01")
+y2023
+y2024
+y2023 / days(1) # <14> 
+y2024 / days(1)
+```
+
+13. You can create an interval by writing `start %--% end`.
+14. Now when we do this math we get the exact number of "human" days within the span of dates we specified. 
+
+## Time zones
+
+Time zones are a very complicated topic because different places have different rules which can, or already have, change(d) over time! To really clarify things `R` uses the international standard IANA time zones which use a consistent naming scheme: `{area}/{location}`.
+
+. . . 
+
+```{r}
+Sys.timezone() # <15>
+OlsonNames() # <16>
+```
+
+15. Use `Sys.timezone()` to find out which timezone `R` thinks you're in. 
+16. See the complete list of all time zone names with `OlsonNames()`
+
+## Changing Time Zones
+
+There are two ways you may want to change the time zone: 
+
+. . . 
+
+#### **Keep instant in time, change display**
+
+```{r}
+x <- ymd_hms("2024-06-01 12:00:00", tz = "America/New_York")
+x
+
+with_tz(x, tzone = "Australia/Lord_Howe") # <17> 
+```
+
+17. The `+10:30` offset is the difference relative to `UTC` (aka Greenwich Mean Time) which is `2024-06-01 16:00:00 UTC` in this example.
+
+<br>
+
+#### **Change underlying instant in time**
+
+```{r}
+y <- ymd_hms("2024-06-01 9:00:00", tz = "America/Los_Angeles")
+y
+
+force_tz(y, tzone = "Australia/Lord_Howe") # <18> 
+```
+
+18. In this case the time zone was labelled incorrectly so by forcing the correct time zone we changed the underlying instant in time. 
+
+## Default Time Zones 
+
+Time zones in `R` only control printing of date/time objects. Unless otherwise specified, lubridate always uses UTC^[UTC (Coordinated Universal Time) is the standard time zone used by the scientific community and is roughly equivalent to GMT (Greenwich Mean Time). It does not have DST, which makes a convenient representation for computation.]. 
+
+. . . 
+
+Operations that combine date-times, like `c()`, will often drop the time zone. In that case, the date-times will display in the time zone of the first element:
+
+. . . 
+
+```{r}
+a <- ymd_hms("2024-06-01 14:00:00", tz = "Asia/Gaza") 
+b <- ymd_hms("2024-06-01 14:00:00", tz = "Cuba") 
+c <- ymd_hms("2024-06-01 14:00:00", tz = "Africa/Kinshasa") 
+a # <19>
+b # <20>
+c # <21>
+c(a, b, c)
+```
+
+19. EEST = Eastern European Summer Time
+20. CDT = Central Daylight Time
+21. WAT = West Africa Time
+
+# Lab{.section-title background-color="#99a486"}
+
+## Importing & Tidying Data
+
+1. Follow [this link] and click on 
+
+# Homework{.section-title background-color="#1e4655"}
+
+## Homework 5 <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+
+## Due dates
 
 ```{r}
 #| echo: false
-billboard_2000_raw <- read_csv(file = "https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture5/data/billboard.csv")
-billboard_2000 <- billboard_2000_raw %>%
-  pivot_longer(cols=wk1:wk76,
-               names_to ="week",
-               values_to = "rank")
+#| message: false
+#| warning: false
+
+# reading in base due date schedule
+source("../due_dates_schedule.R")
+
+make_due_date_table(5)
+
+
+
 ```
-
-
-```{r}
-billboard_2000 %>% 
-  select(date.entered) %>% 
-  head(10)
-```
-
-## Extracting Year, Month, or Day
-
-```{r }
-library(lubridate)
-head(billboard_2000$date.entered, 5)
-year(billboard_2000$date.entered) %>% 
-  head(5)
-month(billboard_2000$date.entered) %>% 
-  head(5)
-day(billboard_2000$date.entered) %>% 
-  head(5)
-```
-
-## Extracting Weekday, Quarter, and Leap Year Boolean
-
-```{r}
-wday(billboard_2000$date.entered) %>% 
-  head(5)
-quarter(billboard_2000$date.entered) %>% 
-  head(5)
-leap_year(billboard_2000$date.entered) %>% 
-   head(5)
-```
-
-
-
-
-
-
 
 
 
