@@ -62,7 +62,7 @@ flights |>
 #| echo: false
 #| eval: false
 flights |> 
-  filter(dest == "SAN") |> 
+  filter(dest %in% "MIA") |> 
   left_join(weather, by = join_by(origin, year, month, day, hour)) |> 
   summarize(avg_temp = mean(temp, na.rm = TRUE), 
             .by = month) |> 
