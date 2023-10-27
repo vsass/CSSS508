@@ -2176,22 +2176,129 @@ c(a, b, c)
   i) Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
   ii) Read in your data using the appropriate function from `readr`. 
   iii) Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
-  iv) Turn the variable `religion` and one other^[Hint: Created in the last step] into factors.
-  v) Make a visualization in ggplot that 
+  iv) Turn two of the variables into factors^[Hint: Which two variables are categorical?].
+  v) Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency^[You can determine this by summarizing the data or creating a visualization of the data.]?
+
+## Answers 
+
+Question 1.i: Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
   
+## Answers
+
+Question 1.ii: Read in your data using the appropriate function from `readr`. 
+
 ```{r}
-religion_income <- read_csv(file = "data/religion_income.csv")
-religion_income_tidy <- relig_income |> 
+religion_income <- read_csv(file = "data/religion_income.csv", 
+                            col_types = c("f", rep("i", 10)))
+```
+
+## Answers
+
+Question 1.iii: Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
+
+```{r}
+religion_income <- read_csv(file = "data/religion_income.csv", 
+                            col_types = c("f", rep("i", 10)))
+
+religion_income_tidy <- religion_income |> 
   pivot_longer(cols = !religion, 
               names_to = "income", 
-              values_to = "count") |> 
+              values_to = "frequency")
+```
+
+## Answers 
+
+Question 1.iv: Turn two of the variables into factors^[Hint: Which two variables are categorical?].
+
+```{r}
+religion_income <- read_csv(file = "data/religion_income.csv", 
+                            col_types = c("f", rep("i", 10)))
+
+religion_income_tidy <- religion_income |> 
+  pivot_longer(cols = !religion, 
+              names_to = "income", 
+              values_to = "frequency") |> 
+  mutate(income = fct(income, levels = c("Don't know/refused", "<$10k", "$10-20k", "$20-30k", "$30-40k", "$40-50k",
+                                          "$50-75k", "$75-100k", "$100-150k", ">150k")))
+```
+
+## Answers 
+
+Question 1.v: Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency^[You can determine this by summarizing the data or creating a visualization of the data.]?
+
+
+```{r}
+#| fig-align: center
+#| fig-width: 12
+#| fig-height: 12
+library(ggthemes)
+library(geomtextpath)
+
+religion_income <- read_csv(file = "data/religion_income.csv")
+religion_income_tidy <- religion_income |> 
+  pivot_longer(cols = !religion, 
+              names_to = "income", 
+              values_to = "frequency") |> 
   mutate(religion = fct(religion), 
          income = fct(income, levels = c("Don't know/refused", "<$10k", "$10-20k", "$20-30k", "$30-40k", "$40-50k",
                                           "$50-75k", "$75-100k", "$100-150k", ">150k")))
 
+# Data manipulation 1
+religion_income_tidy |> 
+  filter(income != "Don't know/refused") |> 
+  slice_max(frequency)
 
-ggplot(religion_income_tidy, aes(x = income, y = count, fill = income)) + 
-  geom_bar(stat = "identity") + facet_wrap(religion ~ . )
+# Data manipulation 2
+religion_income_prop <- religion_income_tidy |> 
+  filter(income != "Don't know/refused") |> 
+  mutate(total = sum(frequency), 
+         prop = frequency/total, 
+         .by = religion) |> 
+  arrange(desc(prop))
+religion_income_prop
+
+# Visualization 1
+ggplot(religion_income_tidy, aes(x = income, y = religion, fill = frequency)) + 
+  geom_raster() + 
+  scale_fill_distiller("Frequency", palette = "Greens", direction = 1) +
+  labs(title = "Heatmap of Religion & Income", 
+       x = "Income Level", 
+       y = "Religious Affiliation") +
+  theme_tufte(base_size = 18)
+
+# Visualization 2
+# ggplot(religion_income_prop, aes(x = as.integer(income), y = prop, color = religion)) + 
+#   geom_point() + 
+#   geom_textpath(aes(label = religion)) +
+#   labs(title = "Relative Distribution of Income by Religion", 
+#        x = "Income Level", 
+#        y = "Proportion of Respective Religious Affiliation") +
+#   theme_tufte(base_size = 18)
+```
+
+
+  
+```{r}
+#| eval: false
+#| echo: false
+
+# 2. Go to the [Lecture 5 Homepage](https://vsass.github.io/CSSS508/Lectures/Lecture5/CSSS508_Lecture5_index.html) and click on the link `Higher Education Trends` under the Data section. 
+#   i) Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
+#   ii) Read in your data using the appropriate function from `readr`. 
+#   iii) Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
+#   iv) Visualize these data. What's the trend in higher educational careers? 
+
+library(geomtextpath)
+
+higher_edu <- read_csv(file = "data/instructional-staff.csv")
+higher_edu_tidy <- higher_edu |> 
+  pivot_longer(cols = !faculty_type, 
+              names_to = "year", 
+              values_to = "percentage") |> 
+  mutate(year = as.integer(year))
+
+ggplot(higher_edu_tidy, aes(x = year, y = percentage, color = faculty_type)) + 
+  geom_textpath(aes(label = faculty_type))
 ```
 
 
@@ -2199,6 +2306,11 @@ ggplot(religion_income_tidy, aes(x = income, y = count, fill = income)) +
 
 ## Homework 5 <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
+- read in data with diff col types (factor, date)
+- pivot data
+- relevel a factor
+- calculate something with a date
+- plot date other things
 
 ## Due dates
 

@@ -1,0 +1,155 @@
+---
+title: "Homework 3 Key"
+format: 
+  html:
+    code-annotations: hover
+    highlight-style: a11y-dark
+    embed-resources: true
+---
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+
+knitr::opts_chunk$set(
+  comment = ">")
+```
+
+#### Answer 1
+
+Below is one possible way you may have organized your folder for this class into a project/series of projects. **Note**: for whichever folder you set as a project(s) you will have a `.Rproj` file which maintains specific project settings. That project folder is your default working directory when you're doing any work within this folder (including within subfolders). Individual `.qmd` files will have a working directory of the specific folder they are in *when they are rendered*. Keep this in mind when trying to run code from a source document saved in a folder separate from its associated project folder. 
+
+```
+    CSSS508
+      Week1/
+        homework1.qmd
+        lab1.qmd
+        Week1.RProj
+      Week2/
+        homework2.qmd
+        lab2.qmd
+        Week2.RProj
+      Week3/
+        homework3.qmd
+        lab3.qmd
+        Week3.RProj
+```
+
+---
+
+#### Answer 2
+
+```{r}
+(x <- rnorm(20, 10, 5)) # <1>
+```
+1. If you want to simultaneously create and call an object to see what it looks like you can put parentheses around the entire assignment and it will be created and called in one step!
+
+i. `rnorm` takes a number of observations (`n`) and a specified mean (`mean`) and standard deviation (`sd`). It returns `n` number of random deviates from the normal distribution with the specified mean and standard deviation. 
+ii. `n` is required but `mean` and `sd` are optional. If they are not specified they default to `0` and `1` respectively. 
+iii. `random`
+iv. 
+```{r}
+#| eval: false
+x[-20] # <2> 
+x[c(1:19)] # <3>
+x[c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)] # <4>
+```
+
+2. Simplest approach
+3. Also a fairly straightforward approach
+4. More tedious approach
+
+```{r}
+#| echo: false
+x[-20]
+```
+
+
+
+v. 
+```{r}
+x[x > 10] # <5>
+```
+5. When writing a conditional argument you always include the object you're evaluating. This also allows you to make comparisons of `x` to conditional statements of different vectors of the same length. See example below.
+
+*Example of indexing with another variable's condition:*
+
+```{r}
+(a <- rnorm(20, 7, 5)) # <6> 
+```
+6. Creating another 20 element length vector
+
+```{r}
+x[a < 5] # <7>
+```
+
+7. The numerical indices that evaluate to `TRUE` for `a < 5` will be the same indices returned of `x` in this indexing call. 
+
+---
+
+#### Answer 3
+
+```{r}
+#| fig-align: center
+#| message: false
+ggplot(mpg, aes(x = class)) +
+  geom_bar()
+ggplot(mpg, aes(x = cty, y = hwy)) +
+  geom_point()
+ggsave("mpg-plot.png")
+```
+
+i. The second plot is saved because the default for `ggsave()` when not explicitly given a plot object as the second argument is to save the last plot displayed. 
+ii. The plot image `mpg-plot.png` should have been added to your current project folder. **Note**: If your project is at the course level and you're running this interactively, it will be saved in the overall course folder. When you render the file for homework3.qmd it will be saved in whichever folder that file is saved (i.e. the project folder is always the working durectory when you're running code interactively in an R session. Each **rendered** file has a working directory of whichever folder they are saved to). 
+
+```
+    CSSS508
+      Week1/
+        homework1.qmd
+        lab1.qmd
+        Week1.RProj
+      Week2/
+        homework2.qmd
+        lab2.qmd
+        Week2.RProj
+      Week3/
+        homework3.qmd
+        lab3.qmd
+        mpg-plot.png
+        Week3.RProj
+``` 
+
+---
+
+#### Answer 4
+
+One of my favorite keyboard shortcuts is multi-cursor editing which is demonstrated in [this tip](https://twitter.com/Chr_Koenig/status/1512352942443143172). If you use **Ctrl** + **Alt_left** + **Mouse_left** you can create new coursors wherever you click your mouse. This then allows you to type something once and have it repeated wherever the cursors are. Check out the whole, very useful, thread [here](https://twitter.com/Chr_Koenig/status/1512352888986742787). 
+
+---
+
+#### Answer 5
+
+```{r}
+y <- tibble(a = seq(1, 10, 2), 
+            b = c("apple", "banana", "strawberry", "peach", "mango"), 
+            c = c(rep(TRUE, 3), rep(FALSE, 2)))
+y
+```
+
+i. `seq` creates a sequence of numbers from the first argument `from` to the second argument `to` by increments of the third argument `by`. 
+ii. `rep` repeats the first argument `x` by the second argument which can be the integer number of `times`, `length.out` (length of final vector), or `each` (how many times each element of `x` should be repeated). 
+iii. 
+
+```{r}
+y[c(2, 5), 2]
+```
+
+iv. 
+
+```{r}
+y$c
+```
+
+v. `y[3:5, ]` prints out the 3rd, 4th, and 5th rows and `:` is a shortcut for giving a sequence from the first number (on the left) to the second number (on the right) in increments of 1 or -1. 
+
