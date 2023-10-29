@@ -790,8 +790,8 @@ First things to check after loading new data:
 ![](images/tidy-1.png){fig-align="center"}
 
 ::: {.incremental}
-1. The values for a single observation are in their own row.
-2. The values for a single variable are in their own column.
+1. The values for a single variable are in their own column.
+2. The values for a single observation are in their own row.
 3. There is only one value per cell.
 :::
 
@@ -1603,7 +1603,7 @@ Sometimes you'll have several levels of a variable that have a small enough `N` 
 
 ```{r}
 gss_cat |>
-  mutate(relig = fct_lump_n(relig, n = 10)) |>
+  mutate(relig = fct_lump_n(relig, n = 10)) |> # <9>
   count(relig, sort = TRUE)
 ```
 
@@ -1618,10 +1618,10 @@ So far we've mostly been discussing how to code nominal variables, or categorica
 If you want to specify that your factor has a strict order you can classify it as a ordered factor. 
 
 ```{r}
-ordered(c("a", "b", "c")) # <9>
+ordered(c("a", "b", "c")) # <10>
 ```
 
-9. Ordered factors imply a strict ordering and equal distance between levels: the first level is “less than” the second level by the same amount that the second level is “less than” the third level, and so on.
+10. Ordered factors imply a strict ordering and equal distance between levels: the first level is “less than” the second level by the same amount that the second level is “less than” the third level, and so on.
 
 <br> 
 
@@ -1641,8 +1641,6 @@ In practice there are only two ways in which ordered factors are different than 
 ## Date and Date-Time
 
 While they may look like character strings, Dates, Date-Times and Times^[The `hms` package can be used to deal with times but they're not very common.] are each separate classes of data. 
-
-. . . 
 
 :::: {.columns}
 ::: {.column width="33%"}
@@ -2129,7 +2127,7 @@ x
 with_tz(x, tzone = "Australia/Lord_Howe") # <17> 
 ```
 
-17. The `+10:30` offset is the difference relative to `UTC` (aka Greenwich Mean Time) which is `2024-06-01 16:00:00 UTC` in this example.
+17. The `+10:30` offset is the difference relative to `UTC` (functionally similar to Greenwich Mean Time) which is `2024-06-01 16:00:00 UTC` in this example.
 
 <br>
 
@@ -2172,29 +2170,30 @@ c(a, b, c)
 
 ## Importing & Tidying Data
 
-1. Go to the [Lecture 5 Homepage](https://vsass.github.io/CSSS508/Lectures/Lecture5/CSSS508_Lecture5_index.html) and click on the link `Religion & Income` under the Data section. 
-  i) Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
-  ii) Read in your data using the appropriate function from `readr`. 
-  iii) Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
-  iv) Turn two of the variables into factors^[Hint: Which two variables are categorical?].
-  v) Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency^[You can determine this by summarizing the data or creating a visualization of the data.]?
+Go to the [Lecture 5 Homepage](https://vsass.github.io/CSSS508/Lectures/Lecture5/CSSS508_Lecture5_index.html) and click on the link `Religion & Income` under the Data section. 
+
+1. Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
+2. Read in your data using the appropriate function from `readr`. 
+3. Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
+4. Turn two of the variables into factors^[Hint: Which two variables are categorical?].
+5. Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency^[You can determine this by summarizing the data or creating a visualization of the data.]?
 
 ## Answers 
 
-Question 1.i: Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
+Question 1: Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
   
-## Answers
+## Answers {auto-animate="true"}
 
-Question 1.ii: Read in your data using the appropriate function from `readr`. 
+Question 2: Read in your data using the appropriate function from `readr`. 
 
 ```{r}
 religion_income <- read_csv(file = "data/religion_income.csv", 
                             col_types = c("f", rep("i", 10)))
 ```
 
-## Answers
+## Answers {auto-animate="true"}
 
-Question 1.iii: Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
+Question 3: Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
 
 ```{r}
 religion_income <- read_csv(file = "data/religion_income.csv", 
@@ -2206,9 +2205,9 @@ religion_income_tidy <- religion_income |>
               values_to = "frequency")
 ```
 
-## Answers 
+## Answers {auto-animate="true"}
 
-Question 1.iv: Turn two of the variables into factors^[Hint: Which two variables are categorical?].
+Question 4: Turn two of the variables into factors^[Hint: Which two variables are categorical?].
 
 ```{r}
 religion_income <- read_csv(file = "data/religion_income.csv", 
@@ -2218,115 +2217,58 @@ religion_income_tidy <- religion_income |>
   pivot_longer(cols = !religion, 
               names_to = "income", 
               values_to = "frequency") |> 
-  mutate(income = fct(income, levels = c("Don't know/refused", "<$10k", "$10-20k", "$20-30k", "$30-40k", "$40-50k",
-                                          "$50-75k", "$75-100k", "$100-150k", ">150k")))
+  mutate(income = fct(income, levels = c("Don't know/refused", "<$10k", "$10-20k", 
+                                         "$20-30k", "$30-40k", "$40-50k", "$50-75k", 
+                                         "$75-100k", "$100-150k", ">150k")))
 ```
 
 ## Answers 
 
-Question 1.v: Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency^[You can determine this by summarizing the data or creating a visualization of the data.]?
-
+Question 5: Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency? You can determine this by **summarizing the data** or creating a visualization of the data.
 
 ```{r}
-#| fig-align: center
-#| fig-width: 12
-#| fig-height: 12
-library(ggthemes)
-library(geomtextpath)
-
-religion_income <- read_csv(file = "data/religion_income.csv")
-religion_income_tidy <- religion_income |> 
-  pivot_longer(cols = !religion, 
-              names_to = "income", 
-              values_to = "frequency") |> 
-  mutate(religion = fct(religion), 
-         income = fct(income, levels = c("Don't know/refused", "<$10k", "$10-20k", "$20-30k", "$30-40k", "$40-50k",
-                                          "$50-75k", "$75-100k", "$100-150k", ">150k")))
-
-# Data manipulation 1
+# Data manipulation
 religion_income_tidy |> 
   filter(income != "Don't know/refused") |> 
   slice_max(frequency)
+```
 
-# Data manipulation 2
-religion_income_prop <- religion_income_tidy |> 
+## Answers <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+Question 5: Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency? You can determine this by summarizing the data or creating a **visualization** of the data.
+
+```{r}
+#| eval: false
+#| fig-align: center
+#| fig-width: 20
+#| fig-height: 15
+#| code-fold: true
+# Visualization
+library(ggthemes)
+library(geomtextpath)
+
+heatmap <- religion_income_tidy |> 
   filter(income != "Don't know/refused") |> 
-  mutate(total = sum(frequency), 
-         prop = frequency/total, 
-         .by = religion) |> 
-  arrange(desc(prop))
-religion_income_prop
-
-# Visualization 1
-ggplot(religion_income_tidy, aes(x = income, y = religion, fill = frequency)) + 
+ggplot(aes(x = income, y = religion, fill = frequency)) + 
   geom_raster() + 
   scale_fill_distiller("Frequency", palette = "Greens", direction = 1) +
   labs(title = "Heatmap of Religion & Income", 
        x = "Income Level", 
        y = "Religious Affiliation") +
   theme_tufte(base_size = 18)
-
-# Visualization 2
-# ggplot(religion_income_prop, aes(x = as.integer(income), y = prop, color = religion)) + 
-#   geom_point() + 
-#   geom_textpath(aes(label = religion)) +
-#   labs(title = "Relative Distribution of Income by Religion", 
-#        x = "Income Level", 
-#        y = "Proportion of Respective Religious Affiliation") +
-#   theme_tufte(base_size = 18)
 ```
 
-
-  
 ```{r}
-#| eval: false
 #| echo: false
-
-# 2. Go to the [Lecture 5 Homepage](https://vsass.github.io/CSSS508/Lectures/Lecture5/CSSS508_Lecture5_index.html) and click on the link `Higher Education Trends` under the Data section. 
-#   i) Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
-#   ii) Read in your data using the appropriate function from `readr`. 
-#   iii) Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
-#   iv) Visualize these data. What's the trend in higher educational careers? 
-
-library(geomtextpath)
-
-higher_edu <- read_csv(file = "data/instructional-staff.csv")
-higher_edu_tidy <- higher_edu |> 
-  pivot_longer(cols = !faculty_type, 
-              names_to = "year", 
-              values_to = "percentage") |> 
-  mutate(year = as.integer(year))
-
-ggplot(higher_edu_tidy, aes(x = year, y = percentage, color = faculty_type)) + 
-  geom_textpath(aes(label = faculty_type))
+#| eval: false
+ggsave(plot = heatmap, filename = "images/heatmap.png", width = 16, height = 8, units = "in")
 ```
 
+![](images/heatmap.png){fig-align="center" width=150% height=150%}
 
 # Homework{.section-title background-color="#1e4655"}
 
-## Homework 5 <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
-
-- read in data with diff col types (factor, date)
-- pivot data
-- relevel a factor
-- calculate something with a date
-- plot date other things
-
-## Due dates
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-# reading in base due date schedule
-source("../due_dates_schedule.R")
-
-make_due_date_table(5)
-
-
-
-```
+## {background-iframe="https://vsass.github.io/CSSS508/Homework/HW5/homework5.html"}
 
 
 
@@ -2334,95 +2276,5 @@ make_due_date_table(5)
 
 
 
-
-
-
-## Activity!
-
-In groups of 2-3, you will use the [Billboard data](https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture5/data/billboard.csv) to investigate a question:
-
-1. Write down a question of interest that could be studied with this data
-     * *Which/how many artists had #1 hits?*
-     * *How does rank for each song change over time?*
-     * *Is there a relationship between highest rank and length of song?*
-2. Make the Billboard data *tidy*, perhaps using the code from this lecture.
-
-3. Perform additional steps (if necessary) to help answer your question:
-    * Perhaps using `filter`, `select`, `group_by`, `mutate`, `summarize`, etc.
-
-4. Make a plot or table that answers your question and write down your answer in a sentence.
-
-5. Send me your question, plot/table, and written answer on Canvas
-
-## Example: Question
-
-**Question:** Do songs that hit #1 have a different trajectory than those that don't?
-
-```{r}
-billboard_2000_question <- billboard_2000 %>%
-    group_by(artist, track) %>%
-    mutate(`Weeks at #1` = sum(rank == 1),
-           `Peak Rank`   = ifelse(any(rank == 1),
-                                  "Hit #1",
-                                  "Didn't hit #1")) 
-```
-
-::: aside
-Note: `any(rank==1)` checks to see if *any* value of `rank` is equal to one for the given `artist` and `track`
-:::
-
-## Example Visualization
-
-::: {.panel-tabset}
-
-### Code
-
-```{r}
-library(ggplot2)
-library(ggthemes)
-billboard_trajectories <- 
-  ggplot(data = billboard_2000_question,
-         aes(x = week, y = rank, group = track,
-             color = `Peak Rank`)) +
-  geom_line(aes(size = `Peak Rank`), alpha = 0.4) +
-  theme_tufte() +
-  xlab("Week") + ylab("Rank") +
-  scale_color_manual(values = c("black", "red")) +
-  scale_size_manual(values = c(0.25, 1)) +
-  theme(legend.position = c(0.90, 0.75),
-        legend.background = element_rect(fill = "transparent"))
-```
-
-### Charts of 2000: Beauty!
-
-```{r}
-#| fig-height: 6
-#| fig-width: 12
-billboard_trajectories
-```
-:::
-
-::: aside
-Songs that reach #1 on the Billboard charts appear to last >20 weeks on the charts, while other songs very rarely make it past that point.
-:::
-
-# Homework
-
-## Homework 4
-
-*On [Course Website!*](https://vsass.github.io/CSSS508/Homework/HW5/homework4.html)
-
-## Due dates
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-# reading in base due date schedule
-source("../due_dates_schedule.R")
-
-make_due_date_table(5)
-```
 
 
