@@ -1,5 +1,9 @@
 ---
 title: "Homework 5"
+code-annotations: hover
+execute: 
+  message: false
+  warning: false
 output: 
   html_document:
     highlight-style: a11y-dark
@@ -16,72 +20,18 @@ output:
 knitr::opts_chunk$set(
   comment = ">")
 library(tidyverse)
-library(geomtextpath)
 library(ggrepel)
 library(ggthemes)
-library(socviz)
-
-# Read in data
-billboard <- read_csv("billboard.csv") 
-
-billboard_tidy <- billboard |> 
-  pivot_longer(starts_with("wk"), 
-               names_to = "week", 
-               values_to = "rank", 
-               values_drop_na = TRUE, 
-               names_prefix = "wk", 
-               names_transform = list(week = as.integer)) |> 
-  janitor::clean_names() 
-
-
-billboard_tidy3 <- billboard_tidy2 |> 
-  mutate(date = if_else(week == 1, 
-                       date_entered, 
-                       date_entered + weeks(x = week)))
-
-
-# top 3 artist w/ most songs in top 100 in 2003 - ranks of their songs plotted over time
-billboard_tidy4 <- billboard_tidy3 |> 
-  distinct(artist, track) |> 
-  summarize(n = n(), 
-            .by = artist) |> 
-  filter(n > 2) |> 
-  slice_max(n = 3, order_by = n)
-
-billboard_tidy5 <- billboard_tidy3 |> 
-  filter(artist %in% c("Jay-Z", "Dixie Chicks, The", "Houston, Whitney")) |> 
-  mutate(artist = case_when(artist == "Dixie Chicks, The" ~ "The Dixie Chicks", 
-                            artist == "Houston, Whitney" ~ "Whitney Houston", 
-                            artist == "Jay-Z" ~ "Jay-Z"))
-ggplot(billboard_tidy5, aes(date, rank, color = artist, group = track)) + 
-  geom_textpath(aes(label = track)) + 
-  geom_hline(yintercept = 1, color = "yellow")
-
-# overall charting #1 songs in context of all songs
-billboard_tidy6 <- billboard_tidy3 %>%
-    mutate(`weeks_at_1` = sum(rank == 1),
-           `peak_rank`   = ifelse(any(rank == 1), # <1> 
-                                  "Hit #1",
-                                  "Didn't hit #1"), 
-           .by = c(artist, track)) 
-ggplot(billboard_tidy6, aes(date, rank, group = track, color = peak_rank)) + 
-  geom_line(aes(size = peak_rank), alpha = 0.4) +
-  geom_label_repel(data = billboard_tidy6 |>  filter(peak_rank == "Hit #1") |>  slice_min(date, by = artist), aes(label = artist)) +
-  #geom_label_repel(data = billboard_tidy6 |>  filter(peak_rank == "Hit #1") |>  slice_min(date, by = artist), aes(label = artist), nudge_y = 4, nudge_x = 2) +
-  theme_tufte() +
-  xlab("Date") + ylab("Rank") +
-  scale_color_manual("Peak Rank", values = c("black", "red")) +
-  scale_size_manual("Peak Rank", values = c(0.25, 1)) +
-  theme(legend.position = c(0.1, 0.15),
-        legend.background = element_rect(fill = "transparent"))
 ```
-1. `any(rank==1)` checks to see if any value of `rank` is equal to one for the given artist and track
 
-1. Download the `billboard` data set introduced in lecture to the same folder where you're saving your qmd for this homework^[If your project directory is different from the directory where you'll be saving these two files, you should run `setwd()` in the **console** and give it a string of the file path to the folder where these two files are saved. This will allow you to run code interactively without error.].
+### Exercises
+
+1. Download the `billboard` data set introduced in lecture (above) to the same folder where you're saving your qmd for this homework^[If your project directory is different from the directory where you'll be saving these two files, you should run `setwd()` in the **console** and give it a string of the file path to the folder where these two files are saved. This will allow you to run code interactively without error.].
 2. Read in the data, clean up the names, and pivot it in a way so the first few rows look like this: 
 
 ```{r}
 #| echo: false
+billboard <- read_csv("billboard.csv") 
 billboard_tidy <- billboard |> 
   pivot_longer(starts_with("wk"), 
                names_to = "week", 
@@ -93,7 +43,7 @@ billboard_tidy <- billboard |>
 billboard_tidy
 ```
 
-3. Create a variable named `date` that corresponds to the `week` based on the `date_entered`^[For instance, if the `date_entered` is 1-13-2000 and `week` is 1, then when `week` is 2 `date` will have a value of `1-20-2000`. Hint: Try using `if_else()` here.].
+3. Create a variable named `date` that corresponds to the `week` based on the `date_entered`^[For instance, if the `date_entered` is `1-13-2000` and `week` is 1, then when `week` is 2 `date` will have a value of `1-20-2000`. Hint: Try using `if_else()` here.]. Read the footnote for a hint but in you need help visualizing what the final dataset might look like, you can reveal another hint below. 
 
 ```{r}
 #| echo: false
@@ -103,9 +53,19 @@ billboard_tidy_date <- billboard_tidy |>
                        date_entered + weeks(x = week)))
 ```
 
-4. Create a dataset of the song(s) with the most weeks in the top 3 by month of 2000. The final dataset should look like this:
+::: {.callout-caution collapse="true" icon="false"}
+## <span style="color:tomato">{{< fa lightbulb >}}</span> Click for a preview of what the final dataset should look like
 
 ```{r}
+billboard_tidy_date
+```
+
+:::
+
+4. Create a dataset of the song(s) with the <span style="color:#e15759">**most weeks in the top 3 by month of 2000**</span>. The final dataset should look like this:
+
+```{r}
+#| echo: false
 billboard_top3_month <- billboard_tidy_date |> 
   mutate(month = month(date),
          year = year(date),
@@ -116,26 +76,16 @@ billboard_top3_month <- billboard_tidy_date |>
             by = month) |> 
   distinct(month, artist, track) |> 
   arrange(month)
+billboard_top3_month
 ```
 
-```{r}
-  
-  
-  filter(any(top3 == 1), 
-         .by = c(track, artist)) |> 
-  mutate(max_peak = max(peak_weeks), 
-         .by = month) |> 
-  filter(any(peak_weeks == max_peak), 
-         .by = c(track, artist)) |> 
-  mutate(max_month = if_else(peak_weeks == max_peak, month, NA)) |> 
-  group_by(artist, track) |> 
-  fill(max_month, .direction = "updown") |> 
-  ungroup()
-```
-
-Pick one month of 2000 and visualize the **entire charting trajectory** of the songs that spent **at least 1 week** in the top 3 during that month. An example for April is provided below.
+5. Pick one month of 2000 and visualize the **entire charting trajectory** of the songs that spent **at least 1 week** in the top 3 during that month. **Hint**: start with the data set created in question 3. An example of what this could look like for April is provided below. 
 
 ```{r}
+#| echo: false
+#| fig-align: center
+#| fig-width: 12
+#| fig-height: 6
 billboard_top3_month_viz <- billboard_tidy_date |> 
   mutate(month = month(date),
          year = year(date),
@@ -148,9 +98,10 @@ billboard_top3_month_viz <- billboard_tidy_date |>
 
 ggplot(billboard_top3_month_viz, aes(date, rank, group = track, color = artist)) + 
   annotate(geom = "rect", xmin = ymd("2000-04-01"), xmax = ymd("2000-05-01"), ymin = 0, ymax = 85, 
-           fill = "#59a14f", alpha = 0.5) + 
+           fill = "#59a14f", alpha = 0.25) + 
   geom_line(show.legend = TRUE) + 
-  geom_label_repel(data = billboard_top3_month_viz |> slice_max(date, by = track), aes(label = track), 
+  geom_label_repel(data = billboard_top3_month_viz |> slice_max(date, by = track), 
+                   aes(label = track), 
                    show.legend = FALSE) + 
   scale_color_manual("Artist", values = c("#4e79a7","#f28e2c","#e15759","#76b7b2")) + 
   labs(title = "Billboard Top 100 Trajectory for Songs that Hit Top 3 During April 2000", 
@@ -161,49 +112,53 @@ ggplot(billboard_top3_month_viz, aes(date, rank, group = track, color = artist))
   theme(legend.position = c(0.85, 0.85),
         legend.title.align = 0.5,
         legend.background = element_blank(),
-        legend.box.background = element_rect(colour = "black"))
-  
-  
-
-
-
-
-
-  
-
-
-
+        legend.box.background = element_rect(colour = "black", fill = "#f6f7f9"),
+        panel.background = element_rect(fill = "#f6f7f9", color = "#f6f7f9"), 
+        plot.background = element_rect(fill = "#f6f7f9", color = "#f6f7f9"))
 ```
 
+> Note: This example plot is an **extremely** specified and polished version of what this can look like. There are a number of ways this can look and you should not be graded nor grade lower for aesthetic features that many of you are still learning. The takeaway here is to challenge yourself to figure out the code to create something that can plot the entire trajectory of the songs that *reached* the top 3 in whatever month you choose. This will require a combination of the skills you've learned in this class thus far. Try this with the content available from lecture first. If you get stuck, there is a hint you can reveal below. 
+
+::: {.callout-caution collapse="true" icon="false"}
+## <span style="color:tomato">{{< fa lightbulb >}}</span> Click for skeleton code you can fill in 
+
+Note: This is how **I** did this problem but there are many approaches to every coding puzzle in `R`. If this skeleton code is useful, use it. If not, I'm happy to chat through **your** approach in office hours 🤓 
+
+*Replace all instances of `function`, `variable`, and `value` with what you think the correct answer should be. Additional hints provided by hovering over the code annotation.*
 
 ```{r}
-Default  Deuteronopia Protanopia Tritanopia
-"#66C2A5" "#AEAEA7"   "#BABAA5"  '#82BDBD'   
-"#FC8D62" "#B6B661"   "#9E9E63"  '#F29494'   
-"#8DA0CB" "#9C9CCB"   "#9E9ECB"  '#92ABAB'   
-"#E78AC3" "#ACACC1"   "#9898C3"  '#DA9C9C'   
-"#A6D854" "#CACA5E"   "#D3D355"  '#B6C8C8'   
+#| eval: false
+billboard_top3_month_viz <- billboard_tidy_date |> 
+  mutate(month = function(variable), # <1>
+         year = function(variable), # <2>
+         top3 = if_else(variable <= value & variable == value, 1, 0)) |> # <3>
+  mutate(peak_weeks = function(variable), # <4>
+         month_peak = ifelse(variable > 0, variable, NA), # <5>
+         .by = c(month, artist, track)) |> 
+  filter(function(month_peak == "value"), # <6>
+         .by = c(track, artist)) 
+
+library(ggrepel) # <7>
+ggplot(billboard_top3_month_viz, 
+       aes(variable, variable, group = variable, color = variable)) + # <8> 
+  function + # <9>
+  geom_label_repel(data = billboard_top3_month_viz |> function(variable, by = track), # <10>
+                   mapping = aes(label = variable)) # <11> 
 ```
 
+1. What month is associated with each row's chart position?
+2. Are there multiple years in this dataset?! Given that we're interested in the Billboard Top 100 for **2000** it might be useful to have a variable that allows us to discriminate between years. 
+3. To create some indicator of top 3 status you'll need to provide two conditions (one variable needs to be less than or equal to a certain value and another needs to equal a certain value)
+4. Get a total of all the weeks a particular song was in the top 3 in a particular month
+5. Need to create a variable that reflects when a particular song charted in the top 3 and `NA` otherwise
+6. In order to get the entire trajectory of a song we can't simply filter for the month when it peaked. Then we'd only be able to plot that snippet of its trajectory. Hint: Which function returns `TRUE` if even 1 element it's given is `TRUE`?
+7. Load if you want to add labels
+8. You want to visualize the ranking trajectory of a song over time. Hint: `group` is the variable you want to visualize.
+9. What geometry would be appropriate here?
+10. To properly label this plot you'll need to subset the data, otherwise it will try to plot a label for every date available. 
+11. Which variable's text are you trying to label?
 
-
-5. Come up a question you want to explore visually and create a plot to answer it. Be sure to include your question as well as the plot. 
-
-```{r}
-# Do songs that hit #1 have a different trajectory than those that don’t?
-ggplot(billboard_tidy6, aes(week, rank, group = track, color = peak_rank)) + 
-  geom_line(aes(size = peak_rank), alpha = 0.4) +
-  theme_tufte() +
-  xlab("Date") + ylab("Rank") +
-  scale_color_manual("Peak Rank", values = c("black", "red")) +
-  scale_size_manual("Peak Rank", values = c(0.25, 1)) +
-  theme(legend.position = c(0.7, 0.7),
-        legend.background = element_rect(fill = "transparent"))
-# 
-```
-
-
-
+:::
 
 ### Due Dates
 
@@ -221,26 +176,5 @@ make_due_date_table(5) |>
 
 
 
-```{r}
-library(tidyverse)
-inspections <- read_csv("Food_Establishment_Inspection_Data_20231028.csv")
-# problems(inspections)
 
-# read in only the variables that correspond to restaurant name, inspection date, inspection type, inspection result, and grade
-inspections <- read_csv("Food_Establishment_Inspection_Data_20231028.csv", 
-                        col_select = c("Name", "Inspection Date", "Inspection Type", "Inspection Result", "Grade"))
-
-inspections_clean <- inspections |> 
-  janitor::clean_names() |> 
-  mutate(inspection_date = mdy(inspection_date), 
-         inspection_type = fct(inspection_type), 
-         inspection_result = fct(inspection_result)) |> 
-  filter(year(inspection_date) == "2020")
-  
-
-
-ggplot(inspections_clean, aes(x = inspection_date, y = grade, color = grade, group = name)) +
-  geom_jitter() + 
-  geom_line()
-```
 

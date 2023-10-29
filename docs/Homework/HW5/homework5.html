@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -39,6 +73,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -212,33 +248,215 @@ ul.task-list li input[type="checkbox"] {
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
 <p><a href="../../Lectures/Lecture5/data/billboard.csv">billboard.csv</a></p>
+</section>
+<section id="exercises" class="level3">
+<h3 class="anchored" data-anchor-id="exercises">Exercises</h3>
 <ol type="1">
-<li>Download the <code>billboard</code> data set introduced in lecture to the same folder where you’re saving your qmd for this homework<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</li>
-<li>Read in the data with the correct column types</li>
+<li>Download the <code>billboard</code> data set introduced in lecture (above) to the same folder where you’re saving your qmd for this homework<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</li>
+<li>Read in the data, clean up the names, and pivot it in a way so the first few rows look like this:</li>
 </ol>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 5,307 × 7
+&gt;     year artist  track                   time   date_entered  week  rank
+&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;                   &lt;time&gt; &lt;date&gt;       &lt;int&gt; &lt;dbl&gt;
+&gt;  1  2000 2 Pac   Baby Don't Cry (Keep... 04:22  2000-02-26       1    87
+&gt;  2  2000 2 Pac   Baby Don't Cry (Keep... 04:22  2000-02-26       2    82
+&gt;  3  2000 2 Pac   Baby Don't Cry (Keep... 04:22  2000-02-26       3    72
+&gt;  4  2000 2 Pac   Baby Don't Cry (Keep... 04:22  2000-02-26       4    77
+&gt;  5  2000 2 Pac   Baby Don't Cry (Keep... 04:22  2000-02-26       5    87
+&gt;  6  2000 2 Pac   Baby Don't Cry (Keep... 04:22  2000-02-26       6    94
+&gt;  7  2000 2 Pac   Baby Don't Cry (Keep... 04:22  2000-02-26       7    99
+&gt;  8  2000 2Ge+her The Hardest Part Of ... 03:15  2000-09-02       1    91
+&gt;  9  2000 2Ge+her The Hardest Part Of ... 03:15  2000-09-02       2    87
+&gt; 10  2000 2Ge+her The Hardest Part Of ... 03:15  2000-09-02       3    92
+&gt; # ℹ 5,297 more rows</code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Create a variable named <code>date</code> that corresponds to the <code>week</code> based on the <code>date_entered</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Read the footnote for a hint but in you need help visualizing what the final dataset might look like, you can reveal another hint below.</li>
+</ol>
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:tomato"><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i></span> Click for a preview of what the final dataset should look like
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>billboard_tidy_date</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 5,307 × 8
+&gt;     year artist  track                 time  date_entered  week  rank date      
+&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;                 &lt;tim&gt; &lt;date&gt;       &lt;int&gt; &lt;dbl&gt; &lt;date&gt;    
+&gt;  1  2000 2 Pac   Baby Don't Cry (Keep… 04:22 2000-02-26       1    87 2000-02-26
+&gt;  2  2000 2 Pac   Baby Don't Cry (Keep… 04:22 2000-02-26       2    82 2000-03-11
+&gt;  3  2000 2 Pac   Baby Don't Cry (Keep… 04:22 2000-02-26       3    72 2000-03-18
+&gt;  4  2000 2 Pac   Baby Don't Cry (Keep… 04:22 2000-02-26       4    77 2000-03-25
+&gt;  5  2000 2 Pac   Baby Don't Cry (Keep… 04:22 2000-02-26       5    87 2000-04-01
+&gt;  6  2000 2 Pac   Baby Don't Cry (Keep… 04:22 2000-02-26       6    94 2000-04-08
+&gt;  7  2000 2 Pac   Baby Don't Cry (Keep… 04:22 2000-02-26       7    99 2000-04-15
+&gt;  8  2000 2Ge+her The Hardest Part Of … 03:15 2000-09-02       1    91 2000-09-02
+&gt;  9  2000 2Ge+her The Hardest Part Of … 03:15 2000-09-02       2    87 2000-09-16
+&gt; 10  2000 2Ge+her The Hardest Part Of … 03:15 2000-09-02       3    92 2000-09-23
+&gt; # ℹ 5,297 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Create a dataset of the song(s) with the <span style="color:#e15759"><strong>most weeks in the top 3 by month of 2000</strong></span>. The final dataset should look like this:</li>
+</ol>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 16 × 3
+&gt;    month artist              track                  
+&gt;    &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt;                  
+&gt;  1     1 Aguilera, Christina What A Girl Wants      
+&gt;  2     2 Aguilera, Christina What A Girl Wants      
+&gt;  3     2 Savage Garden       I Knew I Loved You     
+&gt;  4     3 Lonestar            Amazed                 
+&gt;  5     4 Destiny's Child     Say My Name            
+&gt;  6     4 Santana             Maria, Maria           
+&gt;  7     5 Hill, Faith         Breathe                
+&gt;  8     5 Santana             Maria, Maria           
+&gt;  9     6 Hill, Faith         Breathe                
+&gt; 10     6 Santana             Maria, Maria           
+&gt; 11     7 Aaliyah             Try Again              
+&gt; 12     8 matchbox twenty     Bent                   
+&gt; 13     9 Janet               Doesn't Really Matte...
+&gt; 14    10 Madonna             Music                  
+&gt; 15    11 Creed               With Arms Wide Open    
+&gt; 16    12 Destiny's Child     Independent Women Pa...</code></pre>
+</div>
+</div>
+<ol start="5" type="1">
+<li>Pick one month of 2000 and visualize the <strong>entire charting trajectory</strong> of the songs that spent <strong>at least 1 week</strong> in the top 3 during that month. <strong>Hint</strong>: start with the data set created in question 3. An example of what this could look like for April is provided below.</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="homework5_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Note: This example plot is an <strong>extremely</strong> specified and polished version of what this can look like. There are a number of ways this can look and you should not be graded nor grade lower for aesthetic features that many of you are still learning. The takeaway here is to challenge yourself to figure out the code to create something that can plot the entire trajectory of the songs that <em>reached</em> the top 3 in whatever month you choose. This will require a combination of the skills you’ve learned in this class thus far. Try this with the content available from lecture first. If you get stuck, there is a hint you can reveal below.</p>
+</blockquote>
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:tomato"><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i></span> Click for skeleton code you can fill in
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Note: This is how <strong>I</strong> did this problem but there are many approaches to every coding puzzle in <code>R</code>. If this skeleton code is useful, use it. If not, I’m happy to chat through <strong>your</strong> approach in office hours 🤓</p>
+<p><em>Replace all instances of <code>function</code>, <code>variable</code>, and <code>value</code> with what you think the correct answer should be. Additional hints provided by hovering over the code annotation.</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a>billboard_top3_month_viz <span class="ot">&lt;-</span> billboard_tidy_date <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="cf">function</span>(variable),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-3" class="code-annotation-target"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">year =</span> <span class="cf">function</span>(variable),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-4" class="code-annotation-target"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">top3 =</span> <span class="fu">if_else</span>(variable <span class="sc">&lt;=</span> value <span class="sc">&amp;</span> variable <span class="sc">==</span> value, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4">4</button><span id="annotated-cell-1-5" class="code-annotation-target"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">peak_weeks =</span> <span class="cf">function</span>(variable),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="5">5</button><span id="annotated-cell-1-6" class="code-annotation-target"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">month_peak =</span> <span class="fu">ifelse</span>(variable <span class="sc">&gt;</span> <span class="dv">0</span>, variable, <span class="cn">NA</span>),</span>
+<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">.by =</span> <span class="fu">c</span>(month, artist, track)) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="6">6</button><span id="annotated-cell-1-8" class="code-annotation-target"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="cf">function</span>(month_peak <span class="sc">==</span> <span class="st">"value"</span>),</span>
+<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">.by =</span> <span class="fu">c</span>(track, artist)) </span>
+<span id="annotated-cell-1-10"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="7">7</button><span id="annotated-cell-1-11" class="code-annotation-target"><a href="#annotated-cell-1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="annotated-cell-1-12"><a href="#annotated-cell-1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(billboard_top3_month_viz, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="8">8</button><span id="annotated-cell-1-13" class="code-annotation-target"><a href="#annotated-cell-1-13" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(variable, variable, <span class="at">group =</span> variable, <span class="at">color =</span> variable)) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="9">9</button><span id="annotated-cell-1-14" class="code-annotation-target"><a href="#annotated-cell-1-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span> <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="10">10</button><span id="annotated-cell-1-15" class="code-annotation-target"><a href="#annotated-cell-1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> billboard_top3_month_viz <span class="sc">|&gt;</span> <span class="cf">function</span>(variable, <span class="at">by =</span> track),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="11">11</button><span id="annotated-cell-1-16" class="code-annotation-target"><a href="#annotated-cell-1-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">label =</span> variable))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-lines="2" data-code-annotation="1" data-code-cell="annotated-cell-1">What month is associated with each row’s chart position?</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-lines="3" data-code-annotation="2" data-code-cell="annotated-cell-1">Are there multiple years in this dataset?! Given that we’re interested in the Billboard Top 100 for <strong>2000</strong> it might be useful to have a variable that allows us to discriminate between years.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-lines="4" data-code-annotation="3" data-code-cell="annotated-cell-1">To create some indicator of top 3 status you’ll need to provide two conditions (one variable needs to be less than or equal to a certain value and another needs to equal a certain value)</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-lines="5" data-code-annotation="4" data-code-cell="annotated-cell-1">Get a total of all the weeks a particular song was in the top 3 in a particular month</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-lines="6" data-code-annotation="5" data-code-cell="annotated-cell-1">Need to create a variable that reflects when a particular song charted in the top 3 and <code>NA</code> otherwise</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-lines="8" data-code-annotation="6" data-code-cell="annotated-cell-1">In order to get the entire trajectory of a song we can’t simply filter for the month when it peaked. Then we’d only be able to plot that snippet of its trajectory. Hint: Which function returns <code>TRUE</code> if even 1 element it’s given is <code>TRUE</code>?</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="7">7</dt>
+<dd>
+<span data-code-lines="11" data-code-annotation="7" data-code-cell="annotated-cell-1">Load if you want to add labels</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="8">8</dt>
+<dd>
+<span data-code-lines="13" data-code-annotation="8" data-code-cell="annotated-cell-1">You want to visualize the ranking trajectory of a song over time. Hint: <code>group</code> is the variable you want to visualize.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="9">9</dt>
+<dd>
+<span data-code-lines="14" data-code-annotation="9" data-code-cell="annotated-cell-1">What geometry would be appropriate here?</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="10">10</dt>
+<dd>
+<span data-code-lines="15" data-code-annotation="10" data-code-cell="annotated-cell-1">To properly label this plot you’ll need to subset the data, otherwise it will try to plot a label for every date available.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="11">11</dt>
+<dd>
+<span data-code-lines="16" data-code-annotation="11" data-code-cell="annotated-cell-1">Which variable’s text are you trying to label?</span>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="due-dates" class="level3">
 <h3 class="anchored" data-anchor-id="due-dates">Due Dates</h3>
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="toxtnsulwg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#toxtnsulwg table {
+<div id="ycffpayeow" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ycffpayeow table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#toxtnsulwg thead, #toxtnsulwg tbody, #toxtnsulwg tfoot, #toxtnsulwg tr, #toxtnsulwg td, #toxtnsulwg th {
+#ycffpayeow thead, #ycffpayeow tbody, #ycffpayeow tfoot, #ycffpayeow tr, #ycffpayeow td, #ycffpayeow th {
   border-style: none;
 }
 
-#toxtnsulwg p {
+#ycffpayeow p {
   margin: 0;
   padding: 0;
 }
 
-#toxtnsulwg .gt_table {
+#ycffpayeow .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -264,12 +482,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#toxtnsulwg .gt_caption {
+#ycffpayeow .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#toxtnsulwg .gt_title {
+#ycffpayeow .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -281,7 +499,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#toxtnsulwg .gt_subtitle {
+#ycffpayeow .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -293,7 +511,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#toxtnsulwg .gt_heading {
+#ycffpayeow .gt_heading {
   background-color: #F6F7F9;
   text-align: center;
   border-bottom-color: #F6F7F9;
@@ -305,13 +523,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#toxtnsulwg .gt_bottom_border {
+#ycffpayeow .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#toxtnsulwg .gt_col_headings {
+#ycffpayeow .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -326,7 +544,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#toxtnsulwg .gt_col_heading {
+#ycffpayeow .gt_col_heading {
   color: #333333;
   background-color: #F6F7F9;
   font-size: 100%;
@@ -346,7 +564,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#toxtnsulwg .gt_column_spanner_outer {
+#ycffpayeow .gt_column_spanner_outer {
   color: #333333;
   background-color: #F6F7F9;
   font-size: 100%;
@@ -358,15 +576,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#toxtnsulwg .gt_column_spanner_outer:first-child {
+#ycffpayeow .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#toxtnsulwg .gt_column_spanner_outer:last-child {
+#ycffpayeow .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#toxtnsulwg .gt_column_spanner {
+#ycffpayeow .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -378,11 +596,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#toxtnsulwg .gt_spanner_row {
+#ycffpayeow .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#toxtnsulwg .gt_group_heading {
+#ycffpayeow .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -408,7 +626,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#toxtnsulwg .gt_empty_group_heading {
+#ycffpayeow .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #F6F7F9;
@@ -423,15 +641,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#toxtnsulwg .gt_from_md > :first-child {
+#ycffpayeow .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#toxtnsulwg .gt_from_md > :last-child {
+#ycffpayeow .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#toxtnsulwg .gt_row {
+#ycffpayeow .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -450,7 +668,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#toxtnsulwg .gt_stub {
+#ycffpayeow .gt_stub {
   color: #333333;
   background-color: #F6F7F9;
   font-size: 100%;
@@ -463,7 +681,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#toxtnsulwg .gt_stub_row_group {
+#ycffpayeow .gt_stub_row_group {
   color: #333333;
   background-color: #F6F7F9;
   font-size: 100%;
@@ -477,15 +695,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#toxtnsulwg .gt_row_group_first td {
+#ycffpayeow .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#toxtnsulwg .gt_row_group_first th {
+#ycffpayeow .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#toxtnsulwg .gt_summary_row {
+#ycffpayeow .gt_summary_row {
   color: #333333;
   background-color: #F6F7F9;
   text-transform: inherit;
@@ -495,16 +713,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#toxtnsulwg .gt_first_summary_row {
+#ycffpayeow .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#toxtnsulwg .gt_first_summary_row.thick {
+#ycffpayeow .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#toxtnsulwg .gt_last_summary_row {
+#ycffpayeow .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -514,7 +732,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#toxtnsulwg .gt_grand_summary_row {
+#ycffpayeow .gt_grand_summary_row {
   color: #333333;
   background-color: #F6F7F9;
   text-transform: inherit;
@@ -524,7 +742,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#toxtnsulwg .gt_first_grand_summary_row {
+#ycffpayeow .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -534,7 +752,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#toxtnsulwg .gt_last_grand_summary_row_top {
+#ycffpayeow .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -544,11 +762,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#toxtnsulwg .gt_striped {
+#ycffpayeow .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#toxtnsulwg .gt_table_body {
+#ycffpayeow .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -557,7 +775,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#toxtnsulwg .gt_footnotes {
+#ycffpayeow .gt_footnotes {
   color: #333333;
   background-color: #F6F7F9;
   border-bottom-style: none;
@@ -571,7 +789,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#toxtnsulwg .gt_footnote {
+#ycffpayeow .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -580,7 +798,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#toxtnsulwg .gt_sourcenotes {
+#ycffpayeow .gt_sourcenotes {
   color: #333333;
   background-color: #F6F7F9;
   border-bottom-style: none;
@@ -594,7 +812,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#toxtnsulwg .gt_sourcenote {
+#ycffpayeow .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -602,63 +820,63 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#toxtnsulwg .gt_left {
+#ycffpayeow .gt_left {
   text-align: left;
 }
 
-#toxtnsulwg .gt_center {
+#ycffpayeow .gt_center {
   text-align: center;
 }
 
-#toxtnsulwg .gt_right {
+#ycffpayeow .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#toxtnsulwg .gt_font_normal {
+#ycffpayeow .gt_font_normal {
   font-weight: normal;
 }
 
-#toxtnsulwg .gt_font_bold {
+#ycffpayeow .gt_font_bold {
   font-weight: bold;
 }
 
-#toxtnsulwg .gt_font_italic {
+#ycffpayeow .gt_font_italic {
   font-style: italic;
 }
 
-#toxtnsulwg .gt_super {
+#ycffpayeow .gt_super {
   font-size: 65%;
 }
 
-#toxtnsulwg .gt_footnote_marks {
+#ycffpayeow .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#toxtnsulwg .gt_asterisk {
+#ycffpayeow .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#toxtnsulwg .gt_indent_1 {
+#ycffpayeow .gt_indent_1 {
   text-indent: 5px;
 }
 
-#toxtnsulwg .gt_indent_2 {
+#ycffpayeow .gt_indent_2 {
   text-indent: 10px;
 }
 
-#toxtnsulwg .gt_indent_3 {
+#ycffpayeow .gt_indent_3 {
   text-indent: 15px;
 }
 
-#toxtnsulwg .gt_indent_4 {
+#ycffpayeow .gt_indent_4 {
   text-indent: 20px;
 }
 
-#toxtnsulwg .gt_indent_5 {
+#ycffpayeow .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -743,6 +961,7 @@ ul.task-list li input[type="checkbox"] {
 
 <ol>
 <li id="fn1"><p>If your project directory is different from the directory where you’ll be saving these two files, you should run <code>setwd()</code> in the <strong>console</strong> and give it a string of the file path to the folder where these two files are saved. This will allow you to run code interactively without error.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>For instance, if the <code>date_entered</code> is <code>1-13-2000</code> and <code>week</code> is 1, then when <code>week</code> is 2 <code>date</code> will have a value of <code>1-20-2000</code>. Hint: Try using <code>if_else()</code> here.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -919,25 +1138,90 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
+      // Handle positioning of the toggle
+      window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
           }
-        });
+        };
+      }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
       }
   const findCites = (el) => {
     const parentEl = el.parentElement;
