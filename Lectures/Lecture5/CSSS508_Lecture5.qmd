@@ -231,6 +231,7 @@ Sometimes a particular dataset or file read from a different software will code 
 
 ```{r}
 #| eval: false
+#| code-line-numbers: "|2"
 billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
                                na = c("N/A", "999"))
 ```
@@ -241,6 +242,7 @@ Depending on how the data were input, there may be several lines that precede th
 
 ```{r}
 #| eval: false
+#| code-line-numbers: "|2"
 billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
                                skip = 1)
 ```
@@ -254,7 +256,6 @@ billboard_2000_raw <- read_csv(file = "data/billboard.csv",
 It takes a character vector to be used as column names (in their order of appearance). 
 
 ```{r}
-#| eval: false
 billboard_renamed <- read_csv(file = "data/billboard.csv", 
                                col_names = c("year", "artist", "track", "time", "date_entered", 
                                              paste("wk", 1:76, sep = "_"))) # <1>
@@ -263,13 +264,17 @@ billboard_renamed |>  names() |> head(10) # <2>
 ```
 
 1. `paste` "pastes" together the first argument to the second argument (separated by whatever is specified in the `sep` argument) as character strings. Since the first argument here is a singular value, it is repeated for the entire length of the vector in the second argument. The first several values of `paste("wk", 1:76, sep = "_")` are: `r head(paste("wk", 1:76, sep = "_"))`
-2. Our first official usage of the pipe! `names` here returns the column names of our data frame.
+2. `names` here returns the column names of our data frame.
+
 . . . 
+
+<br>
 
 If you don't have any variable names you can specify that instead. 
 
 ```{r}
 #| eval: false
+#| code-line-numbers: "|2"
 billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
                                col_names = FALSE) 
 ```
@@ -571,6 +576,8 @@ billboard_2000_raw <- read_csv(file = "data/billboard.csv",
                                col_types = bb_types) # <2> 
 ```
 
+2. This string now specifies the data type for each column of our data frame. Visit [this reference page](https://readr.tidyverse.org/reference/cols.html) to see all available column types and their short codes. 
+
 ```{r}
 #| echo: false
 billboard_renamed <- read_csv(file = "data/billboard.csv",
@@ -578,15 +585,13 @@ billboard_renamed <- read_csv(file = "data/billboard.csv",
   janitor::clean_names(numerals = "right")
 ```
 
-
-2. This string now specifies the data type for each column of our data frame. Visit [this reference page](https://readr.tidyverse.org/reference/cols.html) to see all available column types and their short codes. 
-
 ## Column types
 
 To specify a default column type you can use `.default` like so: 
 
 ```{r}
 #| eval: false
+#| code-line-numbers: "|2"
 billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
                                col_types = cols(.default = col_character())) 
 ```
@@ -599,6 +604,7 @@ Another useful helper is `cols_only()` for when you only want to read in a subse
 
 ```{r}
 #| eval: false
+#| code-line-numbers: "|2"
 billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
                                col_types = cols_only(x = col_character)) 
 ```
@@ -607,7 +613,7 @@ billboard_2000_raw <- read_csv(file = "data/billboard.csv",
 
 <br>
 
-In summary, the `col-types` argument gives you greater control over how your data are read in and can save you recoding time down the road and/or point out where your data are behaving differently than you expect. 
+In summary, the `col_types` argument gives you greater control over how your data are read in and can save you recoding time down the road and/or point out where your data are behaving differently than you expect. 
 
 ## Reading in Multiple Files 
 
@@ -1095,12 +1101,12 @@ who2 |>
   pivot_longer(
     cols = !(country:year),
     names_to = c("diagnosis", "gender", "age"), 
-    names_sep = "_", # <5>
+    names_sep = "_", # <6>
     values_to = "count"
   )
 ```
 
-5. You can use `names_pattern` instead of `names_sep` to extract variables from more complicated naming scenarios once you've learned regular expressions in a few weeks. 
+6. You can use `names_pattern` instead of `names_sep` to extract variables from more complicated naming scenarios once you've learned regular expressions in a few weeks. 
 
 ## Variable & Values in Column Names
 
@@ -1122,14 +1128,14 @@ The new challenge in this dataset is that the column names contain the names of 
 household |> 
   pivot_longer(
     cols = !family, 
-    names_to = c(".value", "child"), # <6>
+    names_to = c(".value", "child"), # <7>
     names_sep = "_", 
-    values_drop_na = TRUE # <7> 
+    values_drop_na = TRUE # <8> 
   )
 ```
 
-6. `.value` isn’t the name of a variable but a unique value that tells `pivot_longer` to use the first component of the pivoted column name as a variable name in the output. 
-7. Using `values_drop_na = TRUE` again since not every family has 2 children.
+7. `.value` isn’t the name of a variable but a unique value that tells `pivot_longer` to use the first component of the pivoted column name as a variable name in the output. 
+8. Using `values_drop_na = TRUE` again since not every family has 2 children.
 
 . . . 
 
@@ -1160,15 +1166,15 @@ A common cue to use `pivot_wider()` is having measurements of different quantiti
 ```{r}
 #| output-location: fragment
 wide_stats <- long_stats |> 
-  pivot_wider(id_cols = Group, # <8>
-              names_from = Statistic, # <9>
-              values_from = Value) # <10>
+  pivot_wider(id_cols = Group, # <9>
+              names_from = Statistic, # <10>
+              values_from = Value) # <11>
 wide_stats
 ```
 
-8. `id_cols` is the column that uniquely identifies each row in the new dataset. Default is everything not in `names_from` and `values_from`.
-9. `names_from` provides the names that will be used for the new columns
-10. `values_from` provides the values that will be used to populate the cells of the new columns.
+9. `id_cols` is the column that uniquely identifies each row in the new dataset. Default is everything not in `names_from` and `values_from`.
+10. `names_from` provides the names that will be used for the new columns
+11. `values_from` provides the values that will be used to populate the cells of the new columns.
 
 . . . 
 
@@ -1397,7 +1403,7 @@ relig_summary <- gss_cat |>
     n = n()
   )
 
-ggplot(relig_summary, aes(x = tvhours, y = relig)) + # <7>
+ggplot(relig_summary, aes(x = tvhours, y = relig)) + 
   geom_point()
 ```
 
@@ -2268,7 +2274,7 @@ ggsave(plot = heatmap, filename = "images/heatmap.png", width = 16, height = 8, 
 
 # Homework{.section-title background-color="#1e4655"}
 
-## {background-iframe="https://vsass.github.io/CSSS508/Homework/HW5/homework5.html"}
+## {background-iframe="https://vsass.github.io/CSSS508/Homework/HW5/homework5.html" background-interactive=TRUE}
 
 
 
