@@ -6822,14 +6822,14 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#making-vectors",
     "title": "",
     "section": "Making Vectors",
-    "text": "Making Vectors\nIn R, we call a set of values of the same type a vector. We can create vectors using the c() function (“c” for combine or concatenate).\n\nc(1, 3, 7, -0.5)\n\n&gt; [1]  1.0  3.0  7.0 -0.5\n\n\n\nVectors have one dimension: length\n\nlength(c(1, 3, 7, -0.5))\n\n&gt; [1] 4\n\n\n\n\nAll elements of a vector are the same type (e.g. numeric or character)!\nIf you mix character and numeric data, it will convert everything to characters!"
+    "text": "Making Vectors\nIn R, we call a set of values of the same type a vector. We can create vectors using the c() function (“c” for combine or concatenate).\n\nc(1, 3, 7, -0.5)\n\n&gt; [1]  1.0  3.0  7.0 -0.5\n\n\n\nVectors have one dimension: length\n\nlength(c(1, 3, 7, -0.5))\n\n&gt; [1] 4\n\n\n\n\nAll elements of a vector are the same type (e.g. numeric or character)!\nCharacter data is the lowest denomination so anything mixed with it will be converted to a character."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#generating-numeric-vectors",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#generating-numeric-vectors",
     "title": "",
     "section": "Generating Numeric Vectors",
-    "text": "Generating Numeric Vectors\nThere are shortcuts for generating numeric vectors:\n\n1:10\n\n&gt;  [1]  1  2  3  4  5  6  7  8  9 10\n\n\n\n\nseq(-3, 6, by = 1.75) # Sequence from -3 to 6, increments of 1.75\n\n&gt; [1] -3.00 -1.25  0.50  2.25  4.00  5.75\n\n\n\n\n\nrep(c(0, 1), times = 3) # Repeat c(0,1) 3 times\n\n&gt; [1] 0 1 0 1 0 1\n\nrep(c(0, 1), each = 3) # Repeat each element 3 times\n\n&gt; [1] 0 0 0 1 1 1"
+    "text": "Generating Numeric Vectors\nThere are shortcuts for generating numeric vectors:\n\n1:10\n\n&gt;  [1]  1  2  3  4  5  6  7  8  9 10\n\n\n\n\n1seq(-3, 6, by = 1.75)\n\n\n1\n\nSequence from -3 to 6, increments of 1.75\n\n\n\n\n&gt; [1] -3.00 -1.25  0.50  2.25  4.00  5.75\n\n\n\n\n\n2rep(c(0, 1), times = 3)\n3rep(c(0, 1), each = 3)\n\n\n2\n\nRepeat c(0,1) 3 times\n\n3\n\nRepeat each element 3 times\n\n\n\n\n&gt; [1] 0 1 0 1 0 1\n&gt; [1] 0 0 0 1 1 1"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#element-wise-vector-math",
@@ -6885,7 +6885,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#matrices-two-dimensions",
     "title": "",
     "section": "Matrices: Two Dimensions",
-    "text": "Matrices: Two Dimensions\nMatrices extend vectors to two dimensions: rows and columns. We can construct them directly using matrix.\nR fills in a matrix column-by-column (not row-by-row!)\n\na_matrix &lt;- matrix(first_names, nrow = 2, ncol = 3)\na_matrix\n\n&gt;      [,1]    [,2]      [,3]     \n&gt; [1,] \"Andre\" \"Cecilia\" \"Edgar\"  \n&gt; [2,] \"Brady\" \"Danni\"   \"Francie\""
+    "text": "Matrices: Two Dimensions\nMatrices extend vectors to two dimensions: rows and columns. We can construct them directly using matrix.\n\nR fills in a matrix column-by-column (not row-by-row!)\n\na_matrix &lt;- matrix(first_names, nrow = 2, ncol = 3)\na_matrix\n\n&gt;      [,1]    [,2]      [,3]     \n&gt; [1,] \"Andre\" \"Cecilia\" \"Edgar\"  \n&gt; [2,] \"Brady\" \"Danni\"   \"Francie\""
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#binding-vectors",
@@ -10609,7 +10609,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\nCentral Tendency\n\n\n20x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\nmedian(x)\n21quantile(x, .95)\n\n\n20\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n21\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt; [1] 286.41\n&gt; [1] 319\n&gt;   95% \n&gt; 464.2\n\n\n\nMeasures of Spread/Variation\n\n\nmin(x)\n\n&gt; [1] 5\n\nmax(x)\n\n&gt; [1] 500\n\nrange(x)\n\n&gt; [1]   5 500\n\n\n\nIQR(x)\n\n\n22\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 222\n\n\n\nvar(x)\n\n\n23\n\n\\[s^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\\]\n\n\n\n\n&gt; [1] 18713.86\n\n\n\n24sd(x)\n\n\n24\n\n\\[s = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\\]\n\n\n\n\n&gt; [1] 136.7986\n\n\n\nPositions\n\nfirst(x)\n\n&gt; [1] 95\n\nlast(x)\n\n&gt; [1] 366\n\nnth(x, 5)\n\n&gt; [1] 362"
+    "text": "Summary Functions\n\nCentral Tendency\n\n20x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\nmedian(x)\n21quantile(x, .95)\n\n\n20\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n21\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt; [1] 256.48\n&gt; [1] 266\n&gt;    95% \n&gt; 469.25"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#common-numerical-manipulations",
@@ -10623,7 +10623,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-fa-scroll",
     "title": "",
     "section": "Summary Functions ",
-    "text": "Summary Functions \n\nCentral Tendency\n\n20x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\nmedian(x)\n21quantile(x, .95)\n\n\n20\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n21\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt; [1] 250.19\n&gt; [1] 250\n&gt;   95% \n&gt; 477.1\n\n\n\n\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 1\n\nmax(x)\n\n&gt; [1] 494\n\nrange(x)\n\n&gt; [1]   1 494\n\n\n\n22IQR(x)\n\n\n22\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 267\n\n\n\n23var(x)\n\n\n23\n\n\\[s^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\\]\n\n\n\n\n&gt; [1] 22614.88\n\n\n\n24sd(x)\n\n\n24\n\n\\[s = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\\]\n\n\n\n\n&gt; [1] 150.3825\n\n\n\n\nPositions\n\nfirst(x)\n\n&gt; [1] 429\n\nlast(x)\n\n&gt; [1] 112\n\nnth(x, n = 77)\n\n&gt; [1] 171"
+    "text": "Summary Functions \n\nCentral Tendency\n\n20x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\nmedian(x)\n21quantile(x, .95)\n\n\n20\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n21\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt; [1] 261.18\n&gt; [1] 274.5\n&gt;    95% \n&gt; 467.05\n\n\n\n\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 5\n\nmax(x)\n\n&gt; [1] 497\n\nrange(x)\n\n&gt; [1]   5 497\n\n\n\n22IQR(x)\n\n\n22\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 278.5\n\n\n\n23var(x)\n\n\n23\n\n\\[s^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\\]\n\n\n\n\n&gt; [1] 22456.35\n\n\n\n24sd(x)\n\n\n24\n\n\\[s = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\\]\n\n\n\n\n&gt; [1] 149.8544\n\n\n\n\nPositions\n\nfirst(x)\n\n&gt; [1] 240\n\nlast(x)\n\n&gt; [1] 400\n\nnth(x, n = 77)\n\n&gt; [1] 345"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#missing",
@@ -10680,5 +10680,19 @@
     "title": "",
     "section": "Missing Factors in Plots",
     "text": "Missing Factors in Plots\nThis sample principle applies when visualizing a factor variable, which will automatically drop levels that don’t have any values. Use drop_values = FALSE in the appropriate scale to display implicit NAs.\n\n\n\n\nggplot(health, aes(x = smoker)) +\n  geom_bar() +\n  scale_x_discrete() + \n  theme_classic(base_size = 22)\n\n\n\n\n\n\n\nggplot(health, aes(x = smoker)) +\n  geom_bar() +\n  scale_x_discrete(drop = FALSE) + \n  theme_classic(base_size = 22)"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-1",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-1",
+    "title": "",
+    "section": "Summary Functions",
+    "text": "Summary Functions\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 3\n\nmax(x)\n\n&gt; [1] 496\n\nrange(x)\n\n&gt; [1]   3 496\n\n\n\n22IQR(x)\n\n\n22\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 248\n\n\n\n23var(x)\n\n\n23\n\n\\[s^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\\]\n\n\n\n\n&gt; [1] 20629.24\n\n\n\n24sd(x)\n\n\n24\n\n\\[s = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\\]\n\n\n\n\n&gt; [1] 143.6288"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-2",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-2",
+    "title": "",
+    "section": "Summary Functions",
+    "text": "Summary Functions\nPositions\n\nfirst(x)\n\n&gt; [1] 305\n\nlast(x)\n\n&gt; [1] 282\n\nnth(x, n = 77)\n\n&gt; [1] 116"
   }
 ]
