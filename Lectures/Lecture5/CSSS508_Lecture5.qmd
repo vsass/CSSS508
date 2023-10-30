@@ -36,14 +36,7 @@ require(xml2)
 require(tidyverse)
 
 knitr::opts_chunk$set(
-  comment = ">"
-  # collapse = TRUE,
-  # cache = TRUE,
-  # fig.retina = 2,
-  # fig.width = 6,
-  # fig.asp = 2/3,
-  # fig.show = "hold"
-)
+  comment = ">")
 ```
 
 [Importing, Exporting, and Cleaning Data]{.custom-title}
@@ -114,7 +107,7 @@ If you have an actual data file, you'll have to import it yourself...
 
 ## Delimited Text Files
 
-Besides a package, it's easiest when data is stored in a text file. The most commonly encountered delimitd file is a **.csv**.
+Besides a package, it's easiest when data is stored in a text file. The most commonly encountered delimited file is a **.csv**.
 
 . . . 
 
@@ -222,7 +215,7 @@ This makes the process *reproducible!*
 
 ## Specifying `NA`s 
 
-`NA`s are technically logical (boolean) variables^[We'll cover these more in depth in a couple of weeks.] that indicate a missing value. 
+`NA`s are technically logical (boolean) variables that indicate a missing value. 
 
 . . . 
 
@@ -509,7 +502,7 @@ flowchart LR
 
 ## Most Common Issue with Reading in Data
 
-The most common problem that occurs when reading in data is having mixed data. Most often, given the heuristic provided in the last slide, will parse a variable as a character string to preserve whatever it contains. 
+The most common problem that occurs when reading in data is having mixed data. Most often, given the heuristic provided in the last slide, `readr` will parse a variable as a character string to preserve whatever it contains. 
 
 . . . 
 
@@ -574,6 +567,7 @@ bb_types
 # re-read in data with column types specified
 billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
                                col_types = bb_types) # <2> 
+billboard_2000_raw |> head(1)
 ```
 
 2. This string now specifies the data type for each column of our data frame. Visit [this reference page](https://readr.tidyverse.org/reference/cols.html) to see all available column types and their short codes. 
@@ -779,7 +773,7 @@ First things to check after loading new data:
 * Did all the rows/columns from the original file make it in?
     + Check using `dim()` or `str()`
 * Are the column names in good shape?
-    + Use `names()` to check; fix with `rename()`
+    + Use `names()` to check; re-read in using `col_names()` or fix with `rename()`
 * Are there "decorative" blank rows or columns to remove?
     + `filter()` or `select()` out those rows/columns
 * How are missing values represented: `NA`, `" "` (blank), `.` (period), `999`?
@@ -789,17 +783,13 @@ First things to check after loading new data:
 
 :::
 
-## What is Tidy Data
+## What is Tidy Data?
 
-**Tidy data^[Read the original article [here](https://www.jstatsoft.org/article/view/v059i10).]** (aka "long data") are such that:
+. . . 
 
-![](images/tidy-1.png){fig-align="center"}
+![](images/tidy_data1.jpeg){.absolute top=50 right=0 left=0}^[Illustrations from the [Openscapes](https://openscapes.org/) blog [Tidy Data for reproducibility, efficiency, and collaboration](https://www.openscapes.org/blog/2020/10/12/tidy-data/) by Julia Lowndes and Allison Horst]
 
-::: {.incremental}
-1. The values for a single variable are in their own column.
-2. The values for a single observation are in their own row.
-3. There is only one value per cell.
-:::
+
 
 ## Why do we Want Tidy Data?
 
@@ -814,6 +804,12 @@ First things to check after loading new data:
 . . . 
 
 Most real-world data is not tidy because data are often organized for goals other than analysis (i.e. data entry) and most people aren't familiar with the principles of tidy data. 
+
+## Why do we Want Tidy Data?
+
+. . . 
+
+![](images/tidy_data3.jpeg){.absolute top=50 right=0 left=0}^[Illustrations from the [Openscapes](https://openscapes.org/) blog [Tidy Data for reproducibility, efficiency, and collaboration](https://www.openscapes.org/blog/2020/10/12/tidy-data/) by Julia Lowndes and Allison Horst]
 
 ## Slightly "Messy" Data
 
@@ -892,6 +888,12 @@ Week columns continue up to `wk76`!
 * What are the **values** in the data?
     + e.g. 2000; 3 Doors Down; Kryptonite; 3 minutes 53 seconds; April 8, 2000; Week 3 (**stuck in column headings**); rank 68 (**spread over many columns**)
 :::
+
+## Reminder: Why do we Want Tidy Data?
+
+. . . 
+
+![](images/tidy_data2.jpeg){.absolute top=50 right=0 left=0}^[Illustrations from the [Openscapes](https://openscapes.org/) blog [Tidy Data for reproducibility, efficiency, and collaboration](https://www.openscapes.org/blog/2020/10/12/tidy-data/) by Julia Lowndes and Allison Horst]
 
 ## `tidyr`
 
@@ -1061,7 +1063,7 @@ billboard_2000 <- billboard_renamed %>%
 head(billboard_2000, 5)
 ```
 
-4. `names_prefix` is used to remove "wk" from the values of `week`
+4. `names_prefix` is used to remove "wk_" from the values of `week`
 5. `names_transform` converts `week` into an integer number.
 
 ## Multiple Variables in Column Names
@@ -1091,7 +1093,7 @@ Data documentation and some minor investigation would lead you to figure out tha
 
 . . . 
 
-To organize the six pieces of information in this dataset into six separate columns, we use `pivot_longer()` with a vector of column names for `names_to` and instructors for splitting the original variable names into pieces for `names_sep` as well as a column name for `values_to`!
+To organize the six pieces of information in this dataset into six separate columns, we use `pivot_longer()` with a vector of column names for `names_to` and instructions for splitting the original variable names into pieces for `names_sep` as well as a column name for `values_to`!
 
 ## Multiple Variables in Column Names
 
@@ -1189,14 +1191,14 @@ If there are multiple rows in the input that correspond to one cell in the outpu
 
 ## Data types in `R`
 
-Going back to our list of data types in `R`: 
+Going back to our list of data types in `R`:  
 
 . . . 
 
-* ~~Logical~~
+* Logicals
 * Factors
 * Date/Date-time
-* Numeric
+* Numbers
 * Missing Values
 * Strings
 
@@ -1204,10 +1206,21 @@ Going back to our list of data types in `R`:
 
 Going back to our list of data types in `R`: 
 
-* ~~Logical~~
+* ~~Logicals~~
+* Factors
+* Date/Date-time
+* Numbers
+* Missing Values
+* Strings
+
+## Data types in `R`
+
+Going back to our list of data types in `R`: 
+
+* ~~Logicals~~
 * <span style="color:#e15759">Factors</span>
 * <span style="color:#e15759">Date/Date-time</span>
-* Numeric
+* Numbers
 * Missing Values
 * Strings
 
@@ -1861,7 +1874,7 @@ While `ISO8601` format is read in as a string of human-readable date/times, anot
 :::
 
 ::: {.fragment}
-If the offset is in seconds you'll want to use `as_date_time()` and if it's in days use `as_date()` for the conversion. 
+If the offset is in seconds you'll want to use `as_datetime()` and if it's in days use `as_date()` for the conversion. 
 
 ```{r}
 as_datetime(1)
@@ -2184,11 +2197,11 @@ Go to the [Lecture 5 Homepage](https://vsass.github.io/CSSS508/Lectures/Lecture5
 4. Turn two of the variables into factors^[Hint: Which two variables are categorical?].
 5. Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency^[You can determine this by summarizing the data or creating a visualization of the data.]?
 
-## Answers 
+## Answers {visibility="hidden"}
 
 Question 1: Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
   
-## Answers {auto-animate="true"}
+## Answers {auto-animate="true" visibility="hidden"}
 
 Question 2: Read in your data using the appropriate function from `readr`. 
 
@@ -2197,7 +2210,7 @@ religion_income <- read_csv(file = "data/religion_income.csv",
                             col_types = c("f", rep("i", 10)))
 ```
 
-## Answers {auto-animate="true"}
+## Answers {auto-animate="true" visibility="hidden"}
 
 Question 3: Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
 
@@ -2211,7 +2224,7 @@ religion_income_tidy <- religion_income |>
               values_to = "frequency")
 ```
 
-## Answers {auto-animate="true"}
+## Answers {auto-animate="true" visibility="hidden"}
 
 Question 4: Turn two of the variables into factors^[Hint: Which two variables are categorical?].
 
@@ -2228,7 +2241,7 @@ religion_income_tidy <- religion_income |>
                                          "$75-100k", "$100-150k", ">150k")))
 ```
 
-## Answers 
+## Answers {visibility="hidden"}
 
 Question 5: Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency? You can determine this by **summarizing the data** or creating a visualization of the data.
 
@@ -2239,7 +2252,7 @@ religion_income_tidy |>
   slice_max(frequency)
 ```
 
-## Answers <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+## Answers <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable visibility="hidden"} 
 
 Question 5: Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency? You can determine this by summarizing the data or creating a **visualization** of the data.
 

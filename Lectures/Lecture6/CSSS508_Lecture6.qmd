@@ -19,6 +19,7 @@ format:
     history: false
     progress: true
     link-external-icon: true
+    code-annotations: hover
     pointer:
       color: "#b18eb1"
 revealjs-plugins:
@@ -31,8 +32,9 @@ revealjs-plugins:
 require(downlit)
 require(xml2)
 require(tidyverse)
-options(width = 70)
-# knitr::opts_chunk$set(comment = "##")
+
+knitr::opts_chunk$set(
+  comment = ">")
 ```
 
 ## {#title-slide data-menu-title="Data Structures & Types" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
@@ -46,161 +48,714 @@ options(width = 70)
 
 [Victoria Sass]{.custom-subtitle3}
 
-# Preamble: Data Structures and Types in `R` {.section-title background-color="#99a486"}
-
---- 
-
-<br>
-
-So far, we've been manipulating, summarizing, and making visuals out of data. That's pretty great!!
-
-But now, we need to get more into the weeds of programming...
-
-Today is all about *types of data* in R.
-
 # Roadmap{.section-title background-color="#99a486"}
 
 ---
 
+:::: {.columns}
+
+::: {.column width="50%"}
+
 <br>
 
-Last time, we learned about,
+### Last time, we learned:
 
-* Logical conditions
-* Subsetting data
-* Modifying data 
-* Summarizing data
-* Merging together data
+* Importing and Exporting Data
+* Tidying and Reshaping Data
+* Working with Factors
+* Wrangling Date/Date-Time Data
+:::
 
-. . . 
+::: {.column width="50%"}
 
-Today, we will cover,
+<br> 
+
+::: {.fragment}
+### Today, we will cover:
 
 * Types of Data
-* Vectors
-* Matrices
-* Lists
+  * Numbers
+  * Missing Values
+* Data Structures
+  * Vectors
+  * Matrices
+  * Lists
+    * Dataframes
 
-# Types of Data{.section-title background-color="#99a486"}
+:::
 
-+ `numeric`
-+ `character`
-+ `factor`
-+ `logical`
-+ `NA`, `NaN`, and `Inf`
+:::
 
-## How is my data stored?
-
-Under the hood, R stores different types of data in different ways.
+::::
 
 . . . 
 
-+ e.g., R knows that `4.0` is a number, and that `"Vic"` is not a number.
+This week we start getting more into the weeds of programming in `R`. 
 
 . . . 
 
-So what exactly are the common data types, and how do we know what R is doing?
+These skills will help you understand some of `R`'s quirks, how to troubleshoot errors when they arise, and how to write more efficient and automated code that does a lot of work for you! 
 
-## Data Types
+## Data types in `R`
 
-* **numeric**: `c(1, 10*3, 4, -3.14)`
-
-. . . 
-
-* **character**: `c("red", "blue", "blue")`
+Returning, once again, to our list of data types in `R`: 
 
 . . . 
 
-* **factor**: `factor(c("red", "blue", "blue"))`
+* Logicals
+* Factors
+* Date/Date-time
+* Numbers
+* Missing Values
+* Strings
 
+## Data types in `R`
+
+Returning, once again, to our list of data types in `R`: 
+
+* ~~Logicals~~
+* ~~Factors~~
+* ~~Date/Date-time~~
+* Numbers
+* Missing Values
+* Strings
 
 . . . 
 
-* **logical**: `c(FALSE, TRUE, TRUE)`
+![](images/logicals_factors.png){.absolute top=95 right=0 left=250 width="900" height="600"}
 
-## Note on Factor Vectors
+---
 
-Factors are categorical data that encode a (modest) number of **levels**, like for experimental group or geographic region: 
+
+## Data types in `R`
+
+Returning, once again, to our list of data types in `R`: 
+
+* ~~Logicals~~
+* ~~Factors~~
+* ~~Date/Date-time~~
+* <span style="color:#e15759">Numbers<span>
+* <span style="color:#e15759">Missing Values</span>
+* Strings
+
+# Numbers{.section-title background-color="#99a486"}
+
+## Numbers, Two Ways
+
+`R` has two types of numeric variables: `double` and `integer`. 
+
+. . . 
+
+![](images/numbers.png){fig-align="center" width=70% height=70%}
+
+## Numbers Coded as Character Strings
+
+Oftentimes numerical data is coded as a string so you'll need to use the appropriate parsing function to read it in in the correct form. 
+
+. . . 
 
 ```{r}
-test_group <- factor(c("Treatment", "Placebo", "Placebo", "Treatment"))
-test_group
+parse_integer(c("1", "2", "3"))
+parse_double(c("1", "2", "3.123"))
 ```
 
 . . . 
 
-Why use `factor` instead of `character`? Because `factor` data can go into a statistical model^[Most R models will automatically convert character data to factors. The default reference is chosen alphabetically.].
+<br>
 
-## Note on Logical Vectors
-
-Remember that `logical` data in R takes on boolean `TRUE` or `FALSE` values.
+If you have values with extraneous non-numerical text you want to ignore there's a separate function for that.
 
 . . . 
-
-You can do math with logical values, because R makes `TRUE` = 1 and `FALSE` = 0:
 
 ```{r}
-my_booleans <- c(TRUE, TRUE, FALSE, FALSE, FALSE)
-sum(my_booleans)
-mean(my_booleans)
+parse_number(c("USD 3,513", "59%", "$1,123,456.00"))
 ```
 
-## Missing or Infinite Data Types
+## `count()`
 
-Your data may otherwise be missing or infinite:
+A very useful and common exploratory data analysis tool is to check the relative sums of different categories of a variable. That's what `count()` is for!
 
-1. **Not Applicable** `NA` 
-
-    + Used when data simply is missing or "not available"
-    
 . . . 
-
-2. **Not a Number** `NaN`
-
-    + Used when you try to perform a bad math operation, e.g., `0 / 0 `
-    
-. . . 
-
-3. **Infinite** `Inf`, `-Inf`
-
-    + Used when you divide by 0, e.g., `-5/0` or `5/0`
-
-## Checking Data Types
-
-`class()` tells us what type of data we have:
 
 ```{r}
-class4     <- class(4)
-classAB    <- class(c("A", "B"))
-classABFac <- class(factor("A", "B"))
-classTRUE  <- class(TRUE)
+library(nycflights13)
+data(flights)
 
-c(class4, classAB, classABFac, classTRUE)
+flights |> count(origin) # <1> 
 ```
+1. Add the argument `sort = TRUE` to see the most common values first (i.e. arranged in descending order).
+. . . 
+
+This is functionally the same as grouping and summarizing with `n()`.
+
+. . . 
+
+```{r}
+flights |> 
+  summarise(n= n(), # <2>
+            .by = origin) # <3>
+```
+2. `n()` is a special summary function that doesn’t take any arguments and instead accesses information about the “current” group. This means that it only works inside dplyr verbs. 
+3. You can do this longer version if you also want to compute other summaries simultaneously. 
+
+## `n_distinct()`
+
+Use this function if you want the count the number of distinct (unique) values of one or more variables. 
+
+. . . 
+
+Say we're interested in which destinations are served by the most carriers:
+
+```{r}
+flights |> 
+  summarize(carriers = n_distinct(carrier), 
+            .by = dest) |> 
+  arrange(desc(carriers))
+```
+
+## Weighted Counts
+
+A weighted count is simply a grouped sum, therefore `count` has a `wt` argument to allow for the shorthand. 
+
+. . . 
+
+Let's find out the number of miles each plane flew. 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{r}
+flights |> 
+  summarize(miles = sum(distance), 
+            .by = tailnum)
+```
+
+:::
+
+::: {.column width="50%"}
+This is equivalent to: 
+
+```{r}
+flights |> count(tailnum, wt = distance) 
+```
+
+:::
+
+::::
+
+## Recycling Rules
+
+`R` handles mismatched lengths by recycling, or repeating, the short vector.
+
+. . . 
+
+```{r}
+x <- c(1, 2, 10, 20)
+x / 5 # <4> 
+```
+4. This is shorthand for: `x / c(5, 5, 5, 5)`
+
+. . . 
+
+You generally only want to recycle scalars, or vectors the length 1. Technically, however, `R` will recycle any vector that's shorter in length (and it *won't always* give you a warning if the shorter vector is not a multiple of the longer vector).
+
+. . . 
+
+```{r}
+#| warning: true
+x * c(1, 2)
+x * c(1, 2, 3)
+```
+
+## Recycling with Logicals 
+
+The same rules apply to logical operations which can lead to unexpected results *without warning*. 
+
+. . . 
+
+For example, take this code which attempts to find all flights in January and February:
+
+```{r}
+flights |> 
+  filter(month == c(1, 2)) |> # <5> 
+  head(5)
+```
+5. A common mistake is to mix up `==` with `%in%`. This code will actually find flights in odd numbered rows that departed in January and flights in even numbered rows that departed in February. Unfortunately there’s no warning because `flights` has an even number of rows. 
+
+. . . 
+
+To protect you from this type of silent failure, most tidyverse functions use a stricter form of recycling that only recycles single values. However, when using base `R` functions like `==`, this protection is not built in. 
+
+## Other Useful Arithmetic Functions
+
+```{r}
+#| echo: false
+df <- tribble(
+  ~x, ~y,
+  1,  3,
+  5,  2,
+  7, NA,
+)
+```
+
+In addition to the standards (`+`, `-`, `/`, `*`, `^`), `R` has many other useful arithmetic functions. 
+
+. . . 
+
+**Pairwise min/max**
+
+```{r}
+df
+df |> 
+  mutate(
+    min = pmin(x, y, na.rm = TRUE), # <6>
+    max = pmax(x, y, na.rm = TRUE) # <7>
+  )
+```
+6. `pmin()` returns the smallest value in each row. `min()`, by contrast, finds the smallest observation given a number of rows.
+7. `pmax()` returns the largest value in each row. `max()`, by contrast, finds the largest observation given a number of rows.
+
+## Other Useful Arithmetic Functions
+
+**Modular arithmetic**
+
+```{r}
+1:10 %/% 3 # <8>
+1:10 %% 3 # <9>
+```
+8. Computes integer division. 
+9. Computes the remainder. 
+
+. . . 
+
+We can see how this can be useful in our `flights` data which has curiously stored time: 
+
+```{r}
+flights |> mutate(hour = sched_dep_time %/% 100,
+                  minute = sched_dep_time %% 100,
+                  .keep = "used")
+```
+
+## Other Useful Arithmetic Functions
+
+**Logarithms**^[An incredibly useful transformation for dealing with data that ranges across multiple orders of magnitude and converting exponential growth to linear growth.]
+
+```{r}
+log(c(2.718282, 7.389056, 20.085537)) # <10> 
+log2(c(2, 4, 8)) # <11>
+log10(c(10, 100, 1000)) # <12>
+```
+10. Inverse is `exp()`
+11. Easy to interpret because a difference of 1 on the log scale corresponds to doubling on the original scale and a difference of -1 corresponds to halving. Inverse is `2^`. 
+12. Easy to back-transform because everything is on the order of 10. Inverse is `10^`. 
+
+## Other Useful Arithmetic Functions
+
+**Cumulative and Rolling Aggregates**
+
+Base `R` provides `cumsum()`, `cumprod()`, `cummin()`, `cummax()` for running, or cumulative, sums, products, mins and maxes. `dplyr` provides `cummean()` for cumulative means.
+
+. . . 
+
+```{r}
+cumsum(1:15) # <13>
+```
+13. `cumsum()` is the most common in practice.
+
+. . . 
+
+For complex rolling/sliding aggregates, check out the [`slidr` package](https://slider.r-lib.org/index.html). 
+
+## Other Useful Arithmetic Functions
+
+**Numeric Ranges**
+
+```{r}
+x <- c(1, 2, 5, 10, 15, 20)
+cut(x, breaks = c(0, 5, 10, 15, 20)) # <14> 
+```
+14. `cut()` breaks up (aka bins) a numeric vector into discrete buckets
+
+. . . 
+
+```{r}
+cut(x, breaks = c(0, 5, 10, 100)) # <15>
+```
+15. The bins don't have to be the same size.
+
+. . . 
+
+```{r}
+cut(x, 
+  breaks = c(0, 5, 10, 15, 20), 
+  labels = c("sm", "md", "lg", "xl") # <16>
+)
+```
+16. You can optionally supply your own labels. Note that there should be one less labels than breaks.
+
+. . . 
+
+```{r}
+y <- c(NA, -10, 5, 10, 30) # <17>
+cut(y, breaks = c(0, 5, 10, 15, 20))
+```
+17. Any values outside of the range of the breaks will become `NA`.
+
+## Rounding 
+
+`round()` allows us to round to a certain decimal place. Without specifying an argument for the `digits` argument it will round to the nearest integer. 
+
+. . . 
+
+```{r}
+round(pi)
+round(pi, digits = 2)
+```
+
+. . . 
+
+Using negative integers in the `digits` argument allows you to round on the left-hand side of the decimal place. 
+
+```{r}
+round(39472, digits = -1)
+round(39472, digits = -2)
+round(39472, digits = -3)
+```
+
+## Rounding 
+
+What's going on here?
+
+```{r}
+round(c(1.5, 2.5)) 
+```
+
+. . . 
+
+`round()` uses what’s known as “round half to even” or Banker’s rounding: if a number is half way between two integers, it will be rounded to the even integer. This is a good strategy because it keeps the rounding **unbiased**: half of all 0.5s are rounded up, and half are rounded down.
+
+. . . 
+
+`floor()` and `ceiling()` are also useful rounding shortcuts.
+
+```{r}
+floor(123.456) # <18>
+ceiling(123.456) # <19>
+```
+18. Always rounds down.
+19. Always rounds up. 
+
+## Summary Functions <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+. . . 
+
+**Central Tendency**
+
+```{r}
+x <- sample(1:500, size = 100, replace = TRUE) # <20>
+mean(x)
+median(x)
+quantile(x, .95) # <21>
+```
+20. `sample()` takes a vector of data, and samples `size` elements from it, with replacement if `replace` equals `TRUE`. 
+21. A generalization of the median: `quantile(x, 0.95)` will find the value that’s greater than 95% of the values; `quantile(x, 0.5)` is equivalent to the median.
+
+. . . 
+
+**Measures of Spread/Variation**
+
+```{r}
+min(x)
+max(x)
+range(x)
+```
+
+```{r}
+IQR(x) # <22>
+```
+22. Equivalent to `quantile(x, 0.75) - quantile(x, 0.25)` and gives you the range that contains the middle 50% of the data.
+
+```{r}
+var(x) # <23>
+```
+23. $$s^2 = \frac{\sum(x_i-\overline{x})^2}{n-1}$$ 
+
+```{r}
+sd(x) # <24>
+```
+24. $$s = \sqrt{\frac{\sum(x_i-\overline{x})^2}{n-1}}$$
+
+. . . 
+
+**Positions**
+
+```{r}
+first(x)
+last(x)
+nth(x, n = 77)
+```
+
+## Common Numerical Manipulations
+
+These formulas can be used in a summary call but are also useful with `mutate()`, particularly if being applied to grouped data. 
+
+. . . 
+
+```{r}
+#| eval: false
+x / sum(x) # <19> 
+(x - mean(x)) / sd(x) # <20>
+(x - min(x)) / (max(x) - min(x)) # <21>
+x / first(x) # <22>
+```
+19. Calculates the proportion of a total.
+20. Computes a Z-score (standardized to mean 0 and sd 1). 
+21. Standardizes to range [0, 1].
+22. Computes an index based on the first observation.
+
+
+# Missing Values{.section-title background-color="#99a486"}
+
+## Explicit Missing Values
+
+. . . 
+
+> *An explicit missing value is the presence of an absence.*
+
+. . . 
+
+In other words, an explicit missing value is one in which you see an `NA`. 
+
+. . . 
+
+Depending on the reason for its missingness, there are different ways to deal with `NA`s.
+
+. . . 
+
+**Data Entry Shorthand**
+
+If your data were entered by hand and `NA`s merely represent a value being carried forward from the last entry then you can use `fill()` to help complete your data.
+
+:::: {.columns}
+
+::: {.column width="50%"}
+::: {.fragment}
+```{r}
+treatment <- tribble(
+  ~person,           ~treatment, ~response,
+  "Derrick Whitmore", 1,         7,
+  NA,                 2,         10,
+  "Katherine Burke",  3,         NA,
+  NA,                 1,         4
+)
+```
+:::
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+```{r}
+treatment |>
+  fill(everything()) # <1> 
+```
+1. `fill()` takes one or more variables (in this case `everything()`, which means all variables), and by default fills them in downwards. If you have a different issue you can change the `.direction` argument to `"up"`,`"downup"`, or `"updown"`. 
+:::
+:::
+::::
+
+## Explicit Missing Values
+
+Other times an `NA` represents some fixed value, usually `0`. 
+
+. . . 
+
+```{r}
+x <- c(1, 4, 5, 7, NA)
+coalesce(x, 0) # <2> 
+```
+2. `coalesce()` in the `dplyr` package takes a vector as the first argument and will replace any missing values with the value provided in the second argument. 
+
+. . . 
+
+<br>
+
+If the opposite issue occurs (i.e. a value is actually an `NA`), try specifying that to the `na` argument of your `readr` data import function. Otherwise, use `na_if()` from `dplyr`. 
+
+```{r}
+x <- c(1, 4, 5, 7, -99)
+na_if(x, -99)
+```
+
+## Explicit Missing Values
+
+**`NaN`s**
+
+A special sub-type of missing value is an `NaN`, or `N`ot `a` `N`umber. 
+
+. . . 
+
+These generally behave similar to `NA`s and are likely the result of a mathematical operation that has an indeterminate result:
+
+```{r}
+0 / 0 
+0 * Inf
+Inf - Inf
+sqrt(-1)
+```
+
+. . . 
+
+If you need to explicitly identify an `NaN` you can use `is.nan()`. 
+
+## Implicit `NA`s
+
+> *An implicit missing value is the absence of a presence.*
+
+. . . 
+
+We've seen a couple of ways that implicit `NA`s can be made implicit in previous lectures: `pivoting` and `joining`. 
+
+. . . 
+
+```{r}
+#| echo: false
+stocks <- tibble(
+  year  = c(2020, 2020, 2020, 2020, 2021, 2021, 2021),
+  qtr   = c(   1,    2,    3,    4,    2,   3,    4),
+  price = c(1.88, 0.59, 0.35, 0.89, 0.34, 0.17, 2.66)
+)
+```
+
+. . . 
+
+For example, if we *really* look at the dataset below, we can see that there are missing values that don't appear as `NA` merely due to the current structure of the data.
+
+```{r}
+stocks
+```
+
+## Implicit `NA`s
+
+`tidyr::complete()` allows you to generate explicit missing values by providing a set of variables that define the combination of rows that should exist.
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width="35%"}
+::: {.fragment}
+```{r}
+stocks |>
+  complete(year, qtr)
+```
+:::
+:::
+
+::: {.column width="65%"}
+::: {.fragment}
+```{r}
+stocks |>
+  complete(year, qtr, fill = list(price = 0.93))
+```
+:::
+:::
+
+::::
+
+::: aside
+The `fill` argument of `complete` only allows you to supply 1 value per variable. If you have more than one value to fill, using `complete` to create the data structure you need, and `case_when` to replace `NA`s would be the most straightforward approach.
+:::
+
+## Missing Factor Levels
+
+. . . 
+
+The last type of missingness is a theoretical level of a factor that doesn't have any observations. 
+
+```{r}
+#| echo: false
+health <- tibble(
+  name   = c("Ikaia", "Oletta", "Leriah", "Dashay", "Tresaun"),
+  smoker = factor(c("no", "no", "no", "no", "no"), levels = c("yes", "no")),
+  age    = c(34, 88, 75, 47, 56),
+)
+```
+
+. . . 
+
+For instance, we have this `health` dataset and we're interested in smokers:
+
+```{r}
+health
+```
+
+. . . 
+
+```{r}
+levels(health$smoker) # <3> 
+```
+3. This dataset only contains non-smokers, but we know that smokers exist; the group of smokers is simply empty. 
+
+. . . 
+
+```{r}
+health |> count(smoker, .drop = FALSE) # <4>
+```
+4. We can request `count()` to keep all the groups, even those not seen in the data by using `.drop = FALSE`.
+
+## Missing Factors in Plots
+
+This sample principle applies when visualizing a factor variable, which will automatically drop levels that don’t have any values. Use `drop_values = FALSE` in the appropriate scale to display implicit `NA`s. 
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+#| code-line-numbers: "3"
+ggplot(health, aes(x = smoker)) +
+  geom_bar() +
+  scale_x_discrete() + 
+  theme_classic(base_size = 22)
+```
+
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+
+```{r}
+#| code-line-numbers: "3"
+ggplot(health, aes(x = smoker)) +
+  geom_bar() +
+  scale_x_discrete(drop = FALSE) + 
+  theme_classic(base_size = 22)
+```
+:::
+:::
+
+::::
 
 ## Testing Data Types
 
 There are also functions to **test** for certain data types:
 
 ```{r}
-c(is.numeric(5),  is.character("A"))
-
+is.numeric(5)
+is.character("A")
 is.logical(TRUE)
-
-c(is.infinite(-Inf),  is.na(NA),  is.nan(NaN))
+is.infinite(-Inf)
+is.na(NA)
+is.nan(NaN)
 ```
-
-Warning: `NA` is not `NaN`!!!
 
 # Vectors{.section-title background-color="#99a486"}
 
-+ Creating Vectors
-+ Vector Math
-+ Subsetting Vectors
-
 ## Making Vectors
 
-In R, we call a set of values of the same type a **vector**. We can create vectors using the `c()` function ("c" for **c**ombine or **c**oncatenate).
+In R, we call a set of values of the same type a **vector**. We can create vectors using the `c()` function ("c" for `c`ombine or `c`oncatenate).
 
 ```{r}
 c(1, 3, 7, -0.5)
@@ -218,7 +773,7 @@ length(c(1, 3, 7, -0.5))
 
 All elements of a vector are the same type (e.g. numeric or character)!
 
-If you mix character and numeric data, it will convert everything to *characters*!
+Character data is the lowest denomination so anything mixed with it will be converted to a character. 
 
 ## Generating Numeric Vectors
 
@@ -231,15 +786,18 @@ There are shortcuts for generating numeric vectors:
 . . . 
 
 ```{r}
-seq(-3, 6, by = 1.75) # Sequence from -3 to 6, increments of 1.75
+seq(-3, 6, by = 1.75) # <1>
 ```
+1. Sequence from -3 to 6, increments of 1.75
 
 . . . 
 
 ```{r}
-rep(c(0, 1), times = 3) # Repeat c(0,1) 3 times
-rep(c(0, 1), each = 3) # Repeat each element 3 times
+rep(c(0, 1), times = 3) # <2>
+rep(c(0, 1), each = 3) # <3>
 ```
+2. Repeat c(0,1) 3 times
+3. Repeat each element 3 times
 
 ## Element-wise Vector Math
 
@@ -330,6 +888,8 @@ first_names[-3]
 ## Matrices: Two Dimensions
 
 **Matrices** extend vectors to two **dimensions**: **rows** and **columns**. We can construct them directly using `matrix`.
+
+. . . 
 
 R fills in a matrix column-by-column (**not** row-by-row!)
 
@@ -658,3 +1218,4 @@ source("../due_dates_schedule.R")
 
 make_due_date_table(6)
 ```
+
