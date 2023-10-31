@@ -80,7 +80,6 @@ knitr::opts_chunk$set(
   * Vectors
   * Matrices
   * Lists
-    * Dataframes
 
 :::
 
@@ -242,49 +241,6 @@ flights |> count(tailnum, wt = distance)
 
 ::::
 
-## Recycling Rules
-
-`R` handles mismatched lengths by recycling, or repeating, the short vector.
-
-. . . 
-
-```{r}
-x <- c(1, 2, 10, 20)
-x / 5 # <4> 
-```
-4. This is shorthand for: `x / c(5, 5, 5, 5)`
-
-. . . 
-
-You generally only want to recycle scalars, or vectors the length 1. Technically, however, `R` will recycle any vector that's shorter in length (and it *won't always* give you a warning if the shorter vector is not a multiple of the longer vector).
-
-. . . 
-
-```{r}
-#| warning: true
-x * c(1, 2)
-x * c(1, 2, 3)
-```
-
-## Recycling with Logicals 
-
-The same rules apply to logical operations which can lead to unexpected results *without warning*. 
-
-. . . 
-
-For example, take this code which attempts to find all flights in January and February:
-
-```{r}
-flights |> 
-  filter(month == c(1, 2)) |> # <5> 
-  head(5)
-```
-5. A common mistake is to mix up `==` with `%in%`. This code will actually find flights in odd numbered rows that departed in January and flights in even numbered rows that departed in February. Unfortunately there’s no warning because `flights` has an even number of rows. 
-
-. . . 
-
-To protect you from this type of silent failure, most tidyverse functions use a stricter form of recycling that only recycles single values. However, when using base `R` functions like `==`, this protection is not built in. 
-
 ## Other Useful Arithmetic Functions
 
 ```{r}
@@ -355,6 +311,10 @@ log10(c(10, 100, 1000)) # <12>
 Base `R` provides `cumsum()`, `cumprod()`, `cummin()`, `cummax()` for running, or cumulative, sums, products, mins and maxes. `dplyr` provides `cummean()` for cumulative means.
 
 . . . 
+
+```{r}
+1:15
+```
 
 ```{r}
 cumsum(1:15) # <13>
@@ -434,6 +394,8 @@ round(c(1.5, 2.5))
 `round()` uses what’s known as “round half to even” or Banker’s rounding: if a number is half way between two integers, it will be rounded to the even integer. This is a good strategy because it keeps the rounding **unbiased**: half of all 0.5s are rounded up, and half are rounded down.
 
 . . . 
+
+<br>
 
 `floor()` and `ceiling()` are also useful rounding shortcuts.
 
@@ -637,8 +599,6 @@ stocks
 
 `tidyr::complete()` allows you to generate explicit missing values by providing a set of variables that define the combination of rows that should exist.
 
-. . . 
-
 :::: {.columns}
 
 ::: {.column width="35%"}
@@ -740,6 +700,8 @@ ggplot(health, aes(x = smoker)) +
 
 There are also functions to **test** for certain data types:
 
+. . . 
+
 ```{r}
 is.numeric(5)
 is.character("A")
@@ -771,6 +733,8 @@ length(c(1, 3, 7, -0.5))
 
 All elements of a vector are the same type (e.g. numeric or character)!
 
+. . . 
+
 Character data is the lowest denomination so anything mixed with it will be converted to a character. 
 
 ## Generating Numeric Vectors
@@ -793,9 +757,11 @@ seq(-3, 6, by = 1.75) # <1>
 ```{r}
 rep(c(0, 1), times = 3) # <2>
 rep(c(0, 1), each = 3) # <3>
+rep(c(0, 1), length.out = 3) # <4>
 ```
-2. Repeat c(0,1) 3 times
-3. Repeat each element 3 times
+2. Repeat `c(0, 1)` 3 times.
+3. Repeat each element 3 times.
+4. Repeat `c(0, 1)` until the length of the final vector is 3. 
 
 ## Element-wise Vector Math
 
@@ -803,36 +769,56 @@ When doing arithmetic operations on vectors, R handles these *element-wise*:
 
 ```{r}
 c(1, 2, 3) + c(4, 5, 6)
-c(1, 2, 3, 4)^3 # exponentiation with ^
+c(1, 2, 3, 4)^3 # <5> 
 ```
+5. Exponentiation is carried out using the `^` operator.
 
-Common operations: `*`, `/`, `exp()` = $e^x$, `log()` = $\log_e(x)$
+. . . 
 
-## Vector Recycling
+Other common operations: `*`, `/`, `exp()` = $e^x$, `log()` = $\log_e(x)$
 
-If we work with vectors of different lengths, R will **recycle** the shorter one by repeating it to make it match up with the longer one:
+## Recycling Rules
+
+`R` handles mismatched lengths of vectors by recycling, or repeating, the short vector.
+
+. . . 
+
 ```{r}
-c(0.5, 3) * c(1, 2, 3, 4)
-c(0.5, 3, 0.5, 3) * c(1, 2, 3, 4) # same thing
+x <- c(1, 2, 10, 20)
+x / 5 # <6> 
 ```
+6. This is shorthand for: `x / c(5, 5, 5, 5)`
 
-## Scalars as Recycling
+. . . 
 
-A special case of recycling involves arithmetic with **scalars** (a single number). These are vectors of length 1 that are recycled to make a longer vector:
-```{r}
-3 * c(-1, 0, 1, 2) + 1
-```
+You generally only want to recycle scalars, or vectors the length 1. Technically, however, `R` will recycle any vector that's shorter in length (and it *won't always* give you a warning if the shorter vector is not a multiple of the longer vector).
 
-## Warning on Recycling
-
-Recycling doesn't work so well with vectors of incommensurate lengths:
+. . . 
 
 ```{r}
 #| warning: true
-c(1,2) + c(100,200,300)
+x * c(1, 2)
+x * c(1, 2, 3)
 ```
 
-Be careful!!
+## Recycling with Logicals 
+
+The same rules apply to logical operations which can lead to unexpected results *without warning*. 
+
+. . . 
+
+For example, take this code which attempts to find all flights in January and February:
+
+```{r}
+flights |> 
+  filter(month == c(1, 2)) |> # <7> 
+  head(5)
+```
+7. A common mistake is to mix up `==` with `%in%`. This code will actually find flights in odd numbered rows that departed in January and flights in even numbered rows that departed in February. Unfortunately there’s no warning because `flights` has an even number of rows. 
+
+. . . 
+
+To protect you from this type of silent failure, most tidyverse functions use a stricter form of recycling that only recycles single values. However, when using base `R` functions like `==`, this protection is not built in. 
 
 ## Example: Standardizing Data
 
@@ -851,7 +837,7 @@ round(z, 2)
 
 ## Math with Missing Values
 
-Even one `NA` "poisons the well": You'll get `NA` out of your calculations unless you add the extra argument `na.rm = TRUE` (availabe in some functions):
+Even one `NA` "poisons the well": You'll get `NA` out of your calculations unless you add the extra argument `na.rm = TRUE` (available in some functions):
 
 . . . 
 
@@ -863,13 +849,12 @@ mean(vector_w_missing, na.rm = TRUE)
 
 ## Subsetting Vectors
 
-We can **subset** a vector in a number of ways:
+Recall, we can **subset** a vector in a number of ways:
 
 * Passing a single index or vector of entries to **keep**:
 
 ```{r}
 first_names <- c("Andre", "Brady", "Cecilia", "Danni", "Edgar", "Francie")
-first_names[1]
 first_names[c(1, 2)]
 ```
 
@@ -881,11 +866,33 @@ first_names[c(1, 2)]
 first_names[-3]
 ```
 
+. . . 
+
+* Passing a **logical condition**:
+
+```{r}
+first_names[nchar(first_names) == 7] # <8>
+```
+8. `nchar()` counts the number of characters in a character string. 
+
+. . . 
+
+* Passing a **named vector**: 
+
+```{r}
+pet_names <- c(dog = "Lemon", cat = "Seamus")
+pet_names["cat"]
+```
+
+
+
+
+
 # Matrices{.section-title background-color="#99a486"}
 
 ## Matrices: Two Dimensions
 
-**Matrices** extend vectors to two **dimensions**: **rows** and **columns**. We can construct them directly using `matrix`.
+**Matrices** extend vectors to two **dimensions**: **rows** and **columns**. We can construct them directly using `matrix()`.
 
 . . . 
 
@@ -898,23 +905,33 @@ a_matrix
 
 ## Binding Vectors
 
-We can also make matrices by *binding* vectors together with `rbind()` (**r**ow **bind**) and `cbind()` (**c**olumn **bind**).
+We can also make matrices by *binding* vectors together with `rbind()` (`r`ow `bind`) and `cbind()` (`c`olumn `bind`).
+
+. . . 
 
 ```{r}
-b_matrix <- cbind(c(1, 2), c(3, 4), c(5, 6))
+b_matrix <- rbind(c(1, 2, 3), c(4, 5, 6))
 b_matrix
-c_matrix <- rbind(c(1, 2, 3), c(4, 5, 6))
+c_matrix <- cbind(c(1, 2), c(3, 4), c(5, 6))
 c_matrix
 ```
 
 ## Subsetting Matrices
 
-We subset matrices using the same methods as with vectors, except we index them with `[rows, columns]`:
+We subset matrices using the same methods as with vectors, except we index them with `[rows, columns]`^[Like we learned how to do with dataframes in week 3.]:
 
 ```{r}
-a_matrix[1, 2] # row 1, column 2
-a_matrix[1, c(2,3)] # row 1, columns 2 and 3
+a_matrix
 ```
+
+. . . 
+
+```{r}
+a_matrix[1, 2] # <9> 
+a_matrix[1, c(2,3)] # <10> 
+```
+9. Row 1, Column 2.
+10. Row 1, Columns 2 and 3. 
 
 . . . 
 
@@ -927,6 +944,8 @@ dim(a_matrix)
 ## Matrices Becoming Vectors
 
 If a matrix ends up having just one row or column after subsetting, by default R will make it into a vector. 
+
+. . . 
 
 ```{r}
 a_matrix[, 1] 
@@ -944,10 +963,14 @@ a_matrix[, 1, drop = FALSE]
 
 Matrices can contain numeric, integer, factor, character, or logical. But just like vectors, *all elements must be the same data type*.
 
+. . . 
+
 ```{r}
 bad_matrix <- cbind(1:2, c("Victoria", "Sass"))
 bad_matrix
 ```
+
+. . . 
 
 In this case, everything was converted to characters!
 
@@ -955,16 +978,21 @@ In this case, everything was converted to characters!
 
 We can access dimension names or name them ourselves:
 
+. . . 
+
 ```{r}
 rownames(bad_matrix) <- c("First", "Last")
 colnames(bad_matrix) <- c("Number", "Name")
 bad_matrix
-bad_matrix[ ,"Name", drop = FALSE]
+bad_matrix[ ,"Name", drop = FALSE] # <11>
 ```
+11. `drop = FALSE` maintains the matrix structure; when `drop = TRUE` (the default) it will be converted to a vector. 
 
 ## Matrix Arithmetic
 
-Matrices of the same dimensions can have math performed entry-wise with the usual arithmetic operators:
+Matrices of the same dimensions can have math performed element-wise with the usual arithmetic operators:
+
+. . . 
 
 ```{r}
 matrix(c(2, 4, 6, 8),nrow = 2, ncol = 2) / matrix(c(2, 1, 3, 1),nrow = 2, ncol = 2)
@@ -974,84 +1002,141 @@ matrix(c(2, 4, 6, 8),nrow = 2, ncol = 2) / matrix(c(2, 1, 3, 1),nrow = 2, ncol =
 
 To do matrix transpositions, use `t()`.
 
+. . . 
+
 ```{r}
+c_matrix
 e_matrix <- t(c_matrix)
 e_matrix
 ```
 
 . . . 
 
-To do actual matrix multiplication (not entry-wise), use `%*%`.
+To do actual matrix multiplication<sup>1</sup> (not element-wise), use `%*%`.
 
+:::: {.columns}
+
+::: {.column width="50%"}
 ```{r}
-f_matrix <- c_matrix %*% e_matrix
+f_matrix <- c_matrix %*% e_matrix 
 f_matrix
 ```
+:::
 
-## "Proper" Matrix Math (cont.)
+::: {.column width="50%"}
+![1.](images/multiply_matrices.gif)
+:::
 
-To invert an invertible square matrix, use `solve()`.
+::::
+
+## "Proper" Matrix Math
+
+To invert an invertible square matrix^[![](images/inverse_matrix.png)], use `solve()`.
+
+. . . 
 
 ```{r}
 g_matrix <- solve(f_matrix)
 g_matrix
 ```
 
-## Matrices vs. data.frames and tibbles
+
+
+## Matrices vs. Data.frames and Tibbles
 
 All of these structures display data in two dimensions
 
+. . . 
+
+:::: {.columns}
+
+::: {.column width="33%"}
 + `matrix`
 
-    + Base R
+    + Base `R`
     + Single data type allowed
+:::
 
-. . . 
-
+::: {.column width="34%"}
 + `data.frame`
 
-    + Base R (default for data storage)
+    + Base `R` 
     + Stores multiple data types
-    
-. . . 
+    + Default for data storage
+:::
 
+::: {.column width="33%"}
 + `tibbles`
 
-    + tidyverse
+    + `tidyverse`
     + Stores multiple data types
     + Displays nicely
+:::
+
+::::
 
 . . . 
 
-In practice, data.frames and tibbles are very similar!
+In practice, `data.frames` and `tibbles` are very similar!
 
-## Creating `data.frame`s
+## Creating `data.frame`s or `tibbles`
 
-We create a `data.frame` by specifying the columns separately:
+We can create a `data.frame` or `tibble` by specifying the columns separately, as individual vectors:
 
+. . . 
+
+:::: {.columns}
+
+::: {.column width="50%"}
 ```{r}
-data.frame(Column1Name = c(1,2,3),
-           Column2Name = c("A","B","C"))
+data.frame(Column1 = c(1, 2, 3),
+           Column2 = c("A", "B", "C"))
 ```
+:::
 
-*Note:* `data.frame`s allow for **mixed data types!**
+::: {.column width="50%"}
+```{r}
+tibble(Column1 = c(1, 2, 3),
+       Column2 = c("A", "B", "C"))
+```
+:::
+
+::::
+
+. . . 
+
+*Note:* `data.frame`s and `tibbles` allow for **mixed data types!**
+
+. . . 
+
+This distinction leads us to the final data type, of which `data.frame`s and `tibble`s are a subset. 
+
+::: aside
+`tibble`'s additional advantages are only displaying the first 10 rows and only the columns that will comfortably fit within the parameters of your console space when called (`data.frame`will display all columns and a certain number of rows depending upon your default max setting - usually this is an overwhelming amount of output, aesthetical confusing,  and not very helpful).
+:::
 
 # Lists{.section-title background-color="#99a486"}
 
 ## What are Lists?
 
+. . . 
+
 **Lists** are objects that can store multiple types of data.
 
+. . . 
 
 ```{r}
-my_list <- list("first_thing"  = 1:5,
-                 "second_thing" = matrix(8:11, nrow = 2))
+my_list <- list(first_thing = 1:5,
+                second_thing = matrix(8:11, nrow = 2), 
+                third_thing = fct(c("apple", "pear", "banana", "apple", "apple")))
 my_list
 ```
 
 ## Accessing List Elements
 
 You can access a list element by its name or number in `[[ ]]`, or a `$` followed by its name:
+
+. . . 
 
 ```{r}
 my_list[["first_thing"]]
@@ -1062,6 +1147,8 @@ my_list$first_thing
 ## Why Two Brackets `[[` `]]`?
 
 Double brackets get *the actual element* — as whatever data type it is stored as, in that location in the list.
+
+. . . 
 
 ```{r}
 str(my_list[[1]])
@@ -1079,13 +1166,104 @@ str(my_list[1])
 
 You can use `names()` to get a vector of list element names:
 
+. . . 
+
 ```{r}
 names(my_list)
 ```
 
-## Example: Regression Output
+## `pluck()`
 
-When you perform linear regression in R, the output is a list!
+An alternative to using Base `R`'s `[[ ]]` is using `pluck()` from the tidyverse's `purrr` package. 
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+obj1 <- list("a", list(1, elt = "foo"))
+obj2 <- list("b", list(2, elt = "bar"))
+x <- list(obj1, obj2)
+x
+```
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+```{r}
+pluck(x, 1) 
+```
+
+<br>
+
+This is the same as same as `x[[1]]`.
+
+:::
+:::
+
+::::
+
+## `pluck()`
+
+An alternative to using Base `R`s `[[ ]]` is using `pluck()` from the tidyverse's `purrr` package. 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+obj1 <- list("a", list(1, elt = "foo"))
+obj2 <- list("b", list(2, elt = "bar"))
+x <- list(obj1, obj2)
+x
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+pluck(x, 1, 2) 
+```
+
+<br>
+
+This is the same as `x[[1]][[2]]`.
+:::
+
+::::
+
+## `pluck()`
+
+An alternative to using Base `R`s `[[ ]]` is using `pluck()` from the tidyverse's `purrr` package. 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+obj1 <- list("a", list(1, elt = "foo"))
+obj2 <- list("b", list(2, elt = "bar"))
+x <- list(obj1, obj2)
+x
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+pluck(x, 1, 2, "elt") 
+```
+
+<br>
+
+You can supply names to index into named vectors. This is the same as `x[[1]][[2]][["elt"]]`. 
+
+:::
+
+::::
+
+## Example: Regression Output <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+When you perform linear regression in `R`, the output is a list!
+
+. . . 
 
 ```{r}
 lm_output <- lm(speed ~ dist, data = cars)
@@ -1094,30 +1272,46 @@ names(lm_output)
 lm_output$coefficients
 ```
 
-# Summary{.section-title background-color="#99a486"}
+. . . 
 
-1. Types of Data: `numeric`, `character`, `factor`, `logical`, `NA`, `NaN`, `Inf`
-1. Vectors: `c()`
-1. Matrices: `matrix`, `data.frame`, `tibble`
-1. Lists: `list`
+What does a list object look like?
 
-*Let's take a 10 minute break, then come back together for some practice!*
+```{r}
+#| output-location: fragment
+str(lm_output)
+```
 
-## Mini-Check 1: Types of Data
+## Data Structures in `R` Overview
+
+. . . 
+
+![](images/data_types_r2.png){fig-align="center" width=200%}
+
+## Data Structures in `R` Overview
+
+![](images/data_types_r3.png){fig-align="center"}
+
+# Lab{.section-title background-color="#99a486"}
+
+## Mini-Check 1: Types of Data & Arithmetic
 
 In each case, what will R return?
 
 ::: {.incremental}
-* `is.numeric(3.14)`
-  + `TRUE`
 * `is.numeric(pi)`
   + `TRUE`
+* `is.integer(3.14)`
+  + `FALSE`
 * `is.logical(FALSE)`
   + `TRUE`
 * `is.nan(NA)`
   + `FALSE`
+* `10 %/% 4`
+  * `2`
+* `10 %% 4`
+  * `2`
 :::
-    
+
 ## Mini-Check 2: Vectors
 
 ::: {.incremental}
@@ -1139,7 +1333,7 @@ In each case, what will R return?
   + `a_vector[c(1, 2)]`
 :::
 
-## Activity: Matrices and Lists
+## Matrices and Lists
 
 1. Write code to create the following matrix:
 
@@ -1156,17 +1350,17 @@ matrix(c("A", "B", "C", "D", "E", "F"), nrow = 2, byrow = TRUE)[ ,2, drop = FALS
 3. Complete the following sentence: "Lists are to vectors, what data frames are to..."
 
 4. Create a list that contains 3 elements: 
-    i) "ten_numbers" (integers between 1 and 10)
-    ii) "my_name" (your name as a character) 
-    iii) "booleans" (vector of `TRUE` and `FALSE` alternating three times)
+    i) `ten_numbers` (integers between 1 and 10)
+    ii) `my_name` (your name as a character) 
+    iii) `booleans` (vector of `TRUE` and `FALSE` alternating three times)
 
 ## Answers
 
 1\. Write code to create the following matrix:
 
 ```{r}
-mat_test <- matrix(c("A", "B", "C", "D", "E", "F"), nrow = 2, byrow = TRUE)
-mat_test
+matrix_test <- matrix(c("A", "B", "C", "D", "E", "F"), nrow = 2, byrow = TRUE)
+matrix_test
 ```
 
 . . . 
@@ -1174,46 +1368,23 @@ mat_test
 2\. Write a line of code to extract the second column. Ensure the output is still a *matrix*.
 
 ```{r}
-mat_test[ ,2, drop = FALSE]
+matrix_test[ ,2, drop = FALSE]
 ```
 
 ## Answers
 
-3\. Complete the following sentence: "Lists are to vectors, what data frames are to...**Matrices!**^[*Lists and data frames can contain mixed data types, while vectors and matrices can only contain one data type.*]" 
+3\. Complete the following sentence: "Lists are to vectors, what data frames are to...**Matrices!**^[*Lists and data frames can contain mixed data types, while vectors and matrices can only contain one data type. Additionally, lists and vectors are **technically** one dimension while matrices and dataframes are two dimensions.*]" 
 
 . . . 
 
 4\. Create a list that contains 3 elements:
 
 ```{r}
-my_new_list <- list("ten_numbers" = 1:10,
-                    "my_name" = "Victoria Sass",
-                    "booleans" = rep(c(TRUE, FALSE), times = 3))
+my_new_list <- list(ten_numbers = 1:10,
+                    my_name = "Victoria Sass",
+                    booleans = rep(c(TRUE, FALSE), times = 3))
 my_new_list
 ```
 
-# Homework{.section-title background-color="#99a486"}
 
-## Homework 6
-
-For Homework 6, you will fill in an Quarto template on our [course website](https://vsass.github.io/CSSS508/Homework/HW6/homework6.html) that walks you through the process of creating, accessing, and manipulating R data structures. Enter values in the qmd document and Render it to check your answers!
-
-+ *Render after entering each answer!!*  If you get an error, check to see if undoing your last edit solves the problem. Coding an assignment to handle all possible mistakes is really hard! 
-
-+ This assignment is *long*, so *start early*.
-
-On the due date, I will provide a key for the written answers. You will grade those answers as part of your peer review. In addition, you'll be asked to comment on the style of your peer's code and what you yourself did similarly/different. Please remember to provide a numerical grade (0-3), as always.
-
-## Due dates
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-# reading in base due date schedule
-source("../due_dates_schedule.R")
-
-make_due_date_table(6)
-```
 
