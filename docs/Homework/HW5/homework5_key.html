@@ -219,15 +219,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a>billboard_tidy_date <span class="ot">&lt;-</span> billboard_tidy <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-2" class="code-annotation-target"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">if_else</span>(week <span class="sc">==</span> <span class="dv">1</span>,</span>
 <span id="annotated-cell-3-3"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>                       date_entered,</span>
-<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>                       date_entered <span class="sc">+</span> <span class="fu">weeks</span>(<span class="at">x =</span> week)))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>                       date_entered <span class="sc">+</span> <span class="fu">weeks</span>(<span class="at">x =</span> week <span class="sc">-</span> <span class="dv">1</span>)))</span>
+<span id="annotated-cell-3-5"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a>billboard_tidy_date</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-3" data-code-annotation="1" data-code-lines="2,3,4">This <code>if_else</code> basically says, “if <code>week</code> is equal to 1 then assign the <code>date_entered</code> value to <code>date</code>. Otherwise, add the number of <code>week</code>s to the <code>date_entered</code> value.</span>
+<span data-code-lines="2,3,4" data-code-annotation="1" data-code-cell="annotated-cell-3">This <code>if_else</code> basically says, “if <code>week</code> is equal to 1 then assign the <code>date_entered</code> value to <code>date</code>. Otherwise, add the number of <code>week</code>s minus 1 to the <code>date_entered</code> value (i.e.&nbsp;for the second week you would want to add <code>2 - 1</code> or <code>1</code> week to the <code>date_entered</code> value).</span>
 </dd>
 </dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 5,307 × 8
+&gt;     year artist  track                 time  date_entered  week  rank date      
+&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;                 &lt;tim&gt; &lt;date&gt;       &lt;int&gt; &lt;dbl&gt; &lt;date&gt;    
+&gt;  1  2000 2 Pac   Baby Don't Cry (Keep… 04:22 2000-02-26       1    87 2000-02-26
+&gt;  2  2000 2 Pac   Baby Don't Cry (Keep… 04:22 2000-02-26       2    82 2000-03-04
+&gt;  3  2000 2 Pac   Baby Don't Cry (Keep… 04:22 2000-02-26       3    72 2000-03-11
+&gt;  4  2000 2 Pac   Baby Don't Cry (Keep… 04:22 2000-02-26       4    77 2000-03-18
+&gt;  5  2000 2 Pac   Baby Don't Cry (Keep… 04:22 2000-02-26       5    87 2000-03-25
+&gt;  6  2000 2 Pac   Baby Don't Cry (Keep… 04:22 2000-02-26       6    94 2000-04-01
+&gt;  7  2000 2 Pac   Baby Don't Cry (Keep… 04:22 2000-02-26       7    99 2000-04-08
+&gt;  8  2000 2Ge+her The Hardest Part Of … 03:15 2000-09-02       1    91 2000-09-02
+&gt;  9  2000 2Ge+her The Hardest Part Of … 03:15 2000-09-02       2    87 2000-09-09
+&gt; 10  2000 2Ge+her The Hardest Part Of … 03:15 2000-09-02       3    92 2000-09-16
+&gt; # ℹ 5,297 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -253,54 +270,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-annotation="2" data-code-lines="2">We need to be able to filter rows by month so we need to create a <code>month</code> variable from out <code>date</code> variable.</span>
+<span data-code-lines="2" data-code-annotation="2" data-code-cell="annotated-cell-4">We need to be able to filter rows by month so we need to create a <code>month</code> variable from out <code>date</code> variable.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-annotation="3" data-code-lines="3">This dataset is about the 2000 top 100 but many of these songs charted before or after that year. Therefore, we will need an variable for year as well so we make sure we’re finding the songs that charted in the months of 2000.</span>
+<span data-code-lines="3" data-code-annotation="3" data-code-cell="annotated-cell-4">This dataset is about the 2000 top 100 but many of these songs charted before or after that year. Therefore, we will need an variable for year as well so we make sure we’re finding the songs that charted in the months of 2000.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-annotation="4" data-code-lines="4">To create our <code>top3</code> indicator we provide the two conditions that the rank for that observation is less than or equal to 3 AND the year is 2000. If so, <code>top3</code> will be assigned a value of 1 and if not it will get a value of 0.</span>
+<span data-code-lines="4" data-code-annotation="4" data-code-cell="annotated-cell-4">To create our <code>top3</code> indicator we provide the two conditions that the rank for that observation is less than or equal to 3 AND the year is 2000. If so, <code>top3</code> will be assigned a value of 1 and if not it will get a value of 0.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-annotation="5" data-code-lines="5,6">To filter for the most weeks in the top 3 we need to count how many weeks a song was in the top 3, grouped by month, song, and artist.</span>
+<span data-code-lines="5,6" data-code-annotation="5" data-code-cell="annotated-cell-4">To filter for the most weeks in the top 3 we need to count how many weeks a song was in the top 3, grouped by month, song, and artist.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-annotation="6" data-code-lines="7,8">Then, by month we can slice the song(s) with the most weeks in the top 3.</span>
+<span data-code-lines="7,8" data-code-annotation="6" data-code-cell="annotated-cell-4">Then, by month we can slice the song(s) with the most weeks in the top 3.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-annotation="7" data-code-lines="9">Now we just want the name of the artist, song, the month they were charting in the top 3 for the most weeks, and the number of weeks</span>
+<span data-code-lines="9" data-code-annotation="7" data-code-cell="annotated-cell-4">Now we just want the name of the artist, song, the month they were charting in the top 3 for the most weeks, and the number of weeks</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-annotation="8" data-code-lines="10">To see this in chronological order we want to arrange by the month</span>
+<span data-code-lines="10" data-code-annotation="8" data-code-cell="annotated-cell-4">To see this in chronological order we want to arrange by the month</span>
 </dd>
 </dl>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&gt; # A tibble: 16 × 4
+<pre><code>&gt; # A tibble: 19 × 4
 &gt;    month artist              track                   peak_weeks
 &gt;    &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt;                        &lt;dbl&gt;
-&gt;  1     1 Aguilera, Christina What A Girl Wants                2
-&gt;  2     2 Aguilera, Christina What A Girl Wants                4
-&gt;  3     2 Savage Garden       I Knew I Loved You               4
-&gt;  4     3 Lonestar            Amazed                           4
-&gt;  5     4 Destiny's Child     Say My Name                      5
-&gt;  6     4 Santana             Maria, Maria                     5
-&gt;  7     5 Hill, Faith         Breathe                          4
-&gt;  8     5 Santana             Maria, Maria                     4
-&gt;  9     6 Hill, Faith         Breathe                          3
-&gt; 10     6 Santana             Maria, Maria                     3
-&gt; 11     7 Aaliyah             Try Again                        5
-&gt; 12     8 matchbox twenty     Bent                             4
-&gt; 13     9 Janet               Doesn't Really Matte...          5
-&gt; 14    10 Madonna             Music                            4
-&gt; 15    11 Creed               With Arms Wide Open              4
-&gt; 16    12 Destiny's Child     Independent Women Pa...          5</code></pre>
+&gt;  1     1 Aguilera, Christina What A Girl Wants                3
+&gt;  2     2 Savage Garden       I Knew I Loved You               4
+&gt;  3     3 Lonestar            Amazed                           4
+&gt;  4     4 Hill, Faith         Breathe                          5
+&gt;  5     4 Santana             Maria, Maria                     5
+&gt;  6     5 Hill, Faith         Breathe                          4
+&gt;  7     5 Santana             Maria, Maria                     4
+&gt;  8     6 Aaliyah             Try Again                        2
+&gt;  9     6 Anthony, Marc       You Sang To Me                   2
+&gt; 10     6 Hill, Faith         Breathe                          2
+&gt; 11     6 Santana             Maria, Maria                     2
+&gt; 12     6 Vertical Horizon    Everything You Want              2
+&gt; 13     7 Aaliyah             Try Again                        4
+&gt; 14     8 Sisqo               Incomplete                       4
+&gt; 15     8 matchbox twenty     Bent                             4
+&gt; 16     9 Janet               Doesn't Really Matte...          5
+&gt; 17    10 Madonna             Music                            4
+&gt; 18    11 Creed               With Arms Wide Open              4
+&gt; 19    12 Destiny's Child     Independent Women Pa...          5</code></pre>
 </div>
 </div>
 </section>
@@ -341,47 +361,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-5" data-target-annotation="9">9</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-annotation="9" data-code-lines="5">In order to visualize the entire trajectory, we need to have a variable that indicates when a song was charting in the top 3</span>
+<span data-code-lines="5" data-code-annotation="9" data-code-cell="annotated-cell-5">In order to visualize the entire trajectory, we need to have a variable that indicates when a song was charting in the top 3</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-annotation="10" data-code-lines="7">This allows us to filter by each song whether any of the weeks charted in the top 3 for the month we’re interested in. Without these two steps we could only filter for the weeks in which they were charting and therefore couldn’t plot their entire ranking trajectory.</span>
+<span data-code-lines="7" data-code-annotation="10" data-code-cell="annotated-cell-5">This allows us to filter by each song whether any of the weeks charted in the top 3 for the month we’re interested in. Without these two steps we could only filter for the weeks in which they were charting and therefore couldn’t plot their entire ranking trajectory.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="11">11</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-annotation="11" data-code-lines="11,12">Shading the region for April for reference.</span>
+<span data-code-lines="11,12" data-code-annotation="11" data-code-cell="annotated-cell-5">Shading the region for April for reference.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="12">12</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-annotation="12" data-code-lines="13">Want the legend for the line to appear.</span>
+<span data-code-lines="13" data-code-annotation="12" data-code-cell="annotated-cell-5">Want the legend for the line to appear.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="13">13</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-annotation="13" data-code-lines="14">Need to use a subset of the data otherwise each row will try to plot a label; I picked the last charting date for each song.</span>
+<span data-code-lines="14" data-code-annotation="13" data-code-cell="annotated-cell-5">Need to use a subset of the data otherwise each row will try to plot a label; I picked the last charting date for each song.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="14">14</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-annotation="14" data-code-lines="16">Wanted to remove the legend for the label (a lower-case “a”).</span>
+<span data-code-lines="16" data-code-annotation="14" data-code-cell="annotated-cell-5">Wanted to remove the legend for the label (a lower-case “a”).</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="15">15</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-annotation="15" data-code-lines="17">Specifying the colors I want to use for the 4 different lines.</span>
+<span data-code-lines="17" data-code-annotation="15" data-code-cell="annotated-cell-5">Specifying the colors I want to use for the 4 different lines.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="16">16</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-annotation="16" data-code-lines="23">Moving the legend to maximize plotting space.</span>
+<span data-code-lines="23" data-code-annotation="16" data-code-cell="annotated-cell-5">Moving the legend to maximize plotting space.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="17">17</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-annotation="17" data-code-lines="24">Centering the legend title in the legend box.</span>
+<span data-code-lines="24" data-code-annotation="17" data-code-cell="annotated-cell-5">Centering the legend title in the legend box.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="18">18</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-annotation="18" data-code-lines="25">Putting a black border around the legend.</span>
+<span data-code-lines="25" data-code-annotation="18" data-code-cell="annotated-cell-5">Putting a black border around the legend.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="19">19</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-annotation="19" data-code-lines="26">Changing the plot color to the same color as the website.</span>
+<span data-code-lines="26" data-code-annotation="19" data-code-cell="annotated-cell-5">Changing the plot color to the same color as the website.</span>
 </dd>
 </dl>
 </div>

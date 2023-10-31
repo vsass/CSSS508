@@ -10,12 +10,143 @@ output:
 ---
 
 ```{r}
-#| echo: false
-knitr::opts_chunk$set(
-  comment = ">")
+#| code-fold: true
+knitr::opts_chunk$set(comment = ">")
 library(tidyverse)
 library(ggrepel)
 library(ggthemes)
 ```
 
-#### Answer 2
+#### Answer 1.i
+
+```{r}
+vec_char <- LETTERS[1:10]
+```
+
+#### Answer 1.ii
+
+```{r}
+vec_fac <- factor(letters[17:26])
+```
+
+#### Answer 1.iii
+
+```{r}
+rev(vec_fac)
+```
+
+#### Answer 1.iv
+An `integer`, because vectors can only be of one type and factors have an underlying numeric representation (as integers!).
+
+#### Answer 1.v
+
+You get `1`s and `0`s when you covert it to `numeric`. You get `"TRUE"`s and `"FALSE"`s when you convert it to `character.` You get `"0"`s, and `“1”`s if you convert it to `numeric` and then `character.` 
+
+#### Answer 2.i
+
+```{r}
+matrix_mixed <- matrix(NA, nrow = 10, ncol = 4)
+typeof(matrix_mixed)
+```
+
+#### Answer 2.ii
+```{r}
+matrix_mixed[, 1] <- 1:10
+typeof(matrix_mixed)
+```
+
+#### Answer 2.iii
+```{r}
+matrix_mixed[, 2] <- rnorm(10)
+typeof(matrix_mixed)
+```
+
+#### Answer 2.iv
+```{r}
+matrix_mixed[, c(3,4)] <- c(vec_char, vec_fac)
+typeof(matrix_mixed)
+```
+
+#### Answer 2.v
+`NA`s are technically a logical indicator of missingness so if an entire matrix is `NA`, it's data type will be `logical`. `NA`s can be paired with any data type so when the first column was added it automatically became the data type of those values. `integers` are compatible with `double`s so they were coerced to `double` when the second column was added. All of the columns were coerced to a `character` string when the `character` and `factor` vectors were added since characters are the lowest-common-denominator of data types. This progression is due to the fact that matrices can only be one data type so they will morph into whatever data type can coerce the others.
+
+#### Answer 2.vi
+`factor`s are technically represented by integers that correspond to their level number. Therefore, when `vec_fac` was coerced into a character string, it was the numbers of the levels that became `character` strings, not the level names themselves. 
+
+#### Answer 2.vii
+Add the argument `byrow = TRUE`.
+
+#### Answer 2.viii
+Firstly, the vector `math_vec` is added to each column of `math_matrix`. For the second part, the first calculation does matrix multiplication, while the second does element-wise multiplication.
+
+```{r}
+#| echo: false
+math_matrix <- matrix(1:5, nrow = 5, ncol = 5)
+math_vec <- 1:5
+```
+
+
+#### Answer 3.i
+```{r}
+first_list <- list("letters" = letters, "math_matrix" = math_matrix, "17" = 17, "vec_fac" = vec_fac)
+```
+
+#### Answer 3.ii
+```{r}
+first_list$letters[12:16]
+first_list[["letters"]][12:16]
+```
+
+#### Answer 3.iii
+```{r}
+second_list <- list("math_vec" = math_vec, "vec_char" = vec_char) 
+```
+
+#### Answer 3.iv
+```{r}
+first_list$second_list <- second_list
+```
+
+#### Answer 3.v
+```{r}
+first_list$second_list$vec_char[1]
+first_list[["second_list"]][["vec_char"]][1]
+```
+
+
+#### Answer 4.i
+```{r}
+df_1 <- data.frame(vec_char = vec_char, math_vec = math_vec)
+```
+
+#### Answer 4.ii
+```{r}
+df_1
+```
+
+`math_vec` was repeated twice due to `R`'s recycling rules for vectors. 
+
+#### Answer 4.iii
+```{r}
+df_1$fac_letters <- first_list$vec_fac
+```
+
+#### Answer 4.iv
+```{r}
+names(df_1)
+colnames(df_1)
+rownames(df_1)
+
+names(first_list)
+colnames(first_list)
+rownames(first_list)
+
+names(matrix_mixed)
+colnames(matrix_mixed)
+rownames(matrix_mixed)
+```
+
+All of these functions work for a `data.frame()`! `names()` and `colnames()` tell us the column names, while `rownames()` gives us the numbers between 1 and 10. `names()` works for lists and returns a vector of the names of each element. `colnames()` and `rownames()` don't work for lists. None of these functions work for the matrix we created^[You can, however, assign row names and column names to a matrix using `rownames()` and `columnnames()` respectively. Alternatively, if you create a matrix using `cbind` and named vectors, the `colnames` will be taken from the names of the vectors used.]. 
+
+#### Answer 4.v
+`length()` gives number of columns in a data frame, number of elements in a list, number of total cells in a matrix, and length of a vector. `dim()` gives number of rows/columns for data frames and matrices, but doesn't work for lists and vectors.

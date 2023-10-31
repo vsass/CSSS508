@@ -43,9 +43,10 @@ Create a variable named `date` that corresponds to the `week` based on the `date
 billboard_tidy_date <- billboard_tidy |> 
   mutate(date = if_else(week == 1, # <1>
                        date_entered, # <1>
-                       date_entered + weeks(x = week))) # <1>
+                       date_entered + weeks(x = week - 1))) # <1>
+billboard_tidy_date
 ```
-1. This `if_else` basically says, "if `week` is equal to 1 then assign the `date_entered` value to `date`. Otherwise, add the number of `week`s to the `date_entered` value. 
+1. This `if_else` basically says, "if `week` is equal to 1 then assign the `date_entered` value to `date`. Otherwise, add the number of `week`s minus 1 to the `date_entered` value (i.e. for the second week you would want to add `2 - 1` or `1` week to the `date_entered` value). 
 
 #### Answer 4
 

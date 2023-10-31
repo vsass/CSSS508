@@ -17,17 +17,49 @@ Answer each of the following questions. Be sure to display **all your code in th
     ```
 
 ### Exercises
-1. Vectors
-  i. `LETTERS` contains the 26 capital letters in order. Use `LETTERS` and `[ ]` to create a vector of the first 13 capital letters.
-  ii. `letters` contains the 26 lowercase letters in order. Use `fct`, `letters`, and `[ ]` to create a factor variable using the last 13 lower case letters.
-  iii. Use `rev()` to reverse the order of `vec_fac`.
-  iv. Use `:` to create an integer vector of the numbers 11 through 20.
-  v. If you used `c()` to combine `vec_int` with `vec_fac`, what class of vector would you get? Why?
-  vi. Consider the vector `c(TRUE, FALSE, TRUE, TRUE)`. What happens to its values when you try to convert it to numeric? To character? To numeric and then character?
-  
-2. Matrices
-  i. 
 
+#### Question 1: Vectors
+  i. `LETTERS` contains the 26 capital letters in order. Use `LETTERS` and `[ ]` to create a vector called `vec_char` of the first 10 capital letters.
+  ii. `letters` contains the 26 lowercase letters in order. Use `factor`, `letters`, and `[ ]` to create a factor variable called `vec_fac` using the last 10 lower case letters.
+  iii. Use `rev()` to reverse the order of `vec_fac`.
+  iv. If you used `c()` to combine `vec_fac` with a vector of integers, what class of vector would you get? Why?
+  v. Consider the vector `c(TRUE, FALSE, TRUE, TRUE)`. In words, what happens to its values when you try to convert it to numeric? To character? To numeric and then character?
+  
+#### Question 2: Matrices
+  i. Use `matrix()` to create a matrix called `matrix_mixed` with 10 rows and four columns filled with NA. What data type does this matrix contain^[Use `typeof()` to find this.]?
+  ii. Add the numbers 1 through 10 to the first row of this empty matrix and get it's data type. 
+  iii. Add 10 random deviates from the normal distribution^[Using `rnorm()`.] to the second column and get it's data type. 
+  iv. Assign `vec_char` and `vec_fac` to the third and fourth columns of `matrix_mixed` using one assignment operator. What is the data type of the matrix now?
+  v. Explain this progression of data types from part i to part iv. 
+  vi. Look at `matrix_mixed`. What happened to the letters in column 4?
+  vii. Run this code in your console: `matrix(letters, ncol = 2)`. It consists of letters `a` to `m` in the first column and `n` to `z` in the second column. How can you change this code to make it go in alphabetical order left to right, top to bottom instead?
+  viii. Consider the code below: 
+```{r}
+math_matrix <- matrix(1:5, nrow = 5, ncol = 5)
+math_vec <- 1:5
+```
+  What happens when you add `math_matrix` and `math_vec` to one another? What's the difference between the results of `math_matrix %*% math_vec` and `math_matrix * math_vec`^[Run all three calculations for this problem in your console, no need to include them in your qmd]?
+  
+#### Question 3: Lists
+  i. Create a list called `first_list` that contains `letters`, `math_matrix`, the number `17`, and `vec_fac` (in that order) and assign them their vector names. 
+  ii. Index `first_list` to pull out just the letters `"l" "m" "n" "o" "p"`. 
+  iii. Create another list called `second_list` and put `math_vec` and `vec_char` as named elements in it. 
+  iv. Add `second_list` as the fifth element of `first_list`.
+  v. Index into `first_list` and pull out the capital A from `vec_char`. 
+  vi. Run the following code: 
+```{r}
+lm_output <- lm(mpg ~ wt, data = mtcars)
+lm_output
+```
+  
+  How many elements does `lm_output` have and what are the dimensions of the model element? 
+  
+#### Question 4: Data Frames
+  i. Use `data.frame()` to combine `vec_char` (first column) and `math_vec` (second column) into `df_1`.
+  ii. Look at `df_1`. What happened with `math_vec` in the second column? Why?
+  iii. Use `$` to add `vec_fac` from `first_list` to `df_1` and call it `fac_letters`.
+  iv. Use `names()`, `colnames()`, and `rownames()` on `df_1.` How does this compare to the behavior of these functions on lists and matrices?
+  v. Similarly, how do the results of `length()` and `dim()` differ between data frames, lists, matrices, and vectors?
 
 
 ### Due Dates
