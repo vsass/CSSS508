@@ -29,20 +29,6 @@ Remember, the package `nycflights13` contains data on flights originating in NYC
 
 1. Choose an airport outside New York, and count how many flights went to that airport from NYC in 2013. How many of those flights started at JFK, LGA, and EWR respectively?
 
-```{r}
-#| echo: false
-#| eval: false
-library(nycflights13)
-library(tidyverse)
-
-sd_flights <- flights |> 
-  filter(dest == "SAN") |> 
-  summarize(n = n(), 
-            .by = origin)
-
-# There were `r sum(sd_flights$n)` total flights from New York to San Diego. `r sd_flights$n[sd_flights$origin == "JFK"]` of those flights originated from `r sd_flights$origin[1]` and `r sd_flights$n[sd_flights$origin == "EWR"]` from `r sd_flights$origin[2]`. 
-```
-
 2. The variable `arr_delay` contains arrival delays in minutes (negative values represent early arrivals). Make a `ggplot` histogram displaying arrival delays for 2013 flights from NYC to the airport you chose.
 
 ```{r}

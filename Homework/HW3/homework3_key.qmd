@@ -90,12 +90,32 @@ x[a < 5] # <7>
 #### Answer 3
 
 ```{r}
+#| message: false
+#| eval: false
+ggplot(mpg, aes(x = class)) +
+  geom_bar() 
+```
+
+```{r}
 #| fig-align: center
 #| message: false
+#| echo: false
 ggplot(mpg, aes(x = class)) +
-  geom_bar()
+  geom_bar() +
+  theme(plot.background = element_rect(fill = "#f6f7f9", color = NA))
+```
+
+```{r}
 ggplot(mpg, aes(x = cty, y = hwy)) +
-  geom_point()
+  geom_point() 
+ggsave("mpg-plot.png")
+```
+
+
+```{r}
+ggplot(mpg, aes(x = cty, y = hwy)) +
+  geom_point() + 
+  theme(plot.background = element_rect(fill = "#f6f7f9", color = NA))
 ggsave("mpg-plot.png")
 ```
 

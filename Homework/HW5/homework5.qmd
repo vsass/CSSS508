@@ -85,7 +85,7 @@ billboard_top3_month <- billboard_tidy_date |>
          .by = c(month, artist, track)) |> 
   slice_max(peak_weeks, 
             by = month) |> 
-  distinct(month, artist, track) |> 
+  distinct(month, artist, track, peak_weeks) |> 
   arrange(month)
 billboard_top3_month
 ```
@@ -143,31 +143,29 @@ billboard_top3_month_viz <- billboard_tidy_date |>
   mutate(month = function(variable), # <1>
          year = function(variable), # <2>
          top3 = if_else(variable <= value & variable == value, 1, 0)) |> # <3>
-  mutate(peak_weeks = function(variable), # <4>
-         month_peak = ifelse(variable > 0, variable, NA), # <5>
+  mutate(month_peak = ifelse(variable > 0, variable, NA), # <4>
          .by = c(month, artist, track)) |> 
-  filter(function(month_peak == "value"), # <6>
+  filter(function(month_peak == "value"), # <5>
          .by = c(track, artist)) 
 
-library(ggrepel) # <7>
+library(ggrepel) # <6>
 ggplot(billboard_top3_month_viz, 
-       aes(variable, variable, group = variable, color = variable)) + # <8> 
-  function + # <9>
-  geom_label_repel(data = billboard_top3_month_viz |> function(variable, by = track), # <10>
-                   mapping = aes(label = variable)) # <11> 
+       aes(variable, variable, group = variable, color = variable)) + # <7> 
+  function + # <8>
+  geom_label_repel(data = billboard_top3_month_viz |> function(variable, by = track), # <9>
+                   mapping = aes(label = variable)) # <10> 
 ```
 
 1. What month is associated with each row's chart position?
 2. Are there multiple years in this dataset?! Given that we're interested in the Billboard Top 100 for **2000** it might be useful to have a variable that allows us to discriminate between years. 
 3. To create some indicator of top 3 status you'll need to provide two conditions (one variable needs to be less than or equal to a certain value and another needs to equal a certain value)
-4. Get a total of all the weeks a particular song was in the top 3 in a particular month
-5. Need to create a variable that reflects when a particular song charted in the top 3 and `NA` otherwise
-6. In order to get the entire trajectory of a song we can't simply filter for the month when it peaked. Then we'd only be able to plot that snippet of its trajectory. Hint: Which function returns `TRUE` if even 1 element it's given is `TRUE`?
-7. Load if you want to add labels
-8. You want to visualize the ranking trajectory of a song over time. Hint: `group` is the variable you want to visualize.
-9. What geometry would be appropriate here?
-10. To properly label this plot you'll need to subset the data, otherwise it will try to plot a label for every date available. 
-11. Which variable's text are you trying to label?
+4. Need to create a variable that reflects when a particular song charted in the top 3 and `NA` otherwise
+5. In order to get the entire trajectory of a song we can't simply filter for the month when it peaked. Then we'd only be able to plot that snippet of its trajectory. Hint: Which function returns `TRUE` if even 1 element it's given is `TRUE`?
+6. Load if you want to add labels
+7. You want to visualize the ranking trajectory of a song over time. Hint: `group` is the variable you want to visualize.
+8. What geometry would be appropriate here?
+9. To properly label this plot you'll need to subset the data, otherwise it will try to plot a label for every date available. 
+10. Which variable's text are you trying to label?
 
 :::
 

@@ -1,0 +1,113 @@
+---
+title: "Homework 4 Key"
+code-annotations: hover
+code-fold: show
+execute: 
+  message: false
+  warning: false
+output: 
+  html_document:
+    highlight-style: a11y-dark
+---
+
+```{r}
+#| code-fold: true
+library(tidyverse)
+library(ggthemes)
+library(nycflights13)
+library(scales)
+library(gt)
+```
+
+#### Answer 1
+
+Choose an airport outside New York, and count how many flights went to that airport from NYC in 2013. How many of those flights started at JFK, LGA, and EWR respectively?
+
+```{r}
+sd_flights <- flights |> 
+  filter(dest == "SAN") |> 
+  summarize(n = n(), 
+            .by = origin) # <1> 
+```
+1. An alternative to this `summarize` call would be to call `count(origin)`.
+
+There were `r number(sum(sd_flights$n), big.mark = ",")` total flights from New York to San Diego. `r number(sd_flights$n[sd_flights$origin == "JFK"], big.mark = ",")` of those flights originated from `r sd_flights$origin[1]` and `r number(sd_flights$n[sd_flights$origin == "EWR"], big.mark = ",")` from `r sd_flights$origin[2]`.^[To add various punctuation to inline numeric values try the `number` function from the `scales` package.] 
+
+#### Answer 2
+
+The variable `arr_delay` contains arrival delays in minutes (negative values represent early arrivals). Make a `ggplot` histogram displaying arrival delays for 2013 flights from NYC to the airport you chose.
+
+```{r}
+#| fig-align: center
+flights |> 
+  filter(dest == "SAN") |> 
+  ggplot(aes(x = arr_delay)) +
+  geom_histogram() + 
+  geom_vline(xintercept = 0, color = "#e15759") + # <2>
+  labs(title = "Arrival delays from NYC airports to SAN in 2013",
+       x = "Arrival delays (minutes)",
+       y = "Count") +
+  theme_tufte() + 
+  theme(plot.background = element_rect(fill = "#f6f7f9", color = NA)) # <3>
+```
+2. `geom_vline` adds a vertical line to your plot which can be useful for demarcating comparison or threshold values.
+3. Changing the background color of my plot to match the website's color using `fill` and removing the border of the plot using `color`. 
+
+#### Answer 3
+
+Use `left_join` to add weather data at departure to the subsetted data^[Hint: What variables could you match on that equal `time_hour`?]. Calculate the mean temperature by `month` at departure (`temp`) across all flights.
+
+```{r}
+flights |> 
+  filter(dest == "SAN") |> 
+  left_join(weather, by = join_by(origin, year, month, day, hour)) |> 
+  summarize(avg_temp = mean(temp, na.rm = TRUE) |> round(2) |> number(suffix = "°F"), # <4>
+            .by = month) |> 
+  arrange(month) |> 
+  gt() |> # <5>
+  cols_align(align = "center") |> # <5>
+  cols_label(month = "Month", # <5>
+             avg_temp = "Average Temperature") |> # <5>
+  tab_options(table.background.color = "#f6f7f9") # <5>
+```
+4. When creating the mean temperature I also chose to round to two decimal places with `round()` and add the suffix `°F` with the `number` function from the `scales` package. This level of detail is not necessary for this assignment. 
+5. Making the table a bit nicer looking (again, not necessary here)
+
+#### Answer 4
+
+Investigate if there is a relationship between departure delay (`dep_delay`) and precipitation (`precip`) in the full dataset. Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation.
+
+```{r}
+#| fig-align: center
+flights |> 
+  left_join(weather, by = join_by(origin, year, month, day, hour)) |> 
+  ggplot(aes(x = precip, y = dep_delay)) + 
+  geom_jitter(alpha = 0.1) + # <6>
+  geom_smooth(method = "lm") + # <7> 
+  labs(title = "Does precipitation increase the likelihood of departure delays?",
+       x = "Precipitation (in inches)",
+       y = "Departure delay (in minutes)") + 
+  theme_tufte() + 
+  theme(plot.background = element_rect(fill = "#f6f7f9", color = NA))
+```
+6. It can be helpful to make all points transparent if there is extreme over-plotting like in this plot. It allows you see more clearly see where there is over-plotting. 
+7. Adding a regression line allows for better visualization of the relationship between precipitation and departure delays. 
+
+It looks like there is a slightly positive relationship between precipitation and the length of a departure delay. 
+
+```{r}
+#| fig-align: center
+flights |> 
+  left_join(weather, by = join_by(origin, year, month, day, hour)) |> 
+  ggplot(aes(x = precip, y = dep_delay, color = origin)) + # <8> 
+  geom_jitter(alpha = 0.1) + 
+  geom_smooth(method = "lm", fill = "#f6f7f9") + 
+  labs(title = "Does precipitation increase the likelihood of departure delays?",
+       x = "Precipitation (in inches)",
+       y = "Departure delay (in minutes)") + 
+  theme_tufte() + 
+  theme(plot.background = element_rect(fill = "#f6f7f9", color = NA))
+```
+8. Just added the mapping aesthetic by `color` to visualize this by origin airport. 
+
+When broken down by origin airport it looks like this slight positive association is a bit stronger for JFK and LGA than it is for EWR. 
