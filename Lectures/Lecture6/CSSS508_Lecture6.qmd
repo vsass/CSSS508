@@ -261,6 +261,9 @@ In addition to the standards (`+`, `-`, `/`, `*`, `^`), `R` has many other usefu
 
 ```{r}
 df
+```
+
+```{r}
 df |> 
   mutate(
     min = pmin(x, y, na.rm = TRUE), # <6>
@@ -276,6 +279,9 @@ df |>
 
 ```{r}
 1:10 %/% 3 # <8>
+```
+
+```{r}
 1:10 %% 3 # <9>
 ```
 8. Computes integer division. 
@@ -297,11 +303,15 @@ flights |> mutate(hour = sched_dep_time %/% 100,
 
 ```{r}
 log(c(2.718282, 7.389056, 20.085537)) # <10> 
-log2(c(2, 4, 8)) # <11>
-log10(c(10, 100, 1000)) # <12>
 ```
 10. Inverse is `exp()`
+```{r}
+log2(c(2, 4, 8)) # <11>
+```
 11. Easy to interpret because a difference of 1 on the log scale corresponds to doubling on the original scale and a difference of -1 corresponds to halving. Inverse is `2^`. 
+```{r}
+log10(c(10, 100, 1000)) # <12>
+```
 12. Easy to back-transform because everything is on the order of 10. Inverse is `10^`. 
 
 ## Other Useful Arithmetic Functions
@@ -401,9 +411,11 @@ round(c(1.5, 2.5))
 
 ```{r}
 floor(123.456) # <18>
-ceiling(123.456) # <19>
 ```
 18. Always rounds down.
+```{r}
+ceiling(123.456) # <19>
+```
 19. Always rounds up. 
 
 ## Summary Functions 
@@ -415,10 +427,15 @@ ceiling(123.456) # <19>
 ```{r}
 x <- sample(1:500, size = 100, replace = TRUE) # <20>
 mean(x)
-median(x)
-quantile(x, .95) # <21>
 ```
 20. `sample()` takes a vector of data, and samples `size` elements from it, with replacement if `replace` equals `TRUE`. 
+```{r}
+median(x)
+```
+
+```{r}
+quantile(x, .95) # <21>
+```
 21. A generalization of the median: `quantile(x, 0.95)` will find the value that’s greater than 95% of the values; `quantile(x, 0.5)` is equivalent to the median.
 
 ## Summary Functions 
@@ -526,6 +543,8 @@ treatment |>
 
 ## Explicit Missing Values
 
+**Represent A Fixed Value**
+
 Other times an `NA` represents some fixed value, usually `0`. 
 
 . . . 
@@ -539,6 +558,8 @@ coalesce(x, 0) # <2>
 . . . 
 
 <br>
+
+**Represented By a Fixed Value**
 
 If the opposite issue occurs (i.e. a value is actually an `NA`), try specifying that to the `na` argument of your `readr` data import function. Otherwise, use `na_if()` from `dplyr`. 
 
@@ -672,7 +693,6 @@ This sample principle applies when visualizing a factor variable, which will aut
 
 ::: {.column width="50%"}
 ```{r}
-#| code-line-numbers: "3"
 ggplot(health, aes(x = smoker)) +
   geom_bar() +
   scale_x_discrete() + 
@@ -783,6 +803,9 @@ When doing arithmetic operations on vectors, R handles these *element-wise*:
 
 ```{r}
 c(1, 2, 3) + c(4, 5, 6)
+```
+
+```{r}
 c(1, 2, 3, 4)^3 # <5> 
 ```
 5. Exponentiation is carried out using the `^` operator.
@@ -956,9 +979,11 @@ a_matrix
 
 ```{r}
 a_matrix[1, 2] # <9> 
-a_matrix[1, c(2,3)] # <10> 
 ```
 9. Row 1, Column 2.
+```{r}
+a_matrix[1, c(2,3)] # <10> 
+```
 10. Row 1, Columns 2 and 3. 
 
 . . . 
@@ -971,7 +996,7 @@ dim(a_matrix)
 
 ## Matrices Becoming Vectors
 
-If a matrix ends up having just one row or column after subsetting, by default R will make it into a vector. 
+If a matrix ends up having just one row or column after subsetting, by default `R` will make it into a vector. 
 
 . . . 
 
@@ -1012,6 +1037,9 @@ We can access dimension names or name them ourselves:
 rownames(bad_matrix) <- c("First", "Last")
 colnames(bad_matrix) <- c("Number", "Name")
 bad_matrix
+```
+
+```{r}
 bad_matrix[ ,"Name", drop = FALSE] # <11>
 ```
 11. `drop = FALSE` maintains the matrix structure; when `drop = TRUE` (the default) it will be converted to a vector. 
@@ -1052,14 +1080,14 @@ f_matrix
 :::
 
 ::: {.column width="50%"}
-![1.](images/multiply_matrices.gif)
+![1. A reminder of how to do matrix multiplication :)](images/multiply_matrices.gif)
 :::
 
 ::::
 
 ## "Proper" Matrix Math
 
-To invert an invertible square matrix^[![](images/inverse_matrix.png)], use `solve()`.
+To invert an invertible square matrix^[![A reminder of how to invert a 2x2 square matrix.](images/inverse_matrix.png)], use `solve()`.
 
 . . . 
 
@@ -1137,10 +1165,10 @@ tibble(Column1 = c(1, 2, 3),
 
 . . . 
 
-This distinction leads us to the final data type, of which `data.frame`s and `tibble`s are a subset. 
+This distinction leads us to the final data type, of which `data.frame`s and `tibble`s are a particular subset. 
 
 ::: aside
-`tibble`'s additional advantages are only displaying the first 10 rows and only the columns that will comfortably fit within the parameters of your console space when called (`data.frame`will display all columns and a certain number of rows depending upon your default max setting - usually this is an overwhelming amount of output, aesthetical confusing,  and not very helpful).
+`tibble`'s additional advantages are only displaying the first 10 rows and only the columns that will comfortably fit within the parameters of your console space when called (`data.frame` will display all columns and a certain number of rows depending upon your default max setting - usually this is an overwhelming amount of output, aesthetically confusing,  and not very helpful).
 :::
 
 # Lists{.section-title background-color="#99a486"}
@@ -1234,7 +1262,7 @@ This is the same as same as `x[[1]]`.
 
 ## `pluck()`
 
-An alternative to using Base `R`s `[[ ]]` is using `pluck()` from the tidyverse's `purrr` package. 
+An alternative to using Base `R`'s `[[ ]]` is using `pluck()` from the tidyverse's `purrr` package. 
 
 :::: {.columns}
 
@@ -1261,7 +1289,7 @@ This is the same as `x[[1]][[2]]`.
 
 ## `pluck()`
 
-An alternative to using Base `R`s `[[ ]]` is using `pluck()` from the tidyverse's `purrr` package. 
+An alternative to using Base `R`'s `[[ ]]` is using `pluck()` from the tidyverse's `purrr` package. 
 
 :::: {.columns}
 
@@ -1281,7 +1309,7 @@ pluck(x, 1, 2, "elt")
 
 <br>
 
-You can supply names to index into named vectors. This is the same as `x[[1]][[2]][["elt"]]`. 
+You can supply names to index into named vectors as well. This is the same as calling `x[[1]][[2]][["elt"]]`. 
 
 :::
 

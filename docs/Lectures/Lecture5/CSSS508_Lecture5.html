@@ -2862,11 +2862,11 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a><span class="fu">as_datetime</span>(<span class="fu">today</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&gt; [1] "2023-10-30 UTC"</code></pre>
+<pre><code>&gt; [1] "2023-10-31 UTC"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a><span class="fu">as_date</span>(<span class="fu">now</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&gt; [1] "2023-10-30"</code></pre>
+<pre><code>&gt; [1] "2023-10-31"</code></pre>
 </div>
 </div>
 <p><br></p>
@@ -3038,8 +3038,8 @@
 </dl>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&gt; Time difference of 155 days
-&gt; [1] "13392000s (~22.14 weeks)"</code></pre>
+<pre><code>&gt; Time difference of 156 days
+&gt; [1] "13478400s (~22.29 weeks)"</code></pre>
 </div>
 </div>
 </div>
@@ -3652,7 +3652,77 @@
 <li>Pivot your data to make it tidy<sup>2</sup>.</li>
 <li>Turn two of the variables into factors<sup>3</sup>.</li>
 <li>Excluding the income category <code>Don't know/refused</code>, which religion-income combination has the largest frequency<sup>4</sup>?</li>
-</ol><aside><ol class="aside-footnotes"><li id="fn25"><p><code>R</code> Script or <code>.qmd</code></p></li><li id="fn26"><p>There should be 3 columns in your final dataset</p></li><li id="fn27"><p>Hint: Which two variables are categorical?</p></li><li id="fn28"><p>You can determine this by summarizing the data or creating a visualization of the data.</p></li></ol></aside></section></section><section><section id="homework" class="title-slide slide level1 section-title center" data-background-color="#1e4655"><h1>Homework</h1>
+</ol><aside><ol class="aside-footnotes"><li id="fn25"><p><code>R</code> Script or <code>.qmd</code></p></li><li id="fn26"><p>There should be 3 columns in your final dataset</p></li><li id="fn27"><p>Hint: Which two variables are categorical?</p></li><li id="fn28"><p>You can determine this by summarizing the data or creating a visualization of the data.</p></li></ol></aside></section><section id="answers" class="slide level2"><h2>Answers</h2>
+<p>Question 1: Click <em>File</em> &gt; <em>Save</em> to download this data to the same folder where your source document<sup>1</sup> will be saved for this lab.</p>
+<aside><ol class="aside-footnotes"><li id="fn29"><p><code>R</code> Script or <code>.qmd</code></p></li></ol></aside></section><section id="answers-1" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Answers</h2>
+<p>Question 2: Read in your data using the appropriate function from <code>readr</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb145-1" class="hljs-ln-code"><a href="#cb145-1"></a>religion_income <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/religion_income.csv"</span>, </span>
+<span id="cb145-2" class="hljs-ln-code"><a href="#cb145-2"></a>                            <span class="at">col_types =</span> <span class="fu">c</span>(<span class="st">"f"</span>, <span class="fu">rep</span>(<span class="st">"i"</span>, <span class="dv">10</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="answers-2" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Answers</h2>
+<p>Question 3: Pivot your data to make it tidy<sup>1</sup>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb146-1" class="hljs-ln-code"><a href="#cb146-1"></a>religion_income <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/religion_income.csv"</span>, </span>
+<span id="cb146-2" class="hljs-ln-code"><a href="#cb146-2"></a>                            <span class="at">col_types =</span> <span class="fu">c</span>(<span class="st">"f"</span>, <span class="fu">rep</span>(<span class="st">"i"</span>, <span class="dv">10</span>)))</span>
+<span id="cb146-3" class="hljs-ln-code"><a href="#cb146-3"></a></span>
+<span id="cb146-4" class="hljs-ln-code"><a href="#cb146-4"></a>religion_income_tidy <span class="ot">&lt;-</span> religion_income <span class="sc">|&gt;</span> </span>
+<span id="cb146-5" class="hljs-ln-code"><a href="#cb146-5"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>religion, </span>
+<span id="cb146-6" class="hljs-ln-code"><a href="#cb146-6"></a>              <span class="at">names_to =</span> <span class="st">"income"</span>, </span>
+<span id="cb146-7" class="hljs-ln-code"><a href="#cb146-7"></a>              <span class="at">values_to =</span> <span class="st">"frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn30"><p>There should be 3 columns in your final dataset</p></li></ol></aside></section><section id="answers-3" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Answers</h2>
+<p>Question 4: Turn two of the variables into factors<sup>1</sup>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb147-1" class="hljs-ln-code"><a href="#cb147-1"></a>religion_income <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/religion_income.csv"</span>, </span>
+<span id="cb147-2" class="hljs-ln-code"><a href="#cb147-2"></a>                            <span class="at">col_types =</span> <span class="fu">c</span>(<span class="st">"f"</span>, <span class="fu">rep</span>(<span class="st">"i"</span>, <span class="dv">10</span>)))</span>
+<span id="cb147-3" class="hljs-ln-code"><a href="#cb147-3"></a></span>
+<span id="cb147-4" class="hljs-ln-code"><a href="#cb147-4"></a>religion_income_tidy <span class="ot">&lt;-</span> religion_income <span class="sc">|&gt;</span> </span>
+<span id="cb147-5" class="hljs-ln-code"><a href="#cb147-5"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>religion, </span>
+<span id="cb147-6" class="hljs-ln-code"><a href="#cb147-6"></a>              <span class="at">names_to =</span> <span class="st">"income"</span>, </span>
+<span id="cb147-7" class="hljs-ln-code"><a href="#cb147-7"></a>              <span class="at">values_to =</span> <span class="st">"frequency"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb147-8" class="hljs-ln-code"><a href="#cb147-8"></a>  <span class="fu">mutate</span>(<span class="at">income =</span> <span class="fu">fct</span>(income, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Don't know/refused"</span>, <span class="st">"&lt;$10k"</span>, <span class="st">"$10-20k"</span>, </span>
+<span id="cb147-9" class="hljs-ln-code"><a href="#cb147-9"></a>                                         <span class="st">"$20-30k"</span>, <span class="st">"$30-40k"</span>, <span class="st">"$40-50k"</span>, <span class="st">"$50-75k"</span>, </span>
+<span id="cb147-10" class="hljs-ln-code"><a href="#cb147-10"></a>                                         <span class="st">"$75-100k"</span>, <span class="st">"$100-150k"</span>, <span class="st">"&gt;150k"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn31"><p>Hint: Which two variables are categorical?</p></li></ol></aside></section><section id="answers-4" class="slide level2"><h2>Answers</h2>
+<p>Question 5: Excluding the income category <code>Don't know/refused</code>, which religion-income combination has the largest frequency? You can determine this by <strong>summarizing the data</strong> or creating a visualization of the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1"></a><span class="co"># Data manipulation</span></span>
+<span id="cb148-2"><a href="#cb148-2"></a>religion_income_tidy <span class="sc">|&gt;</span> </span>
+<span id="cb148-3"><a href="#cb148-3"></a>  <span class="fu">filter</span>(income <span class="sc">!=</span> <span class="st">"Don't know/refused"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb148-4"><a href="#cb148-4"></a>  <span class="fu">slice_max</span>(frequency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 1 × 3
+&gt;   religion         income  frequency
+&gt;   &lt;fct&gt;            &lt;fct&gt;       &lt;dbl&gt;
+&gt; 1 Evangelical Prot $50-75k      1486</code></pre>
+</div>
+</div>
+</section><section id="answers-fa-scroll" class="slide level2 scrollable"><h2>Answers <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
+</h2>
+<p>Question 5: Excluding the income category <code>Don't know/refused</code>, which religion-income combination has the largest frequency? You can determine this by summarizing the data or creating a <strong>visualization</strong> of the data.</p>
+<div class="cell" data-layout-align="center">
+<details><summary>Code</summary><div class="sourceCode cell-code" id="cb150"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1"></a><span class="co"># Visualization</span></span>
+<span id="cb150-2"><a href="#cb150-2"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb150-3"><a href="#cb150-3"></a><span class="fu">library</span>(geomtextpath)</span>
+<span id="cb150-4"><a href="#cb150-4"></a></span>
+<span id="cb150-5"><a href="#cb150-5"></a>heatmap <span class="ot">&lt;-</span> religion_income_tidy <span class="sc">|&gt;</span> </span>
+<span id="cb150-6"><a href="#cb150-6"></a>  <span class="fu">filter</span>(income <span class="sc">!=</span> <span class="st">"Don't know/refused"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb150-7"><a href="#cb150-7"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> religion, <span class="at">fill =</span> frequency)) <span class="sc">+</span> </span>
+<span id="cb150-8"><a href="#cb150-8"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span> </span>
+<span id="cb150-9"><a href="#cb150-9"></a>  <span class="fu">scale_fill_distiller</span>(<span class="st">"Frequency"</span>, <span class="at">palette =</span> <span class="st">"Greens"</span>, <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb150-10"><a href="#cb150-10"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Heatmap of Religion &amp; Income"</span>, </span>
+<span id="cb150-11"><a href="#cb150-11"></a>       <span class="at">x =</span> <span class="st">"Income Level"</span>, </span>
+<span id="cb150-12"><a href="#cb150-12"></a>       <span class="at">y =</span> <span class="st">"Religious Affiliation"</span>) <span class="sc">+</span></span>
+<span id="cb150-13"><a href="#cb150-13"></a>  <span class="fu">theme_tufte</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="images/heatmap.png" style="width:150.0%;height:150.0%"></p>
+</figure>
+</div>
+</section></section><section><section id="homework" class="title-slide slide level1 section-title center" data-background-color="#1e4655"><h1>Homework</h1>
 
 </section><section id="section-4" class="slide level2" data-menu-title="Homework 5" data-background-iframe="https://vsass.github.io/CSSS508/Homework/HW5/homework5.html" data-background-interactive="TRUE"><h2></h2>
 
