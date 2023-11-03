@@ -166,7 +166,7 @@ library(readr)
 Let's import some data about song ranks on the Billboard Hot 100 in 2000:
 
 ```{r}
-billboard_2000_raw <- read_csv(file = "data/billboard.csv")
+billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv")
 ```
 
 . . . 
@@ -226,7 +226,7 @@ Sometimes a particular dataset or file read from a different software will code 
 ```{r}
 #| eval: false
 #| code-line-numbers: "|2"
-billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv", 
                                na = c("N/A", "999"))
 ```
 
@@ -237,7 +237,7 @@ Depending on how the data were input, there may be several lines that precede th
 ```{r}
 #| eval: false
 #| code-line-numbers: "|2"
-billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv", 
                                skip = 1)
 ```
 
@@ -250,7 +250,7 @@ billboard_2000_raw <- read_csv(file = "data/billboard.csv",
 It takes a character vector to be used as column names (in their order of appearance). 
 
 ```{r}
-billboard_renamed <- read_csv(file = "data/billboard.csv", 
+billboard_renamed <- read_csv(file = "data/billboard_top100.csv", 
                                col_names = c("year", "artist", "track", "time", "date_entered", 
                                              paste("wk", 1:76, sep = "_"))) # <1>
 
@@ -269,7 +269,7 @@ If you don't have any variable names you can specify that instead.
 ```{r}
 #| eval: false
 #| code-line-numbers: "|2"
-billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv", 
                                col_names = FALSE) 
 ```
 
@@ -566,7 +566,7 @@ bb_types
 
 ```{r}
 # re-read in data with column types specified
-billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv", 
                                col_types = bb_types) # <2> 
 billboard_2000_raw |> head(1)
 ```
@@ -575,7 +575,7 @@ billboard_2000_raw |> head(1)
 
 ```{r}
 #| echo: false
-billboard_renamed <- read_csv(file = "data/billboard.csv",
+billboard_renamed <- read_csv(file = "data/billboard_top100.csv",
                               col_types = bb_types) |> 
   janitor::clean_names(numerals = "right")
 ```
@@ -587,7 +587,7 @@ To specify a default column type you can use `.default` like so:
 ```{r}
 #| eval: false
 #| code-line-numbers: "|2"
-billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv", 
                                col_types = cols(.default = col_character())) 
 ```
 
@@ -600,7 +600,7 @@ Another useful helper is `cols_only()` for when you only want to read in a subse
 ```{r}
 #| eval: false
 #| code-line-numbers: "|2"
-billboard_2000_raw <- read_csv(file = "data/billboard.csv", 
+billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv", 
                                col_types = cols_only(x = col_character)) 
 ```
 
@@ -617,7 +617,7 @@ If you data are split across multiple files you can read them in all at once by 
 ```{r}
 #| output-location: fragment
 # Create list of files manually
-sales_files <- c("data/01-sales.csv", "data/02-sales.csv", "data/03-sales.csv")
+sales_files <- c("data/01_sales.csv", "data/02_sales.csv", "data/03_sales.csv")
 read_csv(sales_files, id = "file")
 ```
 
@@ -2207,7 +2207,7 @@ Question 1: Click *File* > *Save* to download this data to the same folder where
 Question 2: Read in your data using the appropriate function from `readr`. 
 
 ```{r}
-religion_income <- read_csv(file = "data/religion_income.csv", 
+religion_income <- read_csv(file = "data/religion-income.csv", 
                             col_types = c("f", rep("i", 10)))
 ```
 
