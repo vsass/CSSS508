@@ -173,7 +173,57 @@ Additionally, you can represent [Unicode](https://en.wikipedia.org/wiki/List_of_
 str_view(c("\U1F00F", "\u2866", "\U1F192"))
 ```
 
+## Data: King County Restaurant Inspections!
+
+Today we'll study real data on **food safety inspections in King County**, collected from [data.kingcounty.gov](https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5).
+
+```{r reading_data}
+#| eval: false
+#| echo: false
+restaurants <- read_csv("data/Food_Establishment_Inspection_Data_20231102.csv")
+save(restaurants, file = "Lectures/Lecture7/data/restaurants.Rdata")
+```
+
+
+Note these data are *fairly large* in the native `.csv` format. The following code can be used to download the data directly from my `Github` page as smaller, `.Rdata` object:
+
+```{r}
+load(url("https://vsass.github.io/CSSS508/Lectures/Lecture7/restaurants.Rdata"))
+```
+
+## Quick Examination of the Data
+
+```{r}
+names(restaurants)
+dim(restaurants)
+```
+
+. . . 
+
+**Good Questions to Ask:**
+
+::: {.incremental}
+* What does each row represent?
+* Is the data in long or wide format?
+* What are the key variables?
+* How are the data stored? (*data type*)
+:::
+
 ## Creating Strings
+You can create strings based on the value of other strings with `str_c()` (`str`ing `c`ombine), which takes any number of vectors and returns a character vector. 
+
+. . . 
+
+```{r}
+#| output-location: fragment
+str_c(c("CSSS", "STAT", "SOC"), 508) # <7>
+str_c(c("CSSS", "STAT", "SOC"), 508, sep = " ") # <8>
+str_c(c("CSSS", "STAT", "SOC"), 508, sep = " ", collapse = ", ") # <9>
+```
+7. By default, `str_c` doesn't put a space between the vectors it is combining.
+8. You can add a specific separator, including a space, using the `sep` argument. 
+9. If you want to combine the output into a single string, use `collapse`. 
+
 
 
 
@@ -198,11 +248,6 @@ str_view(c("\U1F00F", "\u2866", "\U1F192"))
 
 
 
-
-```{r}
-mutate(religion = factor(religion), 
-       income = fct(income))
-```
 
 
 
