@@ -1,5 +1,5 @@
 ########################
-### Lecture 4 R Code ###
+### Lecture 5 R Code ###
 ########################
 
 # Note: Anything behind a # that isn't a comment (like this) is code that is 
