@@ -487,11 +487,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-1" data-code-annotation="1">Double quote.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-1" data-code-lines="1">Double quote.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="2" data-code-cell="annotated-cell-1" data-code-annotation="2">Single quote.</span>
+<span data-code-annotation="2" data-code-cell="annotated-cell-1" data-code-lines="2">Single quote.</span>
 </dd>
 </dl>
 </div>
@@ -505,7 +505,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-2" data-code-annotation="3">Backslash.</span>
+<span data-code-annotation="3" data-code-cell="annotated-cell-2" data-code-lines="1">Backslash.</span>
 </dd>
 </dl>
 </div>
@@ -521,7 +521,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-3" data-code-annotation="4">All <code>stringr</code> functions begin with the prefix <code>str_</code> which is useful due to R Studio’s auto-complete feature.</span>
+<span data-code-annotation="4" data-code-cell="annotated-cell-3" data-code-lines="1">All <code>stringr</code> functions begin with the prefix <code>str_</code> which is useful due to R Studio’s auto-complete feature.</span>
 </dd>
 </dl>
 </div>
@@ -544,11 +544,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-4" data-code-annotation="5">Use <code>\n</code> to create a new line. Helpful when plotting if you have variable names or values that are wordy!</span>
+<span data-code-annotation="5" data-code-cell="annotated-cell-4" data-code-lines="1">Use <code>\n</code> to create a new line. Helpful when plotting if you have variable names or values that are wordy!</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-lines="2" data-code-cell="annotated-cell-4" data-code-annotation="6">Use <code>\t</code> to add a tab. <code>str_view</code> will highlight tabs in blue in your console to make it stand out from other random whitespace.</span>
+<span data-code-annotation="6" data-code-cell="annotated-cell-4" data-code-lines="2">Use <code>\t</code> to add a tab. <code>str_view</code> will highlight tabs in blue in your console to make it stand out from other random whitespace.</span>
 </dd>
 </dl>
 </div>
@@ -573,8 +573,173 @@
 </div>
 </div>
 </section>
+<section id="data-king-county-restaurant-inspections" class="slide level2">
+<h2>Data: King County Restaurant Inspections!</h2>
+<p>Today we’ll study real data on <strong>food safety inspections in King County</strong>, collected from <a href="https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5">data.kingcounty.gov</a>.</p>
+<p>Note these data are <em>fairly large</em> in their native <code>.csv</code> format. The following code can be used to download the data directly from my <code>Github</code> page as a smaller, <code>.Rdata</code> object:</p>
+<div class="cell" data-hash="CSSS508_Lecture7_cache/revealjs/unnamed-chunk-8_69bb6533524a05bd8cd7256a3904d49b">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">load</span>(<span class="fu">url</span>(<span class="st">"https://github.com/vsass/CSSS508/raw/main/Lectures/Lecture7/data/restaurants.Rdata"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="quick-examination-of-the-data" class="slide level2">
+<h2>Quick Examination of the Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">glimpse</span>(restaurants)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; Rows: 256,681
+&gt; Columns: 22
+&gt; $ Name                         &lt;chr&gt; "#807 TUTTA BELLA", "#807 TUTTA BELLA", "…
+&gt; $ `Program Identifier`         &lt;chr&gt; "#807 TUTTA BELLA", "#807 TUTTA BELLA", "…
+&gt; $ `Inspection Date`            &lt;chr&gt; "03/02/2023", "03/02/2023", "08/31/2022",…
+&gt; $ Description                  &lt;chr&gt; "Seating 0-12 - Risk Category III", "Seat…
+&gt; $ Address                      &lt;chr&gt; "2746 NE 45TH ST", "2746 NE 45TH ST", "27…
+&gt; $ City                         &lt;chr&gt; "SEATTLE", "SEATTLE", "SEATTLE", "SEATTLE…
+&gt; $ `Zip Code`                   &lt;dbl&gt; 98105, 98105, 98105, 98105, 98105, 98105,…
+&gt; $ Phone                        &lt;chr&gt; "(206) 722-6400", "(206) 722-6400", "(206…
+&gt; $ Longitude                    &lt;dbl&gt; -122.2964, -122.2964, -122.2964, -122.296…
+&gt; $ Latitude                     &lt;dbl&gt; 47.66231, 47.66231, 47.66231, 47.66231, 4…
+&gt; $ `Inspection Business Name`   &lt;chr&gt; "#807 TUTTA BELLA", "#807 TUTTA BELLA", "…
+&gt; $ `Inspection Type`            &lt;chr&gt; "Routine Inspection/Field Review", "Routi…
+&gt; $ `Inspection Score`           &lt;dbl&gt; 20, 20, 10, 10, 0, 0, 0, 30, 30, 0, 47, 4…
+&gt; $ `Inspection Result`          &lt;chr&gt; "Unsatisfactory", "Unsatisfactory", "Unsa…
+&gt; $ `Inspection Closed Business` &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,…
+&gt; $ `Violation Type`             &lt;chr&gt; "RED", "RED", "BLUE", "RED", NA, NA, NA, …
+&gt; $ `Violation Description`      &lt;chr&gt; "1300 - Food contact surfaces cleaned and…
+&gt; $ `Violation Points`           &lt;dbl&gt; 15, 5, 5, 5, 0, 0, 0, 5, 25, 0, 5, 2, 5, …
+&gt; $ Business_ID                  &lt;chr&gt; "PR0089260", "PR0089260", "PR0089260", "P…
+&gt; $ Inspection_Serial_Num        &lt;chr&gt; "DAJ5DTHLV", "DAJ5DTHLV", "DAEEWQC0L", "D…
+&gt; $ Violation_Record_ID          &lt;chr&gt; "IVBTPZO0B", "IV5GOME67", "IVQ7QYW2V", "I…
+&gt; $ Grade                        &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2,…</code></pre>
+</div>
+</div>
+<p><br></p>
+<div class="fragment">
+<h4 align="center">
+Good Questions to Ask
+</h4>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div>
+<ul>
+<li class="fragment">What does each row represent?</li>
+<li class="fragment">Is the data in long or wide format?</li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<div>
+<ul>
+<li class="fragment">What are the key variables?</li>
+<li class="fragment">How are the data stored? (<em>data type</em>)</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
 <section id="creating-strings" class="slide level2">
 <h2>Creating Strings</h2>
+<p>You can create strings based on the value of other strings with <code>str_c()</code> (<code>str</code>ing <code>c</code>ombine), which takes any number of vectors and returns a character vector.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="7">7</button><span id="annotated-cell-8-1" class="code-annotation-target"><a href="#annotated-cell-8-1"></a><span class="fu">str_c</span>(<span class="fu">c</span>(<span class="st">"CSSS"</span>, <span class="st">"STAT"</span>, <span class="st">"SOC"</span>), <span class="dv">508</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="8">8</button><span id="annotated-cell-8-2" class="code-annotation-target"><a href="#annotated-cell-8-2"></a><span class="fu">str_c</span>(<span class="fu">c</span>(<span class="st">"CSSS"</span>, <span class="st">"STAT"</span>, <span class="st">"SOC"</span>), <span class="dv">508</span>, <span class="at">sep =</span> <span class="st">" "</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="9">9</button><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3"></a><span class="fu">str_c</span>(<span class="fu">c</span>(<span class="st">"CSSS"</span>, <span class="st">"STAT"</span>, <span class="st">"SOC"</span>), <span class="dv">508</span>, <span class="at">sep =</span> <span class="st">" "</span>, <span class="at">collapse =</span> <span class="st">", "</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-8" data-target-annotation="7">7</dt>
+<dd>
+<span data-code-annotation="7" data-code-cell="annotated-cell-8" data-code-lines="1">By default, <code>str_c</code> doesn’t put a space between the vectors it is combining.</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="8">8</dt>
+<dd>
+<span data-code-annotation="8" data-code-cell="annotated-cell-8" data-code-lines="2">You can add a specific separator, including a space, using the <code>sep</code> argument.</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="9">9</dt>
+<dd>
+<span data-code-annotation="9" data-code-cell="annotated-cell-8" data-code-lines="3">If you want to combine the output into a single string, use <code>collapse</code>.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; [1] "CSSS508" "STAT508" "SOC508" 
+&gt; [1] "CSSS 508" "STAT 508" "SOC 508" 
+&gt; [1] "CSSS 508, STAT 508, SOC 508"</code></pre>
+</div>
+</div>
+</section>
+<section id="example-with-restaurant-data" class="slide level2">
+<h2>Example with Restaurant Data</h2>
+<p>You can create strings based on the value of other strings with <code>str_c()</code> (<code>str</code>ing <code>c</code>ombine), which takes any number of vectors and returns a character vector.</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1"></a>restaurants <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-9-2"><a href="#annotated-cell-9-2"></a>  <span class="fu">select</span>(Name, Address, City) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-9-3"><a href="#annotated-cell-9-3"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="10">10</button><span id="annotated-cell-9-4" class="code-annotation-target"><a href="#annotated-cell-9-4"></a>  <span class="fu">mutate</span>(<span class="at">Sentence =</span> <span class="fu">str_c</span>(Name, <span class="st">" is located at "</span>, Address, <span class="st">" in "</span>, City, <span class="st">"."</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-9" data-target-annotation="10">10</dt>
+<dd>
+<span data-code-annotation="10" data-code-cell="annotated-cell-9" data-code-lines="4">Notice there are spaces at the beginning and end of the fixed character strings. This is because if we used the <code>sep</code> argument here it would add a space before the period at the end of the sentence. So instead, we can add them directly where we want them.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 10,969 × 4
+&gt;    Name                              Address                      City  Sentence
+&gt;    &lt;chr&gt;                             &lt;chr&gt;                        &lt;chr&gt; &lt;chr&gt;   
+&gt;  1 #807 TUTTA BELLA                  2746 NE 45TH ST              SEAT… #807 TU…
+&gt;  2 +MAS CAFE                         1906 N 34TH ST               SEAT… +MAS CA…
+&gt;  3 ?al?al Cafe                       122 2ND AVE S                SEAT… ?al?al …
+&gt;  4 100 LB CLAM                       1001 FAIRVIEW AVE N Unit 17… SEAT… 100 LB …
+&gt;  5 1000 SPIRITS                      1225 1ST AVE                 SEAT… 1000 SP…
+&gt;  6 100TH AVE CAKES                   15364 NE 96TH PL             REDM… 100TH A…
+&gt;  7 108 VIETNAMESE AUTHENTIC  CUISINE 18114 E VALLEY HWY           KENT  108 VIE…
+&gt;  8 11TH FRAME RESTAURANT &amp; LOUNGE    7638 NE BOTHELL WAY          KENM… 11TH FR…
+&gt;  9 125TH ST GRILL                    12255 AURORA AVE N           Seat… 125TH S…
+&gt; 10 12S TACOS MEXICAN FOOD KC1012     625 S 4TH ST                 RENT… 12S TAC…
+&gt; # ℹ 10,959 more rows</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-strings-1" class="slide level2">
+<h2>Creating Strings</h2>
+<p>As we saw in the previous example, when you’re mixing many fixed and variable strings with <code>str_c()</code> things can get overwhelmed by quotation marks pretty easily. An alternative with simpler syntax is <code>str_glue()</code> in which anything inside <code>{}</code> will be evaluated like it’s outside the quotes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>restaurants <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">select</span>(Name, Address, City) <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="fu">mutate</span>(<span class="at">Sentence =</span> <span class="fu">str_glue</span>(<span class="st">"{Name} is located at {Address} in {City}."</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 10,969 × 4
+&gt;    Name                              Address                      City  Sentence
+&gt;    &lt;chr&gt;                             &lt;chr&gt;                        &lt;chr&gt; &lt;glue&gt;  
+&gt;  1 #807 TUTTA BELLA                  2746 NE 45TH ST              SEAT… #807 TU…
+&gt;  2 +MAS CAFE                         1906 N 34TH ST               SEAT… +MAS CA…
+&gt;  3 ?al?al Cafe                       122 2ND AVE S                SEAT… ?al?al …
+&gt;  4 100 LB CLAM                       1001 FAIRVIEW AVE N Unit 17… SEAT… 100 LB …
+&gt;  5 1000 SPIRITS                      1225 1ST AVE                 SEAT… 1000 SP…
+&gt;  6 100TH AVE CAKES                   15364 NE 96TH PL             REDM… 100TH A…
+&gt;  7 108 VIETNAMESE AUTHENTIC  CUISINE 18114 E VALLEY HWY           KENT  108 VIE…
+&gt;  8 11TH FRAME RESTAURANT &amp; LOUNGE    7638 NE BOTHELL WAY          KENM… 11TH FR…
+&gt;  9 125TH ST GRILL                    12255 AURORA AVE N           Seat… 125TH S…
+&gt; 10 12S TACOS MEXICAN FOOD KC1012     625 S 4TH ST                 RENT… 12S TAC…
+&gt; # ℹ 10,959 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="creating-strings-2" class="slide level2">
+<h2>Creating Strings</h2>
+<p>If you want to create a summary of certain character strings you can use <code>str_flatten()</code> which takes a character vector and combines each element of the vector into a single string.</p>
+</section>
+<section id="hold" class="slide level2">
+<h2>Hold</h2>
 </section>
 <section id="base-r-equivalents" class="slide level2">
 <h2>Base <code>R</code> Equivalents</h2>

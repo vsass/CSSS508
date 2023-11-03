@@ -5653,21 +5653,21 @@
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#data-king-county-restaurant-inspections",
     "title": "",
     "section": "Data: King County Restaurant Inspections!",
-    "text": "Data: King County Restaurant Inspections!\nToday we’ll study real data on food safety inspections in King County, collected from data.kingcounty.gov.\nNote these data are fairly large. The following code can be used to download the data directly from my Github page:\n\nrestaurants &lt;- read_csv(file = \"https://raw.githubusercontent.com/vsass/CSSS508/main/Lectures/Lecture8/data/restaurants.csv\")"
+    "text": "Data: King County Restaurant Inspections!\nToday we’ll study real data on food safety inspections in King County, collected from data.kingcounty.gov.\nNote these data are fairly large in their native .csv format. The following code can be used to download the data directly from my Github page as a smaller, .Rdata object:\n\nload(url(\"https://github.com/vsass/CSSS508/raw/main/Lectures/Lecture7/data/restaurants.Rdata\"))"
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#quick-examination-of-the-data",
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#quick-examination-of-the-data",
     "title": "",
     "section": "Quick Examination of the Data",
-    "text": "Quick Examination of the Data\n\nnames(restaurants)\n\n [1] \"Name\"                       \"Program Identifier\"        \n [3] \"Inspection Date\"            \"Description\"               \n [5] \"Address\"                    \"City\"                      \n [7] \"Zip Code\"                   \"Phone\"                     \n [9] \"Longitude\"                  \"Latitude\"                  \n[11] \"Inspection Business Name\"   \"Inspection Type\"           \n[13] \"Inspection Score\"           \"Inspection Result\"         \n[15] \"Inspection Closed Business\" \"Violation Type\"            \n[17] \"Violation Description\"      \"Violation Points\"          \n[19] \"Business_ID\"                \"Inspection_Serial_Num\"     \n[21] \"Violation_Record_ID\"        \"Grade\"                     \n\ndim(restaurants)\n\n[1] 255270     22"
+    "text": "Quick Examination of the Data\n\nglimpse(restaurants)\n\n&gt; Rows: 256,681\n&gt; Columns: 22\n&gt; $ Name                         &lt;chr&gt; \"#807 TUTTA BELLA\", \"#807 TUTTA BELLA\", \"…\n&gt; $ `Program Identifier`         &lt;chr&gt; \"#807 TUTTA BELLA\", \"#807 TUTTA BELLA\", \"…\n&gt; $ `Inspection Date`            &lt;chr&gt; \"03/02/2023\", \"03/02/2023\", \"08/31/2022\",…\n&gt; $ Description                  &lt;chr&gt; \"Seating 0-12 - Risk Category III\", \"Seat…\n&gt; $ Address                      &lt;chr&gt; \"2746 NE 45TH ST\", \"2746 NE 45TH ST\", \"27…\n&gt; $ City                         &lt;chr&gt; \"SEATTLE\", \"SEATTLE\", \"SEATTLE\", \"SEATTLE…\n&gt; $ `Zip Code`                   &lt;dbl&gt; 98105, 98105, 98105, 98105, 98105, 98105,…\n&gt; $ Phone                        &lt;chr&gt; \"(206) 722-6400\", \"(206) 722-6400\", \"(206…\n&gt; $ Longitude                    &lt;dbl&gt; -122.2964, -122.2964, -122.2964, -122.296…\n&gt; $ Latitude                     &lt;dbl&gt; 47.66231, 47.66231, 47.66231, 47.66231, 4…\n&gt; $ `Inspection Business Name`   &lt;chr&gt; \"#807 TUTTA BELLA\", \"#807 TUTTA BELLA\", \"…\n&gt; $ `Inspection Type`            &lt;chr&gt; \"Routine Inspection/Field Review\", \"Routi…\n&gt; $ `Inspection Score`           &lt;dbl&gt; 20, 20, 10, 10, 0, 0, 0, 30, 30, 0, 47, 4…\n&gt; $ `Inspection Result`          &lt;chr&gt; \"Unsatisfactory\", \"Unsatisfactory\", \"Unsa…\n&gt; $ `Inspection Closed Business` &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,…\n&gt; $ `Violation Type`             &lt;chr&gt; \"RED\", \"RED\", \"BLUE\", \"RED\", NA, NA, NA, …\n&gt; $ `Violation Description`      &lt;chr&gt; \"1300 - Food contact surfaces cleaned and…\n&gt; $ `Violation Points`           &lt;dbl&gt; 15, 5, 5, 5, 0, 0, 0, 5, 25, 0, 5, 2, 5, …\n&gt; $ Business_ID                  &lt;chr&gt; \"PR0089260\", \"PR0089260\", \"PR0089260\", \"P…\n&gt; $ Inspection_Serial_Num        &lt;chr&gt; \"DAJ5DTHLV\", \"DAJ5DTHLV\", \"DAEEWQC0L\", \"D…\n&gt; $ Violation_Record_ID          &lt;chr&gt; \"IVBTPZO0B\", \"IV5GOME67\", \"IVQ7QYW2V\", \"I…\n&gt; $ Grade                        &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2,…\n\n\n\n\n\nGood Questions to Ask\n\n\n\n\n\nWhat does each row represent?\nIs the data in long or wide format?\n\n\n\n\n\nWhat are the key variables?\nHow are the data stored? (data type)"
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#quick-examination-of-the-data-1",
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#quick-examination-of-the-data-1",
     "title": "",
     "section": "Quick Examination of the Data",
-    "text": "Quick Examination of the Data\nGood Questions to Ask:\n\nWhat does each row represent?\nIs the data in long or wide format?\nWhat are the key variables?\nHow are the data stored? (data type)"
+    "text": "Quick Examination of the Data\n\nglimpse(restaurants)\n\n&gt; Rows: 256,681\n&gt; Columns: 22\n&gt; $ Name                         &lt;chr&gt; \"#807 TUTTA BELLA\", \"#807 TUTTA BELLA\", \"…\n&gt; $ `Program Identifier`         &lt;chr&gt; \"#807 TUTTA BELLA\", \"#807 TUTTA BELLA\", \"…\n&gt; $ `Inspection Date`            &lt;chr&gt; \"03/02/2023\", \"03/02/2023\", \"08/31/2022\",…\n&gt; $ Description                  &lt;chr&gt; \"Seating 0-12 - Risk Category III\", \"Seat…\n&gt; $ Address                      &lt;chr&gt; \"2746 NE 45TH ST\", \"2746 NE 45TH ST\", \"27…\n&gt; $ City                         &lt;chr&gt; \"SEATTLE\", \"SEATTLE\", \"SEATTLE\", \"SEATTLE…\n&gt; $ `Zip Code`                   &lt;dbl&gt; 98105, 98105, 98105, 98105, 98105, 98105,…\n&gt; $ Phone                        &lt;chr&gt; \"(206) 722-6400\", \"(206) 722-6400\", \"(206…\n&gt; $ Longitude                    &lt;dbl&gt; -122.2964, -122.2964, -122.2964, -122.296…\n&gt; $ Latitude                     &lt;dbl&gt; 47.66231, 47.66231, 47.66231, 47.66231, 4…\n&gt; $ `Inspection Business Name`   &lt;chr&gt; \"#807 TUTTA BELLA\", \"#807 TUTTA BELLA\", \"…\n&gt; $ `Inspection Type`            &lt;chr&gt; \"Routine Inspection/Field Review\", \"Routi…\n&gt; $ `Inspection Score`           &lt;dbl&gt; 20, 20, 10, 10, 0, 0, 0, 30, 30, 0, 47, 4…\n&gt; $ `Inspection Result`          &lt;chr&gt; \"Unsatisfactory\", \"Unsatisfactory\", \"Unsa…\n&gt; $ `Inspection Closed Business` &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,…\n&gt; $ `Violation Type`             &lt;chr&gt; \"RED\", \"RED\", \"BLUE\", \"RED\", NA, NA, NA, …\n&gt; $ `Violation Description`      &lt;chr&gt; \"1300 - Food contact surfaces cleaned and…\n&gt; $ `Violation Points`           &lt;dbl&gt; 15, 5, 5, 5, 0, 0, 0, 5, 25, 0, 5, 2, 5, …\n&gt; $ Business_ID                  &lt;chr&gt; \"PR0089260\", \"PR0089260\", \"PR0089260\", \"P…\n&gt; $ Inspection_Serial_Num        &lt;chr&gt; \"DAJ5DTHLV\", \"DAJ5DTHLV\", \"DAEEWQC0L\", \"D…\n&gt; $ Violation_Record_ID          &lt;chr&gt; \"IVBTPZO0B\", \"IV5GOME67\", \"IVQ7QYW2V\", \"I…\n&gt; $ Grade                        &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2,…"
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#nchar",
@@ -10868,7 +10868,7 @@
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#creating-strings",
     "title": "",
     "section": "Creating Strings",
-    "text": "Creating Strings"
+    "text": "Creating Strings\nYou can create strings based on the value of other strings with str_c() (string combine), which takes any number of vectors and returns a character vector.\n\n7str_c(c(\"CSSS\", \"STAT\", \"SOC\"), 508)\n8str_c(c(\"CSSS\", \"STAT\", \"SOC\"), 508, sep = \" \")\n9str_c(c(\"CSSS\", \"STAT\", \"SOC\"), 508, sep = \" \", collapse = \", \")\n\n\n7\n\nBy default, str_c doesn’t put a space between the vectors it is combining.\n\n8\n\nYou can add a specific separator, including a space, using the sep argument.\n\n9\n\nIf you want to combine the output into a single string, use collapse.\n\n\n\n\n\n\n&gt; [1] \"CSSS508\" \"STAT508\" \"SOC508\" \n&gt; [1] \"CSSS 508\" \"STAT 508\" \"SOC 508\" \n&gt; [1] \"CSSS 508, STAT 508, SOC 508\""
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#base-r-equivalents",
@@ -10890,5 +10890,33 @@
     "title": "",
     "section": "Answers",
     "text": "Answers\n\n&gt; # A tibble: 180 × 3\n&gt;    religion income             frequency\n&gt;    &lt;fct&gt;    &lt;fct&gt;                  &lt;dbl&gt;\n&gt;  1 Agnostic &lt;$10k                     27\n&gt;  2 Agnostic $10-20k                   34\n&gt;  3 Agnostic $20-30k                   60\n&gt;  4 Agnostic $30-40k                   81\n&gt;  5 Agnostic $40-50k                   76\n&gt;  6 Agnostic $50-75k                  137\n&gt;  7 Agnostic $75-100k                 122\n&gt;  8 Agnostic $100-150k                109\n&gt;  9 Agnostic &gt;150k                     84\n&gt; 10 Agnostic Don't know/refused        96\n&gt; # ℹ 170 more rows"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#example-with-restaurant-data",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#example-with-restaurant-data",
+    "title": "",
+    "section": "Example with Restaurant Data",
+    "text": "Example with Restaurant Data\nYou can create strings based on the value of other strings with str_c() (string combine), which takes any number of vectors and returns a character vector.\n\n\nrestaurants |&gt; \n  select(Name, Address, City) |&gt; \n  distinct() |&gt; \n10  mutate(Sentence = str_c(Name, \" is located at \", Address, \" in \", City, \".\"))\n\n\n10\n\nNotice there are spaces at the beginning and end of the fixed character strings. This is because if we used the sep argument here it would add a space before the period at the end of the sentence. So instead, we can add them directly where we want them.\n\n\n\n\n\n\n&gt; # A tibble: 10,969 × 4\n&gt;    Name                              Address                      City  Sentence\n&gt;    &lt;chr&gt;                             &lt;chr&gt;                        &lt;chr&gt; &lt;chr&gt;   \n&gt;  1 #807 TUTTA BELLA                  2746 NE 45TH ST              SEAT… #807 TU…\n&gt;  2 +MAS CAFE                         1906 N 34TH ST               SEAT… +MAS CA…\n&gt;  3 ?al?al Cafe                       122 2ND AVE S                SEAT… ?al?al …\n&gt;  4 100 LB CLAM                       1001 FAIRVIEW AVE N Unit 17… SEAT… 100 LB …\n&gt;  5 1000 SPIRITS                      1225 1ST AVE                 SEAT… 1000 SP…\n&gt;  6 100TH AVE CAKES                   15364 NE 96TH PL             REDM… 100TH A…\n&gt;  7 108 VIETNAMESE AUTHENTIC  CUISINE 18114 E VALLEY HWY           KENT  108 VIE…\n&gt;  8 11TH FRAME RESTAURANT & LOUNGE    7638 NE BOTHELL WAY          KENM… 11TH FR…\n&gt;  9 125TH ST GRILL                    12255 AURORA AVE N           Seat… 125TH S…\n&gt; 10 12S TACOS MEXICAN FOOD KC1012     625 S 4TH ST                 RENT… 12S TAC…\n&gt; # ℹ 10,959 more rows"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#creating-strings-1",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#creating-strings-1",
+    "title": "",
+    "section": "Creating Strings",
+    "text": "Creating Strings\nAs we saw in the previous example, when you’re mixing many fixed and variable strings with str_c() things can get overwhelmed by quotation marks pretty easily. An alternative with simpler syntax is str_glue() in which anything inside {} will be evaluated like it’s outside the quotes.\n\nrestaurants |&gt; \n  select(Name, Address, City) |&gt; \n  distinct() |&gt; \n  mutate(Sentence = str_glue(\"{Name} is located at {Address} in {City}.\"))\n\n\n\n&gt; # A tibble: 10,969 × 4\n&gt;    Name                              Address                      City  Sentence\n&gt;    &lt;chr&gt;                             &lt;chr&gt;                        &lt;chr&gt; &lt;glue&gt;  \n&gt;  1 #807 TUTTA BELLA                  2746 NE 45TH ST              SEAT… #807 TU…\n&gt;  2 +MAS CAFE                         1906 N 34TH ST               SEAT… +MAS CA…\n&gt;  3 ?al?al Cafe                       122 2ND AVE S                SEAT… ?al?al …\n&gt;  4 100 LB CLAM                       1001 FAIRVIEW AVE N Unit 17… SEAT… 100 LB …\n&gt;  5 1000 SPIRITS                      1225 1ST AVE                 SEAT… 1000 SP…\n&gt;  6 100TH AVE CAKES                   15364 NE 96TH PL             REDM… 100TH A…\n&gt;  7 108 VIETNAMESE AUTHENTIC  CUISINE 18114 E VALLEY HWY           KENT  108 VIE…\n&gt;  8 11TH FRAME RESTAURANT & LOUNGE    7638 NE BOTHELL WAY          KENM… 11TH FR…\n&gt;  9 125TH ST GRILL                    12255 AURORA AVE N           Seat… 125TH S…\n&gt; 10 12S TACOS MEXICAN FOOD KC1012     625 S 4TH ST                 RENT… 12S TAC…\n&gt; # ℹ 10,959 more rows"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#creating-strings-2",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#creating-strings-2",
+    "title": "",
+    "section": "Creating Strings",
+    "text": "Creating Strings\nIf you want to create a summary of certain character strings you can use str_flatten() which takes a character vector and combines each element of the vector into a single string."
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#hold",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#hold",
+    "title": "",
+    "section": "Hold",
+    "text": "Hold"
   }
 ]

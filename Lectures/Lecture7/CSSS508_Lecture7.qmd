@@ -185,34 +185,45 @@ save(restaurants, file = "Lectures/Lecture7/data/restaurants.Rdata")
 ```
 
 
-Note these data are *fairly large* in the native `.csv` format. The following code can be used to download the data directly from my `Github` page as smaller, `.Rdata` object:
+Note these data are *fairly large* in their native `.csv` format. The following code can be used to download the data directly from my `Github` page as a smaller, `.Rdata` object:
 
 ```{r}
-load(url("https://vsass.github.io/CSSS508/Lectures/Lecture7/restaurants.Rdata"))
+#| cache: true
+load(url("https://github.com/vsass/CSSS508/raw/main/Lectures/Lecture7/data/restaurants.Rdata"))
 ```
 
 ## Quick Examination of the Data
 
 ```{r}
-names(restaurants)
-dim(restaurants)
+glimpse(restaurants)
 ```
+
+<br>
 
 . . . 
 
-**Good Questions to Ask:**
+<h4 align="center">Good Questions to Ask</h4>
 
-::: {.incremental}
+:::: {.columns}
+
+::: {.column width="50%"}
+::: {.incremental }
 * What does each row represent?
 * Is the data in long or wide format?
+:::
+:::
+
+::: {.column width="50%"}
+::: {.incremental}
 * What are the key variables?
 * How are the data stored? (*data type*)
 :::
+:::
+
+::::
 
 ## Creating Strings
 You can create strings based on the value of other strings with `str_c()` (`str`ing `c`ombine), which takes any number of vectors and returns a character vector. 
-
-. . . 
 
 ```{r}
 #| output-location: fragment
@@ -224,7 +235,47 @@ str_c(c("CSSS", "STAT", "SOC"), 508, sep = " ", collapse = ", ") # <9>
 8. You can add a specific separator, including a space, using the `sep` argument. 
 9. If you want to combine the output into a single string, use `collapse`. 
 
+## Example with Restaurant Data
 
+You can create strings based on the value of other strings with `str_c()` (`str`ing `c`ombine), which takes any number of vectors and returns a character vector. 
+
+. . . 
+
+```{r}
+#| output-location: fragment
+restaurants |> 
+  select(Name, Address, City) |> 
+  distinct() |> 
+  mutate(Sentence = str_c(Name, " is located at ", Address, " in ", City, ".")) # <10>
+```
+10. Notice there are spaces at the beginning and end of the fixed character strings. This is because if we used the `sep` argument here it would add a space before the period at the end of the sentence. So instead, we can add them directly where we want them. 
+
+## Creating Strings
+
+As we saw in the previous example, when you're mixing many fixed and variable strings with `str_c()` things can get overwhelmed by quotation marks pretty easily. An alternative with simpler syntax is `str_glue()` in which anything inside `{}` will be evaluated like it's outside the quotes. 
+
+```{r}
+#| output-location: fragment
+restaurants |> 
+  select(Name, Address, City) |> 
+  distinct() |> 
+  mutate(Sentence = str_glue("{Name} is located at {Address} in {City}."))
+```
+
+## Creating Strings
+
+If you want to create a summary of certain character strings you can use `str_flatten()` which takes a character vector and combines each element of the vector into a single string. 
+
+. . . 
+
+```{r}
+#| output-location: fragment
+restaurants |> 
+  select(Name, `Inspection Score`) |> # <11>
+  summarize(inspection_scores = str_flatten(`Inspection Score`, ", "), 
+            .by = Name)
+```
+11. Notice that when a variable has spaces in it's name (rather than being separated with an underscore in snake_case, for instance) you need to put backticks around it so `R` knows it is a singular object name. 
 
 
 ## Base `R` Equivalents
