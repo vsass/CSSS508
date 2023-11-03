@@ -35,8 +35,7 @@ require(downlit)
 require(xml2)
 require(tidyverse)
 
-knitr::opts_chunk$set(
-  comment = ">")
+knitr::opts_chunk$set(comment = ">")
 ```
 
 [Importing, Exporting, and Cleaning Data]{.custom-title}
@@ -872,7 +871,7 @@ Most real-world data is not tidy because data are often organized for goals othe
 
 ```{r}
 #| echo: false
-billboard_2000_raw %>% 
+billboard_2000_raw |> 
   head(10)
 ```
 
@@ -1000,7 +999,7 @@ Adding the argument `values_drop_na = TRUE` to `pivot_longer()` will remove rows
 ```{r}
 #| output-location: fragment 
 #| code-line-numbers: "|5"
-billboard_2000 <- billboard_renamed %>%
+billboard_2000 <- billboard_renamed |> 
   pivot_longer(cols = wk_1:wk_76, 
                names_to = "week", 
                values_to = "rank", 
@@ -1054,7 +1053,7 @@ Alternatively (and more efficiently), there are a number of optional arguments f
 
 ```{r}
 #| output-location: fragment
-billboard_2000 <- billboard_renamed %>%
+billboard_2000 <- billboard_renamed |> 
   pivot_longer(starts_with("wk_"), 
                names_to        = "week", 
                values_to       = "rank",
@@ -2199,11 +2198,11 @@ Go to the [Lecture 5 Homepage](https://vsass.github.io/CSSS508/Lectures/Lecture5
 4. Turn two of the variables into factors^[Hint: Which two variables are categorical?].
 5. Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency^[You can determine this by summarizing the data or creating a visualization of the data.]?
 
-## Answers {visibility="hidden"}
+## Answers
 
 Question 1: Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
   
-## Answers {auto-animate="true" visibility="hidden"}
+## Answers
 
 Question 2: Read in your data using the appropriate function from `readr`. 
 
@@ -2212,38 +2211,44 @@ religion_income <- read_csv(file = "data/religion_income.csv",
                             col_types = c("f", rep("i", 10)))
 ```
 
-## Answers {auto-animate="true" visibility="hidden"}
+## Answers {auto-animate="true"}
 
 Question 3: Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
 
 ```{r}
-religion_income <- read_csv(file = "data/religion_income.csv", 
-                            col_types = c("f", rep("i", 10)))
-
+#| output-location: fragment
 religion_income_tidy <- religion_income |> 
   pivot_longer(cols = !religion, 
               names_to = "income", 
               values_to = "frequency")
+religion_income_tidy
 ```
 
-## Answers {auto-animate="true" visibility="hidden"}
+## Answers {auto-animate="true"}
 
 Question 4: Turn two of the variables into factors^[Hint: Which two variables are categorical?].
 
 ```{r}
-religion_income <- read_csv(file = "data/religion_income.csv", 
-                            col_types = c("f", rep("i", 10)))
-
+#| output-location: fragment
 religion_income_tidy <- religion_income |> 
   pivot_longer(cols = !religion, 
               names_to = "income", 
               values_to = "frequency") |> 
-  mutate(income = fct(income, levels = c("Don't know/refused", "<$10k", "$10-20k", 
+  mutate(income = fct(income, 
+                      levels = c("Don't know/refused", "<$10k", "$10-20k", 
                                          "$20-30k", "$30-40k", "$40-50k", "$50-75k", 
                                          "$75-100k", "$100-150k", ">150k")))
 ```
 
-## Answers {visibility="hidden"}
+## Answers
+
+```{r}
+#| output-location: fragment
+religion_income_tidy
+```
+
+
+## Answers
 
 Question 5: Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency? You can determine this by **summarizing the data** or creating a visualization of the data.
 
@@ -2254,7 +2259,7 @@ religion_income_tidy |>
   slice_max(frequency)
 ```
 
-## Answers <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable visibility="hidden"} 
+## Answers <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
 Question 5: Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency? You can determine this by summarizing the data or creating a **visualization** of the data.
 

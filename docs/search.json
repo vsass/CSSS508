@@ -1824,7 +1824,7 @@
     "href": "Lectures/Lecture5/CSSS508_Lecture5.html#pivoting-better-values_drop_na",
     "title": "",
     "section": "Pivoting Better: values_drop_na\n",
-    "text": "Pivoting Better: values_drop_na\n\nAdding the argument values_drop_na = TRUE to pivot_longer() will remove rows with missing ranks. Since these NAs don’t really represent unknown observations (i.e. they were forced to exist by the structure of the dataset) this is an appropriate approach here.\n\nbillboard_2000 &lt;- billboard_renamed %&gt;%\n  pivot_longer(cols = wk_1:wk_76, \n               names_to = \"week\", \n               values_to = \"rank\", \n               values_drop_na = TRUE)\nsummary(billboard_2000$rank)\n\n\n\n&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n&gt;    1.00   26.00   51.00   51.05   76.00  100.00\n\n\n\nNo more NA values!\n\ndim(billboard_2000)\n\n\n\n&gt; [1] 5307    7\n\n\n\n\nAnd way fewer rows!"
+    "text": "Pivoting Better: values_drop_na\n\nAdding the argument values_drop_na = TRUE to pivot_longer() will remove rows with missing ranks. Since these NAs don’t really represent unknown observations (i.e. they were forced to exist by the structure of the dataset) this is an appropriate approach here.\n\nbillboard_2000 &lt;- billboard_renamed |&gt; \n  pivot_longer(cols = wk_1:wk_76, \n               names_to = \"week\", \n               values_to = \"rank\", \n               values_drop_na = TRUE)\nsummary(billboard_2000$rank)\n\n\n\n&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n&gt;    1.00   26.00   51.00   51.05   76.00  100.00\n\n\n\nNo more NA values!\n\ndim(billboard_2000)\n\n\n\n&gt; [1] 5307    7\n\n\n\n\nAnd way fewer rows!"
   },
   {
     "objectID": "Lectures/Lecture5/CSSS508_Lecture5.html#parse_number",
@@ -5639,7 +5639,7 @@
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#basics-of-strings-1",
     "title": "",
     "section": "Basics of Strings",
-    "text": "Basics of Strings\n\n\nA general programming term for a unit of character data is a string\n\nStrings are a sequence of characters\n\nIn R, “strings” and “character data” are mostly interchangeable.\nSome languages have more precise distinctions, but we won’t worry about that here!\n\n\n\n\n\n\nWe can create strings by surrounding text, numbers, spaces, or symbols with quotes!\n\nExamples: \"Hello! My name is Vic\" or \"%*$#01234\""
+    "text": "Basics of Strings\nR can treat strings in funny ways!\n\n\"01\" == \"1\"\n\n[1] FALSE\n\n\"01\" == 1\n\n[1] FALSE\n\n\"1\" == 1\n\n[1] TRUE\n\n\n\nReminder: We can check data types using the class() function!\n\nc(class(\"1\"), class(1))\n\n[1] \"character\" \"numeric\""
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#basics-of-strings-2",
@@ -7438,28 +7438,28 @@
     "href": "Lectures/Lecture5/CSSS508_Lecture5.html#answers-2",
     "title": "",
     "section": "Answers",
-    "text": "Answers\nQuestion 3: Pivot your data to make it tidy1.\n\nreligion_income &lt;- read_csv(file = \"data/religion_income.csv\", \n                            col_types = c(\"f\", rep(\"i\", 10)))\n\nreligion_income_tidy &lt;- religion_income |&gt; \n  pivot_longer(cols = !religion, \n              names_to = \"income\", \n              values_to = \"frequency\")\n\nThere should be 3 columns in your final dataset"
+    "text": "Answers\nQuestion 3: Pivot your data to make it tidy1.\n\nreligion_income_tidy &lt;- religion_income |&gt; \n  pivot_longer(cols = !religion, \n              names_to = \"income\", \n              values_to = \"frequency\")\nreligion_income_tidy\n\n\n\n&gt; # A tibble: 180 × 3\n&gt;    religion income             frequency\n&gt;    &lt;fct&gt;    &lt;chr&gt;                  &lt;dbl&gt;\n&gt;  1 Agnostic &lt;$10k                     27\n&gt;  2 Agnostic $10-20k                   34\n&gt;  3 Agnostic $20-30k                   60\n&gt;  4 Agnostic $30-40k                   81\n&gt;  5 Agnostic $40-50k                   76\n&gt;  6 Agnostic $50-75k                  137\n&gt;  7 Agnostic $75-100k                 122\n&gt;  8 Agnostic $100-150k                109\n&gt;  9 Agnostic &gt;150k                     84\n&gt; 10 Agnostic Don't know/refused        96\n&gt; # ℹ 170 more rows\n\n\nThere should be 3 columns in your final dataset"
   },
   {
     "objectID": "Lectures/Lecture5/CSSS508_Lecture5.html#answers-3",
     "href": "Lectures/Lecture5/CSSS508_Lecture5.html#answers-3",
     "title": "",
     "section": "Answers",
-    "text": "Answers\nQuestion 4: Turn two of the variables into factors1.\n\nreligion_income &lt;- read_csv(file = \"data/religion_income.csv\", \n                            col_types = c(\"f\", rep(\"i\", 10)))\n\nreligion_income_tidy &lt;- religion_income |&gt; \n  pivot_longer(cols = !religion, \n              names_to = \"income\", \n              values_to = \"frequency\") |&gt; \n  mutate(income = fct(income, levels = c(\"Don't know/refused\", \"&lt;$10k\", \"$10-20k\", \n                                         \"$20-30k\", \"$30-40k\", \"$40-50k\", \"$50-75k\", \n                                         \"$75-100k\", \"$100-150k\", \"&gt;150k\")))\n\nHint: Which two variables are categorical?"
+    "text": "Answers\nQuestion 4: Turn two of the variables into factors1.\n\nreligion_income_tidy &lt;- religion_income |&gt; \n  pivot_longer(cols = !religion, \n              names_to = \"income\", \n              values_to = \"frequency\") |&gt; \n  mutate(income = fct(income, \n                      levels = c(\"Don't know/refused\", \"&lt;$10k\", \"$10-20k\", \n                                         \"$20-30k\", \"$30-40k\", \"$40-50k\", \"$50-75k\", \n                                         \"$75-100k\", \"$100-150k\", \"&gt;150k\")))\n\n\n\n\nHint: Which two variables are categorical?"
   },
   {
     "objectID": "Lectures/Lecture5/CSSS508_Lecture5.html#answers-4",
     "href": "Lectures/Lecture5/CSSS508_Lecture5.html#answers-4",
     "title": "",
     "section": "Answers",
-    "text": "Answers\nQuestion 5: Excluding the income category Don't know/refused, which religion-income combination has the largest frequency? You can determine this by summarizing the data or creating a visualization of the data.\n\n# Data manipulation\nreligion_income_tidy |&gt; \n  filter(income != \"Don't know/refused\") |&gt; \n  slice_max(frequency)\n\n&gt; # A tibble: 1 × 3\n&gt;   religion         income  frequency\n&gt;   &lt;fct&gt;            &lt;fct&gt;       &lt;dbl&gt;\n&gt; 1 Evangelical Prot $50-75k      1486"
+    "text": "Answers\n\nreligion_income_tidy\n\n\n\n&gt; # A tibble: 180 × 3\n&gt;    religion income             frequency\n&gt;    &lt;fct&gt;    &lt;fct&gt;                  &lt;dbl&gt;\n&gt;  1 Agnostic &lt;$10k                     27\n&gt;  2 Agnostic $10-20k                   34\n&gt;  3 Agnostic $20-30k                   60\n&gt;  4 Agnostic $30-40k                   81\n&gt;  5 Agnostic $40-50k                   76\n&gt;  6 Agnostic $50-75k                  137\n&gt;  7 Agnostic $75-100k                 122\n&gt;  8 Agnostic $100-150k                109\n&gt;  9 Agnostic &gt;150k                     84\n&gt; 10 Agnostic Don't know/refused        96\n&gt; # ℹ 170 more rows"
   },
   {
     "objectID": "Lectures/Lecture5/CSSS508_Lecture5.html#answers-5",
     "href": "Lectures/Lecture5/CSSS508_Lecture5.html#answers-5",
     "title": "",
     "section": "Answers",
-    "text": "Answers\nQuestion 5: Excluding the income category Don't know/refused, which religion-income combination has the largest frequency? You can determine this by summarizing the data or creating a visualization of the data.\n\nCode# Visualization\nlibrary(ggthemes)\nlibrary(geomtextpath)\n\nggplot(religion_income_tidy, aes(x = income, y = religion, fill = frequency)) + \n  geom_raster() + \n  scale_fill_distiller(\"Frequency\", palette = \"Greens\", direction = 1) +\n  labs(title = \"Heatmap of Religion & Income\", \n       x = \"Income Level\", \n       y = \"Religious Affiliation\") +\n  theme_tufte(base_size = 18)"
+    "text": "Answers\nQuestion 5: Excluding the income category Don't know/refused, which religion-income combination has the largest frequency? You can determine this by summarizing the data or creating a visualization of the data.\n\n# Data manipulation\nreligion_income_tidy |&gt; \n  filter(income != \"Don't know/refused\") |&gt; \n  slice_max(frequency)\n\n&gt; # A tibble: 1 × 3\n&gt;   religion         income  frequency\n&gt;   &lt;fct&gt;            &lt;fct&gt;       &lt;dbl&gt;\n&gt; 1 Evangelical Prot $50-75k      1486"
   },
   {
     "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html",
@@ -9895,7 +9895,7 @@
     "href": "Lectures/Lecture5/CSSS508_Lecture5.html#use-pivot_longer-arguments",
     "title": "",
     "section": "Use pivot_longer arguments",
-    "text": "Use pivot_longer arguments\nAlternatively (and more efficiently), there are a number of optional arguments for pivot_longer that are meant to help deal with naming issues.\n\n\nbillboard_2000 &lt;- billboard_renamed %&gt;%\n  pivot_longer(starts_with(\"wk_\"), \n               names_to        = \"week\", \n               values_to       = \"rank\",\n               values_drop_na  = TRUE,\n4               names_prefix    = \"wk_\",\n5               names_transform = list(week = as.integer))\n\nhead(billboard_2000, 5)\n\n\n4\n\nnames_prefix is used to remove “wk_” from the values of week\n\n5\n\nnames_transform converts week into an integer number.\n\n\n\n\n\n\n&gt; # A tibble: 5 × 7\n&gt;    year artist track                   time   date_entered  week  rank\n&gt;   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;                   &lt;time&gt; &lt;date&gt;       &lt;int&gt; &lt;int&gt;\n&gt; 1  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       1    87\n&gt; 2  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       2    82\n&gt; 3  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       3    72\n&gt; 4  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       4    77\n&gt; 5  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       5    87"
+    "text": "Use pivot_longer arguments\nAlternatively (and more efficiently), there are a number of optional arguments for pivot_longer that are meant to help deal with naming issues.\n\n\nbillboard_2000 &lt;- billboard_renamed |&gt; \n  pivot_longer(starts_with(\"wk_\"), \n               names_to        = \"week\", \n               values_to       = \"rank\",\n               values_drop_na  = TRUE,\n4               names_prefix    = \"wk_\",\n5               names_transform = list(week = as.integer))\n\nhead(billboard_2000, 5)\n\n\n4\n\nnames_prefix is used to remove “wk_” from the values of week\n\n5\n\nnames_transform converts week into an integer number.\n\n\n\n\n\n\n&gt; # A tibble: 5 × 7\n&gt;    year artist track                   time   date_entered  week  rank\n&gt;   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;                   &lt;time&gt; &lt;date&gt;       &lt;int&gt; &lt;int&gt;\n&gt; 1  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       1    87\n&gt; 2  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       2    82\n&gt; 3  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       3    72\n&gt; 4  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       4    77\n&gt; 5  2000 2 Pac  Baby Don't Cry (Keep... 04:22  2000-02-26       5    87"
   },
   {
     "objectID": "Lectures/Lecture5/CSSS508_Lecture5.html#multiple-variables-in-column-names",
@@ -10834,5 +10834,61 @@
     "title": "Tips & Tricks",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nEditing datasets in this way is not reproducible unless this also generates the code required to make those changes and you save that code in your source document. Proceed with caution.↩︎"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#basics-of-strings",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#basics-of-strings",
+    "title": "",
+    "section": "Basics of Strings",
+    "text": "Basics of Strings\n\n\nA general programming term for a unit of character data is a string\n\nStrings are a sequence of characters\nIn R, “strings” and “character data” are mostly interchangeable.\nSome languages have more precise distinctions, but we won’t worry about that here!\n\n\n\n\n\nWe can create strings by surrounding text, numbers, spaces, or symbols with quotes!\n\nExamples: \"Hello! My name is Vic\" or \"%*$#01234\"\n\nYou can create a string using either single quotes (' ') or double quotes (\" \")\n\nIn the interests of consistency, the tidyverse style guide recommends using \" \", unless the string contains multiple \" \""
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#escaping-with-strings",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#escaping-with-strings",
+    "title": "",
+    "section": "Escaping with Strings",
+    "text": "Escaping with Strings\nWe use a lot of different symbols in our code that we might actually want to represent within a string itself. To do that, we need to escape that particular character. We can do that using \\.\n\nFor instance, if we want to include a literal single or double quote in our string, we’d escape it by writing:\n\n1\"\\'\"\n2'\\\"'\n\n\n1\n\nDouble quote.\n\n2\n\nSingle quote.\n\n\n\n\n\n\nSimilarly, if we want to represent a \\ we’ll need to escape it as well…\n\n3\"\\\\\"\n\n\n3\n\nBackslash.\n\n\n\n\n\n\nNote: When you print these objects you’ll see the escape characters. To actually view the string’s contents ( and not the syntax needed to construct it), use str_view().\n\n\n\n4str_view(c('\\\"', \"\\\"\", \"\\\\\"))\n\n\n4\n\nAll stringr functions begin with the prefix str_ which is useful due to R Studio’s auto-complete feature.\n\n\n\n\n&gt; [1] │ \"\n&gt; [2] │ \"\n&gt; [3] │ \\"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#other-useful-characters",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#other-useful-characters",
+    "title": "",
+    "section": "Other Useful Characters",
+    "text": "Other Useful Characters"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#other-special-characters",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#other-special-characters",
+    "title": "",
+    "section": "Other Special Characters",
+    "text": "Other Special Characters\nThere are other things you may want to represent inside a character string, such as a new line, or a tab space.\n\n\n5str_view(\"Sometimes you need\\nto create another line.\")\n6str_view(\"\\tOther times you just need to indent somewhere.\")\n\n\n5\n\nUse \\n to create a new line. Helpful when plotting if you have variable names or values that are wordy!\n\n6\n\nUse \\t to add a tab. str_view will highlight tabs in blue in your console to make it stand out from other random whitespace.\n\n\n\n\n\n\n&gt; [1] │ Sometimes you need\n&gt;     │ to create another line.\n&gt; [1] │ {\\t}Other times you just need to indent somewhere.\n\n\n\n\nAdditionally, you can represent Unicode characters which will be written with the \\u or \\U escape.\n\nstr_view(c(\"\\U1F00F\", \"\\u2866\", \"\\U1F192\"))\n\n&gt; [1] │ 🀏\n&gt; [2] │ ⡦\n&gt; [3] │ 🆒"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#creating-strings",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#creating-strings",
+    "title": "",
+    "section": "Creating Strings",
+    "text": "Creating Strings"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#base-r-equivalents",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#base-r-equivalents",
+    "title": "",
+    "section": "Base R Equivalents",
+    "text": "Base R Equivalents\n\n\nBase R\npaste0(x, sep, collapse)\n\nstringr\nstr_c(x, sep, collapse)"
+  },
+  {
+    "objectID": "Lectures/Lecture5/CSSS508_Lecture5.html#answers-2-output",
+    "href": "Lectures/Lecture5/CSSS508_Lecture5.html#answers-2-output",
+    "title": "",
+    "section": "Answers",
+    "text": "Answers\n\n&gt; # A tibble: 180 × 3\n&gt;    religion income             frequency\n&gt;    &lt;fct&gt;    &lt;chr&gt;                  &lt;dbl&gt;\n&gt;  1 Agnostic &lt;$10k                     27\n&gt;  2 Agnostic $10-20k                   34\n&gt;  3 Agnostic $20-30k                   60\n&gt;  4 Agnostic $30-40k                   81\n&gt;  5 Agnostic $40-50k                   76\n&gt;  6 Agnostic $50-75k                  137\n&gt;  7 Agnostic $75-100k                 122\n&gt;  8 Agnostic $100-150k                109\n&gt;  9 Agnostic &gt;150k                     84\n&gt; 10 Agnostic Don't know/refused        96\n&gt; # ℹ 170 more rows"
+  },
+  {
+    "objectID": "Lectures/Lecture5/CSSS508_Lecture5.html#answers-3-output",
+    "href": "Lectures/Lecture5/CSSS508_Lecture5.html#answers-3-output",
+    "title": "",
+    "section": "Answers",
+    "text": "Answers\n\n&gt; # A tibble: 180 × 3\n&gt;    religion income             frequency\n&gt;    &lt;fct&gt;    &lt;fct&gt;                  &lt;dbl&gt;\n&gt;  1 Agnostic &lt;$10k                     27\n&gt;  2 Agnostic $10-20k                   34\n&gt;  3 Agnostic $20-30k                   60\n&gt;  4 Agnostic $30-40k                   81\n&gt;  5 Agnostic $40-50k                   76\n&gt;  6 Agnostic $50-75k                  137\n&gt;  7 Agnostic $75-100k                 122\n&gt;  8 Agnostic $100-150k                109\n&gt;  9 Agnostic &gt;150k                     84\n&gt; 10 Agnostic Don't know/refused        96\n&gt; # ℹ 170 more rows"
   }
 ]
