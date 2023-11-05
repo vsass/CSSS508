@@ -1,415 +1,172 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>csss508_lecture7</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
-
-  <title>csss508_lecture7</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-      vertical-align: middle;
-    }
-    /* CSS for syntax highlighting */
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #97947a;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #97947a;  padding-left: 4px; }
-    div.sourceCode
-      { color: #f8f8f2; background-color: #2b2b2b; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #f8f8f2; } /* Normal */
-    code span.al { color: #dcc6e0; } /* Alert */
-    code span.an { color: #d4d0ab; } /* Annotation */
-    code span.at { color: #ffd700; } /* Attribute */
-    code span.bn { color: #dcc6e0; } /* BaseN */
-    code span.bu { color: #f5ab35; } /* BuiltIn */
-    code span.cf { color: #ffa07a; } /* ControlFlow */
-    code span.ch { color: #abe338; } /* Char */
-    code span.cn { color: #ffa07a; } /* Constant */
-    code span.co { color: #d4d0ab; } /* Comment */
-    code span.cv { color: #d4d0ab; font-style: italic; } /* CommentVar */
-    code span.do { color: #d4d0ab; font-style: italic; } /* Documentation */
-    code span.dt { color: #dcc6e0; } /* DataType */
-    code span.dv { color: #dcc6e0; } /* DecVal */
-    code span.er { color: #dcc6e0; } /* Error */
-    code span.ex { color: #ffd700; } /* Extension */
-    code span.fl { color: #f5ab35; } /* Float */
-    code span.fu { color: #ffd700; } /* Function */
-    code span.im { color: #f8f8f2; } /* Import */
-    code span.in { color: #d4d0ab; } /* Information */
-    code span.kw { color: #ffa07a; } /* Keyword */
-    code span.op { color: #00e0e0; } /* Operator */
-    code span.ot { color: #ffa07a; } /* Other */
-    code span.pp { color: #dcc6e0; } /* Preprocessor */
-    code span.sc { color: #00e0e0; } /* SpecialChar */
-    code span.ss { color: #abe338; } /* SpecialString */
-    code span.st { color: #abe338; } /* String */
-    code span.va { color: #f5ab35; } /* Variable */
-    code span.vs { color: #abe338; } /* VerbatimString */
-    code span.wa { color: #d4d0ab; font-style: italic; } /* Warning */
-  </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css">
-  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-pointer/pointer.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
-
-  .callout {
-    margin-top: 1em;
-    margin-bottom: 1em;  
-    border-radius: .25rem;
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
+}</script>
 
-  .callout.callout-style-simple { 
-    padding: 0em 0.5em;
-    border-left: solid #acacac .3rem;
-    border-right: solid 1px silver;
-    border-top: solid 1px silver;
-    border-bottom: solid 1px silver;
-    display: flex;
-  }
 
-  .callout.callout-style-default {
-    border-left: solid #acacac .3rem;
-    border-right: solid 1px silver;
-    border-top: solid 1px silver;
-    border-bottom: solid 1px silver;
-  }
-
-  .callout .callout-body-container {
-    flex-grow: 1;
-  }
-
-  .callout.callout-style-simple .callout-body {
-    font-size: 1rem;
-    font-weight: 400;
-  }
-
-  .callout.callout-style-default .callout-body {
-    font-size: 0.9rem;
-    font-weight: 400;
-  }
-
-  .callout.callout-titled.callout-style-simple .callout-body {
-    margin-top: 0.2em;
-  }
-
-  .callout:not(.callout-titled) .callout-body {
-      display: flex;
-  }
-
-  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
-    padding-left: 1.6em;
-  }
-
-  .callout.callout-titled .callout-header {
-    padding-top: 0.2em;
-    margin-bottom: -0.2em;
-  }
-
-  .callout.callout-titled .callout-title  p {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-  }
-    
-  .callout.callout-titled.callout-style-simple .callout-content  p {
-    margin-top: 0;
-  }
-
-  .callout.callout-titled.callout-style-default .callout-content  p {
-    margin-top: 0.7em;
-  }
-
-  .callout.callout-style-simple div.callout-title {
-    border-bottom: none;
-    font-size: .9rem;
-    font-weight: 600;
-    opacity: 75%;
-  }
-
-  .callout.callout-style-default  div.callout-title {
-    border-bottom: none;
-    font-weight: 600;
-    opacity: 85%;
-    font-size: 0.9rem;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-
-  .callout.callout-style-default div.callout-content {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-
-  .callout.callout-style-simple .callout-icon::before {
-    height: 1rem;
-    width: 1rem;
-    display: inline-block;
-    content: "";
-    background-repeat: no-repeat;
-    background-size: 1rem 1rem;
-  }
-
-  .callout.callout-style-default .callout-icon::before {
-    height: 0.9rem;
-    width: 0.9rem;
-    display: inline-block;
-    content: "";
-    background-repeat: no-repeat;
-    background-size: 0.9rem 0.9rem;
-  }
-
-  .callout-title {
-    display: flex
-  }
-    
-  .callout-icon::before {
-    margin-top: 1rem;
-    padding-right: .5rem;
-  }
-
-  .callout.no-icon::before {
-    display: none !important;
-  }
-
-  .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
-  }
-
-  .callout.callout-titled .callout-icon::before {
-    margin-top: .5rem;
-    padding-right: .5rem;
-  }
-
-  .callout:not(.callout-titled) .callout-icon::before {
-    margin-top: 1rem;
-    padding-right: .5rem;
-  }
-
-  /* Callout Types */
-
-  div.callout-note {
-    border-left-color: #4582ec !important;
-  }
-
-  div.callout-note .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
-  }
-
-  div.callout-note.callout-style-default .callout-title {
-    background-color: #dae6fb
-  }
-
-  div.callout-important {
-    border-left-color: #d9534f !important;
-  }
-
-  div.callout-important .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
-  }
-
-  div.callout-important.callout-style-default .callout-title {
-    background-color: #f7dddc
-  }
-
-  div.callout-warning {
-    border-left-color: #f0ad4e !important;
-  }
-
-  div.callout-warning .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
-  }
-
-  div.callout-warning.callout-style-default .callout-title {
-    background-color: #fcefdc
-  }
-
-  div.callout-tip {
-    border-left-color: #02b875 !important;
-  }
-
-  div.callout-tip .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
-  }
-
-  div.callout-tip.callout-style-default .callout-title {
-    background-color: #ccf1e3
-  }
-
-  div.callout-caution {
-    border-left-color: #fd7e14 !important;
-  }
-
-  div.callout-caution .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
-  }
-
-  div.callout-caution.callout-style-default .callout-title {
-    background-color: #ffe5d0
-  }
-
-  </style>
-  <style type="text/css">
-    .reveal div.sourceCode {
-      margin: 0;
-      overflow: auto;
-    }
-    .reveal div.hanging-indent {
-      margin-left: 1em;
-      text-indent: -1em;
-    }
-    .reveal .slide:not(.center) {
-      height: 100%;
-    }
-    .reveal .slide.scrollable {
-      overflow-y: auto;
-    }
-    .reveal .footnotes {
-      height: 100%;
-      overflow-y: auto;
-    }
-    .reveal .slide .absolute {
-      position: absolute;
-      display: block;
-    }
-    .reveal .footnotes ol {
-      counter-reset: ol;
-      list-style-type: none; 
-      margin-left: 0;
-    }
-    .reveal .footnotes ol li:before {
-      counter-increment: ol;
-      content: counter(ol) ". "; 
-    }
-    .reveal .footnotes ol li > p:first-child {
-      display: inline-block;
-    }
-    .reveal .slide ul,
-    .reveal .slide ol {
-      margin-bottom: 0.5em;
-    }
-    .reveal .slide ul li,
-    .reveal .slide ol li {
-      margin-top: 0.4em;
-      margin-bottom: 0.2em;
-    }
-    .reveal .slide ul[role="tablist"] li {
-      margin-bottom: 0;
-    }
-    .reveal .slide ul li > *:first-child,
-    .reveal .slide ol li > *:first-child {
-      margin-block-start: 0;
-    }
-    .reveal .slide ul li > *:last-child,
-    .reveal .slide ol li > *:last-child {
-      margin-block-end: 0;
-    }
-    .reveal .slide .columns:nth-child(3) {
-      margin-block-start: 0.8em;
-    }
-    .reveal blockquote {
-      box-shadow: none;
-    }
-    .reveal .tippy-content>* {
-      margin-top: 0.2em;
-      margin-bottom: 0.7em;
-    }
-    .reveal .tippy-content>*:last-child {
-      margin-bottom: 0.2em;
-    }
-    .reveal .slide > img.stretch.quarto-figure-center,
-    .reveal .slide > img.r-stretch.quarto-figure-center {
-      display: block;
-      margin-left: auto;
-      margin-right: auto; 
-    }
-    .reveal .slide > img.stretch.quarto-figure-left,
-    .reveal .slide > img.r-stretch.quarto-figure-left  {
-      display: block;
-      margin-left: 0;
-      margin-right: auto; 
-    }
-    .reveal .slide > img.stretch.quarto-figure-right,
-    .reveal .slide > img.r-stretch.quarto-figure-right  {
-      display: block;
-      margin-left: auto;
-      margin-right: 0; 
-    }
-  </style>
 </head>
-<body class="quarto-light">
-  <div class="reveal">
-    <div class="slides">
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="http://vsass.github.io" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">CS&amp;SS 508</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../syllabus.html" rel="" target="">
+ <span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../Lectures/lectures.html" rel="" target="">
+ <span class="menu-text">Lectures</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../Homework/homework.html" rel="" target="">
+ <span class="menu-text">Homework</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="CSSS508_Lecture7.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
 
 
-<section id="title-slide" class="slide level2 center" data-menu-title="Working with Text Data" data-background="#1e4655" data-background-image="../../images/csss-logo.png" data-background-position="center top 5%" data-background-size="50%">
-<h2></h2>
+
+<section id="title-slide" class="level2" data-menu-title="Working with Text Data" data-background="#1e4655" data-background-image="../../images/csss-logo.png" data-background-position="center top 5%" data-background-size="50%">
+<h2 data-menu-title="Working with Text Data" data-background="#1e4655" data-background-image="../../images/csss-logo.png" data-background-position="center top 5%" data-background-size="50%" class="anchored" data-anchor-id="title-slide"></h2>
 <p><span class="custom-title">Working with Text Data</span></p>
 <p><span class="custom-subtitle">CS&amp;SS 508 • Lecture 7</span></p>
 <p><span class="custom-subtitle2">14 November 2023</span></p>
 <p><span class="custom-subtitle3">Victoria Sass</span></p>
 </section>
-<section>
-<section id="roadmap" class="title-slide slide level1 section-title center" data-background-color="#99a486">
-<h1>Roadmap</h1>
-
-</section>
-<section class="slide level2">
-
+<section id="roadmap" class="level1 section-title" data-background-color="#99a486">
+<h1 class="section-title" data-background-color="#99a486">Roadmap</h1>
+<hr>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><br></p>
-<h3 id="last-time-we-learned">Last time, we learned:</h3>
+<section id="last-time-we-learned" class="level3">
+<h3 class="anchored" data-anchor-id="last-time-we-learned">Last time, we learned:</h3>
 <ul>
 <li>Types of Data
 <ul>
@@ -423,105 +180,98 @@
 <li>Lists</li>
 </ul></li>
 </ul>
+</section>
 </div><div class="column" style="width:50%;">
 <p><br></p>
 <div class="fragment">
-<!-- -->
-<h3 id="today-we-will-cover">Today, we will cover:</h3>
+<section id="today-we-will-cover" class="level3">
+<h3 class="anchored" data-anchor-id="today-we-will-cover">Today, we will cover:</h3>
 <ul>
 <li>Types of Data
 <ul>
 <li>Strings</li>
 </ul></li>
-<li>String Manipulation</li>
-<li>Regular Expressions</li>
+<li>Pattern Matching &amp; Regular Expressions</li>
 </ul>
-</div>
-</div>
-</div>
-</section></section>
-<section id="strings" class="title-slide slide level1 section-title center" data-background-color="#99a486">
-<h1>Strings</h1>
-
 </section>
-
-<section>
-<section id="section" class="title-slide slide level1 section-title center" data-menu-title="`stringr``" data-background-image="images/stringr.png" data-background-size="contain" data-background-position="center" data-background-color="#1e4655">
-<h1></h1>
-
+</div>
+</div>
+</div>
 </section>
-<section id="basics-of-strings" class="slide level2">
-<h2>Basics of Strings</h2>
-<div>
-<ul>
-<li class="fragment">A general programming term for a unit of character data is a <strong>string</strong>
-<ul>
-<li class="fragment">Strings are a <em>sequence of characters</em></li>
-<li class="fragment">In R, “strings” and “character data” are mostly interchangeable.</li>
-<li class="fragment">Some languages have more precise distinctions, but we won’t worry about that here!</li>
+<section id="strings" class="level1 section-title" data-background-color="#99a486">
+<h1 class="section-title" data-background-color="#99a486">Strings</h1>
+</section>
+<section id="section" class="level1 section-title" data-menu-title="`stringr``" data-background-image="images/stringr.png" data-background-size="contain" data-background-position="center" data-background-color="#1e4655">
+<h1 class="section-title" data-menu-title="`stringr``" data-background-image="images/stringr.png" data-background-size="contain" data-background-position="center" data-background-color="#1e4655"></h1>
+<section id="basics-of-strings" class="level2">
+<h2 class="anchored" data-anchor-id="basics-of-strings">Basics of Strings</h2>
+<div class="incremental">
+<ul class="incremental">
+<li>A general programming term for a unit of character data is a <strong>string</strong>
+<ul class="incremental">
+<li>Strings are a <em>sequence of characters</em></li>
+<li>In R, “strings” and “character data” are mostly interchangeable.</li>
+<li>Some languages have more precise distinctions, but we won’t worry about that here!</li>
 </ul></li>
 </ul>
 </div>
-<div>
-<ul>
-<li class="fragment">We can create strings by surrounding text, numbers, spaces, or symbols with quotes!
-<ul>
-<li class="fragment">Examples: <code>"Hello! My name is Vic"</code> or <code>"%*$#01234"</code></li>
+<div class="incremental">
+<ul class="incremental">
+<li>We can create strings by surrounding text, numbers, spaces, or symbols with quotes!
+<ul class="incremental">
+<li>Examples: <code>"Hello! My name is Vic"</code> or <code>"%*$#01234"</code></li>
 </ul></li>
-<li class="fragment">You can create a string using either single quotes (<code>' '</code>) or double quotes (<code>" "</code>)
-<ul>
-<li class="fragment">In the interests of consistency, the tidyverse style guide recommends using <code>" "</code>, unless the string contains multiple <code>" "</code></li>
+<li>You can create a string using either single quotes (<code>' '</code>) or double quotes (<code>" "</code>)
+<ul class="incremental">
+<li>In the interests of consistency, the tidyverse style guide recommends using <code>" "</code>, unless the string contains multiple <code>" "</code></li>
 </ul></li>
 </ul>
 </div>
 </section>
-<section id="escaping-with-strings" class="slide level2">
-<h2>Escaping with Strings</h2>
+<section id="escaping-with-strings" class="level2">
+<h2 class="anchored" data-anchor-id="escaping-with-strings">Escaping with Strings</h2>
 <p>We use a lot of different symbols in our code that we might actually want to represent <em>within</em> a string itself. To do that, we need to escape that particular character. We can do that using <code>\</code>.</p>
-<div class="fragment">
+<p>. . .</p>
 <p>For instance, if we want to include a literal single or double quote in our string, we’d escape it by writing:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1"></a><span class="st">"</span><span class="sc">\'</span><span class="st">"</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2"></a><span class="st">'</span><span class="sc">\"</span><span class="st">'</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="st">"</span><span class="sc">\'</span><span class="st">"</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a><span class="st">'</span><span class="sc">\"</span><span class="st">'</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-1" data-code-lines="1">Double quote.</span>
+<span data-code-lines="1" data-code-cell="annotated-cell-1" data-code-annotation="1">Double quote.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-1" data-code-lines="2">Single quote.</span>
+<span data-code-lines="2" data-code-cell="annotated-cell-1" data-code-annotation="2">Single quote.</span>
 </dd>
 </dl>
 </div>
 </div>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>Similarly, if we want to represent a <code>\</code> we’ll need to escape it as well…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1"></a><span class="st">"</span><span class="sc">\\</span><span class="st">"</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="st">"</span><span class="sc">\\</span><span class="st">"</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-2" data-code-lines="1">Backslash.</span>
+<span data-code-lines="1" data-code-cell="annotated-cell-2" data-code-annotation="3">Backslash.</span>
 </dd>
 </dl>
 </div>
 </div>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p><strong>Note</strong>: When you print these objects you’ll see the escape characters. To actually view the string’s contents ( and not the syntax needed to construct it), use <code>str_view()</code>.</p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="4">4</button><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">'</span><span class="sc">\"</span><span class="st">'</span>, <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">'</span><span class="sc">\"</span><span class="st">'</span>, <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="annotated-cell-3" data-code-lines="1">All <code>stringr</code> functions begin with the prefix <code>str_</code> which is useful due to R Studio’s auto-complete feature.</span>
+<span data-code-lines="1" data-code-cell="annotated-cell-3" data-code-annotation="4">All <code>stringr</code> functions begin with the prefix <code>str_</code> which is useful due to R Studio’s auto-complete feature.</span>
 </dd>
 </dl>
 </div>
@@ -531,60 +281,55 @@
 &gt; [3] │ \</code></pre>
 </div>
 </div>
-</div>
 </section>
-<section id="other-special-characters" class="slide level2">
-<h2>Other Special Characters</h2>
+<section id="other-special-characters" class="level2">
+<h2 class="anchored" data-anchor-id="other-special-characters">Other Special Characters</h2>
 <p>There are other things you may want to represent inside a character string, such as a new line, or a tab space.</p>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="5">5</button><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1"></a><span class="fu">str_view</span>(<span class="st">"Sometimes you need</span><span class="sc">\n</span><span class="st">to create another line."</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="6">6</button><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2"></a><span class="fu">str_view</span>(<span class="st">"</span><span class="sc">\t</span><span class="st">Other times you just need to indent somewhere."</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>. . .</p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(<span class="st">"Sometimes you need</span><span class="sc">\n</span><span class="st">to create another line."</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="6" onclick="event.preventDefault();">6</a><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(<span class="st">"</span><span class="sc">\t</span><span class="st">Other times you just need to indent somewhere."</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="5" data-code-cell="annotated-cell-4" data-code-lines="1">Use <code>\n</code> to create a new line. Helpful when plotting if you have variable names or values that are wordy!</span>
+<span data-code-lines="1" data-code-cell="annotated-cell-4" data-code-annotation="5">Use <code>\n</code> to create a new line. Helpful when plotting if you have variable names or values that are wordy!</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-annotation="6" data-code-cell="annotated-cell-4" data-code-lines="2">Use <code>\t</code> to add a tab. <code>str_view</code> will highlight tabs in blue in your console to make it stand out from other random whitespace.</span>
+<span data-code-lines="2" data-code-cell="annotated-cell-4" data-code-annotation="6">Use <code>\t</code> to add a tab. <code>str_view</code> will highlight tabs in blue in your console to make it stand out from other random whitespace.</span>
 </dd>
 </dl>
 </div>
-</div>
-<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] │ Sometimes you need
 &gt;     │ to create another line.
 &gt; [1] │ {\t}Other times you just need to indent somewhere.</code></pre>
 </div>
 </div>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>Additionally, you can represent <a href="https://en.wikipedia.org/wiki/List_of_Unicode_characters">Unicode</a> characters which will be written with the <code>\u</code> or <code>\U</code> escape.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"\U1F00F"</span>, <span class="st">"\u2866"</span>, <span class="st">"\U1F192"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"\U1F00F"</span>, <span class="st">"\u2866"</span>, <span class="st">"\U1F192"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] │ 🀏
 &gt; [2] │ ⡦
 &gt; [3] │ 🆒</code></pre>
 </div>
 </div>
-</div>
 </section>
-<section id="data-king-county-restaurant-inspections" class="slide level2">
-<h2>Data: King County Restaurant Inspections!</h2>
+<section id="data-king-county-restaurant-inspections" class="level2">
+<h2 class="anchored" data-anchor-id="data-king-county-restaurant-inspections">Data: King County Restaurant Inspections!</h2>
 <p>Today we’ll study real data on <strong>food safety inspections in King County</strong>, collected from <a href="https://data.kingcounty.gov/Health/Food-Establishment-Inspection-Data/f29f-zza5">data.kingcounty.gov</a>.</p>
 <p>Note these data are <em>fairly large</em> in their native <code>.csv</code> format. The following code can be used to download the data directly from my <code>Github</code> page as a smaller, <code>.Rdata</code> object:</p>
-<div class="cell" data-hash="CSSS508_Lecture7_cache/revealjs/unnamed-chunk-8_69bb6533524a05bd8cd7256a3904d49b">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">load</span>(<span class="fu">url</span>(<span class="st">"https://github.com/vsass/CSSS508/raw/main/Lectures/Lecture7/data/restaurants.Rdata"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="CSSS508_Lecture7_cache/html/unnamed-chunk-7_61d7f022fd2d4549e0a16ab7f129ab70">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">url</span>(<span class="st">"https://github.com/vsass/CSSS508/raw/main/Lectures/Lecture7/data/restaurants.Rdata"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="quick-examination-of-the-data" class="slide level2">
-<h2>Quick Examination of the Data</h2>
+<section id="quick-examination-of-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="quick-examination-of-the-data">Quick Examination of the Data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">glimpse</span>(restaurants)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(restaurants)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; Rows: 256,681
 &gt; Columns: 22
@@ -613,54 +358,51 @@
 </div>
 </div>
 <p><br></p>
-<div class="fragment">
-<h4 align="center">
+<p>. . .</p>
+<h4 align="center" class="anchored">
 Good Questions to Ask
 </h4>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div>
-<ul>
-<li class="fragment">What does each row represent?</li>
-<li class="fragment">Is the data in long or wide format?</li>
+<div class="incremental">
+<ul class="incremental">
+<li>What does each row represent?</li>
+<li>Is the data in long or wide format?</li>
 </ul>
 </div>
 </div><div class="column" style="width:50%;">
-<div>
-<ul>
-<li class="fragment">What are the key variables?</li>
-<li class="fragment">How are the data stored? (<em>data type</em>)</li>
+<div class="incremental">
+<ul class="incremental">
+<li>What are the key variables?</li>
+<li>How are the data stored? (<em>data type</em>)</li>
 </ul>
-</div>
 </div>
 </div>
 </div>
 </section>
-<section id="creating-strings" class="slide level2">
-<h2>Creating Strings</h2>
+<section id="creating-strings" class="level2">
+<h2 class="anchored" data-anchor-id="creating-strings">Creating Strings</h2>
 <p>You can create strings based on the value of other strings with <code>str_c()</code> (<code>str</code>ing <code>c</code>ombine), which takes any number of vectors and returns a character vector.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="7">7</button><span id="annotated-cell-8-1" class="code-annotation-target"><a href="#annotated-cell-8-1"></a><span class="fu">str_c</span>(<span class="fu">c</span>(<span class="st">"CSSS"</span>, <span class="st">"STAT"</span>, <span class="st">"SOC"</span>), <span class="dv">508</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="8">8</button><span id="annotated-cell-8-2" class="code-annotation-target"><a href="#annotated-cell-8-2"></a><span class="fu">str_c</span>(<span class="fu">c</span>(<span class="st">"CSSS"</span>, <span class="st">"STAT"</span>, <span class="st">"SOC"</span>), <span class="dv">508</span>, <span class="at">sep =</span> <span class="st">" "</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="9">9</button><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3"></a><span class="fu">str_c</span>(<span class="fu">c</span>(<span class="st">"CSSS"</span>, <span class="st">"STAT"</span>, <span class="st">"SOC"</span>), <span class="dv">508</span>, <span class="at">sep =</span> <span class="st">" "</span>, <span class="at">collapse =</span> <span class="st">", "</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="7" onclick="event.preventDefault();">7</a><span id="annotated-cell-8-1" class="code-annotation-target"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_c</span>(<span class="fu">c</span>(<span class="st">"CSSS"</span>, <span class="st">"STAT"</span>, <span class="st">"SOC"</span>), <span class="dv">508</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="8" onclick="event.preventDefault();">8</a><span id="annotated-cell-8-2" class="code-annotation-target"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str_c</span>(<span class="fu">c</span>(<span class="st">"CSSS"</span>, <span class="st">"STAT"</span>, <span class="st">"SOC"</span>), <span class="dv">508</span>, <span class="at">sep =</span> <span class="st">" "</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="9" onclick="event.preventDefault();">9</a><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str_c</span>(<span class="fu">c</span>(<span class="st">"CSSS"</span>, <span class="st">"STAT"</span>, <span class="st">"SOC"</span>), <span class="dv">508</span>, <span class="at">sep =</span> <span class="st">" "</span>, <span class="at">collapse =</span> <span class="st">", "</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-8" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-annotation="7" data-code-cell="annotated-cell-8" data-code-lines="1">By default, <code>str_c</code> doesn’t put a space between the vectors it is combining.</span>
+<span data-code-lines="1" data-code-cell="annotated-cell-8" data-code-annotation="7">By default, <code>str_c</code> doesn’t put a space between the vectors it is combining.</span>
 </dd>
 <dt data-target-cell="annotated-cell-8" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-annotation="8" data-code-cell="annotated-cell-8" data-code-lines="2">You can add a specific separator, including a space, using the <code>sep</code> argument.</span>
+<span data-code-lines="2" data-code-cell="annotated-cell-8" data-code-annotation="8">You can add a specific separator, including a space, using the <code>sep</code> argument.</span>
 </dd>
 <dt data-target-cell="annotated-cell-8" data-target-annotation="9">9</dt>
 <dd>
-<span data-code-annotation="9" data-code-cell="annotated-cell-8" data-code-lines="3">If you want to combine the output into a single string, use <code>collapse</code>.</span>
+<span data-code-lines="3" data-code-cell="annotated-cell-8" data-code-annotation="9">If you want to combine the output into a single string, use <code>collapse</code>.</span>
 </dd>
 </dl>
 </div>
-</div>
-<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "CSSS508" "STAT508" "SOC508" 
 &gt; [1] "CSSS 508" "STAT 508" "SOC 508" 
@@ -668,659 +410,989 @@ Good Questions to Ask
 </div>
 </div>
 </section>
-<section id="example-with-restaurant-data" class="slide level2">
-<h2>Example with Restaurant Data</h2>
-<p>You can create strings based on the value of other strings with <code>str_c()</code> (<code>str</code>ing <code>c</code>ombine), which takes any number of vectors and returns a character vector.</p>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1"></a>restaurants <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-9-2"><a href="#annotated-cell-9-2"></a>  <span class="fu">select</span>(Name, Address, City) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-9-3"><a href="#annotated-cell-9-3"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="10">10</button><span id="annotated-cell-9-4" class="code-annotation-target"><a href="#annotated-cell-9-4"></a>  <span class="fu">mutate</span>(<span class="at">Sentence =</span> <span class="fu">str_c</span>(Name, <span class="st">" is located at "</span>, Address, <span class="st">" in "</span>, City, <span class="st">"."</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="example-1-with-restaurant-data" class="level2">
+<h2 class="anchored" data-anchor-id="example-1-with-restaurant-data">Example #1 with Restaurant Data</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a>restaurants <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, Address, City) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="10" onclick="event.preventDefault();">10</a><span id="annotated-cell-9-4" class="code-annotation-target"><a href="#annotated-cell-9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sentence =</span> <span class="fu">str_c</span>(Name, <span class="st">" is located at "</span>, Address, <span class="st">" in "</span>, City, <span class="st">"."</span>),</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="11" onclick="event.preventDefault();">11</a><span id="annotated-cell-9-5" class="code-annotation-target"><a href="#annotated-cell-9-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">.keep =</span> <span class="st">"none"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-9" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-annotation="10" data-code-cell="annotated-cell-9" data-code-lines="4">Notice there are spaces at the beginning and end of the fixed character strings. This is because if we used the <code>sep</code> argument here it would add a space before the period at the end of the sentence. So instead, we can add them directly where we want them.</span>
+<span data-code-lines="4" data-code-cell="annotated-cell-9" data-code-annotation="10">Notice there are spaces at the beginning and end of the fixed character strings. This is because if we used the <code>sep</code> argument here it would add a space before the period at the end of the sentence. So instead, we can add them directly where we want them.</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="11">11</dt>
+<dd>
+<span data-code-lines="5" data-code-cell="annotated-cell-9" data-code-annotation="11">Using <code>.keep = "none"</code> here in order to see <em>just</em> the results of our mutate.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 10,969 × 1
+&gt;    Sentence                                                                    
+&gt;    &lt;chr&gt;                                                                       
+&gt;  1 #807 TUTTA BELLA is located at 2746 NE 45TH ST in SEATTLE.                  
+&gt;  2 +MAS CAFE is located at 1906 N 34TH ST in SEATTLE.                          
+&gt;  3 ?al?al Cafe is located at 122 2ND AVE S in SEATTLE.                         
+&gt;  4 100 LB CLAM is located at 1001 FAIRVIEW AVE N Unit 1700A in SEATTLE.        
+&gt;  5 1000 SPIRITS is located at 1225 1ST AVE in SEATTLE.                         
+&gt;  6 100TH AVE CAKES is located at 15364 NE 96TH PL in REDMOND.                  
+&gt;  7 108 VIETNAMESE AUTHENTIC  CUISINE is located at 18114 E VALLEY HWY in KENT. 
+&gt;  8 11TH FRAME RESTAURANT &amp; LOUNGE is located at 7638 NE BOTHELL WAY in KENMORE.
+&gt;  9 125TH ST GRILL is located at 12255 AURORA AVE N in Seattle.                 
+&gt; 10 12S TACOS MEXICAN FOOD KC1012 is located at 625 S 4TH ST in RENTON.         
+&gt; # ℹ 10,959 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="example-2-with-restaurant-data" class="level2">
+<h2 class="anchored" data-anchor-id="example-2-with-restaurant-data">Example #2 with Restaurant Data</h2>
+<p>As we saw in the previous example, when you’re mixing many fixed and variable strings with <code>str_c()</code> things can get overwhelmed by quotation marks pretty easily. An alternative with simpler syntax is <code>str_glue()</code> in which anything inside <code>{}</code> will be evaluated like it’s outside the quotes.</p>
+<p>. . .</p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>restaurants <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, Address, City) <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sentence =</span> <span class="fu">str_glue</span>(<span class="st">"{Name} is located at {Address} in {City}."</span>), </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">.keep =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 10,969 × 1
+&gt;    Sentence                                                                    
+&gt;    &lt;glue&gt;                                                                      
+&gt;  1 #807 TUTTA BELLA is located at 2746 NE 45TH ST in SEATTLE.                  
+&gt;  2 +MAS CAFE is located at 1906 N 34TH ST in SEATTLE.                          
+&gt;  3 ?al?al Cafe is located at 122 2ND AVE S in SEATTLE.                         
+&gt;  4 100 LB CLAM is located at 1001 FAIRVIEW AVE N Unit 1700A in SEATTLE.        
+&gt;  5 1000 SPIRITS is located at 1225 1ST AVE in SEATTLE.                         
+&gt;  6 100TH AVE CAKES is located at 15364 NE 96TH PL in REDMOND.                  
+&gt;  7 108 VIETNAMESE AUTHENTIC  CUISINE is located at 18114 E VALLEY HWY in KENT. 
+&gt;  8 11TH FRAME RESTAURANT &amp; LOUNGE is located at 7638 NE BOTHELL WAY in KENMORE.
+&gt;  9 125TH ST GRILL is located at 12255 AURORA AVE N in Seattle.                 
+&gt; 10 12S TACOS MEXICAN FOOD KC1012 is located at 625 S 4TH ST in RENTON.         
+&gt; # ℹ 10,959 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="example-3-with-restaurant-data" class="level2">
+<h2 class="anchored" data-anchor-id="example-3-with-restaurant-data">Example #3 with Restaurant Data</h2>
+<p>If you want to create a summary of certain character strings you can use <code>str_flatten()</code> which takes a character vector and combines each element of the vector into a single string.</p>
+<p>. . .</p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a>restaurants <span class="sc">|&gt;</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="11" onclick="event.preventDefault();">11</a><span id="annotated-cell-11-2" class="code-annotation-target"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, <span class="st">`</span><span class="at">Inspection Score</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-11-3"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">inspection_scores =</span> <span class="fu">str_flatten</span>(<span class="st">`</span><span class="at">Inspection Score</span><span class="st">`</span>, <span class="at">collapse =</span> <span class="st">", "</span>), </span>
+<span id="annotated-cell-11-4"><a href="#annotated-cell-11-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> Name)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-11" data-target-annotation="11">11</dt>
+<dd>
+<span data-code-lines="2" data-code-cell="annotated-cell-11" data-code-annotation="11">Notice that when a variable has spaces in it’s name (rather than being separated with an underscore in snake_case, for instance) you need to put backticks around it so <code>R</code> knows it is a singular object name.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 9,878 × 2
+&gt;    Name                              inspection_scores                          
+&gt;    &lt;chr&gt;                             &lt;chr&gt;                                      
+&gt;  1 #807 TUTTA BELLA                  20, 20, 10, 10, 0, 0                       
+&gt;  2 +MAS CAFE                         0, 30, 30, 0, 47, 47, 47, 47, 47, 0, 0     
+&gt;  3 ?al?al Cafe                       0, 0                                       
+&gt;  4 100 LB CLAM                       0, 0, 0, 25, 25, 25, 25, 0, 0              
+&gt;  5 1000 SPIRITS                      0, 5, 0, 5, 0, 5, 0, 5, 0, 32, 32, 32, 25,…
+&gt;  6 100TH AVE CAKES                   0, 0, 0, 0                                 
+&gt;  7 108 VIETNAMESE AUTHENTIC  CUISINE 35, 35, 35, 30, 30, 15, 15                 
+&gt;  8 11TH FRAME RESTAURANT &amp; LOUNGE    20, 20, 0, 10, 10, 5, 0, 30, 30, 18, 18, 1…
+&gt;  9 125TH ST GRILL                    0, 20, 20, 20, 0, 20, 20, 20, 18, 18, 18, …
+&gt; 10 12S TACOS MEXICAN FOOD KC1012     &lt;NA&gt;                                       
+&gt; # ℹ 9,868 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="extracting-data-from-strings" class="level2">
+<h2 class="anchored" data-anchor-id="extracting-data-from-strings">Extracting Data from Strings</h2>
+<p>Oftentimes you’ll have multiple pieces of information in one single string. That’s where the family of <code>separate_*</code> functions come in handy.</p>
+<p>. . .</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="12" onclick="event.preventDefault();">12</a><span id="annotated-cell-12-1" class="code-annotation-target"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">separate_longer_delim</span>(col, delim)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="13" onclick="event.preventDefault();">13</a><span id="annotated-cell-12-2" class="code-annotation-target"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">separate_longer_position</span>(col, width)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="14" onclick="event.preventDefault();">14</a><span id="annotated-cell-12-3" class="code-annotation-target"><a href="#annotated-cell-12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">separate_wider_delim</span>(col, delim, names)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="15" onclick="event.preventDefault();">15</a><span id="annotated-cell-12-4" class="code-annotation-target"><a href="#annotated-cell-12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">separate_wider_position</span>(col, widths)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-12" data-target-annotation="12">12</dt>
+<dd>
+<span data-code-lines="1" data-code-cell="annotated-cell-12" data-code-annotation="12">Takes a string and splits it into many rows based on a specified delimiter. Tends to be most useful when the number of components varies from row to row.</span>
+</dd>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="13">13</dt>
+<dd>
+<span data-code-lines="2" data-code-cell="annotated-cell-12" data-code-annotation="13">Rarer use case but also splits into many rows, now based on the width of the output desired.</span>
+</dd>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="14">14</dt>
+<dd>
+<span data-code-lines="3" data-code-cell="annotated-cell-12" data-code-annotation="14">Takes a string and splits it into many columns based on a specified delimiter. Need to provide names for the new columns created by the split.</span>
+</dd>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="15">15</dt>
+<dd>
+<span data-code-lines="4" data-code-cell="annotated-cell-12" data-code-annotation="15">Rather than a delimiter you provide a named integer vector where the name gives the name of the new column, and the value is the number of characters it occupies.</span>
 </dd>
 </dl>
 </div>
 </div>
-<div class="cell fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code>&gt; # A tibble: 10,969 × 4
-&gt;    Name                              Address                      City  Sentence
-&gt;    &lt;chr&gt;                             &lt;chr&gt;                        &lt;chr&gt; &lt;chr&gt;   
-&gt;  1 #807 TUTTA BELLA                  2746 NE 45TH ST              SEAT… #807 TU…
-&gt;  2 +MAS CAFE                         1906 N 34TH ST               SEAT… +MAS CA…
-&gt;  3 ?al?al Cafe                       122 2ND AVE S                SEAT… ?al?al …
-&gt;  4 100 LB CLAM                       1001 FAIRVIEW AVE N Unit 17… SEAT… 100 LB …
-&gt;  5 1000 SPIRITS                      1225 1ST AVE                 SEAT… 1000 SP…
-&gt;  6 100TH AVE CAKES                   15364 NE 96TH PL             REDM… 100TH A…
-&gt;  7 108 VIETNAMESE AUTHENTIC  CUISINE 18114 E VALLEY HWY           KENT  108 VIE…
-&gt;  8 11TH FRAME RESTAURANT &amp; LOUNGE    7638 NE BOTHELL WAY          KENM… 11TH FR…
-&gt;  9 125TH ST GRILL                    12255 AURORA AVE N           Seat… 125TH S…
-&gt; 10 12S TACOS MEXICAN FOOD KC1012     625 S 4TH ST                 RENT… 12S TAC…
-&gt; # ℹ 10,959 more rows</code></pre>
+</section>
+<section id="example-with-restaurant-data" class="level2">
+<h2 class="anchored" data-anchor-id="example-with-restaurant-data">Example with Restaurant Data</h2>
+<p>The most common use case will be the need to split a character string into multiple columns, which will require the <code>separate_wider_*</code> functions<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>. . .</p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a>restaurants <span class="sc">|&gt;</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="16" onclick="event.preventDefault();">16</a><span id="annotated-cell-13-2" class="code-annotation-target"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Inspection Date</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-13-3"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(<span class="st">`</span><span class="at">Inspection Date</span><span class="st">`</span>, </span>
+<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">delim =</span> <span class="st">"/"</span>, </span>
+<span id="annotated-cell-13-5"><a href="#annotated-cell-13-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"month"</span>, <span class="st">"day"</span>, <span class="st">"year"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-13" data-target-annotation="16">16</dt>
+<dd>
+<span data-code-lines="2" data-code-cell="annotated-cell-13" data-code-annotation="16">This variable was read in as a character string rather than a date object.</span>
+</dd>
+</dl>
 </div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 256,681 × 3
+&gt;    month day   year 
+&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+&gt;  1 03    02    2023 
+&gt;  2 03    02    2023 
+&gt;  3 08    31    2022 
+&gt;  4 08    31    2022 
+&gt;  5 01    13    2022 
+&gt;  6 01    06    2021 
+&gt;  7 06    22    2023 
+&gt;  8 03    01    2023 
+&gt;  9 03    01    2023 
+&gt; 10 07    13    2022 
+&gt; # ℹ 256,671 more rows</code></pre>
 </div>
 </div>
 </section>
-<section id="creating-strings-1" class="slide level2">
-<h2>Creating Strings</h2>
-<p>As we saw in the previous example, when you’re mixing many fixed and variable strings with <code>str_c()</code> things can get overwhelmed by quotation marks pretty easily. An alternative with simpler syntax is <code>str_glue()</code> in which anything inside <code>{}</code> will be evaluated like it’s outside the quotes.</p>
+<section id="separate_wider_-functions" class="level2">
+<h2 class="anchored" data-anchor-id="separate_wider_-functions"><code>separate_wider_*</code> functions</h2>
+<p>The nice thing about this set of functions is that they have a built-in debugging method for instances when some rows don’t have the expected number of pieces.</p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>restaurants <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Address) <span class="sc">|&gt;</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(Address, </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">delim =</span> <span class="st">" "</span>, </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"num"</span>, <span class="st">"name"</span>, <span class="st">"type"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>&gt; Error in `separate_wider_delim()`:
+&gt; ! Expected 3 pieces in each element of `Address`.
+&gt; ! 792 values were too short.
+&gt; ℹ Use `too_few = "debug"` to diagnose the problem.
+&gt; ℹ Use `too_few = "align_start"/"align_end"` to silence this message.
+&gt; ! 223848 values were too long.
+&gt; ℹ Use `too_many = "debug"` to diagnose the problem.
+&gt; ℹ Use `too_many = "drop"/"merge"` to silence this message.</code></pre>
+</div>
+</div>
+</section>
+<section id="separate_wider_-functions-1" class="level2">
+<h2 class="anchored" data-anchor-id="separate_wider_-functions-1"><code>separate_wider_*</code> functions</h2>
+<p>The nice thing about this set of functions is that they have a built-in debugging method for instances when some rows don’t have the expected number of pieces.</p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a>debug <span class="ot">&lt;-</span> restaurants <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-15-2"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Address) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-15-3"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(Address, </span>
+<span id="annotated-cell-15-4"><a href="#annotated-cell-15-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">delim =</span> <span class="st">" "</span>, </span>
+<span id="annotated-cell-15-5"><a href="#annotated-cell-15-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"num"</span>, <span class="st">"name"</span>, <span class="st">"type"</span>), </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="17" onclick="event.preventDefault();">17</a><span id="annotated-cell-15-6" class="code-annotation-target"><a href="#annotated-cell-15-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">too_many =</span> <span class="st">"debug"</span>,</span>
+<span id="annotated-cell-15-7"><a href="#annotated-cell-15-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">too_few =</span> <span class="st">"debug"</span>) </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="18" onclick="event.preventDefault();">18</a><span id="annotated-cell-15-8" class="code-annotation-target"><a href="#annotated-cell-15-8" aria-hidden="true" tabindex="-1"></a>debug[debug<span class="sc">$</span>Address_pieces <span class="sc">==</span> <span class="dv">4</span>, ]</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-15" data-target-annotation="17">17</dt>
+<dd>
+<span data-code-lines="6" data-code-cell="annotated-cell-15" data-code-annotation="17"><code>too_few = "align_start"</code> and <code>too_few = "align_end"</code> will add <code>NA</code>s to the missing pieces depending on where they should go.</span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="18">18</dt>
+<dd>
+<span data-code-lines="8" data-code-cell="annotated-cell-15" data-code-annotation="18">Example of the <code>too_many</code> error (<code>Address_pieces</code> ranged from 4 to 9 in this dataset).</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 172,718 × 7
+&gt;    num   name  type  Address         Address_ok Address_pieces Address_remainder
+&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;           &lt;lgl&gt;               &lt;int&gt; &lt;chr&gt;            
+&gt;  1 2746  NE    45TH  2746 NE 45TH ST FALSE                   4 " ST"            
+&gt;  2 2746  NE    45TH  2746 NE 45TH ST FALSE                   4 " ST"            
+&gt;  3 2746  NE    45TH  2746 NE 45TH ST FALSE                   4 " ST"            
+&gt;  4 2746  NE    45TH  2746 NE 45TH ST FALSE                   4 " ST"            
+&gt;  5 2746  NE    45TH  2746 NE 45TH ST FALSE                   4 " ST"            
+&gt;  6 2746  NE    45TH  2746 NE 45TH ST FALSE                   4 " ST"            
+&gt;  7 1906  N     34TH  1906 N 34TH ST  FALSE                   4 " ST"            
+&gt;  8 1906  N     34TH  1906 N 34TH ST  FALSE                   4 " ST"            
+&gt;  9 1906  N     34TH  1906 N 34TH ST  FALSE                   4 " ST"            
+&gt; 10 1906  N     34TH  1906 N 34TH ST  FALSE                   4 " ST"            
+&gt; # ℹ 172,708 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="separate_wider_-functions-2" class="level2">
+<h2 class="anchored" data-anchor-id="separate_wider_-functions-2"><code>separate_wider_*</code> functions</h2>
+<p>The nice thing about this set of functions is that they have a built-in debugging method for instances when some rows don’t have the expected number of pieces.</p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1" aria-hidden="true" tabindex="-1"></a>debug <span class="ot">&lt;-</span> restaurants <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-16-2"><a href="#annotated-cell-16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Address) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-16-3"><a href="#annotated-cell-16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(Address, </span>
+<span id="annotated-cell-16-4"><a href="#annotated-cell-16-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">delim =</span> <span class="st">" "</span>, </span>
+<span id="annotated-cell-16-5"><a href="#annotated-cell-16-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"num"</span>, <span class="st">"name"</span>, <span class="st">"type"</span>),</span>
+<span id="annotated-cell-16-6"><a href="#annotated-cell-16-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">too_many =</span> <span class="st">"debug"</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="19" onclick="event.preventDefault();">19</a><span id="annotated-cell-16-7" class="code-annotation-target"><a href="#annotated-cell-16-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">too_few =</span> <span class="st">"debug"</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="20" onclick="event.preventDefault();">20</a><span id="annotated-cell-16-8" class="code-annotation-target"><a href="#annotated-cell-16-8" aria-hidden="true" tabindex="-1"></a>debug[debug<span class="sc">$</span>Address_pieces <span class="sc">==</span> <span class="dv">2</span>, ]</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-16" data-target-annotation="19">19</dt>
+<dd>
+<span data-code-lines="7" data-code-cell="annotated-cell-16" data-code-annotation="19">Example of the <code>too_few</code> error.</span>
+</dd>
+<dt data-target-cell="annotated-cell-16" data-target-annotation="20">20</dt>
+<dd>
+<span data-code-lines="8" data-code-cell="annotated-cell-16" data-code-annotation="20">You can either silently “drop” any additional pieces with <code>too_many = "drop"</code> or “merge” them all into the final column with <code>too_many = "merge"</code>.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 792 × 7
+&gt;    num   name     type  Address      Address_ok Address_pieces Address_remainder
+&gt;    &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;        &lt;lgl&gt;               &lt;int&gt; &lt;chr&gt;            
+&gt;  1 1401  BROADWAY &lt;NA&gt;  1401 BROADW… FALSE                   2 ""               
+&gt;  2 1401  BROADWAY &lt;NA&gt;  1401 BROADW… FALSE                   2 ""               
+&gt;  3 1401  BROADWAY &lt;NA&gt;  1401 BROADW… FALSE                   2 ""               
+&gt;  4 1401  BROADWAY &lt;NA&gt;  1401 BROADW… FALSE                   2 ""               
+&gt;  5 1401  BROADWAY &lt;NA&gt;  1401 BROADW… FALSE                   2 ""               
+&gt;  6 1401  BROADWAY &lt;NA&gt;  1401 BROADW… FALSE                   2 ""               
+&gt;  7 1401  BROADWAY &lt;NA&gt;  1401 BROADW… FALSE                   2 ""               
+&gt;  8 1401  BROADWAY &lt;NA&gt;  1401 BROADW… FALSE                   2 ""               
+&gt;  9 1401  BROADWAY &lt;NA&gt;  1401 BROADW… FALSE                   2 ""               
+&gt; 10 1401  BROADWAY &lt;NA&gt;  1401 BROADW… FALSE                   2 ""               
+&gt; # ℹ 782 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="modifying-strings-converting-cases" class="level2">
+<h2 class="anchored" data-anchor-id="modifying-strings-converting-cases">Modifying Strings: Converting Cases</h2>
+<p><code>str_to_upper()</code>, <code>str_to_lower()</code>, <code>str_to_title()</code> convert cases, which is often a good idea to do before searching for values:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>restaurants <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">select</span>(Name, Address, City) <span class="sc">|&gt;</span> </span>
-<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb10-4"><a href="#cb10-4"></a>  <span class="fu">mutate</span>(<span class="at">Sentence =</span> <span class="fu">str_glue</span>(<span class="st">"{Name} is located at {Address} in {City}."</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell fragment">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>unique_cities <span class="ot">&lt;-</span> <span class="fu">unique</span>(restaurants<span class="sc">$</span>City)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>unique_cities  <span class="sc">|&gt;</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&gt; # A tibble: 10,969 × 4
-&gt;    Name                              Address                      City  Sentence
-&gt;    &lt;chr&gt;                             &lt;chr&gt;                        &lt;chr&gt; &lt;glue&gt;  
-&gt;  1 #807 TUTTA BELLA                  2746 NE 45TH ST              SEAT… #807 TU…
-&gt;  2 +MAS CAFE                         1906 N 34TH ST               SEAT… +MAS CA…
-&gt;  3 ?al?al Cafe                       122 2ND AVE S                SEAT… ?al?al …
-&gt;  4 100 LB CLAM                       1001 FAIRVIEW AVE N Unit 17… SEAT… 100 LB …
-&gt;  5 1000 SPIRITS                      1225 1ST AVE                 SEAT… 1000 SP…
-&gt;  6 100TH AVE CAKES                   15364 NE 96TH PL             REDM… 100TH A…
-&gt;  7 108 VIETNAMESE AUTHENTIC  CUISINE 18114 E VALLEY HWY           KENT  108 VIE…
-&gt;  8 11TH FRAME RESTAURANT &amp; LOUNGE    7638 NE BOTHELL WAY          KENM… 11TH FR…
-&gt;  9 125TH ST GRILL                    12255 AURORA AVE N           Seat… 125TH S…
-&gt; 10 12S TACOS MEXICAN FOOD KC1012     625 S 4TH ST                 RENT… 12S TAC…
-&gt; # ℹ 10,959 more rows</code></pre>
+<pre><code>&gt; [1] "SEATTLE" "REDMOND" "KENT"    "KENMORE" "Seattle" "RENTON"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_upper</span>(unique_cities) <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; [1] "SEATTLE" "REDMOND" "KENT"    "KENMORE" "SEATTLE" "RENTON"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_lower</span>(unique_cities) <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; [1] "seattle" "redmond" "kent"    "kenmore" "seattle" "renton"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_title</span>(unique_cities) <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; [1] "Seattle" "Redmond" "Kent"    "Kenmore" "Seattle" "Renton"</code></pre>
 </div>
 </div>
 </section>
-<section id="creating-strings-2" class="slide level2">
-<h2>Creating Strings</h2>
-<p>If you want to create a summary of certain character strings you can use <code>str_flatten()</code> which takes a character vector and combines each element of the vector into a single string.</p>
+<section id="modifying-strings-removing-whitespace" class="level2">
+<h2 class="anchored" data-anchor-id="modifying-strings-removing-whitespace">Modifying Strings: Removing Whitespace</h2>
+<p>Extra leading or trailing whitespace is common in text data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>unique_names <span class="ot">&lt;-</span> <span class="fu">unique</span>(restaurants<span class="sc">$</span>Name)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>unique_names <span class="sc">|&gt;</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; [1] "#807 TUTTA BELLA" "+MAS CAFE"        "?al?al Cafe"</code></pre>
+</div>
+</div>
+<p>We can remove the whitespace using <code>str_trim()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_trim</span>(unique_names) <span class="sc">|&gt;</span>  </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; [1] "#807 TUTTA BELLA" "+MAS CAFE"        "?al?al Cafe"</code></pre>
+</div>
+</div>
 </section>
-<section id="hold" class="slide level2">
-<h2>Hold</h2>
+<section id="counting-characters" class="level2">
+<h2 class="anchored" data-anchor-id="counting-characters">Counting Characters</h2>
+<p>At the most basic level you can use <code>str_length()</code> to count the characters are in a string.</p>
+<p>. . .</p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="annotated-cell-23"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-23-1"><a href="#annotated-cell-23-1" aria-hidden="true" tabindex="-1"></a>restaurants <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-23-2"><a href="#annotated-cell-23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Phone</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="21" onclick="event.preventDefault();">21</a><span id="annotated-cell-23-3" class="code-annotation-target"><a href="#annotated-cell-23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">phone_length =</span> <span class="fu">str_length</span>(<span class="st">`</span><span class="at">Phone</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="22" onclick="event.preventDefault();">22</a><span id="annotated-cell-23-4" class="code-annotation-target"><a href="#annotated-cell-23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(phone_length)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-23" data-target-annotation="21">21</dt>
+<dd>
+<span data-code-lines="3" data-code-cell="annotated-cell-23" data-code-annotation="21">Getting the length of <code>Phone</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-23" data-target-annotation="22">22</dt>
+<dd>
+<span data-code-lines="4" data-code-cell="annotated-cell-23" data-code-annotation="22">Getting the count of different lengths for <code>Phone</code> found in the data</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 4 × 2
+&gt;   phone_length      n
+&gt;          &lt;int&gt;  &lt;int&gt;
+&gt; 1           14 185717
+&gt; 2           15    155
+&gt; 3           18     49
+&gt; 4           NA  70760</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="annotated-cell-24"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-24-1"><a href="#annotated-cell-24-1" aria-hidden="true" tabindex="-1"></a>phone_numbers <span class="ot">&lt;-</span> restaurants <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-24-2"><a href="#annotated-cell-24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Phone</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-24-3"><a href="#annotated-cell-24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">phone_length =</span> <span class="fu">str_length</span>(<span class="st">`</span><span class="at">Phone</span><span class="st">`</span>)) </span>
+<span id="annotated-cell-24-4"><a href="#annotated-cell-24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-24-5"><a href="#annotated-cell-24-5" aria-hidden="true" tabindex="-1"></a>phone_numbers <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-24-6"><a href="#annotated-cell-24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(phone_length <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">18</span>)) <span class="sc">|&gt;</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="23" onclick="event.preventDefault();">23</a><span id="annotated-cell-24-7" class="code-annotation-target"><a href="#annotated-cell-24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">by =</span> phone_length)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-24" data-target-annotation="23">23</dt>
+<dd>
+<span data-code-lines="7" data-code-cell="annotated-cell-24" data-code-annotation="23">Filtering for the two abnormal phone number lengths, and getting the first observation (row) by the two different numbers (15, 18).</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 2 × 2
+&gt;   Phone              phone_length
+&gt;   &lt;chr&gt;                     &lt;int&gt;
+&gt; 1 (714) 670-=5051              15
+&gt; 2 (822) 370-0EXT3700           18</code></pre>
+</div>
+</div>
 </section>
-<section id="base-r-equivalents" class="slide level2">
-<h2>Base <code>R</code> Equivalents</h2>
+<section id="subsetting-strings" class="level2">
+<h2 class="anchored" data-anchor-id="subsetting-strings">Subsetting Strings</h2>
+<p>If we want to subset a string we can use <code>str_sub()</code>. Let’s pull out just the area codes from the <code>Phone</code> variable.</p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="annotated-cell-25"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-25-1"><a href="#annotated-cell-25-1" aria-hidden="true" tabindex="-1"></a>restaurants <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-25-2"><a href="#annotated-cell-25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Phone</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-25" data-target-annotation="24" onclick="event.preventDefault();">24</a><span id="annotated-cell-25-3" class="code-annotation-target"><a href="#annotated-cell-25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">area_code =</span> <span class="fu">str_sub</span>(<span class="st">`</span><span class="at">Phone</span><span class="st">`</span>, <span class="at">start =</span> <span class="dv">2</span>, <span class="at">end =</span> <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-25-4"><a href="#annotated-cell-25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(area_code)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-25" data-target-annotation="24">24</dt>
+<dd>
+<span data-code-lines="3" data-code-cell="annotated-cell-25" data-code-annotation="24"><code>start</code> and <code>end</code> are the positions where the “substring” should start and end (inclusive). You can also use negative values to count backwards from the end of a string. Note that <code>str_sub()</code> won’t fail if the string is too short: it will just return as much as possible.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 209 × 1
+&gt;    area_code
+&gt;    &lt;chr&gt;    
+&gt;  1 206      
+&gt;  2 952      
+&gt;  3 758      
+&gt;  4 425      
+&gt;  5 702      
+&gt;  6 509      
+&gt;  7 512      
+&gt;  8 &lt;NA&gt;     
+&gt;  9 760      
+&gt; 10 801      
+&gt; # ℹ 199 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="working-with-non-english-strings" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-non-english-strings">Working with Non-English Strings</h2>
+<p>Computer infrastructure is heavily biased towards English speakers so there are some things to be aware of if you’re interested in working with character data in a different language.</p>
+<p>. . .</p>
+<p><br></p>
+<section id="encoding" class="level4">
+<h4 class="anchored" data-anchor-id="encoding">Encoding</h4>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/UTF-8">UTF-8</a> can encode just about every character used by humans today and many extra symbols like emojis.
+<ul>
+<li><code>readr</code> uses UTF-8 everywhere. This is a good default but will fail for data produced by older systems that don’t use UTF-8.</li>
+</ul></li>
+<li>To read these correctly, you specify the encoding via the <code>locale</code> argument (hopefully that information is provided in the data documentation).
+<ul>
+<li>Unfortunately, that’s rarely the case, so <code>readr</code> provides <code>guess_encoding()</code> to help you figure it out. It’s not foolproof and works better when you have lots of text.</li>
+</ul></li>
+<li>Learn more about the intricacies of encoding <a href="https://kunststube.net/encoding/">here</a>.</li>
+</ul>
+</section>
+</section>
+<section id="working-with-non-english-strings-1" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-non-english-strings-1">Working with Non-English Strings</h2>
+<p>Computer infrastructure is heavily biased towards English speakers so there are some things to be aware of if you’re interested in working with character data in a different language.</p>
+<p><br></p>
+<section id="letter-variations" class="level4">
+<h4 class="anchored" data-anchor-id="letter-variations">Letter Variations</h4>
+<ul>
+<li>Accented letters may be either 1 character or 2 depending upon how they’re encoded, which affects position for <code>str_length()</code> and <code>str_sub()</code>.</li>
+<li><code>str_equal()</code> will recognize that the different variations have the same appearance while <code>==</code> will evaluate them as different.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="pattern-matching-regular-expressions" class="level1 section-title" data-background-color="#99a486">
+<h1 class="section-title" data-background-color="#99a486">Pattern Matching &amp; Regular Expressions</h1>
+<section id="pattern-matching" class="level2">
+<h2 class="anchored" data-anchor-id="pattern-matching">Pattern-Matching!</h2>
+<p>It’s common to want to see if a string satisfies a certain <em>pattern</em>.</p>
+<p>. . .</p>
+<p>We did this with numeric values earlier in this course!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>restaurants <span class="sc">|&gt;</span>  </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Inspection Score</span><span class="st">`</span> <span class="sc">&lt;</span> <span class="dv">10</span> <span class="sc">|</span> <span class="st">`</span><span class="at">Inspection Score</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="dv">150</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 139,744 × 22
+&gt;    Name         `Program Identifier` `Inspection Date` Description Address City 
+&gt;    &lt;chr&gt;        &lt;chr&gt;                &lt;chr&gt;             &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;
+&gt;  1 #807 TUTTA … #807 TUTTA BELLA     01/13/2022        Seating 0-… 2746 N… SEAT…
+&gt;  2 #807 TUTTA … #807 TUTTA BELLA     01/06/2021        Seating 0-… 2746 N… SEAT…
+&gt;  3 +MAS CAFE    +MAS CAFE            06/22/2023        Seating 0-… 1906 N… SEAT…
+&gt;  4 +MAS CAFE    +MAS CAFE            07/13/2022        Seating 0-… 1906 N… SEAT…
+&gt;  5 +MAS CAFE    +MAS CAFE            12/29/2021        Seating 0-… 1906 N… SEAT…
+&gt;  6 +MAS CAFE    +MAS CAFE            07/29/2020        Seating 0-… 1906 N… SEAT…
+&gt;  7 ?al?al Cafe  ?al?al Cafe          03/16/2023        Seating 13… 122 2N… SEAT…
+&gt;  8 ?al?al Cafe  ?al?al Cafe          01/11/2023        Seating 13… 122 2N… SEAT…
+&gt;  9 100 LB CLAM  100 LB CLAM          09/13/2023        Seating 0-… 1001 F… SEAT…
+&gt; 10 100 LB CLAM  100 LB CLAM          07/13/2022        Seating 0-… 1001 F… SEAT…
+&gt; # ℹ 139,734 more rows
+&gt; # ℹ 16 more variables: `Zip Code` &lt;dbl&gt;, Phone &lt;chr&gt;, Longitude &lt;dbl&gt;,
+&gt; #   Latitude &lt;dbl&gt;, `Inspection Business Name` &lt;chr&gt;, `Inspection Type` &lt;chr&gt;,
+&gt; #   `Inspection Score` &lt;dbl&gt;, `Inspection Result` &lt;chr&gt;,
+&gt; #   `Inspection Closed Business` &lt;lgl&gt;, `Violation Type` &lt;chr&gt;,
+&gt; #   `Violation Description` &lt;chr&gt;, `Violation Points` &lt;dbl&gt;, Business_ID &lt;chr&gt;,
+&gt; #   Inspection_Serial_Num &lt;chr&gt;, Violation_Record_ID &lt;chr&gt;, Grade &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="patterns-str_detect" class="level2">
+<h2 class="anchored" data-anchor-id="patterns-str_detect">Patterns: <code>str_detect()</code></h2>
+<p>We can do similar pattern-checking using <code>str_detect()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-27"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-27-1" class="code-annotation-target"><a href="#annotated-cell-27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_detect</span>(string, pattern)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-27" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-lines="1" data-code-cell="annotated-cell-27" data-code-annotation="1"><code>string</code> is the character string (or vector of strings) we want to examine and <code>pattern</code> is the pattern that we’re checking for, inside <code>string</code>. The output will be a <code>TRUE</code>/<code>FALSE</code> vector indicating if pattern was found.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>. . .</p>
+<p><br></p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>restaurants <span class="sc">|&gt;</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, Address) <span class="sc">|&gt;</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Address, <span class="st">"Pike"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 5 × 2
+&gt;   Name                           Address       
+&gt;   &lt;chr&gt;                          &lt;chr&gt;         
+&gt; 1 Axum Foods DBA Lands Of Origin 1532 Pike PL  
+&gt; 2 CHA CHA LOUNGE                 1013 E Pike ST
+&gt; 3 Kitchen and Market             1926 Pike PL  
+&gt; 4 Luke's Lobster                 104 Pike ST   
+&gt; 5 SAM'S TAVERN                   1024 E Pike ST</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<p><br></p>
+<p>Hmmm…there are only 5 restaurants on a street with Pike in the name?!</p>
+</section>
+<section id="patterns-str_detect-1" class="level2">
+<h2 class="anchored" data-anchor-id="patterns-str_detect-1">Patterns: <code>str_detect()</code></h2>
+<p>We can do similar pattern-checking using <code>str_detect()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-29"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-29" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-29-1" class="code-annotation-target"><a href="#annotated-cell-29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_detect</span>(string, pattern)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-29" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-lines="1" data-code-cell="annotated-cell-29" data-code-annotation="1"><code>string</code> is the character string (or vector of strings) we want to examine and <code>pattern</code> is the pattern that we’re checking for, inside <code>string</code>. The output will be a <code>TRUE</code>/<code>FALSE</code> vector indicating if pattern was found.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p><br></p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="annotated-cell-30"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-30-1"><a href="#annotated-cell-30-1" aria-hidden="true" tabindex="-1"></a>restaurants <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-30-2"><a href="#annotated-cell-30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, Address) <span class="sc">|&gt;</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-30" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-30-3" class="code-annotation-target"><a href="#annotated-cell-30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Address =</span> <span class="fu">str_to_title</span>(Address)) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-30-4"><a href="#annotated-cell-30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Address, <span class="st">"Pike"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-30-5"><a href="#annotated-cell-30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-30" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-lines="3" data-code-cell="annotated-cell-30" data-code-annotation="2">Note: Results are case-sensitive!! Therefore we need to transform all the addresses to the same case.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 139 × 2
+&gt;    Name                                       Address           
+&gt;    &lt;chr&gt;                                      &lt;chr&gt;             
+&gt;  1 ALDER &amp; ASH                                629 Pike St       
+&gt;  2 ALIBI ROOM, THE                            85 Pike St        
+&gt;  3 AMAZON RETAIL LLC                          610 E Pike St     
+&gt;  4 ATHENIAN INN                               1517 Pike Pl      
+&gt;  5 ATRIUM KITCHEN AT PIKE PLACE MARKET        93 Pike St Ste 101
+&gt;  6 AUDACITY WINEBAR ALEXANDRIA NICOLE CELLARS 800 Pike St       
+&gt;  7 Axum Foods DBA Lands Of Origin             1532 Pike Pl      
+&gt;  8 AYUTTHAYA THAI RESTAURANT                  727 E Pike St     
+&gt;  9 BAGELBOP                                   93 Pike St        
+&gt; 10 BAI TONG THAI STREET CAFE                  1121 E Pike St    
+&gt; # ℹ 129 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="patterns-str_detect-2" class="level2">
+<h2 class="anchored" data-anchor-id="patterns-str_detect-2">Patterns: <code>str_detect()</code></h2>
+<p>Let’s see which phone numbers are in the 206 area code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>restaurants <span class="sc">|&gt;</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(Phone) <span class="sc">|&gt;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">area_code_206 =</span> <span class="fu">str_detect</span>(<span class="at">string =</span> Phone, <span class="at">pattern =</span> <span class="st">"206"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 7,384 × 2
+&gt;    Phone          area_code_206
+&gt;    &lt;chr&gt;          &lt;lgl&gt;        
+&gt;  1 (206) 722-6400 TRUE         
+&gt;  2 (206) 491-4694 TRUE         
+&gt;  3 (952) 649-8629 FALSE        
+&gt;  4 (206) 369-2978 TRUE         
+&gt;  5 (206) 612-2660 TRUE         
+&gt;  6 (758) 753-4760 FALSE        
+&gt;  7 (425) 251-8803 FALSE        
+&gt;  8 (425) 486-5555 FALSE        
+&gt;  9 (206) 363-8950 TRUE         
+&gt; 10 (425) 545-5552 FALSE        
+&gt; # ℹ 7,374 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="replacement-str_replace" class="level2">
+<h2 class="anchored" data-anchor-id="replacement-str_replace">Replacement: <code>str_replace()</code></h2>
+<p>What about if you want to replace a string with something else? Use <code>str_replace()</code>!</p>
+<p>. . .</p>
+<p>This function works very similarly to <code>str_detect()</code>, but with one extra argument:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-32"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-32-1" class="code-annotation-target"><a href="#annotated-cell-32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace</span>(string, pattern, replacement)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-32" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-lines="1" data-code-cell="annotated-cell-32" data-code-annotation="2"><code>replacement</code> is what <code>pattern</code> is substituted for.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>. . .</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>restaurants <span class="sc">|&gt;</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Inspection Date</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">full_date =</span> <span class="fu">str_replace</span>(<span class="at">string =</span> <span class="st">`</span><span class="at">Inspection Date</span><span class="st">`</span>, </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">pattern =</span> <span class="st">"01/"</span>,</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">replacement =</span> <span class="st">"January "</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 256,681 × 2
+&gt;    `Inspection Date` full_date      
+&gt;    &lt;chr&gt;             &lt;chr&gt;          
+&gt;  1 03/02/2023        03/02/2023     
+&gt;  2 03/02/2023        03/02/2023     
+&gt;  3 08/31/2022        08/31/2022     
+&gt;  4 08/31/2022        08/31/2022     
+&gt;  5 01/13/2022        January 13/2022
+&gt;  6 01/06/2021        January 06/2021
+&gt;  7 06/22/2023        06/22/2023     
+&gt;  8 03/01/2023        03/January 2023
+&gt;  9 03/01/2023        03/January 2023
+&gt; 10 07/13/2022        07/13/2022     
+&gt; # ℹ 256,671 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace</span>(<span class="at">string =</span> <span class="st">"Hi, I'm Vic"</span>,</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">pattern =</span> <span class="st">"Hi"</span>, </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">replacement =</span> <span class="st">"Hello"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; [1] "Hello, I'm Vic"</code></pre>
+</div>
+</div>
+</section>
+<section id="what-are-regular-expressions" class="level2">
+<h2 class="anchored" data-anchor-id="what-are-regular-expressions">What are Regular Expressions?</h2>
+<p><strong>Regular expressions</strong> or <strong>regex</strong>es are how we describe patterns we are looking for in text in a way that a computer can understand. We write an <strong>expression</strong>, apply it to a string input, and then can do things with <strong>matches</strong> we find.</p>
+<p>. . .</p>
+<ul>
+<li><strong>Literal characters</strong> are defined snippets to search for like <code>SEA</code> or <code>206</code>.</li>
+</ul>
+<p>. . .</p>
+<ul>
+<li><strong>Metacharacters</strong><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> let us be flexible in describing patterns:
+<ul>
+<li><strong>Quantifiers</strong> control how many times a pattern can match.
+<ul>
+<li><code>?</code> makes a pattern optional (i.e.&nbsp;it matches 0 or 1 times)</li>
+<li><code>+</code> lets a pattern repeat (i.e.&nbsp;it matches at least once)</li>
+<li><code>*</code> lets a pattern be optional or repeat (i.e.&nbsp;it matches any number of times, including 0).</li>
+</ul></li>
+<li><strong>Character classes</strong> are defined by <code>[]</code> and let you match a set of characters.
+<ul>
+<li>You can invert a match by starting it with <code>^</code></li>
+</ul></li>
+<li><strong>Alternation</strong>, <code>|</code>, allows us to pick between one or more alternative patterns.</li>
+</ul>
+<h2 id="base-r-equivalents" class="anchored">Base <code>R</code> Equivalents</h2></li>
+</ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<h4 id="base-r">Base <code>R</code></h4>
-<p><span class="custom-code">paste0(x, sep, collapse)</span></p>
+<section id="base-r" class="level4">
+<h4 class="anchored" data-anchor-id="base-r">Base <code>R</code></h4>
+<p><span class="custom-code">paste0(x, sep, collapse)</span><br>
+<span class="custom-code"></span><br>
+<code>nchar(x)</code><br>
+<span class="custom-code">substr(x, start, end)</span><br>
+<code>toupper(x)</code><br>
+<span class="custom-code">tolower(x)</span><br>
+<code>tools::toTitleCase(x)</code><br>
+<span class="custom-code">trimws(x)</span><br>
+<code>grepl(pattern, x)</code></p>
+</section>
 </div><div class="column" style="width:50%;">
-<h4 id="stringr"><code>stringr</code></h4>
-<p><span class="custom-code">str_c(x, sep, collapse)</span></p>
+<section id="stringr" class="level4">
+<h4 class="anchored" data-anchor-id="stringr"><code>stringr</code></h4>
+<p><span class="custom-code">str_c(x, sep, collapse)</span><br>
+<span class="custom-code">str_flatten(x, collapse)</span><br>
+<code>str_length(x)</code><br>
+<span class="custom-code">str_sub(x, start, end)</span><br>
+<code>str_to_upper(x)</code><br>
+<span class="custom-code">str_to_lower(x)</span><br>
+<code>str_to_title(x)</code><br>
+<span class="custom-code">str_trim(x)</span><br>
+<code>str_detect(x, pattern)</code></p>
+</section>
 </div>
 </div>
 
-<div class="footer footer-default">
 
-</div>
-</section></section>
-    </div>
-  </div>
+</section>
+</section>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
 
-  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
-  <script>
-
-      // Full list of configuration options available at:
-      // https://revealjs.com/config/
-      Reveal.initialize({
-'controlsAuto': true,
-'previewLinksAuto': false,
-'smaller': true,
-'pdfSeparateFragments': false,
-'autoAnimateEasing': "ease",
-'autoAnimateDuration': 1,
-'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":true},
-'pointer': {"key":"q","color":"#b18eb1","pointerSize":16,"alwaysVisible":false},
-'smaller': true,
- 
-        // Display controls in the bottom right corner
-        controls: false,
-
-        // Help the user learn the controls by providing hints, for example by
-        // bouncing the down arrow when they first encounter a vertical slide
-        controlsTutorial: false,
-
-        // Determines where controls appear, "edges" or "bottom-right"
-        controlsLayout: 'edges',
-
-        // Visibility rule for backwards navigation arrows; "faded", "hidden"
-        // or "visible"
-        controlsBackArrows: 'faded',
-
-        // Display a presentation progress bar
-        progress: true,
-
-        // Display the page number of the current slide
-        slideNumber: 'c/t',
-
-        // 'all', 'print', or 'speaker'
-        showSlideNumber: 'all',
-
-        // Add the current slide number to the URL hash so that reloading the
-        // page/copying the URL will return you to the same slide
-        hash: true,
-
-        // Start with 1 for the hash rather than 0
-        hashOneBasedIndex: false,
-
-        // Flags if we should monitor the hash and change slides accordingly
-        respondToHashChanges: true,
-
-        // Push each slide change to the browser history
-        history: false,
-
-        // Enable keyboard shortcuts for navigation
-        keyboard: true,
-
-        // Enable the slide overview mode
-        overview: true,
-
-        // Disables the default reveal.js slide layout (scaling and centering)
-        // so that you can use custom CSS layout
-        disableLayout: false,
-
-        // Vertical centering of slides
-        center: false,
-
-        // Enables touch navigation on devices with touch input
-        touch: true,
-
-        // Loop the presentation
-        loop: false,
-
-        // Change the presentation direction to be RTL
-        rtl: false,
-
-        // see https://revealjs.com/vertical-slides/#navigation-mode
-        navigationMode: 'linear',
-
-        // Randomizes the order of slides each time the presentation loads
-        shuffle: false,
-
-        // Turns fragments on and off globally
-        fragments: true,
-
-        // Flags whether to include the current fragment in the URL,
-        // so that reloading brings you to the same fragment position
-        fragmentInURL: false,
-
-        // Flags if the presentation is running in an embedded mode,
-        // i.e. contained within a limited portion of the screen
-        embedded: false,
-
-        // Flags if we should show a help overlay when the questionmark
-        // key is pressed
-        help: true,
-
-        // Flags if it should be possible to pause the presentation (blackout)
-        pause: true,
-
-        // Flags if speaker notes should be visible to all viewers
-        showNotes: false,
-
-        // Global override for autoplaying embedded media (null/true/false)
-        autoPlayMedia: null,
-
-        // Global override for preloading lazy-loaded iframes (null/true/false)
-        preloadIframes: null,
-
-        // Number of milliseconds between automatically proceeding to the
-        // next slide, disabled when set to 0, this value can be overwritten
-        // by using a data-autoslide attribute on your slides
-        autoSlide: 0,
-
-        // Stop auto-sliding after user input
-        autoSlideStoppable: true,
-
-        // Use this method for navigation when auto-sliding
-        autoSlideMethod: null,
-
-        // Specify the average time in seconds that you think you will spend
-        // presenting each slide. This is used to show a pacing timer in the
-        // speaker view
-        defaultTiming: null,
-
-        // Enable slide navigation via mouse wheel
-        mouseWheel: false,
-
-        // The display mode that will be used to show slides
-        display: 'block',
-
-        // Hide cursor if inactive
-        hideInactiveCursor: true,
-
-        // Time before the cursor is hidden (in ms)
-        hideCursorTime: 5000,
-
-        // Opens links in an iframe preview overlay
-        previewLinks: true,
-
-        // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'none',
-
-        // Transition speed (default/fast/slow)
-        transitionSpeed: 'default',
-
-        // Transition style for full page slide backgrounds
-        // (none/fade/slide/convex/concave/zoom)
-        backgroundTransition: 'none',
-
-        // Number of slides away from the current that are visible
-        viewDistance: 3,
-
-        // Number of slides away from the current that are visible on mobile
-        // devices. It is advisable to set this to a lower number than
-        // viewDistance in order to save resources.
-        mobileViewDistance: 2,
-
-        // The "normal" size of the presentation, aspect ratio will be preserved
-        // when the presentation is scaled to fit different resolutions. Can be
-        // specified using percentage units.
-        width: 1050,
-
-        height: 700,
-
-        // Factor of the display size that should remain empty around the content
-        margin: 0.1,
-
-        math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
-          config: 'TeX-AMS_HTML-full',
-          tex2jax: {
-            inlineMath: [['\\(','\\)']],
-            displayMath: [['\\[','\\]']],
-            balanceBraces: true,
-            processEscapes: false,
-            processRefs: true,
-            processEnvironments: true,
-            preview: 'TeX',
-            skipTags: ['script','noscript','style','textarea','pre','code'],
-            ignoreClass: 'tex2jax_ignore',
-            processClass: 'tex2jax_process'
-          },
-        },
-
-        // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
-
-          RevealMath,
-          RevealNotes,
-          RevealSearch,
-          RevealZoom
-        ]
-      });
-    </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
+<ol>
+<li id="fn1"><p>If you need to use the <code>separate_longer_*</code> functions, you can read more about them <a href="https://r4ds.hadley.nz/strings#separating-into-rows">here</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>To treat a metacharacter as a literal character, you must <strong>escape</strong> it with two preceding backslashes <code>\\</code>, e.g.&nbsp;to match <code>(206)</code> including the parentheses, you’d use <code>\\(206\\)</code> in your regex.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
       }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
       }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
-          }
-        }
-        return false;
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
             }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
-          }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      });
-      function tippyHover(el, contentFn) {
-        const config = {
-          allowHTML: true,
-          content: contentFn,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start'
-        };
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          return note.innerHTML;
-        });
-      }
-          let selectedAnnoteEl;
-          const selectorForAnnotation = ( cell, annotation) => {
-            let cellAttr = 'data-code-cell="' + cell + '"';
-            let lineAttr = 'data-code-annotation="' +  annotation + '"';
-            const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-            return selector;
-          }
-          const selectCodeLines = (annoteEl) => {
-            const doc = window.document;
-            const targetCell = annoteEl.getAttribute("data-target-cell");
-            const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-            const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-            const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-            const lineIds = lines.map((line) => {
-              return targetCell + "-" + line;
-            })
-            let top = null;
-            let height = null;
-            let parent = null;
-            if (lineIds.length > 0) {
-                //compute the position of the single el (top and bottom and make a div)
-                const el = window.document.getElementById(lineIds[0]);
-                top = el.offsetTop;
-                height = el.offsetHeight;
-                parent = el.parentElement.parentElement;
-              if (lineIds.length > 1) {
-                const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-                const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-                height = bottom - top;
-              }
-              if (top !== null && height !== null && parent !== null) {
-                // cook up a div (if necessary) and position it 
-                let div = window.document.getElementById("code-annotation-line-highlight");
-                if (div === null) {
-                  div = window.document.createElement("div");
-                  div.setAttribute("id", "code-annotation-line-highlight");
-                  div.style.position = 'absolute';
-                  parent.appendChild(div);
-                }
-                div.style.top = top - 2 + "px";
-                div.style.height = height + 4 + "px";
-                let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-                if (gutterDiv === null) {
-                  gutterDiv = window.document.createElement("div");
-                  gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                  gutterDiv.style.position = 'absolute';
-                  const codeCell = window.document.getElementById(targetCell);
-                  const gutter = codeCell.querySelector('.code-annotation-gutter');
-                  gutter.appendChild(gutterDiv);
-                }
-                gutterDiv.style.top = top - 2 + "px";
-                gutterDiv.style.height = height + 4 + "px";
-              }
-              selectedAnnoteEl = annoteEl;
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
             }
-          };
-          const unselectCodeLines = () => {
-            const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-            elementsIds.forEach((elId) => {
-              const div = window.document.getElementById(elId);
-              if (div) {
-                div.remove();
-              }
-            });
-            selectedAnnoteEl = undefined;
-          };
-          // Handle positioning of the toggle
-          window.addEventListener(
-          "resize",
-          throttle(() => {
-            elRect = undefined;
-            if (selectedAnnoteEl) {
-              selectCodeLines(selectedAnnoteEl);
-            }
-          }, 10)
-          );
-          function throttle(fn, ms) {
-          let throttle = false;
-          let timer;
-            return (...args) => {
-              if(!throttle) { // first call gets through
-                  fn.apply(this, args);
-                  throttle = true;
-              } else { // all the others get throttled
-                  if(timer) clearTimeout(timer); // cancel #2
-                  timer = setTimeout(() => {
-                    fn.apply(this, args);
-                    timer = throttle = false;
-                  }, ms);
-              }
-            };
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
           }
-          const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
-          for (let i=0; i<annoteTargets.length; i++) {
-            const annoteTarget = annoteTargets[i];
-            const targetCell = annoteTarget.getAttribute("data-target-cell");
-            const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
-            const contentFn = () => {
-              const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-              if (content) {
-                const tipContent = content.cloneNode(true);
-                tipContent.classList.add("code-annotation-tip-content");
-                return tipContent.outerHTML;
-              }
-            }
-            const config = {
-              allowHTML: true,
-              content: contentFn,
-              onShow: (instance) => {
-                selectCodeLines(instance.reference);
-                instance.reference.classList.add('code-annotation-active');
-                window.tippy.hideAll();
-              },
-              onHide: (instance) => {
-                unselectCodeLines();
-                instance.reference.classList.remove('code-annotation-active');
-              },
-              maxWidth: 300,
-              delay: [50, 0],
-              duration: [200, 0],
-              offset: [5, 10],
-              arrow: true,
-              appendTo: function(el) {
-                return el.parentElement.parentElement.parentElement;
-              },
-              interactive: true,
-              interactiveBorder: 10,
-              theme: 'light-border',
-              placement: 'right',
-              popperOptions: {
-                modifiers: [
-                {
-                  name: 'flip',
-                  options: {
-                    flipVariations: false, // true by default
-                    allowedAutoPlacements: ['right'],
-                    fallbackPlacements: ['right', 'top', 'top-start', 'top-end'],
-                  },
-                },
-                {
-                  name: 'preventOverflow',
-                  options: {
-                    mainAxis: false,
-                    altAxis: false
-                  }
-                }
-                ]        
-              }      
-            };
-            window.tippy(annoteTarget, config); 
-          }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
-          }
-        } else {
-          return undefined;
+          selectedAnnoteEl = annoteEl;
         }
       };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
-          });
-        }
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href);
-        }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-              // default icon
-              link.classList.add("external");
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
           }
-        }
-    });
-    </script>
-    
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Created with <a href="https://quarto.org/">Quarto</a> • <a href="https://creativecommons.org/licenses/by-nc/4.0/">License</a></div>   
+    <div class="nav-footer-center">Copyright © 2023 Victoria Sass <br> Course content adapted from <a href="https://clanfear.github.io/CSSS508/">Chuck Lanfear</a> and <a href="https://pearce790.github.io/CSSS508/index.html">Michael Pearce</a></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="mailto:vsass@uw.edu">
+      <i class="bi bi-envelope-at" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=A3lEdiIAAAAJ&amp;hl=en">
+      <i class="bi bi-google" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vsass">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="http://vsass.github.io/Sass_Victoria_CV_2023.pdf">
+      <i class="bi bi-file-person" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
 
 </body></html>

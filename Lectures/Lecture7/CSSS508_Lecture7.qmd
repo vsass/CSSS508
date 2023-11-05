@@ -26,14 +26,6 @@ revealjs-plugins:
   - pointer
 ---
 
-```{r}
-#| echo: false
-#| cache: false
-require(downlit)
-require(xml2)
-require(tidyverse)
-```
-
 ## {#title-slide data-menu-title="Working with Text Data" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
 
 ```{r}
@@ -84,8 +76,7 @@ knitr::opts_chunk$set(comment = ">")
 
 * Types of Data
   * Strings
-* String Manipulation
-* Regular Expressions
+* Pattern Matching & Regular Expressions
 
 :::
 
@@ -235,9 +226,23 @@ str_c(c("CSSS", "STAT", "SOC"), 508, sep = " ", collapse = ", ") # <9>
 8. You can add a specific separator, including a space, using the `sep` argument. 
 9. If you want to combine the output into a single string, use `collapse`. 
 
-## Example with Restaurant Data
+## Example #1 with Restaurant Data
 
-You can create strings based on the value of other strings with `str_c()` (`str`ing `c`ombine), which takes any number of vectors and returns a character vector. 
+
+```{r}
+#| output-location: fragment
+restaurants |> 
+  select(Name, Address, City) |> 
+  distinct() |> 
+  mutate(Sentence = str_c(Name, " is located at ", Address, " in ", City, "."), # <10>
+         .keep = "none") # <11>
+```
+10. Notice there are spaces at the beginning and end of the fixed character strings. This is because if we used the `sep` argument here it would add a space before the period at the end of the sentence. So instead, we can add them directly where we want them. 
+11. Using `.keep = "none"` here in order to see *just* the results of our mutate. 
+
+## Example #2 with Restaurant Data
+
+As we saw in the previous example, when you're mixing many fixed and variable strings with `str_c()` things can get overwhelmed by quotation marks pretty easily. An alternative with simpler syntax is `str_glue()` in which anything inside `{}` will be evaluated like it's outside the quotes. 
 
 . . . 
 
@@ -246,23 +251,11 @@ You can create strings based on the value of other strings with `str_c()` (`str`
 restaurants |> 
   select(Name, Address, City) |> 
   distinct() |> 
-  mutate(Sentence = str_c(Name, " is located at ", Address, " in ", City, ".")) # <10>
-```
-10. Notice there are spaces at the beginning and end of the fixed character strings. This is because if we used the `sep` argument here it would add a space before the period at the end of the sentence. So instead, we can add them directly where we want them. 
-
-## Creating Strings
-
-As we saw in the previous example, when you're mixing many fixed and variable strings with `str_c()` things can get overwhelmed by quotation marks pretty easily. An alternative with simpler syntax is `str_glue()` in which anything inside `{}` will be evaluated like it's outside the quotes. 
-
-```{r}
-#| output-location: fragment
-restaurants |> 
-  select(Name, Address, City) |> 
-  distinct() |> 
-  mutate(Sentence = str_glue("{Name} is located at {Address} in {City}."))
+  mutate(Sentence = str_glue("{Name} is located at {Address} in {City}."), 
+         .keep = "none")
 ```
 
-## Creating Strings
+## Example #3 with Restaurant Data
 
 If you want to create a summary of certain character strings you can use `str_flatten()` which takes a character vector and combines each element of the vector into a single string. 
 
@@ -272,37 +265,362 @@ If you want to create a summary of certain character strings you can use `str_fl
 #| output-location: fragment
 restaurants |> 
   select(Name, `Inspection Score`) |> # <11>
-  summarize(inspection_scores = str_flatten(`Inspection Score`, ", "), 
+  summarize(inspection_scores = str_flatten(`Inspection Score`, collapse = ", "), 
             .by = Name)
 ```
 11. Notice that when a variable has spaces in it's name (rather than being separated with an underscore in snake_case, for instance) you need to put backticks around it so `R` knows it is a singular object name. 
 
+## Extracting Data from Strings
 
-## Base `R` Equivalents
+Oftentimes you'll have multiple pieces of information in one single string. That's where the family of `separate_*` functions come in handy. 
+
+. . . 
+
+```{r}
+#| eval: false
+separate_longer_delim(col, delim) # <12>
+separate_longer_position(col, width) # <13>
+separate_wider_delim(col, delim, names) # <14>
+separate_wider_position(col, widths) # <15>
+```
+12. Takes a string and splits it into many rows based on a specified delimiter. Tends to be most useful when the number of components varies from row to row.
+13. Rarer use case but also splits into many rows, now based on the width of the output desired. 
+14. Takes a string and splits it into many columns based on a specified delimiter. Need to provide names for the new columns created by the split. 
+15. Rather than a delimiter you provide a named integer vector where the name gives the name of the new column, and the value is the number of characters it occupies. 
+
+## Example with Restaurant Data
+
+The most common use case will be the need to split a character string into multiple columns, which will require the `separate_wider_*` functions^[If you need to use the `separate_longer_*` functions, you can read more about them [here](https://r4ds.hadley.nz/strings#separating-into-rows).]. 
+
+. . . 
+
+```{r}
+#| output-location: fragment
+restaurants |> 
+  select(`Inspection Date`) |> # <16>
+  separate_wider_delim(`Inspection Date`, 
+                       delim = "/", 
+                       names = c("month", "day", "year"))
+
+```
+16. This variable was read in as a character string rather than a date object. 
+
+## `separate_wider_*` functions
+
+The nice thing about this set of functions is that they have a built-in debugging method for instances when some rows don't have the expected number of pieces. 
+
+```{r}
+#| output-location: fragment
+#| error: true
+restaurants |> 
+  select(Address) |> 
+  separate_wider_delim(Address, 
+                       delim = " ", 
+                       names = c("num", "name", "type")) 
+```
+
+## `separate_wider_*` functions
+
+The nice thing about this set of functions is that they have a built-in debugging method for instances when some rows don't have the expected number of pieces.
+
+```{r}
+#| output-location: fragment
+#| warning: true
+debug <- restaurants |> 
+  select(Address) |> 
+  separate_wider_delim(Address, 
+                       delim = " ", 
+                       names = c("num", "name", "type"), 
+                       too_many = "debug", # <17>
+                       too_few = "debug") 
+debug[debug$Address_pieces == 4, ] # <18>
+```
+17. `too_few = "align_start"` and `too_few = "align_end"` will add `NA`s to the missing pieces depending on where they should go.
+18. Example of the `too_many` error (`Address_pieces` ranged from 4 to 9 in this dataset). 
+    
+
+## `separate_wider_*` functions
+
+The nice thing about this set of functions is that they have a built-in debugging method for instances when some rows don't have the expected number of pieces.
+
+```{r}
+#| output-location: fragment
+#| warning: true
+debug <- restaurants |> 
+  select(Address) |> 
+  separate_wider_delim(Address, 
+                       delim = " ", 
+                       names = c("num", "name", "type"),
+                       too_many = "debug",
+                       too_few = "debug") # <19>
+debug[debug$Address_pieces == 2, ] # <20>
+```
+19. Example of the `too_few` error.
+20. You can either silently “drop” any additional pieces with `too_many = "drop"` or “merge” them all into the final column with `too_many = "merge"`. 
+
+## Modifying Strings: Converting Cases
+
+`str_to_upper()`, `str_to_lower()`, `str_to_title()` convert cases, which is often a good idea to do before searching for values:
+
+```{r make_seattle_uppercase}
+unique_cities <- unique(restaurants$City)
+unique_cities  |> 
+  head()
+
+str_to_upper(unique_cities) |> 
+  head()
+str_to_lower(unique_cities) |> 
+  head()
+str_to_title(unique_cities) |> 
+  head()
+```
+
+## Modifying Strings: Removing Whitespace
+
+Extra leading or trailing whitespace is common in text data:
+
+```{r show_whitespace}
+unique_names <- unique(restaurants$Name)
+unique_names |> 
+  head(3)
+```
+
+We can remove the whitespace using `str_trim()`:
+
+```{r clean_whitespace}
+str_trim(unique_names) |>  
+  head(3)
+```
+
+## Counting Characters
+
+At the most basic level you can use `str_length()` to count the characters are in a string. 
+
+. . . 
+
+```{r}
+#| output-location: fragment
+restaurants |> 
+  select(`Phone`) |> 
+  mutate(phone_length = str_length(`Phone`)) |> # <21> 
+  count(phone_length) # <22>
+```
+21. Getting the length of `Phone` 
+22. Getting the count of different lengths for `Phone` found in the data
+
+. . . 
+
+```{r}
+#| output-location: fragment
+phone_numbers <- restaurants |>
+  select(`Phone`) |> 
+  mutate(phone_length = str_length(`Phone`)) 
+
+phone_numbers |> 
+  filter(phone_length %in% c(15, 18)) |> 
+  slice_head(n = 1, by = phone_length) # <23>
+```
+23. Filtering for the two abnormal phone number lengths, and getting the first observation (row) by the two different numbers (15, 18). 
+
+
+## Subsetting Strings
+
+If we want to subset a string we can use `str_sub()`. Let's pull out just the area codes from the `Phone` variable. 
+
+```{r}
+#| output-location: fragment
+restaurants |> 
+  select(`Phone`) |> 
+  mutate(area_code = str_sub(`Phone`, start = 2, end = 4)) |> # <24> 
+  distinct(area_code)
+```
+24. `start` and `end` are the positions where the "substring" should start and end (inclusive). You can also use negative values to count backwards from the end of a string. Note that `str_sub()` won’t fail if the string is too short: it will just return as much as possible. 
+
+## Working with Non-English Strings
+
+Computer infrastructure is heavily biased towards English speakers so there are some things to be aware of if you're interested in working with character data in a different language. 
+
+. . . 
+
+<br>
+
+#### Encoding
+
+* [UTF-8](https://en.wikipedia.org/wiki/UTF-8) can encode just about every character used by humans today and many extra symbols like emojis. 
+  * `readr` uses UTF-8 everywhere. This is a good default but will fail for data produced by older systems that don’t use UTF-8. 
+* To read these correctly, you specify the encoding via the `locale` argument (hopefully that information is provided in the data documentation). 
+  * Unfortunately, that’s rarely the case, so `readr` provides `guess_encoding()` to help you figure it out. It’s not foolproof and works better when you have lots of text.
+* Learn more about the intricacies of encoding [here](https://kunststube.net/encoding/).
+
+## Working with Non-English Strings
+
+Computer infrastructure is heavily biased towards English speakers so there are some things to be aware of if you're interested in working with character data in a different language. 
+
+<br>
+
+#### Letter Variations
+
+* Accented letters may be either 1 character or 2 depending upon how they're encoded, which affects position for `str_length()` and `str_sub()`.
+* `str_equal()` will recognize that the different variations have the same appearance while `==` will evaluate them as different.
+
+# Pattern Matching & Regular Expressions {.section-title background-color="#99a486"}
+
+## Pattern-Matching!
+
+It's common to want to see if a string satisfies a certain *pattern*.
+
+. . . 
+
+We did this with numeric values earlier in this course!
+
+```{r}
+restaurants |>  
+  filter(`Inspection Score` < 10 | `Inspection Score` > 150)
+```
+
+
+## Patterns: `str_detect()` 
+
+We can do similar pattern-checking using `str_detect()`:
+
+```{r}
+#| eval: false
+str_detect(string, pattern) # <1>
+```
+1. `string` is the character string (or vector of strings) we want to examine and `pattern` is the pattern that we're checking for, inside `string`. The output will be a `TRUE`/`FALSE` vector indicating if pattern was found.
+
+. . . 
+
+<br>
+
+```{r}
+#| output-location: fragment
+restaurants |> 
+  select(Name, Address) |> 
+  filter(str_detect(Address, "Pike")) |> 
+  distinct()
+```
+
+. . . 
+
+<br>
+
+Hmmm...there are only 5 restaurants on a street with Pike in the name?!
+
+## Patterns: `str_detect()` 
+
+We can do similar pattern-checking using `str_detect()`:
+
+```{r}
+#| eval: false
+str_detect(string, pattern) # <1>
+```
+1. `string` is the character string (or vector of strings) we want to examine and `pattern` is the pattern that we're checking for, inside `string`. The output will be a `TRUE`/`FALSE` vector indicating if pattern was found.
+
+<br>
+
+```{r}
+#| output-location: fragment
+restaurants |> 
+  select(Name, Address) |> 
+  mutate(Address = str_to_title(Address)) |> # <2>
+  filter(str_detect(Address, "Pike")) |> 
+  distinct()
+```
+2. Note: Results are case-sensitive!! Therefore we need to transform all the addresses to the same case. 
+
+## Patterns: `str_detect()`
+
+Let's see which phone numbers are in the 206 area code:
+
+```{r}
+restaurants |> 
+  distinct(Phone) |>
+  mutate(area_code_206 = str_detect(string = Phone, pattern = "206"))
+```
+
+## Replacement: `str_replace()`
+
+What about if you want to replace a string with something else? Use `str_replace()`!
+
+. . . 
+
+This function works very similarly to `str_detect()`, but with one extra argument:
+
+```{r}
+#| eval: false
+str_replace(string, pattern, replacement) # <2> 
+```
+2. `replacement` is what `pattern` is substituted for.
+
+. . . 
+
+```{r}
+restaurants |> 
+  select(`Inspection Date`) |> 
+  mutate(full_date = str_replace(string = `Inspection Date`, 
+                                 pattern = "01/",
+                                 replacement = "January "))
+
+
+str_replace(string = "Hi, I'm Vic",
+            pattern = "Hi", 
+            replacement = "Hello")
+```
+
+
+
+## What are Regular Expressions?
+
+**Regular expressions** or **regex**es are how we describe patterns we are looking for in text in a way that a computer can understand. We write an **expression**, apply it to a string input, and then can do things with **matches** we find.
+
+. . . 
+
+* **Literal characters** are defined snippets to search for like `SEA` or `206`. 
+
+. . . 
+
+* **Metacharacters**^[To treat a metacharacter as a literal character, you must **escape** it with two preceding backslashes `\\`, e.g. to match `(206)` including the parentheses, you'd use `\\(206\\)` in your regex.] let us be flexible in describing patterns:
+  * **Quantifiers** control how many times a pattern can match.
+    * `?` makes a pattern optional (i.e. it matches 0 or 1 times)
+    * `+` lets a pattern repeat (i.e. it matches at least once)
+    * `*` lets a pattern be optional or repeat (i.e. it matches any number of times, including 0).
+  * **Character classes** are defined by `[]` and let you match a set of characters. 
+    * You can invert a match by starting it with `^`
+  * **Alternation**, `|`, allows us to pick between one or more alternative patterns.
+  
+  
+  ## Base `R` Equivalents
 
 :::: {.columns}
 
 ::: {.column width="50%"}
 #### Base `R`
-[paste0(x, sep, collapse)]{.custom-code}
-
-
+[paste0(x, sep, collapse)]{.custom-code}  
+[]{.custom-code}  
+`nchar(x)`  
+[substr(x, start, end)]{.custom-code}  
+`toupper(x)`  
+[tolower(x)]{.custom-code}  
+`tools::toTitleCase(x)`  
+[trimws(x)]{.custom-code}  
+`grepl(pattern, x)`
 :::
 
 ::: {.column width="50%"}
 #### `stringr`
-[str_c(x, sep, collapse)]{.custom-code}
-
+[str_c(x, sep, collapse)]{.custom-code}  
+[str_flatten(x, collapse)]{.custom-code}  
+`str_length(x)`  
+[str_sub(x, start, end)]{.custom-code}    
+`str_to_upper(x)`  
+[str_to_lower(x)]{.custom-code}  
+`str_to_title(x)`  
+[str_trim(x)]{.custom-code}  
+`str_detect(x, pattern)`
 :::
 
 ::::
-
-
-
-
-
-
-
 
 
 
