@@ -362,7 +362,10 @@ debug[debug$Address_pieces == 2, ] # <20>
 
 `str_to_upper()`, `str_to_lower()`, `str_to_title()` convert cases, which is often a good idea to do before searching for values:
 
-```{r make_seattle_uppercase}
+. . . 
+
+```{r}
+#| output-location: fragment
 unique_cities <- unique(restaurants$City)
 unique_cities  |> 
   head()
@@ -380,6 +383,7 @@ str_to_title(unique_cities) |>
 Extra leading or trailing whitespace is common in text data:
 
 ```{r show_whitespace}
+#| output-location: fragment
 unique_names <- unique(restaurants$Name)
 unique_names |> 
   head(3)
@@ -528,16 +532,12 @@ restaurants |>
   distinct()
 ```
 2. Note: Results are case-sensitive!! Therefore we need to transform all the addresses to the same case. 
+## Patterns: `str_detect()` 
 
-## Patterns: `str_detect()`
 
-Let's see which phone numbers are in the 206 area code:
 
-```{r}
-restaurants |> 
-  distinct(Phone) |>
-  mutate(area_code_206 = str_detect(string = Phone, pattern = "206"))
-```
+
+
 
 ## Replacement: `str_replace()`
 
