@@ -153,7 +153,7 @@ There are other things you may want to represent inside a character string, such
 str_view("Sometimes you need\nto create another line.") # <5>
 str_view("\tOther times you just need to indent somewhere.") # <6>
 ```
-5. Use `\n` to create a new line. Helpful when plotting if you have variable names or values that are wordy!
+5. Use `\n` to create a new line. Helpful when plotting if you have variable names or values that are wordy! If you need to do this for one or more variables you can use `str_wrap()` and specify the character width you desire. 
 6. Use `\t` to add a tab. `str_view` will highlight tabs in blue in your console to make it stand out from other random whitespace. 
 
 . . . 
@@ -319,6 +319,16 @@ restaurants |>
                        names = c("num", "name", "type")) 
 ```
 
+. . . 
+
+These debugging options will add 3 new variables to the data frame that begin with the name of the splitting variable with a suffix to designate the information they provide. 
+
+. . . 
+
+* `_ok` is a binary `TRUE`/`FALSE` telling you if that observation split in the expected way.  
+* `_pieces` returns the number of pieces that observation actually contains. 
+* `_remainder` returns the additional pieces left over (if any) for that observation. 
+
 ## `separate_wider_*` functions
 
 The nice thing about this set of functions is that they have a built-in debugging method for instances when some rows don't have the expected number of pieces.
@@ -335,7 +345,7 @@ debug <- restaurants |>
                        too_few = "debug") 
 debug[debug$Address_pieces == 4, ] # <18>
 ```
-17. `too_few = "align_start"` and `too_few = "align_end"` will add `NA`s to the missing pieces depending on where they should go.
+17. `too_many = "drop"` will drop any additional pieces and `too_many = "merge"` will merge them all into the final column.
 18. Example of the `too_many` error (`Address_pieces` ranged from 4 to 9 in this dataset). 
     
 
@@ -355,8 +365,9 @@ debug <- restaurants |>
                        too_few = "debug") # <19>
 debug[debug$Address_pieces == 2, ] # <20>
 ```
-19. Example of the `too_few` error.
-20. You can either silently “drop” any additional pieces with `too_many = "drop"` or “merge” them all into the final column with `too_many = "merge"`. 
+19. `too_few = "align_start"` and `too_few = "align_end"` will add `NA`s to the missing pieces depending on where they should go.
+20. Example of the `too_few` error.
+
 
 ## Modifying Strings: Converting Cases
 
