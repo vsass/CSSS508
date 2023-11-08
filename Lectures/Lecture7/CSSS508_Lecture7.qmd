@@ -676,7 +676,7 @@ restaurants |>
   mutate(Address = str_to_upper(Address)) |> 
   slice_head(n = 30) |> 
   pull(Address) |> 
-  str_view(pattern = "(ST|AVE|BL|WAY|PL)([:alpha:+]?)$", match = NA)
+  str_view(pattern = "(ST|AVE|BL|WAY|PL|HWY){1}( ?)(N|W|E|S|NW|NE|SW|SE?)(?=.*?)$", match = NA)
 
 restaurants |> 
   select(Address) |> 
@@ -725,6 +725,9 @@ restaurants |>
 :::
 
 ::::
+
+
+
 
 
 
