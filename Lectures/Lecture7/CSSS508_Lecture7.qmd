@@ -483,7 +483,20 @@ Computer infrastructure is heavily biased towards English speakers so there are 
 * Accented letters may be either 1 character or 2 depending upon how they're encoded, which affects position for `str_length()` and `str_sub()`.
 * `str_equal()` will recognize that the different variations have the same appearance while `==` will evaluate them as different.
 
-# Pattern Matching & Regular Expressions {.section-title background-color="#99a486"}
+## Working with Non-English Strings
+
+Computer infrastructure is heavily biased towards English speakers so there are some things to be aware of if you're interested in working with character data in a different language. 
+
+<br>
+
+#### Locale-Dependent Functions
+
+*  A locale is similar to a language but includes an optional region specifier to handle regional variations within a language^[You can see which are supported in `stringr` by looking at `stringi::stri_locale_list()`].
+* Base `R` string functions will automatically use the locale set by your operating system which means that base R string functions do what you expect for your language. 
+  * However, your code might work differently if you share it with someone who lives in a different country.
+  * To avoid this problem, `stringr` defaults to English rules by using the “en” locale and requires you to specify the locale argument to override it. 
+
+# Pattern Matching & <br> Regular Expressions {.section-title background-color="#99a486"}
 
 ## Pattern-Matching!
 
@@ -548,11 +561,6 @@ restaurants |>
   distinct()
 ```
 2. Note: Results are case-sensitive!! Therefore we need to transform all the addresses to the same case. 
-## Patterns: `str_detect()` 
-
-
-
-
 
 
 ## Replacement: `str_replace()`
@@ -565,9 +573,9 @@ This function works very similarly to `str_detect()`, but with one extra argumen
 
 ```{r}
 #| eval: false
-str_replace(string, pattern, replacement) # <2> 
+str_replace(string, pattern, replacement) # <3> 
 ```
-2. `replacement` is what `pattern` is substituted for.
+3. `replacement` is what `pattern` is substituted for.
 
 . . . 
 
@@ -575,38 +583,118 @@ str_replace(string, pattern, replacement) # <2>
 restaurants |> 
   select(`Inspection Date`) |> 
   mutate(full_date = str_replace(string = `Inspection Date`, 
-                                 pattern = "01/",
+                                 pattern = "01/", # <4>
                                  replacement = "January "))
+```
+4. In this case, our pattern is limited since `"01/"` occurs both for the month and the day. This would be a good place for a regular expression. 
 
 
-str_replace(string = "Hi, I'm Vic",
-            pattern = "Hi", 
-            replacement = "Hello")
+## What are Regular Expressions? <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+**Regular expressions**^[Regular expressions are very compact and use a lot of punctuation characters, so they can seem overwhelming and hard to read at first. **DO NOT** prioritize learning this right now, especially if you are still a beginner! This information is for future reference and to give you a sense of what you can do if you need/want to work with text data in the future.] or **regex** are how we describe patterns we are looking for in text in a way that a computer can understand. We write an **expression**, apply it to a string input, and then can do things with **matches** we find.
+
+. . . 
+
+* **Literal characters** are defined snippets to search for like `Pike` or `01/`. 
+
+. . . 
+
+* **Metacharacters**^[To treat a metacharacter as a literal character, you must **escape** it with two preceding backslashes `\\`, e.g. to match `(206)` including the parentheses, you'd use `\\(206\\)` in your regex.] let us be flexible in describing patterns. Some basic types of metacharacters include:
+  * **Quantifiers** control how many times a pattern can match
+    * `?` makes a pattern optional (i.e. it matches 0 or 1 times)
+    * `+` lets a pattern repeat (i.e. it matches at least once)
+    * `*` lets a pattern be optional or repeat (i.e. it matches any number of times, including 0)
+    * `{n}` matches exactly `n` times, `{n,}` matches at least `n` times, `{n, m}` matches between `n` and `m` times
+  * **Character classes** are defined by `[]` and let you match a set of characters
+    * `.` matches any character except a new line (`\n`)
+    * `-` allows you to specify a range
+    * You can invert a match by starting it with `^`
+  * **Alternation**, `|`, allows us to pick between one or more alternative patterns
+  * **Anchors** allow you to add specificity as to where the match occurs
+    * Use `^` to anchor the start
+    * Use `$` to anchor the end
+    * Match the boundary between words (start or end) with `\b`
+  
+. . . 
+
+[Here's a good site](https://regexlearn.com/) to learn `regex` if you need to/when you're ready!
+  
+## Replacement with regex: `str_replace()`
+
+Let's go back to our example and see if we can use a regular expression to create a full date for 
+
+. . . 
+
+```{r}
+restaurants |> 
+  select(`Inspection Date`) |> 
+  mutate(full_date = str_replace(string = `Inspection Date`, 
+                                 pattern = "^01/", # <5>
+                                 replacement = "January "))
+```
+5. We can pretty simply use a regex signifier (the starting anchor `^`) to make sure our replacement only happens to the `01/`s in the month position.   
+## `separate_wider_regex()`
+
+Let's look at a more realistic example and introduce the `regex` version of our `separate_wider_*` functions. 
+
+. . .
+
+What if we wanted to separate the `Description` variable into two separate variables: `Capacity` and `Risk Category`. 
+
+```{r}
+table(restaurants$Description)
 ```
 
 
 
-## What are Regular Expressions?
 
-**Regular expressions** or **regex**es are how we describe patterns we are looking for in text in a way that a computer can understand. We write an **expression**, apply it to a string input, and then can do things with **matches** we find.
 
-. . . 
 
-* **Literal characters** are defined snippets to search for like `SEA` or `206`. 
 
-. . . 
 
-* **Metacharacters**^[To treat a metacharacter as a literal character, you must **escape** it with two preceding backslashes `\\`, e.g. to match `(206)` including the parentheses, you'd use `\\(206\\)` in your regex.] let us be flexible in describing patterns:
-  * **Quantifiers** control how many times a pattern can match.
-    * `?` makes a pattern optional (i.e. it matches 0 or 1 times)
-    * `+` lets a pattern repeat (i.e. it matches at least once)
-    * `*` lets a pattern be optional or repeat (i.e. it matches any number of times, including 0).
-  * **Character classes** are defined by `[]` and let you match a set of characters. 
-    * You can invert a match by starting it with `^`
-  * **Alternation**, `|`, allows us to pick between one or more alternative patterns.
-  
-  
-  ## Base `R` Equivalents
+
+## Try later
+
+What if we wanted to *actually* extract the different components of the `Address` variable. 
+
+```{r}
+#| output-location: fragment
+restaurants |> 
+  select(Address) |> 
+  distinct()
+```
+
+
+
+```{r}
+#| output-location: fragment
+#| error: true
+
+restaurants |> 
+  select(Address) |> 
+  distinct() |> 
+  mutate(Address = str_to_upper(Address)) |> 
+  slice_head(n = 30) |> 
+  pull(Address) |> 
+  str_view(pattern = "(ST|AVE|BL|WAY|PL)([:alpha:+]?)$", match = NA)
+
+restaurants |> 
+  select(Address) |> 
+  distinct() |> 
+  mutate(Address = str_to_upper(Address)) |> 
+  separate_wider_regex(string = Address, 
+                       patterns = c(num = "^[:digit:]+",  
+                                    direction = "(?<=[:digit:])( [:alpha:]{1,2}? )",
+                                    name = "(?<=[:digit:])( .*? )(?=ST|AVE|BL|WAY|PL)",
+                                    type = "(?<= .*?))( ST|AVE|BL|WAY|PL )(.{1,2}?)")) # <6>
+
+```
+6. With this function you give it a named character vector where the names become the column names and the character strings are regular expressions that match the desired contents of the vector. 
+
+## `separate_wider_regex()`
+
+
+## Base `R` Equivalents
 
 :::: {.columns}
 
