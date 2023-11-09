@@ -158,6 +158,9 @@ str_view("\tOther times you just need to indent somewhere.") # <6>
 
 . . . 
 
+If you need to limit the width of an entire 
+. . . 
+
 Additionally, you can represent [Unicode](https://en.wikipedia.org/wiki/List_of_Unicode_characters) characters which will be written with the `\u` or `\U` escape. 
 
 ```{r}
@@ -270,9 +273,55 @@ restaurants |>
 ```
 11. Notice that when a variable has spaces in it's name (rather than being separated with an underscore in snake_case, for instance) you need to put backticks around it so `R` knows it is a singular object name. 
 
-## Extracting Data from Strings
+## Example #4 with Restaurant Data
 
-Oftentimes you'll have multiple pieces of information in one single string. That's where the family of `separate_*` functions come in handy. 
+What if we want to plot one of the variables in our dataset but many of its values are too long and it'd be too arduous to manually add `\n` to every long value? There's `str_wrap()`!
+
+. . . 
+
+```{r}
+#| output: false
+restaurants |> 
+  mutate(Name = str_wrap(Name, width = 20)) |> 
+  distinct(Name)
+```
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| output: true
+restaurants |> 
+  mutate(Name = str_wrap(Name, width = 20)) |> 
+  distinct(Name)
+```
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+```{r}
+#| echo: false
+#| output: true
+library(gt)
+long <- restaurants |> 
+  select(Name) |> 
+  distinct() |> 
+  mutate(Name = str_wrap(Name, width = 20), 
+         Name = str_replace_all(Name, "\n", "<br>")) |> 
+  slice_head(n = 10) |> 
+  gt() |> 
+  fmt_markdown(columns = everything())
+long
+```
+:::
+:::
+
+::::
+
+## Separating Character Strings into Multiple Variables
+
+Oftentimes you'll have multiple pieces of information in one single string. That's where the family of `separate_*` functions^[These functions actually come from the `tidyr` package because they operate on (columns of) data frames, rather than individual vectors. You'll notice that all of the `str_*` functions go inside a `dplyr` function, such as `mutate`, `filter`, etc. That's because they operate on the level of a vector, not a dataframe. These `separate_*` functions, however, work like `dplyr` functions in that they operate directly on a column of data so you can pipe a data frame directly to them.] come in handy. 
 
 . . . 
 
@@ -368,7 +417,6 @@ debug[debug$Address_pieces == 2, ] # <20>
 19. `too_few = "align_start"` and `too_few = "align_end"` will add `NA`s to the missing pieces depending on where they should go.
 20. Example of the `too_few` error.
 
-
 ## Modifying Strings: Converting Cases
 
 `str_to_upper()`, `str_to_lower()`, `str_to_title()` convert cases, which is often a good idea to do before searching for values:
@@ -390,6 +438,13 @@ str_to_title(unique_cities) |>
 ```
 
 ## Modifying Strings: Removing Whitespace
+
+```{r}
+#| echo: false
+restaurants <- restaurants |> 
+  mutate(Name = if_else(Name == "+MAS CAFE", "+MAS CAFE  ", Name))
+```
+
 
 Extra leading or trailing whitespace is common in text data:
 
@@ -446,6 +501,8 @@ phone_numbers |>
 ## Subsetting Strings
 
 If we want to subset a string we can use `str_sub()`. Let's pull out just the area codes from the `Phone` variable. 
+
+. . . 
 
 ```{r}
 #| output-location: fragment
@@ -591,7 +648,7 @@ restaurants |>
 
 ## What are Regular Expressions? <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
-**Regular expressions**^[Regular expressions are very compact and use a lot of punctuation characters, so they can seem overwhelming and hard to read at first. **DO NOT** prioritize learning this right now, especially if you are still a beginner! This information is for future reference and to give you a sense of what you can do if you need/want to work with text data in the future.] or **regex** are how we describe patterns we are looking for in text in a way that a computer can understand. We write an **expression**, apply it to a string input, and then can do things with **matches** we find.
+**Regular expressions**^[Regular expressions are very compact and use a lot of punctuation characters, so they can seem overwhelming and hard to read at first. **DO NOT** prioritize learning this right now, especially if you are still a beginner! This information is for future reference and to give you a sense of what you can do if you need/want to work with text data in the future.] or **regexes** are how we describe patterns we are looking for in text in a way that a computer can understand. We write an **expression**, apply it to a string input, and then can do things with **matches** we find.
 
 . . . 
 
@@ -599,7 +656,7 @@ restaurants |>
 
 . . . 
 
-* **Metacharacters**^[To treat a metacharacter as a literal character, you must **escape** it with two preceding backslashes `\\`, e.g. to match `(206)` including the parentheses, you'd use `\\(206\\)` in your regex.] let us be flexible in describing patterns. Some basic types of metacharacters include:
+* **Metacharacters**^[To treat a metacharacter as a literal character, you must **escape** it with two preceding backslashes `\\`, e.g. to match `(206)` including the parentheses, you'd use `\\(206\\)` in your regex.] let us be flexible in describing patterns. Some basic types of metacharacters are listed below. 
   * **Quantifiers** control how many times a pattern can match
     * `?` makes a pattern optional (i.e. it matches 0 or 1 times)
     * `+` lets a pattern repeat (i.e. it matches at least once)
@@ -609,19 +666,28 @@ restaurants |>
     * `.` matches any character except a new line (`\n`)
     * `-` allows you to specify a range
     * You can invert a match by starting it with `^`
+  * **Grouping** allows you to override the default precedence rules for regular expressions
+    * `()` also allows you to create groups which can be referenced later in the regular expression with backreferences, like `\1`, `\2`
+    * Use `(?:)`, the non-grouping parentheses, to control precedence but not capture the match in a group. This is slightly more efficient than capturing parentheses and most useful for complex cases where you need to capture matches and control precedence independently.
   * **Alternation**, `|`, allows us to pick between one or more alternative patterns
   * **Anchors** allow you to add specificity as to where the match occurs
     * Use `^` to anchor the start
     * Use `$` to anchor the end
     * Match the boundary between words (start or end) with `\b`
+  * **Lookarounds** look ahead or behind the current match without “consuming” any characters. These are useful when you want to check that a pattern exists, but you don't want to include it in the result.
+    * `(?=...)` is a positive look-ahead assertion. Matches if `...` matches at the current input
+    * `(?!...)` is a negative look-ahead assertion. Matches if `...` does not match at the current input
+    * `(?<=...)` is a positive look-behind assertion. Matches if `...` matches text preceding the current position. Length must be bounded (i.e. no `*` or `+`)
+    * `(?<!...)` is a negative look-behind assertion. Matches if `...` does not match text preceding the current position. Length must be bounded
+(i.e. no `*` or `+`)
   
 . . . 
 
-[Here's a good site](https://regexlearn.com/) to learn `regex` if you need to/when you're ready!
+You can read more about regular expressions in `stringr` [here](https://stringr.tidyverse.org/articles/regular-expressions.html#grouping) and [this is a useful tutorial](https://regexlearn.com/) to learn `regex` if you need to/when you're ready!
   
 <br>  
   
-## Replacement with regex: `str_replace()`
+## Separation with regex {auto-animate=true}
 
 Let's go back to our example and see if we can use a regular expression to replace `01/` just for the month position of our date variable. 
 
@@ -635,11 +701,11 @@ restaurants |>
                                  pattern = "^01/", # <5>
                                  replacement = "January "))
 ```
-5. We can pretty simply use a regex signifier (the starting anchor `^`) to make sure our replacement only happens to the `01/`s in the month position.   
+5. We can pretty simply use a regex signifier (the starting anchor `^`) to make sure our replacement only happens to the `01/`s in the month position.
 
 ## Separation with regex
 
-Let's look at a more realistic example and introduce the regex version of our `separate_wider_*` functions. What if we wanted to separate the `Description` variable into two separate variables: `capacity_description` and `risk_category`. 
+Let's look at a more realistic example and introduce the regex version of our `separate_wider_*` functions. What if we wanted to separate the `Description` variable into two separate variables: `capacity_description` and `risk_category`?
 
 ```{r}
 #| output-location: fragment
@@ -663,7 +729,7 @@ res_sep <- restaurants |>
                        patterns = c(capacity_description = "^.+", # <10>
                                     risk_category = "Risk ?(?:Category)? ?I{1,3}$")) 
 ```
-8. For this example I want to limit the dataset just to the pertinent variables so I am only keeping all distinct combinations of `Name` and `Description`.
+8. For this example I want to limit the dataset just to the pertinent variables for illustrative purposes so I am only keeping the distinct values of `Name` and `Description`. 
 9. The `cols` argument of this function is the column you want to separate. 
 10. The `patterns` argument takes a named character vector where the names become the column names and the character strings are regular expressions that match the desired contents of the vector. 
 
@@ -746,13 +812,18 @@ res_sep |>
 
 Nice! 
 
+![](images/outkast_fresh_clean.gif){.absolute right=0 top=400}
+
+## Other Uses for Regular Expressions
 
 
-## Base `R` Equivalents
+
+
+## Base `R` Equivalents^[You can see a full list [here](https://stringr.tidyverse.org/articles/from-base.html), including functions we didn't look at today.]  
 
 :::: {.columns}
 
-::: {.column width="50%"}
+::: {.column width="45%"}
 #### Base `R`
 [paste0(x, sep, collapse)]{.custom-code}  
 []{.custom-code}  
@@ -762,10 +833,12 @@ Nice!
 [tolower(x)]{.custom-code}  
 `tools::toTitleCase(x)`  
 [trimws(x)]{.custom-code}  
-`grepl(pattern, x)`
+`grepl(pattern, x)`  
+[sub(x, pattern, replacement)]{.custom-code}   
+`strwrap(x)`
 :::
 
-::: {.column width="50%"}
+::: {.column width="55%"}
 #### `stringr`
 [str_c(x, sep, collapse)]{.custom-code}  
 [str_flatten(x, collapse)]{.custom-code}  
@@ -775,13 +848,18 @@ Nice!
 [str_to_lower(x)]{.custom-code}  
 `str_to_title(x)`  
 [str_trim(x)]{.custom-code}  
-`str_detect(x, pattern)`
+`str_detect(x, pattern)`  
+[str_replace(x, pattern, replacement)]{.custom-code}  
+`str_wrap(x)` 
 :::
 
 ::::
 
+<br>
 
-
+::: aside
+There are many other useful `stringr` functions/variants of the functions we used today. Check them out [here](https://stringr.tidyverse.org/reference/index.html). 
+:::
 
 
 
