@@ -298,3 +298,82 @@ source("../due_dates_schedule.R")
 
 make_due_date_table(7)
 ```
+
+
+
+
+
+
+
+
+
+
+## Try later
+
+What if we wanted to *actually* extract the different components of the `Address` variable. 
+
+```{r}
+#| output-location: fragment
+res_adds <- restaurants |> 
+  select(Address) |> 
+  distinct() |> 
+  mutate(Address = str_to_upper(Address)) 
+res_adds
+```
+
+To just pull out the elements we want (number, street name, street type) we'll first want to remove any optional unit numbers at the end of our string to make our `separate_wider_regex` more straight-forward. 
+
+. . . 
+
+```{r}
+#| output-location: fragment
+#| cache: true
+res_adds |> 
+  pull(Address) |> 
+  head(20) |> 
+  str_view(pattern = " (#|STE|SUITE|SHOP|UNIT|APT).*$", match = NA)
+
+res_adds |> 
+  pull(Address) |> 
+  head(20) |> 
+  str_view(pattern = " (#|STE|SUITE|SHOP|UNIT|APT).*$")
+```
+
+. . . 
+
+```{r}
+#| output-location: fragment
+res_adds2 <- res_adds |> 
+  mutate(Address_simple = str_remove(Address, pattern = " (#|STE|SUITE|SHOP|UNIT).*$"))
+res_adds2 |> print(n = 20)
+```
+
+. . . 
+
+```{r}
+#| output-location: fragment
+res_adds |> pull(Address) |> head(20) |> 
+  str_view(pattern = "[#|STE|SUITE|SHOP|UNIT|APT|]?[:graph:]*$", match = NA)
+
+res_sep <- res_adds |> 
+  separate_wider_regex(cols = Address, 
+                       patterns = c(address_num = "^[:digit:]+",
+                                    address_name = "[NW|NE|SW|SE|N|W|E|S]? ?.*(?=ST|AVE|BL|WAY|PL|HWY|RD|DR|PKWY)",
+                                    address_type = "(?:ST|AVE|BL|WAY|PL|HWY|RD|DR|PKWY)? ?(?:.*)?(?:#|STE|SUITE|SHOP|UNIT|APT|)"), 
+                       too_few = "debug") # <6>
+
+
+res_sep <- res_adds |> 
+  separate_wider_regex(cols = Address, 
+                       patterns = c(address_num = "^[:digit:]+",
+                                    address_name = "[NW|NE|SW|SE|N|W|E|S]? ?.*[ST|AVE|BL|WAY|PL|HWY|RD|DR|PKWY]? ?[NW|NE|SW|SE|N|W|E|S]?",
+                                    # address_type = "(?:ST|AVE|BL|WAY|PL|HWY|RD|DR|PKWY)? ?(?:NW|NE|SW|SE|N|W|E|S)?", 
+                                    address_suffix = "[#|STE|SUITE|SHOP|UNIT|APT|]?[:graph:]*$"), 
+                       too_few = "debug") # <6>
+
+res_sep |> count(Address_ok)
+check <- res_sep |> filter(Address_ok == FALSE) 
+```
+6. With this function you give it a named character vector where the names become the column names and the character strings are regular expressions that match the desired contents of the vector. 
+
+## `separate_wider_regex()`

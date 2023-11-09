@@ -619,13 +619,16 @@ restaurants |>
 
 [Here's a good site](https://regexlearn.com/) to learn `regex` if you need to/when you're ready!
   
+<br>  
+  
 ## Replacement with regex: `str_replace()`
 
-Let's go back to our example and see if we can use a regular expression to create a full date for 
+Let's go back to our example and see if we can use a regular expression to replace `01/` just for the month position of our date variable. 
 
 . . . 
 
 ```{r}
+#| output-location: fragment
 restaurants |> 
   select(`Inspection Date`) |> 
   mutate(full_date = str_replace(string = `Inspection Date`, 
@@ -633,65 +636,116 @@ restaurants |>
                                  replacement = "January "))
 ```
 5. We can pretty simply use a regex signifier (the starting anchor `^`) to make sure our replacement only happens to the `01/`s in the month position.   
-## `separate_wider_regex()`
 
-Let's look at a more realistic example and introduce the `regex` version of our `separate_wider_*` functions. 
+## Separation with regex
 
-. . .
-
-What if we wanted to separate the `Description` variable into two separate variables: `Capacity` and `Risk Category`. 
-
-```{r}
-table(restaurants$Description)
-```
-
-
-
-
-
-
-
-
-
-## Try later
-
-What if we wanted to *actually* extract the different components of the `Address` variable. 
+Let's look at a more realistic example and introduce the regex version of our `separate_wider_*` functions. What if we wanted to separate the `Description` variable into two separate variables: `capacity_description` and `risk_category`. 
 
 ```{r}
 #| output-location: fragment
 restaurants |> 
-  select(Address) |> 
-  distinct()
+  count(Description) |> # <6>
+  print(n = 33) # <7>
 ```
+6. See all distinct values that `Description` takes to figure out how we need to separate this character vector. 
+7. You can force a tibble to print more than the default 10 rows by specifying the number with `print(n)`.
 
+<br>
 
+## Separation with regex {auto-animate=true}
 
 ```{r}
 #| output-location: fragment
 #| error: true
-
-restaurants |> 
-  select(Address) |> 
-  distinct() |> 
-  mutate(Address = str_to_upper(Address)) |> 
-  slice_head(n = 30) |> 
-  pull(Address) |> 
-  str_view(pattern = "(ST|AVE|BL|WAY|PL|HWY){1}( ?)(N|W|E|S|NW|NE|SW|SE?)(?=.*?)$", match = NA)
-
-restaurants |> 
-  select(Address) |> 
-  distinct() |> 
-  mutate(Address = str_to_upper(Address)) |> 
-  separate_wider_regex(string = Address, 
-                       patterns = c(num = "^[:digit:]+",  
-                                    direction = "(?<=[:digit:])( [:alpha:]{1,2}? )",
-                                    name = "(?<=[:digit:])( .*? )(?=ST|AVE|BL|WAY|PL)",
-                                    type = "(?<= .*?))( ST|AVE|BL|WAY|PL )(.{1,2}?)")) # <6>
-
+res_sep <- restaurants |> 
+  distinct(Name, Description) |> # <8>
+  separate_wider_regex(cols = Description, # <9>
+                       patterns = c(capacity_description = "^.+", # <10>
+                                    risk_category = "Risk ?(?:Category)? ?I{1,3}$")) 
 ```
-6. With this function you give it a named character vector where the names become the column names and the character strings are regular expressions that match the desired contents of the vector. 
+8. For this example I want to limit the dataset just to the pertinent variables so I am only keeping all distinct combinations of `Name` and `Description`.
+9. The `cols` argument of this function is the column you want to separate. 
+10. The `patterns` argument takes a named character vector where the names become the column names and the character strings are regular expressions that match the desired contents of the vector. 
 
-## `separate_wider_regex()`
+. . . 
+
+<br>
+
+I've triggered the debugging error message which tells me how to diagnose/ignore the mismatch that's occurring. 
+
+## Separation with regex {auto-animate=true}
+
+```{r}
+#| output-location: fragment
+#| 
+res_sep <- restaurants |> 
+  distinct(Name, Description) |> 
+  separate_wider_regex(cols = Description, 
+                       patterns = c(capacity_description = "^.+", # <11>
+                                    risk_category = "Risk ?(?:Category)? ?I{1,3}$"), # <12>
+                       too_few = "debug") |> 
+  distinct(capacity_description, risk_category, Description_ok, Description_matches, Description_remainder) |> # <13>
+  print(n = 33)
+```
+11. `"^"` matches the beginning of a string, <br> `"."` matches any character except a new line, and `"+"` quantifies that `"."`, asking it to return 1 or more characters. 
+12. `"Risk"` matches exactly, `" ?"` matches a singular white space 0 or 1 time, <br> `"(?:Category)?"` **optionally** matches the exact word "Category", again `" ?"` matches a singular white space 0 or 1 time, `"I{1,3}"` matches "I" 1-3 times, and `"$"` signifies the end of the string. 
+13. Using `distinct()` on the created and debugging variables allows us to see what didn't match. 
+
+
+## Separation with regex {auto-animate=true}
+
+```{r}
+#| output-location: fragment
+res_sep <- restaurants |> 
+  distinct(Name, Description) |> 
+  separate_wider_regex(cols = Description, 
+                       patterns = c(capacity_description = "^.+",
+                                    risk_category = "Risk ?(?:Category)? ?I{1,3}$"), 
+                       too_few = "align_start") # <14>
+res_sep
+```
+14. Since the only non-match was the one without a valid value for `risk_category`, we can give `too_few` the value `align_start` which tells the function to fill in anything without a value for the second variable with an `NA`. 
+
+. . . 
+
+We can clean up these variables a bit more with a version of `str_replace()`: `str_remove()`. This technically replaces the pattern match with `""`, or an empty string. 
+
+## Separation with regex {auto-animate=true}
+
+```{r}
+#| output-location: fragment
+res_sep <- restaurants |> 
+  distinct(Name, Description) |> 
+  separate_wider_regex(cols = Description, 
+                       patterns = c(capacity_description = "^.+",
+                                    risk_category = "Risk ?(?:Category)? ?I{1,3}$"), 
+                       too_few = "align_start") |>
+  mutate(capacity_description = str_remove(capacity_description, pattern = " - $"), # <15> 
+         risk_category = str_remove(risk_category, pattern = "Risk ?(?:Category)? ")) # <16>
+res_sep
+```
+15. We can remove the trailing ` - ` by using `str_remove` and providing the regular expression for that piece of the `capacity_description` string. 
+16. Since this variable is already named `risk_category`, we can remove that language from the beginning of each string, by matching the first part of our original regular expression for this variable.
+
+## Separation with regex
+
+What do the final 33 distinct values of these two new variables look like? 
+
+. . . 
+
+```{r}
+#| output-location: fragment
+res_sep |> 
+  distinct(capacity_description, risk_category) |> 
+  print(n = 33)
+```
+
+<br>
+
+. . . 
+
+Nice! 
+
 
 
 ## Base `R` Equivalents
