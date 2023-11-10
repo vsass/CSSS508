@@ -90,6 +90,10 @@ billboard_top3_month_viz <- billboard_tidy_date |>
   filter(any(month_peak == 4), # <10>
          .by = c(track, artist)) 
 
+date_order <- billboard_top3_month_viz |> 
+  filter(date == date("2000-05-06")) |> 
+  arrange(desc(rank))
+
 ggplot(billboard_top3_month_viz, aes(date, rank, group = track, color = artist)) + 
   annotate(geom = "rect", xmin = ymd("2000-04-01"), xmax = ymd("2000-05-01"), ymin = 0, ymax = 85, # <11>
            fill = "#59a14f", alpha = 0.25) + # <11>

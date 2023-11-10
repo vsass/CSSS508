@@ -226,7 +226,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-3" data-code-lines="2,3,4">This <code>if_else</code> basically says, “if <code>week</code> is equal to 1 then assign the <code>date_entered</code> value to <code>date</code>. Otherwise, add the number of <code>week</code>s minus 1 to the <code>date_entered</code> value (i.e.&nbsp;for the second week you would want to add <code>2 - 1</code> or <code>1</code> week to the <code>date_entered</code> value).</span>
+<span data-code-cell="annotated-cell-3" data-code-annotation="1" data-code-lines="2,3,4">This <code>if_else</code> basically says, “if <code>week</code> is equal to 1 then assign the <code>date_entered</code> value to <code>date</code>. Otherwise, add the number of <code>week</code>s minus 1 to the <code>date_entered</code> value (i.e.&nbsp;for the second week you would want to add <code>2 - 1</code> or <code>1</code> week to the <code>date_entered</code> value).</span>
 </dd>
 </dl>
 </div>
@@ -270,31 +270,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-4" data-code-lines="2">We need to be able to filter rows by month so we need to create a <code>month</code> variable from out <code>date</code> variable.</span>
+<span data-code-cell="annotated-cell-4" data-code-annotation="2" data-code-lines="2">We need to be able to filter rows by month so we need to create a <code>month</code> variable from out <code>date</code> variable.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-4" data-code-lines="3">This dataset is about the 2000 top 100 but many of these songs charted before or after that year. Therefore, we will need an variable for year as well so we make sure we’re finding the songs that charted in the months of 2000.</span>
+<span data-code-cell="annotated-cell-4" data-code-annotation="3" data-code-lines="3">This dataset is about the 2000 top 100 but many of these songs charted before or after that year. Therefore, we will need a variable for year as well so we make sure we’re finding the songs that charted in the months of 2000.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="annotated-cell-4" data-code-lines="4">To create our <code>top3</code> indicator we provide the two conditions that the rank for that observation is less than or equal to 3 AND the year is 2000. If so, <code>top3</code> will be assigned a value of 1 and if not it will get a value of 0.</span>
+<span data-code-cell="annotated-cell-4" data-code-annotation="4" data-code-lines="4">To create our <code>top3</code> indicator we provide the two conditions that the rank for that observation is less than or equal to 3 AND the year is 2000. If so, <code>top3</code> will be assigned a value of 1 and if not it will get a value of 0.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="5" data-code-cell="annotated-cell-4" data-code-lines="5,6">To filter for the most weeks in the top 3 we need to count how many weeks a song was in the top 3, grouped by month, song, and artist.</span>
+<span data-code-cell="annotated-cell-4" data-code-annotation="5" data-code-lines="5,6">To filter for the most weeks in the top 3 we need to count how many weeks a song was in the top 3, grouped by month, song, and artist.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-annotation="6" data-code-cell="annotated-cell-4" data-code-lines="7,8">Then, by month we can slice the song(s) with the most weeks in the top 3.</span>
+<span data-code-cell="annotated-cell-4" data-code-annotation="6" data-code-lines="7,8">Then, by month we can slice the song(s) with the most weeks in the top 3.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-annotation="7" data-code-cell="annotated-cell-4" data-code-lines="9">Now we just want the name of the artist, song, the month they were charting in the top 3 for the most weeks, and the number of weeks</span>
+<span data-code-cell="annotated-cell-4" data-code-annotation="7" data-code-lines="9">Now we just want the name of the artist, song, the month they were charting in the top 3 for the most weeks, and the number of weeks</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-annotation="8" data-code-cell="annotated-cell-4" data-code-lines="10">To see this in chronological order we want to arrange by the month</span>
+<span data-code-cell="annotated-cell-4" data-code-annotation="8" data-code-lines="10">To see this in chronological order we want to arrange by the month</span>
 </dd>
 </dl>
 </div>
@@ -339,69 +339,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="10">10</button><span id="annotated-cell-5-7" class="code-annotation-target"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">any</span>(month_peak <span class="sc">==</span> <span class="dv">4</span>),</span>
 <span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">.by =</span> <span class="fu">c</span>(track, artist)) </span>
 <span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-5-10"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(billboard_top3_month_viz, <span class="fu">aes</span>(date, rank, <span class="at">group =</span> track, <span class="at">color =</span> artist)) <span class="sc">+</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="11">11</button><span id="annotated-cell-5-11" class="code-annotation-target"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">"rect"</span>, <span class="at">xmin =</span> <span class="fu">ymd</span>(<span class="st">"2000-04-01"</span>), <span class="at">xmax =</span> <span class="fu">ymd</span>(<span class="st">"2000-05-01"</span>), <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">85</span>,</span>
-<span id="annotated-cell-5-12"><a href="#annotated-cell-5-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">"#59a14f"</span>, <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="12">12</button><span id="annotated-cell-5-13" class="code-annotation-target"><a href="#annotated-cell-5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="13">13</button><span id="annotated-cell-5-14" class="code-annotation-target"><a href="#annotated-cell-5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> billboard_top3_month_viz <span class="sc">|&gt;</span> <span class="fu">slice_max</span>(date, <span class="at">by =</span> track),</span>
-<span id="annotated-cell-5-15"><a href="#annotated-cell-5-15" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">label =</span> track), </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="14">14</button><span id="annotated-cell-5-16" class="code-annotation-target"><a href="#annotated-cell-5-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="15">15</button><span id="annotated-cell-5-17" class="code-annotation-target"><a href="#annotated-cell-5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">"Artist"</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#4e79a7"</span>,<span class="st">"#f28e2c"</span>,<span class="st">"#e15759"</span>,<span class="st">"#76b7b2"</span>)) <span class="sc">+</span></span>
-<span id="annotated-cell-5-18"><a href="#annotated-cell-5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Billboard Top 100 Trajectory for Songs that Hit Top 3 During April 2000"</span>, </span>
-<span id="annotated-cell-5-19"><a href="#annotated-cell-5-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Date"</span>, </span>
-<span id="annotated-cell-5-20"><a href="#annotated-cell-5-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Rank"</span>, </span>
-<span id="annotated-cell-5-21"><a href="#annotated-cell-5-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Note: April shaded in green"</span>) <span class="sc">+</span> </span>
-<span id="annotated-cell-5-22"><a href="#annotated-cell-5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_tufte</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="16">16</button><span id="annotated-cell-5-23" class="code-annotation-target"><a href="#annotated-cell-5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.85</span>, <span class="fl">0.85</span>),</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="17">17</button><span id="annotated-cell-5-24" class="code-annotation-target"><a href="#annotated-cell-5-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title.align =</span> <span class="fl">0.5</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="18">18</button><span id="annotated-cell-5-25" class="code-annotation-target"><a href="#annotated-cell-5-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.box.background =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"#f6f7f9"</span>),</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="19">19</button><span id="annotated-cell-5-26" class="code-annotation-target"><a href="#annotated-cell-5-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#f6f7f9"</span>, <span class="at">color =</span> <span class="st">"#f6f7f9"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-5-10"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a>date_order <span class="ot">&lt;-</span> billboard_top3_month_viz <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-5-11"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">==</span> <span class="fu">date</span>(<span class="st">"2000-05-06"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-5-12"><a href="#annotated-cell-5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(rank))</span>
+<span id="annotated-cell-5-13"><a href="#annotated-cell-5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-5-14"><a href="#annotated-cell-5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(billboard_top3_month_viz, <span class="fu">aes</span>(date, rank, <span class="at">group =</span> track, <span class="at">color =</span> artist)) <span class="sc">+</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="11">11</button><span id="annotated-cell-5-15" class="code-annotation-target"><a href="#annotated-cell-5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">"rect"</span>, <span class="at">xmin =</span> <span class="fu">ymd</span>(<span class="st">"2000-04-01"</span>), <span class="at">xmax =</span> <span class="fu">ymd</span>(<span class="st">"2000-05-01"</span>), <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">85</span>,</span>
+<span id="annotated-cell-5-16"><a href="#annotated-cell-5-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">"#59a14f"</span>, <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="12">12</button><span id="annotated-cell-5-17" class="code-annotation-target"><a href="#annotated-cell-5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="13">13</button><span id="annotated-cell-5-18" class="code-annotation-target"><a href="#annotated-cell-5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> billboard_top3_month_viz <span class="sc">|&gt;</span> <span class="fu">slice_max</span>(date, <span class="at">by =</span> track),</span>
+<span id="annotated-cell-5-19"><a href="#annotated-cell-5-19" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">label =</span> track), </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="14">14</button><span id="annotated-cell-5-20" class="code-annotation-target"><a href="#annotated-cell-5-20" aria-hidden="true" tabindex="-1"></a>                   <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="15">15</button><span id="annotated-cell-5-21" class="code-annotation-target"><a href="#annotated-cell-5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">"Artist"</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#4e79a7"</span>,<span class="st">"#f28e2c"</span>,<span class="st">"#e15759"</span>,<span class="st">"#76b7b2"</span>)) <span class="sc">+</span></span>
+<span id="annotated-cell-5-22"><a href="#annotated-cell-5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Billboard Top 100 Trajectory for Songs that Hit Top 3 During April 2000"</span>, </span>
+<span id="annotated-cell-5-23"><a href="#annotated-cell-5-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Date"</span>, </span>
+<span id="annotated-cell-5-24"><a href="#annotated-cell-5-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Rank"</span>, </span>
+<span id="annotated-cell-5-25"><a href="#annotated-cell-5-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Note: April shaded in green"</span>) <span class="sc">+</span> </span>
+<span id="annotated-cell-5-26"><a href="#annotated-cell-5-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_tufte</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="16">16</button><span id="annotated-cell-5-27" class="code-annotation-target"><a href="#annotated-cell-5-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.85</span>, <span class="fl">0.85</span>),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="17">17</button><span id="annotated-cell-5-28" class="code-annotation-target"><a href="#annotated-cell-5-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title.align =</span> <span class="fl">0.5</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="18">18</button><span id="annotated-cell-5-29" class="code-annotation-target"><a href="#annotated-cell-5-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.box.background =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"#f6f7f9"</span>),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="19">19</button><span id="annotated-cell-5-30" class="code-annotation-target"><a href="#annotated-cell-5-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#f6f7f9"</span>, <span class="at">color =</span> <span class="st">"#f6f7f9"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-5" data-target-annotation="9">9</dt>
 <dd>
-<span data-code-annotation="9" data-code-cell="annotated-cell-5" data-code-lines="5">In order to visualize the entire trajectory, we need to have a variable that indicates when a song was charting in the top 3</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="9" data-code-lines="5">In order to visualize the entire trajectory, we need to have a variable that indicates when a song was charting in the top 3</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-annotation="10" data-code-cell="annotated-cell-5" data-code-lines="7">This allows us to filter by each song whether any of the weeks charted in the top 3 for the month we’re interested in. Without these two steps we could only filter for the weeks in which they were charting and therefore couldn’t plot their entire ranking trajectory.</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="10" data-code-lines="7">This allows us to filter by each song whether any of the weeks charted in the top 3 for the month we’re interested in. Without these two steps we could only filter for the weeks in which they were charting and therefore couldn’t plot their entire ranking trajectory.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="11">11</dt>
 <dd>
-<span data-code-annotation="11" data-code-cell="annotated-cell-5" data-code-lines="11,12">Shading the region for April for reference.</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="11" data-code-lines="15,16">Shading the region for April for reference.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="12">12</dt>
 <dd>
-<span data-code-annotation="12" data-code-cell="annotated-cell-5" data-code-lines="13">Want the legend for the line to appear.</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="12" data-code-lines="17">Want the legend for the line to appear.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="13">13</dt>
 <dd>
-<span data-code-annotation="13" data-code-cell="annotated-cell-5" data-code-lines="14">Need to use a subset of the data otherwise each row will try to plot a label; I picked the last charting date for each song.</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="13" data-code-lines="18">Need to use a subset of the data otherwise each row will try to plot a label; I picked the last charting date for each song.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="14">14</dt>
 <dd>
-<span data-code-annotation="14" data-code-cell="annotated-cell-5" data-code-lines="16">Wanted to remove the legend for the label (a lower-case “a”).</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="14" data-code-lines="20">Wanted to remove the legend for the label (a lower-case “a”).</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="15">15</dt>
 <dd>
-<span data-code-annotation="15" data-code-cell="annotated-cell-5" data-code-lines="17">Specifying the colors I want to use for the 4 different lines.</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="15" data-code-lines="21">Specifying the colors I want to use for the 4 different lines.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="16">16</dt>
 <dd>
-<span data-code-annotation="16" data-code-cell="annotated-cell-5" data-code-lines="23">Moving the legend to maximize plotting space.</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="16" data-code-lines="27">Moving the legend to maximize plotting space.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="17">17</dt>
 <dd>
-<span data-code-annotation="17" data-code-cell="annotated-cell-5" data-code-lines="24">Centering the legend title in the legend box.</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="17" data-code-lines="28">Centering the legend title in the legend box.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="18">18</dt>
 <dd>
-<span data-code-annotation="18" data-code-cell="annotated-cell-5" data-code-lines="25">Putting a black border around the legend.</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="18" data-code-lines="29">Putting a black border around the legend.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="19">19</dt>
 <dd>
-<span data-code-annotation="19" data-code-cell="annotated-cell-5" data-code-lines="26">Changing the plot color to the same color as the website.</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="19" data-code-lines="30">Changing the plot color to the same color as the website.</span>
 </dd>
 </dl>
 </div>

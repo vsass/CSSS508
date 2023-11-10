@@ -413,6 +413,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="due-dates" class="level2">
 <h2 class="anchored" data-anchor-id="due-dates">Due dates</h2>
+</section>
+<section id="try-later" class="level2">
+<h2 class="anchored" data-anchor-id="try-later">Try later</h2>
+<p>What if we wanted to <em>actually</em> extract the different components of the <code>Address</code> variable.</p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>res_adds <span class="ot">&lt;-</span> restaurants <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Address) <span class="sc">|&gt;</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Address =</span> <span class="fu">str_to_upper</span>(Address)) </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>res_adds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To just pull out the elements we want (number, street name, street type) we’ll first want to remove any optional unit numbers at the end of our string to make our <code>separate_wider_regex</code> more straight-forward.</p>
+<p>. . .</p>
+<div class="cell" data-output-location="fragment" data-hash="scratch_cache/html/unnamed-chunk-20_5c809efb5c6a65984147caf1e73150e4">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>res_adds <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(Address) <span class="sc">|&gt;</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">20</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_view</span>(<span class="at">pattern =</span> <span class="st">" (#|STE|SUITE|SHOP|UNIT|APT).*$"</span>, <span class="at">match =</span> <span class="cn">NA</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>res_adds <span class="sc">|&gt;</span> </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(Address) <span class="sc">|&gt;</span> </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">20</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_view</span>(<span class="at">pattern =</span> <span class="st">" (#|STE|SUITE|SHOP|UNIT|APT).*$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>. . .</p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>res_adds2 <span class="ot">&lt;-</span> res_adds <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Address_simple =</span> <span class="fu">str_remove</span>(Address, <span class="at">pattern =</span> <span class="st">" (#|STE|SUITE|SHOP|UNIT).*$"</span>))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>res_adds2 <span class="sc">|&gt;</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>. . .</p>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="annotated-cell-23"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-23-1"><a href="#annotated-cell-23-1" aria-hidden="true" tabindex="-1"></a>res_adds <span class="sc">|&gt;</span> <span class="fu">pull</span>(Address) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">20</span>) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-23-2"><a href="#annotated-cell-23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_view</span>(<span class="at">pattern =</span> <span class="st">"[#|STE|SUITE|SHOP|UNIT|APT|]?[:graph:]*$"</span>, <span class="at">match =</span> <span class="cn">NA</span>)</span>
+<span id="annotated-cell-23-3"><a href="#annotated-cell-23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-23-4"><a href="#annotated-cell-23-4" aria-hidden="true" tabindex="-1"></a>res_sep <span class="ot">&lt;-</span> res_adds <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-23-5"><a href="#annotated-cell-23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(<span class="at">cols =</span> Address, </span>
+<span id="annotated-cell-23-6"><a href="#annotated-cell-23-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">patterns =</span> <span class="fu">c</span>(<span class="at">address_num =</span> <span class="st">"^[:digit:]+"</span>,</span>
+<span id="annotated-cell-23-7"><a href="#annotated-cell-23-7" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">address_name =</span> <span class="st">"[NW|NE|SW|SE|N|W|E|S]? ?.*(?=ST|AVE|BL|WAY|PL|HWY|RD|DR|PKWY)"</span>,</span>
+<span id="annotated-cell-23-8"><a href="#annotated-cell-23-8" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">address_type =</span> <span class="st">"(?:ST|AVE|BL|WAY|PL|HWY|RD|DR|PKWY)? ?(?:.*)?(?:#|STE|SUITE|SHOP|UNIT|APT|)"</span>), </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="6" onclick="event.preventDefault();">6</a><span id="annotated-cell-23-9" class="code-annotation-target"><a href="#annotated-cell-23-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">too_few =</span> <span class="st">"debug"</span>)</span>
+<span id="annotated-cell-23-10"><a href="#annotated-cell-23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-23-11"><a href="#annotated-cell-23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-23-12"><a href="#annotated-cell-23-12" aria-hidden="true" tabindex="-1"></a>res_sep <span class="ot">&lt;-</span> res_adds <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-23-13"><a href="#annotated-cell-23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(<span class="at">cols =</span> Address, </span>
+<span id="annotated-cell-23-14"><a href="#annotated-cell-23-14" aria-hidden="true" tabindex="-1"></a>                       <span class="at">patterns =</span> <span class="fu">c</span>(<span class="at">address_num =</span> <span class="st">"^[:digit:]+"</span>,</span>
+<span id="annotated-cell-23-15"><a href="#annotated-cell-23-15" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">address_name =</span> <span class="st">"[NW|NE|SW|SE|N|W|E|S]? ?.*[ST|AVE|BL|WAY|PL|HWY|RD|DR|PKWY]? ?[NW|NE|SW|SE|N|W|E|S]?"</span>,</span>
+<span id="annotated-cell-23-16"><a href="#annotated-cell-23-16" aria-hidden="true" tabindex="-1"></a>                                    <span class="co"># address_type = "(?:ST|AVE|BL|WAY|PL|HWY|RD|DR|PKWY)? ?(?:NW|NE|SW|SE|N|W|E|S)?", </span></span>
+<span id="annotated-cell-23-17"><a href="#annotated-cell-23-17" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">address_suffix =</span> <span class="st">"[#|STE|SUITE|SHOP|UNIT|APT|]?[:graph:]*$"</span>), </span>
+<span id="annotated-cell-23-18"><a href="#annotated-cell-23-18" aria-hidden="true" tabindex="-1"></a>                       <span class="at">too_few =</span> <span class="st">"debug"</span>)</span>
+<span id="annotated-cell-23-19"><a href="#annotated-cell-23-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-23-20"><a href="#annotated-cell-23-20" aria-hidden="true" tabindex="-1"></a>res_sep <span class="sc">|&gt;</span> <span class="fu">count</span>(Address_ok)</span>
+<span id="annotated-cell-23-21"><a href="#annotated-cell-23-21" aria-hidden="true" tabindex="-1"></a>check <span class="ot">&lt;-</span> res_sep <span class="sc">|&gt;</span> <span class="fu">filter</span>(Address_ok <span class="sc">==</span> <span class="cn">FALSE</span>) </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-23" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-lines="9,18" data-code-annotation="6" data-code-cell="annotated-cell-23">With this function you give it a named character vector where the names become the column names and the character strings are regular expressions that match the desired contents of the vector.</span>
+</dd>
+</dl>
+</div>
+</div>
+</section>
+<section id="separate_wider_regex" class="level2">
+<h2 class="anchored" data-anchor-id="separate_wider_regex"><code>separate_wider_regex()</code></h2>
 
 
 </section>

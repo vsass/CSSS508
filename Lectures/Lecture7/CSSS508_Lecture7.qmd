@@ -814,8 +814,70 @@ Nice!
 
 ![](images/outkast_fresh_clean.gif){.absolute right=0 top=400}
 
-## Other Uses for Regular Expressions
+## Other Uses for Regular Expressions <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
+Even if you aren't explicitly manipulating/analyzing text data for your research, knowing some things about regular expressions will still come in handy because they're used in other places, both in Base `R` and the `tidyverse`.
+
+. . . 
+
+::: {.panel-tabset}
+
+### Base `R`
+
+::: {.fragment}
+* `apropos(pattern)` searches all objects available from the global environment that match the given pattern. This is useful if you can’t quite remember the name of a function, for example: 
+
+```{r}
+#| output-location: fragment
+apropos("separate")
+```
+
+:::
+
+::: {.fragment}
+* `list.files(path, pattern)` lists all files in path that match a regular expression pattern. For example, you can find all the Quarto files in the current directory with:
+
+
+```{r}
+#| output-location: fragment
+list.files(pattern = "\\.qmd$")
+```
+
+:::
+
+### `tidyverse`
+
+::: {.fragment}
+* `matches(pattern)` will select all variables whose name matches the supplied pattern.. It’s a `tidyselect` function (like `starts_with()` and the like) that you can use in any tidyverse function that selects variables. 
+
+```{r}
+#| output-location: fragment
+names(iris)
+iris %>% select(matches("[pt]al")) |> names() # <17>
+```
+17. `[pt]` signifies match either`p` or `t`. 
+:::
+
+::: {.fragment}
+`pivot_longer()`'s argument `names_pattern` takes a vector of regular expressions, just like `separate_wider_regex()`. It’s useful when extracting data out of variable names with a complex structure. 
+
+```{r}
+#| output-location: fragment
+names(who)
+who |> pivot_longer(cols = new_sp_m014:newrel_f65,
+                    names_to = c("diagnosis", "gender", "age"), 
+                    names_pattern = "new_?(.*)_(.)(.*)", # <18>
+                    values_to = "count") |> 
+  slice_head(n = 10)
+```
+18. `new` matches exactly, then `_?` *optionally* matches an underscore, `(.*)` matches any number of characters and in this example it captures the new `diagnosis` variable, `_` matches exactly, `(.)` matches one character which captures the `gender` variable `m` or `f` in this example, and lastly, `(.*)` again matches any number of characters, in this case it captures the varying digits of the `age` variable.
+:::
+
+::: {.fragment}
+The `delim` argument in `separate_longer_delim()` and `separate_wider_delim()` usually matches a fixed string, but you can use `regex()` to make it match a pattern. This is useful, for example, if you want to match a comma that is optionally followed by a space, i.e. `regex(", ?")`.
+:::
+
+:::
 
 
 
