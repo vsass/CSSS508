@@ -26,7 +26,7 @@ revealjs-plugins:
   - pointer
 ---
 
-## {#title-slide data-menu-title="Working with Text Data" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
+##  {#title-slide data-menu-title="Working with Text Data" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
 
 ```{r}
 #| echo: false
@@ -46,63 +46,56 @@ knitr::opts_chunk$set(comment = ">")
 
 [Victoria Sass]{.custom-subtitle3}
 
-# Roadmap{.section-title background-color="#99a486"}
+# Roadmap {.section-title background-color="#99a486"}
 
----
+------------------------------------------------------------------------
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-
 <br>
 
 ### Last time, we learned:
 
-* Types of Data
-  * Numbers
-  * Missing Values
-* Data Structures
-  * Vectors
-  * Matrices
-  * Lists
+-   Types of Data
+    -   Numbers
+    -   Missing Values
+-   Data Structures
+    -   Vectors
+    -   Matrices
+    -   Lists
 :::
 
 ::: {.column width="50%"}
+<br>
 
-<br> 
-
-::: {.fragment}
+::: fragment
 ### Today, we will cover:
 
-* Types of Data
-  * Strings
-* Pattern Matching & Regular Expressions
-
+-   Types of Data
+    -   Strings
+-   Pattern Matching & Regular Expressions
+:::
+:::
 :::
 
-:::
+# Strings {.section-title background-color="#99a486"}
 
-::::
-
-
-# Strings{.section-title background-color="#99a486"}
-
-# {data-menu-title="`stringr``" background-image="images/stringr.png" background-size="contain" background-position="center" .section-title background-color="#1e4655"}
+#  {.section-title data-menu-title="`stringr``" background-image="images/stringr.png" background-size="contain" background-position="center" background-color="#1e4655"}
 
 ## Basics of Strings
 
-::: {.incremental}
-* A general programming term for a unit of character data is a **string**
-  + Strings are a *sequence of characters*
-  + In R, "strings" and "character data" are mostly interchangeable.
-  + Some languages have more precise distinctions, but we won't worry about that here!
+::: incremental
+-   A general programming term for a unit of character data is a **string**
+    -   Strings are a *sequence of characters*
+    -   In R, "strings" and "character data" are mostly interchangeable.
+    -   Some languages have more precise distinctions, but we won't worry about that here!
 :::
 
-::: {.incremental}
-* We can create strings by surrounding text, numbers, spaces, or symbols with quotes!
-  + Examples: `"Hello! My name is Vic"` or `"%*$#01234"`
-* You can create a string using either single quotes (`' '`) or double quotes (`" "`)
-  * In the interests of consistency, the tidyverse style guide recommends using `" "`, unless the string contains multiple `" "`
+::: incremental
+-   We can create strings by surrounding text, numbers, spaces, or symbols with quotes!
+    -   Examples: `"Hello! My name is Vic"` or `"%*$#01234"`
+-   You can create a string using either single quotes (`' '`) or double quotes (`" "`)
+    -   In the interests of consistency, the tidyverse style guide recommends using `" "`, unless the string contains multiple `" "`
 :::
 
 ## Escaping with Strings
@@ -118,10 +111,11 @@ For instance, if we want to include a literal single or double quote in our stri
 "\'" # <1>
 '\"' # <2>
 ```
-1. Double quote.
-2. Single quote.
 
-. . . 
+1.  Double quote.
+2.  Single quote.
+
+. . .
 
 Similarly, if we want to represent a `\` we'll need to escape it as well...
 
@@ -129,39 +123,41 @@ Similarly, if we want to represent a `\` we'll need to escape it as well...
 #| eval: false
 "\\" # <3>
 ```
-3. Backslash.
 
-. . . 
+3.  Backslash.
 
-**Note**: When you print these objects you'll see the escape characters. To actually view the string's contents ( and not the syntax needed to construct it), use `str_view()`. 
+. . .
 
-. . . 
+**Note**: When you print these objects you'll see the escape characters. To actually view the string's contents ( and not the syntax needed to construct it), use `str_view()`.
+
+. . .
 
 ```{r}
 str_view(c('\"', "\"", "\\")) # <4>
 ```
-4. All `stringr` functions begin with the prefix `str_` which is useful due to R Studio's auto-complete feature.
+
+4.  All `stringr` functions begin with the prefix `str_` which is useful due to R Studio's auto-complete feature.
 
 ## Other Special Characters
 
-There are other things you may want to represent inside a character string, such as a new line, or a tab space. 
+There are other things you may want to represent inside a character string, such as a new line, or a tab space.
 
-. . . 
+. . .
 
-```{r} 
+```{r}
 #| output-location: fragment
 str_view("Sometimes you need\nto create another line.") # <5>
 str_view("\tOther times you just need to indent somewhere.") # <6>
 ```
-5. Use `\n` to create a new line. Helpful when plotting if you have variable names or values that are wordy! If you need to do this for one or more variables you can use `str_wrap()` and specify the character width you desire. 
-6. Use `\t` to add a tab. `str_view` will highlight tabs in blue in your console to make it stand out from other random whitespace. 
 
-. . . 
+5.  Use `\n` to create a new line. Helpful when plotting if you have variable names or values that are wordy! If you need to do this for one or more variables you can use `str_wrap()` and specify the character width you desire.
+6.  Use `\t` to add a tab. `str_view` will highlight tabs in blue in your console to make it stand out from other random whitespace.
 
-If you need to limit the width of an entire 
-. . . 
+. . .
 
-Additionally, you can represent [Unicode](https://en.wikipedia.org/wiki/List_of_Unicode_characters) characters which will be written with the `\u` or `\U` escape. 
+If you need to limit the width of an entire . . .
+
+Additionally, you can represent [Unicode](https://en.wikipedia.org/wiki/List_of_Unicode_characters) characters which will be written with the `\u` or `\U` escape.
 
 ```{r}
 str_view(c("\U1F00F", "\u2866", "\U1F192"))
@@ -179,7 +175,6 @@ restaurants <- restaurants |> mutate(Name = if_else(Name == "+MAS CAFE", "+MAS C
 save(restaurants, file = "Lectures/Lecture7/data/restaurants.Rdata")
 ```
 
-
 Note these data are *fairly large* in their native `.csv` format. The following code can be used to download the data directly from my `Github` page as a smaller, `.Rdata` object:
 
 ```{r}
@@ -195,30 +190,33 @@ glimpse(restaurants)
 
 <br>
 
-. . . 
+. . .
 
-<h4 align="center">Good Questions to Ask</h4>
+<h4 align="center">
 
-:::: {.columns}
+Good Questions to Ask
+
+</h4>
+
+::: columns
+::: {.column width="50%"}
+::: incremental
+-   What does each row represent?
+-   Is the data in long or wide format?
+:::
+:::
 
 ::: {.column width="50%"}
-::: {.incremental }
-* What does each row represent?
-* Is the data in long or wide format?
+::: incremental
+-   What are the key variables?
+-   How are the data stored? (*data type*)
 :::
 :::
-
-::: {.column width="50%"}
-::: {.incremental}
-* What are the key variables?
-* How are the data stored? (*data type*)
 :::
-:::
-
-::::
 
 ## Creating Strings
-You can create strings based on the value of other strings with `str_c()` (`str`ing `c`ombine), which takes any number of vectors and returns a character vector. 
+
+You can create strings based on the value of other strings with `str_c()` (`str`ing `c`ombine), which takes any number of vectors and returns a character vector.
 
 ```{r}
 #| output-location: fragment
@@ -226,9 +224,10 @@ str_c(c("CSSS", "STAT", "SOC"), 508) # <7>
 str_c(c("CSSS", "STAT", "SOC"), 508, sep = " ") # <8>
 str_c(c("CSSS", "STAT", "SOC"), 508, sep = " ", collapse = ", ") # <9>
 ```
-7. By default, `str_c` doesn't put a space between the vectors it is combining.
-8. You can add a specific separator, including a space, using the `sep` argument. 
-9. If you want to combine the output into a single string, use `collapse`. 
+
+7.  By default, `str_c` doesn't put a space between the vectors it is combining.
+8.  You can add a specific separator, including a space, using the `sep` argument.
+9.  If you want to combine the output into a single string, use `collapse`.
 
 ## Example #1 with Restaurant Data
 
@@ -240,14 +239,15 @@ restaurants |>
   mutate(Sentence = str_c(Name, " is located at ", Address, " in ", City, "."), # <10>
          .keep = "none") # <11>
 ```
-10. Notice there are spaces at the beginning and end of the fixed character strings. This is because if we used the `sep` argument here it would add a space before the period at the end of the sentence. So instead, we can add them directly where we want them. 
-11. Using `.keep = "none"` here in order to see *just* the results of our mutate. 
+
+10. Notice there are spaces at the beginning and end of the fixed character strings. This is because if we used the `sep` argument here it would add a space before the period at the end of the sentence. So instead, we can add them directly where we want them.
+11. Using `.keep = "none"` here in order to see *just* the results of our mutate.
 
 ## Example #2 with Restaurant Data
 
-As we saw in the previous example, when you're mixing many fixed and variable strings with `str_c()` things can get overwhelmed by quotation marks pretty easily. An alternative with simpler syntax is `str_glue()` in which anything inside `{}` will be evaluated like it's outside the quotes. 
+As we saw in the previous example, when you're mixing many fixed and variable strings with `str_c()` things can get overwhelmed by quotation marks pretty easily. An alternative with simpler syntax is `str_glue()` in which anything inside `{}` will be evaluated like it's outside the quotes.
 
-. . . 
+. . .
 
 ```{r}
 #| output-location: fragment
@@ -260,9 +260,9 @@ restaurants |>
 
 ## Example #3 with Restaurant Data
 
-If you want to create a summary of certain character strings you can use `str_flatten()` which takes a character vector and combines each element of the vector into a single string. 
+If you want to create a summary of certain character strings you can use `str_flatten()` which takes a character vector and combines each element of the vector into a single string.
 
-. . . 
+. . .
 
 ```{r}
 #| output-location: fragment
@@ -271,13 +271,14 @@ restaurants |>
   summarize(inspection_scores = str_flatten(`Inspection Score`, collapse = ", "), 
             .by = Name)
 ```
-11. Notice that when a variable has spaces in it's name (rather than being separated with an underscore in snake_case, for instance) you need to put backticks around it so `R` knows it is a singular object name. 
+
+11. Notice that when a variable has spaces in it's name (rather than being separated with an underscore in snake_case, for instance) you need to put backticks around it so `R` knows it is a singular object name.
 
 ## Example #4 with Restaurant Data
 
 What if we want to plot one of the variables in our dataset but many of its values are too long and it'd be too arduous to manually add `\n` to every long value? There's `str_wrap()`!
 
-. . . 
+. . .
 
 ```{r}
 #| output: false
@@ -286,8 +287,7 @@ restaurants |>
   distinct(Name)
 ```
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
 ```{r}
 #| echo: false
@@ -299,7 +299,7 @@ restaurants |>
 :::
 
 ::: {.column width="50%"}
-::: {.fragment}
+::: fragment
 ```{r}
 #| echo: false
 #| output: true
@@ -316,14 +316,15 @@ long
 ```
 :::
 :::
-
-::::
+:::
 
 ## Separating Character Strings into Multiple Variables
 
-Oftentimes you'll have multiple pieces of information in one single string. That's where the family of `separate_*` functions^[These functions actually come from the `tidyr` package because they operate on (columns of) data frames, rather than individual vectors. You'll notice that all of the `str_*` functions go inside a `dplyr` function, such as `mutate`, `filter`, etc. That's because they operate on the level of a vector, not a dataframe. These `separate_*` functions, however, work like `dplyr` functions in that they operate directly on a column of data so you can pipe a data frame directly to them.] come in handy. 
+Oftentimes you'll have multiple pieces of information in one single string. That's where the family of `separate_*` functions[^1] come in handy.
 
-. . . 
+[^1]: These functions actually come from the `tidyr` package because they operate on (columns of) data frames, rather than individual vectors. You'll notice that all of the `str_*` functions go inside a `dplyr` function, such as `mutate`, `filter`, etc. That's because they operate on the level of a vector, not a dataframe. These `separate_*` functions, however, work like `dplyr` functions in that they operate directly on a column of data so you can pipe a data frame directly to them.
+
+. . .
 
 ```{r}
 #| eval: false
@@ -332,16 +333,19 @@ separate_longer_position(col, width) # <13>
 separate_wider_delim(col, delim, names) # <14>
 separate_wider_position(col, widths) # <15>
 ```
+
 12. Takes a string and splits it into many rows based on a specified delimiter. Tends to be most useful when the number of components varies from row to row.
-13. Rarer use case but also splits into many rows, now based on the width of the output desired. 
-14. Takes a string and splits it into many columns based on a specified delimiter. Need to provide names for the new columns created by the split. 
-15. Rather than a delimiter you provide a named integer vector where the name gives the name of the new column, and the value is the number of characters it occupies. 
+13. Rarer use case but also splits into many rows, now based on the width of the output desired.
+14. Takes a string and splits it into many columns based on a specified delimiter. Need to provide names for the new columns created by the split.
+15. Rather than a delimiter you provide a named integer vector where the name gives the name of the new column, and the value is the number of characters it occupies.
 
 ## Example with Restaurant Data
 
-The most common use case will be the need to split a character string into multiple columns, which will require the `separate_wider_*` functions^[If you need to use the `separate_longer_*` functions, you can read more about them [here](https://r4ds.hadley.nz/strings#separating-into-rows).]. 
+The most common use case will be the need to split a character string into multiple columns, which will require the `separate_wider_*` functions[^2].
 
-. . . 
+[^2]: If you need to use the `separate_longer_*` functions, you can read more about them [here](https://r4ds.hadley.nz/strings#separating-into-rows).
+
+. . .
 
 ```{r}
 #| output-location: fragment
@@ -352,11 +356,12 @@ restaurants |>
                        names = c("month", "day", "year"))
 
 ```
-16. This variable was read in as a character string rather than a date object. 
+
+16. This variable was read in as a character string rather than a date object.
 
 ## `separate_wider_*` functions
 
-The nice thing about this set of functions is that they have a built-in debugging method for instances when some rows don't have the expected number of pieces. 
+The nice thing about this set of functions is that they have a built-in debugging method for instances when some rows don't have the expected number of pieces.
 
 ```{r}
 #| output-location: fragment
@@ -368,15 +373,15 @@ restaurants |>
                        names = c("num", "name", "type")) 
 ```
 
-. . . 
+. . .
 
-These debugging options will add 3 new variables to the data frame that begin with the name of the splitting variable with a suffix to designate the information they provide. 
+These debugging options will add 3 new variables to the data frame that begin with the name of the splitting variable with a suffix to designate the information they provide.
 
-. . . 
+. . .
 
-* `_ok` is a binary `TRUE`/`FALSE` telling you if that observation split in the expected way.  
-* `_pieces` returns the number of pieces that observation actually contains. 
-* `_remainder` returns the additional pieces left over (if any) for that observation. 
+-   `_ok` is a binary `TRUE`/`FALSE` telling you if that observation split in the expected way.\
+-   `_pieces` returns the number of pieces that observation actually contains.
+-   `_remainder` returns the additional pieces left over (if any) for that observation.
 
 ## `separate_wider_*` functions
 
@@ -394,9 +399,9 @@ debug <- restaurants |>
                        too_few = "debug") 
 debug[debug$Address_pieces == 4, ] # <18>
 ```
+
 17. `too_many = "drop"` will drop any additional pieces and `too_many = "merge"` will merge them all into the final column.
-18. Example of the `too_many` error (`Address_pieces` ranged from 4 to 9 in this dataset). 
-    
+18. Example of the `too_many` error (`Address_pieces` ranged from 4 to 9 in this dataset).
 
 ## `separate_wider_*` functions
 
@@ -414,6 +419,7 @@ debug <- restaurants |>
                        too_few = "debug") # <19>
 debug[debug$Address_pieces == 2, ] # <20>
 ```
+
 19. `too_few = "align_start"` and `too_few = "align_end"` will add `NA`s to the missing pieces depending on where they should go.
 20. Example of the `too_few` error.
 
@@ -421,7 +427,7 @@ debug[debug$Address_pieces == 2, ] # <20>
 
 `str_to_upper()`, `str_to_lower()`, `str_to_title()` convert cases, which is often a good idea to do before searching for values:
 
-. . . 
+. . .
 
 ```{r}
 #| output-location: fragment
@@ -445,7 +451,6 @@ restaurants <- restaurants |>
   mutate(Name = if_else(Name == "+MAS CAFE", "+MAS CAFE  ", Name))
 ```
 
-
 Extra leading or trailing whitespace is common in text data:
 
 ```{r show_whitespace}
@@ -454,7 +459,7 @@ unique_names <- unique(restaurants$Name)
 unique_names |> head(3)
 ```
 
-. . . 
+. . .
 
 We can remove the white space using `str_trim()`:
 
@@ -464,26 +469,27 @@ str_trim(unique_names) |> head(3)
 ```
 
 ::: aside
-Two related functions are `str_squish()` which trims spaces around a string but also removes duplicate spaces inside it and `str_pad()` which *adds* "padding" to any string to make it a given minimum width. 
+Two related functions are `str_squish()` which trims spaces around a string but also removes duplicate spaces inside it and `str_pad()` which *adds* "padding" to any string to make it a given minimum width.
 :::
 
 ## Counting Characters
 
-At the most basic level you can use `str_length()` to count the characters are in a string. 
+At the most basic level you can use `str_length()` to count the characters are in a string.
 
-. . . 
+. . .
 
 ```{r}
 #| output-location: fragment
 restaurants |> 
-  select(`Phone`) |> 
-  mutate(phone_length = str_length(`Phone`)) |> # <21> 
+  select(Phone) |> 
+  mutate(phone_length = str_length(Phone)) |> # <21> 
   count(phone_length) # <22>
 ```
-21. Getting the length of `Phone` 
+
+21. Getting the length of `Phone`
 22. Getting the count of different lengths for `Phone` found in the data
 
-. . . 
+. . .
 
 ```{r}
 #| output-location: fragment
@@ -495,14 +501,14 @@ phone_numbers |>
   filter(phone_length %in% c(15, 18)) |> 
   slice_head(n = 1, by = phone_length) # <23>
 ```
-23. Filtering for the two abnormal phone number lengths, and getting the first observation (row) by the two different numbers (15, 18). 
 
+23. Filtering for the two abnormal phone number lengths, and getting the first observation (row) by the two different numbers (15, 18).
 
 ## Subsetting Strings
 
-If we want to subset a string we can use `str_sub()`. Let's pull out just the area codes from the `Phone` variable. 
+If we want to subset a string we can use `str_sub()`. Let's pull out just the area codes from the `Phone` variable.
 
-. . . 
+. . .
 
 ```{r}
 #| output-location: fragment
@@ -511,47 +517,50 @@ restaurants |>
   mutate(area_code = str_sub(`Phone`, start = 2, end = 4)) |> # <24> 
   distinct(area_code)
 ```
-24. `start` and `end` are the positions where the "substring" should start and end (inclusive). You can also use negative values to count backwards from the end of a string. Note that `str_sub()` won’t fail if the string is too short: it will just return as much as possible. 
+
+24. `start` and `end` are the positions where the "substring" should start and end (inclusive). You can also use negative values to count backwards from the end of a string. Note that `str_sub()` won't fail if the string is too short: it will just return as much as possible.
 
 ## Working with Non-English Strings
 
-Computer infrastructure is heavily biased towards English speakers so there are some things to be aware of if you're interested in working with character data in a different language. 
+Computer infrastructure is heavily biased towards English speakers so there are some things to be aware of if you're interested in working with character data in a different language.
 
-. . . 
+. . .
 
 <br>
 
 #### Encoding
 
-* [UTF-8](https://en.wikipedia.org/wiki/UTF-8) can encode just about every character used by humans today and many extra symbols like emojis. 
-  * `readr` uses UTF-8 everywhere. This is a good default but will fail for data produced by older systems that don’t use UTF-8. 
-* To read these correctly, you specify the encoding via the `locale` argument (hopefully that information is provided in the data documentation). 
-  * Unfortunately, that’s rarely the case, so `readr` provides `guess_encoding()` to help you figure it out. It’s not foolproof and works better when you have lots of text.
-* Learn more about the intricacies of encoding [here](https://kunststube.net/encoding/).
+-   [UTF-8](https://en.wikipedia.org/wiki/UTF-8) can encode just about every character used by humans today and many extra symbols like emojis.
+    -   `readr` uses UTF-8 everywhere. This is a good default but will fail for data produced by older systems that don't use UTF-8.
+-   To read these correctly, you specify the encoding via the `locale` argument (hopefully that information is provided in the data documentation).
+    -   Unfortunately, that's rarely the case, so `readr` provides `guess_encoding()` to help you figure it out. It's not foolproof and works better when you have lots of text.
+-   Learn more about the intricacies of encoding [here](https://kunststube.net/encoding/).
 
 ## Working with Non-English Strings
 
-Computer infrastructure is heavily biased towards English speakers so there are some things to be aware of if you're interested in working with character data in a different language. 
+Computer infrastructure is heavily biased towards English speakers so there are some things to be aware of if you're interested in working with character data in a different language.
 
 <br>
 
 #### Letter Variations
 
-* Accented letters may be either 1 character or 2 depending upon how they're encoded, which affects position for `str_length()` and `str_sub()`.
-* `str_equal()` will recognize that the different variations have the same appearance while `==` will evaluate them as different.
+-   Accented letters may be either 1 character or 2 depending upon how they're encoded, which affects position for `str_length()` and `str_sub()`.
+-   `str_equal()` will recognize that the different variations have the same appearance while `==` will evaluate them as different.
 
 ## Working with Non-English Strings
 
-Computer infrastructure is heavily biased towards English speakers so there are some things to be aware of if you're interested in working with character data in a different language. 
+Computer infrastructure is heavily biased towards English speakers so there are some things to be aware of if you're interested in working with character data in a different language.
 
 <br>
 
 #### Locale-Dependent Functions
 
-*  A locale is similar to a language but includes an optional region specifier to handle regional variations within a language^[You can see which are supported in `stringr` by looking at `stringi::stri_locale_list()`].
-* Base `R` string functions will automatically use the locale set by your operating system which means that base R string functions do what you expect for your language. 
-  * However, your code might work differently if you share it with someone who lives in a different country.
-  * To avoid this problem, `stringr` defaults to English rules by using the “en” locale and requires you to specify the locale argument to override it. 
+-   A locale is similar to a language but includes an optional region specifier to handle regional variations within a language[^3].
+-   Base `R` string functions will automatically use the locale set by your operating system which means that base R string functions do what you expect for your language.
+    -   However, your code might work differently if you share it with someone who lives in a different country.
+    -   To avoid this problem, `stringr` defaults to English rules by using the "en" locale and requires you to specify the locale argument to override it.
+
+[^3]: You can see which are supported in `stringr` by looking at `stringi::stri_locale_list()`
 
 # Pattern Matching & <br> Regular Expressions {.section-title background-color="#99a486"}
 
@@ -559,7 +568,7 @@ Computer infrastructure is heavily biased towards English speakers so there are 
 
 It's common to want to see if a string satisfies a certain *pattern*.
 
-. . . 
+. . .
 
 We did this with numeric values earlier in this course!
 
@@ -568,8 +577,7 @@ restaurants |>
   filter(`Inspection Score` < 10 | `Inspection Score` > 150)
 ```
 
-
-## Patterns: `str_detect()` 
+## Patterns: `str_detect()`
 
 We can do similar pattern-checking using `str_detect()`:
 
@@ -577,9 +585,10 @@ We can do similar pattern-checking using `str_detect()`:
 #| eval: false
 str_detect(string, pattern) # <1>
 ```
-1. `string` is the character string (or vector of strings) we want to examine and `pattern` is the pattern that we're checking for, inside `string`. The output will be a `TRUE`/`FALSE` vector indicating if pattern was found.
 
-. . . 
+1.  `string` is the character string (or vector of strings) we want to examine and `pattern` is the pattern that we're checking for, inside `string`. The output will be a `TRUE`/`FALSE` vector indicating if pattern was found.
+
+. . .
 
 <br>
 
@@ -591,13 +600,13 @@ restaurants |>
   distinct()
 ```
 
-. . . 
+. . .
 
 <br>
 
 Hmmm...there are only 5 restaurants on a street with Pike in the name?!
 
-## Patterns: `str_detect()` 
+## Patterns: `str_detect()`
 
 We can do similar pattern-checking using `str_detect()`:
 
@@ -605,7 +614,8 @@ We can do similar pattern-checking using `str_detect()`:
 #| eval: false
 str_detect(string, pattern) # <1>
 ```
-1. `string` is the character string (or vector of strings) we want to examine and `pattern` is the pattern that we're checking for, inside `string`. The output will be a `TRUE`/`FALSE` vector indicating if pattern was found.
+
+1.  `string` is the character string (or vector of strings) we want to examine and `pattern` is the pattern that we're checking for, inside `string`. The output will be a `TRUE`/`FALSE` vector indicating if pattern was found.
 
 <br>
 
@@ -617,14 +627,14 @@ restaurants |>
   filter(str_detect(Address, "Pike")) |> 
   distinct()
 ```
-2. Note: Results are case-sensitive!! Therefore we need to transform all the addresses to the same case. 
 
+2.  Note: Results are case-sensitive!! Therefore we need to transform all the addresses to the same case.
 
 ## Replacement: `str_replace()`
 
 What about if you want to replace a string with something else? Use `str_replace()`!
 
-. . . 
+. . .
 
 This function works very similarly to `str_detect()`, but with one extra argument:
 
@@ -632,9 +642,10 @@ This function works very similarly to `str_detect()`, but with one extra argumen
 #| eval: false
 str_replace(string, pattern, replacement) # <3> 
 ```
-3. `replacement` is what `pattern` is substituted for.
 
-. . . 
+3.  `replacement` is what `pattern` is substituted for.
+
+. . .
 
 ```{r}
 restaurants |> 
@@ -643,55 +654,58 @@ restaurants |>
                                  pattern = "01/", # <4>
                                  replacement = "January "))
 ```
-4. In this case, our pattern is limited since `"01/"` occurs both for the month and the day. This would be a good place for a regular expression. 
 
+4.  In this case, our pattern is limited since `"01/"` occurs both for the month and the day. This would be a good place for a regular expression.
 
-## What are Regular Expressions? <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+## What are Regular Expressions? [{{< fa scroll >}}]{style="color:#99a486"} {.scrollable}
 
-**Regular expressions**^[Regular expressions are very compact and use a lot of punctuation characters, so they can seem overwhelming and hard to read at first. **DO NOT** prioritize learning this right now, especially if you are still a beginner! This information is for future reference and to give you a sense of what you can do if you need/want to work with text data in the future.] or **regexes** are how we describe patterns we are looking for in text in a way that a computer can understand. We write an **expression**, apply it to a string input, and then can do things with **matches** we find.
+**Regular expressions**[^4] or **regexes** are how we describe patterns we are looking for in text in a way that a computer can understand. We write an **expression**, apply it to a string input, and then can do things with **matches** we find.
 
-. . . 
+[^4]: Regular expressions are very compact and use a lot of punctuation characters, so they can seem overwhelming and hard to read at first. **DO NOT** prioritize learning this right now, especially if you are still a beginner! This information is for future reference and to give you a sense of what you can do if you need/want to work with text data in the future.
 
-* **Literal characters** are defined snippets to search for like `Pike` or `01/`. 
+. . .
 
-. . . 
+-   **Literal characters** are defined snippets to search for like `Pike` or `01/`.
 
-* **Metacharacters**^[To treat a metacharacter as a literal character, you must **escape** it with two preceding backslashes `\\`, e.g. to match `(206)` including the parentheses, you'd use `\\(206\\)` in your regex.] let us be flexible in describing patterns. Some basic types of metacharacters are listed below. 
-  * **Quantifiers** control how many times a pattern can match
-    * `?` makes a pattern optional (i.e. it matches 0 or 1 times)
-    * `+` lets a pattern repeat (i.e. it matches at least once)
-    * `*` lets a pattern be optional or repeat (i.e. it matches any number of times, including 0)
-    * `{n}` matches exactly `n` times, `{n,}` matches at least `n` times, `{n, m}` matches between `n` and `m` times
-  * **Character classes** are defined by `[]` and let you match a set of characters
-    * `.` matches any character except a new line (`\n`)
-    * `-` allows you to specify a range
-    * You can invert a match by starting it with `^`
-  * **Grouping** allows you to override the default precedence rules for regular expressions
-    * `()` also allows you to create groups which can be referenced later in the regular expression with backreferences, like `\1`, `\2`
-    * Use `(?:)`, the non-grouping parentheses, to control precedence but not capture the match in a group. This is slightly more efficient than capturing parentheses and most useful for complex cases where you need to capture matches and control precedence independently.
-  * **Alternation**, `|`, allows us to pick between one or more alternative patterns
-  * **Anchors** allow you to add specificity as to where the match occurs
-    * Use `^` to anchor the start
-    * Use `$` to anchor the end
-    * Match the boundary between words (start or end) with `\b`
-  * **Lookarounds** look ahead or behind the current match without “consuming” any characters. These are useful when you want to check that a pattern exists, but you don't want to include it in the result.
-    * `(?=...)` is a positive look-ahead assertion. Matches if `...` matches at the current input
-    * `(?!...)` is a negative look-ahead assertion. Matches if `...` does not match at the current input
-    * `(?<=...)` is a positive look-behind assertion. Matches if `...` matches text preceding the current position. Length must be bounded (i.e. no `*` or `+`)
-    * `(?<!...)` is a negative look-behind assertion. Matches if `...` does not match text preceding the current position. Length must be bounded
-(i.e. no `*` or `+`)
-  
-. . . 
+. . .
+
+-   **Metacharacters**[^5] let us be flexible in describing patterns. Some basic types of metacharacters are listed below.
+    -   **Quantifiers** control how many times a pattern can match
+        -   `?` makes a pattern optional (i.e. it matches 0 or 1 times)
+        -   `+` lets a pattern repeat (i.e. it matches at least once)
+        -   `*` lets a pattern be optional or repeat (i.e. it matches any number of times, including 0)
+        -   `{n}` matches exactly `n` times, `{n,}` matches at least `n` times, `{n, m}` matches between `n` and `m` times
+    -   **Character classes** are defined by `[]` and let you match a set of characters
+        -   `.` matches any character except a new line (`\n`)
+        -   `-` allows you to specify a range
+        -   You can invert a match by starting it with `^`
+    -   **Grouping** allows you to override the default precedence rules for regular expressions
+        -   `()` also allows you to create groups which can be referenced later in the regular expression with backreferences, like `\1`, `\2`
+        -   Use `(?:)`, the non-grouping parentheses, to control precedence but not capture the match in a group. This is slightly more efficient than capturing parentheses and most useful for complex cases where you need to capture matches and control precedence independently.
+    -   **Alternation**, `|`, allows us to pick between one or more alternative patterns
+    -   **Anchors** allow you to add specificity as to where the match occurs
+        -   Use `^` to anchor the start
+        -   Use `$` to anchor the end
+        -   Match the boundary between words (start or end) with `\b`
+    -   **Lookarounds** look ahead or behind the current match without "consuming" any characters. These are useful when you want to check that a pattern exists, but you don't want to include it in the result.
+        -   `(?=...)` is a positive look-ahead assertion. Matches if `...` matches at the current input
+        -   `(?!...)` is a negative look-ahead assertion. Matches if `...` does not match at the current input
+        -   `(?<=...)` is a positive look-behind assertion. Matches if `...` matches text preceding the current position. Length must be bounded (i.e. no `*` or `+`)
+        -   `(?<!...)` is a negative look-behind assertion. Matches if `...` does not match text preceding the current position. Length must be bounded (i.e. no `*` or `+`)
+
+[^5]: To treat a metacharacter as a literal character, you must **escape** it with two preceding backslashes `\\`, e.g. to match `(206)` including the parentheses, you'd use `\\(206\\)` in your regex.
+
+. . .
 
 You can read more about regular expressions in `stringr` [here](https://stringr.tidyverse.org/articles/regular-expressions.html#grouping) and [this is a useful tutorial](https://regexlearn.com/) to learn `regex` if you need to/when you're ready!
-  
-<br>  
-  
-## Separation with regex {auto-animate=true}
 
-Let's go back to our example and see if we can use a regular expression to replace `01/` just for the month position of our date variable. 
+<br>
 
-. . . 
+## Separation with regex {auto-animate="true"}
+
+Let's go back to our example and see if we can use a regular expression to replace `01/` just for the month position of our date variable.
+
+. . .
 
 ```{r}
 #| output-location: fragment
@@ -701,7 +715,8 @@ restaurants |>
                                  pattern = "^01/", # <5>
                                  replacement = "January "))
 ```
-5. We can pretty simply use a regex signifier (the starting anchor `^`) to make sure our replacement only happens to the `01/`s in the month position.
+
+5.  We can pretty simply use a regex signifier (the starting anchor `^`) to make sure our replacement only happens to the `01/`s in the month position.
 
 ## Separation with regex
 
@@ -713,12 +728,13 @@ restaurants |>
   count(Description) |> # <6>
   print(n = 33) # <7>
 ```
-6. See all distinct values that `Description` takes to figure out how we need to separate this character vector. 
-7. You can force a tibble to print more than the default 10 rows by specifying the number with `print(n)`.
+
+6.  See all distinct values that `Description` takes to figure out how we need to separate this character vector.
+7.  You can force a tibble to print more than the default 10 rows by specifying the number with `print(n)`.
 
 <br>
 
-## Separation with regex {auto-animate=true}
+## Separation with regex {auto-animate="true"}
 
 ```{r}
 #| output-location: fragment
@@ -729,17 +745,18 @@ res_sep <- restaurants |>
                        patterns = c(capacity_description = "^.+", # <10>
                                     risk_category = "Risk ?(?:Category)? ?I{1,3}$")) 
 ```
-8. For this example I want to limit the dataset just to the pertinent variables for illustrative purposes so I am only keeping the distinct values of `Name` and `Description`. 
-9. The `cols` argument of this function is the column you want to separate. 
-10. The `patterns` argument takes a named character vector where the names become the column names and the character strings are regular expressions that match the desired contents of the vector. 
 
-. . . 
+8.  For this example I want to limit the dataset just to the pertinent variables for illustrative purposes so I am only keeping the distinct values of `Name` and `Description`.
+9.  The `cols` argument of this function is the column you want to separate.
+10. The `patterns` argument takes a named character vector where the names become the column names and the character strings are regular expressions that match the desired contents of the vector.
+
+. . .
 
 <br>
 
-I've triggered the debugging error message which tells me how to diagnose/ignore the mismatch that's occurring. 
+I've triggered the debugging error message which tells me how to diagnose/ignore the mismatch that's occurring.
 
-## Separation with regex {auto-animate=true}
+## Separation with regex {auto-animate="true"}
 
 ```{r}
 #| output-location: fragment
@@ -753,12 +770,12 @@ res_sep <- restaurants |>
   distinct(capacity_description, risk_category, Description_ok, Description_matches, Description_remainder) |> # <13>
   print(n = 33)
 ```
-11. `"^"` matches the beginning of a string, <br> `"."` matches any character except a new line, and `"+"` quantifies that `"."`, asking it to return 1 or more characters. 
-12. `"Risk"` matches exactly, `" ?"` matches a singular white space 0 or 1 time, <br> `"(?:Category)?"` **optionally** matches the exact word "Category", again `" ?"` matches a singular white space 0 or 1 time, `"I{1,3}"` matches "I" 1-3 times, and `"$"` signifies the end of the string. 
-13. Using `distinct()` on the created and debugging variables allows us to see what didn't match. 
 
+11. `"^"` matches the beginning of a string, <br> `"."` matches any character except a new line, and `"+"` quantifies that `"."`, asking it to return 1 or more characters.
+12. `"Risk"` matches exactly, `" ?"` matches a singular white space 0 or 1 time, <br> `"(?:Category)?"` **optionally** matches the exact word "Category", again `" ?"` matches a singular white space 0 or 1 time, `"I{1,3}"` matches "I" 1-3 times, and `"$"` signifies the end of the string.
+13. Using `distinct()` on the created and debugging variables allows us to see what didn't match.
 
-## Separation with regex {auto-animate=true}
+## Separation with regex {auto-animate="true"}
 
 ```{r}
 #| output-location: fragment
@@ -770,13 +787,14 @@ res_sep <- restaurants |>
                        too_few = "align_start") # <14>
 res_sep
 ```
-14. Since the only non-match was the one without a valid value for `risk_category`, we can give `too_few` the value `align_start` which tells the function to fill in anything without a value for the second variable with an `NA`. 
 
-. . . 
+14. Since the only non-match was the one without a valid value for `risk_category`, we can give `too_few` the value `align_start` which tells the function to fill in anything without a value for the second variable with an `NA`.
 
-We can clean up these variables a bit more with a version of `str_replace()`: `str_remove()`. This technically replaces the pattern match with `""`, or an empty string. 
+. . .
 
-## Separation with regex {auto-animate=true}
+We can clean up these variables a bit more with a version of `str_replace()`: `str_remove()`. This technically replaces the pattern match with `""`, or an empty string.
+
+## Separation with regex {auto-animate="true"}
 
 ```{r}
 #| output-location: fragment
@@ -790,14 +808,15 @@ res_sep <- restaurants |>
          risk_category = str_remove(risk_category, pattern = "Risk ?(?:Category)? ")) # <16>
 res_sep
 ```
-15. We can remove the trailing ` - ` by using `str_remove` and providing the regular expression for that piece of the `capacity_description` string. 
+
+15. We can remove the trailing `-` by using `str_remove` and providing the regular expression for that piece of the `capacity_description` string.
 16. Since this variable is already named `risk_category`, we can remove that language from the beginning of each string, by matching the first part of our original regular expression for this variable.
 
 ## Separation with regex
 
-What do the final 33 distinct values of these two new variables look like? 
+What do the final 33 distinct values of these two new variables look like?
 
-. . . 
+. . .
 
 ```{r}
 #| output-location: fragment
@@ -808,58 +827,55 @@ res_sep |>
 
 <br>
 
-. . . 
+. . .
 
-Nice! 
+Nice!
 
-![](images/outkast_fresh_clean.gif){.absolute right=0 top=400}
+![](images/outkast_fresh_clean.gif){.absolute right="0" top="400"}
 
-## Other Uses for Regular Expressions <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+## Other Uses for Regular Expressions [{{< fa scroll >}}]{style="color:#99a486"} {.scrollable}
 
 Even if you aren't explicitly manipulating/analyzing text data for your research, knowing some things about regular expressions will still come in handy because they're used in other places, both in Base `R` and the `tidyverse`.
 
-. . . 
+. . .
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ### Base `R`
 
-::: {.fragment}
-* `apropos(pattern)` searches all objects available from the global environment that match the given pattern. This is useful if you can’t quite remember the name of a function, for example: 
+::: fragment
+-   `apropos(pattern)` searches all objects available from the global environment that match the given pattern. This is useful if you can't quite remember the name of a function, for example:
 
 ```{r}
 #| output-location: fragment
 apropos("separate")
 ```
-
 :::
 
-::: {.fragment}
-* `list.files(path, pattern)` lists all files in path that match a regular expression pattern. For example, you can find all the Quarto files in the current directory with:
-
+::: fragment
+-   `list.files(path, pattern)` lists all files in path that match a regular expression pattern. For example, you can find all the Quarto files in the current directory with:
 
 ```{r}
 #| output-location: fragment
 list.files(pattern = "\\.qmd$")
 ```
-
 :::
 
 ### `tidyverse`
 
-::: {.fragment}
-* `matches(pattern)` will select all variables whose name matches the supplied pattern.. It’s a `tidyselect` function (like `starts_with()` and the like) that you can use in any tidyverse function that selects variables. 
+::: fragment
+-   `matches(pattern)` will select all variables whose name matches the supplied pattern.. It's a `tidyselect` function (like `starts_with()` and the like) that you can use in any tidyverse function that selects variables.
 
 ```{r}
 #| output-location: fragment
 names(iris)
 iris %>% select(matches("[pt]al")) |> names() # <17>
 ```
-17. `[pt]` signifies match either`p` or `t`. 
+
+17. `[pt]` signifies match either`p` or `t`.
 :::
 
-::: {.fragment}
-`pivot_longer()`'s argument `names_pattern` takes a vector of regular expressions, just like `separate_wider_regex()`. It’s useful when extracting data out of variable names with a complex structure. 
+::: fragment
+`pivot_longer()`'s argument `names_pattern` takes a vector of regular expressions, just like `separate_wider_regex()`. It's useful when extracting data out of variable names with a complex structure.
 
 ```{r}
 #| output-location: fragment
@@ -870,58 +886,136 @@ who |> pivot_longer(cols = new_sp_m014:newrel_f65,
                     values_to = "count") |> 
   slice_head(n = 10)
 ```
+
 18. `new` matches exactly, then `_?` *optionally* matches an underscore, `(.*)` matches any number of characters and in this example it captures the new `diagnosis` variable, `_` matches exactly, `(.)` matches one character which captures the `gender` variable `m` or `f` in this example, and lastly, `(.*)` again matches any number of characters, in this case it captures the varying digits of the `age` variable.
 :::
 
-::: {.fragment}
+::: fragment
 The `delim` argument in `separate_longer_delim()` and `separate_wider_delim()` usually matches a fixed string, but you can use `regex()` to make it match a pattern. This is useful, for example, if you want to match a comma that is optionally followed by a space, i.e. `regex(", ?")`.
 :::
-
 :::
 
+## Base `R` Equivalents[^6]
 
+[^6]: You can see a full list [here](https://stringr.tidyverse.org/articles/from-base.html), including functions we didn't look at today.
 
-## Base `R` Equivalents^[You can see a full list [here](https://stringr.tidyverse.org/articles/from-base.html), including functions we didn't look at today.]  
-
-:::: {.columns}
-
+::: columns
 ::: {.column width="45%"}
 #### Base `R`
-[paste0(x, sep, collapse)]{.custom-code}  
-[]{.custom-code}  
-`nchar(x)`  
-[substr(x, start, end)]{.custom-code}  
-`toupper(x)`  
-[tolower(x)]{.custom-code}  
-`tools::toTitleCase(x)`  
-[trimws(x)]{.custom-code}  
-`grepl(pattern, x)`  
-[sub(x, pattern, replacement)]{.custom-code}   
+
+[paste0(x, sep, collapse)]{.custom-code}\
+\
+`nchar(x)`\
+[substr(x, start, end)]{.custom-code}\
+`toupper(x)`\
+[tolower(x)]{.custom-code}\
+`tools::toTitleCase(x)`\
+[trimws(x)]{.custom-code}\
+`grepl(pattern, x)`\
+[sub(x, pattern, replacement)]{.custom-code}\
 `strwrap(x)`
 :::
 
 ::: {.column width="55%"}
 #### `stringr`
-[str_c(x, sep, collapse)]{.custom-code}  
-[str_flatten(x, collapse)]{.custom-code}  
-`str_length(x)`  
-[str_sub(x, start, end)]{.custom-code}    
-`str_to_upper(x)`  
-[str_to_lower(x)]{.custom-code}  
-`str_to_title(x)`  
-[str_trim(x)]{.custom-code}  
-`str_detect(x, pattern)`  
-[str_replace(x, pattern, replacement)]{.custom-code}  
-`str_wrap(x)` 
-:::
 
-::::
+[str_c(x, sep, collapse)]{.custom-code}\
+[str_flatten(x, collapse)]{.custom-code}\
+`str_length(x)`\
+[str_sub(x, start, end)]{.custom-code}\
+`str_to_upper(x)`\
+[str_to_lower(x)]{.custom-code}\
+`str_to_title(x)`\
+[str_trim(x)]{.custom-code}\
+`str_detect(x, pattern)`\
+[str_replace(x, pattern, replacement)]{.custom-code}\
+`str_wrap(x)`
+:::
+:::
 
 <br>
 
 ::: aside
-There are many other useful `stringr` functions/variants of the functions we used today. Check them out [here](https://stringr.tidyverse.org/reference/index.html). 
+There are many other useful `stringr` functions/variants of the functions we used today. Check them out [here](https://stringr.tidyverse.org/reference/index.html).
 :::
 
+## Lab
+
+Use the following code to read in the King County restaurants data:
+
+```{r}
+library(babynames) # <1> 
+data(babynames) 
+restaurants <- load(url("https://github.com/vsass/CSSS508/raw/main/Lectures/Lecture7/data/restaurants.Rdata"))
+```
+1. US baby names provided by the SSA. This package contains all names used for at least 5 children of either sex for 1890-2017. 
 
 
+
+## Answers
+
+1. What is the shortest name length? What is the longest name length? Mean? Median?
+
+```{r}
+babynames |> 
+  distinct(name) |> 
+  mutate(length = str_length(name)) |> 
+  summarise(shortest = min(length), 
+            longest = max(length), 
+            mean = mean(length), 
+            median = median(length))
+```
+
+2. What is the most popular letter for a name to start with? 
+
+```{r}
+check <- babynames |> 
+  mutate(first = str_sub(name, 1, 1)) |> 
+  count(first)
+  
+```
+
+3. Make a plot of the distribution of your own name! What is the most likely year you were born based on your name? Is that close to 
+
+```{r}
+babynames |>
+  filter(name == "Vic") |> 
+  ggplot(aes(x = year, y = n)) +
+  geom_histogram(stat = "identity") + 
+  geom_vline(xintercept = 1988, color = "red")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1.  What restaurant has the longest name? The shortest?
+
+```{r}
+restaurants |> 
+  distinct(Name) |> 
+  mutate(length = str_length(Name)) |> 
+  filter(length == max(length) | length == min(length))
+```
+
+2.  
+
+```{r}
+str_c("hi ", NA)
+str_flatten("hi ", NA)
+paste0("hi ", NA)
+str_c(letters[1:2], letters[1:3])
+str_flatten(letters[1:2], letters[1:3])
+paste0(letters[1:2], letters[1:3])
+```
+
+3.  
