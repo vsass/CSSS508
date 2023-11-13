@@ -130,7 +130,7 @@
     "href": "Lectures/Lecture7/CSSS508_Lecture7_index.html",
     "title": "Lecture 7",
     "section": "",
-    "text": "Slides & Code\nHTML slides • Raw qmd file\n\n\n\nSuggested Reading (from R for Data Science (2e))\nChapter 15: Strings • Chapter 16: Regular expressions • Chapter 18: Dates and times •\n\n\n\nUseful Resources\n\nCheatsheets\nstringr • Regular expressions • lubridate\n\n\nPackage Websites\nstringr lubridate hms\n\n\nOther Readings\n\n\nCrowdsource Help\nCS&SS 508 Slack Workspace • Posit community • Stackoverflow"
+    "text": "Slides & Code\nHTML slides • Raw qmd file • R Code\n\n\n\nSuggested Reading (from R for Data Science (2e))\nChapter 15: Strings • Chapter 16: Regular expressions •\n\n\n\nUseful Resources\n\nCheatsheets\nstringr • Regular expressions • tidyr\n\n\nPackage Websites\nstringr tidyr\n\n\nCrowdsource Help\nCS&SS 508 Slack Workspace • Posit community • Stackoverflow"
   },
   {
     "objectID": "Lectures/Lecture1/CSSS508_Lecture1.html#welcome",
@@ -2293,14 +2293,14 @@
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#answers",
     "title": "",
     "section": "Answers",
-    "text": "Answers\n\nWhat restaurant has the longest name? The shortest?"
+    "text": "Answers\n\nWhat is the shortest name length? What is the longest name length? Mean? Median?\n\n\n\nbabynames |&gt; \n  distinct(name) |&gt; \n  mutate(length = str_length(name)) |&gt; \n  summarise(shortest = min(length), \n            longest = max(length), \n            mean = mean(length), \n            median = median(length))\n\n\n\n&gt; # A tibble: 1 × 4\n&gt;   shortest longest  mean median\n&gt;      &lt;int&gt;   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;\n&gt; 1        2      15  6.53      6"
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#answers-1",
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#answers-1",
     "title": "",
     "section": "Answers",
-    "text": "Answers\n2. Write an apply() function to take the median value of each column in the cars dataset\n\nmedian_cars &lt;- apply(cars, 2, median)\nmedian_cars\n\nspeed  dist \n   15    36"
+    "text": "Answers\n\nWhat is the most popular letter for a name to start with?1\n\n\n\nbabynames |&gt; \n  mutate(first = str_sub(name, 1, 1)) |&gt; \n  count(first, wt = prop) |&gt; \n  arrange(desc(n))\n\n\n\n&gt; # A tibble: 26 × 2\n&gt;    first     n\n&gt;    &lt;chr&gt; &lt;dbl&gt;\n&gt;  1 J      32.6\n&gt;  2 M      25.9\n&gt;  3 A      20.9\n&gt;  4 C      18.7\n&gt;  5 R      17.8\n&gt;  6 E      16.0\n&gt;  7 D      15.5\n&gt;  8 L      15.3\n&gt;  9 S      13.8\n&gt; 10 B      11.8\n&gt; # ℹ 16 more rows\n\n\n\nHint, each name has a proportion that is necessary to account for here."
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#my-answers",
@@ -3397,7 +3397,7 @@
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#title-slide",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#title-slide",
-    "title": "",
+    "title": "Roadmap",
     "section": "",
     "text": "Data Structures & Types\nCS&SS 508 • Lecture 6\n7 November 2023\nVictoria Sass"
   },
@@ -3420,7 +3420,7 @@
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#answers-2",
     "title": "",
     "section": "Answers",
-    "text": "Answers\n3. Make a ggplot\n\n\nCode\nPlot\n\n\n\n\nlibrary(ggplot2)\nggplot(cars, aes(speed, dist)) + \n  geom_point() +\n  geom_vline(xintercept = median_cars[1]) +\n  geom_hline(yintercept = median_cars[2])"
+    "text": "Answers\n\nPick a year between 1880 and 2017 and use either str_c() or str_glue() to create a new variable that is a sentence stating what the most popular name was for each binary sex category in that year. Bonus: Add a line break in your sentence and use str_view() to see what the new string looks like1.\n\n\n\nbabynames |&gt; \n  filter(year == 1950) |&gt; \n2  mutate(sex2 = if_else(sex == \"F\", \"girl\", \"boy\")) |&gt;\n3  slice_max(prop, by = c(sex)) |&gt;\n  mutate(Sentence = str_wrap(str_glue(\"The most popular name for {sex2}s in \n                                      {year} was {name}.\"), \n                             width = 25)) |&gt; \n4  pull(Sentence) |&gt;\n  str_view()\n\n\n2\n\nCreating a new sex2 variable for better interpretability of the final Sentence variable.\n\n3\n\nGetting the most popular (by proportion of all names) male and female names.\n\n4\n\npull() is similar to indexing with $ in Base R but works well with pipes. This is necessary to do before str_view() which only takes a vector of values (not a column from a data frame).\n\n\n\n\n\n\n&gt; [1] │ The most popular name for\n&gt;     │ girls in 1950 was Linda.\n&gt; [2] │ The most popular name for\n&gt;     │ boys in 1950 was James.\n\n\n\nHint: Use pull() before running str_view() to extract the last column created (your sentence) as a vector."
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#homework-7",
@@ -6813,30 +6813,30 @@
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#testing-data-types",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#testing-data-types",
-    "title": "",
+    "title": "Roadmap",
     "section": "Testing Data Types",
-    "text": "Testing Data Types\nThere are also functions to test for certain data types:\n\n\nis.numeric(5)\n\n&gt; [1] TRUE\n\nis.character(\"A\")\n\n&gt; [1] TRUE\n\nis.logical(TRUE)\n\n&gt; [1] TRUE\n\nis.infinite(-Inf)\n\n&gt; [1] TRUE\n\nis.na(NA)\n\n&gt; [1] TRUE\n\nis.nan(NaN)\n\n&gt; [1] TRUE"
+    "text": "Testing Data Types\nThere are also functions to test for certain data types:\n. . .\n\nis.numeric(5)\n\n&gt; [1] TRUE\n\nis.character(\"A\")\n\n&gt; [1] TRUE\n\nis.logical(TRUE)\n\n&gt; [1] TRUE\n\nis.infinite(-Inf)\n\n&gt; [1] TRUE\n\nis.na(NA)\n\n&gt; [1] TRUE\n\nis.nan(NaN)\n\n&gt; [1] TRUE"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#making-vectors",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#making-vectors",
-    "title": "",
+    "title": "Roadmap",
     "section": "Making Vectors",
-    "text": "Making Vectors\nIn R, we call a set of values of the same type a vector. We can create vectors using the c() function (“c” for combine or concatenate).\n\nc(1, 3, 7, -0.5)\n\n&gt; [1]  1.0  3.0  7.0 -0.5\n\n\n\nVectors have one dimension: length\n\nlength(c(1, 3, 7, -0.5))\n\n&gt; [1] 4\n\n\n\n\nAll elements of a vector are the same type (e.g. numeric or character)!\n\n\nCharacter data is the lowest denomination so anything mixed with it will be converted to a character."
+    "text": "Making Vectors\nIn R, we call a set of values of the same type a vector. We can create vectors using the c() function (“c” for combine or concatenate).\n\nc(1, 3, 7, -0.5)\n\n&gt; [1]  1.0  3.0  7.0 -0.5\n\n\n. . .\nVectors have one dimension: length\n\nlength(c(1, 3, 7, -0.5))\n\n&gt; [1] 4\n\n\n. . .\nAll elements of a vector are the same type (e.g. numeric or character)!\n. . .\nCharacter data is the lowest denomination so anything mixed with it will be converted to a character."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#generating-numeric-vectors",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#generating-numeric-vectors",
-    "title": "",
+    "title": "Roadmap",
     "section": "Generating Numeric Vectors",
-    "text": "Generating Numeric Vectors\nThere are shortcuts for generating numeric vectors:\n\n1:10\n\n&gt;  [1]  1  2  3  4  5  6  7  8  9 10\n\n\n\n\n1seq(-3, 6, by = 1.75)\n\n\n1\n\nSequence from -3 to 6, increments of 1.75\n\n\n\n\n&gt; [1] -3.00 -1.25  0.50  2.25  4.00  5.75\n\n\n\n\n\n2rep(c(0, 1), times = 3)\n3rep(c(0, 1), each = 3)\n4rep(c(0, 1), length.out = 3)\n\n\n2\n\nRepeat c(0, 1) 3 times.\n\n3\n\nRepeat each element 3 times.\n\n4\n\nRepeat c(0, 1) until the length of the final vector is 3.\n\n\n\n\n&gt; [1] 0 1 0 1 0 1\n&gt; [1] 0 0 0 1 1 1\n&gt; [1] 0 1 0\n\n\n\n\nYou can also assign values to a vector using Base R indexing rules.\n\n\n\nx &lt;- c(3, 6, 2, 9, 5)\nx[6] &lt;- 8\nx\n\n&gt; [1] 3 6 2 9 5 8\n\nx[c(7, 8)] &lt;- c(9, 9)\nx\n\n&gt; [1] 3 6 2 9 5 8 9 9"
+    "text": "Generating Numeric Vectors\nThere are shortcuts for generating numeric vectors:\n\n1:10\n\n&gt;  [1]  1  2  3  4  5  6  7  8  9 10\n\n\n. . .\n\n1seq(-3, 6, by = 1.75)\n\n\n1\n\nSequence from -3 to 6, increments of 1.75\n\n\n\n\n&gt; [1] -3.00 -1.25  0.50  2.25  4.00  5.75\n\n\n. . .\n\n2rep(c(0, 1), times = 3)\n3rep(c(0, 1), each = 3)\n4rep(c(0, 1), length.out = 3)\n\n\n2\n\nRepeat c(0, 1) 3 times.\n\n3\n\nRepeat each element 3 times.\n\n4\n\nRepeat c(0, 1) until the length of the final vector is 3.\n\n\n\n\n&gt; [1] 0 1 0 1 0 1\n&gt; [1] 0 0 0 1 1 1\n&gt; [1] 0 1 0\n\n\n. . .\nYou can also assign values to a vector using Base R indexing rules.\n. . .\n\nx &lt;- c(3, 6, 2, 9, 5)\nx[6] &lt;- 8\nx\n\n&gt; [1] 3 6 2 9 5 8\n\nx[c(7, 8)] &lt;- c(9, 9)\nx\n\n&gt; [1] 3 6 2 9 5 8 9 9"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#element-wise-vector-math",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#element-wise-vector-math",
-    "title": "",
+    "title": "Roadmap",
     "section": "Element-wise Vector Math",
-    "text": "Element-wise Vector Math\nWhen doing arithmetic operations on vectors, R handles these element-wise:\n\nc(1, 2, 3) + c(4, 5, 6)\n\n&gt; [1] 5 7 9\n\n\n\n5c(1, 2, 3, 4)^3\n\n\n5\n\nExponentiation is carried out using the ^ operator.\n\n\n\n\n&gt; [1]  1  8 27 64\n\n\n\nOther common operations: *, /, exp() = \\(e^x\\), log() = \\(\\log_e(x)\\)"
+    "text": "Element-wise Vector Math\nWhen doing arithmetic operations on vectors, R handles these element-wise:\n\nc(1, 2, 3) + c(4, 5, 6)\n\n&gt; [1] 5 7 9\n\n\n\n5c(1, 2, 3, 4)^3\n\n\n5\n\nExponentiation is carried out using the ^ operator.\n\n\n\n\n&gt; [1]  1  8 27 64\n\n\n. . .\nOther common operations: *, /, exp() = \\(e^x\\), log() = \\(\\log_e(x)\\)"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#vector-recycling",
@@ -6862,79 +6862,79 @@
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#example-standardizing-data",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#example-standardizing-data",
-    "title": "",
+    "title": "Roadmap",
     "section": "Example: Standardizing Data",
-    "text": "Example: Standardizing Data\nLet’s say we had some test scores and we wanted to put these on a standardized scale:\n\\[z_i = \\frac{x_i - \\text{mean}(x)}{\\text{SD}(x)}\\]\n\n\nx &lt;- c(97, 68, 75, 77, 69, 81)\nz &lt;- (x - mean(x)) / sd(x)\nround(z, 2)\n\n&gt; [1]  1.81 -0.93 -0.27 -0.08 -0.83  0.30"
+    "text": "Example: Standardizing Data\nLet’s say we had some test scores and we wanted to put these on a standardized scale:\n\\[z_i = \\frac{x_i - \\text{mean}(x)}{\\text{SD}(x)}\\]\n. . .\n\nx &lt;- c(97, 68, 75, 77, 69, 81)\nz &lt;- (x - mean(x)) / sd(x)\nround(z, 2)\n\n&gt; [1]  1.81 -0.93 -0.27 -0.08 -0.83  0.30"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#math-with-missing-values",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#math-with-missing-values",
-    "title": "",
+    "title": "Roadmap",
     "section": "Math with Missing Values",
-    "text": "Math with Missing Values\nEven one NA “poisons the well”: You’ll get NA out of your calculations unless you add the extra argument na.rm = TRUE (available in some functions):\n\n\nvector_w_missing &lt;- c(1, 2, NA, 4, 5, 6, NA)\nmean(vector_w_missing)\n\n&gt; [1] NA\n\nmean(vector_w_missing, na.rm = TRUE)\n\n&gt; [1] 3.6"
+    "text": "Math with Missing Values\nEven one NA “poisons the well”: You’ll get NA out of your calculations unless you add the extra argument na.rm = TRUE (available in some functions):\n. . .\n\nvector_w_missing &lt;- c(1, 2, NA, 4, 5, 6, NA)\nmean(vector_w_missing)\n\n&gt; [1] NA\n\nmean(vector_w_missing, na.rm = TRUE)\n\n&gt; [1] 3.6"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#subsetting-vectors",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#subsetting-vectors",
-    "title": "",
+    "title": "Roadmap",
     "section": "Subsetting Vectors",
-    "text": "Subsetting Vectors\nRecall, we can subset a vector in a number of ways:\n\nPassing a single index or vector of entries to keep:\n\n\nfirst_names &lt;- c(\"Andre\", \"Brady\", \"Cecilia\", \"Danni\", \"Edgar\", \"Francie\")\nfirst_names[c(1, 2)]\n\n&gt; [1] \"Andre\" \"Brady\"\n\n\n\n\nPassing a single index or vector of entries to drop:\n\n\nfirst_names[-3]\n\n&gt; [1] \"Andre\"   \"Brady\"   \"Danni\"   \"Edgar\"   \"Francie\"\n\n\n\n\n\nPassing a logical condition:\n\n\n8first_names[nchar(first_names) == 7]\n\n\n8\n\nnchar() counts the number of characters in a character string.\n\n\n\n\n&gt; [1] \"Cecilia\" \"Francie\"\n\n\n\n\n\nPassing a named vector:\n\n\npet_names &lt;- c(dog = \"Lemon\", cat = \"Seamus\")\npet_names[\"cat\"]\n\n&gt;      cat \n&gt; \"Seamus\""
+    "text": "Subsetting Vectors\nRecall, we can subset a vector in a number of ways:\n\nPassing a single index or vector of entries to keep:\n\n\nfirst_names &lt;- c(\"Andre\", \"Brady\", \"Cecilia\", \"Danni\", \"Edgar\", \"Francie\")\nfirst_names[c(1, 2)]\n\n&gt; [1] \"Andre\" \"Brady\"\n\n\n. . .\n\nPassing a single index or vector of entries to drop:\n\n\nfirst_names[-3]\n\n&gt; [1] \"Andre\"   \"Brady\"   \"Danni\"   \"Edgar\"   \"Francie\"\n\n\n. . .\n\nPassing a logical condition:\n\n\n8first_names[nchar(first_names) == 7]\n\n\n8\n\nnchar() counts the number of characters in a character string.\n\n\n\n\n&gt; [1] \"Cecilia\" \"Francie\"\n\n\n. . .\n\nPassing a named vector:\n\n\npet_names &lt;- c(dog = \"Lemon\", cat = \"Seamus\")\npet_names[\"cat\"]\n\n&gt;      cat \n&gt; \"Seamus\""
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#matrices-two-dimensions",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#matrices-two-dimensions",
-    "title": "",
+    "title": "Roadmap",
     "section": "Matrices: Two Dimensions",
-    "text": "Matrices: Two Dimensions\nMatrices extend vectors to two dimensions: rows and columns. We can construct them directly using matrix().\n\nR fills in a matrix column-by-column (not row-by-row!)\n\na_matrix &lt;- matrix(first_names, nrow = 2, ncol = 3)\na_matrix\n\n&gt;      [,1]    [,2]      [,3]     \n&gt; [1,] \"Andre\" \"Cecilia\" \"Edgar\"  \n&gt; [2,] \"Brady\" \"Danni\"   \"Francie\"\n\n\n\n\nSimilar to vectors, you can make assignments using Base R indexing methods.\n\n\n\na_matrix[1, c(1:3)] &lt;- c(\"Hakim\", \"Tony\", \"Eduardo\")\n\n\n\nHowever, you can’t add rows or columns to a matrix in this way. You can only reassign already-existing cell values."
+    "text": "Matrices: Two Dimensions\nMatrices extend vectors to two dimensions: rows and columns. We can construct them directly using matrix().\n. . .\nR fills in a matrix column-by-column (not row-by-row!)\n\na_matrix &lt;- matrix(first_names, nrow = 2, ncol = 3)\na_matrix\n\n&gt;      [,1]    [,2]      [,3]     \n&gt; [1,] \"Andre\" \"Cecilia\" \"Edgar\"  \n&gt; [2,] \"Brady\" \"Danni\"   \"Francie\"\n\n\n. . .\nSimilar to vectors, you can make assignments using Base R indexing methods.\n. . .\n\na_matrix[1, c(1:3)] &lt;- c(\"Hakim\", \"Tony\", \"Eduardo\")\n\n. . .\nHowever, you can’t add rows or columns to a matrix in this way. You can only reassign already-existing cell values."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#binding-vectors",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#binding-vectors",
-    "title": "",
+    "title": "Roadmap",
     "section": "Binding Vectors",
-    "text": "Binding Vectors\nWe can also make matrices by binding vectors together with rbind() (row bind) and cbind() (column bind).\n\n\nb_matrix &lt;- rbind(c(1, 2, 3), c(4, 5, 6))\nb_matrix\n\n&gt;      [,1] [,2] [,3]\n&gt; [1,]    1    2    3\n&gt; [2,]    4    5    6\n\nc_matrix &lt;- cbind(c(1, 2), c(3, 4), c(5, 6))\nc_matrix\n\n&gt;      [,1] [,2] [,3]\n&gt; [1,]    1    3    5\n&gt; [2,]    2    4    6"
+    "text": "Binding Vectors\nWe can also make matrices by binding vectors together with rbind() (row bind) and cbind() (column bind).\n. . .\n\nb_matrix &lt;- rbind(c(1, 2, 3), c(4, 5, 6))\nb_matrix\n\n&gt;      [,1] [,2] [,3]\n&gt; [1,]    1    2    3\n&gt; [2,]    4    5    6\n\nc_matrix &lt;- cbind(c(1, 2), c(3, 4), c(5, 6))\nc_matrix\n\n&gt;      [,1] [,2] [,3]\n&gt; [1,]    1    3    5\n&gt; [2,]    2    4    6"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#subsetting-matrices",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#subsetting-matrices",
-    "title": "",
+    "title": "Roadmap",
     "section": "Subsetting Matrices",
-    "text": "Subsetting Matrices\nWe subset matrices using the same methods as with vectors, except we index them with [rows, columns]1:\n\na_matrix\n\n&gt;      [,1]    [,2]    [,3]     \n&gt; [1,] \"Hakim\" \"Tony\"  \"Eduardo\"\n&gt; [2,] \"Brady\" \"Danni\" \"Francie\"\n\n\n\n\n9a_matrix[1, 2]\n\n\n9\n\nRow 1, Column 2.\n\n\n\n\n&gt; [1] \"Tony\"\n\n\n\n10a_matrix[1, c(2,3)]\n\n\n10\n\nRow 1, Columns 2 and 3.\n\n\n\n\n&gt; [1] \"Tony\"    \"Eduardo\"\n\n\n\n\nWe can obtain the dimensions of a matrix using dim().\n\ndim(a_matrix)\n\n&gt; [1] 2 3\n\n\n\nLike we learned how to do with dataframes in week 3."
+    "text": "Subsetting Matrices\nWe subset matrices using the same methods as with vectors, except we index them with [rows, columns]2:\n\na_matrix\n\n&gt;      [,1]    [,2]    [,3]     \n&gt; [1,] \"Hakim\" \"Tony\"  \"Eduardo\"\n&gt; [2,] \"Brady\" \"Danni\" \"Francie\"\n\n\n. . .\n\n9a_matrix[1, 2]\n\n\n9\n\nRow 1, Column 2.\n\n\n\n\n&gt; [1] \"Tony\"\n\n\n\n10a_matrix[1, c(2,3)]\n\n\n10\n\nRow 1, Columns 2 and 3.\n\n\n\n\n&gt; [1] \"Tony\"    \"Eduardo\"\n\n\n. . .\nWe can obtain the dimensions of a matrix using dim().\n\ndim(a_matrix)\n\n&gt; [1] 2 3"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#matrices-becoming-vectors",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#matrices-becoming-vectors",
-    "title": "",
+    "title": "Roadmap",
     "section": "Matrices Becoming Vectors",
-    "text": "Matrices Becoming Vectors\nIf a matrix ends up having just one row or column after subsetting, by default R will make it into a vector.\n\n\na_matrix[, 1] \n\n&gt; [1] \"Hakim\" \"Brady\"\n\n\n\n\nYou can prevent this behavior using drop = FALSE.\n\na_matrix[, 1, drop = FALSE] \n\n&gt;      [,1]   \n&gt; [1,] \"Hakim\"\n&gt; [2,] \"Brady\""
+    "text": "Matrices Becoming Vectors\nIf a matrix ends up having just one row or column after subsetting, by default R will make it into a vector.\n. . .\n\na_matrix[, 1] \n\n&gt; [1] \"Hakim\" \"Brady\"\n\n\n. . .\nYou can prevent this behavior using drop = FALSE.\n\na_matrix[, 1, drop = FALSE] \n\n&gt;      [,1]   \n&gt; [1,] \"Hakim\"\n&gt; [2,] \"Brady\""
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#matrix-data-type-warning",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#matrix-data-type-warning",
-    "title": "",
+    "title": "Roadmap",
     "section": "Matrix Data Type Warning",
-    "text": "Matrix Data Type Warning\nMatrices can contain numeric, integer, factor, character, or logical. But just like vectors, all elements must be the same data type.\n\n\nbad_matrix &lt;- cbind(1:2, c(\"Victoria\", \"Sass\"))\nbad_matrix\n\n&gt;      [,1] [,2]      \n&gt; [1,] \"1\"  \"Victoria\"\n&gt; [2,] \"2\"  \"Sass\"\n\n\n\n\nIn this case, everything was converted to characters!"
+    "text": "Matrix Data Type Warning\nMatrices can contain numeric, integer, factor, character, or logical. But just like vectors, all elements must be the same data type.\n. . .\n\nbad_matrix &lt;- cbind(1:2, c(\"Victoria\", \"Sass\"))\nbad_matrix\n\n&gt;      [,1] [,2]      \n&gt; [1,] \"1\"  \"Victoria\"\n&gt; [2,] \"2\"  \"Sass\"\n\n\n. . .\nIn this case, everything was converted to characters!"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#matrix-dimension-names",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#matrix-dimension-names",
-    "title": "",
+    "title": "Roadmap",
     "section": "Matrix Dimension Names",
-    "text": "Matrix Dimension Names\nWe can access dimension names or name them ourselves:\n\n\nrownames(bad_matrix) &lt;- c(\"First\", \"Last\")\ncolnames(bad_matrix) &lt;- c(\"Number\", \"Name\")\nbad_matrix\n\n&gt;       Number Name      \n&gt; First \"1\"    \"Victoria\"\n&gt; Last  \"2\"    \"Sass\"\n\n\n\n11bad_matrix[ ,\"Name\", drop = FALSE]\n\n\n11\n\ndrop = FALSE maintains the matrix structure; when drop = TRUE (the default) it will be converted to a vector.\n\n\n\n\n&gt;       Name      \n&gt; First \"Victoria\"\n&gt; Last  \"Sass\""
+    "text": "Matrix Dimension Names\nWe can access dimension names or name them ourselves:\n. . .\n\nrownames(bad_matrix) &lt;- c(\"First\", \"Last\")\ncolnames(bad_matrix) &lt;- c(\"Number\", \"Name\")\nbad_matrix\n\n&gt;       Number Name      \n&gt; First \"1\"    \"Victoria\"\n&gt; Last  \"2\"    \"Sass\"\n\n\n\n11bad_matrix[ ,\"Name\", drop = FALSE]\n\n\n11\n\ndrop = FALSE maintains the matrix structure; when drop = TRUE (the default) it will be converted to a vector.\n\n\n\n\n&gt;       Name      \n&gt; First \"Victoria\"\n&gt; Last  \"Sass\""
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#matrix-arithmetic",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#matrix-arithmetic",
-    "title": "",
+    "title": "Roadmap",
     "section": "Matrix Arithmetic",
-    "text": "Matrix Arithmetic\nMatrices of the same dimensions can have math performed element-wise with the usual arithmetic operators:\n\n\nmatrix(c(2, 4, 6, 8),nrow = 2, ncol = 2) / matrix(c(2, 1, 3, 1),nrow = 2, ncol = 2)\n\n&gt;      [,1] [,2]\n&gt; [1,]    1    2\n&gt; [2,]    4    8"
+    "text": "Matrix Arithmetic\nMatrices of the same dimensions can have math performed element-wise with the usual arithmetic operators:\n. . .\n\nmatrix(c(2, 4, 6, 8),nrow = 2, ncol = 2) / matrix(c(2, 1, 3, 1),nrow = 2, ncol = 2)\n\n&gt;      [,1] [,2]\n&gt; [1,]    1    2\n&gt; [2,]    4    8"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#proper-matrix-math",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#proper-matrix-math",
-    "title": "",
+    "title": "Roadmap",
     "section": "“Proper” Matrix Math",
-    "text": "“Proper” Matrix Math\nTo do matrix transpositions, use t().\n\n\nc_matrix\n\n&gt;      [,1] [,2] [,3]\n&gt; [1,]    1    3    5\n&gt; [2,]    2    4    6\n\ne_matrix &lt;- t(c_matrix)\ne_matrix\n\n&gt;      [,1] [,2]\n&gt; [1,]    1    2\n&gt; [2,]    3    4\n&gt; [3,]    5    6\n\n\n\n\nTo do actual matrix multiplication1 (not element-wise), use %*%.\n\n\n\nf_matrix &lt;- c_matrix %*% e_matrix \nf_matrix\n\n&gt;      [,1] [,2]\n&gt; [1,]   35   44\n&gt; [2,]   44   56\n\n\n\n\n\n\n1. A reminder of how to do matrix multiplication :)"
+    "text": "“Proper” Matrix Math\nTo do matrix transpositions, use t().\n. . .\n\nc_matrix\n\n&gt;      [,1] [,2] [,3]\n&gt; [1,]    1    3    5\n&gt; [2,]    2    4    6\n\ne_matrix &lt;- t(c_matrix)\ne_matrix\n\n&gt;      [,1] [,2]\n&gt; [1,]    1    2\n&gt; [2,]    3    4\n&gt; [3,]    5    6\n\n\n. . .\nTo do actual matrix multiplication1 (not element-wise), use %*%.\n\n\n\nf_matrix &lt;- c_matrix %*% e_matrix \nf_matrix\n\n&gt;      [,1] [,2]\n&gt; [1,]   35   44\n&gt; [2,]   44   56\n\n\n\n\n\n\n1. A reminder of how to do matrix multiplication :)"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#proper-matrix-math-cont.",
@@ -6946,9 +6946,9 @@
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#matrices-vs.-data.frames-and-tibbles",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#matrices-vs.-data.frames-and-tibbles",
-    "title": "",
+    "title": "Roadmap",
     "section": "Matrices vs. Data.frames and Tibbles",
-    "text": "Matrices vs. Data.frames and Tibbles\nAll of these structures display data in two dimensions\n\n\n\n\nmatrix\n\nBase R\nSingle data type allowed\n\n\n\n\ndata.frame\n\nBase R\nStores multiple data types\nDefault for data storage\n\n\n\n\ntibbles\n\ntidyverse\nStores multiple data types\nDisplays nicely\n\n\n\n\n\n\nIn practice, data.frames and tibbles are very similar!"
+    "text": "Matrices vs. Data.frames and Tibbles\nAll of these structures display data in two dimensions\n. . .\n\n\n\nmatrix\n\nBase R\nSingle data type allowed\n\n\n\n\ndata.frame\n\nBase R\nStores multiple data types\nDefault for data storage\n\n\n\n\ntibbles\n\ntidyverse\nStores multiple data types\nDisplays nicely\n\n\n\n\n. . .\nIn practice, data.frames and tibbles are very similar!"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#creating-data.frames",
@@ -6960,30 +6960,30 @@
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#what-are-lists",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#what-are-lists",
-    "title": "",
+    "title": "Roadmap",
     "section": "What are Lists?",
-    "text": "What are Lists?\n\nLists are objects that can store multiple types of data.\n\n\n\nmy_list &lt;- list(first_thing = 1:5,\n                second_thing = matrix(8:11, nrow = 2), \n                third_thing = fct(c(\"apple\", \"pear\", \"banana\", \"apple\", \"apple\")))\nmy_list\n\n&gt; $first_thing\n&gt; [1] 1 2 3 4 5\n&gt; \n&gt; $second_thing\n&gt;      [,1] [,2]\n&gt; [1,]    8   10\n&gt; [2,]    9   11\n&gt; \n&gt; $third_thing\n&gt; [1] apple  pear   banana apple  apple \n&gt; Levels: apple pear banana"
+    "text": "What are Lists?\n. . .\nLists are objects that can store multiple types of data.\n. . .\n\nmy_list &lt;- list(first_thing = 1:5,\n                second_thing = matrix(8:11, nrow = 2), \n                third_thing = fct(c(\"apple\", \"pear\", \"banana\", \"apple\", \"apple\")))\nmy_list\n\n&gt; $first_thing\n&gt; [1] 1 2 3 4 5\n&gt; \n&gt; $second_thing\n&gt;      [,1] [,2]\n&gt; [1,]    8   10\n&gt; [2,]    9   11\n&gt; \n&gt; $third_thing\n&gt; [1] apple  pear   banana apple  apple \n&gt; Levels: apple pear banana"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#accessing-list-elements",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#accessing-list-elements",
-    "title": "",
+    "title": "Roadmap",
     "section": "Accessing List Elements",
-    "text": "Accessing List Elements\nYou can access a list element by its name or number in [[ ]], or a $ followed by its name:\n\n\nmy_list[[\"first_thing\"]]\n\n&gt; [1] 1 2 3 4 5\n\nmy_list[[1]]\n\n&gt; [1] 1 2 3 4 5\n\nmy_list$first_thing\n\n&gt; [1] 1 2 3 4 5"
+    "text": "Accessing List Elements\nYou can access a list element by its name or number in [[ ]], or a $ followed by its name:\n. . .\n\nmy_list[[\"first_thing\"]]\n\n&gt; [1] 1 2 3 4 5\n\nmy_list[[1]]\n\n&gt; [1] 1 2 3 4 5\n\nmy_list$first_thing\n\n&gt; [1] 1 2 3 4 5"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#why-two-brackets",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#why-two-brackets",
-    "title": "",
+    "title": "Roadmap",
     "section": "Why Two Brackets [[ ]]?",
-    "text": "Why Two Brackets [[ ]]?\nDouble brackets get the actual element — as whatever data type it is stored as, in that location in the list.\n\n\nstr(my_list[[1]])\n\n&gt;  int [1:5] 1 2 3 4 5\n\n\n\n\nIf you use single brackets to access list elements, you get a list back.\n\nstr(my_list[1])\n\n&gt; List of 1\n&gt;  $ first_thing: int [1:5] 1 2 3 4 5"
+    "text": "Why Two Brackets [[ ]]?\nDouble brackets get the actual element — as whatever data type it is stored as, in that location in the list.\n. . .\n\nstr(my_list[[1]])\n\n&gt;  int [1:5] 1 2 3 4 5\n\n\n. . .\nIf you use single brackets to access list elements, you get a list back.\n\nstr(my_list[1])\n\n&gt; List of 1\n&gt;  $ first_thing: int [1:5] 1 2 3 4 5"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#names-and-list-elements",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#names-and-list-elements",
-    "title": "",
+    "title": "Roadmap",
     "section": "names() and List Elements",
-    "text": "names() and List Elements\nYou can use names() to get a vector of list element names:\n\n\nnames(my_list)\n\n&gt; [1] \"first_thing\"  \"second_thing\" \"third_thing\""
+    "text": "names() and List Elements\nYou can use names() to get a vector of list element names:\n. . .\n\nnames(my_list)\n\n&gt; [1] \"first_thing\"  \"second_thing\" \"third_thing\""
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#example-regression-output",
@@ -7002,7 +7002,7 @@
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#mini-check-2-vectors",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#mini-check-2-vectors",
-    "title": "",
+    "title": "Roadmap",
     "section": "Mini-Check 2: Vectors",
     "text": "Mini-Check 2: Vectors\n\n\nWhat does sum(c(1, 2, NA)) output?\n\nNA. The code sum(c(1, 2, NA), na.rm = TRUE) would output 3.\n\n\n\n\n\n\nWhat does rep(c(0, 1), times = 2) output?\n\nc(0, 1, 0, 1)\n\n\n\n\n\n\nI want to get the first and second elements of my vector, a_vector. What’s wrong with the code a_vector[1, 2] ?\n\na_vector[c(1, 2)]"
   },
@@ -7016,16 +7016,16 @@
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#answers",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#answers",
-    "title": "",
+    "title": "Roadmap",
     "section": "Answers",
-    "text": "Answers\n1. Write code to create the following matrix:\n\nmatrix_test &lt;- matrix(c(\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"), nrow = 2, byrow = TRUE)\nmatrix_test\n\n&gt;      [,1] [,2] [,3]\n&gt; [1,] \"A\"  \"B\"  \"C\" \n&gt; [2,] \"D\"  \"E\"  \"F\"\n\n\n\n2. Write a line of code to extract the second column. Ensure the output is still a matrix.\n\nmatrix_test[ ,2, drop = FALSE]\n\n&gt;      [,1]\n&gt; [1,] \"B\" \n&gt; [2,] \"E\""
+    "text": "Answers\n1. Write code to create the following matrix:\n\nmatrix_test &lt;- matrix(c(\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"), nrow = 2, byrow = TRUE)\nmatrix_test\n\n&gt;      [,1] [,2] [,3]\n&gt; [1,] \"A\"  \"B\"  \"C\" \n&gt; [2,] \"D\"  \"E\"  \"F\"\n\n\n. . .\n2. Write a line of code to extract the second column. Ensure the output is still a matrix.\n\nmatrix_test[ ,2, drop = FALSE]\n\n&gt;      [,1]\n&gt; [1,] \"B\" \n&gt; [2,] \"E\""
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#answers-1",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#answers-1",
-    "title": "",
+    "title": "Roadmap",
     "section": "Answers",
-    "text": "Answers\n3. Complete the following sentence: “Lists are to vectors, what data frames are to…Matrices!1”\n\n4. Create a list that contains 3 elements:\n\nmy_new_list &lt;- list(ten_numbers = 1:10,\n                    my_name = \"Victoria Sass\",\n                    booleans = rep(c(TRUE, FALSE), times = 3))\nmy_new_list\n\n&gt; $ten_numbers\n&gt;  [1]  1  2  3  4  5  6  7  8  9 10\n&gt; \n&gt; $my_name\n&gt; [1] \"Victoria Sass\"\n&gt; \n&gt; $booleans\n&gt; [1]  TRUE FALSE  TRUE FALSE  TRUE FALSE\n\n\n\nLists and data frames can contain mixed data types, while vectors and matrices can only contain one data type. Additionally, lists and vectors are technically one dimension while matrices and dataframes are two dimensions."
+    "text": "Answers\n3. Complete the following sentence: “Lists are to vectors, what data frames are to…Matrices!4”\n. . .\n4. Create a list that contains 3 elements:\n\nmy_new_list &lt;- list(ten_numbers = 1:10,\n                    my_name = \"Victoria Sass\",\n                    booleans = rep(c(TRUE, FALSE), times = 3))\nmy_new_list\n\n&gt; $ten_numbers\n&gt;  [1]  1  2  3  4  5  6  7  8  9 10\n&gt; \n&gt; $my_name\n&gt; [1] \"Victoria Sass\"\n&gt; \n&gt; $booleans\n&gt; [1]  TRUE FALSE  TRUE FALSE  TRUE FALSE"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#homework-4",
@@ -7767,7 +7767,7 @@
     "href": "Homework/HW7/homework7.html",
     "title": "Homework 7",
     "section": "",
-    "text": "Due Dates\n\n\n\n\n\n\n  \n    \n    \n      #\n      \n        Section AA\n      \n      \n        Section AB\n      \n    \n    \n      Homework Due\n      Peer Review Due\n      Homework Due\n      Peer Review Due\n    \n  \n  \n    1\n10 October\n15 October\n12 October\n17 October\n    2\n17 October\n22 October\n19 October\n24 October\n    3\n24 October\n29 October\n26 October\n31 October\n    4\n31 October\n5 November\n2 November\n7 November\n    5\n7 November\n12 November\n9 November\n14 November\n    6\n14 November\n19 November\n16 November\n21 November\n    7\n21 November\n26 November\n23 November\n28 November\n    8\n28 November\n3 November\n30 November\n5 November\n    9\n5 December\n10 December\n7 December\n12 December"
+    "text": "Answer each of the following questions. Be sure to display all your code in the rendered version (use echo: true throughout1).\nUse the following code to read in the King County restaurants data:\n\nload(url(\"https://github.com/vsass/CSSS508/raw/main/Lectures/Lecture7/data/restaurants.Rdata\"))"
   },
   {
     "objectID": "Homework/HW8/homework8.html",
@@ -9090,7 +9090,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#footnotes",
     "title": "Roadmap",
     "section": "Footnotes",
-    "text": "Footnotes\n\n\nAn incredibly useful transformation for dealing with data that ranges across multiple orders of magnitude and converting exponential growth to linear growth.↩︎\nLike we learned how to do with dataframes in week 3.↩︎\n↩︎\nLists and data frames can contain mixed data types, while vectors and matrices can only contain one data type. Additionally, lists and vectors are technically one dimension while matrices and dataframes are two dimensions.↩︎"
+    "text": "Footnotes\n\n\nAn incredibly useful transformation for dealing with data that ranges across multiple orders of magnitude and converting exponential growth to linear growth.↩︎\nLike we learned how to do with dataframes in week 3.↩︎\n\n\n\nA reminder of how to invert a 2x2 square matrix.\n\n\n↩︎\nLists and data frames can contain mixed data types, while vectors and matrices can only contain one data type. Additionally, lists and vectors are technically one dimension while matrices and dataframes are two dimensions.↩︎"
   },
   {
     "objectID": "Lectures/Lecture5/CSSS508_Lecture5.html#footnotes",
@@ -10460,37 +10460,37 @@
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#data-types-in-r",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#data-types-in-r",
-    "title": "",
+    "title": "Roadmap",
     "section": "Data types in R",
-    "text": "Data types in R\nReturning, once again, to our list of data types in R:\n\n\nLogicals\nFactors\nDate/Date-time\nNumbers\nMissing Values\nStrings"
+    "text": "Data types in R\nReturning, once again, to our list of data types in R:\n. . .\n\nLogicals\nFactors\nDate/Date-time\nNumbers\nMissing Values\nStrings"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#data-types-in-r-1",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#data-types-in-r-1",
-    "title": "",
+    "title": "Roadmap",
     "section": "Data types in R",
     "text": "Data types in R\nReturning, once again, to our list of data types in R:\n\nLogicals\nFactors\nDate/Date-time\nNumbers\nMissing Values\nStrings"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#data-types-in-r-2",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#data-types-in-r-2",
-    "title": "",
+    "title": "Roadmap",
     "section": "Data types in R",
     "text": "Data types in R\nReturning, once again, to our list of data types in R:\n\nLogicals\nFactors\nDate/Date-time\nNumbers\nMissing Values\nStrings"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#numbers-two-ways",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#numbers-two-ways",
-    "title": "",
+    "title": "Roadmap",
     "section": "Numbers, Two Ways",
-    "text": "Numbers, Two Ways\nR has two types of numeric variables: double and integer."
+    "text": "Numbers, Two Ways\nR has two types of numeric variables: double and integer.\n. . ."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#numbers-coded-as-character-strings",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#numbers-coded-as-character-strings",
-    "title": "",
+    "title": "Roadmap",
     "section": "Numbers Coded as Character Strings",
-    "text": "Numbers Coded as Character Strings\nOftentimes numerical data is coded as a string so you’ll need to use the appropriate parsing function to read it in in the correct form.\n\n\nparse_integer(c(\"1\", \"2\", \"3\"))\n\n&gt; [1] 1 2 3\n\nparse_double(c(\"1\", \"2\", \"3.123\"))\n\n&gt; [1] 1.000 2.000 3.123\n\n\n\n\n\nIf you have values with extraneous non-numerical text you want to ignore there’s a separate function for that.\n\n\n\nparse_number(c(\"USD 3,513\", \"59%\", \"$1,123,456.00\"))\n\n&gt; [1]    3513      59 1123456"
+    "text": "Numbers Coded as Character Strings\nOftentimes numerical data is coded as a string so you’ll need to use the appropriate parsing function to read it in in the correct form.\n. . .\n\nparse_integer(c(\"1\", \"2\", \"3\"))\n\n&gt; [1] 1 2 3\n\nparse_double(c(\"1\", \"2\", \"3.123\"))\n\n&gt; [1] 1.000 2.000 3.123\n\n\n. . .\n\nIf you have values with extraneous non-numerical text you want to ignore there’s a separate function for that.\n. . .\n\nparse_number(c(\"USD 3,513\", \"59%\", \"$1,123,456.00\"))\n\n&gt; [1]    3513      59 1123456"
   },
   {
     "objectID": "Lectures/Lecture5/CSSS508_Lecture5.html#why-do-we-want-tidy-data-1",
@@ -10509,86 +10509,86 @@
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#count",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#count",
-    "title": "",
+    "title": "Roadmap",
     "section": "count()",
-    "text": "count()\nA very useful and common exploratory data analysis tool is to check the relative sums of different categories of a variable. That’s what count() is for!\n\n\nlibrary(nycflights13)\ndata(flights)\n\n1flights |&gt; count(origin)\n\n\n1\n\nAdd the argument sort = TRUE to see the most common values first (i.e. arranged in descending order). . . .\n\n\n\n\n&gt; # A tibble: 3 × 2\n&gt;   origin      n\n&gt;   &lt;chr&gt;   &lt;int&gt;\n&gt; 1 EWR    120835\n&gt; 2 JFK    111279\n&gt; 3 LGA    104662\n\n\nThis is functionally the same as grouping and summarizing with n().\n\n\n\nflights |&gt; \n2  summarise(n= n(),\n3            .by = origin)\n\n\n2\n\nn() is a special summary function that doesn’t take any arguments and instead accesses information about the “current” group. This means that it only works inside dplyr verbs.\n\n3\n\nYou can do this longer version if you also want to compute other summaries simultaneously.\n\n\n\n\n&gt; # A tibble: 3 × 2\n&gt;   origin      n\n&gt;   &lt;chr&gt;   &lt;int&gt;\n&gt; 1 EWR    120835\n&gt; 2 LGA    104662\n&gt; 3 JFK    111279"
+    "text": "count()\nA very useful and common exploratory data analysis tool is to check the relative sums of different categories of a variable. That’s what count() is for!\n. . .\n\nlibrary(nycflights13)\ndata(flights)\n\n1flights |&gt; count(origin)\n\n\n1\n\nAdd the argument sort = TRUE to see the most common values first (i.e. arranged in descending order). . . .\n\n\n\n\n&gt; # A tibble: 3 × 2\n&gt;   origin      n\n&gt;   &lt;chr&gt;   &lt;int&gt;\n&gt; 1 EWR    120835\n&gt; 2 JFK    111279\n&gt; 3 LGA    104662\n\n\nThis is functionally the same as grouping and summarizing with n().\n. . .\n\nflights |&gt; \n2  summarise(n= n(),\n3            .by = origin)\n\n\n2\n\nn() is a special summary function that doesn’t take any arguments and instead accesses information about the “current” group. This means that it only works inside dplyr verbs.\n\n3\n\nYou can do this longer version if you also want to compute other summaries simultaneously.\n\n\n\n\n&gt; # A tibble: 3 × 2\n&gt;   origin      n\n&gt;   &lt;chr&gt;   &lt;int&gt;\n&gt; 1 EWR    120835\n&gt; 2 LGA    104662\n&gt; 3 JFK    111279"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#n_distinct",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#n_distinct",
-    "title": "",
+    "title": "Roadmap",
     "section": "n_distinct()",
-    "text": "n_distinct()\nUse this function if you want the count the number of distinct (unique) values of one or more variables.\n\nSay we’re interested in which destinations are served by the most carriers:\n\nflights |&gt; \n  summarize(carriers = n_distinct(carrier), \n            .by = dest) |&gt; \n  arrange(desc(carriers))\n\n&gt; # A tibble: 105 × 2\n&gt;    dest  carriers\n&gt;    &lt;chr&gt;    &lt;int&gt;\n&gt;  1 ATL          7\n&gt;  2 ORD          7\n&gt;  3 TPA          7\n&gt;  4 BOS          7\n&gt;  5 CLT          7\n&gt;  6 IAD          6\n&gt;  7 MSP          6\n&gt;  8 DTW          6\n&gt;  9 MSY          6\n&gt; 10 PIT          6\n&gt; # ℹ 95 more rows"
+    "text": "n_distinct()\nUse this function if you want the count the number of distinct (unique) values of one or more variables.\n. . .\nSay we’re interested in which destinations are served by the most carriers:\n\nflights |&gt; \n  summarize(carriers = n_distinct(carrier), \n            .by = dest) |&gt; \n  arrange(desc(carriers))\n\n&gt; # A tibble: 105 × 2\n&gt;    dest  carriers\n&gt;    &lt;chr&gt;    &lt;int&gt;\n&gt;  1 ATL          7\n&gt;  2 ORD          7\n&gt;  3 TPA          7\n&gt;  4 BOS          7\n&gt;  5 CLT          7\n&gt;  6 IAD          6\n&gt;  7 MSP          6\n&gt;  8 DTW          6\n&gt;  9 MSY          6\n&gt; 10 PIT          6\n&gt; # ℹ 95 more rows"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#weighted-counts",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#weighted-counts",
-    "title": "",
+    "title": "Roadmap",
     "section": "Weighted Counts",
-    "text": "Weighted Counts\nA weighted count is simply a grouped sum, therefore count has a wt argument to allow for the shorthand.\n\nLet’s find out the number of miles each plane flew.\n\n\n\nflights |&gt; \n  summarize(miles = sum(distance), \n            .by = tailnum)\n\n&gt; # A tibble: 4,044 × 2\n&gt;    tailnum  miles\n&gt;    &lt;chr&gt;    &lt;dbl&gt;\n&gt;  1 N14228  171713\n&gt;  2 N24211  172934\n&gt;  3 N619AA   32141\n&gt;  4 N804JB  311992\n&gt;  5 N668DN   50352\n&gt;  6 N39463  169905\n&gt;  7 N516JB  359585\n&gt;  8 N829AS   52549\n&gt;  9 N593JB  377619\n&gt; 10 N3ALAA   67925\n&gt; # ℹ 4,034 more rows\n\n\n\nThis is equivalent to:\n\nflights |&gt; count(tailnum, wt = distance) \n\n&gt; # A tibble: 4,044 × 2\n&gt;    tailnum      n\n&gt;    &lt;chr&gt;    &lt;dbl&gt;\n&gt;  1 D942DN    3418\n&gt;  2 N0EGMQ  250866\n&gt;  3 N10156  115966\n&gt;  4 N102UW   25722\n&gt;  5 N103US   24619\n&gt;  6 N104UW   25157\n&gt;  7 N10575  150194\n&gt;  8 N105UW   23618\n&gt;  9 N107US   21677\n&gt; 10 N108UW   32070\n&gt; # ℹ 4,034 more rows"
+    "text": "Weighted Counts\nA weighted count is simply a grouped sum, therefore count has a wt argument to allow for the shorthand.\n. . .\nLet’s find out the number of miles each plane flew.\n\n\n\nflights |&gt; \n  summarize(miles = sum(distance), \n            .by = tailnum)\n\n&gt; # A tibble: 4,044 × 2\n&gt;    tailnum  miles\n&gt;    &lt;chr&gt;    &lt;dbl&gt;\n&gt;  1 N14228  171713\n&gt;  2 N24211  172934\n&gt;  3 N619AA   32141\n&gt;  4 N804JB  311992\n&gt;  5 N668DN   50352\n&gt;  6 N39463  169905\n&gt;  7 N516JB  359585\n&gt;  8 N829AS   52549\n&gt;  9 N593JB  377619\n&gt; 10 N3ALAA   67925\n&gt; # ℹ 4,034 more rows\n\n\n\nThis is equivalent to:\n\nflights |&gt; count(tailnum, wt = distance) \n\n&gt; # A tibble: 4,044 × 2\n&gt;    tailnum      n\n&gt;    &lt;chr&gt;    &lt;dbl&gt;\n&gt;  1 D942DN    3418\n&gt;  2 N0EGMQ  250866\n&gt;  3 N10156  115966\n&gt;  4 N102UW   25722\n&gt;  5 N103US   24619\n&gt;  6 N104UW   25157\n&gt;  7 N10575  150194\n&gt;  8 N105UW   23618\n&gt;  9 N107US   21677\n&gt; 10 N108UW   32070\n&gt; # ℹ 4,034 more rows"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#recycling-rules",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#recycling-rules",
-    "title": "",
+    "title": "Roadmap",
     "section": "Recycling Rules",
-    "text": "Recycling Rules\nR handles mismatched lengths of vectors by recycling, or repeating, the short vector.\n\n\nx &lt;- c(1, 2, 10, 20)\n6x / 5\n\n\n6\n\nThis is shorthand for: x / c(5, 5, 5, 5)\n\n\n\n\n&gt; [1] 0.2 0.4 2.0 4.0\n\n\n\n\nYou generally only want to recycle scalars, or vectors the length 1. Technically, however, R will recycle any vector that’s shorter in length (and it won’t always give you a warning if the shorter vector is not a multiple of the longer vector).\n\n\n\nx * c(1, 2)\n\n&gt; [1]  1  4 10 40\n\nx * c(1, 2, 3)\n\n&gt; Warning in x * c(1, 2, 3): longer object length is not a multiple of shorter\n&gt; object length\n\n\n&gt; [1]  1  4 30 20"
+    "text": "Recycling Rules\nR handles mismatched lengths of vectors by recycling, or repeating, the short vector.\n. . .\n\nx &lt;- c(1, 2, 10, 20)\n6x / 5\n\n\n6\n\nThis is shorthand for: x / c(5, 5, 5, 5)\n\n\n\n\n&gt; [1] 0.2 0.4 2.0 4.0\n\n\n. . .\nYou generally only want to recycle scalars, or vectors the length 1. Technically, however, R will recycle any vector that’s shorter in length (and it won’t always give you a warning if the shorter vector is not a multiple of the longer vector).\n. . .\n\nx * c(1, 2)\n\n&gt; [1]  1  4 10 40\n\nx * c(1, 2, 3)\n\n&gt; Warning in x * c(1, 2, 3): longer object length is not a multiple of shorter\n&gt; object length\n\n\n&gt; [1]  1  4 30 20"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#recycling-with-logicals",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#recycling-with-logicals",
-    "title": "",
+    "title": "Roadmap",
     "section": "Recycling with Logicals",
-    "text": "Recycling with Logicals\nThe same rules apply to logical operations which can lead to unexpected results without warning.\n\nFor example, take this code which attempts to find all flights in January and February:\n\nflights |&gt; \n7  filter(month == c(1, 2)) |&gt;\n  head(5)\n\n\n7\n\nA common mistake is to mix up == with %in%. This code will actually find flights in odd numbered rows that departed in January and flights in even numbered rows that departed in February. Unfortunately there’s no warning because flights has an even number of rows.\n\n\n\n\n&gt; # A tibble: 5 × 19\n&gt;    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n&gt; 1  2013     1     1      517            515         2      830            819\n&gt; 2  2013     1     1      542            540         2      923            850\n&gt; 3  2013     1     1      554            600        -6      812            837\n&gt; 4  2013     1     1      555            600        -5      913            854\n&gt; 5  2013     1     1      557            600        -3      838            846\n&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n&gt; #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n&gt; #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;\n\n\n\n\nTo protect you from this type of silent failure, most tidyverse functions use a stricter form of recycling that only recycles single values. However, when using base R functions like ==, this protection is not built in."
+    "text": "Recycling with Logicals\nThe same rules apply to logical operations which can lead to unexpected results without warning.\n. . .\nFor example, take this code which attempts to find all flights in January and February:\n\nflights |&gt; \n7  filter(month == c(1, 2)) |&gt;\n  head(5)\n\n\n7\n\nA common mistake is to mix up == with %in%. This code will actually find flights in odd numbered rows that departed in January and flights in even numbered rows that departed in February. Unfortunately there’s no warning because flights has an even number of rows.\n\n\n\n\n&gt; # A tibble: 5 × 19\n&gt;    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n&gt; 1  2013     1     1      517            515         2      830            819\n&gt; 2  2013     1     1      542            540         2      923            850\n&gt; 3  2013     1     1      554            600        -6      812            837\n&gt; 4  2013     1     1      555            600        -5      913            854\n&gt; 5  2013     1     1      557            600        -3      838            846\n&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n&gt; #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n&gt; #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;\n\n\n. . .\nTo protect you from this type of silent failure, most tidyverse functions use a stricter form of recycling that only recycles single values. However, when using base R functions like ==, this protection is not built in."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#other-useful-arithmetic-functions",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#other-useful-arithmetic-functions",
-    "title": "",
+    "title": "Roadmap",
     "section": "Other Useful Arithmetic Functions",
-    "text": "Other Useful Arithmetic Functions\nIn addition to the standards (+, -, /, *, ^), R has many other useful arithmetic functions.\n\nPairwise min/max\n\ndf\n\n&gt; # A tibble: 3 × 2\n&gt;       x     y\n&gt;   &lt;dbl&gt; &lt;dbl&gt;\n&gt; 1     1     3\n&gt; 2     5     2\n&gt; 3     7    NA\n\n\n\ndf |&gt; \n  mutate(\n6    min = pmin(x, y, na.rm = TRUE),\n7    max = pmax(x, y, na.rm = TRUE)\n  )\n\n\n6\n\npmin() returns the smallest value in each row. min(), by contrast, finds the smallest observation given a number of rows.\n\n7\n\npmax() returns the largest value in each row. max(), by contrast, finds the largest observation given a number of rows.\n\n\n\n\n&gt; # A tibble: 3 × 4\n&gt;       x     y   min   max\n&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n&gt; 1     1     3     1     3\n&gt; 2     5     2     2     5\n&gt; 3     7    NA     7     7"
+    "text": "Other Useful Arithmetic Functions\nIn addition to the standards (+, -, /, *, ^), R has many other useful arithmetic functions.\n. . .\nPairwise min/max\n\ndf\n\n&gt; # A tibble: 3 × 2\n&gt;       x     y\n&gt;   &lt;dbl&gt; &lt;dbl&gt;\n&gt; 1     1     3\n&gt; 2     5     2\n&gt; 3     7    NA\n\n\n\ndf |&gt; \n  mutate(\n6    min = pmin(x, y, na.rm = TRUE),\n7    max = pmax(x, y, na.rm = TRUE)\n  )\n\n\n6\n\npmin() returns the smallest value in each row. min(), by contrast, finds the smallest observation given a number of rows.\n\n7\n\npmax() returns the largest value in each row. max(), by contrast, finds the largest observation given a number of rows.\n\n\n\n\n&gt; # A tibble: 3 × 4\n&gt;       x     y   min   max\n&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n&gt; 1     1     3     1     3\n&gt; 2     5     2     2     5\n&gt; 3     7    NA     7     7"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#other-useful-arithmetic-functions-1",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#other-useful-arithmetic-functions-1",
-    "title": "",
+    "title": "Roadmap",
     "section": "Other Useful Arithmetic Functions",
-    "text": "Other Useful Arithmetic Functions\nModular arithmetic\n\n81:10 %/% 3\n\n\n8\n\nComputes integer division.\n\n\n\n\n&gt;  [1] 0 0 1 1 1 2 2 2 3 3\n\n\n\n91:10 %% 3\n\n\n9\n\nComputes the remainder.\n\n\n\n\n&gt;  [1] 1 2 0 1 2 0 1 2 0 1\n\n\n\nWe can see how this can be useful in our flights data which has curiously stored time:\n\nflights |&gt; mutate(hour = sched_dep_time %/% 100,\n                  minute = sched_dep_time %% 100,\n                  .keep = \"used\")\n\n&gt; # A tibble: 336,776 × 3\n&gt;    sched_dep_time  hour minute\n&gt;             &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;\n&gt;  1            515     5     15\n&gt;  2            529     5     29\n&gt;  3            540     5     40\n&gt;  4            545     5     45\n&gt;  5            600     6      0\n&gt;  6            558     5     58\n&gt;  7            600     6      0\n&gt;  8            600     6      0\n&gt;  9            600     6      0\n&gt; 10            600     6      0\n&gt; # ℹ 336,766 more rows"
+    "text": "Other Useful Arithmetic Functions\nModular arithmetic\n\n81:10 %/% 3\n\n\n8\n\nComputes integer division.\n\n\n\n\n&gt;  [1] 0 0 1 1 1 2 2 2 3 3\n\n\n\n91:10 %% 3\n\n\n9\n\nComputes the remainder.\n\n\n\n\n&gt;  [1] 1 2 0 1 2 0 1 2 0 1\n\n\n. . .\nWe can see how this can be useful in our flights data which has curiously stored time:\n\nflights |&gt; mutate(hour = sched_dep_time %/% 100,\n                  minute = sched_dep_time %% 100,\n                  .keep = \"used\")\n\n&gt; # A tibble: 336,776 × 3\n&gt;    sched_dep_time  hour minute\n&gt;             &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;\n&gt;  1            515     5     15\n&gt;  2            529     5     29\n&gt;  3            540     5     40\n&gt;  4            545     5     45\n&gt;  5            600     6      0\n&gt;  6            558     5     58\n&gt;  7            600     6      0\n&gt;  8            600     6      0\n&gt;  9            600     6      0\n&gt; 10            600     6      0\n&gt; # ℹ 336,766 more rows"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#other-useful-arithmetic-functions-2",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#other-useful-arithmetic-functions-2",
-    "title": "",
+    "title": "Roadmap",
     "section": "Other Useful Arithmetic Functions",
-    "text": "Other Useful Arithmetic Functions\nLogarithms1\n\n10log(c(2.718282, 7.389056, 20.085537))\n\n\n10\n\nInverse is exp()\n\n\n\n\n&gt; [1] 1 2 3\n\n\n\n11log2(c(2, 4, 8))\n\n\n11\n\nEasy to interpret because a difference of 1 on the log scale corresponds to doubling on the original scale and a difference of -1 corresponds to halving. Inverse is 2^.\n\n\n\n\n&gt; [1] 1 2 3\n\n\n\n12log10(c(10, 100, 1000))\n\n\n12\n\nEasy to back-transform because everything is on the order of 10. Inverse is 10^.\n\n\n\n\n&gt; [1] 1 2 3\n\n\nAn incredibly useful transformation for dealing with data that ranges across multiple orders of magnitude and converting exponential growth to linear growth."
+    "text": "Other Useful Arithmetic Functions\nLogarithms1\n\n10log(c(2.718282, 7.389056, 20.085537))\n\n\n10\n\nInverse is exp()\n\n\n\n\n&gt; [1] 1 2 3\n\n\n\n11log2(c(2, 4, 8))\n\n\n11\n\nEasy to interpret because a difference of 1 on the log scale corresponds to doubling on the original scale and a difference of -1 corresponds to halving. Inverse is 2^.\n\n\n\n\n&gt; [1] 1 2 3\n\n\n\n12log10(c(10, 100, 1000))\n\n\n12\n\nEasy to back-transform because everything is on the order of 10. Inverse is 10^.\n\n\n\n\n&gt; [1] 1 2 3"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#other-useful-arithmetic-functions-3",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#other-useful-arithmetic-functions-3",
-    "title": "",
+    "title": "Roadmap",
     "section": "Other Useful Arithmetic Functions",
-    "text": "Other Useful Arithmetic Functions\nCumulative and Rolling Aggregates\nBase R provides cumsum(), cumprod(), cummin(), cummax() for running, or cumulative, sums, products, mins and maxes. dplyr provides cummean() for cumulative means.\n\n\n1:15\n\n&gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15\n\n\n\n13cumsum(1:15)\n\n\n13\n\ncumsum() is the most common in practice.\n\n\n\n\n&gt;  [1]   1   3   6  10  15  21  28  36  45  55  66  78  91 105 120\n\n\n\n\nFor complex rolling/sliding aggregates, check out the slidr package."
+    "text": "Other Useful Arithmetic Functions\nCumulative and Rolling Aggregates\nBase R provides cumsum(), cumprod(), cummin(), cummax() for running, or cumulative, sums, products, mins and maxes. dplyr provides cummean() for cumulative means.\n. . .\n\n1:15\n\n&gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15\n\n\n\n13cumsum(1:15)\n\n\n13\n\ncumsum() is the most common in practice.\n\n\n\n\n&gt;  [1]   1   3   6  10  15  21  28  36  45  55  66  78  91 105 120\n\n\n. . .\nFor complex rolling/sliding aggregates, check out the slidr package."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#other-useful-arithmetic-functions-4",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#other-useful-arithmetic-functions-4",
-    "title": "",
+    "title": "Roadmap",
     "section": "Other Useful Arithmetic Functions",
-    "text": "Other Useful Arithmetic Functions\nNumeric Ranges\n\nx &lt;- c(1, 2, 5, 10, 15, 20)\n14cut(x, breaks = c(0, 5, 10, 15, 20))\n\n\n14\n\ncut() breaks up (aka bins) a numeric vector into discrete buckets\n\n\n\n\n&gt; [1] (0,5]   (0,5]   (0,5]   (5,10]  (10,15] (15,20]\n&gt; Levels: (0,5] (5,10] (10,15] (15,20]\n\n\n\n\n15cut(x, breaks = c(0, 5, 10, 100))\n\n\n15\n\nThe bins don’t have to be the same size.\n\n\n\n\n&gt; [1] (0,5]    (0,5]    (0,5]    (5,10]   (10,100] (10,100]\n&gt; Levels: (0,5] (5,10] (10,100]\n\n\n\n\n\ncut(x, \n  breaks = c(0, 5, 10, 15, 20), \n16  labels = c(\"sm\", \"md\", \"lg\", \"xl\")\n)\n\n\n16\n\nYou can optionally supply your own labels. Note that there should be one less labels than breaks.\n\n\n\n\n&gt; [1] sm sm sm md lg xl\n&gt; Levels: sm md lg xl\n\n\n\n\n\n17y &lt;- c(NA, -10, 5, 10, 30)\ncut(y, breaks = c(0, 5, 10, 15, 20))\n\n\n17\n\nAny values outside of the range of the breaks will become NA.\n\n\n\n\n&gt; [1] &lt;NA&gt;   &lt;NA&gt;   (0,5]  (5,10] &lt;NA&gt;  \n&gt; Levels: (0,5] (5,10] (10,15] (15,20]"
+    "text": "Other Useful Arithmetic Functions\nNumeric Ranges\n\nx &lt;- c(1, 2, 5, 10, 15, 20)\n14cut(x, breaks = c(0, 5, 10, 15, 20))\n\n\n14\n\ncut() breaks up (aka bins) a numeric vector into discrete buckets\n\n\n\n\n&gt; [1] (0,5]   (0,5]   (0,5]   (5,10]  (10,15] (15,20]\n&gt; Levels: (0,5] (5,10] (10,15] (15,20]\n\n\n. . .\n\n15cut(x, breaks = c(0, 5, 10, 100))\n\n\n15\n\nThe bins don’t have to be the same size.\n\n\n\n\n&gt; [1] (0,5]    (0,5]    (0,5]    (5,10]   (10,100] (10,100]\n&gt; Levels: (0,5] (5,10] (10,100]\n\n\n. . .\n\ncut(x, \n  breaks = c(0, 5, 10, 15, 20), \n16  labels = c(\"sm\", \"md\", \"lg\", \"xl\")\n)\n\n\n16\n\nYou can optionally supply your own labels. Note that there should be one less labels than breaks.\n\n\n\n\n&gt; [1] sm sm sm md lg xl\n&gt; Levels: sm md lg xl\n\n\n. . .\n\n17y &lt;- c(NA, -10, 5, 10, 30)\ncut(y, breaks = c(0, 5, 10, 15, 20))\n\n\n17\n\nAny values outside of the range of the breaks will become NA.\n\n\n\n\n&gt; [1] &lt;NA&gt;   &lt;NA&gt;   (0,5]  (5,10] &lt;NA&gt;  \n&gt; Levels: (0,5] (5,10] (10,15] (15,20]"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#rounding",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#rounding",
-    "title": "",
+    "title": "Roadmap",
     "section": "Rounding",
-    "text": "Rounding\nround() allows us to round to a certain decimal place. Without specifying an argument for the digits argument it will round to the nearest integer.\n\n\nround(pi)\n\n&gt; [1] 3\n\nround(pi, digits = 2)\n\n&gt; [1] 3.14\n\n\n\n\nUsing negative integers in the digits argument allows you to round on the left-hand side of the decimal place.\n\nround(39472, digits = -1)\n\n&gt; [1] 39470\n\nround(39472, digits = -2)\n\n&gt; [1] 39500\n\nround(39472, digits = -3)\n\n&gt; [1] 39000"
+    "text": "Rounding\nround() allows us to round to a certain decimal place. Without specifying an argument for the digits argument it will round to the nearest integer.\n. . .\n\nround(pi)\n\n&gt; [1] 3\n\nround(pi, digits = 2)\n\n&gt; [1] 3.14\n\n\n. . .\nUsing negative integers in the digits argument allows you to round on the left-hand side of the decimal place.\n\nround(39472, digits = -1)\n\n&gt; [1] 39470\n\nround(39472, digits = -2)\n\n&gt; [1] 39500\n\nround(39472, digits = -3)\n\n&gt; [1] 39000"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#rounding-1",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#rounding-1",
-    "title": "",
+    "title": "Roadmap",
     "section": "Rounding",
-    "text": "Rounding\nWhat’s going on here?\n\nround(c(1.5, 2.5)) \n\n&gt; [1] 2 2\n\n\n\nround() uses what’s known as “round half to even” or Banker’s rounding: if a number is half way between two integers, it will be rounded to the even integer. This is a good strategy because it keeps the rounding unbiased: half of all 0.5s are rounded up, and half are rounded down.\n\n\n\nfloor() and ceiling() are also useful rounding shortcuts.\n\n18floor(123.456)\n\n\n18\n\nAlways rounds down.\n\n\n\n\n&gt; [1] 123\n\n\n\n19ceiling(123.456)\n\n\n19\n\nAlways rounds up.\n\n\n\n\n&gt; [1] 124"
+    "text": "Rounding\nWhat’s going on here?\n\nround(c(1.5, 2.5)) \n\n&gt; [1] 2 2\n\n\n. . .\nround() uses what’s known as “round half to even” or Banker’s rounding: if a number is half way between two integers, it will be rounded to the even integer. This is a good strategy because it keeps the rounding unbiased: half of all 0.5s are rounded up, and half are rounded down.\n. . .\n\nfloor() and ceiling() are also useful rounding shortcuts.\n\n18floor(123.456)\n\n\n18\n\nAlways rounds down.\n\n\n\n\n&gt; [1] 123\n\n\n\n19ceiling(123.456)\n\n\n19\n\nAlways rounds up.\n\n\n\n\n&gt; [1] 124"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#other-useful-arithmetic-functions-5",
@@ -10607,16 +10607,16 @@
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions",
-    "title": "",
+    "title": "Roadmap",
     "section": "Summary Functions",
-    "text": "Summary Functions\n\nCentral Tendency\n\n20x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\n\n\n20\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n\n\n\n&gt; [1] 246.05\n\n\n\nmedian(x)\n\n&gt; [1] 241\n\n\n\n21quantile(x, .95)\n\n\n21\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt;   95% \n&gt; 446.4"
+    "text": "Summary Functions\n. . .\nCentral Tendency\n\n20x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\n\n\n20\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n\n\n\n&gt; [1] 228.13\n\n\n\nmedian(x)\n\n&gt; [1] 220\n\n\n\n21quantile(x, .95)\n\n\n21\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt;    95% \n&gt; 457.05"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#common-numerical-manipulations",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#common-numerical-manipulations",
-    "title": "",
+    "title": "Roadmap",
     "section": "Common Numerical Manipulations",
-    "text": "Common Numerical Manipulations\nThese formulas can be used in a summary call but are also useful with mutate(), particularly if being applied to grouped data.\n\n\n19x / sum(x)\n20(x - mean(x)) / sd(x)\n21(x - min(x)) / (max(x) - min(x))\n22x / first(x)\n\n\n19\n\nCalculates the proportion of a total.\n\n20\n\nComputes a Z-score (standardized to mean 0 and sd 1).\n\n21\n\nStandardizes to range [0, 1].\n\n22\n\nComputes an index based on the first observation."
+    "text": "Common Numerical Manipulations\nThese formulas can be used in a summary call but are also useful with mutate(), particularly if being applied to grouped data.\n. . .\n\n19x / sum(x)\n20(x - mean(x)) / sd(x)\n21(x - min(x)) / (max(x) - min(x))\n22x / first(x)\n\n\n19\n\nCalculates the proportion of a total.\n\n20\n\nComputes a Z-score (standardized to mean 0 and sd 1).\n\n21\n\nStandardizes to range [0, 1].\n\n22\n\nComputes an index based on the first observation."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-fa-scroll",
@@ -10635,84 +10635,84 @@
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#explicit-missing-values",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#explicit-missing-values",
-    "title": "",
+    "title": "Roadmap",
     "section": "Explicit Missing Values",
-    "text": "Explicit Missing Values\n\n\nAn explicit missing value is the presence of an absence.\n\n\n\nIn other words, an explicit missing value is one in which you see an NA.\n\n\nDepending on the reason for its missingness, there are different ways to deal with NAs.\n\n\nData Entry Shorthand\nIf your data were entered by hand and NAs merely represent a value being carried forward from the last entry then you can use fill() to help complete your data.\n\n\n\n\ntreatment &lt;- tribble(\n  ~person,           ~treatment, ~response,\n  \"Derrick Whitmore\", 1,         7,\n  NA,                 2,         10,\n  \"Katherine Burke\",  3,         NA,\n  NA,                 1,         4\n)\n\n\n\n\n\ntreatment |&gt;\n1  fill(everything())\n\n\n1\n\nfill() takes one or more variables (in this case everything(), which means all variables), and by default fills them in downwards. If you have a different issue you can change the .direction argument to \"up\",\"downup\", or \"updown\".\n\n\n\n\n&gt; # A tibble: 4 × 3\n&gt;   person           treatment response\n&gt;   &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;\n&gt; 1 Derrick Whitmore         1        7\n&gt; 2 Derrick Whitmore         2       10\n&gt; 3 Katherine Burke          3       10\n&gt; 4 Katherine Burke          1        4"
+    "text": "Explicit Missing Values\n. . .\n\nAn explicit missing value is the presence of an absence.\n\n. . .\nIn other words, an explicit missing value is one in which you see an NA.\n. . .\nDepending on the reason for its missingness, there are different ways to deal with NAs.\n. . .\nData Entry Shorthand\nIf your data were entered by hand and NAs merely represent a value being carried forward from the last entry then you can use fill() to help complete your data.\n\n\n\n\ntreatment &lt;- tribble(\n  ~person,           ~treatment, ~response,\n  \"Derrick Whitmore\", 1,         7,\n  NA,                 2,         10,\n  \"Katherine Burke\",  3,         NA,\n  NA,                 1,         4\n)\n\n\n\n\n\ntreatment |&gt;\n1  fill(everything())\n\n\n1\n\nfill() takes one or more variables (in this case everything(), which means all variables), and by default fills them in downwards. If you have a different issue you can change the .direction argument to \"up\",\"downup\", or \"updown\".\n\n\n\n\n&gt; # A tibble: 4 × 3\n&gt;   person           treatment response\n&gt;   &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;\n&gt; 1 Derrick Whitmore         1        7\n&gt; 2 Derrick Whitmore         2       10\n&gt; 3 Katherine Burke          3       10\n&gt; 4 Katherine Burke          1        4"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#explicit-missing-values-1",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#explicit-missing-values-1",
-    "title": "",
+    "title": "Roadmap",
     "section": "Explicit Missing Values",
-    "text": "Explicit Missing Values\nRepresent A Fixed Value\nOther times an NA represents some fixed value, usually 0.\n\n\nx &lt;- c(1, 4, 5, 7, NA)\n2coalesce(x, 0)\n\n\n2\n\ncoalesce() in the dplyr package takes a vector as the first argument and will replace any missing values with the value provided in the second argument.\n\n\n\n\n&gt; [1] 1 4 5 7 0\n\n\n\n\n\nRepresented By a Fixed Value\nIf the opposite issue occurs (i.e. a value is actually an NA), try specifying that to the na argument of your readr data import function. Otherwise, use na_if() from dplyr.\n\nx &lt;- c(1, 4, 5, 7, -99)\nna_if(x, -99)\n\n&gt; [1]  1  4  5  7 NA"
+    "text": "Explicit Missing Values\nRepresent A Fixed Value\nOther times an NA represents some fixed value, usually 0.\n. . .\n\nx &lt;- c(1, 4, 5, 7, NA)\n2coalesce(x, 0)\n\n\n2\n\ncoalesce() in the dplyr package takes a vector as the first argument and will replace any missing values with the value provided in the second argument.\n\n\n\n\n&gt; [1] 1 4 5 7 0\n\n\n. . .\n\nRepresented By a Fixed Value\nIf the opposite issue occurs (i.e. a value is actually an NA), try specifying that to the na argument of your readr data import function. Otherwise, use na_if() from dplyr.\n\nx &lt;- c(1, 4, 5, 7, -99)\nna_if(x, -99)\n\n&gt; [1]  1  4  5  7 NA"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#explicit-missing-values-2",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#explicit-missing-values-2",
-    "title": "",
+    "title": "Roadmap",
     "section": "Explicit Missing Values",
-    "text": "Explicit Missing Values\nNaNs\nA special sub-type of missing value is an NaN, or Not a Number.\n\nThese generally behave similar to NAs and are likely the result of a mathematical operation that has an indeterminate result:\n\n0 / 0 \n\n&gt; [1] NaN\n\n0 * Inf\n\n&gt; [1] NaN\n\nInf - Inf\n\n&gt; [1] NaN\n\nsqrt(-1)\n\n&gt; [1] NaN\n\n\n\n\nIf you need to explicitly identify an NaN you can use is.nan()."
+    "text": "Explicit Missing Values\nNaNs\nA special sub-type of missing value is an NaN, or Not a Number.\n. . .\nThese generally behave similar to NAs and are likely the result of a mathematical operation that has an indeterminate result:\n\n0 / 0 \n\n&gt; [1] NaN\n\n0 * Inf\n\n&gt; [1] NaN\n\nInf - Inf\n\n&gt; [1] NaN\n\nsqrt(-1)\n\n&gt; [1] NaN\n\n\n. . .\nIf you need to explicitly identify an NaN you can use is.nan()."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#implicit-nas",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#implicit-nas",
-    "title": "",
+    "title": "Roadmap",
     "section": "Implicit NAs",
-    "text": "Implicit NAs\n\nAn implicit missing value is the absence of a presence.\n\n\nWe’ve seen a couple of ways that implicit NAs can be made implicit in previous lectures: pivoting and joining.\n\n\nFor example, if we really look at the dataset below, we can see that there are missing values that don’t appear as NA merely due to the current structure of the data.\n\nstocks\n\n&gt; # A tibble: 7 × 3\n&gt;    year   qtr price\n&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n&gt; 1  2020     1  1.88\n&gt; 2  2020     2  0.59\n&gt; 3  2020     3  0.35\n&gt; 4  2020     4  0.89\n&gt; 5  2021     2  0.34\n&gt; 6  2021     3  0.17\n&gt; 7  2021     4  2.66"
+    "text": "Implicit NAs\n\nAn implicit missing value is the absence of a presence.\n\n. . .\nWe’ve seen a couple of ways that implicit NAs can be made implicit in previous lectures: pivoting and joining.\n. . .\n. . .\nFor example, if we really look at the dataset below, we can see that there are missing values that don’t appear as NA merely due to the current structure of the data.\n\nstocks\n\n&gt; # A tibble: 7 × 3\n&gt;    year   qtr price\n&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n&gt; 1  2020     1  1.88\n&gt; 2  2020     2  0.59\n&gt; 3  2020     3  0.35\n&gt; 4  2020     4  0.89\n&gt; 5  2021     2  0.34\n&gt; 6  2021     3  0.17\n&gt; 7  2021     4  2.66"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#implicit-nas-1",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#implicit-nas-1",
-    "title": "",
+    "title": "Roadmap",
     "section": "Implicit NAs",
     "text": "Implicit NAs\ntidyr::complete() allows you to generate explicit missing values by providing a set of variables that define the combination of rows that should exist.\n\n\n\n\nstocks |&gt;\n  complete(year, qtr)\n\n&gt; # A tibble: 8 × 3\n&gt;    year   qtr price\n&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n&gt; 1  2020     1  1.88\n&gt; 2  2020     2  0.59\n&gt; 3  2020     3  0.35\n&gt; 4  2020     4  0.89\n&gt; 5  2021     1 NA   \n&gt; 6  2021     2  0.34\n&gt; 7  2021     3  0.17\n&gt; 8  2021     4  2.66\n\n\n\n\n\n\nstocks |&gt;\n  complete(year, qtr, fill = list(price = 0.93))\n\n&gt; # A tibble: 8 × 3\n&gt;    year   qtr price\n&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n&gt; 1  2020     1  1.88\n&gt; 2  2020     2  0.59\n&gt; 3  2020     3  0.35\n&gt; 4  2020     4  0.89\n&gt; 5  2021     1  0.93\n&gt; 6  2021     2  0.34\n&gt; 7  2021     3  0.17\n&gt; 8  2021     4  2.66\n\n\n\n\n\n\n\nThe fill argument of complete only allows you to supply 1 value per variable. If you have more than one value to fill, using complete to create the data structure you need, and case_when to replace NAs would be the most straightforward approach."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#missing-factor-levels",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#missing-factor-levels",
-    "title": "",
+    "title": "Roadmap",
     "section": "Missing Factor Levels",
-    "text": "Missing Factor Levels\n\nThe last type of missingness is a theoretical level of a factor that doesn’t have any observations.\n\n\nFor instance, we have this health dataset and we’re interested in smokers:\n\nhealth\n\n&gt; # A tibble: 5 × 3\n&gt;   name    smoker   age\n&gt;   &lt;chr&gt;   &lt;fct&gt;  &lt;dbl&gt;\n&gt; 1 Ikaia   no        34\n&gt; 2 Oletta  no        88\n&gt; 3 Leriah  no        75\n&gt; 4 Dashay  no        47\n&gt; 5 Tresaun no        56\n\n\n\n\n\n3levels(health$smoker)\n\n\n3\n\nThis dataset only contains non-smokers, but we know that smokers exist; the group of smokers is simply empty.\n\n\n\n\n&gt; [1] \"yes\" \"no\"\n\n\n\n\n\n4health |&gt; count(smoker, .drop = FALSE)\n\n\n4\n\nWe can request count() to keep all the groups, even those not seen in the data by using .drop = FALSE.\n\n\n\n\n&gt; # A tibble: 2 × 2\n&gt;   smoker     n\n&gt;   &lt;fct&gt;  &lt;int&gt;\n&gt; 1 yes        0\n&gt; 2 no         5"
+    "text": "Missing Factor Levels\n. . .\nThe last type of missingness is a theoretical level of a factor that doesn’t have any observations.\n. . .\nFor instance, we have this health dataset and we’re interested in smokers:\n\nhealth\n\n&gt; # A tibble: 5 × 3\n&gt;   name    smoker   age\n&gt;   &lt;chr&gt;   &lt;fct&gt;  &lt;dbl&gt;\n&gt; 1 Ikaia   no        34\n&gt; 2 Oletta  no        88\n&gt; 3 Leriah  no        75\n&gt; 4 Dashay  no        47\n&gt; 5 Tresaun no        56\n\n\n. . .\n\n3levels(health$smoker)\n\n\n3\n\nThis dataset only contains non-smokers, but we know that smokers exist; the group of smokers is simply empty.\n\n\n\n\n&gt; [1] \"yes\" \"no\"\n\n\n. . .\n\n4health |&gt; count(smoker, .drop = FALSE)\n\n\n4\n\nWe can request count() to keep all the groups, even those not seen in the data by using .drop = FALSE.\n\n\n\n\n&gt; # A tibble: 2 × 2\n&gt;   smoker     n\n&gt;   &lt;fct&gt;  &lt;int&gt;\n&gt; 1 yes        0\n&gt; 2 no         5"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#missing-factors-in-plots",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#missing-factors-in-plots",
-    "title": "",
+    "title": "Roadmap",
     "section": "Missing Factors in Plots",
-    "text": "Missing Factors in Plots\nThis sample principle applies when visualizing a factor variable, which will automatically drop levels that don’t have any values. Use drop_values = FALSE in the appropriate scale to display implicit NAs.\n\n\n\n\nggplot(health, aes(x = smoker)) +\n  geom_bar() +\n  scale_x_discrete() + \n  theme_classic(base_size = 22)\n\n\n\n\n\n\n\nggplot(health, aes(x = smoker)) +\n  geom_bar() +\n  scale_x_discrete(drop = FALSE) + \n  theme_classic(base_size = 22)"
+    "text": "Missing Factors in Plots\nThis sample principle applies when visualizing a factor variable, which will automatically drop levels that don’t have any values. Use drop_values = FALSE in the appropriate scale to display implicit NAs.\n. . .\n\n\n\nggplot(health, aes(x = smoker)) +\n  geom_bar() +\n  scale_x_discrete() + \n  theme_classic(base_size = 22)\n\n\n\n\n\n\n\nggplot(health, aes(x = smoker)) +\n  geom_bar() +\n  scale_x_discrete(drop = FALSE) + \n  theme_classic(base_size = 22)"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-1",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-1",
-    "title": "",
+    "title": "Roadmap",
     "section": "Summary Functions",
-    "text": "Summary Functions\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 8\n\nmax(x)\n\n&gt; [1] 481\n\nrange(x)\n\n&gt; [1]   8 481\n\n\n\n22IQR(x)\n\n\n22\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 215.75\n\n\n\n23var(x)\n\n\n23\n\n\\[s^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\\]\n\n\n\n\n&gt; [1] 16778.43\n\n\n\n24sd(x)\n\n\n24\n\n\\[s = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\\]\n\n\n\n\n&gt; [1] 129.5316"
+    "text": "Summary Functions\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 3\n\nmax(x)\n\n&gt; [1] 489\n\nrange(x)\n\n&gt; [1]   3 489\n\n\n\n22IQR(x)\n\n\n22\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 236\n\n\n\n23var(x)\n\n\n23\n\n\\[s^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\\]\n\n\n\n\n&gt; [1] 20828.44\n\n\n\n24sd(x)\n\n\n24\n\n\\[s = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\\]\n\n\n\n\n&gt; [1] 144.3206"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-2",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-2",
-    "title": "",
+    "title": "Roadmap",
     "section": "Summary Functions",
-    "text": "Summary Functions\nPositions\n\nfirst(x)\n\n&gt; [1] 89\n\nlast(x)\n\n&gt; [1] 426\n\nnth(x, n = 77)\n\n&gt; [1] 313"
+    "text": "Summary Functions\nPositions\n\nfirst(x)\n\n&gt; [1] 218\n\nlast(x)\n\n&gt; [1] 70\n\nnth(x, n = 77)\n\n&gt; [1] 277"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#proper-matrix-math-1",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#proper-matrix-math-1",
-    "title": "",
+    "title": "Roadmap",
     "section": "“Proper” Matrix Math",
-    "text": "“Proper” Matrix Math\nTo invert an invertible square matrix1, use solve().\n\n\ng_matrix &lt;- solve(f_matrix)\ng_matrix\n\n&gt;           [,1]      [,2]\n&gt; [1,]  2.333333 -1.833333\n&gt; [2,] -1.833333  1.458333\n\n\n\n\n\n\nA reminder of how to invert a 2x2 square matrix."
+    "text": "“Proper” Matrix Math\nTo invert an invertible square matrix3, use solve().\n. . .\n\ng_matrix &lt;- solve(f_matrix)\ng_matrix\n\n&gt;           [,1]      [,2]\n&gt; [1,]  2.333333 -1.833333\n&gt; [2,] -1.833333  1.458333"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#data-structures-in-r-overview",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#data-structures-in-r-overview",
-    "title": "",
+    "title": "Roadmap",
     "section": "Data Structures in R Overview",
-    "text": "Data Structures in R Overview"
+    "text": "Data Structures in R Overview\n. . ."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#data-structures-in-r-overview-1",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#data-structures-in-r-overview-1",
-    "title": "",
+    "title": "Roadmap",
     "section": "Data Structures in R Overview",
     "text": "Data Structures in R Overview"
   },
@@ -10726,16 +10726,16 @@
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#example-regression-output-fa-scroll",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#example-regression-output-fa-scroll",
-    "title": "",
+    "title": "Roadmap",
     "section": "Example: Regression Output ",
-    "text": "Example: Regression Output \nWhen you perform linear regression in R, the output is a list!\n\n\nlm_output &lt;- lm(speed ~ dist, data = cars)\nis.list(lm_output)\n\n&gt; [1] TRUE\n\nnames(lm_output)\n\n&gt;  [1] \"coefficients\"  \"residuals\"     \"effects\"       \"rank\"         \n&gt;  [5] \"fitted.values\" \"assign\"        \"qr\"            \"df.residual\"  \n&gt;  [9] \"xlevels\"       \"call\"          \"terms\"         \"model\"\n\nlm_output$coefficients\n\n&gt; (Intercept)        dist \n&gt;   8.2839056   0.1655676\n\n\n\n\nWhat does a list object look like?\n\nstr(lm_output)\n\n\n\n&gt; List of 12\n&gt;  $ coefficients : Named num [1:2] 8.284 0.166\n&gt;   ..- attr(*, \"names\")= chr [1:2] \"(Intercept)\" \"dist\"\n&gt;  $ residuals    : Named num [1:50] -4.62 -5.94 -1.95 -4.93 -2.93 ...\n&gt;   ..- attr(*, \"names\")= chr [1:50] \"1\" \"2\" \"3\" \"4\" ...\n&gt;  $ effects      : Named num [1:50] -108.894 29.866 -0.501 -3.945 -1.797 ...\n&gt;   ..- attr(*, \"names\")= chr [1:50] \"(Intercept)\" \"dist\" \"\" \"\" ...\n&gt;  $ rank         : int 2\n&gt;  $ fitted.values: Named num [1:50] 8.62 9.94 8.95 11.93 10.93 ...\n&gt;   ..- attr(*, \"names\")= chr [1:50] \"1\" \"2\" \"3\" \"4\" ...\n&gt;  $ assign       : int [1:2] 0 1\n&gt;  $ qr           :List of 5\n&gt;   ..$ qr   : num [1:50, 1:2] -7.071 0.141 0.141 0.141 0.141 ...\n&gt;   .. ..- attr(*, \"dimnames\")=List of 2\n&gt;   .. .. ..$ : chr [1:50] \"1\" \"2\" \"3\" \"4\" ...\n&gt;   .. .. ..$ : chr [1:2] \"(Intercept)\" \"dist\"\n&gt;   .. ..- attr(*, \"assign\")= int [1:2] 0 1\n&gt;   ..$ qraux: num [1:2] 1.14 1.15\n&gt;   ..$ pivot: int [1:2] 1 2\n&gt;   ..$ tol  : num 1e-07\n&gt;   ..$ rank : int 2\n&gt;   ..- attr(*, \"class\")= chr \"qr\"\n&gt;  $ df.residual  : int 48\n&gt;  $ xlevels      : Named list()\n&gt;  $ call         : language lm(formula = speed ~ dist, data = cars)\n&gt;  $ terms        :Classes 'terms', 'formula'  language speed ~ dist\n&gt;   .. ..- attr(*, \"variables\")= language list(speed, dist)\n&gt;   .. ..- attr(*, \"factors\")= int [1:2, 1] 0 1\n&gt;   .. .. ..- attr(*, \"dimnames\")=List of 2\n&gt;   .. .. .. ..$ : chr [1:2] \"speed\" \"dist\"\n&gt;   .. .. .. ..$ : chr \"dist\"\n&gt;   .. ..- attr(*, \"term.labels\")= chr \"dist\"\n&gt;   .. ..- attr(*, \"order\")= int 1\n&gt;   .. ..- attr(*, \"intercept\")= int 1\n&gt;   .. ..- attr(*, \"response\")= int 1\n&gt;   .. ..- attr(*, \".Environment\")=&lt;environment: R_GlobalEnv&gt; \n&gt;   .. ..- attr(*, \"predvars\")= language list(speed, dist)\n&gt;   .. ..- attr(*, \"dataClasses\")= Named chr [1:2] \"numeric\" \"numeric\"\n&gt;   .. .. ..- attr(*, \"names\")= chr [1:2] \"speed\" \"dist\"\n&gt;  $ model        :'data.frame':    50 obs. of  2 variables:\n&gt;   ..$ speed: num [1:50] 4 4 7 7 8 9 10 10 10 11 ...\n&gt;   ..$ dist : num [1:50] 2 10 4 22 16 10 18 26 34 17 ...\n&gt;   ..- attr(*, \"terms\")=Classes 'terms', 'formula'  language speed ~ dist\n&gt;   .. .. ..- attr(*, \"variables\")= language list(speed, dist)\n&gt;   .. .. ..- attr(*, \"factors\")= int [1:2, 1] 0 1\n&gt;   .. .. .. ..- attr(*, \"dimnames\")=List of 2\n&gt;   .. .. .. .. ..$ : chr [1:2] \"speed\" \"dist\"\n&gt;   .. .. .. .. ..$ : chr \"dist\"\n&gt;   .. .. ..- attr(*, \"term.labels\")= chr \"dist\"\n&gt;   .. .. ..- attr(*, \"order\")= int 1\n&gt;   .. .. ..- attr(*, \"intercept\")= int 1\n&gt;   .. .. ..- attr(*, \"response\")= int 1\n&gt;   .. .. ..- attr(*, \".Environment\")=&lt;environment: R_GlobalEnv&gt; \n&gt;   .. .. ..- attr(*, \"predvars\")= language list(speed, dist)\n&gt;   .. .. ..- attr(*, \"dataClasses\")= Named chr [1:2] \"numeric\" \"numeric\"\n&gt;   .. .. .. ..- attr(*, \"names\")= chr [1:2] \"speed\" \"dist\"\n&gt;  - attr(*, \"class\")= chr \"lm\""
+    "text": "Example: Regression Output \nWhen you perform linear regression in R, the output is a list!\n. . .\n\nlm_output &lt;- lm(speed ~ dist, data = cars)\nis.list(lm_output)\n\n&gt; [1] TRUE\n\nnames(lm_output)\n\n&gt;  [1] \"coefficients\"  \"residuals\"     \"effects\"       \"rank\"         \n&gt;  [5] \"fitted.values\" \"assign\"        \"qr\"            \"df.residual\"  \n&gt;  [9] \"xlevels\"       \"call\"          \"terms\"         \"model\"\n\nlm_output$coefficients\n\n&gt; (Intercept)        dist \n&gt;   8.2839056   0.1655676\n\n\n. . .\nWhat does a list object look like?\n\nstr(lm_output)\n\n&gt; List of 12\n&gt;  $ coefficients : Named num [1:2] 8.284 0.166\n&gt;   ..- attr(*, \"names\")= chr [1:2] \"(Intercept)\" \"dist\"\n&gt;  $ residuals    : Named num [1:50] -4.62 -5.94 -1.95 -4.93 -2.93 ...\n&gt;   ..- attr(*, \"names\")= chr [1:50] \"1\" \"2\" \"3\" \"4\" ...\n&gt;  $ effects      : Named num [1:50] -108.894 29.866 -0.501 -3.945 -1.797 ...\n&gt;   ..- attr(*, \"names\")= chr [1:50] \"(Intercept)\" \"dist\" \"\" \"\" ...\n&gt;  $ rank         : int 2\n&gt;  $ fitted.values: Named num [1:50] 8.62 9.94 8.95 11.93 10.93 ...\n&gt;   ..- attr(*, \"names\")= chr [1:50] \"1\" \"2\" \"3\" \"4\" ...\n&gt;  $ assign       : int [1:2] 0 1\n&gt;  $ qr           :List of 5\n&gt;   ..$ qr   : num [1:50, 1:2] -7.071 0.141 0.141 0.141 0.141 ...\n&gt;   .. ..- attr(*, \"dimnames\")=List of 2\n&gt;   .. .. ..$ : chr [1:50] \"1\" \"2\" \"3\" \"4\" ...\n&gt;   .. .. ..$ : chr [1:2] \"(Intercept)\" \"dist\"\n&gt;   .. ..- attr(*, \"assign\")= int [1:2] 0 1\n&gt;   ..$ qraux: num [1:2] 1.14 1.15\n&gt;   ..$ pivot: int [1:2] 1 2\n&gt;   ..$ tol  : num 1e-07\n&gt;   ..$ rank : int 2\n&gt;   ..- attr(*, \"class\")= chr \"qr\"\n&gt;  $ df.residual  : int 48\n&gt;  $ xlevels      : Named list()\n&gt;  $ call         : language lm(formula = speed ~ dist, data = cars)\n&gt;  $ terms        :Classes 'terms', 'formula'  language speed ~ dist\n&gt;   .. ..- attr(*, \"variables\")= language list(speed, dist)\n&gt;   .. ..- attr(*, \"factors\")= int [1:2, 1] 0 1\n&gt;   .. .. ..- attr(*, \"dimnames\")=List of 2\n&gt;   .. .. .. ..$ : chr [1:2] \"speed\" \"dist\"\n&gt;   .. .. .. ..$ : chr \"dist\"\n&gt;   .. ..- attr(*, \"term.labels\")= chr \"dist\"\n&gt;   .. ..- attr(*, \"order\")= int 1\n&gt;   .. ..- attr(*, \"intercept\")= int 1\n&gt;   .. ..- attr(*, \"response\")= int 1\n&gt;   .. ..- attr(*, \".Environment\")=&lt;environment: R_GlobalEnv&gt; \n&gt;   .. ..- attr(*, \"predvars\")= language list(speed, dist)\n&gt;   .. ..- attr(*, \"dataClasses\")= Named chr [1:2] \"numeric\" \"numeric\"\n&gt;   .. .. ..- attr(*, \"names\")= chr [1:2] \"speed\" \"dist\"\n&gt;  $ model        :'data.frame':    50 obs. of  2 variables:\n&gt;   ..$ speed: num [1:50] 4 4 7 7 8 9 10 10 10 11 ...\n&gt;   ..$ dist : num [1:50] 2 10 4 22 16 10 18 26 34 17 ...\n&gt;   ..- attr(*, \"terms\")=Classes 'terms', 'formula'  language speed ~ dist\n&gt;   .. .. ..- attr(*, \"variables\")= language list(speed, dist)\n&gt;   .. .. ..- attr(*, \"factors\")= int [1:2, 1] 0 1\n&gt;   .. .. .. ..- attr(*, \"dimnames\")=List of 2\n&gt;   .. .. .. .. ..$ : chr [1:2] \"speed\" \"dist\"\n&gt;   .. .. .. .. ..$ : chr \"dist\"\n&gt;   .. .. ..- attr(*, \"term.labels\")= chr \"dist\"\n&gt;   .. .. ..- attr(*, \"order\")= int 1\n&gt;   .. .. ..- attr(*, \"intercept\")= int 1\n&gt;   .. .. ..- attr(*, \"response\")= int 1\n&gt;   .. .. ..- attr(*, \".Environment\")=&lt;environment: R_GlobalEnv&gt; \n&gt;   .. .. ..- attr(*, \"predvars\")= language list(speed, dist)\n&gt;   .. .. ..- attr(*, \"dataClasses\")= Named chr [1:2] \"numeric\" \"numeric\"\n&gt;   .. .. .. ..- attr(*, \"names\")= chr [1:2] \"speed\" \"dist\"\n&gt;  - attr(*, \"class\")= chr \"lm\""
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#creating-data.frames-or-tibbles",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#creating-data.frames-or-tibbles",
-    "title": "",
+    "title": "Roadmap",
     "section": "Creating data.frames or tibbles",
-    "text": "Creating data.frames or tibbles\nWe can create a data.frame or tibble by specifying the columns separately, as individual vectors:\n\n\n\n\ndata.frame(Column1 = c(1, 2, 3),\n           Column2 = c(\"A\", \"B\", \"C\"))\n\n&gt;   Column1 Column2\n&gt; 1       1       A\n&gt; 2       2       B\n&gt; 3       3       C\n\n\n\n\ntibble(Column1 = c(1, 2, 3),\n       Column2 = c(\"A\", \"B\", \"C\"))\n\n&gt; # A tibble: 3 × 2\n&gt;   Column1 Column2\n&gt;     &lt;dbl&gt; &lt;chr&gt;  \n&gt; 1       1 A      \n&gt; 2       2 B      \n&gt; 3       3 C\n\n\n\n\n\n\nNote: data.frames and tibbles allow for mixed data types!\n\n\nThis distinction leads us to the final data type, of which data.frames and tibbles are a particular subset.\n\n\n\ntibble’s additional advantages are only displaying the first 10 rows and only the columns that will comfortably fit within the parameters of your console space when called (data.frame will display all columns and a certain number of rows depending upon your default max setting - usually this is an overwhelming amount of output, aesthetically confusing, and not very helpful)."
+    "text": "Creating data.frames or tibbles\nWe can create a data.frame or tibble by specifying the columns separately, as individual vectors:\n. . .\n\n\n\ndata.frame(Column1 = c(1, 2, 3),\n           Column2 = c(\"A\", \"B\", \"C\"))\n\n&gt;   Column1 Column2\n&gt; 1       1       A\n&gt; 2       2       B\n&gt; 3       3       C\n\n\n\n\ntibble(Column1 = c(1, 2, 3),\n       Column2 = c(\"A\", \"B\", \"C\"))\n\n&gt; # A tibble: 3 × 2\n&gt;   Column1 Column2\n&gt;     &lt;dbl&gt; &lt;chr&gt;  \n&gt; 1       1 A      \n&gt; 2       2 B      \n&gt; 3       3 C\n\n\n\n\n. . .\nNote: data.frames and tibbles allow for mixed data types!\n. . .\nThis distinction leads us to the final data type, of which data.frames and tibbles are a particular subset.\n\n\ntibble’s additional advantages are only displaying the first 10 rows and only the columns that will comfortably fit within the parameters of your console space when called (data.frame will display all columns and a certain number of rows depending upon your default max setting - usually this is an overwhelming amount of output, aesthetically confusing, and not very helpful)."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#mini-check-2-arithmetic",
@@ -10754,35 +10754,35 @@
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#pluck",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#pluck",
-    "title": "",
+    "title": "Roadmap",
     "section": "pluck()",
-    "text": "pluck()\nAn alternative to using Base R’s [[ ]] is using pluck() from the tidyverse’s purrr package.\n\n\n\n\nobj1 &lt;- list(\"a\", list(1, elt = \"foo\"))\nobj2 &lt;- list(\"b\", list(2, elt = \"bar\"))\nx &lt;- list(obj1, obj2)\nx\n\n&gt; [[1]]\n&gt; [[1]][[1]]\n&gt; [1] \"a\"\n&gt; \n&gt; [[1]][[2]]\n&gt; [[1]][[2]][[1]]\n&gt; [1] 1\n&gt; \n&gt; [[1]][[2]]$elt\n&gt; [1] \"foo\"\n&gt; \n&gt; \n&gt; \n&gt; [[2]]\n&gt; [[2]][[1]]\n&gt; [1] \"b\"\n&gt; \n&gt; [[2]][[2]]\n&gt; [[2]][[2]][[1]]\n&gt; [1] 2\n&gt; \n&gt; [[2]][[2]]$elt\n&gt; [1] \"bar\"\n\n\n\n\n\npluck(x, 1) \n\n&gt; [[1]]\n&gt; [1] \"a\"\n&gt; \n&gt; [[2]]\n&gt; [[2]][[1]]\n&gt; [1] 1\n&gt; \n&gt; [[2]]$elt\n&gt; [1] \"foo\"\n\n\n\nThis is the same as same as x[[1]]."
+    "text": "pluck()\nAn alternative to using Base R’s [[ ]] is using pluck() from the tidyverse’s purrr package.\n. . .\n\n\n\nobj1 &lt;- list(\"a\", list(1, elt = \"foo\"))\nobj2 &lt;- list(\"b\", list(2, elt = \"bar\"))\nx &lt;- list(obj1, obj2)\nx\n\n&gt; [[1]]\n&gt; [[1]][[1]]\n&gt; [1] \"a\"\n&gt; \n&gt; [[1]][[2]]\n&gt; [[1]][[2]][[1]]\n&gt; [1] 1\n&gt; \n&gt; [[1]][[2]]$elt\n&gt; [1] \"foo\"\n&gt; \n&gt; \n&gt; \n&gt; [[2]]\n&gt; [[2]][[1]]\n&gt; [1] \"b\"\n&gt; \n&gt; [[2]][[2]]\n&gt; [[2]][[2]][[1]]\n&gt; [1] 2\n&gt; \n&gt; [[2]][[2]]$elt\n&gt; [1] \"bar\"\n\n\n\n\n\npluck(x, 1) \n\n&gt; [[1]]\n&gt; [1] \"a\"\n&gt; \n&gt; [[2]]\n&gt; [[2]][[1]]\n&gt; [1] 1\n&gt; \n&gt; [[2]]$elt\n&gt; [1] \"foo\"\n\n\n\nThis is the same as same as x[[1]]."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#pluck-1",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#pluck-1",
-    "title": "",
+    "title": "Roadmap",
     "section": "pluck()",
     "text": "pluck()\nAn alternative to using Base R’s [[ ]] is using pluck() from the tidyverse’s purrr package.\n\n\n\nobj1 &lt;- list(\"a\", list(1, elt = \"foo\"))\nobj2 &lt;- list(\"b\", list(2, elt = \"bar\"))\nx &lt;- list(obj1, obj2)\nx\n\n&gt; [[1]]\n&gt; [[1]][[1]]\n&gt; [1] \"a\"\n&gt; \n&gt; [[1]][[2]]\n&gt; [[1]][[2]][[1]]\n&gt; [1] 1\n&gt; \n&gt; [[1]][[2]]$elt\n&gt; [1] \"foo\"\n&gt; \n&gt; \n&gt; \n&gt; [[2]]\n&gt; [[2]][[1]]\n&gt; [1] \"b\"\n&gt; \n&gt; [[2]][[2]]\n&gt; [[2]][[2]][[1]]\n&gt; [1] 2\n&gt; \n&gt; [[2]][[2]]$elt\n&gt; [1] \"bar\"\n\n\n\n\npluck(x, 1, 2) \n\n&gt; [[1]]\n&gt; [1] 1\n&gt; \n&gt; $elt\n&gt; [1] \"foo\"\n\n\n\nThis is the same as x[[1]][[2]]."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#pluck-2",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#pluck-2",
-    "title": "",
+    "title": "Roadmap",
     "section": "pluck()",
     "text": "pluck()\nAn alternative to using Base R’s [[ ]] is using pluck() from the tidyverse’s purrr package.\n\n\n\nobj1 &lt;- list(\"a\", list(1, elt = \"foo\"))\nobj2 &lt;- list(\"b\", list(2, elt = \"bar\"))\nx &lt;- list(obj1, obj2)\nx\n\n&gt; [[1]]\n&gt; [[1]][[1]]\n&gt; [1] \"a\"\n&gt; \n&gt; [[1]][[2]]\n&gt; [[1]][[2]][[1]]\n&gt; [1] 1\n&gt; \n&gt; [[1]][[2]]$elt\n&gt; [1] \"foo\"\n&gt; \n&gt; \n&gt; \n&gt; [[2]]\n&gt; [[2]][[1]]\n&gt; [1] \"b\"\n&gt; \n&gt; [[2]][[2]]\n&gt; [[2]][[2]][[1]]\n&gt; [1] 2\n&gt; \n&gt; [[2]][[2]]$elt\n&gt; [1] \"bar\"\n\n\n\n\npluck(x, 1, 2, \"elt\") \n\n&gt; [1] \"foo\"\n\n\n\nYou can supply names to index into named vectors as well. This is the same as calling x[[1]][[2]][[\"elt\"]]."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#mini-check-1-types-of-data-arithmetic",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#mini-check-1-types-of-data-arithmetic",
-    "title": "",
+    "title": "Roadmap",
     "section": "Mini-Check 1: Types of Data & Arithmetic",
     "text": "Mini-Check 1: Types of Data & Arithmetic\nIn each case, what will R return?\n\n\nis.numeric(pi)\n\nTRUE\n\nis.integer(3.14)\n\nFALSE\n\nis.logical(FALSE)\n\nTRUE\n\nis.nan(NA)\n\nFALSE\n\n10 %/% 4\n\n2\n\n10 %% 4\n\n2"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#matrices-and-lists",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#matrices-and-lists",
-    "title": "",
+    "title": "Roadmap",
     "section": "Matrices and Lists",
     "text": "Matrices and Lists\n\nWrite code to create the following matrix:\n\n\n\n&gt;      [,1] [,2] [,3]\n&gt; [1,] \"A\"  \"B\"  \"C\" \n&gt; [2,] \"D\"  \"E\"  \"F\"\n\n\n\nWrite a line of code to extract the second column. Ensure the output is still a matrix.\n\n\n\n&gt;      [,1]\n&gt; [1,] \"B\" \n&gt; [2,] \"E\"\n\n\n\nComplete the following sentence: “Lists are to vectors, what data frames are to…”\nCreate a list that contains 3 elements:\n\nten_numbers (integers between 1 and 10)\nmy_name (your name as a character)\nbooleans (vector of TRUE and FALSE alternating three times)"
   },
@@ -10847,7 +10847,7 @@
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#escaping-with-strings",
     "title": "",
     "section": "Escaping with Strings",
-    "text": "Escaping with Strings\nWe use a lot of different symbols in our code that we might actually want to represent within a string itself. To do that, we need to escape that particular character. We can do that using \\.\n\nFor instance, if we want to include a literal single or double quote in our string, we’d escape it by writing:\n\n1\"\\'\"\n217'\\\"'\n\n\n1\n\nDouble quote.\n\n2\n\nSingle quote.\n\n\n\n\n\n\nSimilarly, if we want to represent a \\ we’ll need to escape it as well…\n\n3\"\\\\\"\n\n\n3\n\nBackslash.\n\n\n\n\n\n\nNote: When you print these objects you’ll see the escape characters. To actually view the string’s contents ( and not the syntax needed to construct it), use str_view().\n\n\n\n4str_view(c('\\\"', \"\\\"\", \"\\\\\"))\n\n\n4\n\nAll stringr functions begin with the prefix str_ which is useful due to R Studio’s auto-complete feature.\n\n\n\n\n&gt; [1] │ \"\n&gt; [2] │ \"\n&gt; [3] │ \\"
+    "text": "Escaping with Strings\nWe use a lot of different symbols in our code that we might actually want to represent within a string itself. To do that, we need to escape that particular character. We can do that using \\.\n\nFor instance, if we want to include a literal single or double quote in our string, we’d escape it by writing:\n\n1\"\\'\"\n2'\\\"'\n\n\n1\n\nDouble quote.\n\n2\n\nSingle quote.\n\n\n\n\n\n\nSimilarly, if we want to represent a \\ we’ll need to escape it as well…\n\n3\"\\\\\"\n\n\n3\n\nBackslash.\n\n\n\n\n\n\nNote: When you print these objects you’ll see the escape characters. To actually view the string’s contents ( and not the syntax needed to construct it), use str_view().\n\n\n\n4str_view(c(\"\\'\", '\\\"', \"\\\\\"))\n\n\n4\n\nAll stringr functions begin with the prefix str_ which is useful due to R Studio’s auto-complete feature.\n\n\n\n\n&gt; [1] │ '\n&gt; [2] │ \"\n&gt; [3] │ \\"
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#other-useful-characters",
@@ -10861,7 +10861,7 @@
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#other-special-characters",
     "title": "",
     "section": "Other Special Characters",
-    "text": "Other Special Characters\nThere are other things you may want to represent inside a character string, such as a new line, or a tab space.\n\n\n5str_view(\"Sometimes you need\\nto create another line.\")\n6str_view(\"\\tOther times you just need to indent somewhere.\")\n\n\n5\n\nUse \\n to create a new line. Helpful when plotting if you have variable names or values that are wordy! If you need to do this for one or more variables you can use str_wrap() and specify the character width you desire.\n\n6\n\nUse \\t to add a tab. str_view will highlight tabs in blue in your console to make it stand out from other random whitespace.\n\n\n\n\n\n\n&gt; [1] │ Sometimes you need\n&gt;     │ to create another line.\n&gt; [1] │ {\\t}Other times you just need to indent somewhere.\n\n\n\n\nIf you need to limit the width of an entire . . .\nAdditionally, you can represent Unicode characters which will be written with the \\u or \\U escape.\n\nstr_view(c(\"\\U1F00F\", \"\\u2866\", \"\\U1F192\"))\n\n&gt; [1] │ 🀏\n&gt; [2] │ ⡦\n&gt; [3] │ 🆒"
+    "text": "Other Special Characters\nThere are other things you may want to represent inside a character string, such as a new line, or a tab space.\n\n\n5str_view(\"Sometimes you need\\nto create another line.\")\n6str_view(\"\\tOther times you just need to indent somewhere.\")\n\n\n5\n\nUse \\n to create a new line. Helpful when plotting if you have variable names or values that are wordy! If you need to do this for one or more variables you can use str_wrap() and specify the character width you desire.\n\n6\n\nUse \\t to add a tab. str_view will highlight tabs in blue in your console to make it stand out from other random whitespace.\n\n\n\n\n\n\n&gt; [1] │ Sometimes you need\n&gt;     │ to create another line.\n&gt; [1] │ {\\t}Other times you just need to indent somewhere.\n\n\n\n\nAdditionally, you can represent Unicode characters which will be written with the \\u or \\U escape.\n\nstr_view(c(\"\\U1F00F\", \"\\u2866\", \"\\U1F192\"))\n\n&gt; [1] │ 🀏\n&gt; [2] │ ⡦\n&gt; [3] │ 🆒"
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#creating-strings",
@@ -11204,7 +11204,7 @@
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#counting-characters",
     "title": "",
     "section": "Counting Characters",
-    "text": "Counting Characters\nAt the most basic level you can use str_length() to count the characters are in a string.\n\n\nrestaurants |&gt; \n  select(`Phone`) |&gt; \n21  mutate(phone_length = str_length(`Phone`)) |&gt;\n22  count(phone_length)\n\n\n21\n\nGetting the length of Phone\n\n22\n\nGetting the count of different lengths for Phone found in the data\n\n\n\n\n\n\n&gt; # A tibble: 4 × 2\n&gt;   phone_length      n\n&gt;          &lt;int&gt;  &lt;int&gt;\n&gt; 1           14 185717\n&gt; 2           15    155\n&gt; 3           18     49\n&gt; 4           NA  70760\n\n\n\n\n\nphone_numbers &lt;- restaurants |&gt;\n  select(`Phone`) |&gt; \n  mutate(phone_length = str_length(`Phone`)) \n\nphone_numbers |&gt; \n  filter(phone_length %in% c(15, 18)) |&gt; \n23  slice_head(n = 1, by = phone_length)\n\n\n23\n\nFiltering for the two abnormal phone number lengths, and getting the first observation (row) by the two different numbers (15, 18).\n\n\n\n\n\n\n&gt; # A tibble: 2 × 2\n&gt;   Phone              phone_length\n&gt;   &lt;chr&gt;                     &lt;int&gt;\n&gt; 1 (714) 670-=5051              15\n&gt; 2 (822) 370-0EXT3700           18"
+    "text": "Counting Characters\nAt the most basic level you can use str_length() to count the characters are in a string.\n\n\nphone_numbers &lt;- restaurants |&gt;\n  select(`Phone`) |&gt; \n21  mutate(phone_length = str_length(`Phone`))\n\n22phone_numbers |&gt; count(phone_length)\n\n\n21\n\nGetting the length of Phone\n\n22\n\nGetting the count of different lengths for Phone found in the data\n\n\n\n\n\n\n&gt; # A tibble: 4 × 2\n&gt;   phone_length      n\n&gt;          &lt;int&gt;  &lt;int&gt;\n&gt; 1           14 185717\n&gt; 2           15    155\n&gt; 3           18     49\n&gt; 4           NA  70760\n\n\n\n\n\nphone_numbers |&gt; \n  filter(phone_length %in% c(15, 18)) |&gt; \n23  slice_head(n = 1, by = phone_length)\n\n\n23\n\nFiltering for the two abnormal phone number lengths, and getting the first observation (row) by the two different numbers (15, 18).\n\n\n\n\n\n\n&gt; # A tibble: 2 × 2\n&gt;   Phone              phone_length\n&gt;   &lt;chr&gt;                     &lt;int&gt;\n&gt; 1 (714) 670-=5051              15\n&gt; 2 (822) 370-0EXT3700           18"
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#subsetting-strings",
@@ -11239,7 +11239,7 @@
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#modifying-strings-converting-cases",
     "title": "",
     "section": "Modifying Strings: Converting Cases",
-    "text": "Modifying Strings: Converting Cases\nstr_to_upper(), str_to_lower(), str_to_title() convert cases, which is often a good idea to do before searching for values:\n\n\nunique_cities &lt;- unique(restaurants$City)\nunique_cities  |&gt; \n  head()\n\n\n\n&gt; [1] \"SEATTLE\" \"REDMOND\" \"KENT\"    \"KENMORE\" \"Seattle\" \"RENTON\"\n\nstr_to_upper(unique_cities) |&gt; \n  head()\n\n&gt; [1] \"SEATTLE\" \"REDMOND\" \"KENT\"    \"KENMORE\" \"SEATTLE\" \"RENTON\"\n\nstr_to_lower(unique_cities) |&gt; \n  head()\n\n&gt; [1] \"seattle\" \"redmond\" \"kent\"    \"kenmore\" \"seattle\" \"renton\"\n\nstr_to_title(unique_cities) |&gt; \n  head()\n\n&gt; [1] \"Seattle\" \"Redmond\" \"Kent\"    \"Kenmore\" \"Seattle\" \"Renton\""
+    "text": "Modifying Strings: Converting Cases\nstr_to_upper(), str_to_lower(), str_to_title() convert cases, which is often a good idea to do before searching for values:\n\n\nunique_cities &lt;- unique(restaurants$City)\nunique_cities  |&gt; \n  head()\n\n\n\n&gt; [1] \"SEATTLE\" \"REDMOND\" \"KENT\"    \"KENMORE\" \"Seattle\" \"RENTON\"\n\n\n\n\n\nstr_to_upper(unique_cities) |&gt; \n  head()\n\n\n\n&gt; [1] \"SEATTLE\" \"REDMOND\" \"KENT\"    \"KENMORE\" \"SEATTLE\" \"RENTON\"\n\n\n\nstr_to_lower(unique_cities) |&gt; \n  head()\n\n\n\n&gt; [1] \"seattle\" \"redmond\" \"kent\"    \"kenmore\" \"seattle\" \"renton\"\n\n\n\nstr_to_title(unique_cities) |&gt; \n  head()\n\n\n\n&gt; [1] \"Seattle\" \"Redmond\" \"Kent\"    \"Kenmore\" \"Seattle\" \"Renton\""
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#modifying-strings-removing-whitespace",
@@ -11344,7 +11344,7 @@
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#separation-with-regex-3",
     "title": "",
     "section": "Separation with regex",
-    "text": "Separation with regex\n\nres_sep &lt;- restaurants |&gt; \n  distinct(Name, Description) |&gt; \n  separate_wider_regex(cols = Description, \n11                       patterns = c(capacity_description = \"^.+\",\n12                                    risk_category = \"Risk ?(?:Category)? ?I{1,3}$\"),\n                       too_few = \"debug\") |&gt; \n13  distinct(capacity_description, risk_category, Description_ok, Description_matches, Description_remainder) |&gt;\n  print(n = 33)\n\n\n11\n\n\"^\" matches the beginning of a string,  \".\" matches any character except a new line, and \"+\" quantifies that \".\", asking it to return 1 or more characters.\n\n12\n\n\"Risk\" matches exactly, \" ?\" matches a singular white space 0 or 1 time,  \"(?:Category)?\" optionally matches the exact word “Category”, again \" ?\" matches a singular white space 0 or 1 time, \"I{1,3}\" matches “I” 1-3 times, and \"$\" signifies the end of the string.\n\n13\n\nUsing distinct() on the created and debugging variables allows us to see what didn’t match.\n\n\n\n\n\n\n&gt; # A tibble: 33 × 5\n&gt;    capacity_description         risk_category Description_ok Description_matches\n&gt;    &lt;chr&gt;                        &lt;chr&gt;         &lt;lgl&gt;                        &lt;int&gt;\n&gt;  1 \"Seating 0-12 - \"            Risk Categor… TRUE                             2\n&gt;  2 \"Seating 13-50 - \"           Risk Categor… TRUE                             2\n&gt;  3 \"Seating 51-150 - \"          Risk Categor… TRUE                             2\n&gt;  4 \"Bakery-no seating - \"       Risk Categor… TRUE                             2\n&gt;  5 \"Mobile Food Unit - \"        Risk Categor… TRUE                             2\n&gt;  6 \"Seating &gt; 250 - \"           Risk Categor… TRUE                             2\n&gt;  7 \"Seating 151-250 - \"         Risk Categor… TRUE                             2\n&gt;  8 \"Grocery Store-no seating -… Risk Categor… TRUE                             2\n&gt;  9 \"Seating 13-50 - \"           Risk Categor… TRUE                             2\n&gt; 10 \"Caterer - \"                 Risk Categor… TRUE                             2\n&gt; 11 \"Caterer - \"                 Risk Categor… TRUE                             2\n&gt; 12 \"Seating 13-50 - \"           Risk Categor… TRUE                             2\n&gt; 13 \"Seating 0-12 - \"            Risk Categor… TRUE                             2\n&gt; 14 \"Meat/Sea Food - \"           Risk Categor… TRUE                             2\n&gt; 15 \"Bakery-no seating - \"       Risk Categor… TRUE                             2\n&gt; 16 \"Seating 0-12 - \"            Risk Categor… TRUE                             2\n&gt; 17 \"Caterer - \"                 Risk Categor… TRUE                             2\n&gt; 18 \"Limited Food Services - no… &lt;NA&gt;          FALSE                            1\n&gt; 19 \"Seating 51-150 - \"          Risk Categor… TRUE                             2\n&gt; 20 \"Seating 51-150 - \"          Risk Categor… TRUE                             2\n&gt; 21 \"School Lunch Program - \"    Risk II       TRUE                             2\n&gt; 22 \"Mobile Food Unit - \"        Risk Categor… TRUE                             2\n&gt; 23 \"Mobile Food Unit - \"        Risk Categor… TRUE                             2\n&gt; 24 \"Non-Profit Institution - \"  Risk Categor… TRUE                             2\n&gt; 25 \"Grocery Store-no seating -… Risk Categor… TRUE                             2\n&gt; 26 \"Bakery-no seating - \"       Risk Categor… TRUE                             2\n&gt; 27 \"Seating &gt; 250 - \"           Risk Categor… TRUE                             2\n&gt; 28 \"Non-Profit Institution - \"  Risk Categor… TRUE                             2\n&gt; 29 \"Non-Profit Institution - \"  Risk Categor… TRUE                             2\n&gt; 30 \"Seating 151-250 - \"         Risk Categor… TRUE                             2\n&gt; 31 \"Seating &gt; 250 - \"           Risk Categor… TRUE                             2\n&gt; 32 \"Seating 151-250 - \"         Risk Categor… TRUE                             2\n&gt; 33 \"Bed and Breakfast - \"       Risk Categor… TRUE                             2\n&gt; # ℹ 1 more variable: Description_remainder &lt;chr&gt;"
+    "text": "Separation with regex\n\nres_sep &lt;- restaurants |&gt; \n  distinct(Name, Description) |&gt; \n  separate_wider_regex(cols = Description, \n11                       patterns = c(capacity_description = \"^.+\",\n12                                    risk_category = \"Risk ?(?:Category)? ?I{1,3}$\"),\n                       too_few = \"debug\") |&gt; \n  distinct(capacity_description, risk_category, Description_ok, \n13           Description_matches, Description_remainder) |&gt;\n  print(n = 33)\n\n\n11\n\n\"^\" matches the beginning of a string,  \".\" matches any character except a new line, and \"+\" quantifies that \".\", asking it to return 1 or more characters.\n\n12\n\n\"Risk\" matches exactly, \" ?\" matches a singular white space 0 or 1 time,  \"(?:Category)?\" optionally matches the exact word “Category”, again \" ?\" matches a singular white space 0 or 1 time, \"I{1,3}\" matches “I” 1-3 times, and \"$\" signifies the end of the string.\n\n13\n\nUsing distinct() on the created and debugging variables allows us to see what didn’t match.\n\n\n\n\n\n\n&gt; # A tibble: 33 × 5\n&gt;    capacity_description         risk_category Description_ok Description_matches\n&gt;    &lt;chr&gt;                        &lt;chr&gt;         &lt;lgl&gt;                        &lt;int&gt;\n&gt;  1 \"Seating 0-12 - \"            Risk Categor… TRUE                             2\n&gt;  2 \"Seating 13-50 - \"           Risk Categor… TRUE                             2\n&gt;  3 \"Seating 51-150 - \"          Risk Categor… TRUE                             2\n&gt;  4 \"Bakery-no seating - \"       Risk Categor… TRUE                             2\n&gt;  5 \"Mobile Food Unit - \"        Risk Categor… TRUE                             2\n&gt;  6 \"Seating &gt; 250 - \"           Risk Categor… TRUE                             2\n&gt;  7 \"Seating 151-250 - \"         Risk Categor… TRUE                             2\n&gt;  8 \"Grocery Store-no seating -… Risk Categor… TRUE                             2\n&gt;  9 \"Seating 13-50 - \"           Risk Categor… TRUE                             2\n&gt; 10 \"Caterer - \"                 Risk Categor… TRUE                             2\n&gt; 11 \"Caterer - \"                 Risk Categor… TRUE                             2\n&gt; 12 \"Seating 13-50 - \"           Risk Categor… TRUE                             2\n&gt; 13 \"Seating 0-12 - \"            Risk Categor… TRUE                             2\n&gt; 14 \"Meat/Sea Food - \"           Risk Categor… TRUE                             2\n&gt; 15 \"Bakery-no seating - \"       Risk Categor… TRUE                             2\n&gt; 16 \"Seating 0-12 - \"            Risk Categor… TRUE                             2\n&gt; 17 \"Caterer - \"                 Risk Categor… TRUE                             2\n&gt; 18 \"Limited Food Services - no… &lt;NA&gt;          FALSE                            1\n&gt; 19 \"Seating 51-150 - \"          Risk Categor… TRUE                             2\n&gt; 20 \"Seating 51-150 - \"          Risk Categor… TRUE                             2\n&gt; 21 \"School Lunch Program - \"    Risk II       TRUE                             2\n&gt; 22 \"Mobile Food Unit - \"        Risk Categor… TRUE                             2\n&gt; 23 \"Mobile Food Unit - \"        Risk Categor… TRUE                             2\n&gt; 24 \"Non-Profit Institution - \"  Risk Categor… TRUE                             2\n&gt; 25 \"Grocery Store-no seating -… Risk Categor… TRUE                             2\n&gt; 26 \"Bakery-no seating - \"       Risk Categor… TRUE                             2\n&gt; 27 \"Seating &gt; 250 - \"           Risk Categor… TRUE                             2\n&gt; 28 \"Non-Profit Institution - \"  Risk Categor… TRUE                             2\n&gt; 29 \"Non-Profit Institution - \"  Risk Categor… TRUE                             2\n&gt; 30 \"Seating 151-250 - \"         Risk Categor… TRUE                             2\n&gt; 31 \"Seating &gt; 250 - \"           Risk Categor… TRUE                             2\n&gt; 32 \"Seating 151-250 - \"         Risk Categor… TRUE                             2\n&gt; 33 \"Bed and Breakfast - \"       Risk Categor… TRUE                             2\n&gt; # ℹ 1 more variable: Description_remainder &lt;chr&gt;"
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#separation-with-regex-4",
@@ -11407,7 +11407,7 @@
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#other-uses-for-regular-expressions",
     "title": "",
     "section": "Other Uses for Regular Expressions",
-    "text": "Other Uses for Regular Expressions\nEven if you aren’t explicitly manipulating/analyzing text data for your research, knowing some things about regular expressions will still come in handy because they’re used in other places, both in the tidyverse and Base R.\n\n\nBase Rtidyverse\n\n\n\n\napropos(pattern) searches all objects available from the global environment that match the given pattern. This is useful if you can’t quite remember the name of a function, for example:\n\n. . .\n\napropos(\"separate\")\n\n\n\n&gt; [1] \"separate\"                 \"separate_\"               \n&gt; [3] \"separate_longer_delim\"    \"separate_longer_position\"\n&gt; [5] \"separate_rows\"            \"separate_rows_\"          \n&gt; [7] \"separate_wider_delim\"     \"separate_wider_position\" \n&gt; [9] \"separate_wider_regex\"\n\n\n\nlist.files(path, pattern) lists all files in path that match a regular expression pattern. For example, you can find all the Quarto files in the current directory with:\n\n. . .\n\nlist.files(pattern = \"\\\\.qmd$\")\n\n\n\n&gt; [1] \"CSSS508_Lecture7_index.qmd\" \"CSSS508_Lecture7.qmd\"      \n&gt; [3] \"scratch.qmd\""
+    "text": "Other Uses for Regular Expressions\nEven if you aren’t explicitly manipulating/analyzing text data for your research, knowing some things about regular expressions will still come in handy because they’re used in other places, both in Base R and the tidyverse.\n\n\n\n\napropos(pattern)\nlist.files(path, pattern)\n\n\n\n\nmatches()\npivot_longer()\nseparate_*_delim()"
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#base-r-equivalents-fa-scroll",
@@ -11491,7 +11491,7 @@
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#other-uses-for-regular-expressions-fa-scroll",
     "title": "",
     "section": "Other Uses for Regular Expressions ",
-    "text": "Other Uses for Regular Expressions \nEven if you aren’t explicitly manipulating/analyzing text data for your research, knowing some things about regular expressions will still come in handy because they’re used in other places, both in Base R and the tidyverse.\n\n\nBase Rtidyverse\n\n\n\n\napropos(pattern) searches all objects available from the global environment that match the given pattern. This is useful if you can’t quite remember the name of a function, for example:\n\n\napropos(\"separate\")\n\n\n\n&gt; [1] \"separate\"                 \"separate_\"               \n&gt; [3] \"separate_longer_delim\"    \"separate_longer_position\"\n&gt; [5] \"separate_rows\"            \"separate_rows_\"          \n&gt; [7] \"separate_wider_delim\"     \"separate_wider_position\" \n&gt; [9] \"separate_wider_regex\"\n\n\n\n\n\nlist.files(path, pattern) lists all files in path that match a regular expression pattern. For example, you can find all the Quarto files in the current directory with:\n\n\nlist.files(pattern = \"\\\\.qmd$\")\n\n\n\n&gt; [1] \"CSSS508_Lecture7_index.qmd\" \"CSSS508_Lecture7.qmd\"      \n&gt; [3] \"scratch.qmd\"\n\n\n\n\n\n\n\nmatches(pattern) will select all variables whose name matches the supplied pattern.. It’s a tidyselect function (like starts_with() and the like) that you can use in any tidyverse function that selects variables.\n\n\nnames(iris)\niris %&gt;% select(matches(\"[pt]al\")) |&gt; names()\n\n\n17\n\n[pt] signifies match eitherp or t.\n\n\n\n\n\n\n&gt; [1] \"Sepal.Length\" \"Sepal.Width\"  \"Petal.Length\" \"Petal.Width\"  \"Species\"     \n&gt; [1] \"Sepal.Length\" \"Sepal.Width\"  \"Petal.Length\" \"Petal.Width\"\n\n\n\n\npivot_longer()’s argument names_pattern takes a vector of regular expressions, just like separate_wider_regex(). It’s useful when extracting data out of variable names with a complex structure.\n\nnames(who)\nwho |&gt; pivot_longer(cols = new_sp_m014:newrel_f65,\n                    names_to = c(\"diagnosis\", \"gender\", \"age\"), \n18                    names_pattern = \"new_?(.*)_(.)(.*)\",\n                    values_to = \"count\") |&gt; \n  slice_head(n = 10)\n\n\n18\n\nnew matches exactly, then _? optionally matches an underscore, (.*) matches any number of characters and in this example it captures the new diagnosis variable, _ matches exactly, (.) matches one character which captures the gender variable m or f in this example, and lastly, (.*) again matches any number of characters, in this case it captures the varying digits of the age variable.\n\n\n\n\n\n\n&gt;  [1] \"country\"      \"iso2\"         \"iso3\"         \"year\"         \"new_sp_m014\" \n&gt;  [6] \"new_sp_m1524\" \"new_sp_m2534\" \"new_sp_m3544\" \"new_sp_m4554\" \"new_sp_m5564\"\n&gt; [11] \"new_sp_m65\"   \"new_sp_f014\"  \"new_sp_f1524\" \"new_sp_f2534\" \"new_sp_f3544\"\n&gt; [16] \"new_sp_f4554\" \"new_sp_f5564\" \"new_sp_f65\"   \"new_sn_m014\"  \"new_sn_m1524\"\n&gt; [21] \"new_sn_m2534\" \"new_sn_m3544\" \"new_sn_m4554\" \"new_sn_m5564\" \"new_sn_m65\"  \n&gt; [26] \"new_sn_f014\"  \"new_sn_f1524\" \"new_sn_f2534\" \"new_sn_f3544\" \"new_sn_f4554\"\n&gt; [31] \"new_sn_f5564\" \"new_sn_f65\"   \"new_ep_m014\"  \"new_ep_m1524\" \"new_ep_m2534\"\n&gt; [36] \"new_ep_m3544\" \"new_ep_m4554\" \"new_ep_m5564\" \"new_ep_m65\"   \"new_ep_f014\" \n&gt; [41] \"new_ep_f1524\" \"new_ep_f2534\" \"new_ep_f3544\" \"new_ep_f4554\" \"new_ep_f5564\"\n&gt; [46] \"new_ep_f65\"   \"newrel_m014\"  \"newrel_m1524\" \"newrel_m2534\" \"newrel_m3544\"\n&gt; [51] \"newrel_m4554\" \"newrel_m5564\" \"newrel_m65\"   \"newrel_f014\"  \"newrel_f1524\"\n&gt; [56] \"newrel_f2534\" \"newrel_f3544\" \"newrel_f4554\" \"newrel_f5564\" \"newrel_f65\"  \n&gt; # A tibble: 10 × 8\n&gt;    country     iso2  iso3   year diagnosis gender age   count\n&gt;    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;\n&gt;  1 Afghanistan AF    AFG    1980 sp        m      014      NA\n&gt;  2 Afghanistan AF    AFG    1980 sp        m      1524     NA\n&gt;  3 Afghanistan AF    AFG    1980 sp        m      2534     NA\n&gt;  4 Afghanistan AF    AFG    1980 sp        m      3544     NA\n&gt;  5 Afghanistan AF    AFG    1980 sp        m      4554     NA\n&gt;  6 Afghanistan AF    AFG    1980 sp        m      5564     NA\n&gt;  7 Afghanistan AF    AFG    1980 sp        m      65       NA\n&gt;  8 Afghanistan AF    AFG    1980 sp        f      014      NA\n&gt;  9 Afghanistan AF    AFG    1980 sp        f      1524     NA\n&gt; 10 Afghanistan AF    AFG    1980 sp        f      2534     NA\n\n\n\n\nThe delim argument in separate_longer_delim() and separate_wider_delim() usually matches a fixed string, but you can use regex() to make it match a pattern. This is useful, for example, if you want to match a comma that is optionally followed by a space, i.e. regex(\", ?\")."
+    "text": "Other Uses for Regular Expressions \nEven if you aren’t explicitly manipulating/analyzing text data for your research, knowing some things about regular expressions will still come in handy because they’re used in other places, both in Base R and the tidyverse.\n\n\napropos()\n\napropos(pattern) searches all objects available from the global environment that match the given pattern. This is useful if you can’t quite remember the name of a function, for example:\n\n\napropos(\"separate\")\n\n\n\n&gt; [1] \"separate\"                 \"separate_\"               \n&gt; [3] \"separate_longer_delim\"    \"separate_longer_position\"\n&gt; [5] \"separate_rows\"            \"separate_rows_\"          \n&gt; [7] \"separate_wider_delim\"     \"separate_wider_position\" \n&gt; [9] \"separate_wider_regex\"\n\n\n\n\n\nlist.files()\n\nlist.files(path, pattern) lists all files in path that match a regular expression pattern. For example, you can find all the Quarto files in the current directory with:\n\n\nlist.files(pattern = \"\\\\.qmd$\")\n\n\n\n&gt; [1] \"CSSS508_Lecture7_index.qmd\" \"CSSS508_Lecture7.qmd\"      \n&gt; [3] \"scratch.qmd\"\n\n\n\n\n\nmatches()\n\nmatches(pattern) will select all variables whose name matches the supplied pattern.. It’s a tidyselect function (like starts_with() and the like) that you can use in any tidyverse function that selects variables.\n\n\nnames(iris)\niris %&gt;% select(matches(\"[pt]al\")) |&gt;\n  names() \n\n\n17\n\n[pt] signifies match either p or t.\n\n\n\n\n\n\n&gt; [1] \"Sepal.Length\" \"Sepal.Width\"  \"Petal.Length\" \"Petal.Width\"  \"Species\"     \n&gt; [1] \"Sepal.Length\" \"Sepal.Width\"  \"Petal.Length\" \"Petal.Width\"\n\n\n\n\n\npivot_longer()\npivot_longer()’s argument names_pattern takes a vector of regular expressions, just like separate_wider_regex(). It’s useful when extracting data out of variable names with a complex structure.\n\nnames(who)\nwho |&gt; pivot_longer(cols = new_sp_m014:newrel_f65,\n                    names_to = c(\"diagnosis\", \"gender\", \"age\"), \n18                    names_pattern = \"new_?(.*)_(.)(.*)\",\n                    values_to = \"count\") |&gt; \n  slice_head(n = 10)\n\n\n18\n\n\"new_?(.*)_(.)(.*)\" explained: new matches exactly, then _? optionally matches an underscore, (.*) matches any number of characters and in this example it captures the new diagnosis variable, _ matches exactly, (.) matches one character which captures the gender variable m or f in this example, and lastly, (.*) again matches any number of characters, in this case it captures the varying digits of the age variable.\n\n\n\n\n\n\n&gt;  [1] \"country\"      \"iso2\"         \"iso3\"         \"year\"         \"new_sp_m014\" \n&gt;  [6] \"new_sp_m1524\" \"new_sp_m2534\" \"new_sp_m3544\" \"new_sp_m4554\" \"new_sp_m5564\"\n&gt; [11] \"new_sp_m65\"   \"new_sp_f014\"  \"new_sp_f1524\" \"new_sp_f2534\" \"new_sp_f3544\"\n&gt; [16] \"new_sp_f4554\" \"new_sp_f5564\" \"new_sp_f65\"   \"new_sn_m014\"  \"new_sn_m1524\"\n&gt; [21] \"new_sn_m2534\" \"new_sn_m3544\" \"new_sn_m4554\" \"new_sn_m5564\" \"new_sn_m65\"  \n&gt; [26] \"new_sn_f014\"  \"new_sn_f1524\" \"new_sn_f2534\" \"new_sn_f3544\" \"new_sn_f4554\"\n&gt; [31] \"new_sn_f5564\" \"new_sn_f65\"   \"new_ep_m014\"  \"new_ep_m1524\" \"new_ep_m2534\"\n&gt; [36] \"new_ep_m3544\" \"new_ep_m4554\" \"new_ep_m5564\" \"new_ep_m65\"   \"new_ep_f014\" \n&gt; [41] \"new_ep_f1524\" \"new_ep_f2534\" \"new_ep_f3544\" \"new_ep_f4554\" \"new_ep_f5564\"\n&gt; [46] \"new_ep_f65\"   \"newrel_m014\"  \"newrel_m1524\" \"newrel_m2534\" \"newrel_m3544\"\n&gt; [51] \"newrel_m4554\" \"newrel_m5564\" \"newrel_m65\"   \"newrel_f014\"  \"newrel_f1524\"\n&gt; [56] \"newrel_f2534\" \"newrel_f3544\" \"newrel_f4554\" \"newrel_f5564\" \"newrel_f65\"  \n&gt; # A tibble: 10 × 8\n&gt;    country     iso2  iso3   year diagnosis gender age   count\n&gt;    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;\n&gt;  1 Afghanistan AF    AFG    1980 sp        m      014      NA\n&gt;  2 Afghanistan AF    AFG    1980 sp        m      1524     NA\n&gt;  3 Afghanistan AF    AFG    1980 sp        m      2534     NA\n&gt;  4 Afghanistan AF    AFG    1980 sp        m      3544     NA\n&gt;  5 Afghanistan AF    AFG    1980 sp        m      4554     NA\n&gt;  6 Afghanistan AF    AFG    1980 sp        m      5564     NA\n&gt;  7 Afghanistan AF    AFG    1980 sp        m      65       NA\n&gt;  8 Afghanistan AF    AFG    1980 sp        f      014      NA\n&gt;  9 Afghanistan AF    AFG    1980 sp        f      1524     NA\n&gt; 10 Afghanistan AF    AFG    1980 sp        f      2534     NA\n\n\n\n\n\nseparate_*_delim()\nThe delim argument in separate_longer_delim() and separate_wider_delim() usually matches a fixed string, but you can use regex() to make it match a pattern. This is useful, for example, if you want to match a comma that is optionally followed by a space, i.e. regex(\", ?\")."
   },
   {
     "objectID": "Lectures/Lecture7/scratch.html#try-later",
@@ -11512,6 +11512,97 @@
     "href": "Lectures/Lecture7/CSSS508_Lecture7.html#lab",
     "title": "",
     "section": "Lab",
-    "text": "Lab\n\nWhat restaurant has the longest name? The shortest?"
+    "text": "Lab\nFirst, install the babynames packages in your console, then run the following code to load the babynames dataset into your global environment.\n\n1library(babynames)\ndata(babynames) \n\n\n1\n\nUS baby names provided by the Social Security Administration. This package contains all names used for at least 5 children of either sex for 1890-2017.\n\n\n\n\nExercises\n\nWhat is the shortest name length? What is the longest name length? Mean? Median?\nWhat is the most popular letter for a name to start with?1\nPick a year between 1880 and 2017 and use either str_c() or str_glue() to create a new variable that is a sentence stating what the most popular name was for each binary sex category in that year. Bonus: Add a line break in your sentence and use str_view() to see what the new string looks like2.\nOptional bonus: Make a plot of the popularity of your own name/nickname over time. What year was your name most popular? Is that close to your birth year?\n\nHint, each name has a count/proportion that is necessary to incorporate here.Hint: Use pull() before running str_view() to extract the last column created (your sentence) as a vector"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#base-r-equivalents6",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#base-r-equivalents6",
+    "title": "",
+    "section": "Base R Equivalents1",
+    "text": "Base R Equivalents1\n\n\nBase R\npaste0(x, sep, collapse)\n\nnchar(x)\nsubstr(x, start, end)\ntoupper(x)\ntolower(x)\ntools::toTitleCase(x)\ntrimws(x)\ngrepl(pattern, x)\nsub(x, pattern, replacement)\nstrwrap(x)\n\nstringr\nstr_c(x, sep, collapse)\nstr_flatten(x, collapse)\nstr_length(x)\nstr_sub(x, start, end)\nstr_to_upper(x)\nstr_to_lower(x)\nstr_to_title(x)\nstr_trim(x)\nstr_detect(x, pattern)\nstr_replace(x, pattern, replacement)\nstr_wrap(x)\n\n\n\n\n\nThere are many other useful stringr functions/variants of the functions we used today. Check them out here.\nYou can see a full list here, including functions we didn’t look at today."
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#apropos",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#apropos",
+    "title": "",
+    "section": "apropos()",
+    "text": "apropos()\napropos(pattern) searches all objects available from the global environment that match the given pattern. This is useful if you can’t quite remember the name of a function, for example:\n\n\napropos(\"separate\")\n\n\n\n&gt; [1] \"separate\"                 \"separate_\"               \n&gt; [3] \"separate_longer_delim\"    \"separate_longer_position\"\n&gt; [5] \"separate_rows\"            \"separate_rows_\"          \n&gt; [7] \"separate_wider_delim\"     \"separate_wider_position\" \n&gt; [9] \"separate_wider_regex\""
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#list.files",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#list.files",
+    "title": "",
+    "section": "list.files()",
+    "text": "list.files()\nlist.files(path, pattern) lists all files in path that match a regular expression pattern. For example, you can find all the Quarto files in the current directory with:\n\n\nlist.files(pattern = \"\\\\.qmd$\")\n\n\n\n&gt; [1] \"CSSS508_Lecture7_index.qmd\" \"CSSS508_Lecture7.qmd\"      \n&gt; [3] \"scratch.qmd\""
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#matches",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#matches",
+    "title": "",
+    "section": "matches()",
+    "text": "matches()\nmatches(pattern) will select all variables whose name matches the supplied pattern.. It’s a tidyselect function (like starts_with() and the like) that you can use in any tidyverse function that selects variables.\n\n\nnames(iris)\n17iris %&gt;% select(matches(\"[pt]al\")) |&gt;\n  names() \n\n\n17\n\n[pt] signifies match either p or t.\n\n\n\n\n\n\n&gt; [1] \"Sepal.Length\" \"Sepal.Width\"  \"Petal.Length\" \"Petal.Width\"  \"Species\"     \n&gt; [1] \"Sepal.Length\" \"Sepal.Width\"  \"Petal.Length\" \"Petal.Width\""
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#pivot_longer",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#pivot_longer",
+    "title": "",
+    "section": "pivot_longer()",
+    "text": "pivot_longer()\npivot_longer()’s argument names_pattern takes a vector of regular expressions, just like separate_wider_regex(). It’s useful when extracting data out of variable names with a complex structure.\n\n\nnames(who) |&gt; head(n = 10)\n\n\n\n&gt;  [1] \"country\"      \"iso2\"         \"iso3\"         \"year\"         \"new_sp_m014\" \n&gt;  [6] \"new_sp_m1524\" \"new_sp_m2534\" \"new_sp_m3544\" \"new_sp_m4554\" \"new_sp_m5564\"\n\n\n\n\n\nwho |&gt; pivot_longer(cols = new_sp_m014:newrel_f65,\n                    names_to = c(\"diagnosis\", \"gender\", \"age\"), \n18                    names_pattern = \"new_?(.*)_(.)(.*)\",\n                    values_to = \"count\") |&gt; \n  slice_head(n = 10)\n\n\n18\n\n\"new_?(.*)_(.)(.*)\" explained: new matches exactly, then _? optionally matches an underscore, (.*) matches any number of characters and in this example it captures the new diagnosis variable, _ matches exactly, (.) matches one character which captures the gender variable m or f in this example, and lastly, (.*) again matches any number of characters, in this case it captures the varying digits of the age variable.\n\n\n\n\n\n\n&gt; # A tibble: 10 × 8\n&gt;    country     iso2  iso3   year diagnosis gender age   count\n&gt;    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;\n&gt;  1 Afghanistan AF    AFG    1980 sp        m      014      NA\n&gt;  2 Afghanistan AF    AFG    1980 sp        m      1524     NA\n&gt;  3 Afghanistan AF    AFG    1980 sp        m      2534     NA\n&gt;  4 Afghanistan AF    AFG    1980 sp        m      3544     NA\n&gt;  5 Afghanistan AF    AFG    1980 sp        m      4554     NA\n&gt;  6 Afghanistan AF    AFG    1980 sp        m      5564     NA\n&gt;  7 Afghanistan AF    AFG    1980 sp        m      65       NA\n&gt;  8 Afghanistan AF    AFG    1980 sp        f      014      NA\n&gt;  9 Afghanistan AF    AFG    1980 sp        f      1524     NA\n&gt; 10 Afghanistan AF    AFG    1980 sp        f      2534     NA"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#separate__delim",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#separate__delim",
+    "title": "",
+    "section": "separate_*_delim()",
+    "text": "separate_*_delim()\nThe delim argument in separate_longer_delim() and separate_wider_delim() usually matches a fixed string, but you can use regex() to make it match a pattern. This is useful, for example, if you want to match a comma that is optionally followed by a space, i.e. regex(\", ?\")."
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#strings-1",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#strings-1",
+    "title": "",
+    "section": "Strings",
+    "text": "Strings\n\nFirst, install the babynames packages in your console, then run the following code to load the babynames dataset into your global environment.\n\n1library(babynames)\ndata(babynames) \n\n\n1\n\nUS baby names provided by the Social Security Administration. This package contains all names used for at least 5 children of either sex for 1880-2017.\n\n\n\n\n\n\n\nWhat is the shortest name length? What is the longest name length? Mean? Median?\nWhat is the most popular letter for a name to start with?1\nPick a year between 1880 and 2017 and use either str_c() or str_glue() to create a new variable that is a sentence stating what the most popular name was for each binary sex category in that year. Bonus: Add a line break in your sentence and use str_view() to see what the new string looks like2.\nOptional bonus: Make a plot of the popularity of your own name/nickname over time. What year was your name most popular? Is that close to your birth year?\n\n\n\nHint, each name has a proportion that is necessary to incorporate here.Hint: Use pull() before running str_view() to extract the last column created (your sentence) as a vector."
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#answers-3",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#answers-3",
+    "title": "",
+    "section": "Answers",
+    "text": "Answers\n\nOptional bonus: Make a plot of the popularity of your own name/nickname over time. What year was your name most popular? Is that close to your birth year?\n\n\n5library(ggrepel)\n6library(ggthemes)\n7library(patchwork)\n\ncolors &lt;- c(\"#4e79a7\",\"#f28e2c\",\"#e15759\",\"#76b7b2\",\"#59a14f\",\"#edc949\",\n            \"#af7aa1\",\"#ff9da7\",\"#9c755f\",\"#bab0ab\")\n\nvictoria_plot &lt;- babynames |&gt; \n  filter(name == \"Victoria\") |&gt; \n8  mutate(sex2 = if_else(sex == \"F\", \"Female\", \"Male\")) |&gt;\n  ggplot(aes(x = year, y = prop, group = name, fill = name)) +\n  geom_density(stat = \"identity\", alpha = 0.25, color = colors[1]) + \n9  geom_vline(xintercept = 1988, color = colors[2], linetype = 2) +\n10  geom_vline(data = babynames |&gt;\n               filter(name == \"Victoria\") |&gt;\n               mutate(sex2 = if_else(sex == \"F\", \"Female\", \"Male\")) |&gt;\n               slice_max(prop, by = sex2),\n             aes(xintercept = year), color = colors[3]) +\n11  facet_grid(sex2 ~ .,\n             scales = \"free_y\") +\n12  scale_fill_manual(values = colors[1]) +\n  labs(title = 'Popularity of the name \"Victoria\"',\n       subtitle = \"1880-2017, by binary sex category\",\n13       y = \"\",\n       x = \"\") +\n  theme_tufte(base_size = 16) + \n  theme(legend.position = \"none\", \n14        strip.background = element_rect(color=\"black\",\n                                        fill= alpha(colors[10], 0.5),\n                                        linetype = 0))\n\nvic_plot &lt;- babynames |&gt; \n  filter(name == \"Vic\") |&gt; \n  mutate(sex2 = if_else(sex == \"F\", \"Female\", \"Male\")) |&gt; \n  ggplot(aes(x = year, y = prop, group = name, fill = name)) +\n  geom_density(stat = \"identity\", alpha = 0.25, color = colors[6]) + \n  geom_vline(xintercept = 1988, color = colors[2], linetype = 2) +\n  geom_vline(data = babynames |&gt; \n               filter(name == \"Vic\") |&gt; \n               mutate(sex2 = if_else(sex == \"F\", \"Female\", \"Male\")) |&gt; \n               slice_max(prop, by = sex2), \n             aes(xintercept = year), color = colors[3]) + \n  facet_grid(sex2 ~ .,\n             scales = \"free_y\") + \n  scale_fill_manual(values = colors[6]) + \n  labs(title = 'Popularity of the name \"Vic\"',\n       y = \"\", \n       caption = \"Note: y-axes are of different scales; \n       Orange, dashed line represents 1988; # \n       Red, solid line represents most popular # \n15       year for that name-sex pairing.\",\n       x = \"Year\") +\n  theme_tufte(base_size = 16) + \n  theme(legend.position = \"none\", \n        strip.background = element_rect(color=\"black\", \n                                        fill= alpha(colors[10], 0.5), \n                                        linetype = 0))\n\n16combo_plots &lt;- victoria_plot / vic_plot + ylab(NULL)\n\n17wrap_elements(combo_plots) +\n  theme_tufte(base_size = 16) +\n18  labs(tag = \"Proportion of all names given to U.S. newborns\") +\n  theme(plot.tag = element_text(size = rel(1.25), angle = 90),\n        plot.tag.position = \"left\")\n\n\n5\n\nFor labels that don’t overlap.\n\n6\n\nFor extra built-in themes.\n\n7\n\nAllows distinct plots to be put together into one visualization.\n\n8\n\nCreating an alternative sex variable for facet visualization purposes.\n\n9\n\nVertical line for birth year.\n\n10\n\nVertical line for most popular year for that name/nickname.\n\n11\n\nFacetting by sex2 and allowing the y-axis to vary based on facet value.\n\n12\n\nApplying desired colors.\n\n13\n\nLeaving axes blank for final patchwork labelling.\n\n14\n\nSpecifying color for facet labels.\n\n15\n\nAdding note and x-axis text since this plot will be at the bottom of the overall visualization.\n\n16\n\nCreating object for patchwork visuaization.\n\n17\n\nPutting together the two separate plots.\n\n18\n\nCreating and plotting a y axis that spans both plots."
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#answers-4",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#answers-4",
+    "title": "",
+    "section": "Answers",
+    "text": "Answers\n\nnicknames &lt;- babynames |&gt; \n19  mutate(nickname = case_when(str_detect(name, pattern = \"^Vi.{2}oria$\") ~ \"Victoria\",\n                              str_detect(name, pattern = \"^Vi.{2}or$\") ~ \"Victor\",\n                              str_detect(name, pattern = \"^Vi[ck]{1,2}$\") ~ \"Vic\",\n                              str_detect(name, pattern = \"^Tor[riey]*$\") ~ \"Tori\",\n                              str_detect(name, pattern = \"^Vi[ck]+[iey]*$\") ~ \"Vicky\",\n                               .default = NA)) |&gt; \n20  filter(!is.na(nickname)) |&gt;\n21  mutate(prop2 = sum(prop),\n         .by = c(year, nickname, sex)) |&gt;\n  distinct(year, nickname, prop2, sex) |&gt; \n22  mutate(sex2 = if_else(sex == \"F\", \"Female\", \"Male\"),\n23         nickname = fct(nickname, levels = c(\"Victoria\", \"Victor\", \"Vicky\", \"Tori\", \"Vic\")))\n\nmy_names &lt;- nicknames |&gt; \n  ggplot(aes(x = year, y = prop2, fill = nickname, group = nickname)) +\n  geom_density(aes(color = nickname), stat = \"identity\", alpha = 0.15) +\n  geom_vline(xintercept = 1988, color = colors[4], linetype = 2) +\n24  scale_fill_manual(values = colors[c(1:3, 5:7)]) +\n  scale_color_manual(values = colors[c(1:3, 5:7)]) + \n  facet_grid(sex2 ~ .,\n             scales = \"free_y\") + \n  geom_label_repel(data = nicknames |&gt; slice_max(prop2, by = c(sex2, nickname)),\n                   aes(label = nickname), stat = \"identity\") + \n  labs(title = 'Popularity of all nicknames for \"Victoria\" (including all spelling variants)',\n       caption = \"Note: y-axes are of different scales; Teal, dashed line represents 1988\",\n       subtitle = \"1880-2017, by binary sex category\",\n       y = \"Proportion of all names given to U.S. newborns\", \n       x = \"Year\") +\n  theme_tufte(base_size = 16) + \n  theme(legend.position = \"none\", \n        strip.background = element_rect(color=\"black\", fill= alpha(colors[10], 0.5), linetype = 0))\nmy_names\n\n\n19\n\nCreating a new variable that finds all spelling variations of “Victoria” and its most common derivatives using regular expressions.\n\n20\n\nRemoving all names that don’t match any of the versions of “Victoria” or its nicknames.\n\n21\n\nCalculating a new proportion that collapses all spelling variations into the most common variant.\n\n22\n\nCreating an alternative sex variable for facet visualization purposes.\n\n23\n\nPutting names in the order I want to assign for colors.\n\n24\n\nPicking the specific colors I want to assign to the 5 names"
+  },
+  {
+    "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#answers-3-output",
+    "href": "Lectures/Lecture7/CSSS508_Lecture7.html#answers-3-output",
+    "title": "",
+    "section": "Answers",
+    "text": "Answers"
+  },
+  {
+    "objectID": "Homework/HW7/homework7.html#footnotes",
+    "href": "Homework/HW7/homework7.html#footnotes",
+    "title": "Homework 7",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nYou can make this a global option for your whole document by putting it directly in the YAML of your qmd:\n\n---\ntitle: \"My Document\"\nexecute:\n  echo: true\n---\n\n↩︎\nAnything that is separated by spaces counts as a word for this problem.↩︎\nNote: To accurately reflect the true average you’ll want to weight this by restaurant: i.e. get the average grade by restaurant first, then get the average of those averages by zip code.↩︎\nThere are a few ways to do this. Use the method that makes most sense to you!↩︎"
+  },
+  {
+    "objectID": "Homework/HW7/homework7_key.html",
+    "href": "Homework/HW7/homework7_key.html",
+    "title": "Homework 7 Key",
+    "section": "",
+    "text": "Code\nknitr::opts_chunk$set(comment = \"&gt;\")\n\nlibrary(tidyverse)\nlibrary(ggrepel)\nlibrary(ggthemes)\n\nload(url(\"https://github.com/vsass/CSSS508/raw/main/Lectures/Lecture7/data/restaurants.Rdata\"))"
+  },
+  {
+    "objectID": "Homework/HW7/homework7_key.html#footnotes",
+    "href": "Homework/HW7/homework7_key.html#footnotes",
+    "title": "Homework 7 Key",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nNote: To accurately reflect the true average you’ll want to weight this by restaurant: i.e. get the average grade by restaurant first, then get the average of those averages by zip code.↩︎\nThere are a few ways to do this. Use the method that makes most sense to you!↩︎"
   }
 ]

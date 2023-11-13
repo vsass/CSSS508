@@ -1,0 +1,132 @@
+---
+title: "Homework 7 Key"
+code-annotations: hover
+execute: 
+  message: false
+  warning: false
+output: 
+  html_document:
+    highlight-style: a11y-dark
+---
+
+```{r}
+#| code-fold: true
+knitr::opts_chunk$set(comment = ">")
+
+library(tidyverse)
+library(ggrepel)
+library(ggthemes)
+
+load(url("https://github.com/vsass/CSSS508/raw/main/Lectures/Lecture7/data/restaurants.Rdata"))
+```
+
+#### Answer 1
+What is the shortest restaurant name? What is the longest restaurant name? 
+
+```{r}
+restaurants |> 
+  distinct(Name) |> 
+  mutate(length = str_length(Name)) |> 
+  filter(length == min(length) | length == max(length))
+```
+
+
+#### Answer 2: 
+
+Read the documentation for [`separate_longer_delim()`](https://tidyr.tidyverse.org/reference/separate_longer_delim.html). Use this function to figure out what 10 "words" are most frequently used for the restaurant names in this data set. 
+
+```{r}
+restaurants |> 
+  distinct(Name) |> 
+  separate_longer_delim(Name, delim = " ") |> 
+  count(Name) |> 
+  arrange(desc(n))
+```
+
+#### Answer 3
+Which zip code has the highest (meaning **worst**) mean `Grade`?^[Note: To accurately reflect the true average you'll want to weight this by restaurant: i.e. get the average grade by restaurant first, then get the average of those averages by zip code.]
+
+```{r}
+restaurants |> 
+  mutate(avg_score = mean(Grade, na.rm = TRUE),
+            .by = c(`Name`)) |> 
+  summarize(avg_score_zip = mean(avg_score, na.rm = TRUE), 
+            .by = c(`Zip Code`)) |> 
+  slice_max(avg_score_zip)
+```
+
+For that worst-rated zip code, how has its average rating changed by year?^[There are a few ways to do this. Use the method that makes most sense to you!] 
+
+```{r}
+# using stringr functions
+zip_98115_year <- restaurants |> 
+  filter(`Zip Code` == "98115") |>
+  separate_wider_delim(`Inspection Date`, 
+                       delim = "/", 
+                       names = c("month", "day", "year")) |>  
+  mutate(avg_score = mean(Grade, na.rm = TRUE),
+            .by = c(`Name`)) |> 
+  summarize(avg_score_zip = mean(avg_score, na.rm = TRUE), 
+            .by = c(`Zip Code`, year)) |> 
+  arrange(desc(year)) |> 
+  filter(!is.na(year))
+zip_98115_year
+
+# using lubridate functions
+zip_98115_year2 <- restaurants |> 
+  filter(`Zip Code` == "98115") |>
+  mutate(inspection_date = mdy(`Inspection Date`), 
+         year = year(inspection_date)) |> 
+  mutate(avg_score = mean(Grade, na.rm = TRUE),
+            .by = c(`Name`)) |> 
+  summarize(avg_score_zip = mean(avg_score, na.rm = TRUE), 
+            .by = c(`Zip Code`, year)) |> 
+  arrange(desc(year)) |> 
+  filter(!is.na(year))
+zip_98115_year2  
+```
+
+#### Answer 4 (OPTIONAL):
+
+Separate the variable `Phone` into three variables that only contain numerical digits: `area_code`, `first_3`, and `last_4`. 
+
+```{r}
+# Using separate_wider_delim() and str_remove()
+restaurants |> 
+  distinct(Phone) |> 
+  separate_wider_delim(cols = Phone, 
+                       delim = " ", 
+                       names = c("area_code", "phone_number")) |> 
+  separate_wider_delim(cols = phone_number, 
+                       delim = "-", 
+                       names = c("first_3", "last_4")) |> 
+  mutate(area_code = str_remove(area_code, pattern = "\\("), 
+         area_code = str_remove(area_code, pattern = "\\)"))
+
+# Using separate_wider_delim() (using a regex) and str_remove()
+restaurants |> 
+  distinct(Phone) |> 
+  separate_wider_delim(cols = Phone, 
+                       delim = regex("[ |-]"), 
+                       names = c("area_code", "first_3", "last_4")) |> 
+  mutate(area_code = str_remove(area_code, pattern = "\\("), 
+         area_code = str_remove(area_code, pattern = "\\)"))
+
+# Using str_extract()
+restaurants |> 
+  distinct(Phone) |> 
+  mutate(area_code = str_extract(Phone, "[:digit:]{3}"), 
+         first_3 = str_extract(Phone, "(?<= )[:digit:]{3}(?=-)"), 
+         last_4 = str_extract(Phone, "[:digit:]{4}"))
+
+# Using separate_wider_regex()
+restaurants |> 
+  distinct(Phone) |> 
+  separate_wider_regex(cols = Phone, 
+                       patterns = c("^\\(", 
+                                    area_code = "\\d{3}",
+                                    "\\) ",
+                                    first_3 = "\\d{3}",
+                                    "-",
+                                    last_4 = ".{4,}$")) 
+```

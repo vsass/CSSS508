@@ -133,7 +133,7 @@ Similarly, if we want to represent a `\` we'll need to escape it as well...
 . . .
 
 ```{r}
-str_view(c('\"', "\"", "\\")) # <4>
+str_view(c("\'", '\"', "\\")) # <4>
 ```
 
 4.  All `stringr` functions begin with the prefix `str_` which is useful due to R Studio's auto-complete feature.
@@ -154,8 +154,6 @@ str_view("\tOther times you just need to indent somewhere.") # <6>
 6.  Use `\t` to add a tab. `str_view` will highlight tabs in blue in your console to make it stand out from other random whitespace.
 
 . . .
-
-If you need to limit the width of an entire . . .
 
 Additionally, you can represent [Unicode](https://en.wikipedia.org/wiki/List_of_Unicode_characters) characters which will be written with the `\u` or `\U` escape.
 
@@ -434,11 +432,24 @@ debug[debug$Address_pieces == 2, ] # <20>
 unique_cities <- unique(restaurants$City)
 unique_cities  |> 
   head()
+```
 
+. . . 
+
+```{r}
+#| output-location: fragment
 str_to_upper(unique_cities) |> 
   head()
+```
+
+```{r}
+#| output-location: fragment
 str_to_lower(unique_cities) |> 
   head()
+```
+
+```{r}
+#| output-location: fragment
 str_to_title(unique_cities) |> 
   head()
 ```
@@ -480,12 +491,12 @@ At the most basic level you can use `str_length()` to count the characters are i
 
 ```{r}
 #| output-location: fragment
-restaurants |> 
-  select(Phone) |> 
-  mutate(phone_length = str_length(Phone)) |> # <21> 
-  count(phone_length) # <22>
-```
+phone_numbers <- restaurants |>
+  select(`Phone`) |> 
+  mutate(phone_length = str_length(`Phone`)) # <21> 
 
+phone_numbers |> count(phone_length) # <22>
+```
 21. Getting the length of `Phone`
 22. Getting the count of different lengths for `Phone` found in the data
 
@@ -493,10 +504,6 @@ restaurants |>
 
 ```{r}
 #| output-location: fragment
-phone_numbers <- restaurants |>
-  select(`Phone`) |> 
-  mutate(phone_length = str_length(`Phone`)) 
-
 phone_numbers |> 
   filter(phone_length %in% c(15, 18)) |> 
   slice_head(n = 1, by = phone_length) # <23>
@@ -606,7 +613,7 @@ restaurants |>
 
 Hmmm...there are only 5 restaurants on a street with Pike in the name?!
 
-## Patterns: `str_detect()`
+## Patterns: `str_detect()` 
 
 We can do similar pattern-checking using `str_detect()`:
 
@@ -760,14 +767,14 @@ I've triggered the debugging error message which tells me how to diagnose/ignore
 
 ```{r}
 #| output-location: fragment
-#| 
 res_sep <- restaurants |> 
   distinct(Name, Description) |> 
   separate_wider_regex(cols = Description, 
                        patterns = c(capacity_description = "^.+", # <11>
                                     risk_category = "Risk ?(?:Category)? ?I{1,3}$"), # <12>
                        too_few = "debug") |> 
-  distinct(capacity_description, risk_category, Description_ok, Description_matches, Description_remainder) |> # <13>
+  distinct(capacity_description, risk_category, Description_ok, 
+           Description_matches, Description_remainder) |> # <13>
   print(n = 33)
 ```
 
@@ -833,67 +840,93 @@ Nice!
 
 ![](images/outkast_fresh_clean.gif){.absolute right="0" top="400"}
 
-## Other Uses for Regular Expressions [{{< fa scroll >}}]{style="color:#99a486"} {.scrollable}
+## Other Uses for Regular Expressions 
 
-Even if you aren't explicitly manipulating/analyzing text data for your research, knowing some things about regular expressions will still come in handy because they're used in other places, both in Base `R` and the `tidyverse`.
+Even if you aren't explicitly manipulating/analyzing text data for your research, knowing some things about regular expressions will still come in handy because they're used in other places, both in [Base R]{.color-red} and the [tidyverse]{.color-blue}.
 
-. . .
+. . . 
 
-::: panel-tabset
-### Base `R`
+:::: {.columns}
 
-::: fragment
--   `apropos(pattern)` searches all objects available from the global environment that match the given pattern. This is useful if you can't quite remember the name of a function, for example:
+::: {.column width="50%"}
+* [apropos(pattern)]{.color-red}
+* [list.files(path, pattern)]{.color-red}
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+* [matches()]{.color-blue}
+* [pivot_longer()]{.color-blue} 
+* [separate_*_delim()]{.color-blue} 
+:::
+:::
+
+::::
+
+## [apropos()]{.color-red}  
+
+`apropos(pattern)` searches all objects available from the global environment that match the given pattern. This is useful if you can't quite remember the name of a function, for example:
+
+. . . 
 
 ```{r}
 #| output-location: fragment
 apropos("separate")
 ```
-:::
 
-::: fragment
--   `list.files(path, pattern)` lists all files in path that match a regular expression pattern. For example, you can find all the Quarto files in the current directory with:
+
+## [list.files()]{.color-red} 
+
+`list.files(path, pattern)` lists all files in path that match a regular expression pattern. For example, you can find all the Quarto files in the current directory with:
+
+. . . 
 
 ```{r}
 #| output-location: fragment
 list.files(pattern = "\\.qmd$")
 ```
-:::
 
-### `tidyverse`
+## [matches()]{.color-blue} 
 
-::: fragment
--   `matches(pattern)` will select all variables whose name matches the supplied pattern.. It's a `tidyselect` function (like `starts_with()` and the like) that you can use in any tidyverse function that selects variables.
+`matches(pattern)` will select all variables whose name matches the supplied pattern.. It's a `tidyselect` function (like `starts_with()` and the like) that you can use in any tidyverse function that selects variables.
+
+. . . 
 
 ```{r}
 #| output-location: fragment
+#| code-annotations: hover
 names(iris)
-iris %>% select(matches("[pt]al")) |> names() # <17>
+iris %>% select(matches("[pt]al")) |> # <17>
+  names() 
 ```
+17. `[pt]` signifies match either `p` or `t`.
 
-17. `[pt]` signifies match either`p` or `t`.
-:::
+## [pivot_longer()]{.color-blue} 
 
-::: fragment
 `pivot_longer()`'s argument `names_pattern` takes a vector of regular expressions, just like `separate_wider_regex()`. It's useful when extracting data out of variable names with a complex structure.
 
+. . . 
+
 ```{r}
 #| output-location: fragment
-names(who)
+names(who) |> head(n = 10)
+```
+
+. . . 
+
+```{r}
+#| output-location: fragment
 who |> pivot_longer(cols = new_sp_m014:newrel_f65,
                     names_to = c("diagnosis", "gender", "age"), 
                     names_pattern = "new_?(.*)_(.)(.*)", # <18>
                     values_to = "count") |> 
   slice_head(n = 10)
 ```
+18. `"new_?(.*)_(.)(.*)"` explained: `new` matches exactly, then `_?` *optionally* matches an underscore, `(.*)` matches any number of characters and in this example it captures the new `diagnosis` variable, `_` matches exactly, `(.)` matches one character which captures the `gender` variable `m` or `f` in this example, and lastly, `(.*)` again matches any number of characters, in this case it captures the varying digits of the `age` variable.
 
-18. `new` matches exactly, then `_?` *optionally* matches an underscore, `(.*)` matches any number of characters and in this example it captures the new `diagnosis` variable, `_` matches exactly, `(.)` matches one character which captures the `gender` variable `m` or `f` in this example, and lastly, `(.*)` again matches any number of characters, in this case it captures the varying digits of the `age` variable.
-:::
+## [separate_*_delim()]{.color-blue} 
 
-::: fragment
 The `delim` argument in `separate_longer_delim()` and `separate_wider_delim()` usually matches a fixed string, but you can use `regex()` to make it match a pattern. This is useful, for example, if you want to match a comma that is optionally followed by a space, i.e. `regex(", ?")`.
-:::
-:::
 
 ## Base `R` Equivalents[^6]
 
@@ -939,24 +972,37 @@ The `delim` argument in `separate_longer_delim()` and `separate_wider_delim()` u
 There are many other useful `stringr` functions/variants of the functions we used today. Check them out [here](https://stringr.tidyverse.org/reference/index.html).
 :::
 
-## Lab
+# Lab{.section-title background-color="#99a486"}
 
-Use the following code to read in the King County restaurants data:
+## Strings
+
+. . . 
+
+First, install the `babynames` packages in your console, then run the following code to load the `babynames` dataset into your global environment. 
 
 ```{r}
 library(babynames) # <1> 
 data(babynames) 
-restaurants <- load(url("https://github.com/vsass/CSSS508/raw/main/Lectures/Lecture7/data/restaurants.Rdata"))
 ```
-1. US baby names provided by the SSA. This package contains all names used for at least 5 children of either sex for 1890-2017. 
+1. US baby names provided by the Social Security Administration. This package contains all names used for at least 5 children of either sex for 1880-2017. 
 
+<br>
 
+::: {.incremental}
+1. What is the shortest name length? What is the longest name length? Mean? Median?
+2. What is the most popular letter for a name to start with?^[Hint, each name has a proportion that is necessary to incorporate here.] 
+3. Pick a year between 1880 and 2017 and use either `str_c()` or `str_glue()` to create a new variable that is a sentence stating what the most popular name was for each binary sex category in that year. Bonus: Add a line break in your sentence and use `str_view()` to see what the new string looks like^[Hint: Use `pull()` before running `str_view()` to extract the last column created (your sentence) as a vector.]. 
+4. Optional bonus: Make a plot of the popularity of your own name/nickname over time. What year was your name most popular? Is that close to your birth year?
+:::
 
 ## Answers
 
 1. What is the shortest name length? What is the longest name length? Mean? Median?
 
+. . . 
+
 ```{r}
+#| output-location: fragment
 babynames |> 
   distinct(name) |> 
   mutate(length = str_length(name)) |> 
@@ -966,56 +1012,294 @@ babynames |>
             median = median(length))
 ```
 
-2. What is the most popular letter for a name to start with? 
+## Answers
+
+2. What is the most popular letter for a name to start with?^[Hint, each name has a proportion that is necessary to account for here.] 
+
+. . . 
 
 ```{r}
-check <- babynames |> 
+#| output-location: fragment
+babynames |> 
   mutate(first = str_sub(name, 1, 1)) |> 
-  count(first)
+  count(first, wt = prop) |> 
+  arrange(desc(n))
   
 ```
 
-3. Make a plot of the distribution of your own name! What is the most likely year you were born based on your name? Is that close to 
+## Answers
+
+3. Pick a year between 1880 and 2017 and use either `str_c()` or `str_glue()` to create a new variable that is a sentence stating what the most popular name was for each binary sex category in that year. Bonus: Add a line break in your sentence and use `str_view()` to see what the new string looks like^[Hint: Use `pull()` before running `str_view()` to extract the last column created (your sentence) as a vector.].
+
+. . . 
 
 ```{r}
-babynames |>
+#| output-location: fragment
+babynames |> 
+  filter(year == 1950) |> 
+  mutate(sex2 = if_else(sex == "F", "girl", "boy")) |> # <2>
+  slice_max(prop, by = c(sex)) |> # <3>
+  mutate(Sentence = str_wrap(str_glue("The most popular name for {sex2}s in 
+                                      {year} was {name}."), 
+                             width = 25)) |> 
+  pull(Sentence) |> # <4>
+  str_view()
+  
+```
+2. Creating a new `sex2` variable for better interpretability of the final `Sentence` variable. 
+3. Getting the most popular (by proportion of all names) male and female names.
+4. `pull()` is similar to indexing with `$` in Base `R` but works well with pipes. This is necessary to do before `str_view()` which only takes a vector of values (not a column from a data frame).
+
+## Answers
+
+4. Optional bonus: Make a plot of the popularity of your own name/nickname over time. What year was your name most popular? Is that close to your birth year?
+
+```{r}
+#| eval: false
+library(ggrepel) # <5>
+library(ggthemes) # <6>
+library(patchwork) # <7>
+
+colors <- c("#4e79a7","#f28e2c","#e15759","#76b7b2","#59a14f","#edc949",
+            "#af7aa1","#ff9da7","#9c755f","#bab0ab")
+
+victoria_plot <- babynames |> 
+  filter(name == "Victoria") |> 
+  mutate(sex2 = if_else(sex == "F", "Female", "Male")) |> # <8>
+  ggplot(aes(x = year, y = prop, group = name, fill = name)) +
+  geom_density(stat = "identity", alpha = 0.25, color = colors[1]) + 
+  geom_vline(xintercept = 1988, color = colors[2], linetype = 2) + # <9>
+  geom_vline(data = babynames |> # <10>
+               filter(name == "Victoria") |> # <10>
+               mutate(sex2 = if_else(sex == "F", "Female", "Male")) |> # <10>
+               slice_max(prop, by = sex2), # <10>
+             aes(xintercept = year), color = colors[3]) + # <10>
+  facet_grid(sex2 ~ ., # <11>
+             scales = "free_y") + # <11> 
+  scale_fill_manual(values = colors[1]) + # <12>
+  labs(title = 'Popularity of the name "Victoria"',
+       subtitle = "1880-2017, by binary sex category",
+       y = "", # <13>
+       x = "") + # <13>
+  theme_tufte(base_size = 16) + 
+  theme(legend.position = "none", 
+        strip.background = element_rect(color="black", # <14>
+                                        fill= alpha(colors[10], 0.5), # <14>
+                                        linetype = 0)) # <14> 
+
+vic_plot <- babynames |> 
   filter(name == "Vic") |> 
-  ggplot(aes(x = year, y = n)) +
-  geom_histogram(stat = "identity") + 
-  geom_vline(xintercept = 1988, color = "red")
+  mutate(sex2 = if_else(sex == "F", "Female", "Male")) |> 
+  ggplot(aes(x = year, y = prop, group = name, fill = name)) +
+  geom_density(stat = "identity", alpha = 0.25, color = colors[6]) + 
+  geom_vline(xintercept = 1988, color = colors[2], linetype = 2) +
+  geom_vline(data = babynames |> 
+               filter(name == "Vic") |> 
+               mutate(sex2 = if_else(sex == "F", "Female", "Male")) |> 
+               slice_max(prop, by = sex2), 
+             aes(xintercept = year), color = colors[3]) + 
+  facet_grid(sex2 ~ .,
+             scales = "free_y") + 
+  scale_fill_manual(values = colors[6]) + 
+  labs(title = 'Popularity of the name "Vic"',
+       y = "", 
+       caption = "Note: y-axes are of different scales; 
+       Orange, dashed line represents 1988; # 
+       Red, solid line represents most popular # 
+       year for that name-sex pairing.",  # <15>
+       x = "Year") + # <15>
+  theme_tufte(base_size = 16) + 
+  theme(legend.position = "none", 
+        strip.background = element_rect(color="black", 
+                                        fill= alpha(colors[10], 0.5), 
+                                        linetype = 0))
+
+combo_plots <- victoria_plot / vic_plot + ylab(NULL) # <16>
+
+wrap_elements(combo_plots) + # <17> 
+  theme_tufte(base_size = 16) +
+  labs(tag = "Proportion of all names given to U.S. newborns") + # <18>
+  theme(plot.tag = element_text(size = rel(1.25), angle = 90), # <18>
+        plot.tag.position = "left") # <18>
+   
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1.  What restaurant has the longest name? The shortest?
+5. For labels that don't overlap.
+6. For extra built-in themes. 
+7. Allows distinct plots to be put together into one visualization. 
+8. Creating an alternative `sex` variable for facet visualization purposes. 
+9. Vertical line for birth year. 
+10. Vertical line for most popular year for that name/nickname.
+11. Facetting by `sex2` and allowing the y-axis to vary based on facet value. 
+12. Applying desired colors. 
+13. Leaving axes blank for final patchwork labelling. 
+14. Specifying color for facet labels. 
+15. Adding note and x-axis text since this plot will be at the bottom of the overall visualization.
+16. Creating object for patchwork visuaization. 
+17. Putting together the two separate plots. 
+18. Creating and plotting a y axis that spans both plots. 
 
 ```{r}
-restaurants |> 
-  distinct(Name) |> 
-  mutate(length = str_length(Name)) |> 
-  filter(length == max(length) | length == min(length))
+#| echo: false
+#| output: false
+#| fig-align: center
+#| fig-width: 30
+#| fig-asp: 0.625
+library(ggrepel)
+library(ggthemes)
+library(patchwork)
+library(ragg)
+
+colors <- c("#4e79a7","#f28e2c","#e15759","#76b7b2","#59a14f","#edc949","#af7aa1","#ff9da7","#9c755f","#bab0ab")
+
+victoria_plot <- babynames |> 
+  filter(name == "Victoria") |> 
+  mutate(sex2 = if_else(sex == "F", "Female", "Male")) |> 
+  ggplot(aes(x = year, y = prop, group = name, fill = name)) +
+  geom_density(stat = "identity", alpha = 0.25, color = colors[1]) + 
+  geom_vline(xintercept = 1988, color = colors[2], linetype = 2) +
+  geom_vline(data = babynames |> 
+               filter(name == "Victoria") |> 
+               mutate(sex2 = if_else(sex == "F", "Female", "Male")) |> 
+               slice_max(prop, by = sex2), 
+             aes(xintercept = year), color = colors[3]) + 
+  facet_grid(sex2 ~ .,
+             scales = "free_y") + 
+  scale_fill_manual(values = colors[1]) + 
+  labs(title = 'Popularity of the name "Victoria"',
+       y = "",
+       subtitle = "1880-2017, by binary sex category",
+       x = "") +
+  theme_tufte(base_size = 16) + 
+  theme(legend.position = "none", 
+        strip.background = element_rect(color="black", fill= alpha(colors[10], 0.5), linetype = 0))
+
+vic_plot <- babynames |> 
+  filter(name == "Vic") |> 
+  mutate(sex2 = if_else(sex == "F", "Female", "Male")) |> 
+  ggplot(aes(x = year, y = prop, group = name, fill = name)) +
+  geom_density(stat = "identity", alpha = 0.25, color = colors[6]) + 
+  geom_vline(xintercept = 1988, color = colors[2], linetype = 2) +
+  geom_vline(data = babynames |> 
+               filter(name == "Vic") |> 
+               mutate(sex2 = if_else(sex == "F", "Female", "Male")) |> 
+               slice_max(prop, by = sex2), 
+             aes(xintercept = year), color = colors[3]) + 
+  facet_grid(sex2 ~ .,
+             scales = "free_y") + 
+  scale_fill_manual(values = colors[6]) + 
+  labs(title = 'Popularity of the name "Vic"',
+       caption = "Note: y-axes are of different scales; Orange, dashed line represents 1988; Red, solid line represents most popular year for that name-sex pairing.", 
+       y = "", 
+       x = "Year") +
+  theme_tufte(base_size = 16) + 
+  theme(legend.position = "none", 
+        strip.background = element_rect(color="black", fill= alpha(colors[10], 0.5), linetype = 0))
+
+combo_plots <- victoria_plot / vic_plot + ylab(NULL)
+
+ragg::agg_png("victoria_vic_plots.png", width = 16, height = 10, units = "in", res = 300)
+wrap_elements(combo_plots) +
+  labs(tag = "Proportion of all names given to U.S. newborns") +
+  theme_tufte(base_size = 16) +
+  theme(plot.tag = element_text(size = rel(1.25), angle = 90),
+        plot.tag.position = "left")
+dev.off()
 ```
 
-2.  
+## {data-menu-title="Victoria/Vic Plots" background-image="victoria_vic_plots.png"  background-size="contain"}
+
+## Answers
 
 ```{r}
-str_c("hi ", NA)
-str_flatten("hi ", NA)
-paste0("hi ", NA)
-str_c(letters[1:2], letters[1:3])
-str_flatten(letters[1:2], letters[1:3])
-paste0(letters[1:2], letters[1:3])
+#| eval: false
+nicknames <- babynames |> 
+  mutate(nickname = case_when(str_detect(name, pattern = "^Vi.{2}oria$") ~ "Victoria", # <19>
+                              str_detect(name, pattern = "^Vi.{2}or$") ~ "Victor", # <19>
+                              str_detect(name, pattern = "^Vi[ck]{1,2}$") ~ "Vic", # <19>
+                              str_detect(name, pattern = "^Tor[riey]*$") ~ "Tori", # <19> 
+                              str_detect(name, pattern = "^Vi[ck]+[iey]*$") ~ "Vicky", # <19>
+                               .default = NA)) |> 
+  filter(!is.na(nickname)) |> # <20>
+  mutate(prop2 = sum(prop), # <21> 
+         .by = c(year, nickname, sex)) |> # <21> 
+  distinct(year, nickname, prop2, sex) |> 
+  mutate(sex2 = if_else(sex == "F", "Female", "Male"), # <22>
+         nickname = fct(nickname, levels = c("Victoria", "Victor", "Vicky", "Tori", "Vic"))) # <23>
+
+my_names <- nicknames |> 
+  ggplot(aes(x = year, y = prop2, fill = nickname, group = nickname)) +
+  geom_density(aes(color = nickname), stat = "identity", alpha = 0.15) +
+  geom_vline(xintercept = 1988, color = colors[4], linetype = 2) +
+  scale_fill_manual(values = colors[c(1:3, 5:7)]) + # <24>
+  scale_color_manual(values = colors[c(1:3, 5:7)]) + 
+  facet_grid(sex2 ~ .,
+             scales = "free_y") + 
+  geom_label_repel(data = nicknames |> slice_max(prop2, by = c(sex2, nickname)),
+                   aes(label = nickname), stat = "identity") + 
+  labs(title = 'Popularity of all nicknames for "Victoria" (including all spelling variants)',
+       caption = "Note: y-axes are of different scales; Teal, dashed line represents 1988",
+       subtitle = "1880-2017, by binary sex category",
+       y = "Proportion of all names given to U.S. newborns", 
+       x = "Year") +
+  theme_tufte(base_size = 16) + 
+  theme(legend.position = "none", 
+        strip.background = element_rect(color="black", fill= alpha(colors[10], 0.5), linetype = 0))
+my_names
+```
+19. Creating a new variable that finds all spelling variations of "Victoria" and its most common derivatives using regular expressions. 
+20. Removing all names that don't match any of the versions of "Victoria" or its nicknames. 
+21. Calculating a new proportion that collapses all spelling variations into the most common variant. 
+22. Creating an alternative `sex` variable for facet visualization purposes. 
+23. Putting names in the order I want to assign for colors. 
+24. Picking the specific colors I want to assign to the 5 names
+
+
+```{r}
+#| echo: false
+#| output: false
+#| fig-align: center
+#| fig-width: 30
+#| fig-asp: 0.625
+nicknames <- babynames |> 
+  mutate(nickname = case_when(str_detect(name, pattern = "^Vi.{2}oria$") ~ "Victoria",
+                              str_detect(name, pattern = "^Vi.{2}or$") ~ "Victor",
+                              str_detect(name, pattern = "^Vi[ck]{1,2}$") ~ "Vic",
+                              str_detect(name, pattern = "^Tor[riey]*$") ~ "Tori",
+                              str_detect(name, pattern = "^Vi[ck]+[iey]*$") ~ "Vicky",
+                               .default = NA)) |> 
+  filter(!is.na(nickname)) |> 
+  mutate(prop2 = sum(prop), 
+         .by = c(year, nickname, sex)) |> 
+  distinct(year, nickname, prop2, sex) |> 
+  mutate(sex2 = if_else(sex == "F", "Female", "Male"), 
+         nickname = fct(nickname, levels = c("Victoria", "Victor", "Vicky", "Tori", "Vic")))
+
+my_names <- nicknames |> 
+  ggplot(aes(x = year, y = prop2, fill = nickname, group = nickname)) +
+  geom_density(aes(color = nickname), stat = "identity", alpha = 0.15) +
+  geom_vline(xintercept = 1988, color = colors[4], linetype = 2) +
+  scale_fill_manual(values = colors[c(1:3, 5:7)]) + 
+  scale_color_manual(values = colors[c(1:3, 5:7)]) +
+  facet_grid(sex2 ~ .,
+             scales = "free_y") + 
+  geom_label_repel(data = nicknames |> slice_max(prop2, by = c(sex2, nickname)),
+                   aes(label = nickname), stat = "identity") + 
+  labs(title = 'Popularity of all nicknames for "Victoria" (including all spelling variants)',
+       caption = "Note: y-axes are of different scales; Teal, dashed line represents 1988",
+       subtitle = "1880-2017, by binary sex category",
+       y = "Proportion of all names given to U.S. newborns", 
+       x = "Year") +
+  theme_tufte(base_size = 16) + 
+  theme(legend.position = "none", 
+        strip.background = element_rect(color="black", fill= alpha(colors[10], 0.5), linetype = 0))
+ragg::agg_png("nicknames.png", width = 16, height = 10, units = "in", res = 300)
+my_names
+dev.off()
 ```
 
-3.  
+## {data-menu-title="Nicknames Plot" background-image="nicknames.png" background-size="contain"}
+
+# Homework{.section-title background-color="#1e4655"}
+
+## {data-menu-title="Homework 7" background-iframe="https://vsass.github.io/CSSS508/Homework/HW7/homework7.html" background-interactive=TRUE}
+
