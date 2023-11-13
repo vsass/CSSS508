@@ -57,8 +57,11 @@ restaurants |>
 
 For that worst-rated zip code, how has its average rating changed by year?^[There are a few ways to do this. Use the method that makes most sense to you!] 
 
+::: {.panel-tabset}
+
+### Using stringr functions
+
 ```{r}
-# using stringr functions
 zip_98115_year <- restaurants |> 
   filter(`Zip Code` == "98115") |>
   separate_wider_delim(`Inspection Date`, 
@@ -71,8 +74,11 @@ zip_98115_year <- restaurants |>
   arrange(desc(year)) |> 
   filter(!is.na(year))
 zip_98115_year
+```
 
-# using lubridate functions
+### Using lubridate functions
+
+```{r}
 zip_98115_year2 <- restaurants |> 
   filter(`Zip Code` == "98115") |>
   mutate(inspection_date = mdy(`Inspection Date`), 
@@ -85,13 +91,17 @@ zip_98115_year2 <- restaurants |>
   filter(!is.na(year))
 zip_98115_year2  
 ```
+:::
 
 #### Answer 4 (OPTIONAL):
 
 Separate the variable `Phone` into three variables that only contain numerical digits: `area_code`, `first_3`, and `last_4`. 
 
+::: {.panel-tabset}
+
+### `separate_wider_delim()`
+
 ```{r}
-# Using separate_wider_delim() and str_remove()
 restaurants |> 
   distinct(Phone) |> 
   separate_wider_delim(cols = Phone, 
@@ -102,8 +112,12 @@ restaurants |>
                        names = c("first_3", "last_4")) |> 
   mutate(area_code = str_remove(area_code, pattern = "\\("), 
          area_code = str_remove(area_code, pattern = "\\)"))
+```
 
-# Using separate_wider_delim() (using a regex) and str_remove()
+
+### `separate_wider_delim()` (w/ regex)
+
+```{r}
 restaurants |> 
   distinct(Phone) |> 
   separate_wider_delim(cols = Phone, 
@@ -111,15 +125,21 @@ restaurants |>
                        names = c("area_code", "first_3", "last_4")) |> 
   mutate(area_code = str_remove(area_code, pattern = "\\("), 
          area_code = str_remove(area_code, pattern = "\\)"))
+```
 
-# Using str_extract()
+### `str_extract()`
+
+```{r}
 restaurants |> 
   distinct(Phone) |> 
   mutate(area_code = str_extract(Phone, "[:digit:]{3}"), 
          first_3 = str_extract(Phone, "(?<= )[:digit:]{3}(?=-)"), 
          last_4 = str_extract(Phone, "[:digit:]{4}"))
+```
 
-# Using separate_wider_regex()
+### `separate_wider_regex()`
+
+```{r}
 restaurants |> 
   distinct(Phone) |> 
   separate_wider_regex(cols = Phone, 
@@ -130,3 +150,6 @@ restaurants |>
                                     "-",
                                     last_4 = ".{4,}$")) 
 ```
+
+
+:::
