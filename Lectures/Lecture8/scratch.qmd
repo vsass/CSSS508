@@ -1,0 +1,293 @@
+## Example 1: Doubling A Number
+
+```{r}
+double_x <- function(x){
+  double_x <- x * 2
+  return(double_x)
+}
+```
+
+. . .
+
+Let's run it!
+
+```{r}
+double_x(5)
+double_x(NA)
+double_x(1:2)
+```
+
+## Example 2: Extract First/Last
+
+```{r}
+first_and_last <- function(x) {
+    first <- x[1]
+    last  <- x[length(x)]
+    return(c("first" = first, "last" = last))
+}
+```
+
+. . .
+
+Test it out:
+
+```{r}
+first_and_last(c(4, 3, 1, 8))
+```
+
+## Example 2: Testing `first_and_last`
+
+What if I give `first_and_last()` a vector of length 1?
+
+```{r}
+first_and_last(7)
+```
+
+. . .
+
+Of length 0?
+
+```{r}
+first_and_last(numeric(0))
+```
+
+. . .
+
+Maybe we want it to be a little smarter.
+
+## Example 3: Checking Inputs
+
+Let's make sure we get an error message when the vector is too small:
+
+```{r}
+#| code-line-numbers: "|3"
+smarter_first_and_last <- function(x) {
+    if(length(x) < 2){
+      stop("Input is not long enough!")
+    } else{
+      first <- x[1]
+      last  <- x[length(x)]
+      return(c("first" = first, "last" = last))    
+    }
+}
+```
+
+::: aside
+`stop()` ceases running the function and prints the text inside as an error message.
+:::
+
+## Example 3: Testing Smarter Function
+
+```{r, error=TRUE}
+smarter_first_and_last(NA)
+smarter_first_and_last(c(4, 3, 1, 8))
+```
+
+. . .
+
+## Cracking Open Functions
+
+If you type a function name without any parentheses or arguments, you can see its contents:
+
+```{r}
+smarter_first_and_last
+```
+
+# Using functions with `apply()` {.section-title background-color="#99a486"}
+
+## Applying Functions Multiple Times?
+
+Last week, we saw an example where we wanted to take the mean of each column in the `swiss` data:
+
+```{r}
+for(col_index in 1:ncol(swiss)){
+  mean_swiss_col <- mean(swiss[,col_index])
+  names_swiss_col <- names(swiss)[col_index]
+  print(c(names_swiss_col,round(mean_swiss_col,3)))
+}
+```
+
+*Isn't this kind of complex?!*
+
+## `apply()`, don't loop!
+
+Writing loops can be challenging and prone to bugs!!
+
+. . .
+
+The `apply()` can solve this issue:
+
+-   **apply** a function to values in each row or column of a matrix
+-   Doesn't require preallocation
+-   Can take built-in functions or user-created functions.
+
+## Structure of `apply()`
+
+`apply()` takes 3 arguments:
+
+1.  Data (a matrix or data frame)
+2.  Margin (1 applies function to each *row*, 2 applies to each *column*)
+3.  Function
+
+```{r eval=FALSE}
+apply(DATA, MARGIN, FUNCTION)
+```
+
+. . .
+
+For example,
+
+```{r}
+apply(swiss, 2, mean)
+```
+
+## Example 1
+
+```{r}
+row_max <- apply(swiss,1,max) # maximum in each row
+head(row_max, 20)
+```
+
+## Example 2
+
+```{r}
+apply(swiss, 2, summary) # summary of each column
+```
+
+\*\*Note:\* Matrix output!
+
+## Example 3: User-Created Function
+
+```{r}
+scores <- matrix(1:21, nrow=3)
+print(scores)
+my_function <- function(x){ mean(x+10, na.rm = T) }
+apply(scores, 1, my_function)
+```
+
+## Activity: Writing A Function
+
+In Olympic diving, a panel of 7 judges provide scores. After removing the worst and best scores, the mean of the remaining scores is given to the diver. We'll write code to calculate this score!
+
+1.  Suppose I get you a vector, `x`, of length 7. Write code that will sort the vector from least to greatest, then keep the 2nd-6th elements[^1].
+
+2.  Write a function to calculate a diver's score:
+
+    -   Input: Vector of length 7
+    -   Checks: Check that the vector has length 7 (if not, stop!)
+    -   Output: Mean score after removing the lowest and greatest scores.
+
+3.  Calculate the diver's score given `x <- c(2, 1:5, 3)`
+
+[^1]: HINT: Use the `sort()` function and square brackets `[ ]` for subsetting
+
+## Activity: Solution
+
+1.  Sort and extract elements 2 through 6:
+    -   **Answer:** Given vector `x`, use `sort(x)[2:6]`
+2.  Function
+
+```{r}
+divers_score <- function(x){
+  if(length(x) != 7){
+    stop("x is not of length 7!")
+  } else{
+    x_nofirst_nolast <- sort(x)[2:6]
+    return(mean(x_nofirst_nolast))
+  }
+}
+```
+
+. . .
+
+3.  Calculate the diver's score given `x <- c(2, 1:5, 3)`
+
+```{r}
+divers_score(x = c(2,1:5,3) )
+```
+
+## Activity
+
+*These are homework questions!!*
+
+1.  Preallocate a matrix of NAs with 3 rows and 8 columns, called `double_matrix`. Manually specify the first column equal to the values 1, 2, and 3. Using a nested loop, fill in the matrix, row by row, such that each value is double that to its left.
+
+2.  Write an `apply()` function to take the median value of each column in the `cars` dataset
+
+3.  Using `ggplot`, make a scatterplot of the `speed` and `dist` variables in `cars`. Then, add an appropriate horizontal and vertical line symbolizing the median value of each variable[^2].
+
+[^2]: *Hint:* Using the layers `geom_vline(xintercept = )` and `geom_hline(yintercept = )`
+
+## Answers
+
+1.  Preallocate a matrix of NAs with 3 rows and 8 columns, called `double_matrix`. Manually specify the first column equal to the values 1, 2, and 3. Using a nested loop, fill in the matrix, row by row, such that each value is double that to its left.
+
+```{r}
+double_matrix <- matrix(NA, nrow = 3,ncol = 8)
+double_matrix[ , 1] <- 1:3
+for(row in 1:3){
+  for(col in 2:8){
+    double_matrix[row, col] <- double_matrix[row, col-1] * 2
+  }
+}
+double_matrix
+```
+
+## Answers
+
+2\. Write an `apply()` function to take the median value of each column in the `cars` dataset
+
+```{r}
+median_cars <- apply(cars, 2, median)
+median_cars
+```
+
+## Answers
+
+3\. Make a ggplot
+
+::: panel-tabset
+### Code
+
+```{r}
+#| eval: false
+library(ggplot2)
+ggplot(cars, aes(speed, dist)) + 
+  geom_point() +
+  geom_vline(xintercept = median_cars[1]) +
+  geom_hline(yintercept = median_cars[2])
+```
+
+### Plot
+
+```{r}
+#| echo: false
+#| fig-height: 6
+#| fig-width: 8
+#| fig-align: center
+library(ggplot2)
+ggplot(cars,aes(speed,dist)) + 
+  geom_point() +
+  geom_vline(xintercept = median_cars[1]) +
+  geom_hline(yintercept = median_cars[2])
+```
+:::
+
+# Homework {.section-title background-color="#99a486"}
+
+## Homework 8
+
+Time to work on [Homework 8](https://vsass.github.io/CSSS508/Homework/HW8/homework8.html)!
+
+## Due dates
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+# reading in base due date schedule
+source("../due_dates_schedule.R")
+ 
+make_due_date_table(8)
+```

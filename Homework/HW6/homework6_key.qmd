@@ -85,6 +85,10 @@ math_matrix <- matrix(1:5, nrow = 5, ncol = 5)
 math_vec <- 1:5
 ```
 
+```{r}
+math_matrix %*% math_vec
+math_matrix * math_vec
+```
 
 #### Answer 3.i
 ```{r}
@@ -95,6 +99,7 @@ first_list <- list("letters" = letters, "math_matrix" = math_matrix, "17" = 17, 
 ```{r}
 first_list$letters[12:16]
 first_list[["letters"]][12:16]
+pluck(first_list, 1)[12:16]
 ```
 
 #### Answer 3.iii
@@ -111,6 +116,7 @@ first_list$second_list <- second_list
 ```{r}
 first_list$second_list$vec_char[1]
 first_list[["second_list"]][["vec_char"]][1]
+pluck(first_list, "second_list", "vec_char")[1]
 ```
 
 #### Answer 3.vi
@@ -120,8 +126,6 @@ lm_output
 
 lm_output$model |> dim()
 ```
-
-
 
 #### Answer 4.i
 ```{r}

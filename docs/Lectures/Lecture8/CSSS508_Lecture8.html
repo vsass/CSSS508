@@ -7,16 +7,16 @@
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
-<title>csss508_lecture8</title>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-<link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
-<link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
-<style>
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.3.450">
+
+  <title>csss508_lecture8</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+  <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -94,15 +94,15 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #d4d0ab; font-style: italic; } /* Warning */
   </style>
-<link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css">
-<link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-<link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-<link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-<link href="../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-<link href="../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-<link href="../../site_libs/revealjs/plugin/reveal-pointer/pointer.css" rel="stylesheet">
-<link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-<style type="text/css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css">
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-pointer/pointer.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
 
   .callout {
     margin-top: 1em;
@@ -299,7 +299,7 @@
   }
 
   </style>
-<style type="text/css">
+  <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -392,1013 +392,530 @@
     <div class="slides">
 
 
-<section id="title-slide" class="slide level2 center" data-menu-title="Writing Functions" data-background="#1e4655" data-background-image="../../images/csss-logo.png" data-background-position="center top 5%" data-background-size="50%"><h2></h2>
+<section id="title-slide" class="slide level2 center" data-menu-title="Writing Functions" data-background="#1e4655" data-background-image="../../images/csss-logo.png" data-background-position="center top 5%" data-background-size="50%">
+<h2></h2>
 <p><span class="custom-title">Writing Functions</span></p>
 <p><span class="custom-subtitle">CS&amp;SS 508 • Lecture 8</span></p>
 <p><span class="custom-subtitle2">21 November 2023</span></p>
 <p><span class="custom-subtitle3">Victoria Sass</span></p>
-</section><section><section id="roadmap" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Roadmap</h1>
+</section>
+<section>
+<section id="roadmap" class="title-slide slide level1 section-title center" data-background-color="#99a486">
+<h1>Roadmap</h1>
 
-</section><section class="slide level2"><p><br></p>
-<p>Last time, we learned about,</p>
+</section>
+<section class="slide level2">
+
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><br></p>
+<h3 id="last-time-we-learned">Last time, we learned:</h3>
 <ul>
-<li>Why we use loops</li>
-<li>
-<code>for()</code> loops</li>
-<li>
-<code>while()</code> loops</li>
+<li>Types of Data
+<ul>
+<li>Strings</li>
+</ul></li>
+<li>Pattern Matching &amp; Regular Expressions</li>
 </ul>
+</div><div class="column" style="width:50%;">
+<p><br></p>
 <div class="fragment">
-<p>Today, we will cover,</p>
+<!-- -->
+<h3 id="today-we-will-cover">Today, we will cover:</h3>
 <ul>
-<li>Aside: Visualizing the Goal</li>
-<li>Building blocks of functions</li>
-<li>Simple functions</li>
-<li>Using functions with <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code>
-</li>
+<li>Function Basics</li>
+<li>Types of Functions
+<ul>
+<li>Vector Functions</li>
+<li>Dataframe Functions</li>
+<li>Plot Functions</li>
+</ul></li>
 </ul>
 </div>
-</section></section><section><section id="visualizing-the-goal" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Visualizing the Goal</h1>
+</div>
+</div>
+</section></section>
+<section>
+<section id="function-basics" class="title-slide slide level1 section-title center" data-background-color="#99a486">
+<h1>Function Basics</h1>
 
-</section><section class="slide level2"><p><br></p>
+</section>
+<section id="why-functions" class="slide level2">
+<h2>Why Functions?</h2>
+<p><br></p>
+<p>R (as well as mathematics in general) is full of functions!</p>
+<div class="fragment">
+<p><br></p>
+<p>We use functions to:</p>
+<ul>
+<li>Compute summary statistics (<code>mean()</code>, <code>sd()</code>, <code>min()</code>)</li>
+<li>Fit models to data (<code>lm(Fertility ~ Agriculture, data = swiss)</code>)</li>
+<li>Read in data (<code>read_csv()</code>)</li>
+<li>Create visualizations (<code>ggplot()</code>)</li>
+<li>And a lot more!!</li>
+</ul>
+</div>
+</section>
+<section id="examples-of-existing-functions" class="slide level2">
+<h2>Examples of Existing Functions</h2>
+<div>
+<ul>
+<li class="fragment"><code>mean()</code>:
+<ul>
+<li class="fragment">Input: a vector</li>
+<li class="fragment">Output: a single number</li>
+</ul></li>
+<li class="fragment"><code>dplyr::filter()</code>:
+<ul>
+<li class="fragment">Input: a data frame, logical conditions</li>
+<li class="fragment">Output: a data frame with rows removed using those conditions</li>
+</ul></li>
+<li class="fragment"><code>readr::read_csv()</code>:
+<ul>
+<li class="fragment">Input: a file path, optionally variable names or types</li>
+<li class="fragment">Output: a data frame containing info read in from file</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<p>Each function requires <strong>inputs</strong>, and returns <strong>outputs</strong></p>
+</div>
+</section>
+<section id="why-write-your-own-functions" class="slide level2">
+<h2>Why Write Your Own Functions?</h2>
+<div>
+<ul>
+<li class="fragment">Functions allow you to automate common tasks in a more powerful and general way than copy-and-pasting</li>
+<li class="fragment">As requirements change, you only need to update code in one place, instead of many.</li>
+<li class="fragment">You eliminate the chance of making incidental mistakes compared to when you copy and paste (i.e.&nbsp;updating a variable name in one place, but not in another).</li>
+<li class="fragment">It makes it easier to reuse work from project-to-project, increasing your productivity over time.</li>
+<li class="fragment">If well named, your function can make your overall code easier to understand.</li>
+</ul>
+</div>
+</section>
+<section id="plan-your-function-before-writing" class="slide level2">
+<h2>Plan your Function before Writing</h2>
+<p><br></p>
 <p>Before you can write effective code, you need to know <em>exactly</em> what you want:</p>
 <div>
 <ul>
-<li class="fragment">
-<strong>Goal:</strong> Do I want a single value? vector? one observation per person? per year?</li>
-<li class="fragment">
-<strong>Current State:</strong> What do I currently have? matrix, vector? long or wide format?</li>
-<li class="fragment">
-<strong>Translate:</strong> How can I take what I have and turn it into my goal?
+<li class="fragment"><strong>Goal:</strong> Do I want a single value? vector? one observation per person? per year?</li>
+<li class="fragment"><strong>Current State:</strong> What do I currently have? data frame, vector? long or wide format?</li>
+<li class="fragment"><strong>Translate:</strong> How can I take what I have and turn it into my goal?
 <ul>
 <li class="fragment">Sketch out the steps!</li>
 <li class="fragment">Break it down into little operations</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 </div>
 <div class="fragment">
 <p><strong>As we become more advanced coders, this concept is key!!</strong></p>
 <p><strong>Remember:</strong> <em>When you’re stuck, try searching your problem on Google!!</em></p>
 </div>
-</section></section><section><section id="building-blocks-of-functions" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Building blocks of functions</h1>
-
-</section><section id="why-functions" class="slide level2"><h2>Why Functions?</h2>
-<p>R (as well as mathematics in general) is full of functions!</p>
-<div class="fragment">
-<p>We use functions to:</p>
+</section>
+<section id="simple-motivating-example" class="slide level2">
+<h2>Simple, Motivating Example</h2>
+<div class="columns">
+<div class="column" style="width:62%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  <span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="at">b =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="at">c =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="at">d =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  )</span>
+<span id="cb1-7"><a href="#cb1-7"></a>df</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
+<span id="cb1-10"><a href="#cb1-10"></a>  <span class="at">a =</span> (a <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="cb1-11"><a href="#cb1-11"></a>    (<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb1-12"><a href="#cb1-12"></a>  <span class="at">b =</span> (b <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="cb1-13"><a href="#cb1-13"></a>    (<span class="fu">max</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb1-14"><a href="#cb1-14"></a>  <span class="at">c =</span> (c <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="cb1-15"><a href="#cb1-15"></a>    (<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb1-16"><a href="#cb1-16"></a>  <span class="at">d =</span> (d <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="cb1-17"><a href="#cb1-17"></a>    (<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-18"><a href="#cb1-18"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment" data-fragment-index="3">
 <ul>
-<li>Compute summary statistics (<code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>, <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>)</li>
-<li>Fit models to data (<code>lm(Fertility~Agriculture,data=swiss)</code>)</li>
-<li>Load data (<code>read_csv()</code>)</li>
-<li>Create ggplots (<code>ggplot()</code>)</li>
-<li>And so much more!!</li>
+<li class="fragment">What do you think this code does?</li>
+<li class="fragment">Are there any typos?</li>
+<li class="fragment">Could we write this more efficiently as a function?</li>
 </ul>
 </div>
-</section><section id="examples-of-existing-functions" class="slide level2"><h2>Examples of Existing Functions</h2>
+</div><div class="column" style="width:38%;">
+<div class="fragment" data-fragment-index="1">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 5 × 4
+&gt;        a        b      c      d
+&gt;    &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+&gt; 1 -1.35  -0.00412 -0.807  2.30 
+&gt; 2 -1.48  -0.415   -0.787 -1.54 
+&gt; 3 -1.08  -0.847    0.607 -0.117
+&gt; 4 -0.400  1.33    -0.348  0.470
+&gt; 5 -1.71   0.997    0.691 -0.922</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment" data-fragment-index="2">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 5 × 4
+&gt;       a     b      c     d
+&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+&gt; 1 0.276 0.636 0      1    
+&gt; 2 0.173 0.326 0.0137 0    
+&gt; 3 0.479 0     0.944  0.370
+&gt; 4 1     1.64  0.307  0.523
+&gt; 5 0     1.39  1      0.161</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="writing-a-function" class="slide level2">
+<h2>Writing a Function</h2>
+<p>To write a function you need to first analyse your repeated code to figure what parts are constant and what parts vary.</p>
+<div class="fragment">
+<p><br></p>
+<p>Let’s look at the contents of the mutate from the last slide again.</p>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>(a <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb4-2"><a href="#cb4-2"></a>(b <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb4-3"><a href="#cb4-3"></a>(c <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb4-4"><a href="#cb4-4"></a>(d <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<p>There’s quite a bit of repetition here and only a few elements that change.</p>
+</div>
+<div class="fragment">
+<p><br></p>
+<p>We can see how concise our code can be if we replace the varying part with 🟪:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>(🟪 <span class="sc">-</span> <span class="fu">min</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="anatomy-of-a-function" class="slide level2">
+<h2>Anatomy of a Function</h2>
+<p>To turn our code into a function we need three things:</p>
 <div>
 <ul>
-<li class="fragment">
-<code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>:
-<ul>
-<li class="fragment">Input: a vector</li>
-<li class="fragment">Output: a single number</li>
-</ul>
-</li>
-<li class="fragment">
-<code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code>:
-<ul>
-<li class="fragment">Input: a data frame, logical conditions</li>
-<li class="fragment">Output: a data frame with rows removed using those conditions</li>
-</ul>
-</li>
-<li class="fragment">
-<code><a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_csv()</a></code>:
-<ul>
-<li class="fragment">Input: a file path, optionally variable names or types</li>
-<li class="fragment">Output: a data frame containing info read in from file</li>
-</ul>
-</li>
+<li class="fragment"><strong>Name</strong>: What you call the function so you can use it later. The more explanatory this is the easier your code will be to understand.</li>
+<li class="fragment"><strong>Argument(s)</strong> (aka input(s), parameter(s)): What the user passes to the function that affects how it works. This is what varies across calls.</li>
+<li class="fragment"><strong>Body</strong>: The code that’s repeated across all the calls.</li>
 </ul>
 </div>
 <div class="fragment">
-<p>Each function requires <strong>inputs</strong>, and returns <strong>outputs</strong></p>
-</div>
-</section><section id="why-write-your-own-functions" class="slide level2"><h2>Why Write Your Own Functions?</h2>
-<p>Functions encapsulate actions you might perform often, such as:</p>
-<ul>
-<li>Given a vector, compute some special summary stats</li>
-<li>Given a vector and definition of “invalid” values, replace with <code>NA</code>
-</li>
-<li>Defining a new logical operator</li>
-</ul>
-<div class="fragment">
-<p>Advanced function applications (not covered in this class):</p>
-<ul>
-<li>Parallel processing</li>
-<li>Generating <em>other</em> functions</li>
-<li>Making custom packages containing your functions</li>
-</ul>
-</div>
-</section><section id="anatomy-of-a-function" class="slide level2"><h2>Anatomy of a Function</h2>
+<p><strong>Function Template</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>NAME <span class="ot">&lt;-</span> <span class="cf">function</span>(ARGUMENT1, <span class="at">ARGUMENT2=</span>DEFAULT){</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  BODY</span>
-<span id="cb1-3"><a href="#cb1-3"></a>  <span class="fu">return</span>(OUTPUT)</span>
-<span id="cb1-4"><a href="#cb1-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div>
-<ul>
-<li class="fragment">
-<strong>Name</strong>: What you call the function so you can use it later</li>
-<li class="fragment">
-<strong>Arguments</strong> (aka inputs, parameters): things the user passes to the function that affect how it works
-<ul>
-<li class="fragment">e.g.&nbsp;<code>ARGUMENT1</code>, <code>ARGUMENT2</code>
-</li>
-<li class="fragment">
-<code>ARGUMENT2=DEFAULT</code> is example of setting a default value</li>
-<li class="fragment">In this example, <code>ARGUMENT1</code>, <code>ARGUMENT2</code> values won’t exist outside of the function</li>
-</ul>
-</li>
-<li class="fragment">
-<strong>Body</strong>: The actual operations inside the function.</li>
-<li class="fragment">
-<strong>Output</strong>: The object inside <code><a href="https://rdrr.io/r/base/function.html">return()</a></code>. Could be anything (or nothing!)
-<ul>
-<li class="fragment">If unspecified, will be the last thing calculated</li>
-</ul>
-</li>
-</ul>
-</div>
-</section></section><section><section id="simple-functions" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Simple functions</h1>
-
-</section><section id="example-1-doubling-a-number" class="slide level2"><h2>Example 1: Doubling A Number</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>double_x <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  double_x <span class="ot">&lt;-</span> x <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">return</span>(double_x)</span>
-<span id="cb2-4"><a href="#cb2-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p>Let’s run it!</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">double_x</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 10</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">double_x</span>(<span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] NA</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">double_x</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2 4</code></pre>
-</div>
-</div>
-</div>
-</section><section id="example-2-extract-firstlast" class="slide level2"><h2>Example 2: Extract First/Last</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>first_and_last <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb9-2"><a href="#cb9-2"></a>    first <span class="ot">&lt;-</span> x[<span class="dv">1</span>]</span>
-<span id="cb9-3"><a href="#cb9-3"></a>    last  <span class="ot">&lt;-</span> x[<span class="fu">length</span>(x)]</span>
-<span id="cb9-4"><a href="#cb9-4"></a>    <span class="fu">return</span>(<span class="fu">c</span>(<span class="st">"first"</span> <span class="ot">=</span> first, <span class="st">"last"</span> <span class="ot">=</span> last))</span>
-<span id="cb9-5"><a href="#cb9-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p>Test it out:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">first_and_last</span>(<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>first  last 
-    4     8 </code></pre>
-</div>
-</div>
-</div>
-</section><section id="example-2-testing-first_and_last" class="slide level2"><h2>Example 2: Testing <code>first_and_last</code>
-</h2>
-<p>What if I give <code>first_and_last()</code> a vector of length 1?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">first_and_last</span>(<span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>first  last 
-    7     7 </code></pre>
-</div>
-</div>
-<div class="fragment">
-<p>Of length 0?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">first_and_last</span>(<span class="fu">numeric</span>(<span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>first 
-   NA </code></pre>
+<div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1"></a>NAME <span class="ot">&lt;-</span> <span class="cf">function</span>(ARGUMENT1, <span class="at">ARGUMENT2 =</span> DEFAULT){</span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2"></a>  BODY </span>
+<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-annotation="1" data-code-lines="1">In this example, <code>ARGUMENT1</code>, <code>ARGUMENT2</code> values won’t exist outside of the function. <code>ARGUMENT2</code> is an optional argument as it’s been given a default value to use if the user does not specify one.</span>
+</dd>
+</dl>
 </div>
 </div>
 </div>
 <div class="fragment">
-<p>Maybe we want it to be a little smarter.</p>
-</div>
-</section><section id="example-3-checking-inputs" class="slide level2"><h2>Example 3: Checking Inputs</h2>
-<p>Let’s make sure we get an error message when the vector is too small:</p>
+<p>For our current example, this would be:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" data-code-line-numbers="|3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>smarter_first_and_last <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb16-2"><a href="#cb16-2"></a>    <span class="cf">if</span>(<span class="fu">length</span>(x) <span class="sc">&lt;</span> <span class="dv">2</span>){</span>
-<span id="cb16-3"><a href="#cb16-3"></a>      <span class="fu">stop</span>(<span class="st">"Input is not long enough!"</span>)</span>
-<span id="cb16-4"><a href="#cb16-4"></a>    } <span class="cf">else</span>{</span>
-<span id="cb16-5"><a href="#cb16-5"></a>      first <span class="ot">&lt;-</span> x[<span class="dv">1</span>]</span>
-<span id="cb16-6"><a href="#cb16-6"></a>      last  <span class="ot">&lt;-</span> x[<span class="fu">length</span>(x)]</span>
-<span id="cb16-7"><a href="#cb16-7"></a>      <span class="fu">return</span>(<span class="fu">c</span>(<span class="st">"first"</span> <span class="ot">=</span> first, <span class="st">"last"</span> <span class="ot">=</span> last))    </span>
-<span id="cb16-8"><a href="#cb16-8"></a>    }</span>
-<span id="cb16-9"><a href="#cb16-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-
-<aside><div>
-<p><code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code> ceases running the function and prints the text inside as an error message.</p>
-</div></aside></section><section id="example-3-testing-smarter-function" class="slide level2"><h2>Example 3: Testing Smarter Function</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">smarter_first_and_last</span>(<span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in smarter_first_and_last(NA): Input is not long enough!</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">smarter_first_and_last</span>(<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>first  last 
-    4     8 </code></pre>
+<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2">2</button><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2"></a>  (x <span class="sc">-</span> <span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-annotation="2" data-code-lines="1">You can name the placeholder value(s) whatever you want but <code>x</code> is the conventional name for a numeric vector so we’ll use <code>x</code> here.</span>
+</dd>
+</dl>
 </div>
 </div>
-</section><section id="cracking-open-functions" class="slide level2"><h2>Cracking Open Functions</h2>
-<p>If you type a function name without any parentheses or arguments, you can see its contents:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>smarter_first_and_last</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>function(x) {
-    if(length(x) &lt; 2){
-      stop("Input is not long enough!")
-    } else{
-      first &lt;- x[1]
-      last  &lt;- x[length(x)]
-      return(c("first" = first, "last" = last))    
-    }
-}
-&lt;bytecode: 0x7fcbedaf9528&gt;</code></pre>
 </div>
-</div>
-</section></section><section><section id="using-functions-with-apply" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Using functions with <code>apply()</code>
-</h1>
-
-</section><section id="applying-functions-multiple-times" class="slide level2"><h2>Applying Functions Multiple Times?</h2>
-<p>Last week, we saw an example where we wanted to take the mean of each column in the <code>swiss</code> data:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="cf">for</span>(col_index <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(swiss)){</span>
-<span id="cb23-2"><a href="#cb23-2"></a>  mean_swiss_col <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss[,col_index])</span>
-<span id="cb23-3"><a href="#cb23-3"></a>  names_swiss_col <span class="ot">&lt;-</span> <span class="fu">names</span>(swiss)[col_index]</span>
-<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">print</span>(<span class="fu">c</span>(names_swiss_col,<span class="fu">round</span>(mean_swiss_col,<span class="dv">3</span>)))</span>
-<span id="cb23-5"><a href="#cb23-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Fertility" "70.143"   
-[1] "Agriculture" "50.66"      
-[1] "Examination" "16.489"     
-[1] "Education" "10.979"   
-[1] "Catholic" "41.144"  
-[1] "Infant.Mortality" "19.943"          </code></pre>
-</div>
-</div>
-<p><em>Isn’t this kind of complex?!</em></p>
-</section><section id="apply-dont-loop" class="slide level2"><h2>
-<code>apply()</code>, don’t loop!</h2>
-<p>Writing loops can be challenging and prone to bugs!!</p>
+</section>
+<section id="testing-your-function" class="slide level2">
+<h2>Testing Your Function</h2>
+<p>It’s good practice to test a few simple inputs to make sure your function works as expected.</p>
 <div class="fragment">
-<p>The <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> can solve this issue:</p>
-<ul>
-<li>
-<strong>apply</strong> a function to values in each row or column of a matrix</li>
-<li>Doesn’t require preallocation</li>
-<li>Can take built-in functions or user-created functions.</li>
-</ul>
-</div>
-</section><section id="structure-of-apply" class="slide level2"><h2>Structure of <code>apply()</code>
-</h2>
-<p><code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> takes 3 arguments:</p>
-<ol type="1">
-<li>Data (a matrix or data frame)</li>
-<li>Margin (1 applies function to each <em>row</em>, 2 applies to each <em>column</em>)</li>
-<li>Function</li>
-</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">apply</span>(DATA, MARGIN, FUNCTION)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">rescale01</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; [1] 0.0 0.5 1.0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">rescale01</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="cn">NA</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; [1] 0.00 0.25 0.50   NA 1.00</code></pre>
+</div>
+</div>
 </div>
 <div class="fragment">
-<p>For example,</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">apply</span>(swiss, <span class="dv">2</span>, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       Fertility      Agriculture      Examination        Education 
-        70.14255         50.65957         16.48936         10.97872 
-        Catholic Infant.Mortality 
-        41.14383         19.94255 </code></pre>
-</div>
-</div>
-</div>
-</section><section id="example-1" class="slide level2"><h2>Example 1</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>row_max <span class="ot">&lt;-</span> <span class="fu">apply</span>(swiss,<span class="dv">1</span>,max) <span class="co"># maximum in each row</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">head</span>(row_max, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  Courtelary     Delemont Franches-Mnt      Moutier   Neuveville   Porrentruy 
-       80.20        84.84        93.40        85.80        76.90        90.57 
-       Broye        Glane      Gruyere       Sarine      Veveyse        Aigle 
-       92.85        97.16        97.67        91.38        98.61        64.10 
-     Aubonne     Avenches     Cossonay    Echallens     Grandson     Lausanne 
-       67.50        68.90        69.30        72.60        71.70        55.70 
-   La Vallee       Lavaux 
-       54.30        73.00 </code></pre>
-</div>
-</div>
-</section><section id="example-2" class="slide level2"><h2>Example 2</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">apply</span>(swiss, <span class="dv">2</span>, summary) <span class="co"># summary of each column</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        Fertility Agriculture Examination Education  Catholic Infant.Mortality
-Min.     35.00000     1.20000     3.00000   1.00000   2.15000         10.80000
-1st Qu.  64.70000    35.90000    12.00000   6.00000   5.19500         18.15000
-Median   70.40000    54.10000    16.00000   8.00000  15.14000         20.00000
-Mean     70.14255    50.65957    16.48936  10.97872  41.14383         19.94255
-3rd Qu.  78.45000    67.65000    22.00000  12.00000  93.12500         21.70000
-Max.     92.50000    89.70000    37.00000  53.00000 100.00000         26.60000</code></pre>
-</div>
-</div>
-<p>**Note:* Matrix output!</p>
-</section><section id="example-3-user-created-function" class="slide level2"><h2>Example 3: User-Created Function</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="at">nrow=</span><span class="dv">3</span>)</span>
-<span id="cb32-2"><a href="#cb32-2"></a><span class="fu">print</span>(scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7]
-[1,]    1    4    7   10   13   16   19
-[2,]    2    5    8   11   14   17   20
-[3,]    3    6    9   12   15   18   21</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>my_function <span class="ot">&lt;-</span> <span class="cf">function</span>(x){ <span class="fu">mean</span>(x<span class="sc">+</span><span class="dv">10</span>, <span class="at">na.rm =</span> T) }</span>
-<span id="cb34-2"><a href="#cb34-2"></a><span class="fu">apply</span>(scores, <span class="dv">1</span>, my_function)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 20 21 22</code></pre>
-</div>
-</div>
-</section><section id="activity-writing-a-function" class="slide level2"><h2>Activity: Writing A Function</h2>
-<p>In Olympic diving, a panel of 7 judges provide scores. After removing the worst and best scores, the mean of the remaining scores is given to the diver. We’ll write code to calculate this score!</p>
-<ol type="1">
-<li><p>Suppose I get you a vector, <code>x</code>, of length 7. Write code that will sort the vector from least to greatest, then keep the 2nd-6th elements<sup>1</sup>.</p></li>
-<li>
-<p>Write a function to calculate a diver’s score:</p>
-<ul>
-<li>Input: Vector of length 7</li>
-<li>Checks: Check that the vector has length 7 (if not, stop!)</li>
-<li>Output: Mean score after removing the lowest and greatest scores.</li>
-</ul>
-</li>
-<li><p>Calculate the diver’s score given <code>x &lt;- c(2, 1:5, 3)</code></p></li>
-</ol><aside><ol class="aside-footnotes"><li id="fn1"><p>HINT: Use the <code><a href="https://rdrr.io/r/base/sort.html">sort()</a></code> function and square brackets <code>[ ]</code> for subsetting</p></li></ol></aside></section><section id="activity-solution" class="slide level2"><h2>Activity: Solution</h2>
-<ol type="1">
-<li>Sort and extract elements 2 through 6:
-<ul>
-<li>
-<strong>Answer:</strong> Given vector <code>x</code>, use <code>sort(x)[2:6]</code>
-</li>
-</ul>
-</li>
-<li>Function</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>divers_score <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb36-2"><a href="#cb36-2"></a>  <span class="cf">if</span>(<span class="fu">length</span>(x) <span class="sc">!=</span> <span class="dv">7</span>){</span>
-<span id="cb36-3"><a href="#cb36-3"></a>    <span class="fu">stop</span>(<span class="st">"x is not of length 7!"</span>)</span>
-<span id="cb36-4"><a href="#cb36-4"></a>  } <span class="cf">else</span>{</span>
-<span id="cb36-5"><a href="#cb36-5"></a>    x_nofirst_nolast <span class="ot">&lt;-</span> <span class="fu">sort</span>(x)[<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb36-6"><a href="#cb36-6"></a>    <span class="fu">return</span>(<span class="fu">mean</span>(x_nofirst_nolast))</span>
-<span id="cb36-7"><a href="#cb36-7"></a>  }</span>
-<span id="cb36-8"><a href="#cb36-8"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<p>Now we can rewrite our original code in a much simpler way!</p>
 </div>
 <div class="fragment">
-<ol start="3" type="1">
-<li>Calculate the diver’s score given <code>x &lt;- c(2, 1:5, 3)</code>
-</li>
-</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">divers_score</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">3</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">a =</span> <span class="fu">rescale01</span>(a),</span>
+<span id="cb10-2"><a href="#cb10-2"></a>             <span class="at">b =</span> <span class="fu">rescale01</span>(b),</span>
+<span id="cb10-3"><a href="#cb10-3"></a>             <span class="at">c =</span> <span class="fu">rescale01</span>(c),</span>
+<span id="cb10-4"><a href="#cb10-4"></a>             <span class="at">d =</span> <span class="fu">rescale01</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.8</code></pre>
+<pre><code>&gt; # A tibble: 5 × 4
+&gt;       a     b      c     d
+&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+&gt; 1 0.276 0.388 0      1    
+&gt; 2 0.173 0.199 0.0137 0    
+&gt; 3 0.479 0     0.944  0.370
+&gt; 4 1     1     0.307  0.523
+&gt; 5 0     0.849 1      0.161</code></pre>
 </div>
 </div>
 </div>
-</section><section id="activity" class="slide level2"><h2>Activity</h2>
-<p><em>These are homework questions!!</em></p>
-<ol type="1">
-<li><p>Preallocate a matrix of NAs with 3 rows and 8 columns, called <code>double_matrix</code>. Manually specify the first column equal to the values 1, 2, and 3. Using a nested loop, fill in the matrix, row by row, such that each value is double that to its left.</p></li>
-<li><p>Write an <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> function to take the median value of each column in the <code>cars</code> dataset</p></li>
-<li><p>Using <code>ggplot</code>, make a scatterplot of the <code>speed</code> and <code>dist</code> variables in <code>cars</code>. Then, add an appropriate horizontal and vertical line symbolizing the median value of each variable<sup>1</sup>.</p></li>
-</ol><aside><ol class="aside-footnotes"><li id="fn2"><p><em>Hint:</em> Using the layers <code>geom_vline(xintercept = )</code> and <code>geom_hline(yintercept = )</code></p></li></ol></aside></section><section id="answers" class="slide level2"><h2>Answers</h2>
-<ol type="1">
-<li>Preallocate a matrix of NAs with 3 rows and 8 columns, called <code>double_matrix</code>. Manually specify the first column equal to the values 1, 2, and 3. Using a nested loop, fill in the matrix, row by row, such that each value is double that to its left.</li>
-</ol>
+</section>
+<section id="improving-your-function" class="slide level2">
+<h2>Improving Your Function</h2>
+<p>Writing a function is often an iterative process. You’ll write the core of the function and then notice that it needs to include some additional syntax to handle a specific use-case or ways it can generally be made more efficient.</p>
+<div class="columns">
+<div class="column" style="width:42%;">
+<div class="fragment">
+<p><br></p>
+<p>For instance, you might observe that our function does some unnecessary computational repetition by evaluating <code>min()</code> twice and <code>max()</code> once when both can be computed once with <code>range()</code>.</p>
+</div>
+<div class="fragment">
+<p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>double_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">3</span>,<span class="at">ncol =</span> <span class="dv">8</span>)</span>
-<span id="cb39-2"><a href="#cb39-2"></a>double_matrix[ , <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span></span>
-<span id="cb39-3"><a href="#cb39-3"></a><span class="cf">for</span>(row <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>){</span>
-<span id="cb39-4"><a href="#cb39-4"></a>  <span class="cf">for</span>(col <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>){</span>
-<span id="cb39-5"><a href="#cb39-5"></a>    double_matrix[row, col] <span class="ot">&lt;-</span> double_matrix[row, col<span class="dv">-1</span>] <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb39-6"><a href="#cb39-6"></a>  }</span>
-<span id="cb39-7"><a href="#cb39-7"></a>}</span>
-<span id="cb39-8"><a href="#cb39-8"></a>double_matrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
-[1,]    1    2    4    8   16   32   64  128
-[2,]    2    4    8   16   32   64  128  256
-[3,]    3    6   12   24   48   96  192  384</code></pre>
+<div class="sourceCode cell-code" id="cb12" data-code-line-numbers="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-</section><section id="answers-1" class="slide level2"><h2>Answers</h2>
-<p>2. Write an <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> function to take the median value of each column in the <code>cars</code> dataset</p>
+</div><div class="column" style="width:58%;">
+<div class="fragment">
+<p><br></p>
+<p>Or you might find out through trial and error that our function doesn’t handle infinite values well.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>median_cars <span class="ot">&lt;-</span> <span class="fu">apply</span>(cars, <span class="dv">2</span>, median)</span>
-<span id="cb41-2"><a href="#cb41-2"></a>median_cars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cn">Inf</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rescale01</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>speed  dist 
-   15    36 </code></pre>
+<pre><code>&gt;  [1]   0   0   0   0   0   0   0   0   0   0 NaN</code></pre>
 </div>
 </div>
-</section><section id="answers-2" class="slide level2"><h2>Answers</h2>
-<p>3. Make a ggplot</p>
-<div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby">
-<li><a data-tabby-default="" href="#tabset-1-1">Code</a></li>
-<li><a href="#tabset-1-2">Plot</a></li>
+</div>
+<div class="fragment">
+<p>Updating it to exclude infinite values makes it more general as it accounts for more use cases.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15" data-code-line-numbers="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">finite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="vector-functions" class="title-slide slide level1 section-title center" data-background-color="#99a486">
+<h1>Vector Functions</h1>
+
+</section>
+<section id="what-are-vector-functions" class="slide level2">
+<h2>What are Vector Functions?</h2>
+<p>The function we just created is a vector function!</p>
+<div class="fragment">
+<p>Vector functions are simply functions that take one or more vectors as input and return a vector as output.</p>
+</div>
+<div class="fragment">
+<p>There are two types of vector functions: mutate functions and summary functions.</p>
+</div>
+<div class="fragment">
+<p><br></p>
+<div class="fragment">
+<!-- -->
+<h4 id="mutate-functions">Mutate Functions</h4>
+<ul>
+<li>Return an output the same length as the input</li>
+<li>Therefore, these functions work well within <code>mutate()</code> and <code>filter()</code></li>
 </ul>
-<div class="tab-content">
-<div id="tabset-1-1">
+</div>
+<p><br></p>
+<div class="fragment">
+<!-- -->
+<h4 id="summary-functions">Summary Functions</h4>
+<ul>
+<li>Returns a single value</li>
+<li>Therefore well suited for use in <code>summarize()</code></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="examples-of-mutate-functions" class="slide level2">
+<h2>Examples of Mutate Functions</h2>
+<div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb43-2"><a href="#cb43-2"></a><span class="fu">ggplot</span>(cars, <span class="fu">aes</span>(speed, dist)) <span class="sc">+</span> </span>
-<span id="cb43-3"><a href="#cb43-3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb43-4"><a href="#cb43-4"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> median_cars[<span class="dv">1</span>]) <span class="sc">+</span></span>
-<span id="cb43-5"><a href="#cb43-5"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> median_cars[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1"></a>z_score <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-2" class="code-annotation-target"><a href="#annotated-cell-8-2"></a>  (x <span class="sc">-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="annotated-cell-8-3"><a href="#annotated-cell-8-3"></a>} </span>
+<span id="annotated-cell-8-4"><a href="#annotated-cell-8-4"></a></span>
+<span id="annotated-cell-8-5"><a href="#annotated-cell-8-5"></a>ages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">82</span>, <span class="dv">73</span>, <span class="dv">44</span>, <span class="dv">5</span>)</span>
+<span id="annotated-cell-8-6"><a href="#annotated-cell-8-6"></a><span class="fu">z_score</span>(ages)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-annotation="1" data-code-lines="2">Rescales a vector to have a mean of zero and a standard deviation of one.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; [1] -0.64569500  1.12375765  0.84437039 -0.05587745 -1.26655559</code></pre>
 </div>
 </div>
-<div id="tabset-1-2">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture8_files/figure-revealjs/unnamed-chunk-23-1.svg"></p>
-</figure>
 </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section></section><section><section id="homework" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Homework</h1>
-
-</section><section id="homework-8" class="slide level2"><h2>Homework 8</h2>
-<p>Time to work on <a href="https://vsass.github.io/CSSS508/Homework/HW8/homework8.html">Homework 8</a>!</p>
-</section><section id="due-dates" class="slide level2"><h2>Due dates</h2>
+<div class="fragment">
 <div class="cell">
-<div class="cell-output-display">
-
-<div id="axdlrovfrn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#axdlrovfrn table {
-  font-family: Quattrocento, Raleway;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#axdlrovfrn thead, #axdlrovfrn tbody, #axdlrovfrn tfoot, #axdlrovfrn tr, #axdlrovfrn td, #axdlrovfrn th {
-  border-style: none;
-}
-
-#axdlrovfrn p {
-  margin: 0;
-  padding: 0;
-}
-
-#axdlrovfrn .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 100%;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: hidden;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#axdlrovfrn .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#axdlrovfrn .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#axdlrovfrn .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#axdlrovfrn .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#axdlrovfrn .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#axdlrovfrn .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#axdlrovfrn .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#axdlrovfrn .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#axdlrovfrn .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#axdlrovfrn .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#axdlrovfrn .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#axdlrovfrn .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#axdlrovfrn .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#axdlrovfrn .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#axdlrovfrn .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#axdlrovfrn .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#axdlrovfrn .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#axdlrovfrn .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#axdlrovfrn .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#axdlrovfrn .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#axdlrovfrn .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#axdlrovfrn .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#axdlrovfrn .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#axdlrovfrn .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#axdlrovfrn .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#axdlrovfrn .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#axdlrovfrn .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#axdlrovfrn .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#axdlrovfrn .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#axdlrovfrn .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#axdlrovfrn .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#axdlrovfrn .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#axdlrovfrn .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#axdlrovfrn .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#axdlrovfrn .gt_left {
-  text-align: left;
-}
-
-#axdlrovfrn .gt_center {
-  text-align: center;
-}
-
-#axdlrovfrn .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#axdlrovfrn .gt_font_normal {
-  font-weight: normal;
-}
-
-#axdlrovfrn .gt_font_bold {
-  font-weight: bold;
-}
-
-#axdlrovfrn .gt_font_italic {
-  font-style: italic;
-}
-
-#axdlrovfrn .gt_super {
-  font-size: 65%;
-}
-
-#axdlrovfrn .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#axdlrovfrn .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#axdlrovfrn .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#axdlrovfrn .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#axdlrovfrn .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#axdlrovfrn .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#axdlrovfrn .gt_indent_5 {
-  text-indent: 25px;
-}
-</style>
-<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<thead>
-<tr class="gt_col_headings gt_spanner_row">
-<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="2" colspan="1" scope="col" id="#">#</th>
-      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="<strong>Section AA</strong>">
-        <span class="gt_column_spanner"><strong>Section AA</strong></span>
-      </th>
-      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="<strong>Section AB</strong>">
-        <span class="gt_column_spanner"><strong>Section AB</strong></span>
-      </th>
-    </tr>
-<tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="background-color: #C7CDAC;" scope="col" id="Homework Due">Homework Due</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="background-color: #99A486;" scope="col" id="Peer Review Due">Peer Review Due</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="background-color: #C7CDAC;" scope="col" id="Homework Due">Homework Due</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="background-color: #99A486;" scope="col" id="Peer Review Due">Peer Review Due</th>
-    </tr>
-</thead>
-<tbody class="gt_table_body">
-<tr>
-<td headers="Homework" class="gt_row gt_center">1</td>
-<td headers="Due_Date_AA" class="gt_row gt_center">10 October</td>
-<td headers="Peer_Due_Date_AA" class="gt_row gt_center">15 October</td>
-<td headers="Due_Date_AB" class="gt_row gt_center">12 October</td>
-<td headers="Peer_Due_Date_AB" class="gt_row gt_center">17 October</td>
-</tr>
-<tr>
-<td headers="Homework" class="gt_row gt_center">2</td>
-<td headers="Due_Date_AA" class="gt_row gt_center">17 October</td>
-<td headers="Peer_Due_Date_AA" class="gt_row gt_center">22 October</td>
-<td headers="Due_Date_AB" class="gt_row gt_center">19 October</td>
-<td headers="Peer_Due_Date_AB" class="gt_row gt_center">24 October</td>
-</tr>
-<tr>
-<td headers="Homework" class="gt_row gt_center">3</td>
-<td headers="Due_Date_AA" class="gt_row gt_center">24 October</td>
-<td headers="Peer_Due_Date_AA" class="gt_row gt_center">29 October</td>
-<td headers="Due_Date_AB" class="gt_row gt_center">26 October</td>
-<td headers="Peer_Due_Date_AB" class="gt_row gt_center">31 October</td>
-</tr>
-<tr>
-<td headers="Homework" class="gt_row gt_center">4</td>
-<td headers="Due_Date_AA" class="gt_row gt_center">31 October</td>
-<td headers="Peer_Due_Date_AA" class="gt_row gt_center">5 November</td>
-<td headers="Due_Date_AB" class="gt_row gt_center">2 November</td>
-<td headers="Peer_Due_Date_AB" class="gt_row gt_center">7 November</td>
-</tr>
-<tr>
-<td headers="Homework" class="gt_row gt_center">5</td>
-<td headers="Due_Date_AA" class="gt_row gt_center">7 November</td>
-<td headers="Peer_Due_Date_AA" class="gt_row gt_center">12 November</td>
-<td headers="Due_Date_AB" class="gt_row gt_center">9 November</td>
-<td headers="Peer_Due_Date_AB" class="gt_row gt_center">14 November</td>
-</tr>
-<tr>
-<td headers="Homework" class="gt_row gt_center">6</td>
-<td headers="Due_Date_AA" class="gt_row gt_center">14 November</td>
-<td headers="Peer_Due_Date_AA" class="gt_row gt_center">19 November</td>
-<td headers="Due_Date_AB" class="gt_row gt_center">16 November</td>
-<td headers="Peer_Due_Date_AB" class="gt_row gt_center">21 November</td>
-</tr>
-<tr>
-<td headers="Homework" class="gt_row gt_center">7</td>
-<td headers="Due_Date_AA" class="gt_row gt_center">21 November</td>
-<td headers="Peer_Due_Date_AA" class="gt_row gt_center">26 November</td>
-<td headers="Due_Date_AB" class="gt_row gt_center">23 November</td>
-<td headers="Peer_Due_Date_AB" class="gt_row gt_center">28 November</td>
-</tr>
-<tr>
-<td headers="Homework" class="gt_row gt_center" style="border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #1e4655; border-top-width: 3px; border-top-style: solid; border-top-color: #1e4655; border-left-width: 3px; border-left-style: solid; border-left-color: #1e4655;">8</td>
-<td headers="Due_Date_AA" class="gt_row gt_center" style="background-color: #C7CDAC; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #1e4655; border-top-width: 3px; border-top-style: solid; border-top-color: #1e4655;">28 November</td>
-<td headers="Peer_Due_Date_AA" class="gt_row gt_center" style="background-color: #99A486; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #1e4655; border-top-width: 3px; border-top-style: solid; border-top-color: #1e4655;">3 November</td>
-<td headers="Due_Date_AB" class="gt_row gt_center" style="background-color: #C7CDAC; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #1e4655; border-top-width: 3px; border-top-style: solid; border-top-color: #1e4655;">30 November</td>
-<td headers="Peer_Due_Date_AB" class="gt_row gt_center" style="background-color: #99A486; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #1e4655; border-top-width: 3px; border-top-style: solid; border-top-color: #1e4655; border-right-width: 3px; border-right-style: solid; border-right-color: #1e4655;">5 November</td>
-</tr>
-<tr>
-<td headers="Homework" class="gt_row gt_center">9</td>
-<td headers="Due_Date_AA" class="gt_row gt_center">5 December</td>
-<td headers="Peer_Due_Date_AA" class="gt_row gt_center">10 December</td>
-<td headers="Due_Date_AB" class="gt_row gt_center">7 December</td>
-<td headers="Peer_Due_Date_AB" class="gt_row gt_center">12 December</td>
-</tr>
-</tbody>
-</table>
+<div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1"></a>clamp <span class="ot">&lt;-</span> <span class="cf">function</span>(x, min, max) { </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2">2</button><span id="annotated-cell-9-2" class="code-annotation-target"><a href="#annotated-cell-9-2"></a>  <span class="fu">case_when</span>(</span>
+<span id="annotated-cell-9-3"><a href="#annotated-cell-9-3"></a>    x <span class="sc">&lt;</span> min <span class="sc">~</span> min,</span>
+<span id="annotated-cell-9-4"><a href="#annotated-cell-9-4"></a>    x <span class="sc">&gt;</span> max <span class="sc">~</span> max,</span>
+<span id="annotated-cell-9-5"><a href="#annotated-cell-9-5"></a>    <span class="at">.default =</span> x</span>
+<span id="annotated-cell-9-6"><a href="#annotated-cell-9-6"></a>  ) </span>
+<span id="annotated-cell-9-7"><a href="#annotated-cell-9-7"></a>} </span>
+<span id="annotated-cell-9-8"><a href="#annotated-cell-9-8"></a></span>
+<span id="annotated-cell-9-9"><a href="#annotated-cell-9-9"></a><span class="fu">clamp</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">min =</span> <span class="dv">3</span>, <span class="at">max =</span> <span class="dv">7</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-9" data-code-annotation="2" data-code-lines="2,3,4,5">Ensures all values of a vector lie in between a minimum or a maximum.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt;  [1] 3 3 3 4 5 6 7 7 7 7</code></pre>
 </div>
 </div>
 </div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1"></a>first_upper <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="3">3</button><span id="annotated-cell-10-2" class="code-annotation-target"><a href="#annotated-cell-10-2"></a>  <span class="fu">str_sub</span>(x, <span class="dv">1</span>, <span class="dv">1</span>) <span class="ot">&lt;-</span> <span class="fu">str_to_upper</span>(<span class="fu">str_sub</span>(x, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="annotated-cell-10-3"><a href="#annotated-cell-10-3"></a>  x</span>
+<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4"></a>} </span>
+<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5"></a></span>
+<span id="annotated-cell-10-6"><a href="#annotated-cell-10-6"></a><span class="fu">first_upper</span>(<span class="st">"hi there, how's your day going?"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-10" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-annotation="3" data-code-lines="2,3">Make the first character upper case.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; [1] "Hi there, how's your day going?"</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="examples-of-summarize-functions" class="slide level2">
+<h2>Examples of Summarize Functions</h2>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1"></a>cv <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">FALSE</span>) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="4">4</button><span id="annotated-cell-11-2" class="code-annotation-target"><a href="#annotated-cell-11-2"></a>  <span class="fu">sd</span>(x, <span class="at">na.rm =</span> na.rm) <span class="sc">/</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> na.rm)</span>
+<span id="annotated-cell-11-3"><a href="#annotated-cell-11-3"></a>}</span>
+<span id="annotated-cell-11-4"><a href="#annotated-cell-11-4"></a></span>
+<span id="annotated-cell-11-5"><a href="#annotated-cell-11-5"></a><span class="fu">cv</span>(<span class="fu">runif</span>(<span class="dv">100</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">50</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-11" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-annotation="4" data-code-lines="2">Calculation for the coefficient of variation, which divides the standard deviation by the mean.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; [1] 0.5623408</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1"></a>n_missing <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="5">5</button><span id="annotated-cell-12-2" class="code-annotation-target"><a href="#annotated-cell-12-2"></a>  <span class="fu">sum</span>(<span class="fu">is.na</span>(x))</span>
+<span id="annotated-cell-12-3"><a href="#annotated-cell-12-3"></a>} </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-12" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-annotation="5" data-code-lines="2">Calculates the number of missing values. <a href="https://twitter.com/gbganalyst/status/1571619641390252033">Source</a></span>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1"></a>mape <span class="ot">&lt;-</span> <span class="cf">function</span>(actual, predicted) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="6">6</button><span id="annotated-cell-13-2" class="code-annotation-target"><a href="#annotated-cell-13-2"></a>  <span class="fu">sum</span>(<span class="fu">abs</span>((actual <span class="sc">-</span> predicted) <span class="sc">/</span> actual)) <span class="sc">/</span> <span class="fu">length</span>(actual)</span>
+<span id="annotated-cell-13-3"><a href="#annotated-cell-13-3"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-13" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-annotation="6" data-code-lines="2">Calculates the mean absolute percentage error to help you compare model predictions with actual values.</span>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="homework" class="title-slide slide level1 section-title center" data-background-color="#1e4655">
+<h1>Homework</h1>
+
+</section>
+<section id="section" class="slide level2" data-menu-title="Homework 8" data-background-iframe="https://vsass.github.io/CSSS508/Homework/HW8/homework8.html" data-background-interactive="TRUE">
+<h2></h2>
 
 <div class="footer footer-default">
 
 </div>
 </section></section>
-</div>
+    </div>
   </div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="../../site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script><script src="../../site_libs/revealjs/plugin/reveal-pointer/pointer.js"></script><script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="../../site_libs/revealjs/plugin/notes/notes.js"></script><script src="../../site_libs/revealjs/plugin/search/search.js"></script><script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="../../site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -1591,7 +1108,9 @@ Max.     92.50000    89.70000    37.00000  53.00000 100.00000         26.60000</
           RevealZoom
         ]
       });
-    </script><script>
+    </script>
+    
+    <script>
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
@@ -1626,7 +1145,9 @@ Max.     92.50000    89.70000    37.00000  53.00000 100.00000         26.60000</
         }
 
       })();
-    </script><script id="quarto-html-after-body" type="application/javascript">
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
         const mode = bsSheetEl.getAttribute("data-mode");
@@ -1733,6 +1254,157 @@ Max.     92.50000    89.70000    37.00000  53.00000 100.00000         26.60000</
           return note.innerHTML;
         });
       }
+          let selectedAnnoteEl;
+          const selectorForAnnotation = ( cell, annotation) => {
+            let cellAttr = 'data-code-cell="' + cell + '"';
+            let lineAttr = 'data-code-annotation="' +  annotation + '"';
+            const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+            return selector;
+          }
+          const selectCodeLines = (annoteEl) => {
+            const doc = window.document;
+            const targetCell = annoteEl.getAttribute("data-target-cell");
+            const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+            const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+            const lineIds = lines.map((line) => {
+              return targetCell + "-" + line;
+            })
+            let top = null;
+            let height = null;
+            let parent = null;
+            if (lineIds.length > 0) {
+                //compute the position of the single el (top and bottom and make a div)
+                const el = window.document.getElementById(lineIds[0]);
+                top = el.offsetTop;
+                height = el.offsetHeight;
+                parent = el.parentElement.parentElement;
+              if (lineIds.length > 1) {
+                const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+                const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+                height = bottom - top;
+              }
+              if (top !== null && height !== null && parent !== null) {
+                // cook up a div (if necessary) and position it 
+                let div = window.document.getElementById("code-annotation-line-highlight");
+                if (div === null) {
+                  div = window.document.createElement("div");
+                  div.setAttribute("id", "code-annotation-line-highlight");
+                  div.style.position = 'absolute';
+                  parent.appendChild(div);
+                }
+                div.style.top = top - 2 + "px";
+                div.style.height = height + 4 + "px";
+                let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+                if (gutterDiv === null) {
+                  gutterDiv = window.document.createElement("div");
+                  gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                  gutterDiv.style.position = 'absolute';
+                  const codeCell = window.document.getElementById(targetCell);
+                  const gutter = codeCell.querySelector('.code-annotation-gutter');
+                  gutter.appendChild(gutterDiv);
+                }
+                gutterDiv.style.top = top - 2 + "px";
+                gutterDiv.style.height = height + 4 + "px";
+              }
+              selectedAnnoteEl = annoteEl;
+            }
+          };
+          const unselectCodeLines = () => {
+            const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+            elementsIds.forEach((elId) => {
+              const div = window.document.getElementById(elId);
+              if (div) {
+                div.remove();
+              }
+            });
+            selectedAnnoteEl = undefined;
+          };
+          // Handle positioning of the toggle
+          window.addEventListener(
+          "resize",
+          throttle(() => {
+            elRect = undefined;
+            if (selectedAnnoteEl) {
+              selectCodeLines(selectedAnnoteEl);
+            }
+          }, 10)
+          );
+          function throttle(fn, ms) {
+          let throttle = false;
+          let timer;
+            return (...args) => {
+              if(!throttle) { // first call gets through
+                  fn.apply(this, args);
+                  throttle = true;
+              } else { // all the others get throttled
+                  if(timer) clearTimeout(timer); // cancel #2
+                  timer = setTimeout(() => {
+                    fn.apply(this, args);
+                    timer = throttle = false;
+                  }, ms);
+              }
+            };
+          }
+          const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+          for (let i=0; i<annoteTargets.length; i++) {
+            const annoteTarget = annoteTargets[i];
+            const targetCell = annoteTarget.getAttribute("data-target-cell");
+            const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+            const contentFn = () => {
+              const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+              if (content) {
+                const tipContent = content.cloneNode(true);
+                tipContent.classList.add("code-annotation-tip-content");
+                return tipContent.outerHTML;
+              }
+            }
+            const config = {
+              allowHTML: true,
+              content: contentFn,
+              onShow: (instance) => {
+                selectCodeLines(instance.reference);
+                instance.reference.classList.add('code-annotation-active');
+                window.tippy.hideAll();
+              },
+              onHide: (instance) => {
+                unselectCodeLines();
+                instance.reference.classList.remove('code-annotation-active');
+              },
+              maxWidth: 300,
+              delay: [50, 0],
+              duration: [200, 0],
+              offset: [5, 10],
+              arrow: true,
+              appendTo: function(el) {
+                return el.parentElement.parentElement.parentElement;
+              },
+              interactive: true,
+              interactiveBorder: 10,
+              theme: 'light-border',
+              placement: 'right',
+              popperOptions: {
+                modifiers: [
+                {
+                  name: 'flip',
+                  options: {
+                    flipVariations: false, // true by default
+                    allowedAutoPlacements: ['right'],
+                    fallbackPlacements: ['right', 'top', 'top-start', 'top-end'],
+                  },
+                },
+                {
+                  name: 'preventOverflow',
+                  options: {
+                    mainAxis: false,
+                    altAxis: false
+                  }
+                }
+                ]        
+              }      
+            };
+            window.tippy(annoteTarget, config); 
+          }
       const findCites = (el) => {
         const parentEl = el.parentElement;
         if (parentEl) {
@@ -1786,6 +1458,6 @@ Max.     92.50000    89.70000    37.00000  53.00000 100.00000         26.60000</
         }
     });
     </script>
-
+    
 
 </body></html>
