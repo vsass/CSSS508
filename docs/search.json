@@ -116,7 +116,7 @@
     "href": "Lectures/Lecture8/CSSS508_Lecture8_index.html",
     "title": "Lecture 8",
     "section": "",
-    "text": "Slides & Code\nHTML slides • Raw qmd file\n\n\n\nSuggested Reading (from R for Data Science (2e))\nChapter 26: Functions\n\n\n\nUseful Resources\n\nCheatsheets\n\n\nMore resources\n\n\nOther Readings\nHands on Programming with R • Advanced R\n\n\nCrowdsource Help\nCS&SS 508 Slack Workspace • Posit community • Stackoverflow"
+    "text": "Slides & Code\nHTML slides • Raw qmd file • R Code\n\n\n\nSuggested Reading (from R for Data Science (2e))\nChapter 26: Functions\n\n\n\nUseful Resources\n\nOther Readings\nProgramming with tidyr • Programming with dplyr • Programming with ggplot •\nWhat is data-masking and why do I need {{ • Hands on Programming with R • Advanced R: Functional Programming\n\n\nCrowdsource Help\nCS&SS 508 Slack Workspace • Posit community • Stackoverflow"
   },
   {
     "objectID": "Lectures/Lecture9/CSSS508_Lecture9_index.html",
@@ -7177,23 +7177,23 @@
   {
     "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#answers",
     "href": "Lectures/Lecture8/CSSS508_Lecture8.html#answers",
-    "title": "",
+    "title": "Roadmap",
     "section": "Answers",
-    "text": "Answers\n\nPractice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?\n\n\nmean(is.na(x))\nmean(is.na(y))\nmean(is.na(z))\n\n\n\n\nprop_na &lt;- function(x){\n  mean(is.na(x))\n}\n\n1set.seed(50)\nvalues &lt;- sample(c(seq(1, 10, 1), NA), 5, replace = TRUE)\nvalues\n\n\n1\n\nset.seed() is a function that can be used to create reproducible results when writing code that involves creating variables that take on random values.\n\n\n\n\n\n\n&gt; [1] NA  4  2  7  3\n\n\n\nprop_na(values)\n\n\n\n&gt; [1] 0.2\n\n\nThis code calculates the proportion of NA values in a vector. I would call it prop_na() which would take a single argument, x, and return a single numeric value, between 0 and 1."
+    "text": "Answers\n\nPractice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?\n\n\nmean(is.na(x))\nmean(is.na(y))\nmean(is.na(z))\n\n. . .\n\n\nprop_na &lt;- function(x){\n  mean(is.na(x))\n}\n\n1set.seed(50)\nvalues &lt;- sample(c(seq(1, 10, 1), NA), 5, replace = TRUE)\nvalues\n\n\n1\n\nset.seed() is a function that can be used to create reproducible results when writing code that involves creating variables that take on random values.\n\n\n\n\n&gt; [1] NA  4  2  7  3\n\n\n\nprop_na(values)\n\n&gt; [1] 0.2\n\n\nThis code calculates the proportion of NA values in a vector. I would call it prop_na() which would take a single argument, x, and return a single numeric value, between 0 and 1."
   },
   {
     "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#answers-1",
     "href": "Lectures/Lecture8/CSSS508_Lecture8.html#answers-1",
-    "title": "",
+    "title": "Roadmap",
     "section": "Answers",
-    "text": "Answers\n\nPractice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?\n\n\nx / sum(x, na.rm = TRUE)\ny / sum(y, na.rm = TRUE)\nz / sum(z, na.rm = TRUE)\n\n\n\nsums_to_one &lt;- function(x, na.rm = FALSE) {\n  x / sum(x, na.rm = na.rm)\n}\n\nsums_to_one(values)\n\n\n\n&gt; [1] NA NA NA NA NA\n\n\n\nsums_to_one(values, na.rm = TRUE)\n\n\n\n&gt; [1]     NA 0.2500 0.1250 0.4375 0.1875\n\n\nThis code standardizes a vector so that it sums to one. It takes a numeric vector and an optional specification for removing NAs. While the original code had na.rm = TRUE, it’s best to set the default to FALSE which will alert the user if NAs are present by returning NA."
+    "text": "Answers\n\nPractice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?\n\n\nx / sum(x, na.rm = TRUE)\ny / sum(y, na.rm = TRUE)\nz / sum(z, na.rm = TRUE)\n\n. . .\n\nsums_to_one &lt;- function(x, na.rm = FALSE) {\n  x / sum(x, na.rm = na.rm)\n}\n\nsums_to_one(values)\n\n&gt; [1] NA NA NA NA NA\n\n\n\nsums_to_one(values, na.rm = TRUE)\n\n&gt; [1]     NA 0.2500 0.1250 0.4375 0.1875\n\n\nThis code standardizes a vector so that it sums to one. It takes a numeric vector and an optional specification for removing NAs. While the original code had na.rm = TRUE, it’s best to set the default to FALSE which will alert the user if NAs are present by returning NA."
   },
   {
     "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#answers-2",
     "href": "Lectures/Lecture8/CSSS508_Lecture8.html#answers-2",
-    "title": "",
+    "title": "Roadmap",
     "section": "Answers",
-    "text": "Answers\n\nPractice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?\n\n\nround(x / sum(x, na.rm = TRUE) * 100, 1)\nround(y / sum(y, na.rm = TRUE) * 100, 1)\nround(z / sum(z, na.rm = TRUE) * 100, 1)\n\n\n\npct_vec &lt;- function(x, na.rm = FALSE){\n  round(x / sum(x, na.rm = na.rm) * 100, 1)\n}\n\npct_vec(values, na.rm = TRUE)\n\n\n\n&gt; [1]   NA 25.0 12.5 43.8 18.8\n\n\nThis code takes a numeric vector and finds what each value represents as a percentage of the sum of the entire vector and rounds it to the first decimal place. There is also an optional na.rm argument set to FALSE by default."
+    "text": "Answers\n\nPractice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?\n\n\nround(x / sum(x, na.rm = TRUE) * 100, 1)\nround(y / sum(y, na.rm = TRUE) * 100, 1)\nround(z / sum(z, na.rm = TRUE) * 100, 1)\n\n. . .\n\npct_vec &lt;- function(x, na.rm = FALSE){\n  round(x / sum(x, na.rm = na.rm) * 100, 1)\n}\n\npct_vec(values, na.rm = TRUE)\n\n&gt; [1]   NA 25.0 12.5 43.8 18.8\n\n\nThis code takes a numeric vector and finds what each value represents as a percentage of the sum of the entire vector and rounds it to the first decimal place. There is also an optional na.rm argument set to FALSE by default."
   },
   {
     "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#homework-7",
@@ -9083,7 +9083,7 @@
     "href": "Lectures/Lecture8/CSSS508_Lecture8.html#footnotes",
     "title": "Roadmap",
     "section": "Footnotes",
-    "text": "Footnotes\n\n\nHINT: Use the sort() function and square brackets [ ] for subsetting↩︎\nHint: Using the layers geom_vline(xintercept = ) and geom_hline(yintercept = )↩︎"
+    "text": "Footnotes\n\n\nWe’ll see how we can simplify this even further next week!↩︎\nUsed in functions like arrange(), filter(), and summarize() that compute with variables.↩︎\nUsed in functions like select(), relocate(), and rename() that select variables.↩︎\nThis makes it easier to see the hierarchy in your code by skimming the left-hand margin.↩︎"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#footnotes",
@@ -11869,7 +11869,7 @@
     "href": "Lectures/Lecture8/CSSS508_Lecture8.html#data-frame-function-examples",
     "title": "",
     "section": "Data Frame Function Examples",
-    "text": "Data Frame Function Examples\n\nsummary6 &lt;- function(data, var) {\n2  data |&gt; summarize(\n    min = min({{ var }}, na.rm = TRUE),\n    mean = mean({{ var }}, na.rm = TRUE),\n    median = median({{ var }}, na.rm = TRUE),\n    max = max({{ var }}, na.rm = TRUE),\n    n = n(),\n    n_miss = sum(is.na({{ var }})),\n3    .groups = \"drop\"\n  )\n}\n\ndiamonds |&gt; summary6(carat)\n\n\n2\n\nThe goal of this function is to compute six common summary statistics for a specified variable of a dataset.\n\n3\n\nWhenever you wrap summarize() in a helper function it’s good practice to set .groups = \"drop\" to both avoid the message and leave the data in an ungrouped state.\n\n\n\n\n\n\n&gt; # A tibble: 1 × 6\n&gt;     min  mean median   max     n n_miss\n&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;  &lt;int&gt;\n&gt; 1   0.2 0.798    0.7  5.01 53940      0\n\n\n\ncount_prop &lt;- function(df, var, sort = FALSE) {\n  df |&gt;\n    count({{ var }}, sort = sort) |&gt;\n    mutate(prop = n / sum(n))\n}\n\ndiamonds |&gt; count_prop(clarity)\n\n\n\n&gt; # A tibble: 8 × 3\n&gt;   clarity     n   prop\n&gt;   &lt;ord&gt;   &lt;int&gt;  &lt;dbl&gt;\n&gt; 1 I1        741 0.0137\n&gt; 2 SI2      9194 0.170 \n&gt; 3 SI1     13065 0.242 \n&gt; 4 VS2     12258 0.227 \n&gt; 5 VS1      8171 0.151 \n&gt; 6 VVS2     5066 0.0939\n&gt; 7 VVS1     3655 0.0678\n&gt; 8 IF       1790 0.0332"
+    "text": "Data Frame Function Examples\n\nsummary6 &lt;- function(data, var) {\n2  data |&gt; summarize(\n    min = min({{ var }}, na.rm = TRUE),\n    mean = mean({{ var }}, na.rm = TRUE),\n    median = median({{ var }}, na.rm = TRUE),\n    max = max({{ var }}, na.rm = TRUE),\n    n = n(),\n    n_miss = sum(is.na({{ var }})),\n3    .groups = \"drop\"\n  )\n}\n\ndiamonds |&gt; summary6(carat)\n\n\n2\n\nThe goal of this function is to compute six common summary statistics for a specified variable of a dataset.\n\n3\n\nWhenever you wrap summarize() in a helper function it’s good practice to set .groups = \"drop\" to both avoid the message and leave the data in an ungrouped state.\n\n\n\n\n\n\n&gt; # A tibble: 1 × 6\n&gt;     min  mean median   max     n n_miss\n&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;  &lt;int&gt;\n&gt; 1   0.2 0.798    0.7  5.01 53940      0"
   },
   {
     "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#data-frame-function-examples-fa-scroll",
@@ -11944,9 +11944,9 @@
   {
     "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#answers-3",
     "href": "Lectures/Lecture8/CSSS508_Lecture8.html#answers-3",
-    "title": "",
+    "title": "Roadmap",
     "section": "Answers",
-    "text": "Answers\n\nWrite a function that takes a name as an input (i.e. a character string) and returns a greeting based on the current time of day. Hint 1: use a time argument that defaults to lubridate::now(). That will make it easier to test your function. Hint 2: Use rlang::englue to combine your greetings with the name input.\n\n\n\n2greet &lt;- function(name, time = now()){\n  hr &lt;- hour(time) \n3  greeting &lt;- case_when(hr &lt; 12 & hr &gt;= 5 ~ rlang::englue(\"Good moring {name}.\"),\n                        hr &lt; 17 & hr &gt; 12 ~ rlang::englue(\"Good afternoon {name}.\"),\n                        hr &gt;= 17 ~ rlang::englue(\"Good evening {name}.\"),\n                        .default = rlang::englue(\"Why are you awake rn, {name}???\"))\n4  return(greeting)\n}\n\ngreet(\"Vic\")\n\n\n2\n\nBy default this function will take the current time to determine the specific greeting.\n\n\n3\n\nUsing englue() allows you to include user-specified values with { }.\n\n4\n\nreturn() or print() or simply calling the variable greeting is necessary for the function to work as expected.\n\n\n\n\n\n\n&gt; [1] \"Good evening Vic.\"\n\n\n\ngreet(\"Vic\", time = ymd_h(\"2023-11-21 2am\"))\n\n\n\n&gt; [1] \"Why are you awake rn, Vic???\""
+    "text": "Answers\n\nWrite a function that takes a name as an input (i.e. a character string) and returns a greeting based on the current time of day. Hint 1: use a time argument that defaults to lubridate::now(). That will make it easier to test your function. Hint 2: Use rlang::englue to combine your greetings with the name input.\n\n. . .\n\n2greet &lt;- function(name, time = now()){\n  hr &lt;- hour(time) \n3  greeting &lt;- case_when(hr &lt; 12 & hr &gt;= 5 ~ rlang::englue(\"Good moring {name}.\"),\n                        hr &lt; 17 & hr &gt; 12 ~ rlang::englue(\"Good afternoon {name}.\"),\n                        hr &gt;= 17 ~ rlang::englue(\"Good evening {name}.\"),\n                        .default = rlang::englue(\"Why are you awake rn, {name}???\"))\n4  return(greeting)\n}\n\ngreet(\"Vic\")\n\n\n2\n\nBy default this function will take the current time to determine the specific greeting.\n\n\n3\n\nUsing englue() allows you to include user-specified values with { }.\n\n4\n\nreturn() or print() or simply calling the variable greeting is necessary for the function to work as expected.\n\n\n\n\n&gt; [1] \"Good evening Vic.\"\n\n\n\ngreet(\"Vic\", time = ymd_h(\"2023-11-21 2am\"))\n\n&gt; [1] \"Why are you awake rn, Vic???\""
   },
   {
     "objectID": "Homework/HW8/homework8_key.html",
@@ -11968,5 +11968,12 @@
     "title": "Homework 8",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nYou can make this a global option for your whole document by putting it directly in the YAML of your qmd:\n\n---\ntitle: \"My Document\"\nexecute:\n  echo: true\n---\n\n↩︎"
+  },
+  {
+    "objectID": "Lectures/Lecture8/CSSS508_Lecture8.html#data-frame-function-examples-1",
+    "href": "Lectures/Lecture8/CSSS508_Lecture8.html#data-frame-function-examples-1",
+    "title": "",
+    "section": "Data Frame Function Examples",
+    "text": "Data Frame Function Examples\n\ncount_prop &lt;- function(df, var, sort = FALSE) {\n4  df |&gt;\n    count({{ var }}, sort = sort) |&gt;\n    mutate(prop = n / sum(n))\n}\n\ndiamonds |&gt; count_prop(clarity)\n\n\n4\n\nThis function is a variation of count() which also calculates the proportion (Source).\n\n\n\n\n\n\n&gt; # A tibble: 8 × 3\n&gt;   clarity     n   prop\n&gt;   &lt;ord&gt;   &lt;int&gt;  &lt;dbl&gt;\n&gt; 1 I1        741 0.0137\n&gt; 2 SI2      9194 0.170 \n&gt; 3 SI1     13065 0.242 \n&gt; 4 VS2     12258 0.227 \n&gt; 5 VS1      8171 0.151 \n&gt; 6 VVS2     5066 0.0939\n&gt; 7 VVS1     3655 0.0678\n&gt; 8 IF       1790 0.0332"
   }
 ]
