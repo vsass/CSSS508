@@ -72,6 +72,7 @@ knitr::opts_chunk$set(comment = ">")
   - Vector Functions
   - Dataframe Functions
   - Plot Functions
+- Function Style Guide
 
 :::
 :::
@@ -151,6 +152,11 @@ Before you can write effective code, you need to know *exactly* what you want:
 
 ::: {.column width="62%"}
 ```{r}
+#| echo: false
+set.seed(5000)
+```
+
+```{r}
 #| eval: false
 df <- tibble(
   a = rnorm(5),
@@ -184,6 +190,7 @@ df |> mutate(
 ::: {.fragment fragment-index=1}
 ```{r}
 #| echo: false
+set.seed(5000)
 df <- tibble(
   a = rnorm(5),
   b = rnorm(5),
@@ -256,8 +263,8 @@ To turn our code into a function we need three things:
 
 ::: incremental
 -   **Name**: What you call the function so you can use it later. The more explanatory this is the easier your code will be to understand.
--   **Argument(s)** (aka input(s), parameter(s)): What the user passes to the function that affects how it works. This is what varies across calls.
--   **Body**: The code that’s repeated across all the calls. 
+-   **Argument(s)** (aka input(s), parameter(s)): What the user passes to the function that affects how it works. This is what [varies]{.custom-red} across calls.
+-   **Body**: The code that’s [repeated]{.custom-red} across all the calls. 
 :::
 
 . . . 
@@ -296,9 +303,7 @@ rescale01(c(1, 2, 3, NA, 5))
 
 . . . 
 
-<br> 
-
-Now we can rewrite our original code in a much simpler way!
+Now we can rewrite our original code in a much simpler way!^[We'll see how we can simplify this even further next week!]
 
 . . . 
 
@@ -311,7 +316,7 @@ df |> mutate(a = rescale01(a),
 
 ## Improving Your Function
 
-Writing a function is often an iterative process. You'll write the core of the function and then notice that it needs to include some additional syntax to handle a specific use-case or ways it can generally be made more efficient. 
+Writing a function is often an iterative process: you'll write the core of the function and then notice the ways it can be made more efficient or that it needs to include additional syntax to handle a specific use-case. 
 
 :::: {.columns}
 
@@ -381,8 +386,6 @@ Vector functions are simply functions that take one or more vectors as input and
 
 There are two types of vector functions: mutate functions and summary functions. 
 
-. . . 
-
 <br>
 
 ::: {.fragment}
@@ -397,7 +400,7 @@ There are two types of vector functions: mutate functions and summary functions.
 ::: {.fragment}
 #### Summary Functions
 
-* Returns a single value 
+* Return a single value 
 * Therefore well suited for use in `summarize()`
 :::
 
@@ -461,18 +464,463 @@ cv(runif(100, min = 0, max = 50))
 n_missing <- function(x) {
   sum(is.na(x)) # <5>
 } 
+
+var <- sample(c(seq(1, 20, 1), NA, NA), size = 100, replace = TRUE) # <6>
+n_missing(var)
 ```
-5. Calculates the number of missing values. [Source](https://twitter.com/gbganalyst/status/1571619641390252033)
+5. Calculates the number of missing values ([Source](https://twitter.com/gbganalyst/status/1571619641390252033)). 
+6. Creating a random sample of 100 values with a mix of integers from 1 to 100 and `NA` values. 
 
 . . . 
 
 ```{r}
 mape <- function(actual, predicted) {
-  sum(abs((actual - predicted) / actual)) / length(actual) # <6>
+  sum(abs((actual - predicted) / actual)) / length(actual) # <7>
 }
-```
-6. Calculates the mean absolute percentage error to help you compare model predictions with actual values. 
 
+model1 <- lm(dist ~ speed, data = cars)
+mape(cars$dist, model1$fitted.values) # <8>
+```
+7. Calculates the mean absolute percentage error which measures the average magnitude of error produced by a model, or how far off predictions are on average. 
+8. This tells us that the average absolute percentage difference between the predicted values and the actual values is ~ 38%.
+
+# Data Frame Functions {.section-title background-color="#99a486"}
+
+## What are Data Frame Functions?
+
+Vector functions are useful for pulling out code that’s repeated within a dplyr verb. 
+
+. . . 
+
+But if you are building a long pipeline that is used repeatedly you'll want to write a dataframe function. 
+
+. . . 
+
+Data frame functions work like dplyr verbs: they take a data frame as the first argument, some extra arguments that say what to do with it, and return a data frame or a vector.
+
+#### Example
+
+```{r}
+#| error: true
+#| output-location: fragment
+grouped_mean <- function(df, group_var, mean_var) {
+  df |> 
+    group_by(group_var) |> # <1>
+    summarize(mean(mean_var)) # <1>
+}
+
+diamonds |> grouped_mean(cut, carat)
+```
+1. The goal of this function is to compute the mean of `mean_var` grouped by `group_var.`
+
+<br>
+
+::: {.fragment}
+Uh oh, what happened?
+:::
+
+## Tidy Evaluation
+
+Tidy evaluation is what allows us to refer to the names of variables inside a data frame without any special treatment. 
+
+. . . 
+
+This is the reason we don't have to use the `$` operator and can just call the variables directly and `tidyverse` functions know what we're referring to. 
+
+. . . 
+
+::: {.panel-tabset}
+
+### Base `R`
+
+```{r}
+#| eval: false
+diamonds[diamonds$cut == "Ideal" & diamonds$price < 1000, ]
+```
+
+### `tidyverse`
+
+```{r}
+#| eval: false
+diamonds |> filter(cut == "Ideal" & price < 1000)
+```
+:::
+
+. . . 
+
+<br>
+
+Most of the time tidy evaluation does exactly what we want it to do. 
+
+. . . 
+
+The downside of tidy evaluation comes when we want to wrap up repeated tidyverse code into a function. 
+
+. . . 
+
+Here we need some way to tell the functions within *our function* not to treat our argument names as the name of the variables, but instead *look inside them* for the variable we actually want to use. 
+
+## Embracing 
+
+The tidy evaluation solution to this issue is called embracing, which means wrapping variable names in two sets of curly braces (i.e. `var` becomes `{{ var }}`). 
+
+. . . 
+
+Embracing a variable tells `dplyr` to use the value stored inside the argument, not the argument as the literal variable name.
+
+. . . 
+
+```{r}
+#| output-location: fragment
+grouped_mean <- function(df, group_var, mean_var) {
+  df |> 
+    group_by({{ group_var }}) |> 
+    summarize(mean({{ mean_var }}))
+}
+
+diamonds |> grouped_mean(cut, carat)
+```
+
+
+## When to Embrace? [{{< fa scroll >}}]{style="color:#99a486"} {.scrollable}
+
+Look up the documentation of the function! 
+
+. . . 
+
+The two most common sub-types of tidy evaluation are **data-masking**^[Used in functions like `arrange()`, `filter()`, and `summarize()` that compute with variables.] and **tidy-selection**^[Used in functions like `select()`, `relocate()`, and `rename()` that select variables.]. 
+
+![](mutate_help.png){fig-align="center"}
+
+## Data Frame Function Examples [{{< fa scroll >}}]{style="color:#99a486"} {.scrollable}
+
+```{r}
+#| output-location: fragment
+summary6 <- function(data, var) {
+  data |> summarize( # <2>
+    min = min({{ var }}, na.rm = TRUE), # <2>
+    mean = mean({{ var }}, na.rm = TRUE), # <2>
+    median = median({{ var }}, na.rm = TRUE), # <2>
+    max = max({{ var }}, na.rm = TRUE), # <2>
+    n = n(), # <2>
+    n_miss = sum(is.na({{ var }})), # <2>
+    .groups = "drop" # <3>
+  )
+}
+
+diamonds |> summary6(carat)
+```
+2. The goal of this function is to compute six common summary statistics for a specified variable of a dataset.
+3. Whenever you wrap `summarize()` in a helper function it’s good practice to set `.groups = "drop"` to both avoid the message and leave the data in an ungrouped state.
+
+. . . 
+
+```{r}
+#| output-location: fragment
+count_prop <- function(df, var, sort = FALSE) {
+  df |> # <4>
+    count({{ var }}, sort = sort) |> # <4>
+    mutate(prop = n / sum(n)) # <4>
+}
+
+diamonds |> count_prop(clarity)
+```
+4. This function is a variation of `count()` which also calculates the proportion ([Source](https://twitter.com/Diabb6/status/1571635146658402309)). 
+
+# Plot Functions {.section-title background-color="#99a486"}
+
+## What are Plot Functions? 
+
+:::: {.columns}
+
+::: {.column width="60%"}
+What if you have a lot of similar plots to create? You can use a function to eliminate redundency. 
+
+<br>
+
+::: {.fragment}
+The same technique can be used if you want to write a function that returns a plot since `aes()` is a data-masking function. 
+:::
+
+<br>
+
+::: {.fragment}
+Simply use embracing within the `aes()` call to `ggplot()`!
+:::
+ 
+ <br>
+ 
+::: {.fragment}
+```{r}
+#| output: false
+histogram <- function(df, var, binwidth = NULL) {
+  df |> 
+    ggplot(aes(x = {{ var }})) + # <1> 
+    geom_histogram(binwidth = binwidth) # <1>
+}
+
+diamonds |> histogram(carat, 0.1) # <2>
+```
+1. This is a useful function for quickly getting histograms of a specified binwidth from a dataset. 
+2. Note that `histogram()` returns a ggplot2 plot, meaning you can still add on additional components if you want. Just remember to switch from `|>` to `+`.
+:::
+
+:::
+
+::: {.column width="40%"}
+```{r}
+#| echo: false
+ggsave("histogram.png", width = 6, height = 8, units = "in")
+```
+
+::: {.fragment}
+![](histogram.png){.absolute right=0, top=25}
+:::
+:::
+
+::::
+
+## Data Manipulation & Plotting
+
+You might want to create a function that has a bit of data manipulation **_and_** returns a plot. 
+
+. . . 
+
+```{r}
+#| output-location: fragment
+#| fig-align: center
+sorted_bars <- function(df, var) { # <3>
+  df |> 
+    mutate({{ var }} := fct_rev(fct_infreq({{ var }})))  |> # <4>
+    ggplot(aes(y = {{ var }})) + 
+    geom_bar() 
+}
+
+diamonds |> sorted_bars(clarity)
+```
+3. This function creates a vertical bar chart where you automatically sort the bars in frequency order using `fct_infreq()`. 
+4. `:=` (commonly referred to as the “walrus operator”) is used here because we are generating the variable name based on user-supplied data. `R`’s syntax doesn’t allow anything to the left of `=` except for a single, literal name. To work around this problem, we use the special operator `:=` which tidy evaluation treats in exactly the same way as `=`.
+
+## Functions that Label
+
+:::: {.columns}
+
+::: {.column width="60%"}
+What if we want to add labels using our function? 
+
+<br>
+
+::: {.fragment fragment-index=1}
+For that we need to use the low-level package `rlang` that’s used by just about every other package in the tidyverse because it implements tidy evaluation (as well as many other useful tools).
+:::
+
+<br>
+
+:::
+
+::: {.column width="40%"}
+:::
+
+::::
+
+. . . 
+
+Let's take our histogram example from before: 
+```{r}
+#| output: false
+#| echo: true
+histogram <- function(df, var, binwidth) {
+  label <- rlang::englue("A histogram of {{ var }} with binwidth {binwidth}") # <5>
+  
+  df |> 
+    ggplot(aes(x = {{ var }})) + 
+    geom_histogram(binwidth = binwidth) + 
+    labs(title = label)
+}
+
+diamonds |> histogram(carat, 0.1)
+```
+5. `rlang::englue()` works similarly to `str_glue()`, so any value wrapped in <br> `{ }` will be inserted into the string. But it also understands `{{ }}`, which automatically inserts the appropriate variable name.
+
+. . . 
+
+```{r}
+#| echo: false
+#| output: false
+histogram <- function(df, var, binwidth) {
+  label <- rlang::englue("A histogram of {{var}} with binwidth {binwidth}")
+  
+  df |> 
+    ggplot(aes(x = {{ var }})) + 
+    geom_histogram(binwidth = binwidth) + 
+    labs(title = label)
+}
+
+diamonds |> histogram(carat, 0.1)
+ggsave("histogram_label.png", width = 6, height = 8, units = "in")
+```
+
+![](histogram_label.png){.absolute right=50 top=0 width="325" height="400"}
+
+# Function Style Guide {.section-title background-color="#99a486"}
+
+## Best Practices
+
+::: {.incremental}
+* Make function names descriptive; again longer is better due to RStudio's auto-complete feature.
+* Generally, function names should be verbs, and arguments should be nouns.
+   - Some exceptions: computation of a well-known noun (i.e. `mean()`), accessing a property of an object (i.e. `coef()`)
+* `function()` should always be followed by squiggly brackets (`{}`), and the contents should be indented by an additional two spaces^[This makes it easier to see the hierarchy in your code by skimming the left-hand margin.].
+* You should put extra spaces inside of `{{ }}`. This makes it very obvious that something unusual is happening.
+:::
+
+::: aside
+You can read the official tidyverse style guide for functions [here](https://style.tidyverse.org/functions). 
+:::
+
+# Lab {.section-title background-color="#99a486"}
+
+## Writing Functions
+
+1. Practice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?
+
+. . . 
+
+```{r}
+#| eval: false
+mean(is.na(x))
+mean(is.na(y))
+mean(is.na(z))
+
+x / sum(x, na.rm = TRUE)
+y / sum(y, na.rm = TRUE)
+z / sum(z, na.rm = TRUE)
+
+round(x / sum(x, na.rm = TRUE) * 100, 1)
+round(y / sum(y, na.rm = TRUE) * 100, 1)
+round(z / sum(z, na.rm = TRUE) * 100, 1)
+```
+
+. . . 
+
+<br>
+
+2. Write a function that takes a name as an input (i.e. a character string) and returns a greeting based on the current time of day. **Hint**: use a time argument that defaults to `lubridate::now()`. That will make it easier to test your function.
+
+## Answers {visibility="hidden"}
+
+1. Practice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?
+
+```{r}
+#| eval: false
+mean(is.na(x))
+mean(is.na(y))
+mean(is.na(z))
+```
+
+. . . 
+
+<br>
+
+```{r}
+#| output-location: fragment
+prop_na <- function(x){
+  mean(is.na(x))
+}
+
+set.seed(50) # <1>
+values <- sample(c(seq(1, 10, 1), NA), 5, replace = TRUE)
+values
+```
+1. `set.seed()` is a function that can be used to create reproducible results when writing code that involves creating variables that take on random values.
+
+```{r}
+#| output-location: fragment
+prop_na(values)
+```
+
+This code calculates the proportion of `NA` values in a vector. I would call it `prop_na()` which would take a single argument, `x`, and return a single numeric value, between 0 and 1. 
+
+## Answers {visibility="hidden"}
+
+1. Practice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?
+
+```{r}
+#| eval: false
+x / sum(x, na.rm = TRUE)
+y / sum(y, na.rm = TRUE)
+z / sum(z, na.rm = TRUE)
+```
+
+. . . 
+
+```{r}
+#| output-location: fragment
+sums_to_one <- function(x, na.rm = FALSE) {
+  x / sum(x, na.rm = na.rm)
+}
+
+sums_to_one(values)
+```
+
+```{r}
+#| output-location: fragment
+sums_to_one(values, na.rm = TRUE)
+```
+
+This code standardizes a vector so that it sums to one. It takes a numeric vector and an optional specification for removing `NA`s. While the original code had `na.rm = TRUE`, it's best to set the default to `FALSE` which will alert the user if `NA`s are present by returning `NA`. 
+
+## Answers {visibility="hidden"}
+
+1. Practice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?
+
+```{r}
+#| eval: false
+round(x / sum(x, na.rm = TRUE) * 100, 1)
+round(y / sum(y, na.rm = TRUE) * 100, 1)
+round(z / sum(z, na.rm = TRUE) * 100, 1)
+```
+
+. . . 
+
+```{r}
+#| output-location: fragment
+pct_vec <- function(x, na.rm = FALSE){
+  round(x / sum(x, na.rm = na.rm) * 100, 1)
+}
+
+pct_vec(values, na.rm = TRUE)
+```
+
+This code takes a numeric vector and finds what each value represents as a percentage of the sum of the entire vector and rounds it to the first decimal place. There is also an optional `na.rm` argument set to `FALSE` by default.
+
+## Answers {visibility="hidden"}
+
+2. Write a function that takes a name as an input (i.e. a character string) and returns a greeting based on the current time of day. **Hint 1**: use a time argument that defaults to `lubridate::now()`. That will make it easier to test your function. **Hint 2**: Use `rlang::englue` to combine your greetings with the name input. 
+
+. . . 
+
+```{r}
+#| output-location: fragment
+greet <- function(name, time = now()){ # <2>
+  hr <- hour(time) 
+  greeting <- case_when(hr < 12 & hr >= 5 ~ rlang::englue("Good moring {name}."), # <3>
+                        hr < 17 & hr > 12 ~ rlang::englue("Good afternoon {name}."), # <3> 
+                        hr >= 17 ~ rlang::englue("Good evening {name}."), # <3>
+                        .default = rlang::englue("Why are you awake rn, {name}???")) # <3>
+  return(greeting) # <4>
+}
+
+greet("Vic")
+```
+2. By default this function will take the current time to determine the specific greeting.   
+3. Using `englue()` allows you to include user-specified values with `{ }`. 
+4. `return()` or `print()` or simply calling the variable `greeting` is necessary for the function to work as expected. 
+
+```{r}
+#| output-location: fragment
+greet("Vic", time = ymd_h("2023-11-21 2am"))
+```
 
 # Homework{.section-title background-color="#1e4655"}
 

@@ -1,0 +1,94 @@
+---
+title: "Homework 8 Key"
+code-annotations: hover
+execute: 
+  message: false
+  warning: false
+output: 
+  html_document:
+    highlight-style: a11y-dark
+---
+
+```{r}
+#| code-fold: true
+knitr::opts_chunk$set(comment = ">")
+
+library(tidyverse)
+library(ggthemes)
+
+load(url("https://github.com/vsass/CSSS508/raw/main/Lectures/Lecture7/data/restaurants.Rdata"))
+```
+
+#### Answer 1
+
+Given a vector of birthdates^[Format in `mdy()`.], write a function to compute the ages in years. Test your function!
+
+```{r}
+age_from_bday <- function(birthdate){
+  (today() - mdy(birthdate)) |> time_length(unit = "year")
+}
+
+age_from_bday(c("12/05/1980", "November 6, 1983", "Jan 30, 2020", "5-28-23"))
+```
+
+#### Answer 2
+
+For each of the following functions list all arguments that use tidy evaluation and describe whether they use data-masking or tidy-selection: `distinct()`, `count()`, `group_by()`^[The documentation for `group_by()` doesn't explicitly tell you which tidy evaluation method it uses so check out [this resource](https://dplyr.tidyverse.org/articles/programming.html) to figure it out.], `rename_with()`, `slice_min()`, `slice_sample()`.
+
+| Function | Argument(s) | Tidy-Evaluation Type |
+|---------:|:-----------:|:--------------------:|
+|`distinct()`| `...`| data-masking|
+|`count()`| `...`| data-masking|
+| | `wt`| data-masking|
+|`group_by()`| `...`| data-masking|
+|`rename_with()`| `.cols`| tidy-select|
+|`slice_min()`| `order_by`| data-masking|
+| | `by`| tidy-select|
+|`slice_sample()`| `by`| tidy-select|
+| | `weight_by`| data-masking|
+
+#### Question 3:
+
+Build up a rich plotting function by incrementally implementing each of the steps below:
+
+* Draw a scatterplot given `dataset` and `x` and `y` variables.
+* Add a line of best fit (i.e. a linear model with no standard errors).
+* Add a title that includes the names of the variables used.
+
+Test your function with the built-in datasets `cars`, `swiss`, and `iris`. 
+
+```{r}
+#| eval: false
+scatterplot <- function(dataset, x, y){
+  ggplot(data = dataset, aes(x = {{ x }}, y = {{ y }})) + 
+    geom_jitter() + 
+    geom_smooth(method = lm, se = FALSE) + 
+    labs(title = rlang::englue("Relationship between {{ x }} and {{ y }}"), 
+         x = str_to_title(rlang::englue("{{ x }}")), 
+         y = str_to_title(rlang::englue("{{ y }}"))) + 
+    theme_tufte()
+}
+
+scatterplot(cars, speed, dist)
+scatterplot(swiss, Education, Fertility)
+scatterplot(iris, Sepal.Length, Sepal.Width)
+```
+
+```{r}
+#| fig-align: center
+#| echo: false
+scatterplot <- function(dataset, x, y){
+  ggplot(data = dataset, aes(x = {{ x }}, y = {{ y }})) + 
+    geom_jitter() + 
+    geom_smooth(method = lm, se = FALSE) + 
+    labs(title = rlang::englue("Relationship between {{ x }} and {{ y }}"), 
+         x = str_to_title(rlang::englue("{{ x }}")), 
+         y = str_to_title(rlang::englue("{{ y }}"))) + 
+    theme_tufte() +
+    theme(plot.background = element_rect(fill = "#f6f7f9", color = "#f6f7f9"))
+}
+
+scatterplot(cars, speed, dist)
+scatterplot(swiss, Education, Fertility)
+scatterplot(iris, Sepal.Length, Sepal.Width)
+```
