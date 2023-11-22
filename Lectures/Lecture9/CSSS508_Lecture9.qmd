@@ -86,7 +86,9 @@ knitr::opts_chunk$set(comment = ">")
 
 ## Bad Repetition
 
-If someone doesn't know better, they might find the means of variables in the `swiss` data by typing in a line of code for each column:
+If someone doesn't know better, they might find the means of variables in the `swiss` data by typing a line of code for each column:
+
+<br>
 
 ```{r}
 #| eval: false
@@ -99,9 +101,13 @@ mean5 <- mean(swiss$Infant.Mortality)
 c(mean1, mean2 mean3, mean4, mean5, man6)
 ```
 
+<br>
+
 Can you spot the problems?
 
 . . . 
+
+<br>
 
 How upset would they be if the `swiss` data had 200 columns instead of `r ncol(swiss)`?
 
@@ -109,26 +115,25 @@ How upset would they be if the `swiss` data had 200 columns instead of `r ncol(s
 
 ```{r}
 #| include: false
-options(digits = 3)
+options(digits = 4)
 ```
 
-You will learn a better way to calculate column means today using functions from the `purrr` package. 
+Today you'll learn a better way to calculate column means using functions from the `purrr` package. 
+
+<br>
 
 ```{r}
-
-
-
-means <- rep(NA, ncol(swiss))
-for(i in 1:ncol(swiss)){
-  means[i] <- mean(swiss[,i])
-}
-data.frame(Variable=names(swiss),Mean=means)
+#| output-location: fragment
+swiss |> summarize(
+  across(Fertility:Infant.Mortality, mean)
+  )
 ```
 
+::: aside
 Don't worry about the details yet! 
+:::
 
-
-## Don't Repeat Yourself (DRY)!
+## Goal: Don't Repeat Yourself (DRY)!
 
 The **DRY** idea: Computers are much better at doing the same thing over and over again than we are.
 
@@ -138,7 +143,7 @@ The **DRY** idea: Computers are much better at doing the same thing over and ove
 * Lastly, compact code is more readable and easier to troubleshoot.
 :::
 
-## Solution: Iteration!
+## Method: Iteration!
 
 Iteration involves repeatedly performing the same action on different objects. 
 
@@ -152,7 +157,7 @@ We've already done some iteration, both because it's built into `R` in certain w
 
 <br>
 
-#### Some examples we have seen:
+#### Some examples we've seen:
 
 ::: {.incremental}
 - Multiplying a vector x by any integer 
@@ -167,7 +172,22 @@ We've already done some iteration, both because it's built into `R` in certain w
 We're now going to learn what makes `R` a functional programming language. That is, we'll learn some functions that themselves take functions as arguments.
 :::
 
+# {data-menu-title="`purrr``" background-image="images/purrr.png" background-size="contain" background-position="center" .section-title background-color="#1e4655"}
+
+
 # Modifying Multiple Columns {.section-title background-color="#99a486"}
+
+## Motivating Example
+
+```{r}
+df <- tibble(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+```
+
 
 # Reading in Multiple Files {.section-title background-color="#99a486"}
 

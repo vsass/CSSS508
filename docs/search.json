@@ -4104,23 +4104,23 @@
   {
     "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#title-slide",
     "href": "Lectures/Lecture9/CSSS508_Lecture9.html#title-slide",
-    "title": "Roadmap",
+    "title": "",
     "section": "",
     "text": "Iteration\nCS&SS 508 • Lecture 9\n28 November 2023\nVictoria Sass"
   },
   {
     "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#bad-repetition",
     "href": "Lectures/Lecture9/CSSS508_Lecture9.html#bad-repetition",
-    "title": "Roadmap",
+    "title": "",
     "section": "Bad Repetition",
-    "text": "Bad Repetition\nIf someone doesn’t know better, they might find the means of variables in the swiss data by typing in a line of code for each column:\n\nmean1 &lt;- mean(swiss$Fertility)\nmean2 &lt;- mean(swiss$Agriculture)\nmean3 &lt;- mean(swissExamination)\nmean4 &lt;- mean(swiss$Fertility)\nmean5 &lt;- mean(swiss$Catholic)\nmean5 &lt;- mean(swiss$Infant.Mortality)\nc(mean1, mean2 mean3, mean4, mean5, man6)\n\nCan you spot the problems?\n. . .\nHow upset would they be if the swiss data had 200 columns instead of 6?"
+    "text": "Bad Repetition\nIf someone doesn’t know better, they might find the means of variables in the swiss data by typing a line of code for each column:\n\n\nmean1 &lt;- mean(swiss$Fertility)\nmean2 &lt;- mean(swiss$Agriculture)\nmean3 &lt;- mean(swissExamination)\nmean4 &lt;- mean(swiss$Fertility)\nmean5 &lt;- mean(swiss$Catholic)\nmean5 &lt;- mean(swiss$Infant.Mortality)\nc(mean1, mean2 mean3, mean4, mean5, man6)\n\n\nCan you spot the problems?\n\n\nHow upset would they be if the swiss data had 200 columns instead of 6?"
   },
   {
     "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#good-repetition",
     "href": "Lectures/Lecture9/CSSS508_Lecture9.html#good-repetition",
-    "title": "Roadmap",
+    "title": "",
     "section": "Good Repetition",
-    "text": "Good Repetition\nYou will learn a better way to calculate column means today using functions from the purrr package.\n\nmeans &lt;- rep(NA, ncol(swiss))\nfor(i in 1:ncol(swiss)){\n  means[i] &lt;- mean(swiss[,i])\n}\ndata.frame(Variable=names(swiss),Mean=means)\n\n&gt;           Variable Mean\n&gt; 1        Fertility 70.1\n&gt; 2      Agriculture 50.7\n&gt; 3      Examination 16.5\n&gt; 4        Education 11.0\n&gt; 5         Catholic 41.1\n&gt; 6 Infant.Mortality 19.9\n\n\nDon’t worry about the details yet!"
+    "text": "Good Repetition\nToday you’ll learn a better way to calculate column means using functions from the purrr package.\n\n\nswiss |&gt; summarize(\n  across(Fertility:Infant.Mortality, mean)\n  )\n\n\n\n&gt;   Fertility Agriculture Examination Education Catholic Infant.Mortality\n&gt; 1     70.14       50.66       16.49     10.98    41.14            19.94\n\n\n\n\nDon’t worry about the details yet!"
   },
   {
     "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#dont-repeat-yourself-dry",
@@ -12220,5 +12220,19 @@
     "title": "Roadmap",
     "section": "Solution: Iteration!",
     "text": "Solution: Iteration!\nIteration involves repeatedly performing the same action on different objects.\n. . .\n\nWe’ve already done some iteration, both because it’s built into R in certain ways, and because many of the tidyverse packages we’ve used have functions that are iterative.\n. . .\n\n\nSome examples we have seen:\n\n\nMultiplying a vector x by any integer\n\nOther languages require explicit looping but R iterates automatically with its recycling rules\n\nFacetting ggplots\nSummarizing a grouped dataset\n\n\n\n\nWe’re now going to learn what makes R a functional programming language. That is, we’ll learn some functions that themselves take functions as arguments."
+  },
+  {
+    "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#goal-dont-repeat-yourself-dry",
+    "href": "Lectures/Lecture9/CSSS508_Lecture9.html#goal-dont-repeat-yourself-dry",
+    "title": "",
+    "section": "Goal: Don’t Repeat Yourself (DRY)!",
+    "text": "Goal: Don’t Repeat Yourself (DRY)!\nThe DRY idea: Computers are much better at doing the same thing over and over again than we are.\n\n\nWriting code to repeat tasks for us reduces the most common human coding mistakes.\nIt also substantially reduces the time and effort involved in processing large volumes of data.\nLastly, compact code is more readable and easier to troubleshoot."
+  },
+  {
+    "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#method-iteration",
+    "href": "Lectures/Lecture9/CSSS508_Lecture9.html#method-iteration",
+    "title": "",
+    "section": "Method: Iteration!",
+    "text": "Method: Iteration!\nIteration involves repeatedly performing the same action on different objects.\n\n\nWe’ve already done some iteration, both because it’s built into R in certain ways, and because many of the tidyverse packages we’ve used have functions that are iterative.\n\n\n\nSome examples we’ve seen:\n\n\nMultiplying a vector x by any integer\n\nOther languages require explicit looping but R iterates automatically with its recycling rules\n\n\nFacetting ggplots\nSummarizing a grouped dataset\n\n\n\n\nWe’re now going to learn what makes R a functional programming language. That is, we’ll learn some functions that themselves take functions as arguments."
   }
 ]
