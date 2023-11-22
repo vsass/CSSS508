@@ -183,15 +183,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>What is the shortest restaurant name? What is the longest restaurant name?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>restaurants <span class="sc">|&gt;</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(Name) <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name) <span class="sc">|&gt;</span> </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">length =</span> <span class="fu">str_length</span>(Name)) <span class="sc">|&gt;</span> </span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(length <span class="sc">==</span> <span class="fu">min</span>(length) <span class="sc">|</span> length <span class="sc">==</span> <span class="fu">max</span>(length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&gt; # A tibble: 2 × 2
-&gt;   Name                                                                    length
-&gt;   &lt;chr&gt;                                                                    &lt;int&gt;
-&gt; 1 AMAZON BLOCK 20 - LEVEL 2 - Espresso Service/Breakfast/New York Deli (…     77
-&gt; 2 KU                                                                           2</code></pre>
+<pre><code>&gt; # A tibble: 40 × 2
+&gt;    Name                                                                   length
+&gt;    &lt;chr&gt;                                                                   &lt;int&gt;
+&gt;  1 AMAZON BLOCK 20 - LEVEL 2 - Espresso Service/Breakfast/New York Deli …     77
+&gt;  2 AMAZON BLOCK 20 - LEVEL 2 - Espresso Service/Breakfast/New York Deli …     77
+&gt;  3 AMAZON BLOCK 20 - LEVEL 2 - Espresso Service/Breakfast/New York Deli …     77
+&gt;  4 KU                                                                          2
+&gt;  5 KU                                                                          2
+&gt;  6 KU                                                                          2
+&gt;  7 KU                                                                          2
+&gt;  8 KU                                                                          2
+&gt;  9 KU                                                                          2
+&gt; 10 KU                                                                          2
+&gt; # ℹ 30 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -253,32 +262,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">avg_score =</span> <span class="fu">mean</span>(Grade, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">Name</span><span class="st">`</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_score_zip =</span> <span class="fu">mean</span>(avg_score, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">Zip Code</span><span class="st">`</span>, year)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> year) <span class="sc">|&gt;</span> </span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(year)) <span class="sc">|&gt;</span> </span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(year))</span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>zip_98115_year</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&gt; # A tibble: 18 × 3
-&gt;    `Zip Code` year  avg_score_zip
-&gt;         &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;
-&gt;  1      98115 2023           2.30
-&gt;  2      98115 2022           2.35
-&gt;  3      98115 2021           2.23
-&gt;  4      98115 2020           2.09
-&gt;  5      98115 2019           2.08
-&gt;  6      98115 2018           2.03
-&gt;  7      98115 2017           2.12
-&gt;  8      98115 2016           2.15
-&gt;  9      98115 2015           2.10
-&gt; 10      98115 2014           2.00
-&gt; 11      98115 2013           2.01
-&gt; 12      98115 2012           2.01
-&gt; 13      98115 2011           2.00
-&gt; 14      98115 2010           1.89
-&gt; 15      98115 2009           1.97
-&gt; 16      98115 2008           1.93
-&gt; 17      98115 2007           1.91
-&gt; 18      98115 2006           1.99</code></pre>
+<pre><code>&gt; # A tibble: 18 × 2
+&gt;    year  avg_score_zip
+&gt;    &lt;chr&gt;         &lt;dbl&gt;
+&gt;  1 2023           2.30
+&gt;  2 2022           2.35
+&gt;  3 2021           2.23
+&gt;  4 2020           2.09
+&gt;  5 2019           2.08
+&gt;  6 2018           2.03
+&gt;  7 2017           2.12
+&gt;  8 2016           2.15
+&gt;  9 2015           2.10
+&gt; 10 2014           2.00
+&gt; 11 2013           2.01
+&gt; 12 2012           2.01
+&gt; 13 2011           2.00
+&gt; 14 2010           1.89
+&gt; 15 2009           1.97
+&gt; 16 2008           1.93
+&gt; 17 2007           1.91
+&gt; 18 2006           1.99</code></pre>
 </div>
 </div>
 </div>

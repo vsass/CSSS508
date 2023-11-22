@@ -25,7 +25,7 @@ What is the shortest restaurant name? What is the longest restaurant name?
 
 ```{r}
 restaurants |> 
-  distinct(Name) |> 
+  select(Name) |> 
   mutate(length = str_length(Name)) |> 
   filter(length == min(length) | length == max(length))
 ```
@@ -70,7 +70,7 @@ zip_98115_year <- restaurants |>
   mutate(avg_score = mean(Grade, na.rm = TRUE),
             .by = c(`Name`)) |> 
   summarize(avg_score_zip = mean(avg_score, na.rm = TRUE), 
-            .by = c(`Zip Code`, year)) |> 
+            .by = year) |> 
   arrange(desc(year)) |> 
   filter(!is.na(year))
 zip_98115_year
