@@ -25,7 +25,7 @@ What is the shortest restaurant name? What is the longest restaurant name?
 
 ```{r}
 restaurants |> 
-  select(Name) |> 
+  distinct(Name) |> 
   mutate(length = str_length(Name)) |> 
   filter(length == min(length) | length == max(length))
 ```
@@ -33,7 +33,7 @@ restaurants |>
 
 #### Answer 2: 
 
-Read the documentation for [`separate_longer_delim()`](https://tidyr.tidyverse.org/reference/separate_longer_delim.html). Use this function to figure out what 10 "words" are most frequently used for the restaurant names in this data set. 
+Read the documentation for [`separate_longer_delim()`](https://tidyr.tidyverse.org/reference/separate_longer_delim.html). Use this function to figure out what 10 "words"^[Anything that is separated by spaces counts as a word for this problem.] are most frequently used for the restaurant names in this data set. 
 
 ```{r}
 restaurants |> 
@@ -44,12 +44,12 @@ restaurants |>
 ```
 
 #### Answer 3
-Which zip code has the highest (meaning **worst**) mean `Grade`?^[Note: To accurately reflect the true average you'll want to weight this by restaurant: i.e. get the average grade by restaurant first, then get the average of those averages by zip code.]
+Which zip code has the highest (meaning **worst**) mean `Grade`?^[Note: To accurately reflect the true average you'll want to weight this by restaurant: i.e. get the average grade by restaurant first, then get the average of those averages by zip code.] 
 
 ```{r}
 restaurants |> 
   mutate(avg_score = mean(Grade, na.rm = TRUE),
-            .by = c(`Name`)) |> 
+            .by = c(Name)) |> 
   summarize(avg_score_zip = mean(avg_score, na.rm = TRUE), 
             .by = c(`Zip Code`)) |> 
   slice_max(avg_score_zip)
@@ -68,7 +68,7 @@ zip_98115_year <- restaurants |>
                        delim = "/", 
                        names = c("month", "day", "year")) |>  
   mutate(avg_score = mean(Grade, na.rm = TRUE),
-            .by = c(`Name`)) |> 
+            .by = c(Name)) |> 
   summarize(avg_score_zip = mean(avg_score, na.rm = TRUE), 
             .by = year) |> 
   arrange(desc(year)) |> 
@@ -84,7 +84,7 @@ zip_98115_year2 <- restaurants |>
   mutate(inspection_date = mdy(`Inspection Date`), 
          year = year(inspection_date)) |> 
   mutate(avg_score = mean(Grade, na.rm = TRUE),
-            .by = c(`Name`)) |> 
+            .by = c(Name)) |> 
   summarize(avg_score_zip = mean(avg_score, na.rm = TRUE), 
             .by = c(`Zip Code`, year)) |> 
   arrange(desc(year)) |> 
@@ -97,59 +97,69 @@ zip_98115_year2
 
 Separate the variable `Phone` into three variables that only contain numerical digits: `area_code`, `first_3`, and `last_4`. 
 
-::: {.panel-tabset}
+*I came up with 4 different approaches to this but there may be more!*
 
-### `separate_wider_delim()`
+#### 1. `separate_wider_delim()`
 
 ```{r}
 restaurants |> 
   distinct(Phone) |> 
   separate_wider_delim(cols = Phone, 
-                       delim = " ", 
-                       names = c("area_code", "phone_number")) |> 
+                       delim = " ", # <1>
+                       names = c("area_code", "phone_number")) |> # <1>
   separate_wider_delim(cols = phone_number, 
-                       delim = "-", 
-                       names = c("first_3", "last_4")) |> 
-  mutate(area_code = str_remove(area_code, pattern = "\\("), 
-         area_code = str_remove(area_code, pattern = "\\)"))
+                       delim = "-", # <2>
+                       names = c("first_3", "last_4")) |> # <2>
+  mutate(area_code = str_remove(area_code, pattern = "\\("), # <3>
+         area_code = str_remove(area_code, pattern = "\\)")) # <3>
 ```
+1. This separates the area code from the 7 digit phone number.
+2. This separates the 7 digit phone number into the first three digits and the last (at least) four digits.
+3. These calls remove the first (open) parentheses around the area code and then the second (close) parentheses. 
 
-
-### `separate_wider_delim()` (w/ regex)
+#### 2. `separate_wider_delim()` (w/ regex)
 
 ```{r}
 restaurants |> 
   distinct(Phone) |> 
   separate_wider_delim(cols = Phone, 
-                       delim = regex("[ |-]"), 
-                       names = c("area_code", "first_3", "last_4")) |> 
+                       delim = regex("[ |-]"), # <4>
+                       names = c("area_code", "first_3", "last_4")) |> # <4>
   mutate(area_code = str_remove(area_code, pattern = "\\("), 
          area_code = str_remove(area_code, pattern = "\\)"))
 ```
+4. This regex is separating the whole phone number by a space or a dash (what the first approach did in two steps it does in one). 
 
-### `str_extract()`
+#### 3. `str_extract()`
 
 ```{r}
 restaurants |> 
   distinct(Phone) |> 
-  mutate(area_code = str_extract(Phone, "[:digit:]{3}"), 
-         first_3 = str_extract(Phone, "(?<= )[:digit:]{3}(?=-)"), 
-         last_4 = str_extract(Phone, "[:digit:]{4}"))
+  mutate(area_code = str_extract(Phone, "[:digit:]{3}"), # <5>
+         first_3 = str_extract(Phone, "(?<= )[:digit:]{3}(?=-)"), # <6>
+         last_4 = str_extract(Phone, "(?<=-)[:graph:]{4,}$")) # <7>
 ```
+5. This regex extracts the first three digits.
+6. This regex extracts three digits that are preceded by a space and followed by a dash.
+7. This regex extracts at least four numbers/letters/punctuation characters following a dash. 
 
-### `separate_wider_regex()`
+#### 4. `separate_wider_regex()`
 
 ```{r}
 restaurants |> 
   distinct(Phone) |> 
   separate_wider_regex(cols = Phone, 
-                       patterns = c("^\\(", 
-                                    area_code = "\\d{3}",
-                                    "\\) ",
-                                    first_3 = "\\d{3}",
-                                    "-",
-                                    last_4 = ".{4,}$")) 
+                       patterns = c("^\\(", # <8>
+                                    area_code = "\\d{3}", # <9>
+                                    "\\) ", # <10>
+                                    first_3 = "\\d{3}", # <11>
+                                    "-", # <12>
+                                    last_4 = ".{4,}$")) # <13>
 ```
+8. With `separate_wider_regex`, any unnamed regex pattern is matched but not saved into a named variable. This regex matches and discards the first open parentheses.
+9. This regex is an alternative to the one using `str_extract` that captures three digits in a row. (i.e. `\\d` is equivalent to `[:digit:]`)
+10. Matches and discards the second parentheses and a space.
+11. Captures three digits in a row.
+12. Matches and discards a dash. 
+13. Captures at least 4 characters at the end of the phone number. This regex actually includes the entire phone number, even the ones with typos and additional numbers/letters in the last part.
 
-
-:::

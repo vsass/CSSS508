@@ -91,7 +91,8 @@ If someone doesn't know better, they might find the means of variables in the `s
 <br>
 
 ```{r}
-#| eval: false
+#| error: true
+#| output-location: fragment
 mean1 <- mean(swiss$Fertility)
 mean2 <- mean(swiss$Agriculture)
 mean3 <- mean(swissExamination)
@@ -118,7 +119,7 @@ How upset would they be if the `swiss` data had 200 columns instead of `r ncol(s
 options(digits = 4)
 ```
 
-Today you'll learn a better way to calculate column means using functions from the `purrr` package. 
+Today you'll learn a better way to repeat tasks, *without repeating code*, using functions from the `dplyr` and `purrr` packages in the `tidyverse`. 
 
 <br>
 
@@ -137,7 +138,7 @@ Don't worry about the details yet!
 
 The **DRY** idea: Computers are much better at doing the same thing over and over again than we are.
 
-::: {incremental}
+::: {.incremental}
 * Writing code to repeat tasks for us reduces the most common human coding mistakes.
 * It also *substantially* reduces the time and effort involved in processing large volumes of data.
 * Lastly, compact code is more readable and easier to troubleshoot.
@@ -172,27 +173,363 @@ We've already done some iteration, both because it's built into `R` in certain w
 We're now going to learn what makes `R` a functional programming language. That is, we'll learn some functions that themselves take functions as arguments.
 :::
 
-# {data-menu-title="`purrr``" background-image="images/purrr.png" background-size="contain" background-position="center" .section-title background-color="#1e4655"}
-
-
 # Modifying Multiple Columns {.section-title background-color="#99a486"}
 
-## Motivating Example
+## Simple, Motivating Example...Continued
 
+Let's return to our first example from last week: 
+
+::: {.panel-tabset}
+
+### Without our function
+
+::: {.fragment fragment-index=1}
+:::: {.columns}
+
+::: {.column width="50%"}
 ```{r}
-df <- tibble(
-  a = rnorm(10),
-  b = rnorm(10),
-  c = rnorm(10),
-  d = rnorm(10)
-)
+#| echo: false
+set.seed(5000)
 ```
 
+```{r}
+#| eval: false
+df <- tibble(
+  a = rnorm(5),
+  b = rnorm(5),
+  c = rnorm(5),
+  d = rnorm(5)
+  )
+df
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+df <- tibble(
+  a = rnorm(5),
+  b = rnorm(5),
+  c = rnorm(5),
+  d = rnorm(5)
+  )
+df
+```
+:::
+
+::::
+:::
+
+<br>
+
+::: {.fragment fragment-index=2}
+```{r}
+#| eval: false
+df |> mutate(
+  a = (a - min(a, na.rm = TRUE)) / (max(a, na.rm = TRUE) - min(a, na.rm = TRUE)),
+  b = (b - min(b, na.rm = TRUE)) / (max(b, na.rm = TRUE) - min(a, na.rm = TRUE)),
+  c = (c - min(c, na.rm = TRUE)) / (max(c, na.rm = TRUE) - min(c, na.rm = TRUE)),
+  d = (d - min(d, na.rm = TRUE)) / (max(d, na.rm = TRUE) - min(d, na.rm = TRUE))
+  )
+```
+:::
+
+### With our function
+
+::: {.fragment fragment-index=3}
+```{r}
+rescale01 <- function(x) { 
+  (x - min(x, na.rm = TRUE)) / (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+}
+```
+:::
+
+<br>
+
+::: {.fragment fragment-index=4}
+:::: {.columns}
+
+::: {.column width="50%"}
+
+<br>
+
+```{r}
+#| eval: false
+df |> mutate(a = rescale01(a),
+             b = rescale01(b),
+             c = rescale01(c),
+             d = rescale01(d))
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+df |> mutate(a = rescale01(a),
+             b = rescale01(b),
+             c = rescale01(c),
+             d = rescale01(d))
+```
+:::
+
+::::
+
+:::
+
+<br>
+
+::: {.fragment fragment-index=5}
+Can we make this mutate call *even* more efficient?
+:::
+
+### With `across()`
+
+::: {.fragment fragment-index=6}
+```{r}
+#| output-location: fragment
+df |> mutate(across(a:d, rescale01))
+```
+
+:::
+
+:::
+
+## Basics of `across()`
+
+`across()` makes it easy to apply the same transformation to multiple columns. 
+
+. . . 
+
+<br>
+
+```{r}
+#| eval: false
+across(.cols, .fns, .names = NULL)
+```
+
+. . . 
+
+<br>
+
+There are three particularly important arguments, the first two of which you'll use in every call to `across()`.
+
+::: {.incremental}
+* `.cols` specifies which columns to iterate over.
+* `.fns` specifies what to do with each column.
+* `.names` specifies the names of the output columns. 
+  * [By default, the output of `across()` is given the same names as the inputs, meaning that `across()` inside of `mutate()` will replace existing columns. If you’d like to create new columns instead, use `.names` to specify them.]{.custom-small}
+:::
+
+## Reading in columns with `.cols`
+
+`.cols` uses the same specifications as `select()` so you can use `tidyselect` functions like `starts_with()` to select columns based on their name.
+
+. . . 
+
+```{r}
+iris |> 
+  summarise(across(starts_with("Sepal"), median))
+```
+
+. . . 
+
+You can also use `everything()` which selects every (non-grouping) column.
+
+. . . 
+
+```{r}
+iris |> 
+  summarise(across(everything(), median), 
+            .by = Species)
+```
+
+. . . 
+
+Lastly, `where()` allows you to select columns based on their type. 
+
+. . . 
+
+```{r}
+iris |> 
+  summarise(across(where(is.numeric), median)) # <1> 
+```
+1. Just like other selectors, you can combine these with Boolean algebra. For example, `!where(is.numeric)` selects all non-numeric columns.
+
+## Calling a single function 
+
+The second argument to `across()` is what makes `R` a functional programming language. Here we're passing a function to another function. 
+
+. . . 
+
+<br>
+
+::: {.callout-important icon="false"}
+## <span style="color:red">{{< fa circle-exclamation >}}</span> Important Distinction
+
+We’re passing this function to `across()`, so `across()` can call it; we’re not calling it ourselves. That means the function name should never be followed by `()`. If you forget, you’ll get an error:
+
+:::
+
+. . . 
+
+<br>
+
+```{r}
+#| error: true
+airquality |> 
+  summarise(across(Ozone:Temp, median())) # <2>
+```
+2. This error arises because you’re calling the function with no input, `i.e. median()`.
+
+## Anonymous Functions
+
+If the function you pass to `across()` has its own arguments that you want to specify, you'll need to use an anonymous function:  
+
+. . . 
+
+```{r}
+airquality |> 
+  summarise(across(Ozone:Temp, \(x) median(x, na.rm = TRUE))) # <3>
+```
+3. So-called anonymous, because we never explicitly gave it a name with `<-`. Another term programmers use for this is “lambda function”.
+
+. . . 
+
+<br>
+
+You might also see older code that looks like this:
+
+```{r}
+airquality |> 
+  summarise(across(Ozone:Temp, ~ median(.x, na.rm = TRUE))) # <4>
+```
+4. This is another way to write anonymous functions but it only works inside tidyverse functions and always uses the variable name `.x`. Base syntax is now recommended (i.e. `\(x) x + 1`).
+
+## Calling multiple functions
+
+What if we want to know how many missing values we removed, in addition to calculating the median without those values?
+
+. . . 
+
+If you need to call multiple functions within `across()`, you'll need to turn them into a named list. 
+
+. . . 
+
+```{r}
+airquality |> 
+  summarise(across(Ozone:Temp, 
+                   list(median = \(x) median(x, na.rm = TRUE), # <5> 
+                        n_miss = \(x) sum(is.na(x))))) # <5> 
+```
+5. The names of the list are used to name the new variables. In fact, the columns are named using a glue specification `{.col}_{.fn}` where `.col` is the name of the original column and `.fn` is the name of the function.
+
+## Column Names
+
+By default, the output of `across()` is given the same names as the inputs. This means that `across()` inside of mutate() will replace existing columns.
+
+. . . 
+
+```{r}
+df |> mutate(across(a:d, rescale01))
+```
+
+. . . 
+
+If you’d like to instead create new columns, you can use the `.names` argument to give the output new names. 
+
+. . . 
+
+```{r}
+df |> mutate(across(a:d, rescale01, .names = "{.col}_rescaled")) # <6>
+```
+6. `.col` simply represents the original variable name. 
+
+## `if_any()` and `if_all()`
+
+`across()` works well with `mutate()` and `summarize()` but it has two variants that work with `filter()`.
+
+. . . 
+
+```{r}
+airquality |> filter(if_any(Ozone:Temp, is.na)) # <7>
+```
+7. This is the same as `airquality |> filter(is.na(Ozone) | is.na(Solar.R) | is.na(Wind) | is.na(Temp))`
+
+```{r}
+airquality |> filter(if_all(Ozone:Temp, is.na)) # <8>
+```
+8. This is the same as `airquality |> filter(is.na(Ozone) & is.na(Solar.R) & is.na(Wind) & is.na(Temp))`
+
+## `across()` in Functions
+
+Naturally, `across()` lends itself to functions because it allows you to operate on multiple columns simultaneously. 
+
+. . . 
+
+Just remember to embrace with `{{ }}` when using an argument for column selection since the first argument of `across()` uses the tidy evaluation method tidy-select.
+
+. . . 
+
+```{r}
+summarize_means <- function(df, summary_vars = where(is.numeric)) {
+  df |> 
+    summarize(
+      across({{ summary_vars }}, \(x) mean(x, na.rm = TRUE)),
+      n = n(),
+      .groups = "drop"
+    )
+}
+```
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width="45%"}
+
+<br>
+
+```{r}
+#| eval: false
+diamonds |> 
+  group_by(cut) |> 
+  summarize_means(c(carat, x:z))
+```
+
+:::
+
+::: {.column width="55%"}
+```{r}
+#| echo: false
+diamonds |> 
+  group_by(cut) |> 
+  summarize_means(c(carat, x:z))
+```
+
+:::
+::::
+
+## Relationship with `pivot_longer()`
+
+# {data-menu-title="`purrr``" background-image="images/purrr.png" background-size="contain" background-position="center" .section-title background-color="#1e4655"}
 
 # Reading in Multiple Files {.section-title background-color="#99a486"}
+
+## Bad repetition redux 
+
+Imagine you have a directory full of excel spreadsheets you want to read into `R`. 
+
+You could do it with copy and paste:  
+
+
 
 # Saving Multiple Outputs {.section-title background-color="#99a486"}
 
 # Apply Family {.section-title background-color="#99a486"}
 
 # `for` loops {.section-title background-color="#99a486"}
+
+
+
+
+

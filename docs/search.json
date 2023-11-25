@@ -4104,23 +4104,23 @@
   {
     "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#title-slide",
     "href": "Lectures/Lecture9/CSSS508_Lecture9.html#title-slide",
-    "title": "",
+    "title": "Roadmap",
     "section": "",
     "text": "Iteration\nCS&SS 508 • Lecture 9\n28 November 2023\nVictoria Sass"
   },
   {
     "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#bad-repetition",
     "href": "Lectures/Lecture9/CSSS508_Lecture9.html#bad-repetition",
-    "title": "",
+    "title": "Roadmap",
     "section": "Bad Repetition",
-    "text": "Bad Repetition\nIf someone doesn’t know better, they might find the means of variables in the swiss data by typing a line of code for each column:\n\n\nmean1 &lt;- mean(swiss$Fertility)\nmean2 &lt;- mean(swiss$Agriculture)\nmean3 &lt;- mean(swissExamination)\nmean4 &lt;- mean(swiss$Fertility)\nmean5 &lt;- mean(swiss$Catholic)\nmean5 &lt;- mean(swiss$Infant.Mortality)\nc(mean1, mean2 mean3, mean4, mean5, man6)\n\n\nCan you spot the problems?\n\n\nHow upset would they be if the swiss data had 200 columns instead of 6?"
+    "text": "Bad Repetition\nIf someone doesn’t know better, they might find the means of variables in the swiss data by typing a line of code for each column:\n\n\nmean1 &lt;- mean(swiss$Fertility)\nmean2 &lt;- mean(swiss$Agriculture)\nmean3 &lt;- mean(swissExamination)\nmean4 &lt;- mean(swiss$Fertility)\nmean5 &lt;- mean(swiss$Catholic)\nmean5 &lt;- mean(swiss$Infant.Mortality)\nc(mean1, mean2 mean3, mean4, mean5, man6)\n\n&gt; Error: &lt;text&gt;:7:16: unexpected symbol\n&gt; 6: mean5 &lt;- mean(swiss$Infant.Mortality)\n&gt; 7: c(mean1, mean2 mean3\n&gt;                   ^\n\n\n\nCan you spot the problems?\n. . .\n\nHow upset would they be if the swiss data had 200 columns instead of 6?"
   },
   {
     "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#good-repetition",
     "href": "Lectures/Lecture9/CSSS508_Lecture9.html#good-repetition",
-    "title": "",
+    "title": "Roadmap",
     "section": "Good Repetition",
-    "text": "Good Repetition\nToday you’ll learn a better way to calculate column means using functions from the purrr package.\n\n\nswiss |&gt; summarize(\n  across(Fertility:Infant.Mortality, mean)\n  )\n\n\n\n&gt;   Fertility Agriculture Examination Education Catholic Infant.Mortality\n&gt; 1     70.14       50.66       16.49     10.98    41.14            19.94\n\n\n\n\nDon’t worry about the details yet!"
+    "text": "Good Repetition\nToday you’ll learn a better way to repeat tasks, without repeating code, using functions from the dplyr and purrr packages in the tidyverse.\n\n\nswiss |&gt; summarize(\n  across(Fertility:Infant.Mortality, mean)\n  )\n\n&gt;   Fertility Agriculture Examination Education Catholic Infant.Mortality\n&gt; 1     70.14       50.66       16.49     10.98    41.14            19.94\n\n\n\n\nDon’t worry about the details yet!"
   },
   {
     "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#dont-repeat-yourself-dry",
@@ -7767,7 +7767,7 @@
     "href": "Homework/HW7/homework7.html",
     "title": "Homework 7",
     "section": "",
-    "text": "Answer each of the following questions. Be sure to display all your code in the rendered version (use echo: true throughout1).\nUse the following code to read in the King County restaurants data:\n\nload(url(\"https://github.com/vsass/CSSS508/raw/main/Lectures/Lecture7/data/restaurants.Rdata\"))"
+    "text": "Click link above for answers to homework 7."
   },
   {
     "objectID": "Homework/HW8/homework8.html",
@@ -11603,7 +11603,7 @@
     "href": "Homework/HW7/homework7_key.html#footnotes",
     "title": "Homework 7 Key",
     "section": "Footnotes",
-    "text": "Footnotes\n\n\nNote: To accurately reflect the true average you’ll want to weight this by restaurant: i.e. get the average grade by restaurant first, then get the average of those averages by zip code.↩︎\nThere are a few ways to do this. Use the method that makes most sense to you!↩︎"
+    "text": "Footnotes\n\n\nAnything that is separated by spaces counts as a word for this problem.↩︎\nNote: To accurately reflect the true average you’ll want to weight this by restaurant: i.e. get the average grade by restaurant first, then get the average of those averages by zip code.↩︎\nThere are a few ways to do this. Use the method that makes most sense to you!↩︎"
   },
   {
     "objectID": "Lectures/Lecture7/CSSS508_Lecture7.html#base-r-equivalentsyou-can-see-a-full-list-here-including-functions-we-didnt-look-at-today.",
@@ -12224,15 +12224,99 @@
   {
     "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#goal-dont-repeat-yourself-dry",
     "href": "Lectures/Lecture9/CSSS508_Lecture9.html#goal-dont-repeat-yourself-dry",
-    "title": "",
+    "title": "Roadmap",
     "section": "Goal: Don’t Repeat Yourself (DRY)!",
     "text": "Goal: Don’t Repeat Yourself (DRY)!\nThe DRY idea: Computers are much better at doing the same thing over and over again than we are.\n\n\nWriting code to repeat tasks for us reduces the most common human coding mistakes.\nIt also substantially reduces the time and effort involved in processing large volumes of data.\nLastly, compact code is more readable and easier to troubleshoot."
   },
   {
     "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#method-iteration",
     "href": "Lectures/Lecture9/CSSS508_Lecture9.html#method-iteration",
-    "title": "",
+    "title": "Roadmap",
     "section": "Method: Iteration!",
-    "text": "Method: Iteration!\nIteration involves repeatedly performing the same action on different objects.\n\n\nWe’ve already done some iteration, both because it’s built into R in certain ways, and because many of the tidyverse packages we’ve used have functions that are iterative.\n\n\n\nSome examples we’ve seen:\n\n\nMultiplying a vector x by any integer\n\nOther languages require explicit looping but R iterates automatically with its recycling rules\n\n\nFacetting ggplots\nSummarizing a grouped dataset\n\n\n\n\nWe’re now going to learn what makes R a functional programming language. That is, we’ll learn some functions that themselves take functions as arguments."
+    "text": "Method: Iteration!\nIteration involves repeatedly performing the same action on different objects.\n. . .\n\nWe’ve already done some iteration, both because it’s built into R in certain ways, and because many of the tidyverse packages we’ve used have functions that are iterative.\n. . .\n\n\nSome examples we’ve seen:\n\n\nMultiplying a vector x by any integer\n\nOther languages require explicit looping but R iterates automatically with its recycling rules\n\nFacetting ggplots\nSummarizing a grouped dataset\n\n\n\n\nWe’re now going to learn what makes R a functional programming language. That is, we’ll learn some functions that themselves take functions as arguments."
+  },
+  {
+    "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#simple-motivating-example-continued",
+    "href": "Lectures/Lecture9/CSSS508_Lecture9.html#simple-motivating-example-continued",
+    "title": "",
+    "section": "Simple, Motivating Example Continued",
+    "text": "Simple, Motivating Example Continued\nLet’s return to our first example from last week:\n\nrescale01 &lt;- function(x) {\n  (x - min(x, na.rm = TRUE)) / (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))\n}\n\n\n\n\n\n\ndf &lt;- tibble(\n  a = rnorm(5),\n  b = rnorm(5),\n  c = rnorm(5),\n  d = rnorm(5)\n  )\ndf\n\n\n\n\n\ndf |&gt; \n  mutate(a = rescale01(a),\n         b = rescale01(b),\n         c = rescale01(c),\n         d = rescale01(d))\n\n\n\n\n\n\n\n&gt; # A tibble: 5 × 4\n&gt;        a       b      c      d\n&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n&gt; 1 -0.130 -0.398   0.347  0.368\n&gt; 2 -1.14   1.04   -0.433 -1.07 \n&gt; 3 -2.18  -1.06   -0.278 -1.10 \n&gt; 4  0.765 -0.0376  0.674 -0.185\n&gt; 5 -0.474  1.27    1.25   1.36\n\n\n\n\n\n\n&gt; # A tibble: 5 × 4\n&gt;       a     b      c      d\n&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n&gt; 1 0.696 0.284 0.462  0.597 \n&gt; 2 0.354 0.902 0      0.0147\n&gt; 3 0     0     0.0918 0     \n&gt; 4 1     0.439 0.656  0.372 \n&gt; 5 0.580 1     1      1"
+  },
+  {
+    "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#simple-motivating-examplecontinued",
+    "href": "Lectures/Lecture9/CSSS508_Lecture9.html#simple-motivating-examplecontinued",
+    "title": "Roadmap",
+    "section": "Simple, Motivating Example…Continued",
+    "text": "Simple, Motivating Example…Continued\nLet’s return to our first example from last week:\n\nWithout our functionWith our functionWith across()\n\n\n\n\n\n\ndf &lt;- tibble(\n  a = rnorm(5),\n  b = rnorm(5),\n  c = rnorm(5),\n  d = rnorm(5)\n  )\ndf\n\n\n\n\n&gt; # A tibble: 5 × 4\n&gt;        a       b      c      d\n&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n&gt; 1 -0.130 -0.398   0.347  0.368\n&gt; 2 -1.14   1.04   -0.433 -1.07 \n&gt; 3 -2.18  -1.06   -0.278 -1.10 \n&gt; 4  0.765 -0.0376  0.674 -0.185\n&gt; 5 -0.474  1.27    1.25   1.36\n\n\n\n\n\n\n\n\ndf |&gt; mutate(\n  a = (a - min(a, na.rm = TRUE)) / (max(a, na.rm = TRUE) - min(a, na.rm = TRUE)),\n  b = (b - min(b, na.rm = TRUE)) / (max(b, na.rm = TRUE) - min(a, na.rm = TRUE)),\n  c = (c - min(c, na.rm = TRUE)) / (max(c, na.rm = TRUE) - min(c, na.rm = TRUE)),\n  d = (d - min(d, na.rm = TRUE)) / (max(d, na.rm = TRUE) - min(d, na.rm = TRUE))\n  )\n\n\n\n\n\n\nrescale01 &lt;- function(x) { \n  (x - min(x, na.rm = TRUE)) / (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))\n}\n\n\n\n\n\n\n\n\ndf |&gt; mutate(a = rescale01(a),\n             b = rescale01(b),\n             c = rescale01(c),\n             d = rescale01(d))\n\n\n\n\n&gt; # A tibble: 5 × 4\n&gt;       a     b      c      d\n&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n&gt; 1 0.696 0.284 0.462  0.597 \n&gt; 2 0.354 0.902 0      0.0147\n&gt; 3 0     0     0.0918 0     \n&gt; 4 1     0.439 0.656  0.372 \n&gt; 5 0.580 1     1      1\n\n\n\n\n\n\n\nCan we make this mutate call even more efficient?\n\n\n\n\n\ndf |&gt; mutate(across(a:d, rescale01))\n\n&gt; # A tibble: 5 × 4\n&gt;       a     b      c      d\n&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n&gt; 1 0.696 0.284 0.462  0.597 \n&gt; 2 0.354 0.902 0      0.0147\n&gt; 3 0     0     0.0918 0     \n&gt; 4 1     0.439 0.656  0.372 \n&gt; 5 0.580 1     1      1"
+  },
+  {
+    "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#basics-of-across",
+    "href": "Lectures/Lecture9/CSSS508_Lecture9.html#basics-of-across",
+    "title": "Roadmap",
+    "section": "Basics of across()",
+    "text": "Basics of across()\nacross() makes it easy to apply the same transformation to multiple columns.\n. . .\n\n\nacross(.cols, .fns, .names = NULL)\n\n. . .\n\nThere are three particularly important arguments, the first two of which you’ll use in every call to across().\n\n\n.cols specifies which columns to iterate over.\n.fns specifies what to do with each column.\n.names specifies the names of the output columns.\n\nBy default, the output of across() is given the same names as the inputs, meaning that across() inside of mutate() will replace existing columns. If you’d like to create new columns instead, use .names to specify them."
+  },
+  {
+    "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#reading-in-columns-with-.cols",
+    "href": "Lectures/Lecture9/CSSS508_Lecture9.html#reading-in-columns-with-.cols",
+    "title": "Roadmap",
+    "section": "Reading in columns with .cols",
+    "text": "Reading in columns with .cols\n.cols uses the same specifications as select() so you can use tidyselect functions like starts_with() to select columns based on their name.\n. . .\n\niris |&gt; \n  summarise(across(starts_with(\"Sepal\"), median))\n\n&gt;   Sepal.Length Sepal.Width\n&gt; 1          5.8           3\n\n\n. . .\nYou can also use everything() which selects every (non-grouping) column.\n. . .\n\niris |&gt; \n  summarise(across(everything(), median), \n            .by = Species)\n\n&gt;      Species Sepal.Length Sepal.Width Petal.Length Petal.Width\n&gt; 1     setosa          5.0         3.4         1.50         0.2\n&gt; 2 versicolor          5.9         2.8         4.35         1.3\n&gt; 3  virginica          6.5         3.0         5.55         2.0\n\n\n. . .\nLastly, where() allows you to select columns based on their type.\n. . .\n\niris |&gt; \n1  summarise(across(where(is.numeric), median))\n\n\n1\n\nJust like other selectors, you can combine these with Boolean algebra. For example, !where(is.numeric) selects all non-numeric columns.\n\n\n\n\n&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width\n&gt; 1          5.8           3         4.35         1.3"
+  },
+  {
+    "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#calling-a-single-function",
+    "href": "Lectures/Lecture9/CSSS508_Lecture9.html#calling-a-single-function",
+    "title": "Roadmap",
+    "section": "Calling a single function",
+    "text": "Calling a single function\nThe second argument to across() is what makes R a functional programming language. Here we’re passing a function to another function.\n. . .\n\n\n\n\n\n\n\n Important Distinction\n\n\n\nWe’re passing this function to across(), so across() can call it; we’re not calling it ourselves. That means the function name should never be followed by (). If you forget, you’ll get an error:\n\n\n. . .\n\n\nairquality |&gt; \n2  summarise(across(Ozone:Temp, median()))\n\n\n2\n\nThis error arises because you’re calling the function with no input, i.e. median().\n\n\n\n\n&gt; Error in `summarise()`:\n&gt; ℹ In argument: `across(Ozone:Temp, median())`.\n&gt; Caused by error in `median.default()`:\n&gt; ! argument \"x\" is missing, with no default"
+  },
+  {
+    "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#calling-multiple-functions",
+    "href": "Lectures/Lecture9/CSSS508_Lecture9.html#calling-multiple-functions",
+    "title": "Roadmap",
+    "section": "Calling multiple functions",
+    "text": "Calling multiple functions\nWhat if we want to know how many missing values we removed, in addition to calculating the median without those values?\n. . .\nIf you need to call multiple functions within across(), you’ll need to turn them into a named list.\n. . .\n\nairquality |&gt; \n  summarise(across(Ozone:Temp, \n5                   list(median = \\(x) median(x, na.rm = TRUE),\n                        n_miss = \\(x) sum(is.na(x)))))\n\n\n5\n\nThe names of the list are used to name the new variables. In fact, the columns are named using a glue specification {.col}_{.fn} where .col is the name of the original column and .fn is the name of the function.\n\n\n\n\n&gt;   Ozone_median Ozone_n_miss Solar.R_median Solar.R_n_miss Wind_median\n&gt; 1         31.5           37            205              7         9.7\n&gt;   Wind_n_miss Temp_median Temp_n_miss\n&gt; 1           0          79           0"
+  },
+  {
+    "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#anonymous-functions",
+    "href": "Lectures/Lecture9/CSSS508_Lecture9.html#anonymous-functions",
+    "title": "Roadmap",
+    "section": "Anonymous Functions",
+    "text": "Anonymous Functions\nIf the function you pass to across() has its own arguments that you want to specify, you’ll need to use an anonymous function:\n. . .\n\nairquality |&gt; \n3  summarise(across(Ozone:Temp, \\(x) median(x, na.rm = TRUE)))\n\n\n3\n\nSo-called anonymous, because we never explicitly gave it a name with &lt;-. Another term programmers use for this is “lambda function”.\n\n\n\n\n&gt;   Ozone Solar.R Wind Temp\n&gt; 1  31.5     205  9.7   79\n\n\n. . .\n\nYou might also see older code that looks like this:\n\nairquality |&gt; \n4  summarise(across(Ozone:Temp, ~ median(.x, na.rm = TRUE)))\n\n\n4\n\nThis is another way to write anonymous functions but it only works inside tidyverse functions and always uses the variable name .x. Base syntax is now recommended (i.e. \\(x) x + 1).\n\n\n\n\n&gt;   Ozone Solar.R Wind Temp\n&gt; 1  31.5     205  9.7   79"
+  },
+  {
+    "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#column-names",
+    "href": "Lectures/Lecture9/CSSS508_Lecture9.html#column-names",
+    "title": "Roadmap",
+    "section": "Column Names",
+    "text": "Column Names\nBy default, the output of across() is given the same names as the inputs. This means that across() inside of mutate() will replace existing columns.\n. . .\n\ndf |&gt; mutate(across(a:d, rescale01))\n\n&gt; # A tibble: 5 × 4\n&gt;       a     b      c      d\n&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n&gt; 1 0.696 0.284 0.462  0.597 \n&gt; 2 0.354 0.902 0      0.0147\n&gt; 3 0     0     0.0918 0     \n&gt; 4 1     0.439 0.656  0.372 \n&gt; 5 0.580 1     1      1\n\n\n. . .\nIf you’d like to instead create new columns, you can use the .names argument to give the output new names.\n. . .\n\n6df |&gt; mutate(across(a:d, rescale01, .names = \"{.col}_rescaled\"))\n\n\n6\n\n.col simply represents the original variable name.\n\n\n\n\n&gt; # A tibble: 5 × 8\n&gt;        a       b      c      d a_rescaled b_rescaled c_rescaled d_rescaled\n&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;\n&gt; 1 -0.130 -0.398   0.347  0.368      0.696      0.284     0.462      0.597 \n&gt; 2 -1.14   1.04   -0.433 -1.07       0.354      0.902     0          0.0147\n&gt; 3 -2.18  -1.06   -0.278 -1.10       0          0         0.0918     0     \n&gt; 4  0.765 -0.0376  0.674 -0.185      1          0.439     0.656      0.372 \n&gt; 5 -0.474  1.27    1.25   1.36       0.580      1         1          1"
+  },
+  {
+    "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#if_any-and-if_all",
+    "href": "Lectures/Lecture9/CSSS508_Lecture9.html#if_any-and-if_all",
+    "title": "Roadmap",
+    "section": "if_any() and if_all()",
+    "text": "if_any() and if_all()\nacross() works well with mutate() and summarize() but it has two variants that work with filter().\n. . .\n\n7airquality |&gt; filter(if_any(Ozone:Temp, is.na))\n\n\n7\n\nThis is the same as airquality |&gt; filter(is.na(Ozone) | is.na(Solar.R) | is.na(Wind) | is.na(Temp))\n\n\n\n\n&gt;    Ozone Solar.R Wind Temp Month Day\n&gt; 1     NA      NA 14.3   56     5   5\n&gt; 2     28      NA 14.9   66     5   6\n&gt; 3     NA     194  8.6   69     5  10\n&gt; 4      7      NA  6.9   74     5  11\n&gt; 5     NA      66 16.6   57     5  25\n&gt; 6     NA     266 14.9   58     5  26\n&gt; 7     NA      NA  8.0   57     5  27\n&gt; 8     NA     286  8.6   78     6   1\n&gt; 9     NA     287  9.7   74     6   2\n&gt; 10    NA     242 16.1   67     6   3\n&gt; 11    NA     186  9.2   84     6   4\n&gt; 12    NA     220  8.6   85     6   5\n&gt; 13    NA     264 14.3   79     6   6\n&gt; 14    NA     273  6.9   87     6   8\n&gt; 15    NA     259 10.9   93     6  11\n&gt; 16    NA     250  9.2   92     6  12\n&gt; 17    NA     332 13.8   80     6  14\n&gt; 18    NA     322 11.5   79     6  15\n&gt; 19    NA     150  6.3   77     6  21\n&gt; 20    NA      59  1.7   76     6  22\n&gt; 21    NA      91  4.6   76     6  23\n&gt; 22    NA     250  6.3   76     6  24\n&gt; 23    NA     135  8.0   75     6  25\n&gt; 24    NA     127  8.0   78     6  26\n&gt; 25    NA      47 10.3   73     6  27\n&gt; 26    NA      98 11.5   80     6  28\n&gt; 27    NA      31 14.9   77     6  29\n&gt; 28    NA     138  8.0   83     6  30\n&gt; 29    NA     101 10.9   84     7   4\n&gt; 30    NA     139  8.6   82     7  11\n&gt; 31    NA     291 14.9   91     7  14\n&gt; 32    NA     258  9.7   81     7  22\n&gt; 33    NA     295 11.5   82     7  23\n&gt; 34    78      NA  6.9   86     8   4\n&gt; 35    35      NA  7.4   85     8   5\n&gt; 36    66      NA  4.6   87     8   6\n&gt; 37    NA     222  8.6   92     8  10\n&gt; 38    NA     137 11.5   86     8  11\n&gt; 39    NA      64 11.5   79     8  15\n&gt; 40    NA     255 12.6   75     8  23\n&gt; 41    NA     153  5.7   88     8  27\n&gt; 42    NA     145 13.2   77     9  27\n\n\n\n8airquality |&gt; filter(if_all(Ozone:Temp, is.na))\n\n\n8\n\nThis is the same as airquality |&gt; filter(is.na(Ozone) & is.na(Solar.R) & is.na(Wind) & is.na(Temp))\n\n\n\n\n&gt; [1] Ozone   Solar.R Wind    Temp    Month   Day    \n&gt; &lt;0 rows&gt; (or 0-length row.names)"
+  },
+  {
+    "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#across-in-functions",
+    "href": "Lectures/Lecture9/CSSS508_Lecture9.html#across-in-functions",
+    "title": "Roadmap",
+    "section": "across() in Functions",
+    "text": "across() in Functions\nNaturally, across() lends itself to functions because it allows you to operate on multiple columns simultaneously.\n. . .\nJust remember to embrace with {{ }} when using an argument for column selection since the first argument of across() uses the tidy evaluation method tidy-select.\n. . .\n\nsummarize_means &lt;- function(df, summary_vars = where(is.numeric)) {\n  df |&gt; \n    summarize(\n      across({{ summary_vars }}, \\(x) mean(x, na.rm = TRUE)),\n      n = n(),\n      .groups = \"drop\"\n    )\n}\n\n. . .\n\n\n\n\ndiamonds |&gt; \n  group_by(cut) |&gt; \n  summarize_means(c(carat, x:z))\n\n\n\n\n&gt; # A tibble: 5 × 6\n&gt;   cut       carat     x     y     z     n\n&gt;   &lt;ord&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;\n&gt; 1 Fair      1.05   6.25  6.18  3.98  1610\n&gt; 2 Good      0.849  5.84  5.85  3.64  4906\n&gt; 3 Very Good 0.806  5.74  5.77  3.56 12082\n&gt; 4 Premium   0.892  5.97  5.94  3.65 13791\n&gt; 5 Ideal     0.703  5.51  5.52  3.40 21551"
+  },
+  {
+    "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#relationship-with-pivot_longer",
+    "href": "Lectures/Lecture9/CSSS508_Lecture9.html#relationship-with-pivot_longer",
+    "title": "Roadmap",
+    "section": "Relationship with pivot_longer()",
+    "text": "Relationship with pivot_longer()"
+  },
+  {
+    "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#bad-repetition-redux",
+    "href": "Lectures/Lecture9/CSSS508_Lecture9.html#bad-repetition-redux",
+    "title": "Roadmap",
+    "section": "Bad repetition redux",
+    "text": "Bad repetition redux\nImagine you have a directory full of excel spreadsheets you want to read into R.\nYou could do it with copy and paste:"
   }
 ]
