@@ -1,7 +1,65 @@
 ---
 title: "Homework 9"
-highlight-style: a11y-dark
+code-annotations: hover
+execute: 
+  message: false
+  warning: false
+output: 
+  html_document:
+    highlight-style: a11y-dark
 ---
+
+```{r}
+#| echo: false
+knitr::opts_chunk$set(comment = ">")
+
+library(tidyverse)
+```
+
+### Instructions
+Answer each of the following questions. Be sure to display **all your code in the rendered** version (use `echo: true` throughout[^longnote]). 
+
+[^longnote]: You can make this a global option for your whole document by putting it directly in the YAML of your qmd:
+
+    ```{YAML}
+    ---
+    title: "My Document"
+    execute:
+      echo: true
+    ---
+    ```
+
+### Exercises
+
+#### Question 1: 
+
+Compute the number of unique values in each column of `palmerpenguins::penguins`^[You'll need to download the `palmerpenguins` package in order to use `penguins` dataset.].
+
+#### Question 2: 
+
+Compute the mean of every column in `mtcars.`
+
+#### Question 3:
+
+Group `diamonds` by `cut`, `clarity`, and `color` then count the number of observations and compute the mean of each numeric column.
+
+#### Question 4: 
+
+What happens if you use a list of functions in `across()`, but don’t name them? How is the output named?
+
+#### Question 5: 
+
+5. Explain what each step of the following pipeline does. If you haven't seen the function before, look up its help page to learn the specifics of what it does.
+
+```{r}
+diamonds |> 
+  split(diamonds$cut) |>  # <1> 
+  map(\(df) lm(price ~ carat, data = df)) |> 
+  map(summary) |> 
+  map_dbl("r.squared")
+  
+```
+1. A function from base `R` that does not use tidy evaluation and therefore requires base indexing with `$`
 
 ### Due Dates
 

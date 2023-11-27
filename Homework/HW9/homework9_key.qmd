@@ -1,0 +1,81 @@
+---
+title: "Homework 8 Key"
+code-annotations: hover
+execute: 
+  message: false
+  warning: false
+output: 
+  html_document:
+    highlight-style: a11y-dark
+---
+
+```{r}
+#| code-fold: true
+knitr::opts_chunk$set(comment = ">")
+
+library(tidyverse)
+library(ggthemes)
+```
+
+#### Answer 1
+
+Compute the number of unique values in each column of `palmerpenguins::penguins`^[You'll need to download the `palmerpenguins` package in order to use `penguins` dataset.].
+
+```{r}
+library(palmerpenguins)
+data(penguins)
+
+penguins |> summarise(across(everything(), n_distinct))
+```
+
+#### Answer 2
+
+Compute the mean of every column in `mtcars.`
+
+```{r}
+mtcars |> summarise(across(everything(), mean))
+```
+
+#### Answer 3:
+
+Group `diamonds` by `cut`, `clarity`, and `color` then count the number of observations and compute the mean of each numeric column.
+
+```{r}
+diamonds |> summarise(n = n(),
+                      across(where(is.numeric), mean),
+                      .by = c(cut, clarity, color))
+```
+
+#### Answer 4:
+
+What happens if you use a list of functions in `across()`, but don’t name them? How is the output named?
+
+```{r}
+airquality |> 
+  summarize(
+    across(Ozone:Day, list(
+      \(x) median(x, na.rm = TRUE),
+      \(x) sum(is.na(x))
+    )),
+    n = n()
+  )
+```
+
+The default behavior of `across` if the names for multiple functions are not supplied is simply to append the variable name with a number, i.e. the first function will be `{.col}_1`, the second function will be `{.col}_2`, etc.
+
+#### Answer 5:
+
+Explain what each step of the following pipeline does. If you haven't seen the function before, look up its help page to learn the specifics of what it does.
+
+```{r}
+diamonds |>
+  split(diamonds$cut) |>  # <1> 
+  map(\(df) lm(price ~ carat, data = df)) |> # <2>
+  map(summary) %>% # <3> 
+  map_dbl("r.squared") # <4> 
+```
+1. A function from base `R` that does not use tidy evaluation and therefore requires base indexing with `$`. This step splits the `diamonds` dataset into different elements of a list by the `cut` variable
+2. This `map` call creates an anonymous function that vectorizes over the elements of the list created in the previous step, running a linear model regressing `price` onto `carat`.
+3. This `map` call vectorizes the `summary()` function on each model produced in the previous step.
+4. This `map_dbl` call literally plucks (see `map` documentation for the `.f` argument) the `"r.squared"` element from each list element from the previous step and returns them as a named double vector. 
+

@@ -317,7 +317,6 @@ There are three particularly important arguments, the first two of which you'll 
 * `.cols` specifies which columns to iterate over.
 * `.fns` specifies what to do with each column.
 * `.names` specifies the names of the output columns. 
-  * [By default, the output of `across()` is given the same names as the inputs, meaning that `across()` inside of `mutate()` will replace existing columns. If you’d like to create new columns instead, use `.names` to specify them.]{.custom-small}
 :::
 
 ## Reading in columns with `.cols`
@@ -519,15 +518,620 @@ diamonds |>
 
 Imagine you have a directory full of excel spreadsheets you want to read into `R`. 
 
-You could do it with copy and paste:  
+```{r}
+#| eval: false
+data2019 <- readxl::read_excel("data/y2019.xlsx")
+data2020 <- readxl::read_excel("data/y2020.xlsx")
+data2021 <- readxl::read_excel("data/y2021.xlsx")
+data2022 <- readxl::read_excel("data/y2022.xlsx")
+
+data <- bind_rows(data2019, data2020, data2021, data2022)
+```
+
+You could *technically* do it with copy and paste but we know that that's probably not the most efficient, least error-prone approach. 
+
+. . . 
+
+Not to mention how inconvenient this would be if you had hundreds of files to read in and combine. 
+
+. . . 
+
+The **iterative approach** involves three broad steps: 
+
+::: {.incremental}
+* use `list.files()` to list all the files in a directory
+* use `purrr::map()` to read each of them into a list
+* use `purrr::list_rbind()` to combine them into a single data frame
+:::
+
+## Step 1: Listing Files in a Directory
+
+The first part of this method involves creating a character vector of all the file paths for the files you want to read in. We'll motivate this example by reading in the gapminder data that's saved in separate excel sheets by year in my working directory. 
+
+<br>
+
+```{r}
+paths <- list.files("data/gapminder", # <1>
+                    pattern = "[.]xlsx$", # <2>
+                    full.names = TRUE) # <3>
+paths
+```
+1. The first argument, `path`, is the directory to look within. 
+2. `pattern` is a regular expression used to filter the file names. The most common pattern is something like `[.]xlsx$` or `[.]csv$` to find all files with a specified extension.
+3. `full.names` determines whether or not the directory name should be included in the output. You almost always want this to be `TRUE.`
+
+## Reading Files into a List
+
+Now we want to read these excel sheets into a single object so we can use iteration in the next step! A list is the perfect tool for this.
+
+. . . 
+
+```{r}
+files <- list(
+  readxl::read_excel("data/gapminder/1952.xlsx"),
+  readxl::read_excel("data/gapminder/1957.xlsx"),
+  readxl::read_excel("data/gapminder/1962.xlsx"),
+  readxl::read_excel("data/gapminder/1967.xlsx"),
+  readxl::read_excel("data/gapminder/1972.xlsx"),
+  readxl::read_excel("data/gapminder/1977.xlsx"),
+  readxl::read_excel("data/gapminder/1982.xlsx"),
+  readxl::read_excel("data/gapminder/1987.xlsx"),
+  readxl::read_excel("data/gapminder/1992.xlsx"),
+  readxl::read_excel("data/gapminder/1997.xlsx"),
+  readxl::read_excel("data/gapminder/2002.xlsx"),
+  readxl::read_excel("data/gapminder/2007.xlsx")
+)
+```
+
+. . . 
+
+Unfortunately, this is just as tedious a method as reading in all the separate file paths and creating individual data frame objects!
 
 
+## Step 2: Using `map()` instead!
+
+Instead of listing out all the `read_excel()` calls in our list, we can used the `map()` function from the tidyverse's `purrr` package. `map()` is similar to `across()`, but instead of doing something to each column in a data frame, it does something to each element of a vector.
+
+. . . 
+
+```{r}
+files <- map(paths, readxl::read_excel)
+```
+
+. . . 
+
+Now, what does `files` contain?
+
+:::: {.columns}
+::: {.column width="30%"}
+```{r}
+#| eval: false
+files[[1]]
+```
+:::
+::: {.column width="70%"}
+```{r}
+#| echo: false
+files[[1]]
+```
+:::
+::::
+
+## Step 3: Combine Dataframes into One
+
+Now that we have all our individual dataframes in an element of a list, we can use `list_rbind` to combine them into one dataframe. 
+
+. . . 
+
+```{r}
+list_rbind(files)
+```
+
+. . . 
+
+The super efficient, full code for the last two steps would therefore be: 
+
+```{r}
+#| eval: false
+paths |> 
+  map(readxl::read_excel) |> 
+  list_rbind()
+```
+
+## Data in the Filepath
+
+You may have noticed that we're missing a year indicator in our final dataset. That's because that information is actually a part of the filename itself. 
+
+. . . 
+
+There's a way to include the filename in the data but we have to add another step to our `paths` pipeline: 
+
+. . . 
+
+```{r}
+#| eval: false
+files <- paths |> 
+  set_names(basename) |> # <4>
+  map(readxl::read_excel)
+```
+4. The `set_names` function takes the function `basename` which extracts just the file name from the full path. This line of code will therefore create a named vector of the file paths where the names are actually the filenames. 
+
+. . . 
+
+What is this doing? 
+
+:::: {.columns}
+::: {.column width="30%"}
+```{r}
+#| eval: false
+paths |> 
+  set_names(basename)
+```
+:::
+::: {.column width="70%"}
+```{r}
+#| echo: false
+paths |> 
+  set_names(basename)
+```
+:::
+::::
+
+## Data in the Filepath
+
+You may have noticed that we're missing a year indicator in our final dataset. That's because that information is actually a part of the filename itself. 
+
+There's a way to include the filename in the data but we have to add another step to our `paths` pipeline: 
+
+```{r}
+#| eval: false
+files <- paths |> 
+  set_names(basename) |> # <4>
+  map(readxl::read_excel)
+```
+4. The `set_names` function takes the function `basename` which extracts just the file name from the full path. This line of code will therefore create a named vector of the file paths where the names are actually the filenames. 
+
+What is this doing? 
+
+:::: {.columns}
+::: {.column width="35%"}
+```{r}
+#| eval: false
+paths |> 
+  set_names(basename) |> 
+  map(readxl::read_excel)
+```
+:::
+::: {.column width="65%"}
+```{r}
+#| echo: false
+paths |> 
+  set_names(basename) |> 
+  map(readxl::read_excel)
+```
+:::
+::::
+
+## Data in the Filepath
+
+To create a `year` variable we need to tell `list_rbind` to save the filename information.
+
+. . . 
+
+```{r}
+gapminder <- paths |> 
+  set_names(basename) |> 
+  map(readxl::read_excel) |> 
+  list_rbind(names_to = "year") |> # <5>
+  mutate(year = parse_number(year)) # <6>
+gapminder
+```
+5. The name of each list element (the filename) will be saved as the variable `year`.
+6. Extracting just the numeric part of the filename which is the actual year. 
+
+. . . 
+
+```{r}
+write_csv(gapminder, "gapminder.csv") # <7>
+```
+7. Be sure to save your work so you can simply read in one file when working on this project in the future!
+
+## More Complex Cases
+
+. . . 
+
+::: {.callout-note icon=false}
+
+## <span style="color:blue">{{< fa circle-info >}}</span> Complicated Filenames
+There might be other variables stored in the directory name, or maybe the file name contains multiple bits of data. In that case, use `set_names()` (without any arguments) to record the full path, and then use `separate_wider_delim()` and friends to turn them into useful columns. See example at the end of [this section](https://r4ds.hadley.nz/iteration#sec-data-in-the-path).
+:::
+
+. . . 
+
+::: {.callout-tip icon=false}
+
+## <span style="color:green">{{< fa circle-info >}}</span> Untidy data of the same structure
+You can use `map` many times to perform different tidying and data manipulation tasks before combining datasets. Alternatively you can `list_rbind` first and then perform data manipulation tasks using a standard `dplyr` approach. See examples [here](https://r4ds.hadley.nz/iteration#many-simple-iterations).
+:::
+
+. . . 
+
+::: {.callout-warning icon=false}
+
+## <span style="color:tomato">{{< fa circle-info >}}</span> Heterogenous data
+Read [this section](https://r4ds.hadley.nz/iteration#heterogeneous-data) of *"R for Data Science"*
+:::
+
+::: {.callout-important icon=false}
+
+## <span style="color:red">{{< fa circle-info >}}</span> Troubleshooting
+Read [this section](https://r4ds.hadley.nz/iteration#handling-failures) of *"R for Data Science"*
+:::
 
 # Saving Multiple Outputs {.section-title background-color="#99a486"}
 
+## Writing multiple csv files
+
+Let's imagine we want to save multiple datasets based on a feature of the data. 
+
+. . . 
+
+For example, what if we want a different csv for each `clarity` type in the `diamonds` dataset? 
+
+. . . 
+
+The easiest way to make these individual datasets is using `group_nest()`: 
+
+```{r}
+by_clarity <- diamonds |> 
+  group_nest(clarity) |> # <1>
+  mutate(path = str_glue("diamonds-{clarity}.csv")) # <2>
+
+by_clarity
+```
+1. Nests a tibble using a grouping specification. 
+2. Creates a column that gives the name of output file. 
+
+## Writing multiple csv files
+
+Let's imagine we want to save multiple datasets based on a feature of the data. 
+
+For example, what if we want a different csv for each `clarity` type in the `diamonds` dataset? 
+
+The easiest way to make these individual datasets is using `group_nest()`: 
+
+```{r}
+by_clarity$data[[1]]
+```
+
+## Using `walk()`
+
+We basically want to carry out the following but we can't simply use `map()` because now we have *2* arguments that vary. 
+
+```{r}
+#| eval: false
+write_csv(by_clarity$data[[1]], by_clarity$path[[1]])
+write_csv(by_clarity$data[[2]], by_clarity$path[[2]])
+write_csv(by_clarity$data[[3]], by_clarity$path[[3]])
+...
+write_csv(by_clarity$by_clarity[[8]], by_clarity$path[[8]])
+```
+
+. . . 
+
+So we could use `map2()`, which allows us to map over **2** inputs! 
+
+```{r}
+#| eval: false
+map2(by_clarity$data, by_clarity$path, write_csv)
+```
+
+. . . 
+
+If we were to run the above, it will apply the first two arguments to the `write_csv()` function *and also print out all the datasets as it saves them*. 
+
+. . . 
+
+Since we don't actually care about the output (i.e. the printed datasets) and only want the files to be written, there's an even better function we can use: `walk2()`. 
+
+. . . 
+
+```{r}
+#| eval: false
+walk2(by_clarity$data, by_clarity$path, write_csv)
+```
+
+This performs the exact same thing as `map2()` but throws the output away. Therefore we're left with just the file-saving behavior which is what we're after.  
+
+## Saving multiple plots
+
+The same basic approach can be used to save multiple plots. 
+
+. . . 
+
+First let's create a function that draws the plot we want. 
+
+```{r}
+#| fig-align: center
+carat_histogram <- function(df) {
+  ggplot(df, aes(x = carat)) + geom_histogram(binwidth = 0.1)  
+}
+
+carat_histogram(by_clarity$data[[1]])
+```
+
+## Saving multiple plots [{{< fa scroll >}}]{style="color:#99a486"} {.scrollable}
+
+Now we can use `map()` to create a list of many plots and their eventual file paths:
+
+. . . 
+
+```{r}
+by_clarity <- by_clarity |> 
+  mutate(
+    plot = map(data, carat_histogram),
+    path = str_glue("clarity-{clarity}.png")
+  )
+by_clarity
+```
+
+. . . 
+
+```{r}
+by_clarity$plot[[1]]
+```
+
+
+## Saving multiple plots
+
+Then use `walk2()` with `ggsave()` to save each plot:
+
+. . . 
+
+```{r}
+#| eval: false
+walk2(
+  by_clarity$path,
+  by_clarity$plot,
+  \(path, plot) ggsave(path, plot, width = 6, height = 6)
+)
+```
+
+<br>
+
+. . . 
+
+Which is shorthand for: 
+
+```{r}
+#| eval: false
+ggsave(by_clarity$path[[1]], by_clarity$plot[[1]], width = 6, height = 6)
+ggsave(by_clarity$path[[2]], by_clarity$plot[[2]], width = 6, height = 6)
+ggsave(by_clarity$path[[3]], by_clarity$plot[[3]], width = 6, height = 6)
+...
+ggsave(by_clarity$path[[8]], by_clarity$plot[[8]], width = 6, height = 6)
+```
+
 # Apply Family {.section-title background-color="#99a486"}
 
+## `lapply`
+
+Base `R` has it's own family of iterative functions: the apply family of functions. 
+
+. . . 
+
+The most one-to-one translation in this family is `lapply` (list apply) to `map`. 
+
+. . . 
+
+```{r}
+lapply(swiss, FUN = median) # <1>
+```
+1. Since all of the examples of `map` in today's lecture are fairly simple, you can swap in `lapply` for any of them.
+
+Simply, `lapply()` is used to apply a function over a list of any kind (e.g. a data frame) and return a list.
+
+## `sapply()`: Simple `lapply()`
+
+A downside to `lapply()` is that lists can be hard to work with. `sapply()`, therefore, always tries to simplify the result. 
+
+. . . 
+
+```{r}
+sapply(swiss, FUN = median)
+```
+
+In this case, our list was simplified to a named numeric vector. However, the simplification can fail and give you an unexpected type so proceed with caution if you intend to use `sapply()`.
+
+. . . 
+
+#### `vapply()`: vector apply
+
+This version takes an additional argument that specifies the expected type, ensuring that simplification occurs the same way regardless of the input.
+
+::: {.fragment}
+```{r}
+vapply(swiss, median, double(1))
+```
+:::
+
+## `tapply()`
+
+Another important member of the apply family is `tapply()` which computes a single grouped summary. 
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width="40%"}
+```{r}
+#| code-line-numbers: false
+diamonds |> 
+  group_by(cut) |> 
+  summarize(price = mean(price))
+```
+
+:::
+
+::: {.column width="60%"}
+```{r}
+#| code-line-numbers: false
+tapply(diamonds$price, diamonds$cut, mean)
+```
+
+:::
+
+::::
+
+. . . 
+
+<br>
+
+Unfortunately `tapply()` returns its results in a named vector which requires some gymnastics if you want to collect multiple summaries and grouping variables into a data frame. 
+
+## `apply()`
+
+Lastly, there's `apply()`, which works over matrices or data frames. You can apply the function to each row `(MARGIN = 1)` or column `(MARGIN = 2)`.
+
+. . . 
+
+<br>
+
+```{r}
+apply(swiss, MARGIN = 2, FUN = summary)
+```
+
+
 # `for` loops {.section-title background-color="#99a486"}
+
+## Anatomy of a `for` loop
+
+`for` loops are the fundamental building block of iteration that both the apply and map families use under the hood.
+
+. . . 
+
+As you become a more experienced `R` programmer, `for` loops are a powerful and general tool that will be important to learn. 
+
+. . . 
+
+<br>
+
+The basic structure of a for loop looks like this:
+
+```{r}
+#| eval: false
+for (element in vector) {
+  # do something with element
+}
+```
+
+## Parallel with `walk()`
+
+The most straightforward use of for loops is to achieve the same effect as `walk()`: call some function with a side-effect on each element of a vector/list.
+
+. . . 
+
+A *very* basic example: 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+for(i in 1:10) {
+    print(i)
+}
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+1:10 |>
+  walk(\(x) print(x))
+```
+:::
+
+::::
+
+. . . 
+
+Things get a little trickier if you want to save the output of the for loop.
+
+. . . 
+
+When you're ready to dive into more advanced functional programming topics, including loops, check out the [Control Flow](https://adv-r.hadley.nz/control-flow.html#control-flow) and [Functional Programming](https://adv-r.hadley.nz/fp.html) chapters of *Advanced R*. 
+
+
+
+# Lab{.section-title background-color="#99a486"}
+
+## Iteration with `across`
+
+1. Compute the number of unique values in each column of `palmerpenguins::penguins`^[You'll need to download the `palmerpenguins` package in order to use `penguins` dataset.].
+
+2. Compute the mean of every column in `mtcars.`
+
+3. Group `diamonds` by `cut`, `clarity`, and `color` then count the number of observations and compute the mean of each numeric column.
+
+4. What happens if you use a list of functions in `across()`, but don’t name them? How is the output named?
+
+## Answers {visibility="hidden"}
+
+1. Compute the number of unique values in each column of `palmerpenguins::penguins`^[You'll need to download the `palmerpenguins` package in order to use `penguins` dataset.].
+
+. . . 
+
+```{r}
+library(palmerpenguins)
+data(penguins)
+
+penguins |> summarise(across(everything(), n_distinct))
+```
+
+## Answers {visibility="hidden"}
+
+2. Compute the mean of every column in `mtcars.`
+
+. . . 
+
+```{r}
+mtcars |> summarise(across(everything(), mean))
+```
+
+## Answers {visibility="hidden"}
+
+3. Group `diamonds` by `cut`, `clarity`, and `color` then count the number of observations and compute the mean of each numeric column.
+
+. . . 
+
+```{r}
+diamonds |> summarise(n = n(),
+                      across(where(is.numeric), mean),
+                      .by = c(cut, clarity, color))
+```
+
+## Answers {visibility="hidden"}
+
+4. What happens if you use a list of functions in `across()`, but don’t name them? How is the output named?
+
+. . . 
+
+```{r}
+airquality |> 
+  summarize(
+    across(Ozone:Day, list(
+      \(x) median(x, na.rm = TRUE),
+      \(x) sum(is.na(x))
+    )),
+    n = n()
+  )
+```
+
+The default behavior of `across` if the names for multiple functions are not supplied is simply to append the variable name with a number, i.e. the first function will be `{.col}_1`, the second function will be `{.col}_2`, etc.
+ 
+# Homework{.section-title background-color="#1e4655"}
+
+## {data-menu-title="Homework 9" background-iframe="https://vsass.github.io/CSSS508/Homework/HW9/homework9.html" background-interactive=TRUE}
+
 
 
 

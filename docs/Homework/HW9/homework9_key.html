@@ -172,130 +172,117 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="st">"&gt;"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">url</span>(<span class="st">"https://github.com/vsass/CSSS508/raw/main/Lectures/Lecture7/data/restaurants.Rdata"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <section id="answer-1" class="level4">
 <h4 class="anchored" data-anchor-id="answer-1">Answer 1</h4>
-<p>Given a vector of birthdates<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, write a function to compute the ages in years. Test your function!</p>
+<p>Compute the number of unique values in each column of <code>palmerpenguins::penguins</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>age_from_bday <span class="ot">&lt;-</span> <span class="cf">function</span>(birthdate){</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  (<span class="fu">today</span>() <span class="sc">-</span> <span class="fu">mdy</span>(birthdate)) <span class="sc">|&gt;</span> <span class="fu">time_length</span>(<span class="at">unit =</span> <span class="st">"year"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">age_from_bday</span>(<span class="fu">c</span>(<span class="st">"12/05/1980"</span>, <span class="st">"November 6, 1983"</span>, <span class="st">"Jan 30, 2020"</span>, <span class="st">"5-28-23"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(penguins)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), n_distinct))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&gt; [1] 42.9733060 40.0547570  3.8220397  0.4982888</code></pre>
+<pre><code>&gt; # A tibble: 1 × 8
+&gt;   species island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+&gt;     &lt;int&gt;  &lt;int&gt;          &lt;int&gt;         &lt;int&gt;             &lt;int&gt;       &lt;int&gt;
+&gt; 1       3      3            165            81                56          95
+&gt; # ℹ 2 more variables: sex &lt;int&gt;, year &lt;int&gt;</code></pre>
 </div>
 </div>
 </section>
 <section id="answer-2" class="level4">
 <h4 class="anchored" data-anchor-id="answer-2">Answer 2</h4>
-<p>For each of the following functions list all arguments that use tidy evaluation and describe whether they use data-masking or tidy-selection: <code>distinct()</code>, <code>count()</code>, <code>group_by()</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, <code>rename_with()</code>, <code>slice_min()</code>, <code>slice_sample()</code>.</p>
-<table class="table">
-<thead>
-<tr class="header">
-<th style="text-align: right;">Function</th>
-<th style="text-align: center;">Argument(s)</th>
-<th style="text-align: center;">Tidy-Evaluation Type</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;"><code>distinct()</code></td>
-<td style="text-align: center;"><code>...</code></td>
-<td style="text-align: center;">data-masking</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;"><code>count()</code></td>
-<td style="text-align: center;"><code>...</code></td>
-<td style="text-align: center;">data-masking</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;"></td>
-<td style="text-align: center;"><code>wt</code></td>
-<td style="text-align: center;">data-masking</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;"><code>group_by()</code></td>
-<td style="text-align: center;"><code>...</code></td>
-<td style="text-align: center;">data-masking</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;"><code>rename_with()</code></td>
-<td style="text-align: center;"><code>.cols</code></td>
-<td style="text-align: center;">tidy-select</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;"><code>slice_min()</code></td>
-<td style="text-align: center;"><code>order_by</code></td>
-<td style="text-align: center;">data-masking</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;"></td>
-<td style="text-align: center;"><code>by</code></td>
-<td style="text-align: center;">tidy-select</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;"><code>slice_sample()</code></td>
-<td style="text-align: center;"><code>by</code></td>
-<td style="text-align: center;">tidy-select</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;"></td>
-<td style="text-align: center;"><code>weight_by</code></td>
-<td style="text-align: center;">data-masking</td>
-</tr>
-</tbody>
-</table>
+<p>Compute the mean of every column in <code>mtcars.</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt;        mpg    cyl     disp       hp     drat      wt     qsec     vs      am
+&gt; 1 20.09062 6.1875 230.7219 146.6875 3.596563 3.21725 17.84875 0.4375 0.40625
+&gt;     gear   carb
+&gt; 1 3.6875 2.8125</code></pre>
+</div>
+</div>
 </section>
 <section id="answer-3" class="level4">
 <h4 class="anchored" data-anchor-id="answer-3">Answer 3:</h4>
-<p>Build up a rich plotting function by incrementally implementing each of the steps below:</p>
-<ul>
-<li>Draw a scatterplot given <code>dataset</code> and <code>x</code> and <code>y</code> variables.</li>
-<li>Add a line of best fit (i.e.&nbsp;a linear model with no standard errors).</li>
-<li>Add a title that includes the names of the variables used.</li>
-</ul>
-<p>Test your function with the built-in datasets <code>cars</code>, <code>swiss</code>, and <code>iris</code>.</p>
+<p>Group <code>diamonds</code> by <code>cut</code>, <code>clarity</code>, and <code>color</code> then count the number of observations and compute the mean of each numeric column.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>scatterplot <span class="ot">&lt;-</span> <span class="cf">function</span>(dataset, x, y){</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> dataset, <span class="fu">aes</span>(<span class="at">x =</span> {{ x }}, <span class="at">y =</span> {{ y }})) <span class="sc">+</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_jitter</span>() <span class="sc">+</span> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> rlang<span class="sc">::</span><span class="fu">englue</span>(<span class="st">"Relationship between {{ x }} and {{ y }}"</span>), </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="fu">str_to_title</span>(rlang<span class="sc">::</span><span class="fu">englue</span>(<span class="st">"{{ x }}"</span>)), </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="fu">str_to_title</span>(rlang<span class="sc">::</span><span class="fu">englue</span>(<span class="st">"{{ y }}"</span>))) <span class="sc">+</span> </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tufte</span>()</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">scatterplot</span>(cars, speed, dist)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">scatterplot</span>(swiss, Education, Fertility)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">scatterplot</span>(iris, Sepal.Length, Sepal.Width)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="homework8_key_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">.by =</span> <span class="fu">c</span>(cut, clarity, color))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 276 × 11
+&gt;    cut       clarity color     n carat depth table price     x     y     z
+&gt;    &lt;ord&gt;     &lt;ord&gt;   &lt;ord&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+&gt;  1 Ideal     SI2     E       469 0.874  61.7  56.1 3891.  6.02  6.02  3.71
+&gt;  2 Premium   SI1     E       614 0.726  61.2  58.8 3363.  5.64  5.61  3.44
+&gt;  3 Good      VS1     E        89 0.681  61.6  59.2 3713.  5.49  5.52  3.39
+&gt;  4 Premium   VS2     I       315 1.24   61.3  58.9 7156.  6.70  6.67  4.09
+&gt;  5 Good      SI2     J        53 1.32   62.4  59.1 5306.  6.85  6.86  4.27
+&gt;  6 Very Good VVS2    J        29 1.10   62.4  58.3 5960.  6.34  6.37  3.96
+&gt;  7 Very Good VVS1    I        69 0.571  62.2  58.0 2056.  5.17  5.20  3.22
+&gt;  8 Very Good SI1     H       547 0.974  62.0  58.0 4934.  6.15  6.17  3.82
+&gt;  9 Fair      VS2     E        42 0.690  64.5  59.4 3042.  5.50  5.45  3.53
+&gt; 10 Very Good VS1     H       257 0.772  62.0  57.7 3750.  5.68  5.70  3.53
+&gt; # ℹ 266 more rows</code></pre>
 </div>
 </div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="homework8_key_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+</section>
+<section id="answer-4" class="level4">
+<h4 class="anchored" data-anchor-id="answer-4">Answer 4:</h4>
+<p>What happens if you use a list of functions in <code>across()</code>, but don’t name them? How is the output named?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>airquality <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(Ozone<span class="sc">:</span>Day, <span class="fu">list</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      \(x) <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    )),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>()</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt;   Ozone_1 Ozone_2 Solar.R_1 Solar.R_2 Wind_1 Wind_2 Temp_1 Temp_2 Month_1
+&gt; 1    31.5      37       205         7    9.7      0     79      0       7
+&gt;   Month_2 Day_1 Day_2   n
+&gt; 1       0    16     0 153</code></pre>
 </div>
 </div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="homework8_key_files/figure-html/unnamed-chunk-4-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<p>The default behavior of <code>across</code> if the names for multiple functions are not supplied is simply to append the variable name with a number, i.e.&nbsp;the first function will be <code>{.col}_1</code>, the second function will be <code>{.col}_2</code>, etc.</p>
+</section>
+<section id="answer-5" class="level4">
+<h4 class="anchored" data-anchor-id="answer-5">Answer 5:</h4>
+<p>Explain what each step of the following pipeline does. If you haven’t seen the function before, look up its help page to learn the specifics of what it does.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-2" class="code-annotation-target"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(diamonds<span class="sc">$</span>cut) <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2">2</button><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(\(df) <span class="fu">lm</span>(price <span class="sc">~</span> carat, <span class="at">data =</span> df)) <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="3">3</button><span id="annotated-cell-6-4" class="code-annotation-target"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(summary) <span class="sc">%&gt;%</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="4">4</button><span id="annotated-cell-6-5" class="code-annotation-target"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="st">"r.squared"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="2" data-code-annotation="1">A function from base <code>R</code> that does not use tidy evaluation and therefore requires base indexing with <code>$</code>. This step splits the <code>diamonds</code> dataset into different elements of a list by the <code>cut</code> variable</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="3" data-code-annotation="2">This <code>map</code> call creates an anonymous function that vectorizes over the elements of the list created in the previous step, running a linear model regressing <code>price</code> onto <code>carat</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="4" data-code-annotation="3">This <code>map</code> call vectorizes the <code>summary()</code> function on each model produced in the previous step.</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="5" data-code-annotation="4">This <code>map_dbl</code> call literally plucks (see <code>map</code> documentation for the <code>.f</code> argument) the <code>"r.squared"</code> element from each list element from the previous step and returns them as a named double vector.</span>
+</dd>
+</dl>
 </div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt;      Fair      Good Very Good   Premium     Ideal 
+&gt; 0.7383940 0.8509539 0.8581622 0.8556336 0.8670887</code></pre>
 </div>
 </div>
 
@@ -306,8 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>Format in <code>mdy()</code>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>The documentation for <code>group_by()</code> doesn’t explicitly tell you which tidy evaluation method it uses so check out <a href="https://dplyr.tidyverse.org/articles/programming.html">this resource</a> to figure it out.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>You’ll need to download the <code>palmerpenguins</code> package in order to use <code>penguins</code> dataset.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
