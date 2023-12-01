@@ -12562,7 +12562,7 @@
     "href": "Lectures/Lecture9/CSSS508_Lecture9.html#answers-3",
     "title": "",
     "section": "Answers",
-    "text": "Answers\n\nWhat happens if you use a list of functions in across(), but don’t name them? How is the output named?\n\n\n\nairquality |&gt; \n  summarize(\n    across(Ozone:Day, list(\n      \\(x) median(x, na.rm = TRUE),\n      \\(x) sum(is.na(x))\n    )),\n    n = n()\n  )\n\n&gt;   Ozone_1 Ozone_2 Solar.R_1 Solar.R_2 Wind_1 Wind_2 Temp_1 Temp_2 Month_1\n&gt; 1    31.5      37       205         7    9.7      0     79      0       7\n&gt;   Month_2 Day_1 Day_2   n\n&gt; 1       0    16     0 153\n\n\nThe default behavior of across if the names for multiple functions are not supplied is simply to append the variable name with a number, i.e. the first function will be {.col}_1, the second function will be {.col}_2, etc."
+    "text": "Answers\n\nWhat happens if you use a list of functions in across() but don’t name them? How is the output named?\n\n\n\nairquality |&gt; \n  summarize(\n    across(Ozone:Day, list(\n      \\(x) median(x, na.rm = TRUE),\n      \\(x) sum(is.na(x))\n    )),\n    n = n()\n  )\n\n&gt;   Ozone_1 Ozone_2 Solar.R_1 Solar.R_2 Wind_1 Wind_2 Temp_1 Temp_2 Month_1\n&gt; 1    31.5      37       205         7    9.7      0     79      0       7\n&gt;   Month_2 Day_1 Day_2   n\n&gt; 1       0    16     0 153\n\n\nThe default behavior of across if the names for multiple functions are not supplied is simply to append the variable name with a number, i.e. the first function will be {.col}_1, the second function will be {.col}_2, etc."
   },
   {
     "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#answers-4",
