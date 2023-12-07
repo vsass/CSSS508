@@ -79,7 +79,7 @@ diamonds |>
   map_dbl("r.squared") # <4> 
 ```
 
-1.  A function from base `R` that does not use tidy evaluation and therefore requires base indexing with `$`. This step splits the `diamonds` dataset into different elements of a list by the `cut` variable
+1. A function from base `R` that does not use tidy evaluation and therefore requires base indexing with `$`. This step splits the `diamonds` dataset into different elements of a list by the `cut` variable
 2.  This `map` call creates an anonymous function that vectorizes over the elements of the list created in the previous step, running a linear model regressing `price` onto `carat`.
 3.  This `map` call vectorizes the `summary()` function on each model produced in the previous step.
 4.  This `map_dbl` call literally plucks (see `map` documentation for the `.f` argument) the `"r.squared"` element from each list element from the previous step and returns them as a named double vector.
