@@ -42,7 +42,7 @@ rubric <- rubric_table |>
 ## peer review
 
 peer_review_table <- tibble(Evaluation = c("Didn't follow all peer-review instructions.", 
-                                           "Peer review is at least one paragraph long, <br> 
+                                           "Peer review is at least several sentences long, <br> 
                                            mentions any and all key issues from the assignment, <br> 
                                            and points out at least one positive thing in your <br> 
                                            peer’s work (and hopefully more!)."),

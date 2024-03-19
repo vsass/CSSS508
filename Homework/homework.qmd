@@ -27,34 +27,24 @@ library(tidyverse)
 library(gt)
 
 schedule <- tibble(Homework = c(1:9), 
-                   Due_Date_AA = c("10 October", "17 October", "24 October", "31 October", "7 November", "14 November", "21 November", "28 November", "5 December"), 
-                   Peer_Due_Date_AA = c("15 October", "22 October", "29 October", "5 November", "12 November", "19 November", "26 November", "3 November", "10 December"), 
-                   Due_Date_AB = c("12 October", "19 October", "26 October", "2 November", "9 November", "16 November", "23 November", "30 November", "7 December"), 
-                   Peer_Due_Date_AB = c("17 October", "24 October", "31 October", "7 November", "14 November", "21 November", "28 November", "5 November", "12 December"))
+                   Due_Date = c("2 April", "9 April", "16 April", "23 April", "30 April", "7 May", "14 May", "21 May", "28 May"), 
+                   Peer_Due_Date = c("7 April", "14 April", "21 April", "28 April", "5 May", "12 May", "19 May", "26 May", "2 June"))
 
 schedule |> 
   gt() |> 
-  tab_spanner(label = "Section AA",
-              columns = vars(Due_Date_AA, Peer_Due_Date_AA)) |> 
-  tab_spanner(label = "Section AB",
-              columns = vars(Due_Date_AB, Peer_Due_Date_AB), 
-              id = "AB") |> 
   #tab_header(title = md("**Homework & Peer Review Due Dates**")) |> 
   cols_align(align = "center") |> 
   cols_label(Homework = "#",
-             Due_Date_AA = "Homework Due",
-             Peer_Due_Date_AA = "Peer Review Due",
-             Due_Date_AB = "Homework Due",
-             Peer_Due_Date_AB = "Peer Review Due") |> 
+             Due_Date = "Homework Due",
+             Peer_Due_Date = "Peer Review Due") |> 
   tab_style(style = cell_fill(color = "#c7cdac"),
-            locations = list(cells_body(columns = c(Due_Date_AA, Due_Date_AB)), 
-                             cells_column_labels(columns = c(Due_Date_AA, Due_Date_AB)))) |> 
+            locations = list(cells_body(columns = c(Due_Date)), 
+                             cells_column_labels(columns = c(Due_Date)))) |> 
   tab_style(style = cell_fill(color = "#99a486"),
-            locations = list(cells_body(columns = c(Peer_Due_Date_AA, Peer_Due_Date_AB)), 
-                             cells_column_labels(columns = c(Peer_Due_Date_AA, Peer_Due_Date_AB)))) |> 
+            locations = list(cells_body(columns = c(Peer_Due_Date)), 
+                             cells_column_labels(columns = c(Peer_Due_Date)))) |> 
   tab_style(style = cell_fill(color = "#f6f7f9"),
-            locations = list(cells_column_spanners(), 
-                             cells_body(columns = Homework), 
+            locations = list(cells_body(columns = Homework), 
                              cells_column_labels(columns = Homework))) |> 
   tab_options(table.align = "left", 
               table.font.names = c("Raleway", "Fraunces"), 
@@ -86,8 +76,8 @@ rubric |>
 You are required to **both grade and provide feedback** on a peer's homework each week. Reading/evaluating the work of others is useful and important! Good programmers realize that most problems have been solved by others; the trick is figuring out how to apply existing code to new problems. You will develop this skill by reading others' code, evaluating their approach to problems, providing suggestions, and pointing out when you learned something new. <span style="background-color: #decbe4;">**Good peer reviews** give constructive, polite, and insightful comments, are specific and concise, use the grading rubric above, and point out what you learned from their code.</span> <span style="background-color: #fdcdac;">**Poor peer reviews** are impolite or unprofessional, are generic (i.e., could be applied to anyone's homework), or fail to provide useful suggestions.</span>
 
 ::: {.callout-important}
-## Late Homework Will Not Be Accepted For Credit
-Due to the nature of our schedule, peer reviews are randomly assigned when the due date/time is reached. Therefore, if you don't submit your homework on time, you will not be given a peer's homework to review and vice versa. Life is messy and complicated though and we all miss deadlines for a variety of reasons. Therefore, you can request that I provide you with feedback on a late assignment ({{< var message >}} on Slack) but you won't be able to earn any points for that particular homework. 
+## Late Homework Will Automatically Lose Peer-Review Credit
+Peer reviews are randomly assigned when the due date/time is reached. Therefore, if you don't submit your homework on time, you will not be given a peer's homework to review and vice versa. That said, life is messy and complicated and we all miss deadlines for a variety of reasons. Therefore, you can request that I review and provide feedback on a late assignment ({{< var message >}} on Slack) but you won't be able to earn peer-review credit for that particular homework. 
 :::
 
 ### **Rubric Instructor Uses to Grade Peer Review:**

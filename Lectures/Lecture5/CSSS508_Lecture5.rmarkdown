@@ -26,7 +26,9 @@ revealjs-plugins:
   - pointer
 ---
 
+
 ## {#title-slide data-menu-title="Importing, Exporting, and Cleaning Data" background="#1e4655" background-image="../../images/csss-logo.png" background-position="center top 5%" background-size="50%"}
+
 
 ```{r}
 #| echo: false
@@ -37,6 +39,7 @@ require(tidyverse)
 
 knitr::opts_chunk$set(comment = ">")
 ```
+
 
 [Importing, Exporting, and Cleaning Data]{.custom-title}
 
@@ -148,26 +151,32 @@ The `readr` package provides similar functions, like `read_csv()`, that have sli
 
 `readr` is one of the core `tidyverse` packages so loading `tidyverse` will load it too:
 
+
 ```{r}
 library(tidyverse)
 ```
 
+
 . . . 
 
 Alternatively, you can just load `readr` like so:
+
 
 ```{r}
 #| eval: false
 library(readr)
 ```
 
+
 ## `readr` Importing Example
 
 Let's import some data about song ranks on the Billboard Hot 100 in 2000:
 
+
 ```{r}
 billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv")
 ```
+
 
 . . . 
 
@@ -177,10 +186,12 @@ How do we know it loaded?
 
 Let's look at it!
 
+
 ```{r}
 #| output-location: fragment
 glimpse(billboard_2000_raw)
 ```
+
 
 ## Alternate Solution
 
@@ -223,6 +234,7 @@ This makes the process *reproducible!*
 Sometimes a particular dataset or file read from a different software will code `NA`s differently than `R`. If that's the case, you can add additional specifications to `read_csv` for what to read in as `NA`.  
 
 
+
 ```{r}
 #| eval: false
 #| code-line-numbers: "|2"
@@ -230,9 +242,11 @@ billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv",
                                na = c("N/A", "999"))
 ```
 
+
 ## Skipping lines
 
 Depending on how the data were input, there may be several lines that precede the beginning of the data table you're interested in importing. You can skip these lines of metadata with the `skip` argument:
+
 
 ```{r}
 #| eval: false
@@ -240,6 +254,7 @@ Depending on how the data were input, there may be several lines that precede th
 billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv", 
                                skip = 1)
 ```
+
 
 ## Variable names
 
@@ -249,6 +264,7 @@ billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv",
 
 It takes a character vector to be used as column names (in their order of appearance). 
 
+
 ```{r}
 billboard_renamed <- read_csv(file = "data/billboard_top100.csv", 
                                col_names = c("year", "artist", "track", "time", "date_entered", 
@@ -256,6 +272,7 @@ billboard_renamed <- read_csv(file = "data/billboard_top100.csv",
 
 billboard_renamed |>  names() |> head(10) # <2>
 ```
+
 
 1. `paste` "pastes" together the first argument to the second argument (separated by whatever is specified in the `sep` argument) as character strings. Since the first argument here is a singular value, it is repeated for the entire length of the vector in the second argument. The first several values of `paste("wk", 1:76, sep = "_")` are: `r head(paste("wk", 1:76, sep = "_"))`
 2. `names` here returns the column names of our data frame.
@@ -266,6 +283,7 @@ billboard_renamed |>  names() |> head(10) # <2>
 
 If you don't have any variable names you can specify that instead. 
 
+
 ```{r}
 #| eval: false
 #| code-line-numbers: "|2"
@@ -273,9 +291,11 @@ billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv",
                                col_names = FALSE) 
 ```
 
+
 ## Snake Case
 
 If you simply want to change your variables to snake case (all lower case; words separated by `_`), you can use the function `clean_names()` from the `janitor` package which replaces other punctuation separators with `_`. 
+
 
 ```{r}
 #| output-location: fragment
@@ -288,6 +308,7 @@ billboard_renamed <- billboard_2000_raw |>
 
 billboard_renamed |>  names() |> head(10)
 ```
+
 
 1. Run in the console first. 
 2. You can call a function without loading its package by specifying its package name followed by `::` before it; <br> The `numerals` argument specifies if you additionally want to put a separator before a number. 
@@ -375,6 +396,7 @@ Note: For Excel files and Googlesheets You **won't** keep text formatting, color
 
 For each column in a data frame, `readr` functions pull the first 1000 rows and checks:
 
+
 ```{mermaid}
 %%| echo: false
 %%| fig-width: 11
@@ -397,9 +419,11 @@ flowchart LR
 
 ```
 
+
 ## How does `readr` parse different data types?
 
 For each column in a data frame, `readr` functions pull the first 1000 rows and checks: 
+
 
 ```{mermaid}
 %%| echo: false
@@ -423,9 +447,11 @@ flowchart LR
 
 ```
 
+
 ## How does `readr` parse different data types?
 
 For each column in a data frame, `readr` functions pull the first 1000 rows and checks:
+
 
 ```{mermaid}
 %%| echo: false
@@ -449,9 +475,11 @@ flowchart LR
 
 ```
 
+
 ## How does `readr` parse different data types?
 
 For each column in a data frame, `readr` functions pull the first 1000 rows and checks:
+
 
 ```{mermaid}
 %%| echo: false
@@ -475,9 +503,11 @@ flowchart LR
 
 ```
 
+
 ## How does `readr` parse different data types?
 
 For each column in a data frame, `readr` functions pull the first 1000 rows and checks:
+
 
 ```{mermaid}
 %%| echo: false
@@ -501,6 +531,7 @@ flowchart LR
 
 ```
 
+
 ## Most Common Issue with Reading in Data
 
 The most common problem that occurs when reading in data is having mixed data. Most often, given the heuristic provided in the last slide, `readr` will parse a variable as a character string to preserve whatever it contains. 
@@ -509,10 +540,12 @@ The most common problem that occurs when reading in data is having mixed data. M
 
 Let's actually look at how the billboard data was read in: 
 
+
 ```{r}
 #| output-location: fragment
 glimpse(billboard_2000_raw) 
 ```
+
 
 ## What Went Wrong? 
 
@@ -528,6 +561,7 @@ There are not many songs in the data that charted for 60+ weeks—and none in th
 
 ## <span style="color:blue">{{< fa circle-info >}}</span> \ `NA` is logical?
 
+
 ```{r}
 #| output-location: fragment
 class(c(T, F, NA, FALSE, TRUE))
@@ -536,6 +570,7 @@ class(as.Date(c(NA, "2023-10-31", "1986-06-21", "1997-01-15"), tz = "America/Los
 class(c("apple", NA, "mango", "blackberry", "plum")) 
 class(c(NA, NA, NA, NA, NA))
 ```
+
 
 1. `class` returns the data type of its first argument. 
 2. `as.Date` turns a character string of dates into an official date class in Base `R`. If we had an accompanying time stamp we would need to use `as.POSIXct` which turns a character string of dates and times into an official date-time class in Base `R`. 
@@ -551,6 +586,7 @@ Since the `wk*` variables should all be read in as integers, we can specify this
 
 . . . 
 
+
 ```{r}
 #| output-location: fragment
 # Create character string of shortcode column types
@@ -558,11 +594,13 @@ bb_types <- paste(c("icctD", rep("i", 76)), collapse="") # <1>
 bb_types 
 ```
 
+
 1. You can short-code column types with `i` = integer, `c` = character, `t` = time, `D` = date. <br> The `collapse` argument collapses the first two arguments into one complete character string.
 
 . . . 
 
 <br>
+
 
 ```{r}
 # re-read in data with column types specified
@@ -571,7 +609,9 @@ billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv",
 billboard_2000_raw |> head(1)
 ```
 
+
 2. This string now specifies the data type for each column of our data frame. Visit [this reference page](https://readr.tidyverse.org/reference/cols.html) to see all available column types and their short codes. 
+
 
 ```{r}
 #| echo: false
@@ -580,9 +620,11 @@ billboard_renamed <- read_csv(file = "data/billboard_top100.csv",
   janitor::clean_names(numerals = "right")
 ```
 
+
 ## Column types
 
 To specify a default column type you can use `.default` like so: 
+
 
 ```{r}
 #| eval: false
@@ -591,11 +633,13 @@ billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv",
                                col_types = cols(.default = col_character())) 
 ```
 
+
 . . . 
 
 <br>
 
 Another useful helper is `cols_only()` for when you only want to read in a subset of all available variables.
+
 
 ```{r}
 #| eval: false
@@ -603,6 +647,7 @@ Another useful helper is `cols_only()` for when you only want to read in a subse
 billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv", 
                                col_types = cols_only(x = col_character)) 
 ```
+
 
 . . . 
 
@@ -614,6 +659,7 @@ In summary, the `col_types` argument gives you greater control over how your dat
 
 If you data are split across multiple files you can read them in all at once by specifying the `id` argument. 
 
+
 ```{r}
 #| output-location: fragment
 # Create list of files manually
@@ -621,9 +667,11 @@ sales_files <- c("data/01_sales.csv", "data/02_sales.csv", "data/03_sales.csv")
 read_csv(sales_files, id = "file")
 ```
 
+
 ## Reading in Multiple Files 
 
 If you have too many files to reasonable type out all their names you can also use the base `r` function `list.files` to list the files for you. 
+
 
 ```{r}
 #| output-location: fragment
@@ -631,6 +679,7 @@ If you have too many files to reasonable type out all their names you can also u
 sales_files <- list.files("data", pattern = "sales\\.csv$", full.names = TRUE) # <1>
 sales_files
 ```
+
 
 1. We will discuss pattern-matching more in a couple of weeks; if all your data was in one folder without anything else in it, you wouldn't need to specify this argument. Sometimes, however, you may be searching through larger directories that you did not organize and that's when pattern-matching is really powerful. 
 
@@ -644,6 +693,7 @@ Sometimes you'll need to create a data set in your code. You can do this two way
 
 Tibbles lay out the data by columns (i.e. a dataframe transposed).
 
+
 ```{r}
 #| output-location: fragment
 # Creating data with tibble
@@ -654,9 +704,11 @@ tibble(
 )
 ```
 
+
 ### `tribble()`
 
 Tibbles (`tr`ansposed ti`bble`) lay out the data by rows (i.e. the way a dataframe looks) which is much more intuitive.
+
 
 ```{r}
 #| output-location: fragment
@@ -669,16 +721,19 @@ tribble(
 )
 ```
 
+
 :::
 
 ## Writing Delimited Files
 
 Getting data out of R into a delimited file is very similar to getting it into R:
 
+
 ```{r}
 #| eval: false
 write_csv(billboard_2000_raw, path = "data/billboard_data.csv")
 ```
+
 
 This saved the data we pulled off the web in a file called `billboard_data.csv` in the `data` folder of my working directory.
 
@@ -869,11 +924,13 @@ Most real-world data is not tidy because data are often organized for goals othe
 
 ## Billboard is Just Ugly-Messy
 
+
 ```{r}
 #| echo: false
 billboard_2000_raw |> 
   head(10)
 ```
+
 
 ::: aside
 Week columns continue up to `wk76`!
@@ -954,6 +1011,7 @@ This function usually takes three arguments:
 
 ## `pivot_longer()` Example
 
+
 ```{r}
 #| output-location: fragment 
 billboard_2000 <- billboard_renamed |> # <1>
@@ -964,6 +1022,7 @@ billboard_2000 <- billboard_renamed |> # <1>
 billboard_2000 |> head(10)
 ```
 
+
 1. `billboard_renamed` here has snake_case variable names and correctly specified column types
 2. `starts_with()` is one of the helper functions from [`tidyselect`](https://tidyselect.r-lib.org/index.html) that helps select certain common patterns. We could have also used `cols = wk1:wk76`. 
 
@@ -973,20 +1032,24 @@ Now we have a single week column!
 
 ## Lots of Missing Values?!
 
+
 ```{r}
 #| output-location: fragment 
 glimpse(billboard_2000)
 ```
+
 
 ::: {.fragment}
 It looks like 2 Pac's song "Baby Don't Cry" was only on the Billboard Hot 100 for 7 weeks and then dropped off the charts. 
 :::
 . . . 
 
+
 ```{r}
 #| output-location: fragment 
 summary(billboard_2000$rank)
 ```
+
 
 ::: {.fragment}
 We don't want to keep the `r sum(is.na(billboard_2000$rank))` rows with missing ranks.
@@ -995,6 +1058,7 @@ We don't want to keep the `r sum(is.na(billboard_2000$rank))` rows with missing 
 ## Pivoting Better: `values_drop_na`
 
 Adding the argument `values_drop_na = TRUE` to `pivot_longer()` will remove rows with missing ranks. Since these `NA`s don’t really represent unknown observations (i.e. they were forced to exist by the structure of the dataset) this is an appropriate approach here. 
+
 
 ```{r}
 #| output-location: fragment 
@@ -1007,14 +1071,17 @@ billboard_2000 <- billboard_renamed |>
 summary(billboard_2000$rank)
 ```
 
+
 . . . 
 
 No more `NA` values!
+
 
 ```{r}
 #| output-location: fragment 
 dim(billboard_2000)
 ```
+
 
 . . . 
 
@@ -1024,14 +1091,17 @@ And way fewer rows!
 
 The week column is of the type `character`, but it should be `numeric.`
 
+
 ```{r}
 #| output-location: fragment 
 head(billboard_2000$week)
 ```
 
+
 . . . 
 
 `parse_number()` grabs just the numeric information from a character string:
+
 
 ```{r}
 #| output-location: fragment 
@@ -1039,6 +1109,7 @@ billboard_2000 <- billboard_2000 |>
     mutate(week = parse_number(week)) # <3>
 summary(billboard_2000$week)
 ```
+
 3. You can use `mutate()` to overwrite existing columns. 
 
 . . . 
@@ -1050,6 +1121,7 @@ More sophisticated tools for character strings will be covered later in this cou
 Alternatively (and more efficiently), there are a number of optional arguments for `pivot_longer` that are meant to help deal with naming issues.
 
 . . . 
+
 
 ```{r}
 #| output-location: fragment
@@ -1064,6 +1136,7 @@ billboard_2000 <- billboard_renamed |>
 head(billboard_2000, 5)
 ```
 
+
 4. `names_prefix` is used to remove "wk_" from the values of `week`
 5. `names_transform` converts `week` into an integer number.
 
@@ -1075,10 +1148,12 @@ A more challenging situation occurs when you have multiple pieces of information
 
 This dataset contains tuberculosis diagnoses collected by the World Health Organization. 
 
+
 ```{r}
 #| output-location: fragment
 who2
 ```
+
 
 . . . 
 
@@ -1098,6 +1173,7 @@ To organize the six pieces of information in this dataset into six separate colu
 
 ## Multiple Variables in Column Names
 
+
 ```{r}
 #| output-location: fragment
 who2 |> 
@@ -1109,22 +1185,26 @@ who2 |>
   )
 ```
 
+
 6. You can use `names_pattern` instead of `names_sep` to extract variables from more complicated naming scenarios once you've learned regular expressions in a few weeks. 
 
 ## Variable & Values in Column Names
 
 This dataset contains data about five families, with the names and dates of birth of up to two children. 
 
+
 ```{r}
 #| output-location: fragment
 household
 ```
+
 
 . . . 
 
 The new challenge in this dataset is that the column names contain the names of two variables (`dob`, `name`) and the values of another (`child`, with values `1` or `2`).
 
 ## Variable & Values in Column Names
+
 
 ```{r}
 #| output-location: column-fragment
@@ -1136,6 +1216,7 @@ household |>
     values_drop_na = TRUE # <8> 
   )
 ```
+
 
 7. `.value` isn’t the name of a variable but a unique value that tells `pivot_longer` to use the first component of the pivoted column name as a variable name in the output. 
 8. Using `values_drop_na = TRUE` again since not every family has 2 children.
@@ -1152,6 +1233,7 @@ household |>
 
 Here's an example of data that we probably want to pivot wider (unless we want to plot each statistic in its own facet):
 
+
 ```{r}
 #| echo: false
 long_stats <- tibble(Group = c(rep("A", 3), rep("B", 3)),
@@ -1160,11 +1242,13 @@ long_stats <- tibble(Group = c(rep("A", 3), rep("B", 3)),
 long_stats
 ```
 
+
 . . . 
 
 A common cue to use `pivot_wider()` is having measurements of different quantities in the same column.
 
 ## `pivot_wider` Example 
+
 
 ```{r}
 #| output-location: fragment
@@ -1174,6 +1258,7 @@ wide_stats <- long_stats |>
               values_from = Value) # <11>
 wide_stats
 ```
+
 
 9. `id_cols` is the column that uniquely identifies each row in the new dataset. Default is everything not in `names_from` and `values_from`.
 10. `names_from` provides the names that will be used for the new columns
@@ -1237,9 +1322,11 @@ Factors are a special class of data specifically for categorical variables^[<spa
 
 Imagine we have a variable that records the month that an event occurred. 
 
+
 ```{r}
 month <- c("Dec", "Apr", "Jan", "Mar")
 ```
+
 
 . . . 
 
@@ -1247,22 +1334,27 @@ The two main issues with coding this simply as a character string are that
 
 1) It doesn't help catch *spelling errors* and that
 
+
 ```{r}
 #| eval: false
 month <- c("Dec", "Apr", "Jam", "Mar")
 ```
 
+
 . . . 
 
 2) Characters are *sorted alphabetically*, which is not necessarily intuitive or useful for your variable. 
+
 
 ```{r}
 sort(month)
 ```
 
+
 ## Factors
 
 Factors have an additional specification called levels. These are the categories of the categorical variable. We can create a vector of the levels first: 
+
 
 ```{r}
 month_levels <- c(
@@ -1271,22 +1363,27 @@ month_levels <- c(
 )
 ```
 
+
 . . . 
 
 And then we can create a factor like so: 
+
 
 ```{r}
 month_factor <- factor(month, levels = month_levels)
 month_factor
 ```
 
+
 . . . 
 
 We can see that the levels specify in which order the categories should be displayed:
 
+
 ```{r}
 sort(month_factor)
 ```
+
 
 ## Creating Factors
 
@@ -1317,18 +1414,22 @@ sort(month_factor)
 
 You can create a factor by specifying `col_factor()` when reading in data with `readr`: 
 
+
 ```{r}
 #| eval: false
 df <- read_csv(csv, col_types = cols(month = col_factor(month_levels)))
 ```
 
+
 . . . 
 
 If you need to access the levels directly you can use the Base `R` function `levels()`.
 
+
 ```{r}
 levels(month_factor)
 ```
+
 
 ## Changing the Order of Levels
 One of the more common data manipulations you'll want to do with factors is to change the ordering of the levels. This could be to put them in a more intuitive order but also to make a visualization clearer and more impactful. 
@@ -1337,9 +1438,11 @@ One of the more common data manipulations you'll want to do with factors is to c
 
 Let's use a subset of the General Social Survey^[Once you've loaded `forcats` you can run `?gss_cat` to learn more.] data to see what this might look like. 
 
+
 ```{r}
 gss_cat
 ```
+
 
 ## Changing the Order of Levels
 
@@ -1349,12 +1452,14 @@ There are four related functions to change the level ordering in `forcats`.
 
 **`fct_reorder()`**
 
+
 ```{r}
 #| eval: false
 fct_reorder(.f = factor, # <1>
             .x = ordering_vector, # <2>
             .fun = optional_function) # <3>
 ```
+
 1. `factor` is the factor to reorder (or a character string to be turned into a factor)
 2. `ordering_vector` specifies how to reorder `factor` 
 3. `optional_function` is applied if there are multiple values of `ordering_vector` for each value of `factor` (the default is to take the median)
@@ -1362,18 +1467,21 @@ fct_reorder(.f = factor, # <1>
 . . . 
 
 **`fct_relevel()`**
+
 ```{r}
 #| eval: false
 fct_relevel(.f = factor, 
             ... = value, # <4>
             after = placement) # <5>
 ```
+
 4. `value` is either a function (i.e. `sort`) or a character level (default is to move it to the front of the vector)
 5. `placement` is an optional vector index where the level should be placed
 
 . . . 
 
 **`fct_reorder2()`**
+
 ```{r}
 #| eval: false
 fct_reorder2(.f = factor, 
@@ -1381,15 +1489,18 @@ fct_reorder2(.f = factor,
             .y = vector2) # <6>
 ```
 
+
 6. `fct_reorder2` reorders `factor` by the values of `vector2` associated with the largest values of `vector1.`
 
 . . . 
 
 **`fct_infreq()`**
+
 ```{r}
 #| eval: false
 fct_infreq(.f = factor) # <7> 
 ```
+
 
 7. `fct_infreq` reorders `factor` in decreasing frequency. See other variations [here](https://forcats.tidyverse.org/reference/fct_inorder.html). Use with `fct_rev()` for increasing frequency. 
 
@@ -1404,6 +1515,7 @@ There are four related functions to change the level ordering in `forcats`.
 ### <span style="color:#e15759; font-family:Roboto Mono">fct_reorder^[Use `fct_reorder` and `fct_reorder2` for categorical variables where ordering is arbitary.]</span> 
 
 **Without `fct_reorder()`**
+
 
 ```{r}
 #| fig-width: 12
@@ -1421,7 +1533,9 @@ ggplot(relig_summary, aes(x = tvhours, y = relig)) +
   geom_point()
 ```
 
+
 **With `fct_reorder()`**
+
 
 ```{r}
 #| fig-width: 12
@@ -1436,9 +1550,11 @@ relig_summary |>
   geom_point()
 ```
 
+
 ### <span style="color:#4e79a7; font-family:Roboto Mono">fct_relevel^[Use `fct_relevel` for categorical variables that already have an inherent ordering.]</span>
 
 **Without `fct_relevel()`**
+
 
 ```{r}
 #| fig-width: 12
@@ -1456,7 +1572,9 @@ ggplot(rincome_summary, aes(x = age, y = rincome)) +
   geom_point()
 ```
 
+
 **With `fct_relevel()`**
+
 
 ```{r}
 #| fig-width: 12
@@ -1467,9 +1585,11 @@ ggplot(rincome_summary, aes(x = age, y = fct_relevel(rincome, "Not applicable"))
   geom_point()
 ```
 
+
 ### <span style="color:#f28e2c; font-family:Roboto Mono">fct_reorder2</span>
 
 **Without `fct_reorder2()`**
+
 
 ```{r}
 #| fig-width: 12
@@ -1489,7 +1609,9 @@ ggplot(by_age, aes(x = age, y = prop, color = marital)) +
   scale_color_brewer(palette = "Set1")
 ```
 
+
 **With `fct_reorder()`**
+
 
 ```{r}
 #| fig-width: 12
@@ -1502,9 +1624,11 @@ ggplot(by_age, aes(x = age, y = prop, color = fct_reorder2(marital, age, prop)))
   labs(color = "marital") 
 ```
 
+
 ### <span style="color:#76b7b2; font-family:Roboto Mono">fct_infreq</span>
 
 **Without `fct_infreq()`**
+
 
 ```{r}
 #| fig-width: 12
@@ -1517,7 +1641,9 @@ gss_cat |>
   geom_bar()
 ```
 
+
 **With `fct_infreq()`**
+
 
 ```{r}
 #| fig-width: 12
@@ -1530,6 +1656,7 @@ gss_cat |>
   geom_bar()
 ```
 
+
 :::
 
 ## Changing the Value of Levels
@@ -1538,9 +1665,11 @@ You may also want to change the actual values of your factor levels. The main wa
 
 . . . 
 
+
 ```{r}
 gss_cat |> count(partyid) # <8> 
 ```
+
 
 8. You can use `count()` to get the full list of levels for a variable and their respective counts. 
 
@@ -1549,6 +1678,7 @@ gss_cat |> count(partyid) # <8>
 :::: {.columns}
 
 ::: {.column width="60%"}
+
 ```{r}
 #| eval: false
 gss_cat |>
@@ -1564,9 +1694,11 @@ gss_cat |>
   ) |>
   count(partyid)
 ```
+
 :::
 
 ::: {.column width="40%"}
+
 ```{r}
 #| echo: false
 gss_cat |>
@@ -1582,6 +1714,7 @@ gss_cat |>
   ) |>
   count(partyid)
 ```
+
 :::
 
 ::::
@@ -1602,6 +1735,7 @@ A useful variant of `fct_recode()` is `fct_collapse()` which will allow you to c
 
 . . . 
 
+
 ```{r}
 gss_cat |>
   mutate(
@@ -1615,17 +1749,20 @@ gss_cat |>
   count(partyid)
 ```
 
+
 ## `fct_lump_*`
 
 Sometimes you'll have several levels of a variable that have a small enough `N` to warrant grouping them together into an `other` category. The family of `fct_lump_*` functions are designed to help with this. 
 
 . . . 
 
+
 ```{r}
 gss_cat |>
   mutate(relig = fct_lump_n(relig, n = 10)) |> # <9>
   count(relig, sort = TRUE)
 ```
+
 
 9. Other functions include: `fct_lump_min()`, `fct_lump_prop()`, `fct_lump_lowfreq()`. Read more about them [here](https://forcats.tidyverse.org/reference/fct_lump.html). 
 
@@ -1637,9 +1774,11 @@ So far we've mostly been discussing how to code nominal variables, or categorica
 
 If you want to specify that your factor has a strict order you can classify it as a ordered factor. 
 
+
 ```{r}
 ordered(c("a", "b", "c")) # <10>
 ```
+
 
 10. Ordered factors imply a strict ordering and equal distance between levels: the first level is “less than” the second level by the same amount that the second level is “less than” the third level, and so on.
 
@@ -1749,6 +1888,7 @@ If you're reading in a different date/date-time format you can use `col_types` p
 :::
 
 ::: {.fragment}
+
 ```{r}
 csv <- "
   date
@@ -1758,6 +1898,7 @@ csv <- "
 read_csv(csv, col_types = cols(date = col_date("%m/%d/%y")))
 ```
 
+
 <br>
 :::
 
@@ -1766,29 +1907,35 @@ read_csv(csv, col_types = cols(date = col_date("%m/%d/%y")))
 
 You can also use lubridate's helper functions to specify a date format automatically. 
 
+
 ```{r}
 ymd("2017-01-31")
 mdy("January 31st, 2017")
 dmy("31-Jan-2017")
 ```
 
+
 <br>
 
 ::: {.fragment}
 If you need to specify a date-time you can use these helper functions: 
+
 ```{r}
 ymd_hms("2017-01-31 20:11:59")
 mdy_hm("01/31/2017 08:01")
 ```
+
 
 <br>
 :::
 
 ::: {.fragment}
 If you provide a date object with a timezone it'll automatically be converted to a date-time object. 
+
 ```{r}
 ymd("2017-01-31", tz = "UTC")
 ```
+
 
 <br>
 :::
@@ -1797,6 +1944,7 @@ ymd("2017-01-31", tz = "UTC")
 
 If you have time elements in separate variables, like in the `flights` dataset...
 
+
 ```{r}
 #| output-location: fragment
 library(nycflights13)
@@ -1804,8 +1952,10 @@ flights |>
   select(year, month, day, hour, minute)
 ```
 
+
 ::: {.fragment}
 ...you can use `make_date` or `make_datetime` to create your date/time object. 
+
 
 ```{r}
 #| output-location: fragment
@@ -1815,11 +1965,13 @@ flights2 <- flights |>
 flights2
 ```
 
+
 <br>
 ::: 
 
 ::: {.fragment}
 Note that when you use date-times in a numeric context (like in a histogram), 1 means 1 second, so a `binwidth` of 86400 means one day. For dates, 1 means 1 day. 
+
 
 ```{r}
 #| fig-align: center
@@ -1829,8 +1981,10 @@ ggplot(flights2, aes(x = departure)) +
   geom_freqpoly(binwidth = 86400)
 ```
 
+
 <br>
 :::
+
 
 ```{r}
 #| eval: false
@@ -1859,14 +2013,17 @@ billboard_2000 |> filter(track == "Try Again") |>
 ```
 
 
+
 ### Existing Object
 
 `as_datetime()` and `as_date()` are used to coerce existing date/time objects into their counterpart. 
+
 
 ```{r}
 as_datetime(today())
 as_date(now())
 ```
+
 
 <br>
 
@@ -1877,12 +2034,14 @@ While `ISO8601` format is read in as a string of human-readable date/times, anot
 ::: {.fragment}
 If the offset is in seconds you'll want to use `as_datetime()` and if it's in days use `as_date()` for the conversion. 
 
+
 ```{r}
 as_datetime(1)
 as_datetime(5057)
 as_date(1)
 as_date(5057)
 ```
+
 
 <br>
 :::
@@ -1897,6 +2056,7 @@ We've discussed how to make a date/time object from individual components using 
 
 There are a number of accessor functions that allow you to do just that. 
 
+
 ```{r}
 #| output-location: fragment
 datetime <- ymd_hms("2020-01-30 12:30:45")
@@ -1910,6 +2070,7 @@ hour(datetime)
 minute(datetime)
 second(datetime)
 ```
+
 1. You can set `label = TRUE` to return the abbreviated name and `abbr = FALSE` to return the full name (i.e. `month(datetime, label = TRUE)` returns  **<span style="color:#76b7b2">`r month(datetime, label = TRUE)`</span>** and `month(datetime, label = TRUE, abbr = FALSE)` returns **<span style="color:#76b7b2">`r month(datetime, label = TRUE, abbr = FALSE)`</span>**)
 2. Day of the month.
 3. Day of the year.
@@ -1921,6 +2082,7 @@ While less common, you may need to recode a date/time variable which you can als
 
 . . . 
 
+
 ```{r}
 datetime <- ymd_hms("2020-01-30 08:05:35")
 
@@ -1930,15 +2092,18 @@ hour(datetime) <- hour(datetime) + 1
 datetime
 ```
 
+
 . . . 
 
 An alternative^[And more efficient when needing to specify multiple aspects of a date/time variable.] way to do this is by using `update()`:
 
 . . . 
 
+
 ```{r}
 update(datetime, year = 2030, month = 2, mday = 2, hour = 2)
 ```
+
 
 . . . 
 
@@ -1946,9 +2111,11 @@ A nice feature of this function is that if values are too big for the unit in qu
 
 . . . 
 
+
 ```{r}
 update(ymd("2023-02-01"), mday = 30)
 ```
+
 
 
 ## Rounding Dates
@@ -1956,6 +2123,7 @@ update(ymd("2023-02-01"), mday = 30)
 Alternatively, you can round your date/time objects to a nearby unit with these three functions: `floor_date()`, `round_date()`, and `ceiling_date()`.
 
 . . . 
+
 
 ```{r}
 #| output-location: fragment
@@ -1965,6 +2133,7 @@ floor_date(datetime, unit = "week") # <5>
 round_date(datetime, unit = "week", week_start = 1) # <5>
 ceiling_date(datetime, unit = "hour") # <5>
 ```
+
 
 5. These functions take 3 arguments: a date/time vector, a unit of time to round by (valid base units include `second`, `minute`, `hour`, `day`, `week`, `month`, `bimonth`, `quarter`, `season`, `halfyear` and `year`), and the day of the week that the week starts (default is 7, or Sunday). 
 
@@ -1983,11 +2152,13 @@ Durations represent precise physical time. When you subtract two dates, you'll g
 
 . . . 
 
+
 ```{r}
 s_age <- today() - ymd("2023-05-28")
 s_age # <6>    
 as.duration(s_age) # <7> 
 ```
+
 
 6. `difftime` objects record time spans in seconds, minutes, hours, days, or weeks. This is fairly ambiguous so `lubridate` provides a more consistent alternative: the `duration`, which always uses seconds. 
 7. Larger units are created by converting minutes, hours, days, weeks, and years to seconds. 
@@ -1995,6 +2166,7 @@ as.duration(s_age) # <7>
 . . . 
 
 There are a variety of constructors to create durations: 
+
 
 ```{r}
 dseconds(15)
@@ -2005,26 +2177,31 @@ dweeks(3)
 dyears(1) # <8> 
 ```
 
+
 8. Aggregating to larger time units is more problematic. A year uses the “average” number of days in a year, i.e. 365.25. There’s no way to convert a month to a duration, because there’s just too much variation.
 
 ## Math with Durations
 
 You can add and multiply durations:
 
+
 ```{r}
 2 * dyears(1)
 dyears(1) + dweeks(12) + dhours(15)
 ```
 
+
 . . . 
 
 Sometimes you'll get an unexpected results though: 
+
 
 ```{r}
 one_am <- ymd_hms("2026-03-08 01:00:00", tz = "America/New_York")
 one_am
 one_am + ddays(1) # <9> 
 ```
+
 
 9. Daylight Savings Time is a human construction so March 8th only has 23 hours because it’s when DST starts. If we add a full days worth of seconds we end up with a different time and a different time zone. 
 
@@ -2038,10 +2215,12 @@ Periods represent "human" times like days and months and therefore do not have a
 
 . . . 
 
+
 ```{r}
 one_am
 one_am + days(1)
 ```
+
 
 . . . 
 
@@ -2051,26 +2230,31 @@ Periods also have their own constructor functions:
 
 . . . 
 
+
 ```{r}
 hours(c(12, 24))
 days(7)
 months(1:6)
 ```
 
+
 ## Math with Periods
 
 We can add and multiply periods: 
+
 
 ```{r}
 10 * (months(6) + days(1))
 days(50) + hours(25) + minutes(2)
 ```
 
+
 . . . 
 
 <br>
 
 And also add them to dates. 
+
 
 ```{r}
 # A leap year
@@ -2082,6 +2266,7 @@ one_am + ddays(1)
 one_am + days(1) # <10>
 ```
 
+
 10. Periods are more likely than durations to do what you expect. 
 
 ## Intervals
@@ -2092,10 +2277,12 @@ Intervals represent the length of a time span in human units. You can think of i
 
 Imagine we wanted to know how many days are in a year? 
 
+
 ```{r}
 years(1) / days(1) # <11>
 dyears(1) / ddays(365) # <12>
 ```
+
 
 11. Since this value changed depending on the year in question, lubridate gives an estimate (or the average) for the number of days in *any* given year. 
 12. A similar thing happens for durations. 
@@ -2106,6 +2293,7 @@ To be more accurate we need to give the specific range of time in questions.
 
 . . . 
 
+
 ```{r}
 y2023 <- ymd("2023-01-01") %--% ymd("2024-01-01") # <13>
 y2024 <- ymd("2024-01-01") %--% ymd("2025-01-01")
@@ -2114,6 +2302,7 @@ y2024
 y2023 / days(1) # <14> 
 y2024 / days(1)
 ```
+
 
 13. You can create an interval by writing `start %--% end`.
 14. Now when we do this math we get the exact number of "human" days within the span of dates we specified. 
@@ -2124,10 +2313,12 @@ Time zones are a very complicated topic because different places have different 
 
 . . . 
 
+
 ```{r}
 Sys.timezone() # <15>
 OlsonNames() # <16>
 ```
+
 
 15. Use `Sys.timezone()` to find out which timezone `R` thinks you're in. 
 16. See the complete list of all time zone names with `OlsonNames()`
@@ -2140,6 +2331,7 @@ There are two ways you may want to change the time zone:
 
 #### **Keep instant in time, change display**
 
+
 ```{r}
 x <- ymd_hms("2024-06-01 12:00:00", tz = "America/New_York")
 x
@@ -2147,11 +2339,13 @@ x
 with_tz(x, tzone = "Australia/Lord_Howe") # <17> 
 ```
 
+
 17. The `+10:30` offset is the difference relative to `UTC` (functionally similar to Greenwich Mean Time) which is `2024-06-01 16:00:00 UTC` in this example.
 
 <br>
 
 #### **Change underlying instant in time**
+
 
 ```{r}
 y <- ymd_hms("2024-06-01 9:00:00", tz = "America/Los_Angeles")
@@ -2159,6 +2353,7 @@ y
 
 force_tz(y, tzone = "Australia/Lord_Howe") # <18> 
 ```
+
 
 18. In this case the time zone was labelled incorrectly so by forcing the correct time zone we changed the underlying instant in time. 
 
@@ -2172,6 +2367,7 @@ Operations that combine date-times, like `c()`, will often drop the time zone. I
 
 . . . 
 
+
 ```{r}
 a <- ymd_hms("2024-06-01 14:00:00", tz = "Asia/Gaza") 
 b <- ymd_hms("2024-06-01 14:00:00", tz = "Cuba") 
@@ -2181,6 +2377,7 @@ b # <20>
 c # <21>
 c(a, b, c)
 ```
+
 
 19. EEST = Eastern European Summer Time
 20. CDT = Central Daylight Time
@@ -2206,14 +2403,17 @@ Question 1: Click *File* > *Save* to download this data to the same folder where
 
 Question 2: Read in your data using the appropriate function from `readr`. 
 
+
 ```{r}
 religion_income <- read_csv(file = "data/religion-income.csv", 
                             col_types = c("f", rep("i", 10)))
 ```
 
+
 ## Answers {auto-animate="true"} {visibility="hidden"}
 
 Question 3: Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
+
 
 ```{r}
 #| output-location: fragment
@@ -2224,9 +2424,11 @@ religion_income_tidy <- religion_income |>
 religion_income_tidy
 ```
 
+
 ## Answers {auto-animate="true"} {visibility="hidden"}
 
 Question 4: Turn two of the variables into factors^[Hint: Which two variables are categorical?].
+
 
 ```{r}
 #| output-location: fragment
@@ -2240,7 +2442,9 @@ religion_income_tidy <- religion_income |>
                                          "$75-100k", "$100-150k", ">150k")))
 ```
 
+
 ## Answers {visibility="hidden"}
+
 
 ```{r}
 #| output-location: fragment
@@ -2248,9 +2452,11 @@ religion_income_tidy
 ```
 
 
+
 ## Answers {visibility="hidden"}
 
 Question 5: Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency? You can determine this by **summarizing the data** or creating a visualization of the data.
+
 
 ```{r}
 # Data manipulation
@@ -2259,9 +2465,11 @@ religion_income_tidy |>
   slice_max(frequency)
 ```
 
+
 ## Answers <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} {visibility="hidden"}
 
 Question 5: Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency? You can determine this by summarizing the data or creating a **visualization** of the data.
+
 
 ```{r}
 #| eval: false
@@ -2290,11 +2498,13 @@ ggplot(aes(x = income, y = religion, fill = frequency)) +
 ggsave(plot = heatmap, filename = "images/heatmap.png", width = 16, height = 8, units = "in")
 ```
 
+
 ![](images/heatmap.png){fig-align="center" width=150% height=150%}
 
 # Homework{.section-title background-color="#1e4655"}
 
 ## {data-menu-title="Homework 5" background-iframe="https://vsass.github.io/CSSS508/Homework/HW5/homework5.html" background-interactive=TRUE}
+
 
 
 
