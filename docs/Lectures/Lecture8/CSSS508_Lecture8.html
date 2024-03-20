@@ -10,7 +10,7 @@
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+  <meta name="generator" content="quarto-1.4.551">
 
   <title>csss508_lecture8</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,7 +32,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -225,7 +225,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -398,7 +399,7 @@
 <h2></h2>
 <p><span class="custom-title">Writing Functions</span></p>
 <p><span class="custom-subtitle">CS&amp;SS 508 • Lecture 8</span></p>
-<p><span class="custom-subtitle2">14 May 2023</span></p>
+<p><span class="custom-subtitle2">14 May 2024</span></p>
 <p><span class="custom-subtitle3">Victoria Sass</span></p>
 </section>
 <section>
@@ -521,24 +522,24 @@
 <div class="columns">
 <div class="column" style="width:62%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  <span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
-<span id="cb1-3"><a href="#cb1-3"></a>  <span class="at">b =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
-<span id="cb1-4"><a href="#cb1-4"></a>  <span class="at">c =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
-<span id="cb1-5"><a href="#cb1-5"></a>  <span class="at">d =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
-<span id="cb1-6"><a href="#cb1-6"></a>  )</span>
-<span id="cb1-7"><a href="#cb1-7"></a>df</span>
-<span id="cb1-8"><a href="#cb1-8"></a></span>
-<span id="cb1-9"><a href="#cb1-9"></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
-<span id="cb1-10"><a href="#cb1-10"></a>  <span class="at">a =</span> (a <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
-<span id="cb1-11"><a href="#cb1-11"></a>    (<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb1-12"><a href="#cb1-12"></a>  <span class="at">b =</span> (b <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
-<span id="cb1-13"><a href="#cb1-13"></a>    (<span class="fu">max</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb1-14"><a href="#cb1-14"></a>  <span class="at">c =</span> (c <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
-<span id="cb1-15"><a href="#cb1-15"></a>    (<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb1-16"><a href="#cb1-16"></a>  <span class="at">d =</span> (d <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
-<span id="cb1-17"><a href="#cb1-17"></a>    (<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb1-18"><a href="#cb1-18"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-2"><a></a>  <span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
+<span id="cb1-3"><a></a>  <span class="at">b =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
+<span id="cb1-4"><a></a>  <span class="at">c =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
+<span id="cb1-5"><a></a>  <span class="at">d =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
+<span id="cb1-6"><a></a>  )</span>
+<span id="cb1-7"><a></a>df</span>
+<span id="cb1-8"><a></a></span>
+<span id="cb1-9"><a></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
+<span id="cb1-10"><a></a>  <span class="at">a =</span> (a <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="cb1-11"><a></a>    (<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb1-12"><a></a>  <span class="at">b =</span> (b <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="cb1-13"><a></a>    (<span class="fu">max</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb1-14"><a></a>  <span class="at">c =</span> (c <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="cb1-15"><a></a>    (<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb1-16"><a></a>  <span class="at">d =</span> (d <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="cb1-17"><a></a>    (<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-18"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment" data-fragment-index="3">
 <ul>
@@ -588,10 +589,10 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>(a <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb4-2"><a href="#cb4-2"></a>(b <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb4-3"><a href="#cb4-3"></a>(c <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb4-4"><a href="#cb4-4"></a>(d <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>(a <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb4-2"><a></a>(b <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb4-3"><a></a>(c <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb4-4"><a></a>(d <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -601,7 +602,7 @@
 <p><br></p>
 <p>We can see how concise our code can be if we replace the varying part with 🟪:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>(🟪 <span class="sc">-</span> <span class="fu">min</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>(🟪 <span class="sc">-</span> <span class="fu">min</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -625,7 +626,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-3" data-code-lines="1">In this example, <code>ARGUMENT1</code>, <code>ARGUMENT2</code> values won’t exist outside of the function. <code>ARGUMENT2</code> is an optional argument as it’s been given a default value to use if the user does not specify one.</span>
+<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1">In this example, <code>ARGUMENT1</code>, <code>ARGUMENT2</code> values won’t exist outside of the function. <code>ARGUMENT2</code> is an optional argument as it’s been given a default value to use if the user does not specify one.</span>
 </dd>
 </dl>
 </div>
@@ -641,7 +642,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-4" data-code-lines="1">You can name the placeholder value(s) whatever you want but <code>x</code> is the conventional name for a numeric vector so we’ll use <code>x</code> here.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="1" data-code-annotation="2">You can name the placeholder value(s) whatever you want but <code>x</code> is the conventional name for a numeric vector so we’ll use <code>x</code> here.</span>
 </dd>
 </dl>
 </div>
@@ -653,11 +654,11 @@
 <p>It’s good practice to test a few simple inputs to make sure your function works as expected.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">rescale01</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">rescale01</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] 0.0 0.5 1.0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">rescale01</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="cn">NA</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">rescale01</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="cn">NA</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] 0.00 0.25 0.50   NA 1.00</code></pre>
 </div>
@@ -668,10 +669,10 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">a =</span> <span class="fu">rescale01</span>(a),</span>
-<span id="cb10-2"><a href="#cb10-2"></a>             <span class="at">b =</span> <span class="fu">rescale01</span>(b),</span>
-<span id="cb10-3"><a href="#cb10-3"></a>             <span class="at">c =</span> <span class="fu">rescale01</span>(c),</span>
-<span id="cb10-4"><a href="#cb10-4"></a>             <span class="at">d =</span> <span class="fu">rescale01</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">a =</span> <span class="fu">rescale01</span>(a),</span>
+<span id="cb10-2"><a></a>             <span class="at">b =</span> <span class="fu">rescale01</span>(b),</span>
+<span id="cb10-3"><a></a>             <span class="at">c =</span> <span class="fu">rescale01</span>(c),</span>
+<span id="cb10-4"><a></a>             <span class="at">d =</span> <span class="fu">rescale01</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; # A tibble: 5 × 4
 &gt;       a     b      c      d
@@ -697,10 +698,10 @@
 <div class="fragment">
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12" data-code-line-numbers="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb12-2"><a aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-3"><a aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb12-4"><a aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div><div class="column" style="width:58%;">
@@ -708,8 +709,8 @@
 <p><br></p>
 <p>Or you might find out through trial and error that our function doesn’t handle infinite values well.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cn">Inf</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rescale01</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cn">Inf</span>)</span>
+<span id="cb13-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">rescale01</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt;  [1]   0   0   0   0   0   0   0   0   0   0 NaN</code></pre>
 </div>
@@ -718,10 +719,10 @@
 <div class="fragment">
 <p>Updating it to exclude infinite values makes it more general as it accounts for more use cases.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" data-code-line-numbers="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">finite =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-hidden="true" tabindex="-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb15-2"><a aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">finite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-3"><a aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb15-4"><a aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -774,7 +775,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-8" data-code-lines="2">Rescales a vector to have a mean of zero and a standard deviation of one.</span>
+<span data-code-cell="annotated-cell-8" data-code-lines="2" data-code-annotation="1">Rescales a vector to have a mean of zero and a standard deviation of one.</span>
 </dd>
 </dl>
 </div>
@@ -798,7 +799,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-9" data-code-lines="2,3,4,5">Ensures all values of a vector lie in between a minimum or a maximum.</span>
+<span data-code-cell="annotated-cell-9" data-code-lines="2,3,4,5" data-code-annotation="2">Ensures all values of a vector lie in between a minimum or a maximum.</span>
 </dd>
 </dl>
 </div>
@@ -819,7 +820,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-10" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-10" data-code-lines="2,3">Make the first character upper case.</span>
+<span data-code-cell="annotated-cell-10" data-code-lines="2,3" data-code-annotation="3">Make the first character upper case.</span>
 </dd>
 </dl>
 </div>
@@ -842,7 +843,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-11" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="annotated-cell-11" data-code-lines="2">Calculation for the coefficient of variation, which divides the standard deviation by the mean.</span>
+<span data-code-cell="annotated-cell-11" data-code-lines="2" data-code-annotation="4">Calculation for the coefficient of variation, which divides the standard deviation by the mean.</span>
 </dd>
 </dl>
 </div>
@@ -863,11 +864,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-12" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="5" data-code-cell="annotated-cell-12" data-code-lines="2">Calculates the number of missing values (<a href="https://twitter.com/gbganalyst/status/1571619641390252033">Source</a>).</span>
+<span data-code-cell="annotated-cell-12" data-code-lines="2" data-code-annotation="5">Calculates the number of missing values (<a href="https://twitter.com/gbganalyst/status/1571619641390252033">Source</a>).</span>
 </dd>
 <dt data-target-cell="annotated-cell-12" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-annotation="6" data-code-cell="annotated-cell-12" data-code-lines="5">Creating a random sample of 100 values with a mix of integers from 1 to 100 and <code>NA</code> values.</span>
+<span data-code-cell="annotated-cell-12" data-code-lines="5" data-code-annotation="6">Creating a random sample of 100 values with a mix of integers from 1 to 100 and <code>NA</code> values.</span>
 </dd>
 </dl>
 </div>
@@ -888,11 +889,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-13" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-annotation="7" data-code-cell="annotated-cell-13" data-code-lines="2">Calculates the mean absolute percentage error which measures the average magnitude of error produced by a model, or how far off predictions are on average.</span>
+<span data-code-cell="annotated-cell-13" data-code-lines="2" data-code-annotation="7">Calculates the mean absolute percentage error which measures the average magnitude of error produced by a model, or how far off predictions are on average.</span>
 </dd>
 <dt data-target-cell="annotated-cell-13" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-annotation="8" data-code-cell="annotated-cell-13" data-code-lines="6">This tells us that the average absolute percentage difference between the predicted values and the actual values is ~ 38%.</span>
+<span data-code-cell="annotated-cell-13" data-code-lines="6" data-code-annotation="8">This tells us that the average absolute percentage difference between the predicted values and the actual values is ~ 38%.</span>
 </dd>
 </dl>
 </div>
@@ -928,7 +929,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-14" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-14" data-code-lines="3,4">The goal of this function is to compute the mean of <code>mean_var</code> grouped by <code>group_var.</code></span>
+<span data-code-cell="annotated-cell-14" data-code-lines="3,4" data-code-annotation="1">The goal of this function is to compute the mean of <code>mean_var</code> grouped by <code>group_var.</code></span>
 </dd>
 </dl>
 </div>
@@ -958,12 +959,12 @@
 <div class="tab-content">
 <div id="tabset-1-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>diamonds[diamonds<span class="sc">$</span>cut <span class="sc">==</span> <span class="st">"Ideal"</span> <span class="sc">&amp;</span> diamonds<span class="sc">$</span>price <span class="sc">&lt;</span> <span class="dv">1000</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>diamonds[diamonds<span class="sc">$</span>cut <span class="sc">==</span> <span class="st">"Ideal"</span> <span class="sc">&amp;</span> diamonds<span class="sc">$</span>price <span class="sc">&lt;</span> <span class="dv">1000</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-1-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">"Ideal"</span> <span class="sc">&amp;</span> price <span class="sc">&lt;</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>diamonds <span class="sc">|&gt;</span> <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">"Ideal"</span> <span class="sc">&amp;</span> price <span class="sc">&lt;</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -982,19 +983,19 @@
 </section>
 <section id="embracing" class="slide level2">
 <h2>Embracing</h2>
-<p>The tidy evaluation solution to this issue is called embracing, which means wrapping variable names in two sets of curly braces (i.e.&nbsp;<code>var</code> becomes <code>{{ var }}</code>).</p>
+<p>The tidy evaluation solution to this issue is called embracing, which means wrapping variable names in two sets of curly braces (i.e.&nbsp;<code>var</code> becomes <code>{ var }</code>).</p>
 <div class="fragment">
 <p>Embracing a variable tells <code>dplyr</code> to use the value stored inside the argument, not the argument as the literal variable name.</p>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>grouped_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(df, group_var, mean_var) {</span>
-<span id="cb25-2"><a href="#cb25-2"></a>  df <span class="sc">|&gt;</span> </span>
-<span id="cb25-3"><a href="#cb25-3"></a>    <span class="fu">group_by</span>({{ group_var }}) <span class="sc">|&gt;</span> </span>
-<span id="cb25-4"><a href="#cb25-4"></a>    <span class="fu">summarize</span>(<span class="fu">mean</span>({{ mean_var }}))</span>
-<span id="cb25-5"><a href="#cb25-5"></a>}</span>
-<span id="cb25-6"><a href="#cb25-6"></a></span>
-<span id="cb25-7"><a href="#cb25-7"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">grouped_mean</span>(cut, carat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>grouped_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(df, group_var, mean_var) {</span>
+<span id="cb25-2"><a></a>  df <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a></a>    <span class="fu">group_by</span>({{ group_var }}) <span class="sc">|&gt;</span> </span>
+<span id="cb25-4"><a></a>    <span class="fu">summarize</span>(<span class="fu">mean</span>({{ mean_var }}))</span>
+<span id="cb25-5"><a></a>}</span>
+<span id="cb25-6"><a></a></span>
+<span id="cb25-7"><a></a>diamonds <span class="sc">|&gt;</span> <span class="fu">grouped_mean</span>(cut, carat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1010,14 +1011,14 @@
 </div>
 </div>
 </section>
-<section id="when-to-embrace-fa-scroll" class="slide level2 scrollable">
+<section id="when-to-embrace" class="slide level2 scrollable">
 <h2>When to Embrace? <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span></h2>
 <p>Look up the documentation of the function!</p>
 <div class="fragment">
 <p>The two most common sub-types of tidy evaluation are <strong>data-masking</strong><sup>1</sup> and <strong>tidy-selection</strong><sup>2</sup>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="mutate_help.png"></p>
+<p><img data-src="mutate_help.png" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -1042,11 +1043,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-16" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-16" data-code-lines="2,3,4,5,6,7,8">The goal of this function is to compute six common summary statistics for a specified variable of a dataset.</span>
+<span data-code-cell="annotated-cell-16" data-code-lines="2,3,4,5,6,7,8" data-code-annotation="2">The goal of this function is to compute six common summary statistics for a specified variable of a dataset.</span>
 </dd>
 <dt data-target-cell="annotated-cell-16" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-16" data-code-lines="9">Whenever you wrap <code>summarize()</code> in a helper function it’s good practice to set <code>.groups = "drop"</code> to both avoid the message and leave the data in an ungrouped state.</span>
+<span data-code-cell="annotated-cell-16" data-code-lines="9" data-code-annotation="3">Whenever you wrap <code>summarize()</code> in a helper function it’s good practice to set <code>.groups = "drop"</code> to both avoid the message and leave the data in an ungrouped state.</span>
 </dd>
 </dl>
 </div>
@@ -1074,7 +1075,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-17" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="annotated-cell-17" data-code-lines="2,3,4">This function is a variation of <code>count()</code> which also calculates the proportion (<a href="https://twitter.com/Diabb6/status/1571635146658402309">Source</a>).</span>
+<span data-code-cell="annotated-cell-17" data-code-lines="2,3,4" data-code-annotation="4">This function is a variation of <code>count()</code> which also calculates the proportion (<a href="https://twitter.com/Diabb6/status/1571635146658402309">Source</a>).</span>
 </dd>
 </dl>
 </div>
@@ -1116,22 +1117,22 @@
 <p><br></p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1"></a>histogram <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var, <span class="at">binwidth =</span> <span class="cn">NULL</span>) {</span>
-<span id="annotated-cell-1-2"><a href="#annotated-cell-1-2"></a>  df <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-3" class="code-annotation-target"><a href="#annotated-cell-1-3"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> {{ var }})) <span class="sc">+</span></span>
-<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> binwidth)</span>
-<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5"></a>}</span>
-<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-7" class="code-annotation-target"><a href="#annotated-cell-1-7"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">histogram</span>(carat, <span class="fl">0.1</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-53"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-53-1"><a href="#annotated-cell-53-1"></a>histogram <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var, <span class="at">binwidth =</span> <span class="cn">NULL</span>) {</span>
+<span id="annotated-cell-53-2"><a href="#annotated-cell-53-2"></a>  df <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-53" data-target-annotation="1">1</button><span id="annotated-cell-53-3" class="code-annotation-target"><a href="#annotated-cell-53-3"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> {{ var }})) <span class="sc">+</span></span>
+<span id="annotated-cell-53-4"><a href="#annotated-cell-53-4"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> binwidth)</span>
+<span id="annotated-cell-53-5"><a href="#annotated-cell-53-5"></a>}</span>
+<span id="annotated-cell-53-6"><a href="#annotated-cell-53-6"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-53" data-target-annotation="2">2</button><span id="annotated-cell-53-7" class="code-annotation-target"><a href="#annotated-cell-53-7"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">histogram</span>(carat, <span class="fl">0.1</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-53" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-1" data-code-lines="3,4">This is a useful function for quickly getting histograms of a specified binwidth from a dataset.</span>
+<span data-code-cell="annotated-cell-53" data-code-lines="3,4" data-code-annotation="1">This is a useful function for quickly getting histograms of a specified binwidth from a dataset.</span>
 </dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-53" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-1" data-code-lines="7">Note that <code>histogram()</code> returns a ggplot2 plot, meaning you can still add on additional components if you want. Just remember to switch from <code>|&gt;</code> to <code>+</code>.</span>
+<span data-code-cell="annotated-cell-53" data-code-lines="7" data-code-annotation="2">Note that <code>histogram()</code> returns a ggplot2 plot, meaning you can still add on additional components if you want. Just remember to switch from <code>|&gt;</code> to <code>+</code>.</span>
 </dd>
 </dl>
 </div>
@@ -1161,11 +1162,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-18" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-18" data-code-lines="1">This function creates a vertical bar chart where you automatically sort the bars in frequency order using <code>fct_infreq()</code>.</span>
+<span data-code-cell="annotated-cell-18" data-code-lines="1" data-code-annotation="3">This function creates a vertical bar chart where you automatically sort the bars in frequency order using <code>fct_infreq()</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-18" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="annotated-cell-18" data-code-lines="3"><code>:=</code> (commonly referred to as the “walrus operator”) is used here because we are generating the variable name based on user-supplied data. <code>R</code>’s syntax doesn’t allow anything to the left of <code>=</code> except for a single, literal name. To work around this problem, we use the special operator <code>:=</code> which tidy evaluation treats in exactly the same way as <code>=</code>.</span>
+<span data-code-cell="annotated-cell-18" data-code-lines="3" data-code-annotation="4"><code>:=</code> (commonly referred to as the “walrus operator”) is used here because we are generating the variable name based on user-supplied data. <code>R</code>’s syntax doesn’t allow anything to the left of <code>=</code> except for a single, literal name. To work around this problem, we use the special operator <code>:=</code> which tidy evaluation treats in exactly the same way as <code>=</code>.</span>
 </dd>
 </dl>
 </div>
@@ -1174,7 +1175,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture8_files/figure-revealjs/unnamed-chunk-29-1.svg"></p>
+<p><img data-src="CSSS508_Lecture8_files/figure-revealjs/unnamed-chunk-29-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -1212,7 +1213,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-19" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="5" data-code-cell="annotated-cell-19" data-code-lines="2"><code>rlang::englue()</code> works similarly to <code>str_glue()</code>, so any value wrapped in <br> <code>{ }</code> will be inserted into the string. But it also understands <code>{{ }}</code>, which automatically inserts the appropriate variable name.</span>
+<span data-code-cell="annotated-cell-19" data-code-lines="2" data-code-annotation="5"><code>rlang::englue()</code> works similarly to <code>str_glue()</code>, so any value wrapped in <br> <code>{ }</code> will be inserted into the string. But it also understands <code>{ }</code>, which automatically inserts the appropriate variable name.</span>
 </dd>
 </dl>
 </div>
@@ -1237,7 +1238,7 @@
 <li class="fragment">Some exceptions: computation of a well-known noun (i.e.&nbsp;<code>mean()</code>), accessing a property of an object (i.e.&nbsp;<code>coef()</code>)</li>
 </ul></li>
 <li class="fragment"><code>function()</code> should always be followed by squiggly brackets (<code>{}</code>), and the contents should be indented by an additional two spaces<sup>1</sup>.</li>
-<li class="fragment">You should put extra spaces inside of <code>{{ }}</code>. This makes it very obvious that something unusual is happening.</li>
+<li class="fragment">You should put extra spaces inside of <code>{ }</code>. This makes it very obvious that something unusual is happening.</li>
 </ul>
 </div>
 
@@ -1256,17 +1257,17 @@
 </ol>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">mean</span>(<span class="fu">is.na</span>(x))</span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">mean</span>(<span class="fu">is.na</span>(y))</span>
-<span id="cb29-3"><a href="#cb29-3"></a><span class="fu">mean</span>(<span class="fu">is.na</span>(z))</span>
-<span id="cb29-4"><a href="#cb29-4"></a></span>
-<span id="cb29-5"><a href="#cb29-5"></a>x <span class="sc">/</span> <span class="fu">sum</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-6"><a href="#cb29-6"></a>y <span class="sc">/</span> <span class="fu">sum</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-7"><a href="#cb29-7"></a>z <span class="sc">/</span> <span class="fu">sum</span>(z, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-8"><a href="#cb29-8"></a></span>
-<span id="cb29-9"><a href="#cb29-9"></a><span class="fu">round</span>(x <span class="sc">/</span> <span class="fu">sum</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
-<span id="cb29-10"><a href="#cb29-10"></a><span class="fu">round</span>(y <span class="sc">/</span> <span class="fu">sum</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
-<span id="cb29-11"><a href="#cb29-11"></a><span class="fu">round</span>(z <span class="sc">/</span> <span class="fu">sum</span>(z, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">mean</span>(<span class="fu">is.na</span>(x))</span>
+<span id="cb29-2"><a></a><span class="fu">mean</span>(<span class="fu">is.na</span>(y))</span>
+<span id="cb29-3"><a></a><span class="fu">mean</span>(<span class="fu">is.na</span>(z))</span>
+<span id="cb29-4"><a></a></span>
+<span id="cb29-5"><a></a>x <span class="sc">/</span> <span class="fu">sum</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-6"><a></a>y <span class="sc">/</span> <span class="fu">sum</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-7"><a></a>z <span class="sc">/</span> <span class="fu">sum</span>(z, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-8"><a></a></span>
+<span id="cb29-9"><a></a><span class="fu">round</span>(x <span class="sc">/</span> <span class="fu">sum</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb29-10"><a></a><span class="fu">round</span>(y <span class="sc">/</span> <span class="fu">sum</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb29-11"><a></a><span class="fu">round</span>(z <span class="sc">/</span> <span class="fu">sum</span>(z, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -1288,8 +1289,10 @@
 <section id="section" class="slide level2" data-menu-title="Homework 8" data-background-iframe="https://vsass.github.io/CSSS508/Homework/HW8/homework8.html" data-background-interactive="TRUE">
 <h2></h2>
 
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section></section>
 
@@ -1321,7 +1324,6 @@
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': true,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -1622,10 +1624,29 @@
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+              // default icon
+              link.classList.add("external");
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1635,8 +1656,17 @@
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
@@ -1650,7 +1680,11 @@
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
           let selectedAnnoteEl;
@@ -1694,6 +1728,7 @@
                 }
                 div.style.top = top - 2 + "px";
                 div.style.height = height + 4 + "px";
+                div.style.left = 0;
                 let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
                 if (gutterDiv === null) {
                   gutterDiv = window.document.createElement("div");
@@ -1719,8 +1754,8 @@
             });
             selectedAnnoteEl = undefined;
           };
-          // Handle positioning of the toggle
-          window.addEventListener(
+            // Handle positioning of the toggle
+        window.addEventListener(
           "resize",
           throttle(() => {
             elRect = undefined;
@@ -1728,23 +1763,23 @@
               selectCodeLines(selectedAnnoteEl);
             }
           }, 10)
-          );
-          function throttle(fn, ms) {
-          let throttle = false;
-          let timer;
-            return (...args) => {
-              if(!throttle) { // first call gets through
+        );
+        function throttle(fn, ms) {
+        let throttle = false;
+        let timer;
+          return (...args) => {
+            if(!throttle) { // first call gets through
+                fn.apply(this, args);
+                throttle = true;
+            } else { // all the others get throttled
+                if(timer) clearTimeout(timer); // cancel #2
+                timer = setTimeout(() => {
                   fn.apply(this, args);
-                  throttle = true;
-              } else { // all the others get throttled
-                  if(timer) clearTimeout(timer); // cancel #2
-                  timer = setTimeout(() => {
-                    fn.apply(this, args);
-                    timer = throttle = false;
-                  }, ms);
-              }
-            };
-          }
+                  timer = throttle = false;
+                }, ms);
+            }
+          };
+        }
           const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
           for (let i=0; i<annoteTargets.length; i++) {
             const annoteTarget = annoteTargets[i];
@@ -1789,7 +1824,7 @@
                   options: {
                     flipVariations: false, // true by default
                     allowedAutoPlacements: ['right'],
-                    fallbackPlacements: ['right', 'top', 'top-start', 'top-end'],
+                    fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
                   },
                 },
                 {
@@ -1841,20 +1876,6 @@
           });
         }
       }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href);
-        }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-              // default icon
-              link.classList.add("external");
-          }
-        }
     });
     </script>
     

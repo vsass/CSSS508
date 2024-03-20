@@ -11,7 +11,7 @@
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.551">
 <title>csss508_lecture5</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -32,7 +32,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -225,7 +225,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -494,20 +495,20 @@
 <div class="fragment">
 <p><code>readr</code> is one of the core <code>tidyverse</code> packages so loading <code>tidyverse</code> will load it too:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
 <p>Alternatively, you can just load <code>readr</code> like so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(readr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(readr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section><section id="readr-importing-example" class="slide level2"><h2>
 <code>readr</code> Importing Example</h2>
 <p>Let’s import some data about song ranks on the Billboard Hot 100 in 2000:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard_top100.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard_top100.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>How do we know it loaded?</p>
@@ -515,7 +516,7 @@
 <div class="fragment">
 <p>Let’s look at it!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">glimpse</span>(billboard_2000_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">glimpse</span>(billboard_2000_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -623,20 +624,20 @@
 </div>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>Ideally you’ve saved it in your project folder! 😌</p></li></ol></aside></section><section id="manual-data-import" class="slide level2"><h2>Manual Data Import</h2>
 
-<img data-src="images/data_import_manual.png" class="r-stretch quarto-figure-center"></section><section id="specifying-nas" class="slide level2"><h2>Specifying <code>NA</code>s</h2>
+<img data-src="images/data_import_manual.png" class="quarto-figure quarto-figure-center r-stretch"></section><section id="specifying-nas" class="slide level2"><h2>Specifying <code>NA</code>s</h2>
 <p><code>NA</code>s are technically logical (boolean) variables that indicate a missing value.</p>
 <div class="fragment">
 <p>Sometimes a particular dataset or file read from a different software will code <code>NA</code>s differently than <code>R</code>. If that’s the case, you can add additional specifications to <code>read_csv</code> for what to read in as <code>NA</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard_top100.csv"</span>, </span>
-<span id="cb7-2"><a href="#cb7-2"></a>                               <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"N/A"</span>, <span class="st">"999"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard_top100.csv"</span>, </span>
+<span id="cb7-2"><a></a>                               <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"N/A"</span>, <span class="st">"999"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section><section id="skipping-lines" class="slide level2"><h2>Skipping lines</h2>
 <p>Depending on how the data were input, there may be several lines that precede the beginning of the data table you’re interested in importing. You can skip these lines of metadata with the <code>skip</code> argument:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard_top100.csv"</span>, </span>
-<span id="cb8-2"><a href="#cb8-2"></a>                               <span class="at">skip =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard_top100.csv"</span>, </span>
+<span id="cb8-2"><a></a>                               <span class="at">skip =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="variable-names" class="slide level2"><h2>Variable names</h2>
 <p><code>read_csv</code> will automatically take the first row as column names. If you want to rename them you can save yourself some time recoding later on if you specify your preferred variable names upfront with the <code>col_names</code> argument.</p>
@@ -652,11 +653,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-8" data-code-lines="3"><code>paste</code> “pastes” together the first argument to the second argument (separated by whatever is specified in the <code>sep</code> argument) as character strings. Since the first argument here is a singular value, it is repeated for the entire length of the vector in the second argument. The first several values of <code>paste("wk", 1:76, sep = "_")</code> are: wk_1, wk_2, wk_3, wk_4, wk_5, wk_6</span>
+<span data-code-cell="annotated-cell-8" data-code-lines="3" data-code-annotation="1"><code>paste</code> “pastes” together the first argument to the second argument (separated by whatever is specified in the <code>sep</code> argument) as character strings. Since the first argument here is a singular value, it is repeated for the entire length of the vector in the second argument. The first several values of <code>paste("wk", 1:76, sep = "_")</code> are: wk_1, wk_2, wk_3, wk_4, wk_5, wk_6</span>
 </dd>
 <dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-8" data-code-lines="5"><code>names</code> here returns the column names of our data frame.</span>
+<span data-code-cell="annotated-cell-8" data-code-lines="5" data-code-annotation="2"><code>names</code> here returns the column names of our data frame.</span>
 </dd>
 </dl>
 </div>
@@ -670,8 +671,8 @@
 <p><br></p>
 <p>If you don’t have any variable names you can specify that instead.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard_top100.csv"</span>, </span>
-<span id="cb10-2"><a href="#cb10-2"></a>                               <span class="at">col_names =</span> <span class="cn">FALSE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard_top100.csv"</span>, </span>
+<span id="cb10-2"><a></a>                               <span class="at">col_names =</span> <span class="cn">FALSE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section><section id="snake-case" class="slide level2"><h2>Snake Case</h2>
@@ -689,11 +690,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-10" data-code-lines="2">Run in the console first.</span>
+<span data-code-cell="annotated-cell-10" data-code-lines="2" data-code-annotation="1">Run in the console first.</span>
 </dd>
 <dt data-target-cell="annotated-cell-10" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-10" data-code-lines="6">You can call a function without loading its package by specifying its package name followed by <code>::</code> before it; <br> The <code>numerals</code> argument specifies if you additionally want to put a separator before a number.</span>
+<span data-code-cell="annotated-cell-10" data-code-lines="6" data-code-annotation="2">You can call a function without loading its package by specifying its package name followed by <code>::</code> before it; <br> The <code>numerals</code> argument specifies if you additionally want to put a separator before a number.</span>
 </dd>
 </dl>
 </div>
@@ -785,6 +786,7 @@
 <div class="cell" data-reveal="true" data-fig-width="11" data-fig-height="5.5" data-layout-align="center">
 <div class="cell-output-display">
 <div>
+<p></p><figure class=""></figure><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
     id1((Variable))==&gt;A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==&gt;id2{{Logical}}
@@ -803,6 +805,7 @@
 
 </pre>
 </div>
+<p></p>
 </div>
 </div>
 </div>
@@ -811,6 +814,7 @@
 <div class="cell" data-reveal="true" data-fig-width="11" data-fig-height="5.5" data-layout-align="center">
 <div class="cell-output-display">
 <div>
+<p></p><figure class=""></figure><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
     id1((Variable))==&gt;A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==&gt;id2{{Logical}}
@@ -829,6 +833,7 @@
 
 </pre>
 </div>
+<p></p>
 </div>
 </div>
 </div>
@@ -837,6 +842,7 @@
 <div class="cell" data-reveal="true" data-fig-width="11" data-fig-height="5.5" data-layout-align="center">
 <div class="cell-output-display">
 <div>
+<p></p><figure class=""></figure><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
     id1((Variable))==&gt;A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==&gt;id2{{Logical}}
@@ -855,6 +861,7 @@
 
 </pre>
 </div>
+<p></p>
 </div>
 </div>
 </div>
@@ -863,6 +870,7 @@
 <div class="cell" data-reveal="true" data-fig-width="11" data-fig-height="5.5" data-layout-align="center">
 <div class="cell-output-display">
 <div>
+<p></p><figure class=""></figure><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
     id1((Variable))==&gt;A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==&gt;id2{{Logical}}
@@ -881,6 +889,7 @@
 
 </pre>
 </div>
+<p></p>
 </div>
 </div>
 </div>
@@ -889,6 +898,7 @@
 <div class="cell" data-reveal="true" data-fig-width="11" data-fig-height="5.5" data-layout-align="center">
 <div class="cell-output-display">
 <div>
+<p></p><figure class=""></figure><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
     id1((Variable))==&gt;A(["1. Does it contain only F, T, FALSE, TRUE, or NA (ignoring case)?"])==&gt;id2{{Logical}}
@@ -907,6 +917,7 @@
 
 </pre>
 </div>
+<p></p>
 </div>
 </div>
 </div>
@@ -915,7 +926,7 @@
 <div class="fragment">
 <p>Let’s actually look at how the billboard data was read in:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">glimpse</span>(billboard_2000_raw) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">glimpse</span>(billboard_2000_raw) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1017,20 +1028,20 @@
 </div>
 <div class="callout-content">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1"></a><span class="fu">class</span>(<span class="fu">c</span>(T, F, <span class="cn">NA</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>))</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2"></a><span class="fu">class</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="fl">17.5</span>, <span class="fl">5.3</span>, <span class="cn">NA</span>))</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-3" class="code-annotation-target"><a href="#annotated-cell-1-3"></a><span class="fu">class</span>(<span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"2023-10-31"</span>, <span class="st">"1986-06-21"</span>, <span class="st">"1997-01-15"</span>), <span class="at">tz =</span> <span class="st">"America/Los_Angeles"</span>))</span>
-<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4"></a><span class="fu">class</span>(<span class="fu">c</span>(<span class="st">"apple"</span>, <span class="cn">NA</span>, <span class="st">"mango"</span>, <span class="st">"blackberry"</span>, <span class="st">"plum"</span>)) </span>
-<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5"></a><span class="fu">class</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-83"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-83-1"><a href="#annotated-cell-83-1"></a><span class="fu">class</span>(<span class="fu">c</span>(T, F, <span class="cn">NA</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>))</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-83" data-target-annotation="1">1</button><span id="annotated-cell-83-2" class="code-annotation-target"><a href="#annotated-cell-83-2"></a><span class="fu">class</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="fl">17.5</span>, <span class="fl">5.3</span>, <span class="cn">NA</span>))</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-83" data-target-annotation="2">2</button><span id="annotated-cell-83-3" class="code-annotation-target"><a href="#annotated-cell-83-3"></a><span class="fu">class</span>(<span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"2023-10-31"</span>, <span class="st">"1986-06-21"</span>, <span class="st">"1997-01-15"</span>), <span class="at">tz =</span> <span class="st">"America/Los_Angeles"</span>))</span>
+<span id="annotated-cell-83-4"><a href="#annotated-cell-83-4"></a><span class="fu">class</span>(<span class="fu">c</span>(<span class="st">"apple"</span>, <span class="cn">NA</span>, <span class="st">"mango"</span>, <span class="st">"blackberry"</span>, <span class="st">"plum"</span>)) </span>
+<span id="annotated-cell-83-5"><a href="#annotated-cell-83-5"></a><span class="fu">class</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-83" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-1" data-code-lines="2"><code>class</code> returns the data type of its first argument.</span>
+<span data-code-cell="annotated-cell-83" data-code-lines="2" data-code-annotation="1"><code>class</code> returns the data type of its first argument.</span>
 </dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-83" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-1" data-code-lines="3"><code>as.Date</code> turns a character string of dates into an official date class in Base <code>R</code>. If we had an accompanying time stamp we would need to use <code>as.POSIXct</code> which turns a character string of dates and times into an official date-time class in Base <code>R</code>.</span>
+<span data-code-cell="annotated-cell-83" data-code-lines="3" data-code-annotation="2"><code>as.Date</code> turns a character string of dates into an official date class in Base <code>R</code>. If we had an accompanying time stamp we would need to use <code>as.POSIXct</code> which turns a character string of dates and times into an official date-time class in Base <code>R</code>.</span>
 </dd>
 </dl>
 </div>
@@ -1062,7 +1073,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-12" data-code-lines="2">You can short-code column types with <code>c</code> = character, <code>t</code> = time, <code>D</code> = date, <code>i</code> = integer. <br> The <code>collapse</code> argument collapses the first two arguments into one complete character string.</span>
+<span data-code-cell="annotated-cell-12" data-code-lines="2" data-code-annotation="1">You can short-code column types with <code>c</code> = character, <code>t</code> = time, <code>D</code> = date, <code>i</code> = integer. <br> The <code>collapse</code> argument collapses the first two arguments into one complete character string.</span>
 </dd>
 </dl>
 </div>
@@ -1084,7 +1095,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-13" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-13" data-code-lines="3">This string now specifies the data type for each column of our data frame. Visit <a href="https://readr.tidyverse.org/reference/cols.html">this reference page</a> to see all available column types and their short codes.</span>
+<span data-code-cell="annotated-cell-13" data-code-lines="3" data-code-annotation="2">This string now specifies the data type for each column of our data frame. Visit <a href="https://readr.tidyverse.org/reference/cols.html">this reference page</a> to see all available column types and their short codes.</span>
 </dd>
 </dl>
 </div>
@@ -1106,15 +1117,15 @@
 </section><section id="column-types-1" class="slide level2"><h2>Column types</h2>
 <p>To specify a default column type you can use <code>.default</code> like so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard_top100.csv"</span>, </span>
-<span id="cb17-2"><a href="#cb17-2"></a>                               <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>())) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard_top100.csv"</span>, </span>
+<span id="cb17-2"><a></a>                               <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>())) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><br></p>
 <p>Another useful helper is <code>cols_only()</code> for when you only want to read in a subset of all available variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard_top100.csv"</span>, </span>
-<span id="cb18-2"><a href="#cb18-2"></a>                               <span class="at">col_types =</span> <span class="fu">cols_only</span>(<span class="at">x =</span> col_character)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>billboard_2000_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/billboard_top100.csv"</span>, </span>
+<span id="cb18-2"><a></a>                               <span class="at">col_types =</span> <span class="fu">cols_only</span>(<span class="at">x =</span> col_character)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -1124,9 +1135,9 @@
 </section><section id="reading-in-multiple-files" class="slide level2"><h2>Reading in Multiple Files</h2>
 <p>If you data are split across multiple files you can read them in all at once by specifying the <code>id</code> argument.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># Create list of files manually</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a>sales_files <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"data/01_sales.csv"</span>, <span class="st">"data/02_sales.csv"</span>, <span class="st">"data/03_sales.csv"</span>)</span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="fu">read_csv</span>(sales_files, <span class="at">id =</span> <span class="st">"file"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="co"># Create list of files manually</span></span>
+<span id="cb19-2"><a></a>sales_files <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"data/01_sales.csv"</span>, <span class="st">"data/02_sales.csv"</span>, <span class="st">"data/03_sales.csv"</span>)</span>
+<span id="cb19-3"><a></a><span class="fu">read_csv</span>(sales_files, <span class="at">id =</span> <span class="st">"file"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1164,7 +1175,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-17" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-17" data-code-lines="2">We will discuss pattern-matching more in a couple of weeks; if all your data was in one folder without anything else in it, you wouldn’t need to specify this argument. Sometimes, however, you may be searching through larger directories that you did not organize and that’s when pattern-matching is really powerful.</span>
+<span data-code-cell="annotated-cell-17" data-code-lines="2" data-code-annotation="1">We will discuss pattern-matching more in a couple of weeks; if all your data was in one folder without anything else in it, you wouldn’t need to specify this argument. Sometimes, however, you may be searching through larger directories that you did not organize and that’s when pattern-matching is really powerful.</span>
 </dd>
 </dl>
 </div>
@@ -1185,12 +1196,12 @@
 <div id="tabset-1-1">
 <p>Tibbles lay out the data by columns (i.e.&nbsp;a dataframe transposed).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># Creating data with tibble</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">tibble</span>( </span>
-<span id="cb22-3"><a href="#cb22-3"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>), </span>
-<span id="cb22-4"><a href="#cb22-4"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"h"</span>, <span class="st">"m"</span>, <span class="st">"g"</span>),</span>
-<span id="cb22-5"><a href="#cb22-5"></a>  <span class="at">z =</span> <span class="fu">c</span>(<span class="fl">0.08</span>, <span class="fl">0.83</span>, <span class="fl">0.60</span>)</span>
-<span id="cb22-6"><a href="#cb22-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="co"># Creating data with tibble</span></span>
+<span id="cb22-2"><a></a><span class="fu">tibble</span>( </span>
+<span id="cb22-3"><a></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>), </span>
+<span id="cb22-4"><a></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"h"</span>, <span class="st">"m"</span>, <span class="st">"g"</span>),</span>
+<span id="cb22-5"><a></a>  <span class="at">z =</span> <span class="fu">c</span>(<span class="fl">0.08</span>, <span class="fl">0.83</span>, <span class="fl">0.60</span>)</span>
+<span id="cb22-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1206,13 +1217,13 @@
 <div id="tabset-1-2">
 <p>Tibbles (<code>tr</code>ansposed ti<code>bble</code>) lay out the data by rows (i.e.&nbsp;the way a dataframe looks) which is much more intuitive.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Creating data with tribble</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="fu">tribble</span>( </span>
-<span id="cb24-3"><a href="#cb24-3"></a>  <span class="sc">~</span>x, <span class="sc">~</span>y, <span class="sc">~</span>z,</span>
-<span id="cb24-4"><a href="#cb24-4"></a>  <span class="dv">1</span>, <span class="st">"h"</span>, <span class="fl">0.08</span>,</span>
-<span id="cb24-5"><a href="#cb24-5"></a>  <span class="dv">2</span>, <span class="st">"m"</span>, <span class="fl">0.83</span>,</span>
-<span id="cb24-6"><a href="#cb24-6"></a>  <span class="dv">5</span>, <span class="st">"g"</span>, <span class="fl">0.60</span></span>
-<span id="cb24-7"><a href="#cb24-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="co"># Creating data with tribble</span></span>
+<span id="cb24-2"><a></a><span class="fu">tribble</span>( </span>
+<span id="cb24-3"><a></a>  <span class="sc">~</span>x, <span class="sc">~</span>y, <span class="sc">~</span>z,</span>
+<span id="cb24-4"><a></a>  <span class="dv">1</span>, <span class="st">"h"</span>, <span class="fl">0.08</span>,</span>
+<span id="cb24-5"><a></a>  <span class="dv">2</span>, <span class="st">"m"</span>, <span class="fl">0.83</span>,</span>
+<span id="cb24-6"><a></a>  <span class="dv">5</span>, <span class="st">"g"</span>, <span class="fl">0.60</span></span>
+<span id="cb24-7"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1230,7 +1241,7 @@
 </section><section id="writing-delimited-files" class="slide level2"><h2>Writing Delimited Files</h2>
 <p>Getting data out of R into a delimited file is very similar to getting it into R:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">write_csv</span>(billboard_2000_raw, <span class="at">path =</span> <span class="st">"data/billboard_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">write_csv</span>(billboard_2000_raw, <span class="at">path =</span> <span class="st">"data/billboard_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This saved the data we pulled off the web in a file called <code>billboard_data.csv</code> in the <code>data</code> folder of my working directory.</p>
 <div class="fragment">
@@ -1596,7 +1607,7 @@
 <code>values_to</code>: Names the variable stored in the cell values</li>
 </ol>
 
-<img data-src="images/pivot_longer2_column_names.png" class="r-stretch quarto-figure-center"></section><section id="pivot_longer-2" class="slide level2"><h2><code>pivot_longer()</code></h2>
+<img data-src="images/pivot_longer2_column_names.png" class="quarto-figure quarto-figure-center r-stretch"></section><section id="pivot_longer-2" class="slide level2"><h2><code>pivot_longer()</code></h2>
 <p>This function usually takes three arguments:</p>
 <ol type="1">
 <li>
@@ -1606,7 +1617,7 @@
 <li><strong><code>values_to</code>: Names the variable stored in the cell values</strong></li>
 </ol>
 
-<img data-src="images/pivot_longer3_cell_values.png" class="r-stretch quarto-figure-center"></section><section id="pivot_longer-3" class="slide level2"><h2><code>pivot_longer()</code></h2>
+<img data-src="images/pivot_longer3_cell_values.png" class="quarto-figure quarto-figure-center r-stretch"></section><section id="pivot_longer-3" class="slide level2"><h2><code>pivot_longer()</code></h2>
 <p>This function usually takes three arguments:</p>
 <ol type="1">
 <li>
@@ -1617,7 +1628,7 @@
 <code>values_to</code>: Names the variable stored in the cell values</li>
 </ol>
 
-<img data-src="images/pivot_longer1_variables.png" class="r-stretch quarto-figure-center"></section><section id="pivot_longer-example" class="slide level2"><h2>
+<img data-src="images/pivot_longer1_variables.png" class="quarto-figure quarto-figure-center r-stretch"></section><section id="pivot_longer-example" class="slide level2"><h2>
 <code>pivot_longer()</code> Example</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-19"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="1">1</button><span id="annotated-cell-19-1" class="code-annotation-target"><a href="#annotated-cell-19-1"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_renamed <span class="sc">|&gt;</span></span>
@@ -1630,11 +1641,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-19" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-19" data-code-lines="1"><code>billboard_renamed</code> here has snake_case variable names and correctly specified column types</span>
+<span data-code-cell="annotated-cell-19" data-code-lines="1" data-code-annotation="1"><code>billboard_renamed</code> here has snake_case variable names and correctly specified column types</span>
 </dd>
 <dt data-target-cell="annotated-cell-19" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-19" data-code-lines="2"><code>starts_with()</code> is one of the helper functions from <a href="https://tidyselect.r-lib.org/index.html"><code>tidyselect</code></a> that helps select certain common patterns. We could have also used <code>cols = wk1:wk76</code>.</span>
+<span data-code-cell="annotated-cell-19" data-code-lines="2" data-code-annotation="2"><code>starts_with()</code> is one of the helper functions from <a href="https://tidyselect.r-lib.org/index.html"><code>tidyselect</code></a> that helps select certain common patterns. We could have also used <code>cols = wk1:wk76</code>.</span>
 </dd>
 </dl>
 </div>
@@ -1661,7 +1672,7 @@
 </div>
 </section><section id="lots-of-missing-values" class="slide level2"><h2>Lots of Missing Values?!</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">glimpse</span>(billboard_2000)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">glimpse</span>(billboard_2000)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1680,7 +1691,7 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1696,12 +1707,12 @@
 </h2>
 <p>Adding the argument <code>values_drop_na = TRUE</code> to <code>pivot_longer()</code> will remove rows with missing ranks. Since these <code>NA</code>s don’t really represent unknown observations (i.e.&nbsp;they were forced to exist by the structure of the dataset) this is an appropriate approach here.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33" data-code-line-numbers="|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>billboard_2000 <span class="ot">&lt;-</span> billboard_renamed <span class="sc">|&gt;</span> </span>
-<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> wk_1<span class="sc">:</span>wk_76, </span>
-<span id="cb33-3"><a href="#cb33-3"></a>               <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
-<span id="cb33-4"><a href="#cb33-4"></a>               <span class="at">values_to =</span> <span class="st">"rank"</span>, </span>
-<span id="cb33-5"><a href="#cb33-5"></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb33-6"><a href="#cb33-6"></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33" data-code-line-numbers="|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>billboard_2000 <span class="ot">&lt;-</span> billboard_renamed <span class="sc">|&gt;</span> </span>
+<span id="cb33-2"><a></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> wk_1<span class="sc">:</span>wk_76, </span>
+<span id="cb33-3"><a></a>               <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
+<span id="cb33-4"><a></a>               <span class="at">values_to =</span> <span class="st">"rank"</span>, </span>
+<span id="cb33-5"><a></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb33-6"><a></a><span class="fu">summary</span>(billboard_2000<span class="sc">$</span>rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1712,7 +1723,7 @@
 <div class="fragment">
 <p>No more <code>NA</code> values!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">dim</span>(billboard_2000)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="fu">dim</span>(billboard_2000)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1726,7 +1737,7 @@
 </section><section id="parse_number" class="slide level2"><h2><code>parse_number()</code></h2>
 <p>The week column is of the type <code>character</code>, but it should be <code>numeric.</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">head</span>(billboard_2000<span class="sc">$</span>week)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="fu">head</span>(billboard_2000<span class="sc">$</span>week)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1743,7 +1754,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-25" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-25" data-code-lines="2">You can use <code>mutate()</code> to overwrite existing columns.</span>
+<span data-code-cell="annotated-cell-25" data-code-lines="2" data-code-annotation="3">You can use <code>mutate()</code> to overwrite existing columns.</span>
 </dd>
 </dl>
 </div>
@@ -1775,11 +1786,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-26" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="annotated-cell-26" data-code-lines="6"><code>names_prefix</code> is used to remove “wk_” from the values of <code>week</code></span>
+<span data-code-cell="annotated-cell-26" data-code-lines="6" data-code-annotation="4"><code>names_prefix</code> is used to remove “wk_” from the values of <code>week</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-26" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="5" data-code-cell="annotated-cell-26" data-code-lines="7"><code>names_transform</code> converts <code>week</code> into an integer number.</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="7" data-code-annotation="5"><code>names_transform</code> converts <code>week</code> into an integer number.</span>
 </dd>
 </dl>
 </div>
@@ -1802,7 +1813,7 @@
 <div class="fragment">
 <p>This dataset contains tuberculosis diagnoses collected by the World Health Organization.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>who2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>who2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1855,7 +1866,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-28" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-annotation="6" data-code-cell="annotated-cell-28" data-code-lines="5">You can use <code>names_pattern</code> instead of <code>names_sep</code> to extract variables from more complicated naming scenarios once you’ve learned regular expressions in a few weeks.</span>
+<span data-code-cell="annotated-cell-28" data-code-lines="5" data-code-annotation="6">You can use <code>names_pattern</code> instead of <code>names_sep</code> to extract variables from more complicated naming scenarios once you’ve learned regular expressions in a few weeks.</span>
 </dd>
 </dl>
 </div>
@@ -1881,7 +1892,7 @@
 </section><section id="variable-values-in-column-names" class="slide level2"><h2>Variable &amp; Values in Column Names</h2>
 <p>This dataset contains data about five families, with the names and dates of birth of up to two children.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>household</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>household</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1914,11 +1925,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-30" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-annotation="7" data-code-cell="annotated-cell-30" data-code-lines="4"><code>.value</code> isn’t the name of a variable but a unique value that tells <code>pivot_longer</code> to use the first component of the pivoted column name as a variable name in the output.</span>
+<span data-code-cell="annotated-cell-30" data-code-lines="4" data-code-annotation="7"><code>.value</code> isn’t the name of a variable but a unique value that tells <code>pivot_longer</code> to use the first component of the pivoted column name as a variable name in the output.</span>
 </dd>
 <dt data-target-cell="annotated-cell-30" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-annotation="8" data-code-cell="annotated-cell-30" data-code-lines="6">Using <code>values_drop_na = TRUE</code> again since not every family has 2 children.</span>
+<span data-code-cell="annotated-cell-30" data-code-lines="6" data-code-annotation="8">Using <code>values_drop_na = TRUE</code> again since not every family has 2 children.</span>
 </dd>
 </dl>
 </div>
@@ -1940,7 +1951,7 @@
 </div>
 <div class="fragment">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="images/pivot_longer5_names-and-values.png" style="width:75.0%"></p>
+<figure><p><img data-src="images/pivot_longer5_names-and-values.png" class="quarto-figure quarto-figure-center" style="width:75.0%"></p>
 </figure>
 </div>
 </div>
@@ -1977,15 +1988,15 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-31" data-target-annotation="9">9</dt>
 <dd>
-<span data-code-annotation="9" data-code-cell="annotated-cell-31" data-code-lines="2"><code>id_cols</code> is the column that uniquely identifies each row in the new dataset. Default is everything not in <code>names_from</code> and <code>values_from</code>.</span>
+<span data-code-cell="annotated-cell-31" data-code-lines="2" data-code-annotation="9"><code>id_cols</code> is the column that uniquely identifies each row in the new dataset. Default is everything not in <code>names_from</code> and <code>values_from</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-31" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-annotation="10" data-code-cell="annotated-cell-31" data-code-lines="3"><code>names_from</code> provides the names that will be used for the new columns</span>
+<span data-code-cell="annotated-cell-31" data-code-lines="3" data-code-annotation="10"><code>names_from</code> provides the names that will be used for the new columns</span>
 </dd>
 <dt data-target-cell="annotated-cell-31" data-target-annotation="11">11</dt>
 <dd>
-<span data-code-annotation="11" data-code-cell="annotated-cell-31" data-code-lines="4"><code>values_from</code> provides the values that will be used to populate the cells of the new columns.</span>
+<span data-code-cell="annotated-cell-31" data-code-lines="4" data-code-annotation="11"><code>values_from</code> provides the values that will be used to populate the cells of the new columns.</span>
 </dd>
 </dl>
 </div>
@@ -2055,7 +2066,7 @@
 <div class="fragment">
 <p>Imagine we have a variable that records the month that an event occurred.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>month <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Dec"</span>, <span class="st">"Apr"</span>, <span class="st">"Jan"</span>, <span class="st">"Mar"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>month <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Dec"</span>, <span class="st">"Apr"</span>, <span class="st">"Jan"</span>, <span class="st">"Mar"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -2064,7 +2075,7 @@
 <li>It doesn’t help catch <em>spelling errors</em> and that</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>month <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Dec"</span>, <span class="st">"Apr"</span>, <span class="st">"Jam"</span>, <span class="st">"Mar"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a>month <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Dec"</span>, <span class="st">"Apr"</span>, <span class="st">"Jam"</span>, <span class="st">"Mar"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -2072,7 +2083,7 @@
 <li>Characters are <em>sorted alphabetically</em>, which is not necessarily intuitive or useful for your variable.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">sort</span>(month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="fu">sort</span>(month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "Apr" "Dec" "Jan" "Mar"</code></pre>
 </div>
@@ -2081,16 +2092,16 @@
 <aside><ol class="aside-footnotes"><li id="fn13"><p><span style="color:#e15759">For</span> <span style="color:#e15759">cat</span>egorical<span style="color:#e15759">s</span>; forcats is also an anagram of factors.</p></li><li id="fn14"><p>Factors can also be created from character strings that you want to display in non-alphabetical order</p></li></ol></aside></section><section id="factors" class="slide level2"><h2>Factors</h2>
 <p>Factors have an additional specification called levels. These are the categories of the categorical variable. We can create a vector of the levels first:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>month_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb53-2"><a href="#cb53-2"></a>  <span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>, <span class="st">"May"</span>, <span class="st">"Jun"</span>, </span>
-<span id="cb53-3"><a href="#cb53-3"></a>  <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span></span>
-<span id="cb53-4"><a href="#cb53-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a>month_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb53-2"><a></a>  <span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>, <span class="st">"May"</span>, <span class="st">"Jun"</span>, </span>
+<span id="cb53-3"><a></a>  <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span></span>
+<span id="cb53-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>And then we can create a factor like so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>month_factor <span class="ot">&lt;-</span> <span class="fu">factor</span>(month, <span class="at">levels =</span> month_levels)</span>
-<span id="cb54-2"><a href="#cb54-2"></a>month_factor</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a>month_factor <span class="ot">&lt;-</span> <span class="fu">factor</span>(month, <span class="at">levels =</span> month_levels)</span>
+<span id="cb54-2"><a></a>month_factor</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] Dec Apr Jan Mar
 &gt; Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec</code></pre>
@@ -2100,7 +2111,7 @@
 <div class="fragment">
 <p>We can see that the levels specify in which order the categories should be displayed:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">sort</span>(month_factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a><span class="fu">sort</span>(month_factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] Jan Mar Apr Dec
 &gt; Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec</code></pre>
@@ -2132,13 +2143,13 @@
 <div class="fragment">
 <p>You can create a factor by specifying <code>col_factor()</code> when reading in data with <code>readr</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(csv, <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">month =</span> <span class="fu">col_factor</span>(month_levels)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(csv, <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">month =</span> <span class="fu">col_factor</span>(month_levels)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
 <p>If you need to access the levels directly you can use the Base <code>R</code> function <code><a href="https://rdrr.io/r/base/levels.html">levels()</a></code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="fu">levels</span>(month_factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a><span class="fu">levels</span>(month_factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt;  [1] "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec"</code></pre>
 </div>
@@ -2149,7 +2160,7 @@
 <div class="fragment">
 <p>Let’s use a subset of the General Social Survey<sup>1</sup> data to see what this might look like.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>gss_cat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a>gss_cat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; # A tibble: 21,483 × 9
 &gt;     year marital         age race  rincome        partyid    relig denom tvhours
@@ -2180,15 +2191,15 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-41" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-41" data-code-lines="1"><code>factor</code> is the factor to reorder (or a character string to be turned into a factor)</span>
+<span data-code-cell="annotated-cell-41" data-code-lines="1" data-code-annotation="1"><code>factor</code> is the factor to reorder (or a character string to be turned into a factor)</span>
 </dd>
 <dt data-target-cell="annotated-cell-41" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-41" data-code-lines="2"><code>ordering_vector</code> specifies how to reorder <code>factor</code></span>
+<span data-code-cell="annotated-cell-41" data-code-lines="2" data-code-annotation="2"><code>ordering_vector</code> specifies how to reorder <code>factor</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-41" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-41" data-code-lines="3"><code>optional_function</code> is applied if there are multiple values of <code>ordering_vector</code> for each value of <code>factor</code> (the default is to take the median)</span>
+<span data-code-cell="annotated-cell-41" data-code-lines="3" data-code-annotation="3"><code>optional_function</code> is applied if there are multiple values of <code>ordering_vector</code> for each value of <code>factor</code> (the default is to take the median)</span>
 </dd>
 </dl>
 </div>
@@ -2204,11 +2215,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-42" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="annotated-cell-42" data-code-lines="2"><code>value</code> is either a function (i.e.&nbsp;<code>sort</code>) or a character level (default is to move it to the front of the vector)</span>
+<span data-code-cell="annotated-cell-42" data-code-lines="2" data-code-annotation="4"><code>value</code> is either a function (i.e.&nbsp;<code>sort</code>) or a character level (default is to move it to the front of the vector)</span>
 </dd>
 <dt data-target-cell="annotated-cell-42" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="5" data-code-cell="annotated-cell-42" data-code-lines="3"><code>placement</code> is an optional vector index where the level should be placed</span>
+<span data-code-cell="annotated-cell-42" data-code-lines="3" data-code-annotation="5"><code>placement</code> is an optional vector index where the level should be placed</span>
 </dd>
 </dl>
 </div>
@@ -2224,7 +2235,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-43" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-annotation="6" data-code-cell="annotated-cell-43" data-code-lines="2,3"><code>fct_reorder2</code> reorders <code>factor</code> by the values of <code>vector2</code> associated with the largest values of <code>vector1.</code></span>
+<span data-code-cell="annotated-cell-43" data-code-lines="2,3" data-code-annotation="6"><code>fct_reorder2</code> reorders <code>factor</code> by the values of <code>vector2</code> associated with the largest values of <code>vector1.</code></span>
 </dd>
 </dl>
 </div>
@@ -2238,14 +2249,14 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-44" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-annotation="7" data-code-cell="annotated-cell-44" data-code-lines="1"><code>fct_infreq</code> reorders <code>factor</code> in decreasing frequency. See other variations <a href="https://forcats.tidyverse.org/reference/fct_inorder.html">here</a>. Use with <code>fct_rev()</code> for increasing frequency.</span>
+<span data-code-cell="annotated-cell-44" data-code-lines="1" data-code-annotation="7"><code>fct_infreq</code> reorders <code>factor</code> in decreasing frequency. See other variations <a href="https://forcats.tidyverse.org/reference/fct_inorder.html">here</a>. Use with <code>fct_rev()</code> for increasing frequency.</span>
 </dd>
 </dl>
 </div>
 </div>
 <p><br></p>
 </div>
-</section><section id="changing-the-order-of-levels-fa-scroll" class="slide level2 scrollable"><h2>Changing the Order of Levels <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
+</section><section id="changing-the-order-of-levels-2" class="slide level2 scrollable"><h2>Changing the Order of Levels <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
 </h2>
 <p>There are four related functions to change the level ordering in <code>forcats</code>.</p>
 <div class="panel-tabset">
@@ -2259,33 +2270,33 @@
 <div id="tabset-4-1">
 <p><strong>Without <code>fct_reorder()</code></strong></p>
 <div class="cell" data-layout-align="center">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a>relig_summary <span class="ot">&lt;-</span> gss_cat <span class="sc">|&gt;</span></span>
-<span id="cb63-2"><a href="#cb63-2"></a>  <span class="fu">group_by</span>(relig) <span class="sc">|&gt;</span></span>
-<span id="cb63-3"><a href="#cb63-3"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb63-4"><a href="#cb63-4"></a>    <span class="at">tvhours =</span> <span class="fu">mean</span>(tvhours, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb63-5"><a href="#cb63-5"></a>    <span class="at">n =</span> <span class="fu">n</span>()</span>
-<span id="cb63-6"><a href="#cb63-6"></a>  )</span>
-<span id="cb63-7"><a href="#cb63-7"></a></span>
-<span id="cb63-8"><a href="#cb63-8"></a><span class="fu">ggplot</span>(relig_summary, <span class="fu">aes</span>(<span class="at">x =</span> tvhours, <span class="at">y =</span> relig)) <span class="sc">+</span> </span>
-<span id="cb63-9"><a href="#cb63-9"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a>relig_summary <span class="ot">&lt;-</span> gss_cat <span class="sc">|&gt;</span></span>
+<span id="cb63-2"><a></a>  <span class="fu">group_by</span>(relig) <span class="sc">|&gt;</span></span>
+<span id="cb63-3"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb63-4"><a></a>    <span class="at">tvhours =</span> <span class="fu">mean</span>(tvhours, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb63-5"><a></a>    <span class="at">n =</span> <span class="fu">n</span>()</span>
+<span id="cb63-6"><a></a>  )</span>
+<span id="cb63-7"><a></a></span>
+<span id="cb63-8"><a></a><span class="fu">ggplot</span>(relig_summary, <span class="fu">aes</span>(<span class="at">x =</span> tvhours, <span class="at">y =</span> relig)) <span class="sc">+</span> </span>
+<span id="cb63-9"><a></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-56-1.svg"></p>
+<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-56-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>With <code>fct_reorder()</code></strong></p>
 <div class="cell" data-layout-align="center">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>relig_summary <span class="sc">|&gt;</span></span>
-<span id="cb64-2"><a href="#cb64-2"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb64-3"><a href="#cb64-3"></a>    <span class="at">relig =</span> <span class="fu">fct_reorder</span>(relig, tvhours)</span>
-<span id="cb64-4"><a href="#cb64-4"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb64-5"><a href="#cb64-5"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> tvhours, <span class="at">y =</span> relig)) <span class="sc">+</span></span>
-<span id="cb64-6"><a href="#cb64-6"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a></a>relig_summary <span class="sc">|&gt;</span></span>
+<span id="cb64-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb64-3"><a></a>    <span class="at">relig =</span> <span class="fu">fct_reorder</span>(relig, tvhours)</span>
+<span id="cb64-4"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb64-5"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> tvhours, <span class="at">y =</span> relig)) <span class="sc">+</span></span>
+<span id="cb64-6"><a></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-57-1.svg"></p>
+<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-57-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2294,29 +2305,29 @@
 <div id="tabset-4-2">
 <p><strong>Without <code>fct_relevel()</code></strong></p>
 <div class="cell" data-layout-align="center">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a>rincome_summary <span class="ot">&lt;-</span> gss_cat <span class="sc">|&gt;</span></span>
-<span id="cb65-2"><a href="#cb65-2"></a>  <span class="fu">group_by</span>(rincome) <span class="sc">|&gt;</span></span>
-<span id="cb65-3"><a href="#cb65-3"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb65-4"><a href="#cb65-4"></a>    <span class="at">age =</span> <span class="fu">mean</span>(age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb65-5"><a href="#cb65-5"></a>    <span class="at">n =</span> <span class="fu">n</span>()</span>
-<span id="cb65-6"><a href="#cb65-6"></a>  )</span>
-<span id="cb65-7"><a href="#cb65-7"></a></span>
-<span id="cb65-8"><a href="#cb65-8"></a><span class="fu">ggplot</span>(rincome_summary, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> rincome)) <span class="sc">+</span> </span>
-<span id="cb65-9"><a href="#cb65-9"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a>rincome_summary <span class="ot">&lt;-</span> gss_cat <span class="sc">|&gt;</span></span>
+<span id="cb65-2"><a></a>  <span class="fu">group_by</span>(rincome) <span class="sc">|&gt;</span></span>
+<span id="cb65-3"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb65-4"><a></a>    <span class="at">age =</span> <span class="fu">mean</span>(age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb65-5"><a></a>    <span class="at">n =</span> <span class="fu">n</span>()</span>
+<span id="cb65-6"><a></a>  )</span>
+<span id="cb65-7"><a></a></span>
+<span id="cb65-8"><a></a><span class="fu">ggplot</span>(rincome_summary, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> rincome)) <span class="sc">+</span> </span>
+<span id="cb65-9"><a></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-58-1.svg"></p>
+<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-58-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>With <code>fct_relevel()</code></strong></p>
 <div class="cell" data-layout-align="center">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="fu">ggplot</span>(rincome_summary, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> <span class="fu">fct_relevel</span>(rincome, <span class="st">"Not applicable"</span>))) <span class="sc">+</span></span>
-<span id="cb66-2"><a href="#cb66-2"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a><span class="fu">ggplot</span>(rincome_summary, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> <span class="fu">fct_relevel</span>(rincome, <span class="st">"Not applicable"</span>))) <span class="sc">+</span></span>
+<span id="cb66-2"><a></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-59-1.svg"></p>
+<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-59-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2325,33 +2336,33 @@
 <div id="tabset-4-3">
 <p><strong>Without <code>fct_reorder2()</code></strong></p>
 <div class="cell" data-layout-align="center">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>by_age <span class="ot">&lt;-</span> gss_cat <span class="sc">|&gt;</span></span>
-<span id="cb67-2"><a href="#cb67-2"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(age)) <span class="sc">|&gt;</span> </span>
-<span id="cb67-3"><a href="#cb67-3"></a>  <span class="fu">count</span>(age, marital) <span class="sc">|&gt;</span></span>
-<span id="cb67-4"><a href="#cb67-4"></a>  <span class="fu">group_by</span>(age) <span class="sc">|&gt;</span></span>
-<span id="cb67-5"><a href="#cb67-5"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb67-6"><a href="#cb67-6"></a>    <span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)</span>
-<span id="cb67-7"><a href="#cb67-7"></a>  )</span>
-<span id="cb67-8"><a href="#cb67-8"></a></span>
-<span id="cb67-9"><a href="#cb67-9"></a><span class="fu">ggplot</span>(by_age, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> prop, <span class="at">color =</span> marital)) <span class="sc">+</span></span>
-<span id="cb67-10"><a href="#cb67-10"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb67-11"><a href="#cb67-11"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a>by_age <span class="ot">&lt;-</span> gss_cat <span class="sc">|&gt;</span></span>
+<span id="cb67-2"><a></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(age)) <span class="sc">|&gt;</span> </span>
+<span id="cb67-3"><a></a>  <span class="fu">count</span>(age, marital) <span class="sc">|&gt;</span></span>
+<span id="cb67-4"><a></a>  <span class="fu">group_by</span>(age) <span class="sc">|&gt;</span></span>
+<span id="cb67-5"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb67-6"><a></a>    <span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)</span>
+<span id="cb67-7"><a></a>  )</span>
+<span id="cb67-8"><a></a></span>
+<span id="cb67-9"><a></a><span class="fu">ggplot</span>(by_age, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> prop, <span class="at">color =</span> marital)) <span class="sc">+</span></span>
+<span id="cb67-10"><a></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb67-11"><a></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-60-1.svg"></p>
+<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-60-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>With <code>fct_reorder()</code></strong></p>
 <div class="cell" data-layout-align="center">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">ggplot</span>(by_age, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> prop, <span class="at">color =</span> <span class="fu">fct_reorder2</span>(marital, age, prop))) <span class="sc">+</span></span>
-<span id="cb68-2"><a href="#cb68-2"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb68-3"><a href="#cb68-3"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span> </span>
-<span id="cb68-4"><a href="#cb68-4"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">"marital"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a></a><span class="fu">ggplot</span>(by_age, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> prop, <span class="at">color =</span> <span class="fu">fct_reorder2</span>(marital, age, prop))) <span class="sc">+</span></span>
+<span id="cb68-2"><a></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb68-3"><a></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span> </span>
+<span id="cb68-4"><a></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">"marital"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-61-1.svg"></p>
+<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-61-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2360,26 +2371,26 @@
 <div id="tabset-4-4">
 <p><strong>Without <code>fct_infreq()</code></strong></p>
 <div class="cell" data-layout-align="center">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a>gss_cat <span class="sc">|&gt;</span></span>
-<span id="cb69-2"><a href="#cb69-2"></a>  <span class="fu">mutate</span>(<span class="at">marital =</span> marital) <span class="sc">|&gt;</span> </span>
-<span id="cb69-3"><a href="#cb69-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> marital)) <span class="sc">+</span> </span>
-<span id="cb69-4"><a href="#cb69-4"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a>gss_cat <span class="sc">|&gt;</span></span>
+<span id="cb69-2"><a></a>  <span class="fu">mutate</span>(<span class="at">marital =</span> marital) <span class="sc">|&gt;</span> </span>
+<span id="cb69-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> marital)) <span class="sc">+</span> </span>
+<span id="cb69-4"><a></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-62-1.svg"></p>
+<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-62-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>With <code>fct_infreq()</code></strong></p>
 <div class="cell" data-layout-align="center">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>gss_cat <span class="sc">|&gt;</span></span>
-<span id="cb70-2"><a href="#cb70-2"></a>  <span class="fu">mutate</span>(<span class="at">marital =</span> marital <span class="sc">|&gt;</span> <span class="fu">fct_infreq</span>() <span class="sc">|&gt;</span> <span class="fu">fct_rev</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb70-3"><a href="#cb70-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> marital)) <span class="sc">+</span></span>
-<span id="cb70-4"><a href="#cb70-4"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a></a>gss_cat <span class="sc">|&gt;</span></span>
+<span id="cb70-2"><a></a>  <span class="fu">mutate</span>(<span class="at">marital =</span> marital <span class="sc">|&gt;</span> <span class="fu">fct_infreq</span>() <span class="sc">|&gt;</span> <span class="fu">fct_rev</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb70-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> marital)) <span class="sc">+</span></span>
+<span id="cb70-4"><a></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-63-1.svg"></p>
+<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-63-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2396,7 +2407,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-45" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-annotation="8" data-code-cell="annotated-cell-45" data-code-lines="1">You can use <code>count()</code> to get the full list of levels for a variable and their respective counts.</span>
+<span data-code-cell="annotated-cell-45" data-code-lines="1" data-code-annotation="8">You can use <code>count()</code> to get the full list of levels for a variable and their respective counts.</span>
 </dd>
 </dl>
 </div>
@@ -2421,18 +2432,18 @@
 <div class="columns">
 <div class="column" style="width:60%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a>gss_cat <span class="sc">|&gt;</span></span>
-<span id="cb72-2"><a href="#cb72-2"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb72-3"><a href="#cb72-3"></a>    <span class="at">partyid =</span> <span class="fu">fct_recode</span>(partyid,</span>
-<span id="cb72-4"><a href="#cb72-4"></a>      <span class="st">"Republican, strong"</span> <span class="ot">=</span> <span class="st">"Strong republican"</span>,</span>
-<span id="cb72-5"><a href="#cb72-5"></a>      <span class="st">"Republican, weak"</span> <span class="ot">=</span> <span class="st">"Not str republican"</span>,</span>
-<span id="cb72-6"><a href="#cb72-6"></a>      <span class="st">"Independent, near rep"</span> <span class="ot">=</span> <span class="st">"Ind,near rep"</span>,</span>
-<span id="cb72-7"><a href="#cb72-7"></a>      <span class="st">"Independent, near dem"</span> <span class="ot">=</span> <span class="st">"Ind,near dem"</span>,</span>
-<span id="cb72-8"><a href="#cb72-8"></a>      <span class="st">"Democrat, weak"</span> <span class="ot">=</span> <span class="st">"Not str democrat"</span>,</span>
-<span id="cb72-9"><a href="#cb72-9"></a>      <span class="st">"Democrat, strong"</span> <span class="ot">=</span> <span class="st">"Strong democrat"</span></span>
-<span id="cb72-10"><a href="#cb72-10"></a>    )</span>
-<span id="cb72-11"><a href="#cb72-11"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb72-12"><a href="#cb72-12"></a>  <span class="fu">count</span>(partyid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a></a>gss_cat <span class="sc">|&gt;</span></span>
+<span id="cb72-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb72-3"><a></a>    <span class="at">partyid =</span> <span class="fu">fct_recode</span>(partyid,</span>
+<span id="cb72-4"><a></a>      <span class="st">"Republican, strong"</span> <span class="ot">=</span> <span class="st">"Strong republican"</span>,</span>
+<span id="cb72-5"><a></a>      <span class="st">"Republican, weak"</span> <span class="ot">=</span> <span class="st">"Not str republican"</span>,</span>
+<span id="cb72-6"><a></a>      <span class="st">"Independent, near rep"</span> <span class="ot">=</span> <span class="st">"Ind,near rep"</span>,</span>
+<span id="cb72-7"><a></a>      <span class="st">"Independent, near dem"</span> <span class="ot">=</span> <span class="st">"Ind,near dem"</span>,</span>
+<span id="cb72-8"><a></a>      <span class="st">"Democrat, weak"</span> <span class="ot">=</span> <span class="st">"Not str democrat"</span>,</span>
+<span id="cb72-9"><a></a>      <span class="st">"Democrat, strong"</span> <span class="ot">=</span> <span class="st">"Strong democrat"</span></span>
+<span id="cb72-10"><a></a>    )</span>
+<span id="cb72-11"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb72-12"><a></a>  <span class="fu">count</span>(partyid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:40%;">
 <div class="cell">
@@ -2468,16 +2479,16 @@
 <p>A useful variant of <code>fct_recode()</code> is <code>fct_collapse()</code> which will allow you to collapse a lot of levels at once.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a>gss_cat <span class="sc">|&gt;</span></span>
-<span id="cb74-2"><a href="#cb74-2"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb74-3"><a href="#cb74-3"></a>    <span class="at">partyid =</span> <span class="fu">fct_collapse</span>(partyid,</span>
-<span id="cb74-4"><a href="#cb74-4"></a>      <span class="st">"other"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"No answer"</span>, <span class="st">"Don't know"</span>, <span class="st">"Other party"</span>),</span>
-<span id="cb74-5"><a href="#cb74-5"></a>      <span class="st">"rep"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Strong republican"</span>, <span class="st">"Not str republican"</span>),</span>
-<span id="cb74-6"><a href="#cb74-6"></a>      <span class="st">"ind"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Ind,near rep"</span>, <span class="st">"Independent"</span>, <span class="st">"Ind,near dem"</span>),</span>
-<span id="cb74-7"><a href="#cb74-7"></a>      <span class="st">"dem"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Not str democrat"</span>, <span class="st">"Strong democrat"</span>)</span>
-<span id="cb74-8"><a href="#cb74-8"></a>    )</span>
-<span id="cb74-9"><a href="#cb74-9"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb74-10"><a href="#cb74-10"></a>  <span class="fu">count</span>(partyid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a></a>gss_cat <span class="sc">|&gt;</span></span>
+<span id="cb74-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb74-3"><a></a>    <span class="at">partyid =</span> <span class="fu">fct_collapse</span>(partyid,</span>
+<span id="cb74-4"><a></a>      <span class="st">"other"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"No answer"</span>, <span class="st">"Don't know"</span>, <span class="st">"Other party"</span>),</span>
+<span id="cb74-5"><a></a>      <span class="st">"rep"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Strong republican"</span>, <span class="st">"Not str republican"</span>),</span>
+<span id="cb74-6"><a></a>      <span class="st">"ind"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Ind,near rep"</span>, <span class="st">"Independent"</span>, <span class="st">"Ind,near dem"</span>),</span>
+<span id="cb74-7"><a></a>      <span class="st">"dem"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Not str democrat"</span>, <span class="st">"Strong democrat"</span>)</span>
+<span id="cb74-8"><a></a>    )</span>
+<span id="cb74-9"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb74-10"><a></a>  <span class="fu">count</span>(partyid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; # A tibble: 4 × 2
 &gt;   partyid     n
@@ -2500,7 +2511,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-47" data-target-annotation="9">9</dt>
 <dd>
-<span data-code-annotation="9" data-code-cell="annotated-cell-47" data-code-lines="2">Other functions include: <code>fct_lump_min()</code>, <code>fct_lump_prop()</code>, <code>fct_lump_lowfreq()</code>. Read more about them <a href="https://forcats.tidyverse.org/reference/fct_lump.html">here</a>.</span>
+<span data-code-cell="annotated-cell-47" data-code-lines="2" data-code-annotation="9">Other functions include: <code>fct_lump_min()</code>, <code>fct_lump_prop()</code>, <code>fct_lump_lowfreq()</code>. Read more about them <a href="https://forcats.tidyverse.org/reference/fct_lump.html">here</a>.</span>
 </dd>
 </dl>
 </div>
@@ -2531,7 +2542,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-48" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-annotation="10" data-code-cell="annotated-cell-48" data-code-lines="1">Ordered factors imply a strict ordering and equal distance between levels: the first level is “less than” the second level by the same amount that the second level is “less than” the third level, and so on.</span>
+<span data-code-cell="annotated-cell-48" data-code-lines="1" data-code-annotation="10">Ordered factors imply a strict ordering and equal distance between levels: the first level is “less than” the second level by the same amount that the second level is “less than” the third level, and so on.</span>
 </dd>
 </dl>
 </div>
@@ -2597,7 +2608,7 @@
 <div class="fragment">
 <p>Dates and times are challenging data types because there are physical properties but also additional geopolitical definitions that don’t always neatly align with physical reality.</p>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn19"><p>The <code>hms</code> package can be used to deal with times but they’re not very common.</p></li></ol></aside></section><section id="creating-datesdate-times-fa-scroll" class="slide level2 scrollable"><h2>Creating Dates/Date-Times <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
+<aside><ol class="aside-footnotes"><li id="fn19"><p>The <code>hms</code> package can be used to deal with times but they’re not very common.</p></li></ol></aside></section><section id="creating-datesdate-times" class="slide level2 scrollable"><h2>Creating Dates/Date-Times <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
 </h2>
 <div class="panel-tabset">
 <ul id="tabset-5" class="panel-tabset-tabby">
@@ -2736,12 +2747,12 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a>csv <span class="ot">&lt;-</span> <span class="st">"</span></span>
-<span id="cb78-2"><a href="#cb78-2"></a><span class="st">  date</span></span>
-<span id="cb78-3"><a href="#cb78-3"></a><span class="st">  05/22/23</span></span>
-<span id="cb78-4"><a href="#cb78-4"></a><span class="st">"</span></span>
-<span id="cb78-5"><a href="#cb78-5"></a></span>
-<span id="cb78-6"><a href="#cb78-6"></a><span class="fu">read_csv</span>(csv, <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">date =</span> <span class="fu">col_date</span>(<span class="st">"%m/%d/%y"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a></a>csv <span class="ot">&lt;-</span> <span class="st">"</span></span>
+<span id="cb78-2"><a></a><span class="st">  date</span></span>
+<span id="cb78-3"><a></a><span class="st">  05/22/23</span></span>
+<span id="cb78-4"><a></a><span class="st">"</span></span>
+<span id="cb78-5"><a></a></span>
+<span id="cb78-6"><a></a><span class="fu">read_csv</span>(csv, <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">date =</span> <span class="fu">col_date</span>(<span class="st">"%m/%d/%y"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; # A tibble: 1 × 1
 &gt;   date      
@@ -2755,15 +2766,15 @@
 <div id="tabset-5-2">
 <p>You can also use lubridate’s helper functions to specify a date format automatically.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a><span class="fu">ymd</span>(<span class="st">"2017-01-31"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a></a><span class="fu">ymd</span>(<span class="st">"2017-01-31"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "2017-01-31"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a><span class="fu">mdy</span>(<span class="st">"January 31st, 2017"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a></a><span class="fu">mdy</span>(<span class="st">"January 31st, 2017"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "2017-01-31"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="fu">dmy</span>(<span class="st">"31-Jan-2017"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a></a><span class="fu">dmy</span>(<span class="st">"31-Jan-2017"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "2017-01-31"</code></pre>
 </div>
@@ -2772,11 +2783,11 @@
 <div class="fragment">
 <p>If you need to specify a date-time you can use these helper functions:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a><span class="fu">ymd_hms</span>(<span class="st">"2017-01-31 20:11:59"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a></a><span class="fu">ymd_hms</span>(<span class="st">"2017-01-31 20:11:59"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "2017-01-31 20:11:59 UTC"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a><span class="fu">mdy_hm</span>(<span class="st">"01/31/2017 08:01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a></a><span class="fu">mdy_hm</span>(<span class="st">"01/31/2017 08:01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "2017-01-31 08:01:00 UTC"</code></pre>
 </div>
@@ -2786,7 +2797,7 @@
 <div class="fragment">
 <p>If you provide a date object with a timezone it’ll automatically be converted to a date-time object.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a><span class="fu">ymd</span>(<span class="st">"2017-01-31"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a></a><span class="fu">ymd</span>(<span class="st">"2017-01-31"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "2017-01-31 UTC"</code></pre>
 </div>
@@ -2797,9 +2808,9 @@
 <div id="tabset-5-3">
 <p>If you have time elements in separate variables, like in the <code>flights</code> dataset…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1"></a><span class="fu">library</span>(nycflights13)</span>
-<span id="cb92-2"><a href="#cb92-2"></a>flights <span class="sc">|&gt;</span> </span>
-<span id="cb92-3"><a href="#cb92-3"></a>  <span class="fu">select</span>(year, month, day, hour, minute)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a></a><span class="fu">library</span>(nycflights13)</span>
+<span id="cb92-2"><a></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb92-3"><a></a>  <span class="fu">select</span>(year, month, day, hour, minute)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -2822,10 +2833,10 @@
 <div class="fragment">
 <p>…you can use <code>make_date</code> or <code>make_datetime</code> to create your date/time object.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1"></a>flights2 <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
-<span id="cb94-2"><a href="#cb94-2"></a>  <span class="fu">select</span>(year, month, day, hour, minute) <span class="sc">|&gt;</span> </span>
-<span id="cb94-3"><a href="#cb94-3"></a>  <span class="fu">mutate</span>(<span class="at">departure =</span> <span class="fu">make_datetime</span>(year, month, day, hour, minute))</span>
-<span id="cb94-4"><a href="#cb94-4"></a>flights2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a></a>flights2 <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
+<span id="cb94-2"><a></a>  <span class="fu">select</span>(year, month, day, hour, minute) <span class="sc">|&gt;</span> </span>
+<span id="cb94-3"><a></a>  <span class="fu">mutate</span>(<span class="at">departure =</span> <span class="fu">make_datetime</span>(year, month, day, hour, minute))</span>
+<span id="cb94-4"><a></a>flights2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -2850,11 +2861,11 @@
 <div class="fragment">
 <p>Note that when you use date-times in a numeric context (like in a histogram), 1 means 1 second, so a <code>binwidth</code> of 86400 means one day. For dates, 1 means 1 day.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1"></a><span class="fu">ggplot</span>(flights2, <span class="fu">aes</span>(<span class="at">x =</span> departure)) <span class="sc">+</span> </span>
-<span id="cb96-2"><a href="#cb96-2"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">binwidth =</span> <span class="dv">86400</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a></a><span class="fu">ggplot</span>(flights2, <span class="fu">aes</span>(<span class="at">x =</span> departure)) <span class="sc">+</span> </span>
+<span id="cb96-2"><a></a>  <span class="fu">geom_freqpoly</span>(<span class="at">binwidth =</span> <span class="dv">86400</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-76-1.svg"></p>
+<figure><p><img data-src="CSSS508_Lecture5_files/figure-revealjs/unnamed-chunk-76-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2865,11 +2876,11 @@
 <div id="tabset-5-4">
 <p><code>as_datetime()</code> and <code>as_date()</code> are used to coerce existing date/time objects into their counterpart.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a><span class="fu">as_datetime</span>(<span class="fu">today</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a></a><span class="fu">as_datetime</span>(<span class="fu">today</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "2024-03-20 UTC"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a><span class="fu">as_date</span>(<span class="fu">now</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a></a><span class="fu">as_date</span>(<span class="fu">now</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "2024-03-20"</code></pre>
 </div>
@@ -2881,19 +2892,19 @@
 <div class="fragment">
 <p>If the offset is in seconds you’ll want to use <code>as_datetime()</code> and if it’s in days use <code>as_date()</code> for the conversion.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1"></a><span class="fu">as_datetime</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a></a><span class="fu">as_datetime</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "1970-01-01 00:00:01 UTC"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1"></a><span class="fu">as_datetime</span>(<span class="dv">5057</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a></a><span class="fu">as_datetime</span>(<span class="dv">5057</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "1970-01-01 01:24:17 UTC"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1"></a><span class="fu">as_date</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a></a><span class="fu">as_date</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "1970-01-02"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1"></a><span class="fu">as_date</span>(<span class="dv">5057</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a></a><span class="fu">as_date</span>(<span class="dv">5057</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "1983-11-06"</code></pre>
 </div>
@@ -2922,19 +2933,19 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-49" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-49" data-code-lines="4">You can set <code>label = TRUE</code> to return the abbreviated name and <code>abbr = FALSE</code> to return the full name (i.e.&nbsp;<code>month(datetime, label = TRUE)</code> returns <strong><span style="color:#76b7b2">Jan</span></strong> and <code>month(datetime, label = TRUE, abbr = FALSE)</code> returns <strong><span style="color:#76b7b2">January</span></strong>)</span>
+<span data-code-cell="annotated-cell-49" data-code-lines="4" data-code-annotation="1">You can set <code>label = TRUE</code> to return the abbreviated name and <code>abbr = FALSE</code> to return the full name (i.e.&nbsp;<code>month(datetime, label = TRUE)</code> returns <strong><span style="color:#76b7b2">Jan</span></strong> and <code>month(datetime, label = TRUE, abbr = FALSE)</code> returns <strong><span style="color:#76b7b2">January</span></strong>)</span>
 </dd>
 <dt data-target-cell="annotated-cell-49" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-49" data-code-lines="5">Day of the month.</span>
+<span data-code-cell="annotated-cell-49" data-code-lines="5" data-code-annotation="2">Day of the month.</span>
 </dd>
 <dt data-target-cell="annotated-cell-49" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-49" data-code-lines="6">Day of the year.</span>
+<span data-code-cell="annotated-cell-49" data-code-lines="6" data-code-annotation="3">Day of the year.</span>
 </dd>
 <dt data-target-cell="annotated-cell-49" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="annotated-cell-49" data-code-lines="7">Day of the week. You can set <code>label = TRUE</code> to return the abbreviated name and <code>abbr = FALSE</code> to return the full name (i.e.&nbsp;<code>wday(datetime, label = TRUE)</code> returns <strong><span style="color:#76b7b2">Thu</span></strong> and <code>wday(datetime, label = TRUE, abbr = FALSE)</code> returns <strong><span style="color:#76b7b2">Thursday</span></strong>)</span>
+<span data-code-cell="annotated-cell-49" data-code-lines="7" data-code-annotation="4">Day of the week. You can set <code>label = TRUE</code> to return the abbreviated name and <code>abbr = FALSE</code> to return the full name (i.e.&nbsp;<code>wday(datetime, label = TRUE)</code> returns <strong><span style="color:#76b7b2">Thu</span></strong> and <code>wday(datetime, label = TRUE, abbr = FALSE)</code> returns <strong><span style="color:#76b7b2">Thursday</span></strong>)</span>
 </dd>
 </dl>
 </div>
@@ -2956,12 +2967,12 @@
 <p>While less common, you may need to recode a date/time variable which you can also do with these accessor functions.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1"></a>datetime <span class="ot">&lt;-</span> <span class="fu">ymd_hms</span>(<span class="st">"2020-01-30 08:05:35"</span>)</span>
-<span id="cb110-2"><a href="#cb110-2"></a></span>
-<span id="cb110-3"><a href="#cb110-3"></a><span class="fu">year</span>(datetime) <span class="ot">&lt;-</span> <span class="dv">2030</span></span>
-<span id="cb110-4"><a href="#cb110-4"></a><span class="fu">hour</span>(datetime) <span class="ot">&lt;-</span> <span class="fu">hour</span>(datetime) <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb110-5"><a href="#cb110-5"></a></span>
-<span id="cb110-6"><a href="#cb110-6"></a>datetime</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a></a>datetime <span class="ot">&lt;-</span> <span class="fu">ymd_hms</span>(<span class="st">"2020-01-30 08:05:35"</span>)</span>
+<span id="cb110-2"><a></a></span>
+<span id="cb110-3"><a></a><span class="fu">year</span>(datetime) <span class="ot">&lt;-</span> <span class="dv">2030</span></span>
+<span id="cb110-4"><a></a><span class="fu">hour</span>(datetime) <span class="ot">&lt;-</span> <span class="fu">hour</span>(datetime) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb110-5"><a></a></span>
+<span id="cb110-6"><a></a>datetime</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "2030-01-30 09:05:35 UTC"</code></pre>
 </div>
@@ -2972,7 +2983,7 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a><span class="fu">update</span>(datetime, <span class="at">year =</span> <span class="dv">2030</span>, <span class="at">month =</span> <span class="dv">2</span>, <span class="at">mday =</span> <span class="dv">2</span>, <span class="at">hour =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a></a><span class="fu">update</span>(datetime, <span class="at">year =</span> <span class="dv">2030</span>, <span class="at">month =</span> <span class="dv">2</span>, <span class="at">mday =</span> <span class="dv">2</span>, <span class="at">hour =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "2030-02-02 02:05:35 UTC"</code></pre>
 </div>
@@ -2983,7 +2994,7 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1"></a><span class="fu">update</span>(<span class="fu">ymd</span>(<span class="st">"2023-02-01"</span>), <span class="at">mday =</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a></a><span class="fu">update</span>(<span class="fu">ymd</span>(<span class="st">"2023-02-01"</span>), <span class="at">mday =</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "2023-03-02"</code></pre>
 </div>
@@ -3002,7 +3013,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-53" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="5" data-code-cell="annotated-cell-53" data-code-lines="3,4,5">These functions take 3 arguments: a date/time vector, a unit of time to round by (valid base units include <code>second</code>, <code>minute</code>, <code>hour</code>, <code>day</code>, <code>week</code>, <code>month</code>, <code>bimonth</code>, <code>quarter</code>, <code>season</code>, <code>halfyear</code> and <code>year</code>), and the day of the week that the week starts (default is 7, or Sunday).</span>
+<span data-code-cell="annotated-cell-53" data-code-lines="3,4,5" data-code-annotation="5">These functions take 3 arguments: a date/time vector, a unit of time to round by (valid base units include <code>second</code>, <code>minute</code>, <code>hour</code>, <code>day</code>, <code>week</code>, <code>month</code>, <code>bimonth</code>, <code>quarter</code>, <code>season</code>, <code>halfyear</code> and <code>year</code>), and the day of the week that the week starts (default is 7, or Sunday).</span>
 </dd>
 </dl>
 </div>
@@ -3019,7 +3030,7 @@
 <p>There are three different timespan classes in <code>lubridate</code>, which reflect the complexity of date/time data.</p>
 <div class="fragment">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="images/timespans.png"></p>
+<figure><p><img data-src="images/timespans.png" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -3034,11 +3045,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-54" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-annotation="6" data-code-cell="annotated-cell-54" data-code-lines="2"><code>difftime</code> objects record time spans in seconds, minutes, hours, days, or weeks. This is fairly ambiguous so <code>lubridate</code> provides a more consistent alternative: the <code>duration</code>, which always uses seconds.</span>
+<span data-code-cell="annotated-cell-54" data-code-lines="2" data-code-annotation="6"><code>difftime</code> objects record time spans in seconds, minutes, hours, days, or weeks. This is fairly ambiguous so <code>lubridate</code> provides a more consistent alternative: the <code>duration</code>, which always uses seconds.</span>
 </dd>
 <dt data-target-cell="annotated-cell-54" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-annotation="7" data-code-cell="annotated-cell-54" data-code-lines="3">Larger units are created by converting minutes, hours, days, weeks, and years to seconds.</span>
+<span data-code-cell="annotated-cell-54" data-code-lines="3" data-code-annotation="7">Larger units are created by converting minutes, hours, days, weeks, and years to seconds.</span>
 </dd>
 </dl>
 </div>
@@ -3061,7 +3072,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-55" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-annotation="8" data-code-cell="annotated-cell-55" data-code-lines="6">Aggregating to larger time units is more problematic. A year uses the “average” number of days in a year, i.e.&nbsp;365.25. There’s no way to convert a month to a duration, because there’s just too much variation.</span>
+<span data-code-cell="annotated-cell-55" data-code-lines="6" data-code-annotation="8">Aggregating to larger time units is more problematic. A year uses the “average” number of days in a year, i.e.&nbsp;365.25. There’s no way to convert a month to a duration, because there’s just too much variation.</span>
 </dd>
 </dl>
 </div>
@@ -3079,11 +3090,11 @@
 </section><section id="math-with-durations" class="slide level2"><h2>Math with Durations</h2>
 <p>You can add and multiply durations:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">dyears</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">dyears</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "63115200s (~2 years)"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1"></a><span class="fu">dyears</span>(<span class="dv">1</span>) <span class="sc">+</span> <span class="fu">dweeks</span>(<span class="dv">12</span>) <span class="sc">+</span> <span class="fu">dhours</span>(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a></a><span class="fu">dyears</span>(<span class="dv">1</span>) <span class="sc">+</span> <span class="fu">dweeks</span>(<span class="dv">12</span>) <span class="sc">+</span> <span class="fu">dhours</span>(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "38869200s (~1.23 years)"</code></pre>
 </div>
@@ -3098,7 +3109,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-58" data-target-annotation="9">9</dt>
 <dd>
-<span data-code-annotation="9" data-code-cell="annotated-cell-58" data-code-lines="3">Daylight Savings Time is a human construction so March 8th only has 23 hours because it’s when DST starts. If we add a full days worth of seconds we end up with a different time and a different time zone.</span>
+<span data-code-cell="annotated-cell-58" data-code-lines="3" data-code-annotation="9">Daylight Savings Time is a human construction so March 8th only has 23 hours because it’s when DST starts. If we add a full days worth of seconds we end up with a different time and a different time zone.</span>
 </dd>
 </dl>
 </div>
@@ -3115,11 +3126,11 @@
 <p>Periods represent “human” times like days and months and therefore do not have a fixed length in seconds.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1"></a>one_am</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a></a>one_am</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "2026-03-08 01:00:00 EST"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1"></a>one_am <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a></a>one_am <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "2026-03-09 01:00:00 EDT"</code></pre>
 </div>
@@ -3131,15 +3142,15 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1"></a><span class="fu">hours</span>(<span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">24</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a></a><span class="fu">hours</span>(<span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">24</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "12H 0M 0S" "24H 0M 0S"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1"></a><span class="fu">days</span>(<span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a></a><span class="fu">days</span>(<span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "7d 0H 0M 0S"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1"></a><span class="fu">months</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a></a><span class="fu">months</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "1m 0d 0H 0M 0S" "2m 0d 0H 0M 0S" "3m 0d 0H 0M 0S" "4m 0d 0H 0M 0S"
 &gt; [5] "5m 0d 0H 0M 0S" "6m 0d 0H 0M 0S"</code></pre>
@@ -3149,11 +3160,11 @@
 </section><section id="math-with-periods" class="slide level2"><h2>Math with Periods</h2>
 <p>We can add and multiply periods:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1"></a><span class="dv">10</span> <span class="sc">*</span> (<span class="fu">months</span>(<span class="dv">6</span>) <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a></a><span class="dv">10</span> <span class="sc">*</span> (<span class="fu">months</span>(<span class="dv">6</span>) <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "60m 10d 0H 0M 0S"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1"></a><span class="fu">days</span>(<span class="dv">50</span>) <span class="sc">+</span> <span class="fu">hours</span>(<span class="dv">25</span>) <span class="sc">+</span> <span class="fu">minutes</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a></a><span class="fu">days</span>(<span class="dv">50</span>) <span class="sc">+</span> <span class="fu">hours</span>(<span class="dv">25</span>) <span class="sc">+</span> <span class="fu">minutes</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] "50d 25H 2M 0S"</code></pre>
 </div>
@@ -3173,7 +3184,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-66" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-annotation="10" data-code-cell="annotated-cell-66" data-code-lines="7">Periods are more likely than durations to do what you expect.</span>
+<span data-code-cell="annotated-cell-66" data-code-lines="7" data-code-annotation="10">Periods are more likely than durations to do what you expect.</span>
 </dd>
 </dl>
 </div>
@@ -3196,11 +3207,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-67" data-target-annotation="11">11</dt>
 <dd>
-<span data-code-annotation="11" data-code-cell="annotated-cell-67" data-code-lines="1">Since this value changed depending on the year in question, lubridate gives an estimate (or the average) for the number of days in <em>any</em> given year.</span>
+<span data-code-cell="annotated-cell-67" data-code-lines="1" data-code-annotation="11">Since this value changed depending on the year in question, lubridate gives an estimate (or the average) for the number of days in <em>any</em> given year.</span>
 </dd>
 <dt data-target-cell="annotated-cell-67" data-target-annotation="12">12</dt>
 <dd>
-<span data-code-annotation="12" data-code-cell="annotated-cell-67" data-code-lines="2">A similar thing happens for durations.</span>
+<span data-code-cell="annotated-cell-67" data-code-lines="2" data-code-annotation="12">A similar thing happens for durations.</span>
 </dd>
 </dl>
 </div>
@@ -3225,11 +3236,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-68" data-target-annotation="13">13</dt>
 <dd>
-<span data-code-annotation="13" data-code-cell="annotated-cell-68" data-code-lines="1">You can create an interval by writing <code>start %--% end</code>.</span>
+<span data-code-cell="annotated-cell-68" data-code-lines="1" data-code-annotation="13">You can create an interval by writing <code>start %--% end</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-68" data-target-annotation="14">14</dt>
 <dd>
-<span data-code-annotation="14" data-code-cell="annotated-cell-68" data-code-lines="5">Now when we do this math we get the exact number of “human” days within the span of dates we specified.</span>
+<span data-code-cell="annotated-cell-68" data-code-lines="5" data-code-annotation="14">Now when we do this math we get the exact number of “human” days within the span of dates we specified.</span>
 </dd>
 </dl>
 </div>
@@ -3251,11 +3262,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-69" data-target-annotation="15">15</dt>
 <dd>
-<span data-code-annotation="15" data-code-cell="annotated-cell-69" data-code-lines="1">Use <code><a href="https://rdrr.io/r/base/timezones.html">Sys.timezone()</a></code> to find out which timezone <code>R</code> thinks you’re in.</span>
+<span data-code-cell="annotated-cell-69" data-code-lines="1" data-code-annotation="15">Use <code><a href="https://rdrr.io/r/base/timezones.html">Sys.timezone()</a></code> to find out which timezone <code>R</code> thinks you’re in.</span>
 </dd>
 <dt data-target-cell="annotated-cell-69" data-target-annotation="16">16</dt>
 <dd>
-<span data-code-annotation="16" data-code-cell="annotated-cell-69" data-code-lines="2">See the complete list of all time zone names with <code><a href="https://rdrr.io/r/base/timezones.html">OlsonNames()</a></code></span>
+<span data-code-cell="annotated-cell-69" data-code-lines="2" data-code-annotation="16">See the complete list of all time zone names with <code><a href="https://rdrr.io/r/base/timezones.html">OlsonNames()</a></code></span>
 </dd>
 </dl>
 </div>
@@ -3578,7 +3589,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-70" data-target-annotation="17">17</dt>
 <dd>
-<span data-code-annotation="17" data-code-cell="annotated-cell-70" data-code-lines="4">The <code>+10:30</code> offset is the difference relative to <code>UTC</code> (functionally similar to Greenwich Mean Time) which is <code>2024-06-01 16:00:00 UTC</code> in this example.</span>
+<span data-code-cell="annotated-cell-70" data-code-lines="4" data-code-annotation="17">The <code>+10:30</code> offset is the difference relative to <code>UTC</code> (functionally similar to Greenwich Mean Time) which is <code>2024-06-01 16:00:00 UTC</code> in this example.</span>
 </dd>
 </dl>
 </div>
@@ -3598,7 +3609,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-71" data-target-annotation="18">18</dt>
 <dd>
-<span data-code-annotation="18" data-code-cell="annotated-cell-71" data-code-lines="4">In this case the time zone was labelled incorrectly so by forcing the correct time zone we changed the underlying instant in time.</span>
+<span data-code-cell="annotated-cell-71" data-code-lines="4" data-code-annotation="18">In this case the time zone was labelled incorrectly so by forcing the correct time zone we changed the underlying instant in time.</span>
 </dd>
 </dl>
 </div>
@@ -3626,15 +3637,15 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-72" data-target-annotation="19">19</dt>
 <dd>
-<span data-code-annotation="19" data-code-cell="annotated-cell-72" data-code-lines="4">EEST = Eastern European Summer Time</span>
+<span data-code-cell="annotated-cell-72" data-code-lines="4" data-code-annotation="19">EEST = Eastern European Summer Time</span>
 </dd>
 <dt data-target-cell="annotated-cell-72" data-target-annotation="20">20</dt>
 <dd>
-<span data-code-annotation="20" data-code-cell="annotated-cell-72" data-code-lines="5">CDT = Central Daylight Time</span>
+<span data-code-cell="annotated-cell-72" data-code-lines="5" data-code-annotation="20">CDT = Central Daylight Time</span>
 </dd>
 <dt data-target-cell="annotated-cell-72" data-target-annotation="21">21</dt>
 <dd>
-<span data-code-annotation="21" data-code-cell="annotated-cell-72" data-code-lines="6">WAT = West Africa Time</span>
+<span data-code-cell="annotated-cell-72" data-code-lines="6" data-code-annotation="21">WAT = West Africa Time</span>
 </dd>
 </dl>
 </div>
@@ -3661,8 +3672,10 @@
 
 </section><section id="section-4" class="slide level2" data-menu-title="Homework 5" data-background-iframe="https://vsass.github.io/CSSS508/Homework/HW5/homework5.html" data-background-interactive="TRUE"><h2></h2>
 
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section></section>
 </div>
@@ -3675,7 +3688,6 @@
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': true,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -3972,10 +3984,29 @@
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+              // default icon
+              link.classList.add("external");
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -3985,8 +4016,17 @@
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
@@ -4000,7 +4040,11 @@
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
           let selectedAnnoteEl;
@@ -4044,6 +4088,7 @@
                 }
                 div.style.top = top - 2 + "px";
                 div.style.height = height + 4 + "px";
+                div.style.left = 0;
                 let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
                 if (gutterDiv === null) {
                   gutterDiv = window.document.createElement("div");
@@ -4069,8 +4114,8 @@
             });
             selectedAnnoteEl = undefined;
           };
-          // Handle positioning of the toggle
-          window.addEventListener(
+            // Handle positioning of the toggle
+        window.addEventListener(
           "resize",
           throttle(() => {
             elRect = undefined;
@@ -4078,23 +4123,23 @@
               selectCodeLines(selectedAnnoteEl);
             }
           }, 10)
-          );
-          function throttle(fn, ms) {
-          let throttle = false;
-          let timer;
-            return (...args) => {
-              if(!throttle) { // first call gets through
+        );
+        function throttle(fn, ms) {
+        let throttle = false;
+        let timer;
+          return (...args) => {
+            if(!throttle) { // first call gets through
+                fn.apply(this, args);
+                throttle = true;
+            } else { // all the others get throttled
+                if(timer) clearTimeout(timer); // cancel #2
+                timer = setTimeout(() => {
                   fn.apply(this, args);
-                  throttle = true;
-              } else { // all the others get throttled
-                  if(timer) clearTimeout(timer); // cancel #2
-                  timer = setTimeout(() => {
-                    fn.apply(this, args);
-                    timer = throttle = false;
-                  }, ms);
-              }
-            };
-          }
+                  timer = throttle = false;
+                }, ms);
+            }
+          };
+        }
           const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
           for (let i=0; i<annoteTargets.length; i++) {
             const annoteTarget = annoteTargets[i];
@@ -4139,7 +4184,7 @@
                   options: {
                     flipVariations: false, // true by default
                     allowedAutoPlacements: ['right'],
-                    fallbackPlacements: ['right', 'top', 'top-start', 'top-end'],
+                    fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
                   },
                 },
                 {
@@ -4191,20 +4236,6 @@
           });
         }
       }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href);
-        }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-              // default icon
-              link.classList.add("external");
-          }
-        }
     });
     </script>
 
