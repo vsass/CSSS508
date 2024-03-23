@@ -710,7 +710,7 @@
     "href": "Lectures/Lecture2/CSSS508_Lecture2.html#gapminder-data",
     "title": "",
     "section": "Gapminder Data",
-    "text": "Gapminder Data\nWe’ll be working with data from Hans Rosling’s Gapminder project. An excerpt of these data can be accessed through an R package called gapminder1.\n\nIn the console: install.packages(\"gapminder\")\n\n\nThen load the gapminder package as well as the tidyverse package:\n\nlibrary(gapminder)\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.3     ✔ readr     2.1.4\n✔ forcats   1.0.0     ✔ stringr   1.5.0\n✔ ggplot2   3.5.0     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.0\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\nCleaned and assembled by Jenny Bryan at UBC."
+    "text": "Gapminder Data\nWe’ll be working with data from Hans Rosling’s Gapminder project. An excerpt of these data can be accessed through an R package called gapminder1.\n\nIn the console: install.packages(\"gapminder\")\n\n\nThen load the gapminder package as well as the tidyverse package:\n\nlibrary(gapminder)\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.3     ✔ readr     2.1.4\n✔ forcats   1.0.0     ✔ stringr   1.5.0\n✔ ggplot2   3.4.3     ✔ tibble    3.2.1\n✔ lubridate 1.9.2     ✔ tidyr     1.3.0\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\nCleaned and assembled by Jenny Bryan at UBC."
   },
   {
     "objectID": "Lectures/Lecture2/CSSS508_Lecture2.html#check-out-gapminder",
@@ -8519,7 +8519,7 @@
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#selecting-from-dataframes-with",
     "title": "",
     "section": "Selecting from dataframes with [\n",
-    "text": "Selecting from dataframes with [\n\nYou can select rows and columns from dataframes with df[rows, cols].\n\n\n\ndf &lt;- tibble(\n  x = 1:3, \n  y = c(\"a\", \"e\", \"f\"), \n  z = runif(3) # defaults: min = 0, max = 1\n)\n\ndf\n\n\n\n# A tibble: 3 × 3\n      x y         z\n  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;\n1     1 a     0.544\n2     2 e     0.681\n3     3 f     0.678\n\n\n\n\n\n# Select first row and second column\ndf[1, 2]\n\n\n\n# A tibble: 1 × 1\n  y    \n  &lt;chr&gt;\n1 a    \n\n\n\n\n\n# Select all rows and columns x and y\ndf[, c(\"x\" , \"y\")]\n\n\n\n# A tibble: 3 × 2\n      x y    \n  &lt;int&gt; &lt;chr&gt;\n1     1 a    \n2     2 e    \n3     3 f    \n\n\n\n\n\n# Select rows where `x` is greater than 1 and all columns\ndf[df$x &gt; 1, ]\n\n\n\n# A tibble: 2 × 3\n      x y         z\n  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;\n1     2 e     0.681\n2     3 f     0.678"
+    "text": "Selecting from dataframes with [\n\nYou can select rows and columns from dataframes with df[rows, cols].\n\n\n\ndf &lt;- tibble(\n  x = 1:3, \n  y = c(\"a\", \"e\", \"f\"), \n  z = runif(3) # defaults: min = 0, max = 1\n)\n\ndf\n\n\n\n# A tibble: 3 × 3\n      x y         z\n  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;\n1     1 a     0.214\n2     2 e     0.543\n3     3 f     0.314\n\n\n\n\n\n# Select first row and second column\ndf[1, 2]\n\n\n\n# A tibble: 1 × 1\n  y    \n  &lt;chr&gt;\n1 a    \n\n\n\n\n\n# Select all rows and columns x and y\ndf[, c(\"x\" , \"y\")]\n\n\n\n# A tibble: 3 × 2\n      x y    \n  &lt;int&gt; &lt;chr&gt;\n1     1 a    \n2     2 e    \n3     3 f    \n\n\n\n\n\n# Select rows where `x` is greater than 1 and all columns\ndf[df$x &gt; 1, ]\n\n\n\n# A tibble: 2 × 3\n      x y         z\n  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;\n1     2 e     0.543\n2     3 f     0.314"
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#creating-an-rstudio-project",
@@ -10673,7 +10673,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\n\nCentral Tendency\n\n20x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\n\n\n20\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n\n\n\n&gt; [1] 281.38\n\n\n\nmedian(x)\n\n&gt; [1] 312\n\n\n\n21quantile(x, .95)\n\n\n21\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt; 95% \n&gt; 485"
+    "text": "Summary Functions\n\nCentral Tendency\n\n20x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\n\n\n20\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n\n\n\n&gt; [1] 256.85\n\n\n\nmedian(x)\n\n&gt; [1] 270\n\n\n\n21quantile(x, .95)\n\n\n21\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt;   95% \n&gt; 477.3"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#common-numerical-manipulations",
@@ -10750,14 +10750,14 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-1",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 20\n\nmax(x)\n\n&gt; [1] 488\n\nrange(x)\n\n&gt; [1]  20 488\n\n\n\n22IQR(x)\n\n\n22\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 280.75\n\n\n\n23var(x)\n\n\n23\n\n\\[s^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\\]\n\n\n\n\n&gt; [1] 23454.22\n\n\n\n24sd(x)\n\n\n24\n\n\\[s = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\\]\n\n\n\n\n&gt; [1] 153.1477"
+    "text": "Summary Functions\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 2\n\nmax(x)\n\n&gt; [1] 499\n\nrange(x)\n\n&gt; [1]   2 499\n\n\n\n22IQR(x)\n\n\n22\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 281.75\n\n\n\n23var(x)\n\n\n23\n\n\\[s^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\\]\n\n\n\n\n&gt; [1] 22802.63\n\n\n\n24sd(x)\n\n\n24\n\n\\[s = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\\]\n\n\n\n\n&gt; [1] 151.0054"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-2",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-2",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\nPositions\n\nfirst(x)\n\n&gt; [1] 73\n\nlast(x)\n\n&gt; [1] 67\n\nnth(x, n = 77)\n\n&gt; [1] 70"
+    "text": "Summary Functions\nPositions\n\nfirst(x)\n\n&gt; [1] 290\n\nlast(x)\n\n&gt; [1] 174\n\nnth(x, n = 77)\n\n&gt; [1] 11"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#proper-matrix-math-1",
@@ -13244,7 +13244,7 @@
     "href": "Lectures/Lecture10/CSSS508_Lecture10.html#modeling-with-tidymodels",
     "title": "",
     "section": "Modeling with tidymodels",
-    "text": "Modeling with tidymodels\n\nlibrary(tidymodels)\n\n&gt; ── Attaching packages ────────────────────────────────────── tidymodels 1.1.1 ──\n\n\n&gt; ✔ broom        1.0.5      ✔ rsample      1.2.0 \n&gt; ✔ dials        1.2.1      ✔ tune         1.1.2 \n&gt; ✔ infer        1.0.6      ✔ workflows    1.1.4 \n&gt; ✔ modeldata    1.3.0      ✔ workflowsets 1.0.1 \n&gt; ✔ parsnip      1.2.0      ✔ yardstick    1.3.0 \n&gt; ✔ recipes      1.0.10\n\n\n&gt; ── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──\n&gt; ✖ scales::discard() masks purrr::discard()\n&gt; ✖ dplyr::filter()   masks stats::filter()\n&gt; ✖ recipes::fixed()  masks stringr::fixed()\n&gt; ✖ dplyr::lag()      masks stats::lag()\n&gt; ✖ yardstick::spec() masks readr::spec()\n&gt; ✖ recipes::step()   masks stats::step()\n&gt; • Learn how to get started at https://www.tidymodels.org/start/"
+    "text": "Modeling with tidymodels\n\nlibrary(tidymodels)\n\n&gt; ── Attaching packages ────────────────────────────────────── tidymodels 1.1.1 ──\n\n\n&gt; ✔ broom        1.0.5     ✔ rsample      1.2.0\n&gt; ✔ dials        1.2.0     ✔ tune         1.1.2\n&gt; ✔ infer        1.0.5     ✔ workflows    1.1.3\n&gt; ✔ modeldata    1.2.0     ✔ workflowsets 1.0.1\n&gt; ✔ parsnip      1.1.1     ✔ yardstick    1.2.0\n&gt; ✔ recipes      1.0.8\n\n\n&gt; ── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──\n&gt; ✖ scales::discard() masks purrr::discard()\n&gt; ✖ dplyr::filter()   masks stats::filter()\n&gt; ✖ recipes::fixed()  masks stringr::fixed()\n&gt; ✖ dplyr::lag()      masks stats::lag()\n&gt; ✖ yardstick::spec() masks readr::spec()\n&gt; ✖ recipes::step()   masks stats::step()\n&gt; • Search for functions across packages at https://www.tidymodels.org/find/"
   },
   {
     "objectID": "Lectures/Lecture10/CSSS508_Lecture10.html#tidymodels-packages",
