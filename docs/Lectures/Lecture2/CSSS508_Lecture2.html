@@ -438,13 +438,13 @@
 <li class="fragment">
 <code>.R</code>: These are <strong>R</strong> <em>syntax</em> files, where you write code to process and analyze data <em>without making an output document</em><sup>2</sup>.</li>
 <li class="fragment">
-<code>.html</code> (or <code>.pdf</code>): These are the output documents created when you <em>Render</em> a quarto markdown document.</li>
+<code>.html</code> (or <code>.pdf</code> or <code>.docx</code>…): These are the output documents created when you <em>Render</em> a quarto markdown document.</li>
 </ul>
 </div>
 <div class="fragment">
 <p>Make sure you understand the difference between the uses of these file types! Please ask for clarification if needed!</p>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>Quarto builds on a decade of developments with R Markdown documents. .Rmd files operate <strong>very</strong> similarly to Quarto documents but there are minor differences that you can read more about <a href="https://quarto.org/docs/computations/r.html#:~:text=Another%20difference%20between%20R%20Markdown,than%20relying%20on%20external%20packages">here</a>.</p></li><li id="fn2"><p>While beyond the scope of this class, you can use the <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> function to run a <code>.R</code> script file inside a <code>.qmd</code> or <code>.R</code> file. Using this you can break a large project up into multiple files but still run it all at once!</p></li></ol></aside></section></section><section><section id="introducing-the-tidyverse" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Introducing the <code>tidyverse</code>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Quarto builds on a decade of developments with R Markdown documents. .Rmd files operate <strong>very</strong> similarly to Quarto documents but there are minor differences that you can read more about <a href="https://quarto.org/docs/computations/r.html#:~:text=Another%20difference%20between%20R%20Markdown,than%20relying%20on%20external%20packages">here</a>.</p></li><li id="fn2"><p>You can use the <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> function to run a <code>.R</code> script file inside a <code>.qmd</code> or <code>.R</code> file. Using this you can break a large project up into multiple files but still run it all at once!</p></li></ol></aside></section></section><section><section id="introducing-the-tidyverse" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Introducing the <code>tidyverse</code>
 </h1>
 
 </section><section id="packages" class="slide level2"><h2>Packages</h2>
@@ -549,8 +549,8 @@
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.3     ✔ readr     2.1.4
 ✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.3     ✔ tibble    3.2.1
-✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ ggplot2   3.5.0     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
@@ -773,6 +773,8 @@
 <p><br></p>
 <div class="fragment">
 <h4 id="all-layers-have">All layers have:</h4>
+<p>an initializing <code>ggplot</code> call and at least one <code>geom</code> function.</p>
+<p><br></p>
 <div class="panel-tabset">
 <ul id="tabset-1" class="panel-tabset-tabby">
 <li><a data-tabby-default="" href="#tabset-1-1">same data &amp; aesthetics</a></li>
@@ -784,23 +786,27 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> [dataset], </span>
 <span id="cb7-2"><a></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> [x<span class="sc">-</span>variable], <span class="at">y =</span> [y<span class="sc">-</span>variable])) <span class="sc">+</span></span>
-<span id="cb7-3"><a></a>   <span class="fu">geom_xxx</span>() <span class="sc">+</span></span>
-<span id="cb7-4"><a></a>   other options</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a></a>  <span class="fu">geom_xxx</span>() <span class="sc">+</span></span>
+<span id="cb7-4"><a></a>  other options</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-1-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> [dataset]) <span class="sc">+</span></span>
-<span id="cb8-2"><a></a>   <span class="fu">geom_xxx</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> [x<span class="sc">-</span>variable], <span class="at">y =</span> [y<span class="sc">-</span>variable])) <span class="sc">+</span></span>
-<span id="cb8-3"><a></a>   other options</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> [dataset], </span>
+<span id="cb8-2"><a></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> [x<span class="sc">-</span>variable], <span class="at">y =</span> [y<span class="sc">-</span>variable])) <span class="sc">+</span></span>
+<span id="cb8-3"><a></a>  <span class="fu">geom_xxx</span>() <span class="sc">+</span></span>
+<span id="cb8-4"><a></a>  <span class="fu">geom_yyy</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> [x<span class="sc">-</span>variable], <span class="at">y =</span> [y<span class="sc">-</span>variable])) <span class="sc">+</span></span>
+<span id="cb8-5"><a></a>  other options</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-1-3">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb9-2"><a></a>   <span class="fu">geom_xxx</span>(<span class="at">data =</span> [dataset], </span>
-<span id="cb9-3"><a></a>            <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> [x<span class="sc">-</span>variable], <span class="at">y =</span> [y<span class="sc">-</span>variable])) <span class="sc">+</span></span>
-<span id="cb9-4"><a></a>   other options</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-2"><a></a>  <span class="fu">geom_xxx</span>(<span class="at">data =</span> [dataset1],</span>
+<span id="cb9-3"><a></a>           <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> [x<span class="sc">-</span>variable], <span class="at">y =</span> [y<span class="sc">-</span>variable])) <span class="sc">+</span></span>
+<span id="cb9-4"><a></a>  <span class="fu">geom_yyy</span>(<span class="at">data =</span> [dataset2],</span>
+<span id="cb9-5"><a></a>           <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> [x<span class="sc">-</span>variable], <span class="at">y =</span> [y<span class="sc">-</span>variable])) <span class="sc">+</span></span>
+<span id="cb9-6"><a></a>  other options</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -876,7 +882,7 @@
 </div>
 
 <aside><div>
-<p><strong>Set</strong> aesthetics to make the points larger and red.</p>
+<p><strong>Set</strong> aesthetics to make the points larger and red. Notice that these “aesthetics” are not inside the <code>aes</code> call the way <code>x</code> and <code>y</code> are on line 2. These are therefore global settings rather than mapping aesthetics.</p>
 </div></aside></section><section id="axis-labels-points-no-background-3" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Axis Labels, Points, No Background</h2>
 <h3 id="x-axis-label">X-Axis Label</h3>
 <div class="columns">
@@ -990,7 +996,7 @@
 <span id="cb17-4" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
 <span id="cb17-5" class="hljs-ln-code"><a></a>       <span class="at">y =</span> <span class="st">"Life expectancy"</span>,</span>
 <span id="cb17-6" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life expectancy in China"</span>) <span class="sc">+</span></span>
-<span id="cb17-7" class="hljs-ln-code"><a></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">18</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-7" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
@@ -1008,7 +1014,9 @@
 <p>Increase the base text size.</p>
 </div></aside></section><section id="plotting-all-countries" class="slide level2"><h2>Plotting All Countries</h2>
 <p>We have a plot we like for China…</p>
+<div class="fragment">
 <p>… but what if we want <em>all the countries</em>?</p>
+</div>
 </section><section id="plotting-all-countries-1" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Plotting All Countries</h2>
 <h3 id="a-mess">A Mess!</h3>
 <div class="columns">
@@ -1020,7 +1028,7 @@
 <span id="cb18-4" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
 <span id="cb18-5" class="hljs-ln-code"><a></a>       <span class="at">y =</span> <span class="st">"Life expectancy"</span>,</span>
 <span id="cb18-6" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life expectancy over time"</span>) <span class="sc">+</span> </span>
-<span id="cb18-7" class="hljs-ln-code"><a></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">18</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-7" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
@@ -1047,7 +1055,7 @@
 <span id="cb19-4" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
 <span id="cb19-5" class="hljs-ln-code"><a></a>       <span class="at">y =</span> <span class="st">"Life expectancy"</span>,</span>
 <span id="cb19-6" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life expectancy over time"</span>) <span class="sc">+</span> </span>
-<span id="cb19-7" class="hljs-ln-code"><a></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">18</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-7" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
@@ -1075,7 +1083,7 @@
 <span id="cb20-5" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
 <span id="cb20-6" class="hljs-ln-code"><a></a>       <span class="at">y =</span> <span class="st">"Life expectancy"</span>,</span>
 <span id="cb20-7" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life expectancy over time"</span>) <span class="sc">+</span> </span>
-<span id="cb20-8" class="hljs-ln-code"><a></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">18</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-8" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
@@ -1103,7 +1111,7 @@
 <span id="cb21-5" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
 <span id="cb21-6" class="hljs-ln-code"><a></a>       <span class="at">y =</span> <span class="st">"Life expectancy"</span>,</span>
 <span id="cb21-7" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life expectancy over time"</span>) <span class="sc">+</span> </span>
-<span id="cb21-8" class="hljs-ln-code"><a></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">18</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-8" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
@@ -1118,7 +1126,7 @@
 </div>
 
 <aside><div>
-<p>Much better… but maybe we can do highlight regional differences?</p>
+<p>Much better… but what if we highlight regional differences?</p>
 </div></aside></section><section id="plotting-all-countries-5" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Plotting All Countries</h2>
 <h3 id="color">Color</h3>
 <div class="columns">
@@ -1132,7 +1140,7 @@
 <span id="cb22-6" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
 <span id="cb22-7" class="hljs-ln-code"><a></a>       <span class="at">y =</span> <span class="st">"Life expectancy"</span>,</span>
 <span id="cb22-8" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life expectancy over time"</span>) <span class="sc">+</span> </span>
-<span id="cb22-9" class="hljs-ln-code"><a></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">18</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-9" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
@@ -1161,7 +1169,7 @@
 <span id="cb23-6" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
 <span id="cb23-7" class="hljs-ln-code"><a></a>       <span class="at">y =</span> <span class="st">"Life expectancy"</span>,</span>
 <span id="cb23-8" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life expectancy over time"</span>) <span class="sc">+</span> </span>
-<span id="cb23-9" class="hljs-ln-code"><a></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb23-9" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
 <span id="cb23-10" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(continent))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -1191,7 +1199,7 @@
 <span id="cb24-6" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
 <span id="cb24-7" class="hljs-ln-code"><a></a>       <span class="at">y =</span> <span class="st">"Life expectancy"</span>,</span>
 <span id="cb24-8" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life expectancy over time"</span>) <span class="sc">+</span> </span>
-<span id="cb24-9" class="hljs-ln-code"><a></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb24-9" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb24-10" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(continent))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -1221,7 +1229,7 @@
 <span id="cb25-6" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
 <span id="cb25-7" class="hljs-ln-code"><a></a>       <span class="at">y =</span> <span class="st">"Life expectancy"</span>,</span>
 <span id="cb25-8" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life expectancy over time"</span>) <span class="sc">+</span> </span>
-<span id="cb25-9" class="hljs-ln-code"><a></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb25-9" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb25-10" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(continent)) <span class="sc">+</span> </span>
 <span id="cb25-11" class="hljs-ln-code"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1261,7 +1269,7 @@
 <span id="cb26-7"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
 <span id="cb26-8"><a></a>       <span class="at">y =</span> <span class="st">"Life expectancy"</span>,</span>
 <span id="cb26-9"><a></a>       <span class="at">title =</span> <span class="st">"Life expectancy over time"</span>) <span class="sc">+</span> </span>
-<span id="cb26-10"><a></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb26-10"><a></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
 <span id="cb26-11"><a></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(continent)) <span class="sc">+</span></span>
 <span id="cb26-12"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1470,7 +1478,7 @@
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb40" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb40-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
 <span id="cb40-2" class="hljs-ln-code"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.colour =</span> <span class="st">"hotpink"</span>) <span class="sc">+</span></span>
-<span id="cb40-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-58-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section><section id="using-multiple-geoms-2" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Using multiple <code>geoms</code>
@@ -1478,10 +1486,18 @@
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb41" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb41-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
 <span id="cb41-2" class="hljs-ln-code"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.colour =</span> <span class="st">"hotpink"</span>) <span class="sc">+</span></span>
-<span id="cb41-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_jitter</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), <span class="at">alpha =</span> <span class="fl">0.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-59-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section><section id="annotating-specific-datapoints-for-emphasis" class="slide level2"><h2>Annotating specific datapoints for emphasis</h2>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-59-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section><section id="using-multiple-geoms-3" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Using multiple <code>geoms</code>
+</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb42" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb42-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb42-2" class="hljs-ln-code"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.colour =</span> <span class="st">"hotpink"</span>) <span class="sc">+</span></span>
+<span id="cb42-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_jitter</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), <span class="at">alpha =</span> <span class="fl">0.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-60-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section><section id="annotating-specific-datapoints-for-emphasis" class="slide level2"><h2>Annotating specific datapoints for emphasis</h2>
 <div class="panel-tabset">
 <ul id="tabset-3" class="panel-tabset-tabby">
 <li><a data-tabby-default="" href="#tabset-3-1">Basic annotation</a></li>
@@ -1492,27 +1508,11 @@
 <div class="tab-content">
 <div id="tabset-3-1">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb42" data-code-line-numbers="|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
-<span id="cb42-2"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.colour =</span> <span class="st">"hotpink"</span>, <span class="at">outlier.size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb42-3"><a></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> no_outliers, <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), <span class="at">alpha =</span> <span class="fl">0.25</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
-<span id="cb42-4"><a></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> outliers, <span class="fu">aes</span>(<span class="at">label =</span> country), <span class="at">size =</span> <span class="dv">8</span>) <span class="sc">+</span> </span>
-<span id="cb42-5"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-61-1.svg" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-3-2">
-<div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb43" data-code-line-numbers="|1,5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">library</span>(ggrepel)</span>
-<span id="cb43-2"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
-<span id="cb43-3"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.colour =</span> <span class="st">"hotpink"</span>, <span class="at">outlier.size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb43-4"><a></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> no_outliers, <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), <span class="at">alpha =</span> <span class="fl">0.25</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
-<span id="cb43-5"><a></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> outliers, <span class="fu">aes</span>(<span class="at">label =</span> country), <span class="at">color =</span> <span class="st">"hotpink"</span>, <span class="at">size =</span> <span class="dv">8</span>) <span class="sc">+</span> </span>
-<span id="cb43-6"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb43" data-code-line-numbers="|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb43-2"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.colour =</span> <span class="st">"hotpink"</span>, <span class="at">outlier.size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb43-3"><a></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> no_outliers, <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), <span class="at">alpha =</span> <span class="fl">0.25</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb43-4"><a></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> outliers, <span class="fu">aes</span>(<span class="at">label =</span> country), <span class="at">size =</span> <span class="dv">8</span>) <span class="sc">+</span> </span>
+<span id="cb43-5"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-62-1.svg" class="quarto-figure quarto-figure-center"></p>
@@ -1521,18 +1521,34 @@
 </div>
 </div>
 </div>
+<div id="tabset-3-2">
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb44" data-code-line-numbers="|1,5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb44-2"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb44-3"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.colour =</span> <span class="st">"hotpink"</span>, <span class="at">outlier.size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb44-4"><a></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> no_outliers, <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), <span class="at">alpha =</span> <span class="fl">0.25</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb44-5"><a></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> outliers, <span class="fu">aes</span>(<span class="at">label =</span> country), <span class="at">color =</span> <span class="st">"hotpink"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">max.overlaps =</span> <span class="dv">13</span>) <span class="sc">+</span> </span>
+<span id="cb44-6"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-63-1.svg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
 <div id="tabset-3-3">
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>outliers <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb44-2"><a></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span> </span>
-<span id="cb44-3"><a></a>  <span class="fu">mutate</span>(<span class="at">outlier =</span> <span class="fu">case_when</span>(<span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.25</span>) <span class="sc">-</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&gt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>, <span class="co"># anything lower than the 1st quartile - 1.5*IQR </span></span>
-<span id="cb44-4"><a></a>                             <span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.75</span>) <span class="sc">+</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&lt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>, <span class="co"># anything higher than the 3rd quartile + 1.5*IQR</span></span>
-<span id="cb44-5"><a></a>                             <span class="at">.default =</span> <span class="cn">NA</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb44-6"><a></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(outlier)) <span class="sc">|&gt;</span> <span class="co"># remove non-outliers</span></span>
-<span id="cb44-7"><a></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> <span class="fu">group_by</span>(country) <span class="sc">|&gt;</span> <span class="co"># regroup by country</span></span>
-<span id="cb44-8"><a></a>  <span class="fu">filter</span>(lifeExp <span class="sc">==</span> <span class="fu">min</span>(lifeExp)) <span class="co"># filter just the min for each country</span></span>
-<span id="cb44-9"><a></a></span>
-<span id="cb44-10"><a></a><span class="fu">head</span>(outliers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>outliers <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb45-2"><a></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span> </span>
+<span id="cb45-3"><a></a>  <span class="fu">mutate</span>(<span class="at">outlier =</span> <span class="fu">case_when</span>(<span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.25</span>) <span class="sc">-</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&gt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>, <span class="co"># anything lower than the 1st quartile - 1.5*IQR </span></span>
+<span id="cb45-4"><a></a>                             <span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.75</span>) <span class="sc">+</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&lt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>, <span class="co"># anything higher than the 3rd quartile + 1.5*IQR</span></span>
+<span id="cb45-5"><a></a>                             <span class="at">.default =</span> <span class="cn">NA</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb45-6"><a></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(outlier)) <span class="sc">|&gt;</span> <span class="co"># remove non-outliers</span></span>
+<span id="cb45-7"><a></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> <span class="fu">group_by</span>(country) <span class="sc">|&gt;</span> <span class="co"># regroup by country</span></span>
+<span id="cb45-8"><a></a>  <span class="fu">filter</span>(lifeExp <span class="sc">==</span> <span class="fu">min</span>(lifeExp)) <span class="co"># filter just the min for each country</span></span>
+<span id="cb45-9"><a></a></span>
+<span id="cb45-10"><a></a><span class="fu">head</span>(outliers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 7
 # Groups:   country [6]
@@ -1549,14 +1565,14 @@
 </div>
 <div id="tabset-3-4">
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>no_outliers <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb46-2"><a></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span> </span>
-<span id="cb46-3"><a></a>  <span class="fu">mutate</span>(<span class="at">outlier =</span> <span class="fu">case_when</span>(<span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.25</span>) <span class="sc">-</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&gt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>,</span>
-<span id="cb46-4"><a></a>                             <span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.75</span>) <span class="sc">+</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&lt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>, </span>
-<span id="cb46-5"><a></a>                             <span class="at">.default =</span> <span class="cn">NA</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb46-6"><a></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(outlier)) <span class="co"># remove outliers</span></span>
-<span id="cb46-7"><a></a></span>
-<span id="cb46-8"><a></a><span class="fu">head</span>(no_outliers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>no_outliers <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb47-2"><a></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span> </span>
+<span id="cb47-3"><a></a>  <span class="fu">mutate</span>(<span class="at">outlier =</span> <span class="fu">case_when</span>(<span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.25</span>) <span class="sc">-</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&gt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>,</span>
+<span id="cb47-4"><a></a>                             <span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.75</span>) <span class="sc">+</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&lt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>, </span>
+<span id="cb47-5"><a></a>                             <span class="at">.default =</span> <span class="cn">NA</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb47-6"><a></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(outlier)) <span class="co"># remove outliers</span></span>
+<span id="cb47-7"><a></a></span>
+<span id="cb47-8"><a></a><span class="fu">head</span>(no_outliers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 7
 # Groups:   continent [1]
@@ -1578,7 +1594,7 @@
 </section><section id="end-result" class="slide level2"><h2>End Result</h2>
 <p>We’re going to <em>slowly</em> build up a <em>really detailed plot</em> now!</p>
 
-<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-65-1.svg" class="r-stretch"></section><section id="base-ggplot-1" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Base <code>ggplot</code>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-66-1.svg" class="r-stretch"></section><section id="base-ggplot-1" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Base <code>ggplot</code>
 </h2>
 <div class="panel-tabset">
 <ul id="tabset-4" class="panel-tabset-tabby">
@@ -1588,15 +1604,15 @@
 <div class="tab-content">
 <div id="tabset-4-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb48-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="cb48-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb49-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="cb49-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-4-2">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-67-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-68-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -1616,16 +1632,16 @@
 <div class="tab-content">
 <div id="tabset-5-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb49-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="cb49-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="cb49-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb50-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="cb50-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="cb50-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-5-2">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-69-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-70-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -1645,19 +1661,19 @@
 <div class="tab-content">
 <div id="tabset-6-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50" data-code-line-numbers="4-6"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb50-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="cb50-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="cb50-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb50-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
-<span id="cb50-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="cb50-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51" data-code-line-numbers="4-6"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb51-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="cb51-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="cb51-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb51-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
+<span id="cb51-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="cb51-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-6-2">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-71-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-72-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -1677,21 +1693,21 @@
 <div class="tab-content">
 <div id="tabset-7-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51" data-code-line-numbers="7-8"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb51-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="cb51-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="cb51-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb51-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
-<span id="cb51-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="cb51-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
-<span id="cb51-7" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
-<span id="cb51-8" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52" data-code-line-numbers="7-8"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb52-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="cb52-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="cb52-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb52-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
+<span id="cb52-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="cb52-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
+<span id="cb52-7" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
+<span id="cb52-8" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-7-2">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-73-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-74-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -1711,23 +1727,23 @@
 <div class="tab-content">
 <div id="tabset-8-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52" data-code-line-numbers="9-10"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb52-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="cb52-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="cb52-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb52-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
-<span id="cb52-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="cb52-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
-<span id="cb52-7" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
-<span id="cb52-8" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb52-9" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb52-10" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53" data-code-line-numbers="9-10"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb53-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="cb53-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="cb53-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb53-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
+<span id="cb53-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="cb53-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
+<span id="cb53-7" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
+<span id="cb53-8" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb53-9" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb53-10" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-8-2">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-75-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-76-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -1747,25 +1763,25 @@
 <div class="tab-content">
 <div id="tabset-9-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53" data-code-line-numbers="11-12"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb53-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="cb53-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="cb53-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb53-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
-<span id="cb53-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="cb53-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
-<span id="cb53-7" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
-<span id="cb53-8" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb53-9" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb53-10" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
-<span id="cb53-11" class="hljs-ln-code"><a></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb53-12" class="hljs-ln-code"><a></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54" data-code-line-numbers="11-12"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb54-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="cb54-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="cb54-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb54-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
+<span id="cb54-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="cb54-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
+<span id="cb54-7" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
+<span id="cb54-8" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb54-9" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb54-10" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="cb54-11" class="hljs-ln-code"><a></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb54-12" class="hljs-ln-code"><a></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-9-2">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-77-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-78-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -1785,24 +1801,24 @@
 <div class="tab-content">
 <div id="tabset-10-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54" data-code-line-numbers="3,5"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb54-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="cb54-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="cb54-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">"Country"</span>, <span class="at">size =</span> <span class="st">"Country"</span>)) <span class="sc">+</span></span>
-<span id="cb54-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="cb54-5" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent, <span class="at">color =</span> <span class="st">"Continent"</span>, <span class="at">size =</span> <span class="st">"Continent"</span>)) <span class="sc">+</span></span>
-<span id="cb54-6" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
-<span id="cb54-7" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb54-8" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb54-9" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
-<span id="cb54-10" class="hljs-ln-code"><a></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb54-11" class="hljs-ln-code"><a></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55" data-code-line-numbers="3,5"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb55-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="cb55-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="cb55-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">"Country"</span>, <span class="at">size =</span> <span class="st">"Country"</span>)) <span class="sc">+</span></span>
+<span id="cb55-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="cb55-5" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent, <span class="at">color =</span> <span class="st">"Continent"</span>, <span class="at">size =</span> <span class="st">"Continent"</span>)) <span class="sc">+</span></span>
+<span id="cb55-6" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
+<span id="cb55-7" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb55-8" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb55-9" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="cb55-10" class="hljs-ln-code"><a></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb55-11" class="hljs-ln-code"><a></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-10-2">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-79-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-80-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -1822,26 +1838,26 @@
 <div class="tab-content">
 <div id="tabset-11-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55" data-code-line-numbers="3,7"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb55-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="cb55-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="cb55-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, </span>
-<span id="cb55-4" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">"Country"</span>, <span class="at">size =</span> <span class="st">"Country"</span>)) <span class="sc">+</span></span>
-<span id="cb55-5" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="cb55-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent, <span class="at">color =</span> <span class="st">"Continent"</span>, <span class="at">size =</span> <span class="st">"Continent"</span>), </span>
-<span id="cb55-7" class="hljs-ln-code"><a></a>            <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb55-8" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
-<span id="cb55-9" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb55-10" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb55-11" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
-<span id="cb55-12" class="hljs-ln-code"><a></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb55-13" class="hljs-ln-code"><a></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56" data-code-line-numbers="3,7"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb56-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="cb56-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="cb56-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, </span>
+<span id="cb56-4" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">"Country"</span>, <span class="at">size =</span> <span class="st">"Country"</span>)) <span class="sc">+</span></span>
+<span id="cb56-5" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="cb56-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent, <span class="at">color =</span> <span class="st">"Continent"</span>, <span class="at">size =</span> <span class="st">"Continent"</span>), </span>
+<span id="cb56-7" class="hljs-ln-code"><a></a>            <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb56-8" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
+<span id="cb56-9" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb56-10" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb56-11" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="cb56-12" class="hljs-ln-code"><a></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb56-13" class="hljs-ln-code"><a></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-11-2">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-81-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-82-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -1861,28 +1877,28 @@
 <div class="tab-content">
 <div id="tabset-12-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56" data-code-line-numbers="13-15"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb56-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="cb56-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="cb56-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb56-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
-<span id="cb56-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="cb56-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
-<span id="cb56-7" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
-<span id="cb56-8" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb56-9" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb56-10" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
-<span id="cb56-11" class="hljs-ln-code"><a></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb56-12" class="hljs-ln-code"><a></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
-<span id="cb56-13" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span> </span>
-<span id="cb56-14" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Years"</span>, </span>
-<span id="cb56-15" class="hljs-ln-code"><a></a>       <span class="at">x =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57" data-code-line-numbers="13-15"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb57-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="cb57-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="cb57-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb57-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
+<span id="cb57-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="cb57-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
+<span id="cb57-7" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
+<span id="cb57-8" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb57-9" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb57-10" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="cb57-11" class="hljs-ln-code"><a></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb57-12" class="hljs-ln-code"><a></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb57-13" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span> </span>
+<span id="cb57-14" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Years"</span>, </span>
+<span id="cb57-15" class="hljs-ln-code"><a></a>       <span class="at">x =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-12-2">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-83-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-84-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -1902,30 +1918,30 @@
 <div class="tab-content">
 <div id="tabset-13-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57" data-code-line-numbers="16-17"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb57-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="cb57-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="cb57-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb57-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
-<span id="cb57-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="cb57-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
-<span id="cb57-7" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
-<span id="cb57-8" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb57-9" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb57-10" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
-<span id="cb57-11" class="hljs-ln-code"><a></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb57-12" class="hljs-ln-code"><a></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
-<span id="cb57-13" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span> </span>
-<span id="cb57-14" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Years"</span>, </span>
-<span id="cb57-15" class="hljs-ln-code"><a></a>       <span class="at">x =</span> <span class="st">""</span>, </span>
-<span id="cb57-16" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life Expectancy, 1952-2007"</span>, </span>
-<span id="cb57-17" class="hljs-ln-code"><a></a>       <span class="at">subtitle =</span> <span class="st">"By continent and country"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58" data-code-line-numbers="16-17"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb58-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="cb58-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="cb58-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb58-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
+<span id="cb58-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="cb58-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
+<span id="cb58-7" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
+<span id="cb58-8" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb58-9" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb58-10" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="cb58-11" class="hljs-ln-code"><a></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb58-12" class="hljs-ln-code"><a></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb58-13" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span> </span>
+<span id="cb58-14" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Years"</span>, </span>
+<span id="cb58-15" class="hljs-ln-code"><a></a>       <span class="at">x =</span> <span class="st">""</span>, </span>
+<span id="cb58-16" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life Expectancy, 1952-2007"</span>, </span>
+<span id="cb58-17" class="hljs-ln-code"><a></a>       <span class="at">subtitle =</span> <span class="st">"By continent and country"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-13-2">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-85-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-86-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -1945,31 +1961,31 @@
 <div class="tab-content">
 <div id="tabset-14-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58" data-code-line-numbers="18"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb58-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="cb58-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="cb58-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb58-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
-<span id="cb58-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="cb58-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
-<span id="cb58-7" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
-<span id="cb58-8" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb58-9" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb58-10" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
-<span id="cb58-11" class="hljs-ln-code"><a></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb58-12" class="hljs-ln-code"><a></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
-<span id="cb58-13" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span> </span>
-<span id="cb58-14" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Years"</span>, </span>
-<span id="cb58-15" class="hljs-ln-code"><a></a>       <span class="at">x =</span> <span class="st">""</span>, </span>
-<span id="cb58-16" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life Expectancy, 1952-2007"</span>, </span>
-<span id="cb58-17" class="hljs-ln-code"><a></a>       <span class="at">subtitle =</span> <span class="st">"By continent and country"</span>) <span class="sc">+</span></span>
-<span id="cb58-18" class="hljs-ln-code"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59" data-code-line-numbers="18"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb59-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="cb59-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="cb59-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb59-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
+<span id="cb59-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="cb59-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
+<span id="cb59-7" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
+<span id="cb59-8" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb59-9" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb59-10" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="cb59-11" class="hljs-ln-code"><a></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb59-12" class="hljs-ln-code"><a></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb59-13" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span> </span>
+<span id="cb59-14" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Years"</span>, </span>
+<span id="cb59-15" class="hljs-ln-code"><a></a>       <span class="at">x =</span> <span class="st">""</span>, </span>
+<span id="cb59-16" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life Expectancy, 1952-2007"</span>, </span>
+<span id="cb59-17" class="hljs-ln-code"><a></a>       <span class="at">subtitle =</span> <span class="st">"By continent and country"</span>) <span class="sc">+</span></span>
+<span id="cb59-18" class="hljs-ln-code"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-14-2">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-87-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-88-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -1991,32 +2007,32 @@
 <div class="tab-content">
 <div id="tabset-15-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59" data-code-line-numbers="18"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb59-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="cb59-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="cb59-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb59-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
-<span id="cb59-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="cb59-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
-<span id="cb59-7" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
-<span id="cb59-8" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb59-9" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb59-10" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
-<span id="cb59-11" class="hljs-ln-code"><a></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="cb59-12" class="hljs-ln-code"><a></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
-<span id="cb59-13" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span> </span>
-<span id="cb59-14" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Years"</span>, </span>
-<span id="cb59-15" class="hljs-ln-code"><a></a>       <span class="at">x =</span> <span class="st">""</span>, </span>
-<span id="cb59-16" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life Expectancy, 1952-2007"</span>, </span>
-<span id="cb59-17" class="hljs-ln-code"><a></a>       <span class="at">subtitle =</span> <span class="st">"By continent and country"</span>) <span class="sc">+</span></span>
-<span id="cb59-18" class="hljs-ln-code"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.82</span>, <span class="fl">0.15</span>), </span>
-<span id="cb59-19" class="hljs-ln-code"><a></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60" data-code-line-numbers="18"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb60-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="cb60-2" class="hljs-ln-code"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="cb60-3" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb60-4" class="hljs-ln-code"><a></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
+<span id="cb60-5" class="hljs-ln-code"><a></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="cb60-6" class="hljs-ln-code"><a></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
+<span id="cb60-7" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
+<span id="cb60-8" class="hljs-ln-code"><a></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb60-9" class="hljs-ln-code"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb60-10" class="hljs-ln-code"><a></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="cb60-11" class="hljs-ln-code"><a></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="cb60-12" class="hljs-ln-code"><a></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb60-13" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span> </span>
+<span id="cb60-14" class="hljs-ln-code"><a></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Years"</span>, </span>
+<span id="cb60-15" class="hljs-ln-code"><a></a>       <span class="at">x =</span> <span class="st">""</span>, </span>
+<span id="cb60-16" class="hljs-ln-code"><a></a>       <span class="at">title =</span> <span class="st">"Life Expectancy, 1952-2007"</span>, </span>
+<span id="cb60-17" class="hljs-ln-code"><a></a>       <span class="at">subtitle =</span> <span class="st">"By continent and country"</span>) <span class="sc">+</span></span>
+<span id="cb60-18" class="hljs-ln-code"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.82</span>, <span class="fl">0.15</span>), </span>
+<span id="cb60-19" class="hljs-ln-code"><a></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-15-2">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-89-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-90-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2032,7 +2048,7 @@
 
 </section><section id="tidyverse-extended-universe" class="slide level2"><h2>
 <code>tidyverse</code> extended universe</h2>
-<p><code>ggplot2</code> can obviously do a lot on its own. But because <code>R</code> allows for anyone and everyone to expand the functionality of what already exists, numerous extensions<sup>1</sup>. to <code>ggplot2</code> have been created.</p>
+<p><code>ggplot2</code> can obviously do a lot on its own. But because <code>R</code> allows for anyone and everyone to expand the functionality of what already exists, numerous extensions<sup>1</sup> to <code>ggplot2</code> have been created.</p>
 <div class="fragment">
 <p>We’ve already seen one example with <code>ggrepel</code>. But let’s look at a few others…</p>
 </div>
@@ -2041,35 +2057,35 @@
 </h2>
 <p>If you want your labels to follow along the path of your plot (and maintain proper angles and spacing) try using <a href="https://allancameron.github.io/geomtextpath/index.html"><code>geomtextpath</code></a>.</p>
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a></a><span class="co"># install.packages("geomtextpath") &lt;- run in console first</span></span>
-<span id="cb60-2"><a></a><span class="fu">library</span>(geomtextpath)</span>
-<span id="cb60-3"><a></a>gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb60-4"><a></a>  <span class="fu">filter</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Cuba"</span>, <span class="st">"Haiti"</span>, <span class="st">"Dominican Republic"</span>)) <span class="sc">|&gt;</span> <span class="co"># restricting data to 3 regionally-specific countries</span></span>
-<span id="cb60-5"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, </span>
-<span id="cb60-6"><a></a>             <span class="at">y =</span> lifeExp, </span>
-<span id="cb60-7"><a></a>             <span class="at">color =</span> country, </span>
-<span id="cb60-8"><a></a>             <span class="at">label =</span> country)) <span class="sc">+</span> <span class="co"># specify label with text to appear</span></span>
-<span id="cb60-9"><a></a>  <span class="fu">geom_textpath</span>() <span class="sc">+</span> <span class="co"># adding textpath geom to put labels within lines</span></span>
-<span id="cb60-10"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="co"># removing legend</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a><span class="co"># install.packages("geomtextpath") &lt;- run in console first</span></span>
+<span id="cb61-2"><a></a><span class="fu">library</span>(geomtextpath)</span>
+<span id="cb61-3"><a></a>gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb61-4"><a></a>  <span class="fu">filter</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Cuba"</span>, <span class="st">"Haiti"</span>, <span class="st">"Dominican Republic"</span>)) <span class="sc">|&gt;</span> <span class="co"># restricting data to 3 regionally-specific countries</span></span>
+<span id="cb61-5"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, </span>
+<span id="cb61-6"><a></a>             <span class="at">y =</span> lifeExp, </span>
+<span id="cb61-7"><a></a>             <span class="at">color =</span> country, </span>
+<span id="cb61-8"><a></a>             <span class="at">label =</span> country)) <span class="sc">+</span> <span class="co"># specify label with text to appear</span></span>
+<span id="cb61-9"><a></a>  <span class="fu">geom_textpath</span>() <span class="sc">+</span> <span class="co"># adding textpath geom to put labels within lines</span></span>
+<span id="cb61-10"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="co"># removing legend</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-90-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section><section id="ggridges" class="slide level2 scrollable"><h2>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-91-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section><section id="ggridges" class="slide level2 scrollable"><h2>
 <code>ggridges</code> <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
 </h2>
-<p>We can make visualize the differing distributions of a continuous variable by levels of a categorical variable with <a href="https://wilkelab.org/ggridges/">ggridges</a>!</p>
+<p>We can visualize the differing distributions of a continuous variable by levels of a categorical variable with <a href="https://wilkelab.org/ggridges/">ggridges</a>!</p>
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a><span class="co"># install.packages("ggridges") &lt;- run in console first</span></span>
-<span id="cb61-2"><a></a><span class="fu">library</span>(ggridges)</span>
-<span id="cb61-3"><a></a><span class="fu">ggplot</span>(gapminder, </span>
-<span id="cb61-4"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, </span>
-<span id="cb61-5"><a></a>           <span class="at">y =</span> continent, </span>
-<span id="cb61-6"><a></a>           <span class="at">fill =</span> continent, </span>
-<span id="cb61-7"><a></a>           <span class="at">color =</span> continent)) <span class="sc">+</span></span>
-<span id="cb61-8"><a></a>  <span class="fu">geom_density_ridges</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, </span>
-<span id="cb61-9"><a></a>                      <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="co"># add ridges, make all a bit transparent, remove legend</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a></a><span class="co"># install.packages("ggridges") &lt;- run in console first</span></span>
+<span id="cb62-2"><a></a><span class="fu">library</span>(ggridges)</span>
+<span id="cb62-3"><a></a><span class="fu">ggplot</span>(gapminder, </span>
+<span id="cb62-4"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, </span>
+<span id="cb62-5"><a></a>           <span class="at">y =</span> continent, </span>
+<span id="cb62-6"><a></a>           <span class="at">fill =</span> continent, </span>
+<span id="cb62-7"><a></a>           <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb62-8"><a></a>  <span class="fu">geom_density_ridges</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, </span>
+<span id="cb62-9"><a></a>                      <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="co"># add ridges, make all a bit transparent, remove legend</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-91-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section><section id="correlation-matricies" class="slide level2 scrollable"><h2>Correlation Matricies <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-92-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section><section id="correlation-matricies" class="slide level2 scrollable"><h2>Correlation Matricies <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
 </h2>
 <p>Make visually appealing &amp; informative correlation plots in <a href=""><code>GGally</code></a> or <a href=""><code>ggcorrplot</code></a>.</p>
 <div class="panel-tabset">
@@ -2081,45 +2097,18 @@
 <div class="tab-content">
 <div id="tabset-16-1">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a></a><span class="co"># install.packages("GGally") &lt;- run in console first</span></span>
-<span id="cb62-2"><a></a><span class="fu">library</span>(GGally)</span>
-<span id="cb62-3"><a></a></span>
-<span id="cb62-4"><a></a><span class="fu">ggcorr</span>(swiss, </span>
-<span id="cb62-5"><a></a>       <span class="at">geom =</span> <span class="st">"circle"</span>, </span>
-<span id="cb62-6"><a></a>       <span class="at">min_size =</span> <span class="dv">25</span>, <span class="co"># specify minimum size of shape </span></span>
-<span id="cb62-7"><a></a>       <span class="at">max_size =</span> <span class="dv">25</span>, <span class="co"># specify maximum size of shape </span></span>
-<span id="cb62-8"><a></a>       <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="co"># label circles with correlation coefficient</span></span>
-<span id="cb62-9"><a></a>       <span class="at">label_alpha =</span> <span class="cn">TRUE</span>, <span class="co"># less strong correlations have lower alpha</span></span>
-<span id="cb62-10"><a></a>       <span class="at">label_round =</span> <span class="dv">2</span>, <span class="co"># round correlations coefficients to 2 decimal points</span></span>
-<span id="cb62-11"><a></a>       <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.6</span>), </span>
-<span id="cb62-12"><a></a>       <span class="at">legend.size =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-92-1.svg" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-16-2">
-<div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a><span class="co"># install.packages("ggcorrplot") &lt;- run in console first</span></span>
-<span id="cb63-2"><a></a><span class="fu">library</span>(ggcorrplot)</span>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a><span class="co"># install.packages("GGally") &lt;- run in console first</span></span>
+<span id="cb63-2"><a></a><span class="fu">library</span>(GGally)</span>
 <span id="cb63-3"><a></a></span>
-<span id="cb63-4"><a></a><span class="co"># compute correlation matrix</span></span>
-<span id="cb63-5"><a></a>corr <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(swiss), <span class="dv">1</span>)</span>
-<span id="cb63-6"><a></a><span class="co"># computer matrix of correlation p-values</span></span>
-<span id="cb63-7"><a></a>p_mat <span class="ot">&lt;-</span> <span class="fu">cor_pmat</span>(swiss)</span>
-<span id="cb63-8"><a></a></span>
-<span id="cb63-9"><a></a><span class="fu">ggcorrplot</span>(corr,</span>
-<span id="cb63-10"><a></a>           <span class="at">hc.order =</span> <span class="cn">TRUE</span>, <span class="co"># use hierarchical clustering to group like-correlations together</span></span>
-<span id="cb63-11"><a></a>           <span class="at">type =</span> <span class="st">"lower"</span>, <span class="co"># only show lower half of correlation matrix</span></span>
-<span id="cb63-12"><a></a>           <span class="at">p.mat =</span> p_mat, <span class="co"># give corresponding p-values for correlation matrix</span></span>
-<span id="cb63-13"><a></a>           <span class="at">insig =</span> <span class="st">"pch"</span>, <span class="co"># add default shape (an X) to correlations that are insignificant</span></span>
-<span id="cb63-14"><a></a>           <span class="at">outline.color =</span> <span class="st">"black"</span>, <span class="co"># outline cells in white</span></span>
-<span id="cb63-15"><a></a>           <span class="at">ggtheme =</span> ggthemes<span class="sc">::</span><span class="fu">theme_tufte</span>(), <span class="co"># using a specific theme I like from ggthemes package </span></span>
-<span id="cb63-16"><a></a>           <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#4e79a7"</span>, <span class="st">"white"</span>, <span class="st">"#e15759"</span>)) <span class="sc">+</span> <span class="co"># specify custom colors </span></span>
-<span id="cb63-17"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.67</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb63-4"><a></a><span class="fu">ggcorr</span>(swiss, </span>
+<span id="cb63-5"><a></a>       <span class="at">geom =</span> <span class="st">"circle"</span>, </span>
+<span id="cb63-6"><a></a>       <span class="at">min_size =</span> <span class="dv">25</span>, <span class="co"># specify minimum size of shape </span></span>
+<span id="cb63-7"><a></a>       <span class="at">max_size =</span> <span class="dv">25</span>, <span class="co"># specify maximum size of shape </span></span>
+<span id="cb63-8"><a></a>       <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="co"># label circles with correlation coefficient</span></span>
+<span id="cb63-9"><a></a>       <span class="at">label_alpha =</span> <span class="cn">TRUE</span>, <span class="co"># less strong correlations have lower alpha</span></span>
+<span id="cb63-10"><a></a>       <span class="at">label_round =</span> <span class="dv">2</span>, <span class="co"># round correlations coefficients to 2 decimal points</span></span>
+<span id="cb63-11"><a></a>       <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.6</span>), </span>
+<span id="cb63-12"><a></a>       <span class="at">legend.size =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-93-1.svg" class="quarto-figure quarto-figure-center"></p>
@@ -2128,16 +2117,43 @@
 </div>
 </div>
 </div>
-<div id="tabset-16-3">
+<div id="tabset-16-2">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a></a><span class="fu">ggpairs</span>(swiss, </span>
-<span id="cb64-2"><a></a>        <span class="at">lower =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="fu">wrap</span>(<span class="st">"smooth"</span>, <span class="co"># specify a smoothing line added to scatterplots</span></span>
-<span id="cb64-3"><a></a>                                       <span class="at">alpha =</span> <span class="fl">0.5</span>, </span>
-<span id="cb64-4"><a></a>                                       <span class="at">size=</span><span class="fl">0.2</span>))) <span class="sc">+</span> </span>
-<span id="cb64-5"><a></a>  ggthemes<span class="sc">::</span><span class="fu">theme_tufte</span>() <span class="co"># add nice theme from ggthemes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a></a><span class="co"># install.packages("ggcorrplot") &lt;- run in console first</span></span>
+<span id="cb64-2"><a></a><span class="fu">library</span>(ggcorrplot)</span>
+<span id="cb64-3"><a></a></span>
+<span id="cb64-4"><a></a><span class="co"># compute correlation matrix</span></span>
+<span id="cb64-5"><a></a>corr <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(swiss), <span class="dv">1</span>)</span>
+<span id="cb64-6"><a></a><span class="co"># computer matrix of correlation p-values</span></span>
+<span id="cb64-7"><a></a>p_mat <span class="ot">&lt;-</span> <span class="fu">cor_pmat</span>(swiss)</span>
+<span id="cb64-8"><a></a></span>
+<span id="cb64-9"><a></a><span class="fu">ggcorrplot</span>(corr,</span>
+<span id="cb64-10"><a></a>           <span class="at">hc.order =</span> <span class="cn">TRUE</span>, <span class="co"># use hierarchical clustering to group like-correlations together</span></span>
+<span id="cb64-11"><a></a>           <span class="at">type =</span> <span class="st">"lower"</span>, <span class="co"># only show lower half of correlation matrix</span></span>
+<span id="cb64-12"><a></a>           <span class="at">p.mat =</span> p_mat, <span class="co"># give corresponding p-values for correlation matrix</span></span>
+<span id="cb64-13"><a></a>           <span class="at">insig =</span> <span class="st">"pch"</span>, <span class="co"># add default shape (an X) to correlations that are insignificant</span></span>
+<span id="cb64-14"><a></a>           <span class="at">outline.color =</span> <span class="st">"black"</span>, <span class="co"># outline cells in white</span></span>
+<span id="cb64-15"><a></a>           <span class="at">ggtheme =</span> ggthemes<span class="sc">::</span><span class="fu">theme_tufte</span>(), <span class="co"># using a specific theme I like from ggthemes package </span></span>
+<span id="cb64-16"><a></a>           <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#4e79a7"</span>, <span class="st">"white"</span>, <span class="st">"#e15759"</span>)) <span class="sc">+</span> <span class="co"># specify custom colors </span></span>
+<span id="cb64-17"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.67</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-94-1.svg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-16-3">
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a><span class="fu">ggpairs</span>(swiss, </span>
+<span id="cb65-2"><a></a>        <span class="at">lower =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="fu">wrap</span>(<span class="st">"smooth"</span>, <span class="co"># specify a smoothing line added to scatterplots</span></span>
+<span id="cb65-3"><a></a>                                       <span class="at">alpha =</span> <span class="fl">0.5</span>, </span>
+<span id="cb65-4"><a></a>                                       <span class="at">size=</span><span class="fl">0.2</span>))) <span class="sc">+</span> </span>
+<span id="cb65-5"><a></a>  ggthemes<span class="sc">::</span><span class="fu">theme_tufte</span>() <span class="co"># add nice theme from ggthemes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-95-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2150,34 +2166,36 @@
 </h2>
 <p>Combine separate plots into the same graphic using <a href=""><code>patchwork</code></a>.</p>
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a><span class="co"># install.packages("patchwork") &lt;- run in console first</span></span>
-<span id="cb65-2"><a></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb65-3"><a></a></span>
-<span id="cb65-4"><a></a><span class="co"># Create first plot object</span></span>
-<span id="cb65-5"><a></a>plot_lifeExp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder, </span>
-<span id="cb65-6"><a></a>                       <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">y =</span> continent, <span class="at">fill =</span> continent, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
-<span id="cb65-7"><a></a>  <span class="fu">geom_density_ridges</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb65-8"><a></a></span>
-<span id="cb65-9"><a></a><span class="co"># Create second plot object</span></span>
-<span id="cb65-10"><a></a>plot_boxplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder, </span>
-<span id="cb65-11"><a></a>                       <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp, <span class="at">color =</span> continent), </span>
-<span id="cb65-12"><a></a>                       <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb65-13"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.colour =</span> <span class="st">"black"</span>, <span class="at">varwidth =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="co"># change outlier color and make width of boxes relative to N</span></span>
-<span id="cb65-14"><a></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="co"># flip the coordinates (x &amp; y) to align with first plot</span></span>
-<span id="cb65-15"><a></a>  <span class="fu">geom_jitter</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), <span class="co"># add datapoints to boxplot</span></span>
-<span id="cb65-16"><a></a>              <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span> </span>
-<span id="cb65-17"><a></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> outliers, <span class="co"># add new dataset with just 4 of the outliers</span></span>
-<span id="cb65-18"><a></a>                   <span class="fu">aes</span>(<span class="at">label =</span> country), </span>
-<span id="cb65-19"><a></a>                   <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb65-20"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(), <span class="co"># remove y axis text </span></span>
-<span id="cb65-21"><a></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(), <span class="co"># remove y axis ticks </span></span>
-<span id="cb65-22"><a></a>        <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(), <span class="co"># remove y axis title </span></span>
-<span id="cb65-23"><a></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb65-24"><a></a></span>
-<span id="cb65-25"><a></a>plot_lifeExp <span class="sc">+</span> plot_boxplot <span class="co"># simply add two objects together to place side by side</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a><span class="co"># install.packages("patchwork") &lt;- run in console first</span></span>
+<span id="cb66-2"><a></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb66-3"><a></a></span>
+<span id="cb66-4"><a></a><span class="co"># Create first plot object</span></span>
+<span id="cb66-5"><a></a>plot_lifeExp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder, </span>
+<span id="cb66-6"><a></a>                       <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">y =</span> continent, <span class="at">fill =</span> continent, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb66-7"><a></a>  <span class="fu">geom_density_ridges</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb66-8"><a></a></span>
+<span id="cb66-9"><a></a><span class="co"># Create second plot object</span></span>
+<span id="cb66-10"><a></a>plot_boxplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder, </span>
+<span id="cb66-11"><a></a>                       <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp, <span class="at">color =</span> continent), </span>
+<span id="cb66-12"><a></a>                       <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb66-13"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.colour =</span> <span class="st">"black"</span>, <span class="at">varwidth =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="co"># change outlier color and make width of boxes relative to N</span></span>
+<span id="cb66-14"><a></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="co"># flip the coordinates (x &amp; y) to align with first plot</span></span>
+<span id="cb66-15"><a></a>  <span class="fu">geom_jitter</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), <span class="co"># add datapoints to boxplot</span></span>
+<span id="cb66-16"><a></a>              <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span> </span>
+<span id="cb66-17"><a></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> outliers, <span class="co"># mapping new dataset with the outliers</span></span>
+<span id="cb66-18"><a></a>                   <span class="fu">aes</span>(<span class="at">label =</span> country), </span>
+<span id="cb66-19"><a></a>                   <span class="at">color =</span> <span class="st">"black"</span>, </span>
+<span id="cb66-20"><a></a>                   <span class="at">alpha =</span> <span class="fl">0.7</span>, </span>
+<span id="cb66-21"><a></a>                   <span class="at">max.overlaps =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb66-22"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(), <span class="co"># remove y axis text </span></span>
+<span id="cb66-23"><a></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(), <span class="co"># remove y axis ticks </span></span>
+<span id="cb66-24"><a></a>        <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(), <span class="co"># remove y axis title </span></span>
+<span id="cb66-25"><a></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb66-26"><a></a></span>
+<span id="cb66-27"><a></a>plot_lifeExp <span class="sc">+</span> plot_boxplot <span class="co"># simply add two objects together to place side by side</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-95-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section><section id="themes-in-ggplot2" class="slide level2 scrollable"><h2>themes in <code>ggplot2</code> <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-96-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section><section id="themes-in-ggplot2" class="slide level2 scrollable"><h2>themes in <code>ggplot2</code> <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span>
 </h2>
 <p>There are several built-in themes within <code>ggplot2</code>.</p>
 <div class="panel-tabset">
@@ -2194,18 +2212,7 @@
 <div class="tab-content">
 <div id="tabset-17-1">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="co"># reusing plot_lifeExp from previous slide and changing theme</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-96-1.svg" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-17-2">
-<div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="co"># reusing plot_lifeExp from previous slide and changing theme</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-97-1.svg" class="quarto-figure quarto-figure-center"></p>
@@ -2214,9 +2221,9 @@
 </div>
 </div>
 </div>
-<div id="tabset-17-3">
+<div id="tabset-17-2">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-98-1.svg" class="quarto-figure quarto-figure-center"></p>
@@ -2225,9 +2232,9 @@
 </div>
 </div>
 </div>
-<div id="tabset-17-4">
+<div id="tabset-17-3">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_linedraw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-99-1.svg" class="quarto-figure quarto-figure-center"></p>
@@ -2236,9 +2243,9 @@
 </div>
 </div>
 </div>
-<div id="tabset-17-5">
+<div id="tabset-17-4">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_dark</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_linedraw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-100-1.svg" class="quarto-figure quarto-figure-center"></p>
@@ -2247,9 +2254,9 @@
 </div>
 </div>
 </div>
-<div id="tabset-17-6">
+<div id="tabset-17-5">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_dark</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-101-1.svg" class="quarto-figure quarto-figure-center"></p>
@@ -2258,9 +2265,9 @@
 </div>
 </div>
 </div>
-<div id="tabset-17-7">
+<div id="tabset-17-6">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_gray</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-102-1.svg" class="quarto-figure quarto-figure-center"></p>
@@ -2269,12 +2276,23 @@
 </div>
 </div>
 </div>
-<div id="tabset-17-8">
+<div id="tabset-17-7">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_gray</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-103-1.svg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-17-8">
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-104-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2299,19 +2317,8 @@
 <div class="tab-content">
 <div id="tabset-18-1">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a></a><span class="fu">library</span>(ggthemes)</span>
-<span id="cb74-2"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_excel</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-104-1.svg" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-18-2">
-<div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_economist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb75-2"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_excel</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-105-1.svg" class="quarto-figure quarto-figure-center"></p>
@@ -2320,9 +2327,9 @@
 </div>
 </div>
 </div>
-<div id="tabset-18-3">
+<div id="tabset-18-2">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_few</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_economist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-106-1.svg" class="quarto-figure quarto-figure-center"></p>
@@ -2331,9 +2338,9 @@
 </div>
 </div>
 </div>
-<div id="tabset-18-4">
+<div id="tabset-18-3">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_fivethirtyeight</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_few</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-107-1.svg" class="quarto-figure quarto-figure-center"></p>
@@ -2342,9 +2349,9 @@
 </div>
 </div>
 </div>
-<div id="tabset-18-5">
+<div id="tabset-18-4">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_gdocs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_fivethirtyeight</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-108-1.svg" class="quarto-figure quarto-figure-center"></p>
@@ -2353,9 +2360,9 @@
 </div>
 </div>
 </div>
-<div id="tabset-18-6">
+<div id="tabset-18-5">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_stata</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_gdocs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-109-1.svg" class="quarto-figure quarto-figure-center"></p>
@@ -2364,9 +2371,9 @@
 </div>
 </div>
 </div>
-<div id="tabset-18-7">
+<div id="tabset-18-6">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_tufte</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_stata</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-110-1.svg" class="quarto-figure quarto-figure-center"></p>
@@ -2375,12 +2382,23 @@
 </div>
 </div>
 </div>
-<div id="tabset-18-8">
+<div id="tabset-18-7">
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_wsj</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_tufte</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-111-1.svg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-18-8">
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_wsj</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-112-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2412,7 +2430,7 @@
 </section></section><section><section id="summary" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Summary</h1>
 
 </section><section id="summary-1" class="slide level2"><h2>Summary</h2>
-<p><code>ggplot2</code> can do a LOT! I won’t expect you to memorize all these tools, and neither should you! With time and practice, you’ll start to remember the key tools.</p>
+<p><code>ggplot2</code> can do a LOT! I don’t expect you to memorize all these tools, and neither should you! With time and practice, you’ll start to remember the key tools.</p>
 <div class="columns">
 <div class="column" style="width:55%;">
 <ul>

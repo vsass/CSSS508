@@ -37,7 +37,7 @@ require(xml2)
 
 [CS&SS 508 • Lecture 1]{.custom-subtitle}
 
-[{{< var lecture.one >}}]{.custom-subtitle2}
+[{{< var lectures.one >}}]{.custom-subtitle2}
 
 [Victoria Sass]{.custom-subtitle3}
 
@@ -49,6 +49,22 @@ require(xml2)
 - Introductions
 - Syllabus
 - Lecture 1: Introduction to R, RStudio, and Quarto
+
+## Who Am I? 
+
+* Victoria (Vic) Sass
+
+. . . 
+
+* PhD Candidate in Sociology
+
+. . . 
+
+* I've been using `R` and `RStudio` for over 10 years 😱 
+
+. . . 
+
+* I love teaching this class 🤓
 
 ## Introductions
 
@@ -101,7 +117,7 @@ By the end of this course you should feel confident approaching any data you enc
 
 **Lecture:** *On Tuesdays we will meet in the CSSCR lab for an interactive session where we'll cover a specific topic to help you learn fundamental skills, concepts, and principles for learning R. Additionally, these sessions will provide you with the opportunity to work with each other to learn and practice key skills in R. I will be available to answer questions and help troubleshoot code as well.*
 
-**Office Hours:** Drop-in to ask questions, get advice, or continue discussions from lab/lecture. We can talk in a breakout room or with the group! 
+**Office Hours:** *Drop-in to ask questions, get advice, or continue discussions from lab/lecture. We can talk in a breakout room or with the group!* 
 
   * Wednesdays, 11am-1pm (on Zoom; link on {{< var canvas >}})
 
@@ -380,7 +396,7 @@ I'm committed to fostering a friendly and inclusive classroom environment in whi
 
 ## Help and Feedback
 
-**Getting Help:** If at any point during the quarter you find yourself struggling to keep up, please let me know! I am here to help. A great place to start this process is by chatting after class, coming to office hours, or {{< var message >}}on Slack. 
+**Getting Help:** If at any point during the quarter you find yourself struggling to keep up, please let me know! I am here to help. A great place to start this process is by chatting before^[Unfortunately I have to leave right after class to catch the ferry so if you want to chat in person, come early to class. I'll be hanging out starting at 4pm each Tuesday.] class, coming to office hours, or {{< var message >}}on Slack. 
 
 . . . 
 
@@ -885,41 +901,54 @@ tinytex::install_tinytex()
 :::: {.columns}
 
 ::: {.column width="50%"}
+
+
+::: {.panel-tabset}
+
+### Quarto file
+
 ```{r}
 #| echo: false
 #| comment: ""
+   
 cat(readr::read_file("quarto_anatomy.qmd"))
 ```
 
-:::
+### Rendered html document
 
-::: {.column width="50%"}
 ```{r}
 #| label: quarto-anatomy
 #| echo: false
 #| out-width: "90%"
 #| fig-cap: |
-#|   The rendered output of the qmd shown on the left.
+#|   The rendered output of the qmd file shown on the previous tab.
 
 knitr::include_graphics("images/quarto_anatomy.png")
 ```
+
+:::
+
+:::
+
+::: {.column width="50%"}
+
+**Elements of a Quarto document include:**
+
+::: {.fragment .highlight-current-red} 
+1. An (optional) YAML header (surrounded by `---`s).
+::: 
+
+::: {.fragment .highlight-current-red} 
+2. Plain text and any associated formatting. 
+::: 
+
+::: {.fragment .highlight-current-red} 
+3. Chunks of code (surrounded by ```` ``` ```` s) and/or their output.
+::: 
+
 :::
 
 ::::
-
-Elements of a Quarto document include: 
-
-::: {.fragment .highlight-current-red} 
-1. An (optional) YAML header
-::: 
-
-::: {.fragment .highlight-current-red} 
-2. Plain text and any associated formatting
-::: 
-
-::: {.fragment .highlight-current-red} 
-3. Chunks of code and/or their output.
-::: 
 
 ## Quarto Headers
 
@@ -1094,6 +1123,10 @@ z <- y^2
 :::
 ::::
 
+::: aside
+Try copying any of the code chunks from the previous three slides to add some formatted text to your own qmd. 
+:::
+
 ## Quarto Tinkering
 
 Quarto docs can be modified in many ways. Visit these links for more information.
@@ -1120,6 +1153,10 @@ Produces this output in your document:
 ```{r}
 summary(cars)
 ```
+
+. . . 
+
+Add this code chunk to your document!
 
 ## Chunk Options
 
@@ -1153,7 +1190,7 @@ Some useful and common options include:
 
 ## Playing with Chunk Options
 
-Try adding or changing the chunk options for the two chunks in `my_first_Rmd.qmd` and re-rendering to check what happens.
+Try adding or changing the chunk options for the chunk in `my_first_Rmd.qmd` and re-render your document to see what happens.
 
 ```{r}
 #| echo: fenced
@@ -1183,7 +1220,7 @@ Four score and seven years ago is the same as `r 4*20 + 7` years.
 
 <br>
 
-Maybe we've saved a variable in a chunk we want to reference in the text:
+Maybe we've saved a variable in a code chunk that we want to reference in the text:
 
 ```{r}
 x <- sqrt(77)
@@ -1229,7 +1266,7 @@ to
 
 ## Base `R`
 
-Simply by downloading `R` you have access to what is referred to as Base `R`. That is, the build-in functions and datasets that `R` comes equipped with, right out of the box. 
+Simply by downloading `R` you have access to what is referred to as Base `R`. That is, the built-in functions and datasets that `R` comes equipped with, right out of the box. 
 
 . . . 
 
@@ -1284,7 +1321,7 @@ summary(cars)
 
 ## Base `R` is pretty...Basic
 
-`hist()` generates a histogram of a vector. Note you can access a vector that is a column of a dataframe using `$`, the **extract operator**.
+`hist()` generates a histogram of a vector. Note that you can access a vector that is a column of a dataframe using `$`, the **extract operator**.
 
 ::::{.columns}
 
@@ -1352,8 +1389,8 @@ plot(dist ~ speed, data = cars,
      ylab = "Stopping distance (ft)",
      main = "Speeds and stopping distances of cars",
      pch = 16) # Point shape
-abline(h = mean(cars$dist), col = "firebrick") # add horizontal line
-abline(v = mean(cars$speed), col = "cornflowerblue") # add vertical line
+abline(h = mean(cars$dist), col = "firebrick") # add horizontal line (y-value)
+abline(v = mean(cars$speed), col = "cornflowerblue") # add vertical line (x-value)
 ```
 
 <br>
@@ -1421,6 +1458,58 @@ abline(h = mean(cars$dist), col = "firebrick")
 abline(v = mean(cars$speed), col = "cornflowerblue")
 ```
 
+:::
+
+## Another Base `R` Dataset: `swiss`
+
+Let's look at another built-in dataset. 
+
+. . . 
+
+First, run `?swiss` in the console to see what things mean.
+
+. . . 
+
+Then, load it using `data(swiss)`
+
+. . . 
+
+Add chunks to your Quarto document inspecting `swiss`, defining variables, doing some exploratory plots using `hist` or `plot`.
+
+You might experiment with [colors](https://r-charts.com/colors/) and [shapes](https://r-charts.com/base-r/pch-symbols/). 
+
+## Looking at `swiss`
+
+:::{.panel-tabset}
+
+### Code
+
+```{r}
+#| code-line-numbers: "|1"
+#| eval: false
+pairs(swiss, 
+      pch = 8, 
+      col = "violet",
+      main = "Pairwise comparisons of Swiss variables")
+```
+
+### Plot
+
+```{r}
+#| fig-width: 4.75
+#| fig-height: 4.75
+#| fig-align: center
+#| echo: false
+pairs(swiss, 
+      pch = 8, 
+      col = "violet",
+      main = "Pairwise comparisons of Swiss variables")
+```
+
+:::
+
+::: aside
+pairs() is a pairwise scatterplot function. Good for a quick look at small datasets with numerical/continuous data, but mostly useless for larger data.
 :::
 
 ## Packages
@@ -1495,58 +1584,6 @@ This downloads the package to your local machine (or the server of whatever remo
 #| eval: false
 library(package_name)
 ```
-
-## Another Base `R` Dataset: `swiss`
-
-Let's switch gears to the `swiss` data frame built in to R.
-
-. . . 
-
-First, use `?swiss` to see what things mean.
-
-. . . 
-
-Then, load it using `data(swiss)`
-
-. . . 
-
-Add chunks to your Quarto document inspecting `swiss`, defining variables, doing some exploratory plots using `hist` or `plot`.
-
-You might experiment with [colors](https://r-charts.com/colors/) and [shapes](https://r-charts.com/base-r/pch-symbols/). 
-
-## Looking at `swiss`
-
-:::{.panel-tabset}
-
-### Code
-
-```{r}
-#| code-line-numbers: "|1"
-#| eval: false
-pairs(swiss, 
-      pch = 8, 
-      col = "violet",
-      main = "Pairwise comparisons of Swiss variables")
-```
-
-### Plot
-
-```{r}
-#| fig-width: 4.75
-#| fig-height: 4.75
-#| fig-align: center
-#| echo: false
-pairs(swiss, 
-      pch = 8, 
-      col = "violet",
-      main = "Pairwise comparisons of Swiss variables")
-```
-
-:::
-
-::: aside
-pairs() is a pairwise scatterplot function. Good for a quick look at small datasets with numerical/continuous data, but mostly useless for larger data.
-:::
 
 ## `gt` Package
 
@@ -1630,7 +1667,7 @@ swiss |>
 ::: {.fragment}
 ::: {.callout-note icon=false}
 ## 👋 Bye Bye `as.data.frame.matrix()` 
-We no longer need `as.data.frame.matrix()` since `head(swiss)` produces a `data.frame`-type object, which is what both `gt()` and `gt_preview()` take as their first argument.
+We no longer need `as.data.frame.matrix()` since we're no longer using `summary()`. Both `head()` and `gt_preview()` take a `data.frame`-type object as their first argument which is the same data type as `swiss`. 
 :::
 :::
 

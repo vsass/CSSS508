@@ -38,7 +38,7 @@ require(xml2)
 
 [CS&SS 508 • Lecture 2]{.custom-subtitle}
 
-[{{< var lecture.two >}}]{.custom-subtitle2}
+[{{< var lectures.two >}}]{.custom-subtitle2}
 
 [Victoria Sass]{.custom-subtitle3}
 
@@ -84,8 +84,8 @@ We mainly work with three types of files in this class:
 
 :::{.incremental}
 * `.qmd`^[Quarto builds on a decade of developments with R Markdown documents. .Rmd files operate **very** similarly to Quarto documents but there are minor differences that you can read more about [here](https://quarto.org/docs/computations/r.html#:~:text=Another%20difference%20between%20R%20Markdown,than%20relying%20on%20external%20packages).]: These are **markdown** *syntax* files, where you write code and prose to *make documents*.
-* `.R`: These are **R** *syntax* files, where you write code to process and analyze data *without making an output document*^[While beyond the scope of this class, you can use the `source()` function to run a `.R` script file inside a `.qmd` or `.R` file. Using this you can break a large project up into multiple files but still run it all at once!].
-* `.html` (or `.pdf`): These are the output documents created when you *Render* a quarto markdown document.
+* `.R`: These are **R** *syntax* files, where you write code to process and analyze data *without making an output document*^[You can use the `source()` function to run a `.R` script file inside a `.qmd` or `.R` file. Using this you can break a large project up into multiple files but still run it all at once!].
+* `.html` (or `.pdf` or `.docx`...): These are the output documents created when you *Render* a quarto markdown document.
 :::
 
 . . . 
@@ -396,6 +396,11 @@ When aesthetic arguments are called within `aes()` they specify a variable of th
 . . . 
 
 #### All layers have:
+
+an initializing `ggplot` call and at least one `geom` function.
+
+<br>
+
 ::: {.panel-tabset}
 
 ### same data & aesthetics
@@ -404,17 +409,19 @@ When aesthetic arguments are called within `aes()` they specify a variable of th
 #| eval: false
 ggplot(data = [dataset], 
        mapping = aes(x = [x-variable], y = [y-variable])) +
-   geom_xxx() +
-   other options
+  geom_xxx() +
+  other options
 ```
 
 ### same data, diff aesthetics 
 
 ```{r}
 #| eval: false
-ggplot(data = [dataset]) +
-   geom_xxx(mapping = aes(x = [x-variable], y = [y-variable])) +
-   other options
+ggplot(data = [dataset], 
+       mapping = aes(x = [x-variable], y = [y-variable])) +
+  geom_xxx() +
+  geom_yyy(mapping = aes(x = [x-variable], y = [y-variable])) +
+  other options
 ```
 
 ### diff data & aesthetics
@@ -422,9 +429,11 @@ ggplot(data = [dataset]) +
 ```{r}
 #| eval: false
 ggplot() +
-   geom_xxx(data = [dataset], 
-            mapping = aes(x = [x-variable], y = [y-variable])) +
-   other options
+  geom_xxx(data = [dataset1],
+           mapping = aes(x = [x-variable], y = [y-variable])) +
+  geom_yyy(data = [dataset2],
+           mapping = aes(x = [x-variable], y = [y-variable])) +
+  other options
 ```
 
 :::
@@ -517,7 +526,7 @@ ggplot(data = China,
 ::::
 
 ::: aside 
-**Set** aesthetics to make the points larger and red.
+**Set** aesthetics to make the points larger and red. Notice that these "aesthetics" are not inside the `aes` call the way `x` and `y` are on line 2. These are therefore global settings rather than mapping aesthetics. 
 :::
 
 ## Axis Labels, Points, No Background{auto-animate="true"}
@@ -676,7 +685,7 @@ ggplot(data = China,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy in China") +
-  theme_bw(base_size = 18) 
+  theme_minimal(base_size = 18) 
 ```
 :::
 :::{.column width="50%"}
@@ -690,7 +699,7 @@ ggplot(data = China,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy in China") +
-  theme_bw(base_size = 18) 
+  theme_minimal(base_size = 18) 
 ```
 :::
 ::::
@@ -702,6 +711,8 @@ Increase the base text size.
 ## Plotting All Countries
 
 We have a plot we like for China... 
+
+. . . 
 
 ... but what if we want *all the countries*?
 
@@ -720,7 +731,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw(base_size = 18) 
+  theme_minimal(base_size = 18) 
 ```
 :::
 :::{.column width="50%"}
@@ -734,7 +745,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw(base_size = 18) 
+  theme_minimal(base_size = 18) 
 ```
 :::
 ::::
@@ -758,7 +769,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw(base_size = 18) 
+  theme_minimal(base_size = 18) 
 ```
 :::
 :::{.column width="50%"}
@@ -772,7 +783,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw(base_size = 18) 
+  theme_minimal(base_size = 18) 
 ```
 :::
 ::::
@@ -797,7 +808,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw(base_size = 18) 
+  theme_minimal(base_size = 18) 
 ```
 :::
 :::{.column width="50%"}
@@ -812,7 +823,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw(base_size = 18) 
+  theme_minimal(base_size = 18) 
 ```
 :::
 ::::
@@ -837,7 +848,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw(base_size = 18) 
+  theme_minimal(base_size = 18) 
 ```
 :::
 :::{.column width="50%"}
@@ -852,13 +863,13 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw(base_size = 18) 
+  theme_minimal(base_size = 18) 
 ```
 :::
 ::::
 
 ::: aside
-Much better... but maybe we can do highlight regional differences?
+Much better... but what if we highlight regional differences?
 :::
 
 ## Plotting All Countries{auto-animate="true"}
@@ -878,7 +889,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw(base_size = 18) 
+  theme_minimal(base_size = 18) 
 ```
 :::
 :::{.column width="50%"}
@@ -894,7 +905,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw(base_size = 18) 
+  theme_minimal(base_size = 18) 
 ```
 :::
 ::::
@@ -920,7 +931,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw(base_size = 18) +
+  theme_minimal(base_size = 18) +
   facet_wrap(vars(continent))
 ```
 :::
@@ -937,7 +948,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw(base_size = 18) +
+  theme_minimal(base_size = 18) +
   facet_wrap(vars(continent))
 ```
 :::
@@ -964,7 +975,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw() +
+  theme_minimal() +
   facet_wrap(vars(continent))
 ```
 :::
@@ -981,7 +992,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw() +
+  theme_minimal() +
   facet_wrap(vars(continent))
 ```
 :::
@@ -1008,7 +1019,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw() +
+  theme_minimal() +
   facet_wrap(vars(continent)) + 
   theme(legend.position = "none")
 ```
@@ -1026,7 +1037,7 @@ ggplot(data = gapminder,
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw() +
+  theme_minimal() +
   facet_wrap(vars(continent)) + 
   theme(legend.position = "none")
 ```
@@ -1068,7 +1079,7 @@ lifeExp_by_year <-
   labs(x = "Year",
        y = "Life expectancy",
        title = "Life expectancy over time") + 
-  theme_bw() + 
+  theme_minimal() + 
   facet_wrap(vars(continent)) +
   theme(legend.position = "none")
 ```
@@ -1310,6 +1321,16 @@ ggplot(gapminder, aes(x = continent, y = lifeExp)) +
 #| code-line-numbers: "3"
 ggplot(gapminder, aes(x = continent, y = lifeExp)) +
   geom_boxplot(outlier.colour = "hotpink") +
+  geom_point(alpha = 0.25)
+```
+
+## Using multiple `geoms` {auto-animate="true"}
+
+```{r}
+#| fig-align: center
+#| code-line-numbers: "3"
+ggplot(gapminder, aes(x = continent, y = lifeExp)) +
+  geom_boxplot(outlier.colour = "hotpink") +
   geom_jitter(alpha = 0.25)
 ```
 
@@ -1375,7 +1396,7 @@ library(ggrepel)
 ggplot(gapminder, aes(x = continent, y = lifeExp)) +
   geom_boxplot(outlier.colour = "hotpink", outlier.size = 3) +
   geom_jitter(data = no_outliers, position = position_jitter(width = 0.1, height = 0), alpha = 0.25, size = 3) + 
-  geom_label_repel(data = outliers, aes(label = country), color = "hotpink", size = 8) + 
+  geom_label_repel(data = outliers, aes(label = country), color = "hotpink", alpha = 0.7, size = 8, max.overlaps = 13) + 
   theme_minimal(base_size = 18)
 ```
 
@@ -2028,7 +2049,7 @@ Voilà!
 
 ## `tidyverse` extended universe
 
-`ggplot2` can obviously do a lot on its own. But because `R` allows for anyone and everyone to expand the functionality of what already exists, numerous extensions^[The full list can be found [here](https://exts.ggplot2.tidyverse.org/gallery/).]. to `ggplot2` have been created. 
+`ggplot2` can obviously do a lot on its own. But because `R` allows for anyone and everyone to expand the functionality of what already exists, numerous extensions^[The full list can be found [here](https://exts.ggplot2.tidyverse.org/gallery/).] to `ggplot2` have been created. 
 
 . . . 
 
@@ -2055,7 +2076,7 @@ gapminder |>
 
 ## `ggridges` <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
-We can make visualize the differing distributions of a continuous variable by levels of a categorical variable with [ggridges](https://wilkelab.org/ggridges/)!
+We can visualize the differing distributions of a continuous variable by levels of a categorical variable with [ggridges](https://wilkelab.org/ggridges/)!
 
 ```{r}
 #| code-fold: true
@@ -2163,9 +2184,11 @@ plot_boxplot <- ggplot(gapminder,
   coord_flip() + # flip the coordinates (x & y) to align with first plot
   geom_jitter(position = position_jitter(width = 0.1, height = 0), # add datapoints to boxplot
               alpha = 0.25) + 
-  geom_label_repel(data = outliers, # add new dataset with just 4 of the outliers
+  geom_label_repel(data = outliers, # mapping new dataset with the outliers
                    aes(label = country), 
-                   color = "black") +
+                   color = "black", 
+                   alpha = 0.7, 
+                   max.overlaps = 13) +
   theme(axis.text.y = element_blank(), # remove y axis text 
         axis.ticks.y = element_blank(), # remove y axis ticks 
         axis.title.y = element_blank(), # remove y axis title 
@@ -2338,7 +2361,7 @@ You are also able to design your own theme using the `theme()` function and real
 
 ## Summary
 
-`ggplot2` can do a LOT! I won't expect you to memorize all these tools, and neither should you! With time and practice, you'll start to remember the key tools.
+`ggplot2` can do a LOT! I don't expect you to memorize all these tools, and neither should you! With time and practice, you'll start to remember the key tools.
 
 ::::{.columns}
 :::{.column width="55%"}
