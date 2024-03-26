@@ -859,15 +859,15 @@ Most data sets you will work with will be read into `R` and stored as a **datafr
 
 # Quarto{.section-title background-color="#99a486"}
 
-## Quarto Documents
+## Creating a Quarto Document
 
 Let's try making an Quarto file:
 
 1. Choose *File > New File > Quarto Document...*
 2. Make sure *HTML Output* is selected 
-3. In the *Title* box call this test document `my_first_qmd.qmd` and click *Create*
-4. Save this document somewhere (you can delete it later) (either with *File > Save* or clicking <span>&emsp;&ensp;</span> ![](images/rstudio_save.png){.absolute top=284 left=23} towards the top left of the source pane)
-5. Watch the progress in the Background Jobs tab of the console pane, then gaze upon your result!
+3. In the *Title* box call this test document `My First Qmd` and click *Create*
+4. Save this document somewhere (you can delete it later) (either with *File > Save* or clicking <span>&emsp;&ensp;</span> ![](images/rstudio_save.png){.absolute top=284 left=23} towards the top left of the source pane).
+5. Lastly, click <span>&emsp;&emsp;</span> ![](images/rstudio_render.png){.absolute top=320 left=157} Render at the top of the source pan to "knit" your document into an html file. This will produce a minimal webpage since we only have a title. We need to add more content!
 
 . . . 
 
@@ -880,19 +880,62 @@ install.packages('tinytex')
 tinytex::install_tinytex()
 ```
 
+## Anatomy of a Quarto Document
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| comment: ""
+cat(readr::read_file("quarto_anatomy.qmd"))
+```
+
+:::
+
+::: {.column width="50%"}
+```{r}
+#| label: quarto-anatomy
+#| echo: false
+#| out-width: "90%"
+#| fig-cap: |
+#|   The rendered output of the qmd shown on the left.
+
+knitr::include_graphics("images/quarto_anatomy.png")
+```
+:::
+
+::::
+
+Elements of a Quarto document include: 
+
+::: {.fragment .highlight-current-red} 
+1. An (optional) YAML header
+::: 
+
+::: {.fragment .highlight-current-red} 
+2. Plain text and any associated formatting
+::: 
+
+::: {.fragment .highlight-current-red} 
+3. Chunks of code and/or their output.
+::: 
+
 ## Quarto Headers
 
-The header of an .qmd file is a [YAML](https://en.wikipedia.org/wiki/YAML)^[You can read a bit more about YAML headers in Quarto [here](https://quarto.org/docs/get-started/hello/rstudio.html#yaml-header) and [this reference page](https://quarto.org/docs/reference/formats/html.html) lists all options possible for html output.]code block, and everything else is part of the main document.
+The header of an .qmd file is a [YAML](https://en.wikipedia.org/wiki/YAML)^[You can read a bit more about YAML headers in Quarto [here](https://quarto.org/docs/get-started/hello/rstudio.html#yaml-header) and [this reference page](https://quarto.org/docs/reference/formats/html.html) lists all options possible for html output.]code block, and everything else is part of the main document. Try adding some of these other fields to your YAML and re-render it to see what it looks like. 
 
 ```{r}
 #| eval: false
 ---
 title: "Untitled"
 author: "Victoria Sass"
-date: "October 3, 2023"
+date: "March 26, 2024"
 output: html_document
 ---
 ```
+
+. . . 
 
 To mess with global formatting, [you can modify the header](http://rmarkdown.rstudio.com/html_document_format.html)^[Be careful though, YAML is space-sensitive; indents matter!]. 
 
@@ -928,7 +971,7 @@ output:
 :::
 
 ::: {.column width="50%"}
-### Syntax
+### Quarto Syntax
 
 ```{default}
 #| code-line-numbers: false
