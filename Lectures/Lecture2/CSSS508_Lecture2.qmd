@@ -20,6 +20,7 @@ format:
     history: false
     progress: true
     link-external-icon: true
+    code-annotations: hover
     pointer:
       color: "#b18eb1"
 revealjs-plugins:
@@ -83,9 +84,9 @@ require(xml2)
 We mainly work with three types of files in this class:
 
 :::{.incremental}
-* `.qmd`^[Quarto builds on a decade of developments with R Markdown documents. .Rmd files operate **very** similarly to Quarto documents but there are minor differences that you can read more about [here](https://quarto.org/docs/computations/r.html#:~:text=Another%20difference%20between%20R%20Markdown,than%20relying%20on%20external%20packages).]: These are **markdown** *syntax* files, where you write code and prose to *make documents*.
+* `.qmd`^[Quarto builds on a decade of developments with R Markdown documents. .Rmd files operate **very** similarly to Quarto documents but there are minor differences that you can read more about [here](https://quarto.org/docs/computations/r.html#:~:text=Another%20difference%20between%20R%20Markdown,than%20relying%20on%20external%20packages).]: These are **markdown** *syntax* files, where you write code and plain or formatted text to *make documents*.
 * `.R`: These are **R** *syntax* files, where you write code to process and analyze data *without making an output document*^[You can use the `source()` function to run a `.R` script file inside a `.qmd` or `.R` file. Using this you can break a large project up into multiple files but still run it all at once!].
-* `.html` (or `.pdf` or `.docx`...): These are the output documents created when you *Render* a quarto markdown document.
+* `.html` (or `.pdf`, `.docx`, etc.): These are the output documents created when you *Render* a quarto markdown document.
 :::
 
 . . . 
@@ -184,21 +185,21 @@ The principles underlying the tidyverse are:
 
 ## Gapminder Data 
 
-We'll be working with data from Hans Rosling's [Gapminder](http://www.gapminder.org) project. An excerpt of these data can be accessed through an R package called `gapminder`^[Cleaned and assembled by Jenny Bryan at UBC.]. 
+We'll be working with data from Hans Rosling's [Gapminder](http://www.gapminder.org) project. An excerpt of these data can be accessed through an R package called `gapminder`^[Cleaned and assembled by Jenny Bryan at UBC.]. Check the packages tab to see if `gapminder` appears (unchecked) in your computer's list of downloaded packages. 
 
 . . . 
 
-In the console: `install.packages("gapminder")`
+If it doesn't, run `install.packages("gapminder")` in the console. 
 
 . . . 
 
-Then load the `gapminder` package as well as the `tidyverse` package:
+Now, load the `gapminder` package as well as the `tidyverse` package:
 ```{r}
 #| message: true
-#| warning: true
 library(gapminder)
-library(tidyverse)
+library(tidyverse) # <1>
 ```
+1. Every time you `library` (i.e. load) `tidyverse` it will tell you which individual packages it is loading, as well as all function conflicts it has with other packages loaded in the current session. This is useful information but you can suppress seeing/printing this output by adding the `message: false` chunk option to your code chunk. 
 
 ## Check Out Gapminder <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
@@ -274,7 +275,7 @@ ggplot(data = China,
   labs(title = "Life expectancy in China", 
        x = "Year", 
        y = "Life expectancy") +
-  theme_bw(base_size = 18)
+  theme_minimal(base_size = 18)
 ```
 
 <br>
@@ -294,7 +295,7 @@ ggplot(data = China,
   labs(title = "Life expectancy in China", 
        x = "Year", 
        y = "Life expectancy") +
-  theme_bw(base_size = 18)
+  theme_minimal(base_size = 18)
 
 
 ```
@@ -724,7 +725,7 @@ We have a plot we like for China...
 :::{.column width="50%"}
 ```{r}
 #| eval: false
-#| code-line-numbers: "1" 
+#| code-line-numbers: "|1|3" 
 ggplot(data = gapminder,
        aes(x = year, y = lifeExp)) +
   geom_point(color = "red", size = 3) +
@@ -1048,6 +1049,186 @@ ggplot(data = gapminder,
 Looking pretty good!
 :::
 
+# Lab 2 {.section-title background-color="#99a486"}
+
+## Make a histogram
+
+In pairs, create a histogram of life expectancy observations in the complete Gapminder dataset.
+
+1. Set the base layer by specifying the data as `gapminder` and the x variable as `lifeExp`
+
+2. Add a second layer to create a histogram using the function `geom_histogram()`
+
+3. Customize your plot with nice axis labels and a title. 
+
+4. Add the color "salmon" to the entire plot (hint: use the `fill` argument, not `color`). 
+
+5. Change this fill setting to an aesthetic and map continent onto it. 
+
+6. Change the `geom` to `geom_freqpoly`. What happened and how might you fix it?
+
+7. Add facets for `continent` (create only 1 column).
+
+8. Add one of the built-in themes from `ggplot2`.
+
+9. Remove the legend from the plot. 
+
+## Solution: 1. Set Base Layer {auto-animate="true"} {visibility="hidden"}
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| code-line-numbers: "1"
+ggplot(gapminder, aes(x = lifeExp))
+```
+
+## Solution: 2. Add Histogram Layer {auto-animate="true"} {visibility="hidden"}
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| code-line-numbers: "2"
+ggplot(gapminder, aes(x = lifeExp)) +
+  geom_histogram(bins = 30)
+```
+
+::: aside
+Setting the `bins` aesthetic tells ggplot how many values to bin by (lower is more fine-grained, higher is less descriptive).
+:::
+
+## Solution: 3. Add Label Layers {auto-animate="true"} {visibility="hidden"}
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| code-line-numbers: "3-5"
+ggplot(gapminder, aes(x = lifeExp)) +
+  geom_histogram(bins = 30) +
+  xlab("Life Expectancy") +
+  ylab("Count") +
+  ggtitle("Histogram of Life Expectancy in Gapminder Data")
+```
+
+## Solution: 4. Add fill setting {auto-animate="true"} {visibility="hidden"}
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| code-line-numbers: "2"
+ggplot(gapminder, aes(x = lifeExp)) +
+  geom_histogram(bins = 30, fill = "salmon") +
+  xlab("Life Expectancy") +
+  ylab("Count") +
+  ggtitle("Histogram of Life Expectancy in Gapminder Data")
+```
+
+## Solution: 5. Add fill aesthetic {auto-animate="true"} {visibility="hidden"}
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| code-line-numbers: "1"
+ggplot(gapminder, aes(x = lifeExp, fill = continent)) +
+  geom_histogram(bins = 30) +
+  xlab("Life Expectancy") +
+  ylab("Count") +
+  ggtitle("Histogram of Life Expectancy in Gapminder Data")
+```
+
+## Solution: 6. Change geometry {auto-animate="true"} {visibility="hidden"}
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| code-line-numbers: "2"
+ggplot(gapminder, aes(x = lifeExp, fill = continent)) +
+  geom_freqpoly(bins = 30) +
+  xlab("Life Expectancy") +
+  ylab("Count") +
+  ggtitle("Histogram of Life Expectancy in Gapminder Data")
+```
+
+## Solution: 6. Change geometry {auto-animate="true"} {visibility="hidden"}
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| code-line-numbers: "2|1"
+ggplot(gapminder, aes(x = lifeExp, color = continent)) +
+  geom_freqpoly(bins = 30) +
+  xlab("Life Expectancy") +
+  ylab("Count") +
+  ggtitle("Histogram of Life Expectancy in Gapminder Data")
+```
+
+## Solution: 7. Add facets {auto-animate="true"} {visibility="hidden"}
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| code-line-numbers: "3"
+ggplot(gapminder, aes(x = lifeExp, color = continent)) +
+  geom_freqpoly(bins = 30) +
+  facet_wrap(vars(continent), ncol = 1) +
+  xlab("Life Expectancy") +
+  ylab("Count") +
+  ggtitle("Histogram of Life Expectancy in Gapminder Data")
+```
+
+## Solution: 8. Add nicer theme {auto-animate="true"} {visibility="hidden"}
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| code-line-numbers: "7"
+ggplot(gapminder, aes(x = lifeExp, color = continent)) +
+  geom_freqpoly(bins = 30) +
+  facet_wrap(vars(continent), ncol = 1) +
+  xlab("Life Expectancy") +
+  ylab("Count") +
+  ggtitle("Histogram of Life Expectancy in Gapminder Data") +
+  theme_minimal() 
+```
+
+## Solution: 9. Remove legend {auto-animate="true"} {visibility="hidden"}
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| code-line-numbers: "8"
+ggplot(gapminder, aes(x = lifeExp, color = continent)) +
+  geom_freqpoly(bins = 30) +
+  facet_wrap(vars(continent), ncol = 1) +
+  xlab("Life Expectancy") +
+  ylab("Count") +
+  ggtitle("Histogram of Life Expectancy in Gapminder Data") + 
+  theme_minimal() + 
+  theme(legend.position = "none") 
+  
+```
+
+# Break!{.section-title background-color="#1e4655"}
+
 # Advanced ggplot tools{.section-title background-color="#99a486"}
 
 ## Further customization
@@ -1120,7 +1301,8 @@ If you want to save a ggplot, use `ggsave()`:
 
 ```{r}
 #| eval: false
-ggsave("I_saved_a_file.pdf", plot = lifeExp_by_year,
+ggsave(filename = "I_saved_a_file.pdf", 
+       plot = lifeExp_by_year,
        height = 3, width = 5, units = "in")
 ```
 
@@ -1185,7 +1367,7 @@ You can modify these with a `scale_[aesthetic]_[option]()` layer:
 #| fig-height: 6
 #| fig-width: 10
 #| fig-align: center
-#| code-line-numbers: "4, 5-6"
+#| code-line-numbers: "3-6"
 #| eval: false
 lifeExp_by_year +
   theme(legend.position = c(0.8, 0.2)) +
@@ -1311,7 +1493,7 @@ scales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +
 #| fig-align: center
 #| code-line-numbers: "|2"
 ggplot(gapminder, aes(x = continent, y = lifeExp)) +
-  geom_boxplot(outlier.colour = "hotpink")
+  geom_boxplot(outlier.colour = "maroon")
 ```
 
 ## Using multiple `geoms` {auto-animate="true"}
@@ -1320,7 +1502,7 @@ ggplot(gapminder, aes(x = continent, y = lifeExp)) +
 #| fig-align: center
 #| code-line-numbers: "3"
 ggplot(gapminder, aes(x = continent, y = lifeExp)) +
-  geom_boxplot(outlier.colour = "hotpink") +
+  geom_boxplot(outlier.colour = "maroon") +
   geom_point(alpha = 0.25)
 ```
 
@@ -1330,7 +1512,7 @@ ggplot(gapminder, aes(x = continent, y = lifeExp)) +
 #| fig-align: center
 #| code-line-numbers: "3"
 ggplot(gapminder, aes(x = continent, y = lifeExp)) +
-  geom_boxplot(outlier.colour = "hotpink") +
+  geom_boxplot(outlier.colour = "maroon") +
   geom_jitter(alpha = 0.25)
 ```
 
@@ -1340,7 +1522,7 @@ ggplot(gapminder, aes(x = continent, y = lifeExp)) +
 #| fig-align: center
 #| code-line-numbers: "3"
 ggplot(gapminder, aes(x = continent, y = lifeExp)) +
-  geom_boxplot(outlier.colour = "hotpink") +
+  geom_boxplot(outlier.colour = "maroon") +
   geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 0.25)
 ```
 
@@ -1377,9 +1559,9 @@ no_outliers <- gapminder |>
 #| fig-width: 16
 #| fig-height: 8
 ggplot(gapminder, aes(x = continent, y = lifeExp)) +
-  geom_boxplot(outlier.colour = "hotpink", outlier.size = 3) +
+  geom_boxplot(outlier.colour = "maroon", outlier.size = 3) +
   geom_jitter(data = no_outliers, position = position_jitter(width = 0.1, height = 0), alpha = 0.25, size = 3) + 
-  geom_text(data = outliers, aes(label = country), size = 8) + 
+  geom_text(data = outliers, aes(label = country), color = "maroon", size = 8) + 
   theme_minimal(base_size = 18)
 ```
 
@@ -1394,9 +1576,9 @@ ggplot(gapminder, aes(x = continent, y = lifeExp)) +
 #| fig-height: 8
 library(ggrepel)
 ggplot(gapminder, aes(x = continent, y = lifeExp)) +
-  geom_boxplot(outlier.colour = "hotpink", outlier.size = 3) +
+  geom_boxplot(outlier.colour = "maroon", outlier.size = 3) +
   geom_jitter(data = no_outliers, position = position_jitter(width = 0.1, height = 0), alpha = 0.25, size = 3) + 
-  geom_label_repel(data = outliers, aes(label = country), color = "hotpink", alpha = 0.7, size = 8, max.overlaps = 13) + 
+  geom_label_repel(data = outliers, aes(label = country), color = "maroon", alpha = 0.7, size = 8, max.overlaps = 13) + 
   theme_minimal(base_size = 18)
 ```
 
@@ -1413,7 +1595,7 @@ outliers <- gapminder |>
   ungroup() |> group_by(country) |> # regroup by country
   filter(lifeExp == min(lifeExp)) # filter just the min for each country
 
-head(outliers)
+outliers
 ```
 
 ### Code: no outliers
@@ -1426,12 +1608,10 @@ no_outliers <- gapminder |>
                              .default = NA)) |> 
   filter(is.na(outlier)) # remove outliers
 
-head(no_outliers)
+no_outliers
 ```
 
 :::
-
-
 
 # Bonus: Advanced Example!{.section-title background-color="#99a486"}
 
@@ -1455,7 +1635,7 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, group = country)) +
   theme(legend.position=c(0.82, 0.15), axis.text.x = element_text(angle = 45))
 ```
 
-## Base `ggplot` {auto-animate="true"}
+## Base `ggplot`
 
 ::: {.panel-tabset}
 
@@ -1484,7 +1664,7 @@ ggplot(data = gapminder,
 What might be a good `geom` layer for this data?
 :::
 
-## Lines {auto-animate="true"}
+## Lines 
 
 ::: {.panel-tabset}
 
@@ -1517,7 +1697,7 @@ Let's also add a continent-specific average so we can visualize country-deviatio
 
 :::
 
-## Continent Average {auto-animate="true"}
+## Continent Average 
 
 ::: {.panel-tabset}
 
@@ -1555,7 +1735,7 @@ ggplot(data = gapminder,
 A [*loess* curve](https://en.wikipedia.org/wiki/Local_regression) is something like a moving average.
 :::
 
-## Facets {auto-animate="true"}
+## Facets 
 
 ::: {.panel-tabset}
 
@@ -1596,7 +1776,7 @@ ggplot(data = gapminder,
 Facets allow us to gain a clearer understanding of the regional patterns. We want to differentiate the continent-average line from the country-specific lines though so let's change it's color. 
 :::
 
-## Color Scale {auto-animate="true"}
+## Color Scale
 
 ::: {.panel-tabset}
 
@@ -1642,7 +1822,7 @@ Hmm, can't quite see the blue line yet. Let's make it bigger?
 
 :::
 
-## Size Scale {auto-animate="true"}
+## Size Scale
 
 ::: {.panel-tabset}
 
@@ -1692,7 +1872,7 @@ ggplot(data = gapminder,
 It doesn't look like our color and size scales are actually mapping onto our variables. Why is that?
 :::
 
-## Mapping Color & Size {auto-animate="true"}
+## Mapping Color & Size
 
 ::: {.panel-tabset}
 
@@ -1740,7 +1920,7 @@ ggplot(data = gapminder,
 Huzzah! Let's change the transparency on these lines a touch so we can see all our data more easily. 
 :::
 
-## Alpha (Transparency) {auto-animate="true"}
+## Alpha (Transparency)
 
 ::: {.panel-tabset}
 
@@ -1793,7 +1973,7 @@ ggplot(data = gapminder,
 Now we're getting somewhere! We can also add useful labels and clean up the theme. 
 :::
 
-## Theme and Labels {auto-animate="true"}
+## Theme and Labels
 
 ::: {.panel-tabset}
 
@@ -1851,7 +2031,7 @@ ggplot(data = gapminder,
 What's our plot showing? We should be explicit about that. 
 :::
 
-## Title and Subtitle {auto-animate="true"}
+## Title and Subtitle
 
 ::: {.panel-tabset}
 
@@ -1913,7 +2093,7 @@ ggplot(data = gapminder,
 The x-axis feels a little busy right now...
 :::
 
-## Angled Tick Values {auto-animate="true"}
+## Angled Tick Values
 
 ::: {.panel-tabset}
 
@@ -1979,7 +2159,7 @@ ggplot(data = gapminder,
 Note: Fewer values might be better than angled labels! Finally, let's move our legend so it isn't wasting space. 
 :::
 
-## Legend Position {auto-animate="true"}
+## Legend Position
 
 ::: {.panel-tabset}
 
@@ -2381,185 +2561,6 @@ You are also able to design your own theme using the `theme()` function and real
 ![](images/dataviz_kieranhealy.jpeg)
 :::
 ::::
-
-# Lab 2 {.section-title background-color="#99a486"}
-
-## Make a histogram
-
-In pairs, create a histogram of life expectancy observations in the complete Gapminder dataset.
-
-1. Set the base layer by specifying the data as `gapminder` and the x variable as `lifeExp`
-
-2. Add a second layer to create a histogram using the function `geom_histogram()`
-
-3. Customize your plot with nice axis labels and a title. 
-
-4. Add the color "salmon" to the entire plot (hint: use the `fill` argument, not `color`). 
-
-5. Change this fill setting to an aesthetic and map continent onto it. 
-
-6. Change the `geom` to `geom_freqpoly`. What happened and how might you fix it?
-
-7. Add facets for `continent` (create only 1 column).
-
-8. Add one of the built-in themes from `ggplot2`.
-
-9. Remove the legend from the plot. 
-
-## Solution: 1. Set Base Layer {auto-animate="true"} {visibility="hidden"}
-
-```{r}
-#| eval: true
-#| fig-align: center
-#| fig-width: 10
-#| fig-height: 5
-#| code-line-numbers: "1"
-ggplot(gapminder, aes(x = lifeExp))
-```
-
-## Solution: 2. Add Histogram Layer {auto-animate="true"} {visibility="hidden"}
-
-```{r}
-#| eval: true
-#| fig-align: center
-#| fig-width: 10
-#| fig-height: 5
-#| code-line-numbers: "2"
-ggplot(gapminder, aes(x = lifeExp)) +
-  geom_histogram(bins = 30)
-```
-
-::: aside
-Setting the `bins` aesthetic tells ggplot how many values to bin by (lower is more fine-grained, higher is less descriptive).
-:::
-
-## Solution: 3. Add Label Layers {auto-animate="true"} {visibility="hidden"}
-
-```{r}
-#| eval: true
-#| fig-align: center
-#| fig-width: 10
-#| fig-height: 5
-#| code-line-numbers: "3-5"
-ggplot(gapminder, aes(x = lifeExp)) +
-  geom_histogram(bins = 30) +
-  xlab("Life Expectancy") +
-  ylab("Count") +
-  ggtitle("Histogram of Life Expectancy in Gapminder Data")
-```
-
-## Solution: 4. Add fill setting {auto-animate="true"} {visibility="hidden"}
-
-```{r}
-#| eval: true
-#| fig-align: center
-#| fig-width: 10
-#| fig-height: 5
-#| code-line-numbers: "2"
-ggplot(gapminder, aes(x = lifeExp)) +
-  geom_histogram(bins = 30, fill = "salmon") +
-  xlab("Life Expectancy") +
-  ylab("Count") +
-  ggtitle("Histogram of Life Expectancy in Gapminder Data")
-```
-
-## Solution: 5. Add fill aesthetic {auto-animate="true"} {visibility="hidden"}
-
-```{r}
-#| eval: true
-#| fig-align: center
-#| fig-width: 10
-#| fig-height: 5
-#| code-line-numbers: "1"
-ggplot(gapminder, aes(x = lifeExp, fill = continent)) +
-  geom_histogram(bins = 30) +
-  xlab("Life Expectancy") +
-  ylab("Count") +
-  ggtitle("Histogram of Life Expectancy in Gapminder Data")
-```
-
-## Solution: 6. Change geometry {auto-animate="true"} {visibility="hidden"}
-
-```{r}
-#| eval: true
-#| fig-align: center
-#| fig-width: 10
-#| fig-height: 5
-#| code-line-numbers: "2"
-ggplot(gapminder, aes(x = lifeExp, fill = continent)) +
-  geom_freqpoly(bins = 30) +
-  xlab("Life Expectancy") +
-  ylab("Count") +
-  ggtitle("Histogram of Life Expectancy in Gapminder Data")
-```
-
-## Solution: 6. Change geometry {auto-animate="true"} {visibility="hidden"}
-
-```{r}
-#| eval: true
-#| fig-align: center
-#| fig-width: 10
-#| fig-height: 5
-#| code-line-numbers: "2|1"
-ggplot(gapminder, aes(x = lifeExp, color = continent)) +
-  geom_freqpoly(bins = 30) +
-  xlab("Life Expectancy") +
-  ylab("Count") +
-  ggtitle("Histogram of Life Expectancy in Gapminder Data")
-```
-
-## Solution: 7. Add facets {auto-animate="true"} {visibility="hidden"}
-
-```{r}
-#| eval: true
-#| fig-align: center
-#| fig-width: 10
-#| fig-height: 5
-#| code-line-numbers: "3"
-ggplot(gapminder, aes(x = lifeExp, color = continent)) +
-  geom_freqpoly(bins = 30) +
-  facet_wrap(vars(continent), ncol = 1) +
-  xlab("Life Expectancy") +
-  ylab("Count") +
-  ggtitle("Histogram of Life Expectancy in Gapminder Data")
-```
-
-## Solution: 8. Add nicer theme {auto-animate="true"} {visibility="hidden"}
-
-```{r}
-#| eval: true
-#| fig-align: center
-#| fig-width: 10
-#| fig-height: 5
-#| code-line-numbers: "7"
-ggplot(gapminder, aes(x = lifeExp, color = continent)) +
-  geom_freqpoly(bins = 30) +
-  facet_wrap(vars(continent), ncol = 1) +
-  xlab("Life Expectancy") +
-  ylab("Count") +
-  ggtitle("Histogram of Life Expectancy in Gapminder Data") +
-  theme_minimal() 
-```
-
-## Solution: 9. Remove legend {auto-animate="true"} {visibility="hidden"}
-
-```{r}
-#| eval: true
-#| fig-align: center
-#| fig-width: 10
-#| fig-height: 5
-#| code-line-numbers: "8"
-ggplot(gapminder, aes(x = lifeExp, color = continent)) +
-  geom_freqpoly(bins = 30) +
-  facet_wrap(vars(continent), ncol = 1) +
-  xlab("Life Expectancy") +
-  ylab("Count") +
-  ggtitle("Histogram of Life Expectancy in Gapminder Data") + 
-  theme_minimal() + 
-  theme(legend.position = "none") 
-  
-```
-
 
 # Homework{.section-title background-color="#1e4655"}
 
