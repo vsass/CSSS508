@@ -1106,7 +1106,18 @@ temp.txt</code></pre>
 </div>
 </div>
 </div>
-</section><section id="divide-and-conquer" class="slide level2"><h2>Divide and Conquer</h2>
+</section><section id="paths-and-projects" class="slide level2"><h2>Paths and Projects</h2>
+<p>When you work in an RStudio Project your <em>working directory</em> is the project folder.</p>
+<div class="fragment">
+<p>If you are working on a <code>R</code> script or qmd file in a subfolder of this project, the working directory of that file will be its subfolder (not the project folder.</p>
+</div>
+<div class="fragment">
+<p>Keep this in mind when you’re writing code and testing it interactively! Your current working directory will be the project folder when running code interactively even if you’re writing code for a qmd that has a subfolder as the working directory.</p>
+
+</div>
+<aside><div>
+<p>This is only relevant when using file paths (obviously). The most common uses of file paths in an <code>R</code> script or qmd is to read in or write data, and to save plots and tables.</p>
+</div></aside></section><section id="divide-and-conquer" class="slide level2"><h2>Divide and Conquer</h2>
 <p>Often you do not want to include all code for a project in one <code>.qmd</code> file:</p>
 <ul>
 <li>The code takes too long to knit.</li>
@@ -1359,8 +1370,14 @@ temp.txt</code></pre>
 <pre><code>     c      a      e 
  "two"  "one" "four" </code></pre>
 </div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="co"># even repeated values</span></span>
 <span id="cb26-2"><a></a>x[<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>     c      a      a      e      c 
  "two"  "one"  "one" "four"  "two" </code></pre>
@@ -1422,11 +1439,11 @@ temp.txt</code></pre>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
-      x y           z
-  &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt;
-1     1 a     0.799  
-2     2 e     0.00562
-3     3 f     0.702  </code></pre>
+      x y          z
+  &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt;
+1     1 a     0.314 
+2     2 e     0.0578
+3     3 f     0.396 </code></pre>
 </div>
 </div>
 </div><div class="column" style="width:60%;">
@@ -1468,10 +1485,10 @@ temp.txt</code></pre>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
-      x y           z
-  &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt;
-1     2 e     0.00562
-2     3 f     0.702  </code></pre>
+      x y          z
+  &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt;
+1     2 e     0.0578
+2     3 f     0.396 </code></pre>
 </div>
 </div>
 </div>

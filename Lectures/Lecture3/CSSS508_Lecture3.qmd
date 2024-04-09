@@ -815,6 +815,22 @@ For example, if I wanted to reference the syllabus (which is in the main project
 
 :::
 
+## Paths and Projects
+
+When you work in an RStudio Project your *working directory* is the project folder. 
+
+. . . 
+
+If you are working on a `R` script or qmd file in a subfolder of this project, the working directory of that file will be its subfolder (not the project folder. 
+
+. . . 
+
+Keep this in mind when you're writing code and testing it interactively! Your current working directory will be the project folder when running code interactively even if you're writing code for a qmd that has a subfolder as the working directory. 
+
+::: aside
+This is only relevant when using file paths (obviously). The most common uses of file paths in an `R` script or qmd is to read in or write data, and to save plots and tables. 
+:::
+
 ## Divide and Conquer
 
 Often you do not want to include all code for a project in one `.qmd` file:
@@ -1217,6 +1233,12 @@ You can select from the vector
 #| output-location: fragment
 # with positive integers
 x[c(3, 1, 5)]
+```
+:::
+
+::: {.fragment}
+```{r}
+#| output-location: fragment
 # even repeated values
 x[c(3, 1, 1, 5, 3)]
 ```
