@@ -5926,28 +5926,28 @@
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#spacing",
     "title": "",
     "section": "Spacing",
-    "text": "Spacing\nFor readability you’ll want to put spaces around all mathematical operators1 (i.e. +, -, ==, &lt;, etc.) as well as the assignment operator (&lt;-).\n\n# Code goals: \nz &lt;- (a + b)^2 / d\nmean(x, na.rm = TRUE)\n\n# Code foul: \nz&lt;-( a + b ) ^ 2/d\nmean (x ,na.rm=TRUE)\n\n\nTo make code easier to skim quickly it’s alright to add extra space for better alignment.\n\nflights |&gt; \n  mutate(\n    speed      = distance / air_time,\n    dep_hour   = dep_time %/% 100,\n    dep_minute = dep_time %%  100\n  )\n\n\nexcept for ^"
+    "text": "Spacing\nFor readability you’ll want to put spaces around all mathematical operators1 (i.e. +, -, ==, &lt;, etc.) as well as the assignment operator (&lt;-).\n\n# Code goals: \nz &lt;- (a + b)^2 / d\nmean(x, na.rm = TRUE)\n\n# Code foul: \nz&lt;-( a+b ) ^ 2/d\nmean (x ,na.rm=TRUE)\n\n\nTo make code easier to skim quickly it’s alright to add extra space for better alignment.\n\nflights |&gt; \n  mutate(\n    speed      = distance / air_time,\n    dep_hour   = dep_time %/% 100,\n    dep_minute = dep_time %%  100\n  )\n\n\nexcept for ^"
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#pipes",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#pipes",
     "title": "",
     "section": "Pipes",
-    "text": "Pipes\nAs you begin to use more functions, sequentially, it can start to get unclear what’s happening when, and to what.\n\nmedian(sqrt(log(mean(gapminder$pop))))\n\n\nWith nested functions, like those above, you need to read the order of operations inside out, which is a bit awkward. It becomes even more confusing the more function calls you have, especially when they have multiple arguments each.\n\n\nEnter the pipe1: |&gt;\nPipes read “left to right” which is much more intuitive!\n\ngapminder$pop |&gt; mean() |&gt; log() |&gt; sqrt() |&gt; median()\n\n\n\nThe above code takes what’s on the left-hand side of |&gt; and gives it as the first unnamed argument to the first function (mean()).\nThe result of that function call is then “piped” to the first unnamed argument of the second function (log())…\n\n\n\nCeci n’est pas une pipe."
+    "text": "Pipes\nAs you begin to use more functions, sequentially, it can start to get unclear what’s happening when, and to what.\n\nmedian(sqrt(log(mean(gapminder$pop))))\n\n\nWith nested functions, like those above, you need to read the order of operations inside out, which is a bit awkward. It becomes even more confusing the more function calls you have, especially when they have multiple arguments each.\n\n\nEnter the pipe1: |&gt;\nPipes read “left to right” which is much more intuitive!\n\ngapminder$pop |&gt; mean() |&gt; log() |&gt; sqrt() |&gt; median()\n\n\n\nThe above code takes what’s on the left-hand side of |&gt; and gives it as the first unnamed argument to the first function (mean()).\nThe result of that function call is then “piped” to the first unnamed argument of the second function (log())…\n\n\n\nA component of programming which allows us to break a problem into a number of steps, each of which is straightforward and easy to understand."
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#pipes-1",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#pipes-1",
     "title": "",
     "section": "Pipes",
-    "text": "Pipes\nAs you can see, pipes allow us to “chain” many function calls together easily.\n\nThe so-called “native pipe” (i.e. built into base R) is relatively new. Before this, the pipe was a function from the magrittr package that looks like this: %&gt;%.\n\n\nThis latter version continues to work but has a different functionality than the new, native pipe.\n\n\nMost importantly, while both the magrittr pipe and the native pipe take the LHS (left-hand side) and “pipe” it to the RHS (right-hand side), they operate differently when it comes to explicitly specifying which argument of the RHS to pipe the LHS into.\n\n\n\na &lt;- c(\"Z\", NA, \"C\", \"G\", \"A\")\n# magrittr pipe\na %&gt;% gsub('A', '-', x = .)\n\n# native pipe\na |&gt; gsub('A','-', x = _) # _ is the placeholder for |&gt; \na |&gt; gsub(pattern = 'A', replacement = '-') # leaving the \"piped\" argument as the only unnamed argument also works \na |&gt; (\\(.) gsub('A', '-', x = .))() # using an anonymous function call allows you to be explicit while specifying your own placeholder\n\n\n\n\nYou can read more about the differences between |&gt; and %&gt;% here and anonymous functions here. Code above comes from responses to this stackoverflow post."
+    "text": "Pipes\nAs you can see, pipes allow us to “chain” many function calls together easily.\n\nThe so-called “native pipe” (i.e. built into base R) is relatively new. Before this, the pipe was a function from the magrittr package that looks like this: %&gt;%.\n\n\nThis latter version continues to work but has a different functionality than the new, native pipe.\n\n\nMost importantly, while both the magrittr pipe and the native pipe take the LHS (left-hand side) and “pipe” it to the RHS (right-hand side), they operate differently when it comes to explicitly specifying which argument of the RHS to pipe the LHS into.\n\n\n\na &lt;- c(\"Z\", NA, \"C\", \"G\", \"A\")\n# magrittr pipe\na %&gt;% gsub('A', '-', x = .)\n\n# native pipe\na |&gt; gsub('A','-', x = _) # _ is the placeholder for |&gt; \na |&gt; gsub(pattern = 'A', replacement = '-') # leaving the \"piped\" argument as the only unnamed argument also works \na |&gt; (\\(placeholder) gsub('A', '-', x = placeholder))() # using an anonymous function call allows you to be explicit while specifying your own placeholder\n\n\n\n\nYou can read more about the differences between |&gt; and %&gt;% here and anonymous functions here. Code above comes from responses to this stackoverflow post."
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#pipes-2",
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#pipes-2",
     "title": "",
     "section": "Pipes",
-    "text": "Pipes\nSome good syntax practices:\n\n\nYou should always put a space before |&gt; and it should usually be the last thing on a line.\n\nNew functions should be on a new line, indented 2 spaces (RStudio will automatically do this for you)\nNamed arguments within a function should also get their own line\n\n\n\n# code goals\nflights |&gt;  \n  group_by(tailnum) |&gt; \n  summarize(\n    delay = mean(arr_delay, na.rm = TRUE),\n    n = n()\n  )\n\n# code fouls\nflights |&gt;\n  group_by(\n    tailnum\n  ) |&gt; \n  summarize(delay = mean(arr_delay, na.rm = TRUE), n = n())"
+    "text": "Pipes\nSome good syntax practices:\n\n\nYou should always put a space before |&gt; and it should usually be the last thing on a line.\n\nNew functions should be on a new line, indented 2 spaces (RStudio will automatically do this for you if you hit return after a pipe)\nNamed arguments within a function should also get their own line\n\n\n\n# code goals\nflights |&gt;  \n  group_by(tailnum) |&gt; \n  summarize(\n    delay = mean(arr_delay, na.rm = TRUE),\n    n = n()\n  )\n\n# code fouls\nflights |&gt; group_by(tailnum) |&gt; \n  summarize(delay = mean(arr_delay, na.rm = TRUE), n = n())"
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#r-scripts",
@@ -7949,7 +7949,7 @@
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#portability",
     "title": "",
     "section": "Portability",
-    "text": "Portability\nFor research to be reproducible, it must also be portable. Portable software operates independently of workflow.\n\n\nDo Not:\nDo:\n\n\n\n\nUse setwd().\nUse absolute paths except for fixed, immovable sources (secure data).\n\nread_csv(\"C:/my_project/data/my_data.csv\")\n\n\nUse install.packages() in script or .qmd files.\nUse rm(list=ls()) anywhere but your console.\n\n\n\n\n\n\n\n\n\nUse RStudio projects (or the here package) to set directories.\nUse relative paths to load and save files:\n\nread_csv(\"./data/my_data.csv\")\n\n\nLoad all required packages using library().\nClear your workspace when closing RStudio.\n\nSet Tools &gt; Global Options… &gt; Save workspace… to Never"
+    "text": "Portability\nFor research to be reproducible, it must also be portable. Portable software operates independently of workflow.\n\n\nDo Not:\nDo:\n\n\n\n\nUse setwd().\nUse absolute paths except for fixed, immovable sources (secure data).\n\nread_csv(\"C:/my_project/data/my_data.csv\")\n\n\nUse install.packages() in R script or .qmd files.\nUse rm(list=ls()) anywhere but your console.\n\n\n\n\n\n\n\n\n\nUse RStudio projects (or the here package) to set directories.\nUse relative paths to load and save files:\n\nread_csv(\"./data/my_data.csv\")\n\n\nLoad all required packages using library().\nClear your workspace when closing RStudio.\n\nSet Tools &gt; Global Options… &gt; Save workspace… to Never"
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#divide-and-conquer",
@@ -8425,7 +8425,7 @@
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#selecting-the-native-pipe",
     "title": "",
     "section": "Selecting the native pipe",
-    "text": "Selecting the native pipe\nThe |&gt; is recommended over %&gt;% simply because it’s always available (%&gt;% relied on the magrittr package which was a dependency of tidyverse packages) and it’s much simpler to use.\n\nYou’ll need to specify to R that you want to enable its usage by going to Tools &gt; Global Options &gt; Code. Within the “Editing” Tab there is an option to “Use native pipe operator, |&gt;”. Check it! \n\n\n\n\n\n\n\n\n\n\n\n Keyboard Shortcut\n\n\nTo insert a pipe (with spaces) quickly: Ctrl+Shift+M (Windows & Linux OS) Shift+Command+M (Mac)"
+    "text": "Selecting the native pipe\nThe |&gt; is recommended over %&gt;% simply because it’s much simpler to use and it’s always available (%&gt;% relied on the magrittr package which was a dependency of tidyverse packages).\n\nYou’ll need to specify to R that you want to enable its usage by going to Tools &gt; Global Options &gt; Code. Within the “Editing” Tab there is an option to “Use native pipe operator, |&gt;”. Check it! \n\n\n\n\n\n\n\n\n\n\n\n Keyboard Shortcut\n\n\nTo insert a pipe (with spaces) quickly: Ctrl+Shift+M (Windows & Linux OS) Shift+Command+M (Mac)"
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#styling-existing-code",
@@ -8523,7 +8523,7 @@
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#selecting-from-dataframes-with",
     "title": "",
     "section": "Selecting from dataframes with [\n",
-    "text": "Selecting from dataframes with [\n\nYou can select rows and columns from dataframes with df[rows, cols].\n\n\n\ndf &lt;- tibble(\n  x = 1:3, \n  y = c(\"a\", \"e\", \"f\"), \n  z = runif(3) # defaults: min = 0, max = 1\n)\n\ndf\n\n\n\n# A tibble: 3 × 3\n      x y         z\n  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;\n1     1 a     0.214\n2     2 e     0.543\n3     3 f     0.314\n\n\n\n\n\n# Select first row and second column\ndf[1, 2]\n\n\n\n# A tibble: 1 × 1\n  y    \n  &lt;chr&gt;\n1 a    \n\n\n\n\n\n# Select all rows and columns x and y\ndf[, c(\"x\" , \"y\")]\n\n\n\n# A tibble: 3 × 2\n      x y    \n  &lt;int&gt; &lt;chr&gt;\n1     1 a    \n2     2 e    \n3     3 f    \n\n\n\n\n\n# Select rows where `x` is greater than 1 and all columns\ndf[df$x &gt; 1, ]\n\n\n\n# A tibble: 2 × 3\n      x y         z\n  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;\n1     2 e     0.543\n2     3 f     0.314"
+    "text": "Selecting from dataframes with [\n\nYou can select rows and columns from dataframes with df[rows, cols].\n\n\n\ndf &lt;- tibble(\n  x = 1:3, \n  y = c(\"a\", \"e\", \"f\"), \n  z = runif(3) # defaults: min = 0, max = 1\n)\n\ndf\n\n\n\n# A tibble: 3 × 3\n      x y           z\n  &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt;\n1     1 a     0.799  \n2     2 e     0.00562\n3     3 f     0.702  \n\n\n\n\n\n# Select first row and second column\ndf[1, 2]\n\n\n\n# A tibble: 1 × 1\n  y    \n  &lt;chr&gt;\n1 a    \n\n\n\n\n\n# Select all rows and columns x and y\ndf[, c(\"x\" , \"y\")]\n\n\n\n# A tibble: 3 × 2\n      x y    \n  &lt;int&gt; &lt;chr&gt;\n1     1 a    \n2     2 e    \n3     3 f    \n\n\n\n\n\n# Select rows where `x` is greater than 1 and all columns\ndf[df$x &gt; 1, ]\n\n\n\n# A tibble: 2 × 3\n      x y           z\n  &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt;\n1     2 e     0.00562\n2     3 f     0.702"
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#creating-an-rstudio-project",
@@ -8551,7 +8551,7 @@
     "href": "Lectures/Lecture3/CSSS508_Lecture3.html#workflow-versus-product",
     "title": "",
     "section": "Workflow versus Product",
-    "text": "Workflow versus Product\nTo summarize Jenny Bryan, one should separate workflow (i.e. your personal tastes and habits) from product (i.e. the logic and output that is the essence of your project).\n\n\n\n\nWorkflow\n\nThe software you use to write your code (e.g. RStudio)\nThe location you store a project\nThe specific computer you use\nThe code you ran earlier or typed into your console\n\n\nProduct\n\nThe raw data\nThe code that operates on your raw data\nThe packages you use\nThe output files or documents\n\n\n\n\n\nEach data analysis (or homework assignment for a class) should be organized as a project.\n\nProjects should NOT modify anything outside of the project nor need to be modified by someone else (or future you) to run.\nProjects should be independent of your workflow."
+    "text": "Workflow versus Product\nTo summarize Jenny Bryan, one should separate workflow (i.e. your personal tastes and habits) from product (i.e. the logic and output that is the essence of your project).\n\n\n\n\nWorkflow\n\nThe software you use to write your code (e.g. R/RStudio)\nThe location you store a project\nThe specific computer you use\nThe code you ran earlier or typed into your console\n\n\nProduct\n\nThe raw data\nThe code that operates on your raw data\nThe packages you use\nThe output files or documents\n\n\n\n\n\nEach data analysis (or course using R) should be organized as a project.\n\nProjects should NOT modify anything outside of the project nor need to be modified by someone else (or future you) to run.\nProjects should be independent of your workflow."
   },
   {
     "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#portability-1",
@@ -13656,5 +13656,12 @@
     "title": "",
     "section": "Who Am I?",
     "text": "Who Am I?\n\nVictoria (Vic) Sass\n\n\n\nPhD Candidate in Sociology\n\n\n\n\nI’ve been using R and RStudio for over 10 years 😱\n\n\n\n\nI love teaching this class 🤓"
+  },
+  {
+    "objectID": "Lectures/Lecture3/CSSS508_Lecture3.html#disclaimer",
+    "href": "Lectures/Lecture3/CSSS508_Lecture3.html#disclaimer",
+    "title": "",
+    "section": "Disclaimer",
+    "text": "Disclaimer\nThere are honestly no hard, fast rules about what is the correct code. You can produce all styles of code that will run and get you your desired results.\n\nHowever, the following recommendations are made with these truths in mind:\n\n\nUsing a consistent style cuts down on the decisions you have to make, therefore allowing you to focus your attention on the substance of your code\n\nThis makes code easier to write and your overall process more efficient!\n\n\nEasy-to-read code is faster-read-code: both for any collaborators you may have and also future-you.\n\nThis is particularly helpful when scanning code in order to troubleshoot an error\n\n\n\n\n\n\nYou can read more about the specific style we’re using in this class here."
   }
 ]

@@ -433,6 +433,28 @@
 </div>
 </section></section><section><section id="code-style" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Code Style</h1>
 
+</section><section id="disclaimer" class="slide level2"><h2>Disclaimer</h2>
+<p>There are honestly no hard, fast rules about what is <strong>the</strong> <em>correct code</em>. You can produce all styles of code that will run and get you your desired results.</p>
+<div class="fragment">
+<p>However, the following recommendations are made with these truths in mind:</p>
+<div>
+<ul>
+<li class="fragment">Using a consistent style cuts down on the decisions you have to make, therefore allowing you to focus your attention on the substance of your code
+<ul>
+<li class="fragment">This makes code easier to write and your overall process more efficient!</li>
+</ul>
+</li>
+<li class="fragment">Easy-to-read code is faster-read-code: both for any collaborators you may have and also future-you.
+<ul>
+<li class="fragment">This is particularly helpful when scanning code in order to troubleshoot an error</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="fragment">
+<p>You can read more about the specific style we’re using in this class <a href="https://style.tidyverse.org/">here</a>.</p>
+</div>
 </section><section id="naming-objects" class="slide level2"><h2>Naming Objects</h2>
 <p>It’s good practice to name objects (and oftentimes variables) using only lowercase letters, numbers, and <code>_</code> (to separate words).</p>
 <div class="fragment">
@@ -461,7 +483,7 @@
 <span id="cb2-3"><a></a><span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb2-4"><a></a></span>
 <span id="cb2-5"><a></a><span class="co"># Code foul: </span></span>
-<span id="cb2-6"><a></a>z<span class="ot">&lt;-</span>( a <span class="sc">+</span> b ) <span class="sc">^</span> <span class="dv">2</span><span class="sc">/</span>d</span>
+<span id="cb2-6"><a></a>z<span class="ot">&lt;-</span>( a<span class="sc">+</span>b ) <span class="sc">^</span> <span class="dv">2</span><span class="sc">/</span>d</span>
 <span id="cb2-7"><a></a><span class="fu">mean</span> (x ,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
@@ -496,7 +518,7 @@
 </ul>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn2"><p><a href="https://en.wikipedia.org/wiki/The_Treachery_of_Images">Ceci n’est pas une pipe.</a></p></li></ol></aside></section><section id="pipes-1" class="slide level2"><h2>Pipes</h2>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>A component of programming which allows us to break a problem into a number of steps, each of which is straightforward and easy to understand.</p></li></ol></aside></section><section id="pipes-1" class="slide level2"><h2>Pipes</h2>
 <p>As you can see, pipes allow us to “chain” many function calls together easily.</p>
 <div class="fragment">
 <p>The so-called “native pipe” (i.e.&nbsp;built into base <code>R</code>) is relatively new. Before this, the pipe was a function from the <code>magrittr</code> package that looks like this: <code>%&gt;%</code>.</p>
@@ -516,7 +538,7 @@
 <span id="cb6-5"><a></a><span class="co"># native pipe</span></span>
 <span id="cb6-6"><a></a>a <span class="sc">|&gt;</span> <span class="fu">gsub</span>(<span class="st">'A'</span>,<span class="st">'-'</span>, <span class="at">x =</span> _) <span class="co"># _ is the placeholder for |&gt; </span></span>
 <span id="cb6-7"><a></a>a <span class="sc">|&gt;</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">'A'</span>, <span class="at">replacement =</span> <span class="st">'-'</span>) <span class="co"># leaving the "piped" argument as the only unnamed argument also works </span></span>
-<span id="cb6-8"><a></a>a <span class="sc">|&gt;</span> (\(.) <span class="fu">gsub</span>(<span class="st">'A'</span>, <span class="st">'-'</span>, <span class="at">x =</span> .))() <span class="co"># using an anonymous function call allows you to be explicit while specifying your own placeholder</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-8"><a></a>a <span class="sc">|&gt;</span> (\(placeholder) <span class="fu">gsub</span>(<span class="st">'A'</span>, <span class="st">'-'</span>, <span class="at">x =</span> placeholder))() <span class="co"># using an anonymous function call allows you to be explicit while specifying your own placeholder</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </div>
@@ -528,7 +550,7 @@
 <ul>
 <li class="fragment">You should always put a space before <code>|&gt;</code> and it should usually be the last thing on a line.<br>
 </li>
-<li class="fragment">New functions should be on a new line, indented 2 spaces (RStudio will automatically do this for you)</li>
+<li class="fragment">New functions should be on a new line, indented 2 spaces (RStudio will automatically do this for you if you hit return after a pipe)</li>
 <li class="fragment">Named arguments within a function should also get their own line</li>
 </ul>
 </div>
@@ -542,14 +564,11 @@
 <span id="cb7-7"><a></a>  )</span>
 <span id="cb7-8"><a></a></span>
 <span id="cb7-9"><a></a><span class="co"># code fouls</span></span>
-<span id="cb7-10"><a></a>flights <span class="sc">|&gt;</span></span>
-<span id="cb7-11"><a></a>  <span class="fu">group_by</span>(</span>
-<span id="cb7-12"><a></a>    tailnum</span>
-<span id="cb7-13"><a></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb7-14"><a></a>  <span class="fu">summarize</span>(<span class="at">delay =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-10"><a></a>flights <span class="sc">|&gt;</span> <span class="fu">group_by</span>(tailnum) <span class="sc">|&gt;</span> </span>
+<span id="cb7-11"><a></a>  <span class="fu">summarize</span>(<span class="at">delay =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="selecting-the-native-pipe" class="slide level2"><h2>Selecting the native pipe</h2>
-<p>The <code>|&gt;</code> is recommended over <code>%&gt;%</code> simply because it’s always available (<code>%&gt;%</code> relied on the <code>magrittr</code> package which was a dependency of <code>tidyverse</code> packages) and it’s much simpler to use.</p>
+<p>The <code>|&gt;</code> is recommended over <code>%&gt;%</code> simply because it’s much simpler to use and it’s always available (<code>%&gt;%</code> relied on the <code>magrittr</code> package which was a dependency of <code>tidyverse</code> packages).</p>
 <div class="fragment">
 <p>You’ll need to specify to <code>R</code> that you want to enable its usage by going to <em>Tools</em> &gt; <em>Global Options</em> &gt; <em>Code</em>. Within the “Editing” Tab there is an option to “Use native pipe operator, <code>|&gt;</code>”. Check it! <span style="color:#e15759"><i class="fa-solid fa-check" aria-label="check"></i></span></p>
 <div class="columns">
@@ -923,7 +942,7 @@ temp.txt</code></pre>
 <div class="column" style="width:50%;">
 <h3 id="workflow-1">Workflow</h3>
 <ul>
-<li><p>The software you use to write your code (e.g.&nbsp;RStudio)</p></li>
+<li><p>The software you use to write your code (e.g.&nbsp;R/RStudio)</p></li>
 <li><p>The location you store a project</p></li>
 <li><p>The specific computer you use</p></li>
 <li><p>The code you ran earlier or typed into your console</p></li>
@@ -940,7 +959,7 @@ temp.txt</code></pre>
 </div>
 </div>
 <div class="fragment">
-<p>Each data analysis (<em>or homework assignment for a class</em>) should be organized as a <span class="highlight-tableaured"><strong>project</strong></span>.</p>
+<p>Each data analysis (<em>or course using R</em>) should be organized as a <span class="highlight-tableaured"><strong>project</strong></span>.</p>
 <ul>
 <li>Projects <em>should NOT modify anything outside of the project</em> nor need to be modified by someone else (or future you) to run.</li>
 <li><strong>Projects <em>should be independent of your workflow</em>.</strong></li>
@@ -962,7 +981,7 @@ temp.txt</code></pre>
 <li><code>read_csv("C:/my_project/data/my_data.csv")</code></li>
 </ul>
 </li>
-<li>Use <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> in script or .qmd files.</li>
+<li>Use <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> in <code>R</code> script or .qmd files.</li>
 <li>Use <code>rm(list=ls())</code> anywhere but your console.</li>
 </ul>
 <div class="fragment">
@@ -1162,7 +1181,37 @@ temp.txt</code></pre>
 
 <aside><div>
 <p>Note: <a href="https://docs.ropensci.org/targets/"><code>targets</code> is a great package for managing R research pipelines.</a></p>
-</div></aside></section></section><section><section id="reproducible-research" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Reproducible Research</h1>
+</div></aside></section></section><section><section id="lab-3" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Lab 3</h1>
+
+</section><section id="section" class="slide level2" data-menu-title="Lab Exercises"><h2></h2>
+<ol type="1">
+<li><p>If you haven’t already, go to <em>Tools</em> &gt; <em>Global Options</em> and adjust your settings (i.e.&nbsp;<em>General</em>, <em>Code</em> &gt; <em>Editing</em>, and <em>Code</em> &gt; <em>Display</em>) to those recommended in the lecture and any others that you’d like to change (i.e.&nbsp;<em>Appearance</em>, <em>Pane Layout</em>, or <em>R Markdown</em>)</p></li>
+<li><p>Restyle the following pipelines following the guidelines discussed in lecture:</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>flights<span class="sc">|&gt;</span><span class="fu">filter</span>(dest<span class="sc">==</span><span class="st">"IAH"</span>)<span class="sc">|&gt;</span><span class="fu">group_by</span>(year,month,day)<span class="sc">|&gt;</span><span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(),</span>
+<span id="cb16-2"><a></a><span class="at">delay=</span><span class="fu">mean</span>(arr_delay,<span class="at">na.rm=</span><span class="cn">TRUE</span>))<span class="sc">|&gt;</span><span class="fu">filter</span>(n<span class="sc">&gt;</span><span class="dv">10</span>)</span>
+<span id="cb16-3"><a></a></span>
+<span id="cb16-4"><a></a>flights<span class="sc">|&gt;</span><span class="fu">filter</span>(carrier<span class="sc">==</span><span class="st">"UA"</span>,dest<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"IAH"</span>,<span class="st">"HOU"</span>),sched_dep_time<span class="sc">&gt;</span></span>
+<span id="cb16-5"><a></a><span class="dv">0900</span>,sched_arr_time<span class="sc">&lt;</span><span class="dv">2000</span>)<span class="sc">|&gt;</span><span class="fu">group_by</span>(flight)<span class="sc">|&gt;</span><span class="fu">summarize</span>(<span class="at">delay=</span><span class="fu">mean</span>(</span>
+<span id="cb16-6"><a></a>arr_delay,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="at">cancelled=</span><span class="fu">sum</span>(<span class="fu">is.na</span>(arr_delay)),<span class="at">n=</span><span class="fu">n</span>())<span class="sc">|&gt;</span><span class="fu">filter</span>(n<span class="sc">&gt;</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li><p>Press <em>Option</em> + <em>Shift</em> + <em>K</em> / <em>Alt</em> + <em>Shift</em> + <em>K</em>. What happens? How can you get to the same place using the menus?</p></li>
+<li><p>Tweak each of the following R commands so that they run correctly:</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">libary</span>(todyverse)</span>
+<span id="cb17-2"><a></a></span>
+<span id="cb17-3"><a></a><span class="fu">ggplot</span>(<span class="at">dTA =</span> mpg) <span class="sc">+</span> </span>
+<span id="cb17-4"><a></a>  <span class="fu">geom_point</span>(<span class="at">maping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
+<span id="cb17-5"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="5" type="1">
+<li>What might be a good way to organize your homework assignments for this class?</li>
+</ol></section></section><section id="break" class="title-slide slide level1 section-title center" data-background-color="#1e4655"><h1>Break!</h1>
+
+</section><section><section id="reproducible-research" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Reproducible Research</h1>
 
 </section><section id="why-reproducibility" class="slide level2"><h2>Why Reproducibility?</h2>
 <p>Reproducibility is not <em>replication</em>.</p>
@@ -1289,29 +1338,29 @@ temp.txt</code></pre>
 <div class="column" style="width:40%;">
 <p>Given a vector of values:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">a =</span> <span class="st">"one"</span>, </span>
-<span id="cb16-2"><a></a>       <span class="at">b =</span> <span class="cn">NA</span>, </span>
-<span id="cb16-3"><a></a>       <span class="at">c =</span> <span class="st">"two"</span>, </span>
-<span id="cb16-4"><a></a>       <span class="at">d =</span> <span class="st">"three"</span>, </span>
-<span id="cb16-5"><a></a>       <span class="at">e =</span> <span class="st">"four"</span>, </span>
-<span id="cb16-6"><a></a>       <span class="at">f =</span> <span class="cn">NA</span>, </span>
-<span id="cb16-7"><a></a>       <span class="at">g =</span> <span class="cn">NA</span>, </span>
-<span id="cb16-8"><a></a>       <span class="at">h =</span> <span class="st">"five"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">a =</span> <span class="st">"one"</span>, </span>
+<span id="cb23-2"><a></a>       <span class="at">b =</span> <span class="cn">NA</span>, </span>
+<span id="cb23-3"><a></a>       <span class="at">c =</span> <span class="st">"two"</span>, </span>
+<span id="cb23-4"><a></a>       <span class="at">d =</span> <span class="st">"three"</span>, </span>
+<span id="cb23-5"><a></a>       <span class="at">e =</span> <span class="st">"four"</span>, </span>
+<span id="cb23-6"><a></a>       <span class="at">f =</span> <span class="cn">NA</span>, </span>
+<span id="cb23-7"><a></a>       <span class="at">g =</span> <span class="cn">NA</span>, </span>
+<span id="cb23-8"><a></a>       <span class="at">h =</span> <span class="st">"five"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:60%;">
 <p>You can select from the vector</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="co"># with positive integers</span></span>
-<span id="cb17-2"><a></a>x[<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="co"># with positive integers</span></span>
+<span id="cb24-2"><a></a>x[<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>     c      a      e 
  "two"  "one" "four" </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="co"># even repeated values</span></span>
-<span id="cb19-2"><a></a>x[<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="co"># even repeated values</span></span>
+<span id="cb26-2"><a></a>x[<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     c      a      a      e      c 
  "two"  "one"  "one" "four"  "two" </code></pre>
@@ -1320,8 +1369,8 @@ temp.txt</code></pre>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="co"># with negative integers</span></span>
-<span id="cb21-2"><a></a>x[<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">6</span>, <span class="sc">-</span><span class="dv">7</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="co"># with negative integers</span></span>
+<span id="cb28-2"><a></a>x[<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">6</span>, <span class="sc">-</span><span class="dv">7</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1332,8 +1381,8 @@ temp.txt</code></pre>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="co"># with a logical vector</span></span>
-<span id="cb23-2"><a></a>x[<span class="sc">!</span><span class="fu">is.na</span>(x)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="co"># with a logical vector</span></span>
+<span id="cb30-2"><a></a>x[<span class="sc">!</span><span class="fu">is.na</span>(x)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1344,8 +1393,8 @@ temp.txt</code></pre>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="co"># or with a named vector</span></span>
-<span id="cb25-2"><a></a>x[<span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"h"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="co"># or with a named vector</span></span>
+<span id="cb32-2"><a></a>x[<span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"h"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1362,29 +1411,29 @@ temp.txt</code></pre>
 <div class="columns">
 <div class="column" style="width:40%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb27-2"><a></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, </span>
-<span id="cb27-3"><a></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"e"</span>, <span class="st">"f"</span>), </span>
-<span id="cb27-4"><a></a>  <span class="at">z =</span> <span class="fu">runif</span>(<span class="dv">3</span>) <span class="co"># defaults: min = 0, max = 1</span></span>
-<span id="cb27-5"><a></a>)</span>
-<span id="cb27-6"><a></a></span>
-<span id="cb27-7"><a></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb34-2"><a></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, </span>
+<span id="cb34-3"><a></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"e"</span>, <span class="st">"f"</span>), </span>
+<span id="cb34-4"><a></a>  <span class="at">z =</span> <span class="fu">runif</span>(<span class="dv">3</span>) <span class="co"># defaults: min = 0, max = 1</span></span>
+<span id="cb34-5"><a></a>)</span>
+<span id="cb34-6"><a></a></span>
+<span id="cb34-7"><a></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
-      x y         z
-  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-1     1 a     0.214
-2     2 e     0.543
-3     3 f     0.314</code></pre>
+      x y           z
+  &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt;
+1     1 a     0.799  
+2     2 e     0.00562
+3     3 f     0.702  </code></pre>
 </div>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="co"># Select first row and second column</span></span>
-<span id="cb29-2"><a></a>df[<span class="dv">1</span>, <span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="co"># Select first row and second column</span></span>
+<span id="cb36-2"><a></a>df[<span class="dv">1</span>, <span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1397,8 +1446,8 @@ temp.txt</code></pre>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="co"># Select all rows and columns x and y</span></span>
-<span id="cb31-2"><a></a>df[, <span class="fu">c</span>(<span class="st">"x"</span> , <span class="st">"y"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="co"># Select all rows and columns x and y</span></span>
+<span id="cb38-2"><a></a>df[, <span class="fu">c</span>(<span class="st">"x"</span> , <span class="st">"y"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1413,16 +1462,16 @@ temp.txt</code></pre>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="co"># Select rows where `x` is greater than 1 and all columns</span></span>
-<span id="cb33-2"><a></a>df[df<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="dv">1</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="co"># Select rows where `x` is greater than 1 and all columns</span></span>
+<span id="cb40-2"><a></a>df[df<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="dv">1</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
-      x y         z
-  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-1     2 e     0.543
-2     3 f     0.314</code></pre>
+      x y           z
+  &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt;
+1     2 e     0.00562
+2     3 f     0.702  </code></pre>
 </div>
 </div>
 </div>
@@ -1435,8 +1484,8 @@ temp.txt</code></pre>
 <div class="fragment">
 <p>If <code>df</code> is a data.frame, then <code>df[, cols]</code> will return a vector if <code>col</code> selects a single column and a data frame if it selects more than one column.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
-<span id="cb35-2"><a></a>df1[, <span class="st">"x"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb42-2"><a></a>df1[, <span class="st">"x"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1447,8 +1496,8 @@ temp.txt</code></pre>
 <div class="fragment">
 <p>If <code>df</code> is a tibble, then <code>[</code> will always return a tibble.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>df2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
-<span id="cb37-2"><a></a>df2[, <span class="st">"x"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>df2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb44-2"><a></a>df2[, <span class="st">"x"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1464,7 +1513,7 @@ temp.txt</code></pre>
 <div class="fragment">
 <p>One way to avoid this ambiguity with <code>data.frames</code> is to explicitly specify <code>drop = FALSE</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>df1[, <span class="st">"x"</span> , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>df1[, <span class="st">"x"</span> , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1481,12 +1530,12 @@ temp.txt</code></pre>
 <div class="columns">
 <div class="column" style="width:40%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>tb <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb41-2"><a></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb41-3"><a></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">21</span>)</span>
-<span id="cb41-4"><a></a>)</span>
-<span id="cb41-5"><a></a></span>
-<span id="cb41-6"><a></a>tb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>tb <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb48-2"><a></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb48-3"><a></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">21</span>)</span>
+<span id="cb48-4"><a></a>)</span>
+<span id="cb48-5"><a></a></span>
+<span id="cb48-6"><a></a>tb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1503,8 +1552,8 @@ temp.txt</code></pre>
 <div class="fragment">
 <p><code>[[</code> can access by position or by name:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="co"># by position</span></span>
-<span id="cb43-2"><a></a>tb[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a><span class="co"># by position</span></span>
+<span id="cb50-2"><a></a>tb[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1514,8 +1563,8 @@ temp.txt</code></pre>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="co"># by name</span></span>
-<span id="cb45-2"><a></a>tb[[<span class="st">"x"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="co"># by name</span></span>
+<span id="cb52-2"><a></a>tb[[<span class="st">"x"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1526,7 +1575,7 @@ temp.txt</code></pre>
 <div class="fragment">
 <p><code>$</code> is specialized for access by name:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>tb<span class="sc">$</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a>tb<span class="sc">$</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1537,8 +1586,8 @@ temp.txt</code></pre>
 <div class="fragment">
 <p>They can also be used to create new columns.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>tb<span class="sc">$</span>z <span class="ot">&lt;-</span> tb<span class="sc">$</span>x <span class="sc">+</span> tb<span class="sc">$</span>y</span>
-<span id="cb49-2"><a></a>tb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a>tb<span class="sc">$</span>z <span class="ot">&lt;-</span> tb<span class="sc">$</span>x <span class="sc">+</span> tb<span class="sc">$</span>y</span>
+<span id="cb56-2"><a></a>tb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1590,35 +1639,7 @@ temp.txt</code></pre>
 </li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn5"><p><code><a href="https://rdrr.io/r/base/dput.html">dput()</a></code> is also a useful function for quickly creating a snippet of your data to share with others to illustrate your issue.</p></li></ol></aside></section></section><section><section id="lab-3" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Lab 3</h1>
-
-</section><section id="section" class="slide level2" data-menu-title="Lab Exercises"><h2></h2>
-<ol type="1">
-<li><p>If you haven’t already, go to <em>Tools</em> &gt; <em>Global Options</em> and adjust your settings (i.e.&nbsp;<em>General</em>, <em>Code</em> &gt; <em>Editing</em>, and <em>Code</em> &gt; <em>Display</em>) to those recommended in the lecture and any others that you’d like to change (i.e.&nbsp;<em>Appearance</em>, <em>Pane Layout</em>, or <em>R Markdown</em>)</p></li>
-<li><p>Restyle the following pipelines following the guidelines discussed in lecture:</p></li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>flights<span class="sc">|&gt;</span><span class="fu">filter</span>(dest<span class="sc">==</span><span class="st">"IAH"</span>)<span class="sc">|&gt;</span><span class="fu">group_by</span>(year,month,day)<span class="sc">|&gt;</span><span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(),</span>
-<span id="cb51-2"><a></a><span class="at">delay=</span><span class="fu">mean</span>(arr_delay,<span class="at">na.rm=</span><span class="cn">TRUE</span>))<span class="sc">|&gt;</span><span class="fu">filter</span>(n<span class="sc">&gt;</span><span class="dv">10</span>)</span>
-<span id="cb51-3"><a></a></span>
-<span id="cb51-4"><a></a>flights<span class="sc">|&gt;</span><span class="fu">filter</span>(carrier<span class="sc">==</span><span class="st">"UA"</span>,dest<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"IAH"</span>,<span class="st">"HOU"</span>),sched_dep_time<span class="sc">&gt;</span></span>
-<span id="cb51-5"><a></a><span class="dv">0900</span>,sched_arr_time<span class="sc">&lt;</span><span class="dv">2000</span>)<span class="sc">|&gt;</span><span class="fu">group_by</span>(flight)<span class="sc">|&gt;</span><span class="fu">summarize</span>(<span class="at">delay=</span><span class="fu">mean</span>(</span>
-<span id="cb51-6"><a></a>arr_delay,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="at">cancelled=</span><span class="fu">sum</span>(<span class="fu">is.na</span>(arr_delay)),<span class="at">n=</span><span class="fu">n</span>())<span class="sc">|&gt;</span><span class="fu">filter</span>(n<span class="sc">&gt;</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="3" type="1">
-<li><p>Press <em>Option</em> + <em>Shift</em> + <em>K</em> / <em>Alt</em> + <em>Shift</em> + <em>K</em>. What happens? How can you get to the same place using the menus?</p></li>
-<li><p>Tweak each of the following R commands so that they run correctly:</p></li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="fu">libary</span>(todyverse)</span>
-<span id="cb52-2"><a></a></span>
-<span id="cb52-3"><a></a><span class="fu">ggplot</span>(<span class="at">dTA =</span> mpg) <span class="sc">+</span> </span>
-<span id="cb52-4"><a></a>  <span class="fu">geom_point</span>(<span class="at">maping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
-<span id="cb52-5"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="5" type="1">
-<li>What might be a good way to organize your homework assignments for this class?</li>
-</ol></section></section><section><section id="homework" class="title-slide slide level1 section-title center" data-background-color="#1e4655"><h1>Homework</h1>
+<aside><ol class="aside-footnotes"><li id="fn5"><p><code><a href="https://rdrr.io/r/base/dput.html">dput()</a></code> is also a useful function for quickly creating a snippet of your data to share with others to illustrate your issue.</p></li></ol></aside></section></section><section><section id="homework" class="title-slide slide level1 section-title center" data-background-color="#1e4655"><h1>Homework</h1>
 
 </section><section id="section-1" class="slide level2" data-menu-title="Homework 3" data-background-iframe="https://vsass.github.io/CSSS508/Homework/HW3/homework3.html" data-background-interactive="TRUE"><h2></h2>
 

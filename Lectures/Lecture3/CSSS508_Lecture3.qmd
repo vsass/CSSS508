@@ -40,7 +40,7 @@ require(tidyverse)
 
 [CS&SS 508 • Lecture 3]{.custom-subtitle}
 
-[{{< var lecture.three >}}]{.custom-subtitle2}
+[{{< var lectures.three >}}]{.custom-subtitle2}
 
 [Victoria Sass]{.custom-subtitle3}
 
@@ -81,6 +81,25 @@ require(tidyverse)
 
 # Code Style{.section-title background-color="#99a486"}
 
+## Disclaimer
+
+There are honestly no hard, fast rules about what is **the** *correct code*. You can produce all styles of code that will run and get you your desired results. 
+
+. . . 
+
+However, the following recommendations are made with these truths in mind: 
+
+::: {.incremental}
+* Using a consistent style cuts down on the decisions you have to make, therefore allowing you to focus your attention on the substance of your code
+  * This makes code easier to write and your overall process more efficient!
+* Easy-to-read code is faster-read-code: both for any collaborators you may have and also future-you.
+  * This is particularly helpful when scanning code in order to troubleshoot an error
+:::
+
+. . . 
+
+You can read more about the specific style we're using in this class [here](https://style.tidyverse.org/).  
+
 ## Naming Objects
 
 It's good practice to name objects (and oftentimes variables) using only lowercase letters, numbers, and `_` (to separate words). 
@@ -117,7 +136,7 @@ z <- (a + b)^2 / d
 mean(x, na.rm = TRUE)
 
 # Code foul: 
-z<-( a + b ) ^ 2/d
+z<-( a+b ) ^ 2/d
 mean (x ,na.rm=TRUE)
 ```
 
@@ -150,7 +169,7 @@ With nested functions, like those above, you need to read the order of operation
 
 . . . 
 
-**Enter the pipe^[[Ceci n'est pas une pipe.](https://en.wikipedia.org/wiki/The_Treachery_of_Images)]:** `|>`
+**Enter the pipe^[A component of programming which allows us to break a problem into a number of steps, each of which is straightforward and easy to understand.]:** `|>`
 
 Pipes read "left to right" which is much more intuitive! 
 
@@ -191,7 +210,7 @@ a %>% gsub('A', '-', x = .)
 # native pipe
 a |> gsub('A','-', x = _) # _ is the placeholder for |> 
 a |> gsub(pattern = 'A', replacement = '-') # leaving the "piped" argument as the only unnamed argument also works 
-a |> (\(.) gsub('A', '-', x = .))() # using an anonymous function call allows you to be explicit while specifying your own placeholder
+a |> (\(placeholder) gsub('A', '-', x = placeholder))() # using an anonymous function call allows you to be explicit while specifying your own placeholder
 ```
 
 ::: aside
@@ -204,7 +223,7 @@ Some good syntax practices:
 
 ::: {.incremental}
 * You should always put a space before `|>` and it should usually be the last thing on a line.  
-* New functions should be on a new line, indented 2 spaces (RStudio will automatically do this for you)
+* New functions should be on a new line, indented 2 spaces (RStudio will automatically do this for you if you hit return after a pipe)
 * Named arguments within a function should also get their own line
 :::
 
@@ -219,10 +238,7 @@ flights |>
   )
 
 # code fouls
-flights |>
-  group_by(
-    tailnum
-  ) |> 
+flights |> group_by(tailnum) |> 
   summarize(delay = mean(arr_delay, na.rm = TRUE), n = n())
 
 
@@ -230,7 +246,7 @@ flights |>
 
 ## Selecting the native pipe
 
-The `|>`  is recommended over `%>%` simply because it's always available (`%>%` relied on the `magrittr` package which was a dependency of `tidyverse` packages) and it's much simpler to use. 
+The `|>`  is recommended over `%>%` simply because it's much simpler to use and it's always available (`%>%` relied on the `magrittr` package which was a dependency of `tidyverse` packages). 
 
 . . . 
 
@@ -641,7 +657,7 @@ To summarize Jenny Bryan, [one should **separate workflow** (i.e. your personal 
 
 ### Workflow
 
-* The software you use to write your code (e.g. RStudio)
+* The software you use to write your code (e.g. R/RStudio)
 
 * The location you store a project
 
@@ -667,7 +683,7 @@ To summarize Jenny Bryan, [one should **separate workflow** (i.e. your personal 
 
 . . . 
 
-Each data analysis (*or homework assignment for a class*) should be organized as a [**project**]{.highlight-tableaured}. 
+Each data analysis (*or course using R*) should be organized as a [**project**]{.highlight-tableaured}. 
 
 * Projects *should NOT modify anything outside of the project* nor need to be modified by someone else (or future you) to run.
 * **Projects *should be independent of your workflow*.**
@@ -683,7 +699,7 @@ For research to be reproducible, it must also be *portable*. Portable software o
 * Use `setwd()`.
 * Use *absolute paths* except for *fixed, immovable sources* (secure data).
   + `read_csv("C:/my_project/data/my_data.csv")`
-* Use `install.packages()` in script or .qmd files.
+* Use `install.packages()` in `R` script or .qmd files.
 * Use `rm(list=ls())` anywhere but your console.
 
 :::{.fragment}
@@ -874,6 +890,193 @@ Every stage (oval) has an unambiguous input and output. Everything that precedes
 ::: aside
 Note: [`targets` is a great package for managing R research pipelines.](https://docs.ropensci.org/targets/)
 :::
+
+# Lab 3 {.section-title background-color="#99a486"}
+
+## {data-menu-title="Lab Exercises"}
+
+1. If you haven't already, go to *Tools* > *Global Options* and adjust your settings (i.e. *General*, *Code* > *Editing*, and *Code* > *Display*) to those recommended in the lecture and any others that you'd like to change (i.e. *Appearance*, *Pane Layout*, or *R Markdown*)
+
+2. Restyle the following pipelines following the guidelines discussed in lecture: 
+
+```{r}
+#| eval: false
+flights|>filter(dest=="IAH")|>group_by(year,month,day)|>summarize(n=n(),
+delay=mean(arr_delay,na.rm=TRUE))|>filter(n>10)
+
+flights|>filter(carrier=="UA",dest%in%c("IAH","HOU"),sched_dep_time>
+0900,sched_arr_time<2000)|>group_by(flight)|>summarize(delay=mean(
+arr_delay,na.rm=TRUE),cancelled=sum(is.na(arr_delay)),n=n())|>filter(n>10)
+```
+
+3. Press *Option* + *Shift* + *K* / *Alt* + *Shift* + *K*. What happens? How can you get to the same place using the menus?
+
+4. Tweak each of the following R commands so that they run correctly:
+
+```{r}
+#| eval: false
+libary(todyverse)
+
+ggplot(dTA = mpg) + 
+  geom_point(maping = aes(x = displ y = hwy)) +
+  geom_smooth(method = "lm)
+```
+
+5. What might be a good way to organize your homework assignments for this class? 
+
+## Solution: 1. Adjust settings {visibility="hidden"}
+
+![Clear .RData, Never save](images/clean-slate.png){fig-align="center" width=50%}
+
+## Solution: 1. Adjust settings {visibility="hidden"}
+
+![Native pipe](images/rstudio-pipe-options.png){fig-align="center" width=50%}
+
+## Solution: 1. Adjust settings {visibility="hidden"}
+
+![Highlight function calls; preview colors; rainbow parentheses](images/rainbow_function.png){fig-align="center" width=50%}
+
+## Solution: 1. Adjust settings {visibility="hidden"}
+
+![Code appearance](images/code_style.png){fig-align="center" width=50%}
+
+## Solution: 1. Adjust settings {visibility="hidden"}
+
+![Pane Layout](images/pane_arrangement.png){fig-align="center" width=50%}
+
+## Solution: 1. Adjust settings {visibility="hidden"}
+
+![Markdown Preferences](images/markdown_preferences.png){fig-align="center" width=50%}
+
+## Solution: 2. Readable code style {visibility="hidden"}
+
+::: {.fragment .semi-fade-out fragment-index=1}
+```{r}
+#| eval: false
+flights|>filter(dest=="IAH")|>group_by(year,month,day)|>summarize(n=n(),
+delay=mean(arr_delay,na.rm=TRUE))|>filter(n>10)
+
+flights|>filter(carrier=="UA",dest%in%c("IAH","HOU"),sched_dep_time>
+0900,sched_arr_time<2000)|>group_by(flight)|>summarize(delay=mean(
+arr_delay,na.rm=TRUE),cancelled=sum(is.na(arr_delay)),n=n())|>filter(n>10)
+```
+:::
+
+::: {.fragment .fade-in fragment-index=1}
+```{r}
+#| eval: false
+flights |> 
+  filter(dest == "IAH") |> 
+  group_by(year, month, day) |> 
+  summarize(
+    n = n(),
+    delay = mean(arr_delay, na.rm = TRUE)
+    ) |> 
+  filter(n > 10)
+
+flights |> 
+  filter(carrier == "UA", dest %in% c("IAH", "HOU"), 
+         sched_dep_time > 0900, sched_arr_time < 2000) |>
+  group_by(flight) |> 
+  summarize(
+    delay = mean(arr_delay, na.rm = TRUE), 
+    cancelled = sum(is.na(arr_delay)), 
+    n = n() 
+    ) |> 
+  filter(n > 10)
+```
+:::
+
+## Solution: 3. *Option* + *Shift* + *K* / *Alt* + *Shift* + *K* {visibility="hidden"}
+
+![](images/keyboard_shortcuts.png){fig-align="center" width=80%}
+
+::: aside
+You can find the same quick reference pop-up by clicking *Tools* > *Keyboard Shortcuts Help*. 
+:::
+
+
+## Solution: 4. Keyboard shortcut {visibility="hidden"}
+
+::: {.fragment .semi-fade-out fragment-index=1}
+```{r}
+#| eval: false
+libary(todyverse)
+
+ggplot(dTA = mpg) + 
+  geom_point(maping = aes(x = displ y = hwy)) +
+  geom_smooth(method = "lm)
+```
+:::
+
+::: {.fragment .fade-in fragment-index=1}
+```{r}
+#| eval: false
+libary(tidyverse)
+
+ggplot(data = mpg, 
+       mapping = aes(x = displ, y = hwy)) + 
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+:::
+
+## Solution: 5. Organizing a class {visibility="hidden"}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+<br>
+
+::: {.incremental}
+1. Create a folder for this class on a computer/system that gets backed up regularly
+2. Either the class itself is an RStudio project or each homework assignment subfolder is a separate project
+3. Everything within each homework assignment project gets saved into that specific folder (or a subfolder of that folder)
+4. Anything required for each homework assignment (e.g. downloaded data) is saved into its project-specific folder
+:::
+:::
+
+::: {.column width="50%"}
+
+::: {.fragment}
+
+<br>
+
+```
+CSSS508/
+   Homeworks/
+     HW1/
+       homework1.qmd
+       homework1.html
+     HW2/
+       homework2.qmd
+       homework2.html
+     HW3/
+       homework3.qmd
+       homework3.html
+     HW4/
+       homework4.qmd
+       homework4.html
+       data.csv
+     HW5/
+       homework5.qmd
+       homework5.html
+         data/
+           data_raw.csv
+           data_processed.Rdata
+     HW6/
+     HW7/
+     HW8/
+     HW9/
+```
+:::
+
+:::
+
+::::
+
+# Break!{.section-title background-color="#1e4655"}
 
 # Reproducible Research{.section-title background-color="#99a486"}
 
@@ -1206,191 +1409,6 @@ One of the most difficult things as a beginner in `R` (or any language tbh) is n
   + It's cliché, but investing in your learning right now will pay off down the road.
   + Learning how to do something, why `R` works in a certain way, and developing practices that keep you organized will make you more efficient and help prevent minor and major frustrations going forward.
 :::
-
-# Lab 3 {.section-title background-color="#99a486"}
-
-## {data-menu-title="Lab Exercises"}
-
-1. If you haven't already, go to *Tools* > *Global Options* and adjust your settings (i.e. *General*, *Code* > *Editing*, and *Code* > *Display*) to those recommended in the lecture and any others that you'd like to change (i.e. *Appearance*, *Pane Layout*, or *R Markdown*)
-
-2. Restyle the following pipelines following the guidelines discussed in lecture: 
-
-```{r}
-#| eval: false
-flights|>filter(dest=="IAH")|>group_by(year,month,day)|>summarize(n=n(),
-delay=mean(arr_delay,na.rm=TRUE))|>filter(n>10)
-
-flights|>filter(carrier=="UA",dest%in%c("IAH","HOU"),sched_dep_time>
-0900,sched_arr_time<2000)|>group_by(flight)|>summarize(delay=mean(
-arr_delay,na.rm=TRUE),cancelled=sum(is.na(arr_delay)),n=n())|>filter(n>10)
-```
-
-3. Press *Option* + *Shift* + *K* / *Alt* + *Shift* + *K*. What happens? How can you get to the same place using the menus?
-
-4. Tweak each of the following R commands so that they run correctly:
-
-```{r}
-#| eval: false
-libary(todyverse)
-
-ggplot(dTA = mpg) + 
-  geom_point(maping = aes(x = displ y = hwy)) +
-  geom_smooth(method = "lm)
-```
-
-5. What might be a good way to organize your homework assignments for this class? 
-
-## Solution: 1. Adjust settings {visibility="hidden"}
-
-![Clear .RData, Never save](images/clean-slate.png){fig-align="center" width=50%}
-
-## Solution: 1. Adjust settings {visibility="hidden"}
-
-![Native pipe](images/rstudio-pipe-options.png){fig-align="center" width=50%}
-
-## Solution: 1. Adjust settings {visibility="hidden"}
-
-![Highlight function calls; preview colors; rainbow parentheses](images/rainbow_function.png){fig-align="center" width=50%}
-
-## Solution: 1. Adjust settings {visibility="hidden"}
-
-![Code appearance](images/code_style.png){fig-align="center" width=50%}
-
-## Solution: 1. Adjust settings {visibility="hidden"}
-
-![Pane Layout](images/pane_arrangement.png){fig-align="center" width=50%}
-
-## Solution: 1. Adjust settings {visibility="hidden"}
-
-![Markdown Preferences](images/markdown_preferences.png){fig-align="center" width=50%}
-
-## Solution: 2. Readable code style {visibility="hidden"}
-
-::: {.fragment .semi-fade-out fragment-index=1}
-```{r}
-#| eval: false
-flights|>filter(dest=="IAH")|>group_by(year,month,day)|>summarize(n=n(),
-delay=mean(arr_delay,na.rm=TRUE))|>filter(n>10)
-
-flights|>filter(carrier=="UA",dest%in%c("IAH","HOU"),sched_dep_time>
-0900,sched_arr_time<2000)|>group_by(flight)|>summarize(delay=mean(
-arr_delay,na.rm=TRUE),cancelled=sum(is.na(arr_delay)),n=n())|>filter(n>10)
-```
-:::
-
-::: {.fragment .fade-in fragment-index=1}
-```{r}
-#| eval: false
-flights |> 
-  filter(dest == "IAH") |> 
-  group_by(year, month, day) |> 
-  summarize(
-    n = n(),
-    delay = mean(arr_delay, na.rm = TRUE)
-    ) |> 
-  filter(n > 10)
-
-flights |> 
-  filter(carrier == "UA", dest %in% c("IAH", "HOU"), 
-         sched_dep_time > 0900, sched_arr_time < 2000) |>
-  group_by(flight) |> 
-  summarize(
-    delay = mean(arr_delay, na.rm = TRUE), 
-    cancelled = sum(is.na(arr_delay)), 
-    n = n() 
-    ) |> 
-  filter(n > 10)
-```
-:::
-
-## Solution: 3. *Option* + *Shift* + *K* / *Alt* + *Shift* + *K* {visibility="hidden"}
-
-![](images/keyboard_shortcuts.png){fig-align="center" width=80%}
-
-::: aside
-You can find the same quick reference pop-up by clicking *Tools* > *Keyboard Shortcuts Help*. 
-:::
-
-
-## Solution: 4. Keyboard shortcut {visibility="hidden"}
-
-::: {.fragment .semi-fade-out fragment-index=1}
-```{r}
-#| eval: false
-libary(todyverse)
-
-ggplot(dTA = mpg) + 
-  geom_point(maping = aes(x = displ y = hwy)) +
-  geom_smooth(method = "lm)
-```
-:::
-
-::: {.fragment .fade-in fragment-index=1}
-```{r}
-#| eval: false
-libary(tidyverse)
-
-ggplot(data = mpg, 
-       mapping = aes(x = displ, y = hwy)) + 
-  geom_point() +
-  geom_smooth(method = "lm")
-```
-:::
-
-## Solution: 5. Organizing a class {visibility="hidden"}
-
-:::: {.columns}
-
-::: {.column width="50%"}
-
-<br>
-
-::: {.incremental}
-1. Create a folder for this class on a computer/system that gets backed up regularly
-2. Each homework assignment gets a separate RStudio project
-3. Everything within each homework assignment project gets saved into that specific folder (or a subfolder of that folder)
-4. Anything required for each homework assignment (e.g. downloaded data) is saved into its project-specific folder
-:::
-:::
-
-::: {.column width="50%"}
-
-::: {.fragment}
-
-<br>
-
-```
-CSSS508/
-   Homeworks/
-     HW1/
-       homework1.qmd
-       homework1.html
-     HW2/
-       homework2.qmd
-       homework2.html
-     HW3/
-       homework3.qmd
-       homework3.html
-     HW4/
-       homework4.qmd
-       homework4.html
-       data.csv
-     HW5/
-       homework5.qmd
-       homework5.html
-         data/
-           data_raw.csv
-           data_processed.Rdata
-     HW6/
-     HW7/
-     HW8/
-     HW9/
-```
-:::
-
-:::
-
-::::
 
 # Homework{.section-title background-color="#1e4655"}
 
