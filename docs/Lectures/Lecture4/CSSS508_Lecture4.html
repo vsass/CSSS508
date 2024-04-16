@@ -1670,7 +1670,7 @@
 <div class="sourceCode cell-code" id="annotated-cell-36"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-36-1"><a href="#annotated-cell-36-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-36-2"><a href="#annotated-cell-36-2"></a>  <span class="fu">group_by</span>(dest) <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-36" data-target-annotation="5">5</button><span id="annotated-cell-36-3" class="code-annotation-target"><a href="#annotated-cell-36-3"></a>  <span class="fu">slice_max</span>(arr_delay, <span class="at">n =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-36-4"><a href="#annotated-cell-36-4"></a>  <span class="fu">relocate</span>(dest) </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-36-4"><a href="#annotated-cell-36-4"></a>  <span class="fu">relocate</span>(dest, arr_delay) </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-36" data-target-annotation="5">5</dt>
@@ -1682,22 +1682,22 @@
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 108 × 19
 # Groups:   dest [105]
-   dest   year month   day dep_time sched_dep_time dep_delay arr_time
-   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
- 1 ABQ    2013     7    22     2145           2007        98      132
- 2 ACK    2013     7    23     1139            800       219     1250
- 3 ALB    2013     1    25      123           2000       323      229
- 4 ANC    2013     8    17     1740           1625        75     2042
- 5 ATL    2013     7    22     2257            759       898      121
- 6 AUS    2013     7    10     2056           1505       351     2347
- 7 AVL    2013     8    13     1156            832       204     1417
- 8 BDL    2013     2    21     1728           1316       252     1839
- 9 BGR    2013    12     1     1504           1056       248     1628
-10 BHM    2013     4    10       25           1900       325      136
+   dest  arr_delay  year month   day dep_time sched_dep_time dep_delay arr_time
+   &lt;chr&gt;     &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+ 1 ABQ         153  2013     7    22     2145           2007        98      132
+ 2 ACK         221  2013     7    23     1139            800       219     1250
+ 3 ALB         328  2013     1    25      123           2000       323      229
+ 4 ANC          39  2013     8    17     1740           1625        75     2042
+ 5 ATL         895  2013     7    22     2257            759       898      121
+ 6 AUS         349  2013     7    10     2056           1505       351     2347
+ 7 AVL         228  2013     8    13     1156            832       204     1417
+ 8 BDL         266  2013     2    21     1728           1316       252     1839
+ 9 BGR         238  2013    12     1     1504           1056       248     1628
+10 BHM         291  2013     4    10       25           1900       325      136
 # ℹ 98 more rows
-# ℹ 11 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;,
-#   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
-#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+# ℹ 10 more variables: sched_arr_time &lt;int&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+#   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 </div>
 </div>
 
@@ -1871,7 +1871,7 @@
 </div>
 <div id="tabset-1-5">
 <div class="smaller-font">
-<p><code>flights</code> actually contains <strong>foreign keys</strong> that correspond to the primary keys of the other datasets.</p>
+<p><code>flights</code> has three variables (<code>time_hour</code>, <code>flight</code>, <code>carrier</code>) that uniquely identify an observation. More significantly, however, it contains <strong>foreign keys</strong> that correspond to the primary keys of the other datasets.</p>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a>flights</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2483,14 +2483,14 @@
 <section id="manipulating-data" class="slide level2">
 <h2>Manipulating Data</h2>
 <ol type="1">
-<li>Create a new object that contains <code>gapminder</code> (1) observations from China, India, and United States after 1980, and (2) variables corresponding to country, year, population, and life expectancy.</li>
+<li>Create a new object that contains <code>gapminder</code><sup>1</sup> (1) observations from China, India, and United States after 1980, and (2) variables corresponding to country, year, population, and life expectancy.</li>
 <li>How many rows and columns does the object contain?</li>
-<li>Save over your object after sorting the rows by year (ascending order) and population (descending order). Print the first 6 rows.</li>
+<li>Sort the rows by year (ascending order) and population (descending order) and save that over the object created for answer 1. Print the first 6 rows.</li>
 <li>Add a new variable that contains population in billions.</li>
 <li>By year, calculate the total population (in billions) across these three countries</li>
 <li>In <code>ggplot</code>, create a line plot showing life expectancy over time by country. Make the plot visually appealing!</li>
 </ol>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn9"><p>From the <code>gapminder</code> package</p></li></ol></aside></section>
 
 
 

@@ -42,7 +42,7 @@ library(gapminder)
 
 [CS&SS 508 • Lecture 4]{.custom-subtitle}
 
-[{{< var lecture.four >}}]{.custom-subtitle2}
+[{{< var lectures.four >}}]{.custom-subtitle2}
 
 [Victoria Sass]{.custom-subtitle3}
 
@@ -770,7 +770,7 @@ Let's find the flights that are most delayed upon arrival at each destination.
 flights |> 
   group_by(dest) |> 
   slice_max(arr_delay, n = 1) |> # <5>
-  relocate(dest) 
+  relocate(dest, arr_delay) 
 ```
 
 5. You can vary `n` to select more than one row, or instead of `n =`, you can use `prop = 0.1` to select (e.g.) 10% of the rows in each group.
@@ -879,7 +879,7 @@ weather
 ### `flights`
 
 ::: {.smaller-font}
-`flights` actually contains **foreign keys** that correspond to the primary keys of the other datasets.
+`flights` has three variables (`time_hour`, `flight`, `carrier`) that uniquely identify an observation. More significantly, however, it contains **foreign keys** that correspond to the primary keys of the other datasets.
 :::
 
 ```{r}
@@ -1309,9 +1309,9 @@ Rolling joins are a special type of inequality join where instead of getting eve
 
 ## Manipulating Data
 
-1. Create a new object that contains `gapminder` (1) observations from China, India, and United States after 1980, and (2) variables corresponding to country, year, population, and life expectancy. 
+1. Create a new object that contains `gapminder`^[From the `gapminder` package] (1) observations from China, India, and United States after 1980, and (2) variables corresponding to country, year, population, and life expectancy. 
 1. How many rows and columns does the object contain?
-1. Save over your object after sorting the rows by year (ascending order) and population (descending order). Print the first 6 rows.
+1. Sort the rows by year (ascending order) and population (descending order) and save that over the object created for answer 1. Print the first 6 rows.
 1. Add a new variable that contains population in billions.
 1. By year, calculate the total population (in billions) across these three countries
 1. In `ggplot`, create a line plot showing life expectancy over time by country. Make the plot visually appealing!
