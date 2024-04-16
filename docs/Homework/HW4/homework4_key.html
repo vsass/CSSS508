@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -79,7 +79,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -88,6 +94,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -101,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
             <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -110,34 +117,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="http://vsass.github.io" rel="" target="">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="http://vsass.github.io"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html" rel="" target="">
- <span class="menu-text">CS&amp;SS 508</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">CS&amp;SS 508</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../syllabus.html" rel="" target="">
- <span class="menu-text">Syllabus</span></a>
+    <a class="nav-link" href="../../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../Lectures/lectures.html" rel="" target="">
- <span class="menu-text">Lectures</span></a>
+    <a class="nav-link" href="../../Lectures/lectures.html"> 
+<span class="menu-text">Lectures</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../Homework/homework.html" rel="" target="">
- <span class="menu-text">Homework</span></a>
+    <a class="nav-link" href="../../Homework/homework.html"> 
+<span class="menu-text">Homework</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools ms-auto">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
 </a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -164,10 +171,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
 
+
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
@@ -180,7 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 class="anchored" data-anchor-id="answer-1">Answer 1</h4>
 <p>Choose an airport outside New York, and count how many flights went to that airport from NYC in 2013. How many of those flights started at JFK, LGA, and EWR respectively?</p>
 <div class="cell">
-<details open="">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>sd_flights <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">"SAN"</span>) <span class="sc">|&gt;</span> </span>
@@ -191,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="4" data-code-cell="annotated-cell-2">An alternative to this <code>summarize</code> call would be to call <code>count(origin)</code>.</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="4" data-code-annotation="1">An alternative to this <code>summarize</code> call would be to call <code>count(origin)</code>.</span>
 </dd>
 </dl>
 </div>
@@ -202,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 class="anchored" data-anchor-id="answer-2">Answer 2</h4>
 <p>The variable <code>arr_delay</code> contains arrival delays in minutes (negative values represent early arrivals). Make a <code>ggplot</code> histogram displaying arrival delays for 2013 flights from NYC to the airport you chose.</p>
 <div class="cell" data-layout-align="center">
-<details open="">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">"SAN"</span>) <span class="sc">|&gt;</span> </span>
@@ -219,18 +228,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-lines="5" data-code-cell="annotated-cell-3"><code>geom_vline</code> adds a vertical line to your plot which can be useful for demarcating comparison or threshold values.</span>
+<span data-code-cell="annotated-cell-3" data-code-lines="5" data-code-annotation="2"><code>geom_vline</code> adds a vertical line to your plot which can be useful for demarcating comparison or threshold values.</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-lines="10" data-code-cell="annotated-cell-3">Changing the background color of my plot to match the website’s color using <code>fill</code> and removing the border of the plot using <code>color</code>.</span>
+<span data-code-cell="annotated-cell-3" data-code-lines="10" data-code-annotation="3">Changing the background color of my plot to match the website’s color using <code>fill</code> and removing the border of the plot using <code>color</code>.</span>
 </dd>
 </dl>
 </div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="homework4_key_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="homework4_key_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -238,13 +247,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="answer-3" class="level4">
 <h4 class="anchored" data-anchor-id="answer-3">Answer 3</h4>
-<p>Use <code>left_join</code> to add weather data at departure to the subsetted data<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Calculate the mean temperature by <code>month</code> at departure (<code>temp</code>) across all flights.</p>
+<p>Use <code>left_join</code> to add weather data at departure to the subsetted data. If <code>time_hour</code> didn’t exist in one or both of these datasets, which variables would you need to merge on? Calculate the mean temperature by <code>month</code> at departure (<code>temp</code>) across all flights.</p>
 <div class="cell">
-<details open="">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">"SAN"</span>) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(weather, <span class="at">by =</span> <span class="fu">join_by</span>(origin, year, month, day, hour)) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(weather) <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="4">4</button><span id="annotated-cell-4-4" class="code-annotation-target"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_temp =</span> <span class="fu">mean</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">2</span>) <span class="sc">|&gt;</span> <span class="fu">number</span>(<span class="at">suffix =</span> <span class="st">"°F"</span>),</span>
 <span id="annotated-cell-4-5"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> month) <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-4-6"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(month) <span class="sc">|&gt;</span> </span>
@@ -258,33 +267,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-lines="4" data-code-cell="annotated-cell-4">When creating the mean temperature I also chose to round to two decimal places with <code>round()</code> and add the suffix <code>°F</code> with the <code>number</code> function from the <code>scales</code> package. This level of detail is not necessary for this assignment.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="4" data-code-annotation="4">When creating the mean temperature I also chose to round to two decimal places with <code>round()</code> and add the suffix <code>°F</code> with the <code>number</code> function from the <code>scales</code> package. This level of detail is not necessary for this assignment.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="5" data-code-lines="7,8,9,10,11" data-code-cell="annotated-cell-4">Making the table a bit nicer looking (again, not necessary here)</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="7,8,9,10,11" data-code-annotation="5">Making the table a bit nicer looking (again, not necessary here)</span>
 </dd>
 </dl>
 </div>
 <div class="cell-output-display">
-
-<div id="yczcvtupvm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yczcvtupvm table {
+<div>
+<div id="pfnmxnhnbr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pfnmxnhnbr table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#yczcvtupvm thead, #yczcvtupvm tbody, #yczcvtupvm tfoot, #yczcvtupvm tr, #yczcvtupvm td, #yczcvtupvm th {
+#pfnmxnhnbr thead, #pfnmxnhnbr tbody, #pfnmxnhnbr tfoot, #pfnmxnhnbr tr, #pfnmxnhnbr td, #pfnmxnhnbr th {
   border-style: none;
 }
 
-#yczcvtupvm p {
+#pfnmxnhnbr p {
   margin: 0;
   padding: 0;
 }
 
-#yczcvtupvm .gt_table {
+#pfnmxnhnbr .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -310,12 +319,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#yczcvtupvm .gt_caption {
+#pfnmxnhnbr .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#yczcvtupvm .gt_title {
+#pfnmxnhnbr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -327,7 +336,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#yczcvtupvm .gt_subtitle {
+#pfnmxnhnbr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -339,7 +348,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#yczcvtupvm .gt_heading {
+#pfnmxnhnbr .gt_heading {
   background-color: #F6F7F9;
   text-align: center;
   border-bottom-color: #F6F7F9;
@@ -351,13 +360,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#yczcvtupvm .gt_bottom_border {
+#pfnmxnhnbr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yczcvtupvm .gt_col_headings {
+#pfnmxnhnbr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -372,7 +381,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#yczcvtupvm .gt_col_heading {
+#pfnmxnhnbr .gt_col_heading {
   color: #333333;
   background-color: #F6F7F9;
   font-size: 100%;
@@ -392,7 +401,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#yczcvtupvm .gt_column_spanner_outer {
+#pfnmxnhnbr .gt_column_spanner_outer {
   color: #333333;
   background-color: #F6F7F9;
   font-size: 100%;
@@ -404,15 +413,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#yczcvtupvm .gt_column_spanner_outer:first-child {
+#pfnmxnhnbr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yczcvtupvm .gt_column_spanner_outer:last-child {
+#pfnmxnhnbr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yczcvtupvm .gt_column_spanner {
+#pfnmxnhnbr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -424,11 +433,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#yczcvtupvm .gt_spanner_row {
+#pfnmxnhnbr .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#yczcvtupvm .gt_group_heading {
+#pfnmxnhnbr .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -454,7 +463,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#yczcvtupvm .gt_empty_group_heading {
+#pfnmxnhnbr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #F6F7F9;
@@ -469,15 +478,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#yczcvtupvm .gt_from_md > :first-child {
+#pfnmxnhnbr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yczcvtupvm .gt_from_md > :last-child {
+#pfnmxnhnbr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yczcvtupvm .gt_row {
+#pfnmxnhnbr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -496,7 +505,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#yczcvtupvm .gt_stub {
+#pfnmxnhnbr .gt_stub {
   color: #333333;
   background-color: #F6F7F9;
   font-size: 100%;
@@ -509,7 +518,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#yczcvtupvm .gt_stub_row_group {
+#pfnmxnhnbr .gt_stub_row_group {
   color: #333333;
   background-color: #F6F7F9;
   font-size: 100%;
@@ -523,15 +532,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#yczcvtupvm .gt_row_group_first td {
+#pfnmxnhnbr .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#yczcvtupvm .gt_row_group_first th {
+#pfnmxnhnbr .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#yczcvtupvm .gt_summary_row {
+#pfnmxnhnbr .gt_summary_row {
   color: #333333;
   background-color: #F6F7F9;
   text-transform: inherit;
@@ -541,16 +550,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#yczcvtupvm .gt_first_summary_row {
+#pfnmxnhnbr .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#yczcvtupvm .gt_first_summary_row.thick {
+#pfnmxnhnbr .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#yczcvtupvm .gt_last_summary_row {
+#pfnmxnhnbr .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -560,7 +569,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#yczcvtupvm .gt_grand_summary_row {
+#pfnmxnhnbr .gt_grand_summary_row {
   color: #333333;
   background-color: #F6F7F9;
   text-transform: inherit;
@@ -570,7 +579,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#yczcvtupvm .gt_first_grand_summary_row {
+#pfnmxnhnbr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -580,7 +589,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#yczcvtupvm .gt_last_grand_summary_row_top {
+#pfnmxnhnbr .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -590,11 +599,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#yczcvtupvm .gt_striped {
+#pfnmxnhnbr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yczcvtupvm .gt_table_body {
+#pfnmxnhnbr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -603,7 +612,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#yczcvtupvm .gt_footnotes {
+#pfnmxnhnbr .gt_footnotes {
   color: #333333;
   background-color: #F6F7F9;
   border-bottom-style: none;
@@ -617,7 +626,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#yczcvtupvm .gt_footnote {
+#pfnmxnhnbr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -626,7 +635,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#yczcvtupvm .gt_sourcenotes {
+#pfnmxnhnbr .gt_sourcenotes {
   color: #333333;
   background-color: #F6F7F9;
   border-bottom-style: none;
@@ -640,7 +649,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#yczcvtupvm .gt_sourcenote {
+#pfnmxnhnbr .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -648,115 +657,140 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#yczcvtupvm .gt_left {
+#pfnmxnhnbr .gt_left {
   text-align: left;
 }
 
-#yczcvtupvm .gt_center {
+#pfnmxnhnbr .gt_center {
   text-align: center;
 }
 
-#yczcvtupvm .gt_right {
+#pfnmxnhnbr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yczcvtupvm .gt_font_normal {
+#pfnmxnhnbr .gt_font_normal {
   font-weight: normal;
 }
 
-#yczcvtupvm .gt_font_bold {
+#pfnmxnhnbr .gt_font_bold {
   font-weight: bold;
 }
 
-#yczcvtupvm .gt_font_italic {
+#pfnmxnhnbr .gt_font_italic {
   font-style: italic;
 }
 
-#yczcvtupvm .gt_super {
+#pfnmxnhnbr .gt_super {
   font-size: 65%;
 }
 
-#yczcvtupvm .gt_footnote_marks {
+#pfnmxnhnbr .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#yczcvtupvm .gt_asterisk {
+#pfnmxnhnbr .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#yczcvtupvm .gt_indent_1 {
+#pfnmxnhnbr .gt_indent_1 {
   text-indent: 5px;
 }
 
-#yczcvtupvm .gt_indent_2 {
+#pfnmxnhnbr .gt_indent_2 {
   text-indent: 10px;
 }
 
-#yczcvtupvm .gt_indent_3 {
+#pfnmxnhnbr .gt_indent_3 {
   text-indent: 15px;
 }
 
-#yczcvtupvm .gt_indent_4 {
+#pfnmxnhnbr .gt_indent_4 {
   text-indent: 20px;
 }
 
-#yczcvtupvm .gt_indent_5 {
+#pfnmxnhnbr .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Month">Month</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Average Temperature">Average Temperature</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td headers="month" class="gt_row gt_center">1</td>
-<td headers="avg_temp" class="gt_row gt_center">37°F</td></tr>
-    <tr><td headers="month" class="gt_row gt_center">2</td>
-<td headers="avg_temp" class="gt_row gt_center">36°F</td></tr>
-    <tr><td headers="month" class="gt_row gt_center">3</td>
-<td headers="avg_temp" class="gt_row gt_center">41°F</td></tr>
-    <tr><td headers="month" class="gt_row gt_center">4</td>
-<td headers="avg_temp" class="gt_row gt_center">54°F</td></tr>
-    <tr><td headers="month" class="gt_row gt_center">5</td>
-<td headers="avg_temp" class="gt_row gt_center">64°F</td></tr>
-    <tr><td headers="month" class="gt_row gt_center">6</td>
-<td headers="avg_temp" class="gt_row gt_center">74°F</td></tr>
-    <tr><td headers="month" class="gt_row gt_center">7</td>
-<td headers="avg_temp" class="gt_row gt_center">82°F</td></tr>
-    <tr><td headers="month" class="gt_row gt_center">8</td>
-<td headers="avg_temp" class="gt_row gt_center">77°F</td></tr>
-    <tr><td headers="month" class="gt_row gt_center">9</td>
-<td headers="avg_temp" class="gt_row gt_center">70°F</td></tr>
-    <tr><td headers="month" class="gt_row gt_center">10</td>
-<td headers="avg_temp" class="gt_row gt_center">61°F</td></tr>
-    <tr><td headers="month" class="gt_row gt_center">11</td>
-<td headers="avg_temp" class="gt_row gt_center">46°F</td></tr>
-    <tr><td headers="month" class="gt_row gt_center">12</td>
-<td headers="avg_temp" class="gt_row gt_center">40°F</td></tr>
-  </tbody>
-  
-  
+
+<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_col_headings">
+<th id="Month" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Month</th>
+<th id="Average Temperature" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Average Temperature</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_center" headers="month">1</td>
+<td class="gt_row gt_center" headers="avg_temp">37°F</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="month">2</td>
+<td class="gt_row gt_center" headers="avg_temp">36°F</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="month">3</td>
+<td class="gt_row gt_center" headers="avg_temp">41°F</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="month">4</td>
+<td class="gt_row gt_center" headers="avg_temp">54°F</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="month">5</td>
+<td class="gt_row gt_center" headers="avg_temp">64°F</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="month">6</td>
+<td class="gt_row gt_center" headers="avg_temp">74°F</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="month">7</td>
+<td class="gt_row gt_center" headers="avg_temp">82°F</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="month">8</td>
+<td class="gt_row gt_center" headers="avg_temp">77°F</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="month">9</td>
+<td class="gt_row gt_center" headers="avg_temp">70°F</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="month">10</td>
+<td class="gt_row gt_center" headers="avg_temp">61°F</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="month">11</td>
+<td class="gt_row gt_center" headers="avg_temp">46°F</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="month">12</td>
+<td class="gt_row gt_center" headers="avg_temp">40°F</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
+</div>
+<p>If <code>time_hour</code> didn’t exist in one of both of these datasets you would have to join on <code>origin</code>, <code>year</code>, <code>month</code>, <code>day</code>, and <code>hour.</code></p>
 </section>
 <section id="answer-4" class="level4">
 <h4 class="anchored" data-anchor-id="answer-4">Answer 4</h4>
-<p>Investigate if there is a relationship between departure delay (<code>dep_delay</code>) and precipitation (<code>precip</code>) in the full dataset. Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation.</p>
+<p>Investigate if there is a relationship between departure delay (<code>dep_delay</code>) and precipitation (<code>precip</code>) in the full dataset. Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <div class="cell" data-layout-align="center">
-<details open="">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(weather, <span class="at">by =</span> <span class="fu">join_by</span>(origin, year, month, day, hour)) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(weather) <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> precip, <span class="at">y =</span> dep_delay)) <span class="sc">+</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="6">6</button><span id="annotated-cell-5-4" class="code-annotation-target"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="7">7</button><span id="annotated-cell-5-5" class="code-annotation-target"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
@@ -770,28 +804,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-5" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-annotation="6" data-code-lines="4" data-code-cell="annotated-cell-5">It can be helpful to make all points transparent if there is extreme over-plotting like in this plot. It allows you see more clearly see where there is over-plotting.</span>
+<span data-code-cell="annotated-cell-5" data-code-lines="4" data-code-annotation="6">It can be helpful to make all points transparent if there is extreme over-plotting like in this plot. It allows you see more clearly see where there is over-plotting.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-annotation="7" data-code-lines="5" data-code-cell="annotated-cell-5">Adding a regression line allows for better visualization of the relationship between precipitation and departure delays.</span>
+<span data-code-cell="annotated-cell-5" data-code-lines="5" data-code-annotation="7">Adding a regression line allows for better visualization of the relationship between precipitation and departure delays.</span>
 </dd>
 </dl>
 </div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="homework4_key_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="homework4_key_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>It looks like there is a slightly positive relationship between precipitation and the length of a departure delay.</p>
 <div class="cell" data-layout-align="center">
-<details open="">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(weather, <span class="at">by =</span> <span class="fu">join_by</span>(origin, year, month, day, hour)) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(weather) <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="8">8</button><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> precip, <span class="at">y =</span> dep_delay, <span class="at">color =</span> origin)) <span class="sc">+</span></span>
 <span id="annotated-cell-6-4"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
 <span id="annotated-cell-6-5"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">fill =</span> <span class="st">"#f6f7f9"</span>) <span class="sc">+</span> </span>
@@ -805,14 +839,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-6" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-annotation="8" data-code-lines="3" data-code-cell="annotated-cell-6">Just added the mapping aesthetic by <code>color</code> to visualize this by origin airport.</span>
+<span data-code-cell="annotated-cell-6" data-code-lines="3" data-code-annotation="8">Just added the mapping aesthetic by <code>color</code> to visualize this by origin airport.</span>
 </dd>
 </dl>
 </div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="homework4_key_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="homework4_key_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -827,7 +861,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <ol>
 <li id="fn1"><p>To add various punctuation to inline numeric values try the <code>number</code> function from the <code>scales</code> package.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Hint: What variables could you match on that equal <code>time_hour</code>?<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Hint: Read about <a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html"><code>geom_smooth()</code></a> and consider how you might use it with the argument <code>method = "lm"</code> to plot a relationship between these two variables.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -909,10 +943,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -922,8 +978,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -935,7 +1000,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -979,6 +1167,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1004,8 +1193,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-      // Handle positioning of the toggle
-      window.addEventListener(
+        // Handle positioning of the toggle
+    window.addEventListener(
       "resize",
       throttle(() => {
         elRect = undefined;
@@ -1013,23 +1202,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
           selectCodeLines(selectedAnnoteEl);
         }
       }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
               fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
       for (let i=0; i<annoteTargets.length; i++) {
         const annoteTarget = annoteTargets[i];
@@ -1074,7 +1263,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
               options: {
                 flipVariations: false, // true by default
                 allowedAutoPlacements: ['right'],
-                fallbackPlacements: ['right', 'top', 'top-start', 'top-end'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
               },
             },
             {
@@ -1126,27 +1315,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-          // target, if specified
-          link.setAttribute("target", "_blank");
-      }
-    }
 });
 </script>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Created with <a href="https://quarto.org/">Quarto</a> • <a href="https://creativecommons.org/licenses/by-nc/4.0/">License</a></div>   
-    <div class="nav-footer-center">Copyright © 2023 Victoria Sass <br> Course content adapted from <a href="https://clanfear.github.io/CSSS508/">Chuck Lanfear</a> and <a href="https://pearce790.github.io/CSSS508/index.html">Michael Pearce</a></div>
+    <div class="nav-footer-left">
+<p>Created with <a href="https://quarto.org/">Quarto</a> • <a href="https://creativecommons.org/licenses/by-nc/4.0/">License</a></p>
+</div>   
+    <div class="nav-footer-center">
+<p>Copyright © 2023 Victoria Sass <br> Course content adapted from <a href="https://clanfear.github.io/CSSS508/">Chuck Lanfear</a> and <a href="https://pearce790.github.io/CSSS508/index.html">Michael Pearce</a></p>
+</div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
@@ -1177,6 +1356,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
+
 
 
 

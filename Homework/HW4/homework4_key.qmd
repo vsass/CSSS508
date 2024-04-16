@@ -55,12 +55,12 @@ flights |>
 
 #### Answer 3
 
-Use `left_join` to add weather data at departure to the subsetted data^[Hint: What variables could you match on that equal `time_hour`?]. Calculate the mean temperature by `month` at departure (`temp`) across all flights.
+Use `left_join` to add weather data at departure to the subsetted data. If `time_hour` didn't exist in one or both of these datasets, which variables would you need to merge on? Calculate the mean temperature by `month` at departure (`temp`) across all flights.
 
 ```{r}
 flights |> 
   filter(dest == "SAN") |> 
-  left_join(weather, by = join_by(origin, year, month, day, hour)) |> 
+  left_join(weather) |> 
   summarize(avg_temp = mean(temp, na.rm = TRUE) |> round(2) |> number(suffix = "°F"), # <4>
             .by = month) |> 
   arrange(month) |> 
@@ -73,14 +73,16 @@ flights |>
 4. When creating the mean temperature I also chose to round to two decimal places with `round()` and add the suffix `°F` with the `number` function from the `scales` package. This level of detail is not necessary for this assignment. 
 5. Making the table a bit nicer looking (again, not necessary here)
 
+If `time_hour` didn't exist in one of both of these datasets you would have to join on `origin`, `year`, `month`, `day`, and `hour.` 
+
 #### Answer 4
 
-Investigate if there is a relationship between departure delay (`dep_delay`) and precipitation (`precip`) in the full dataset. Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation.
+Investigate if there is a relationship between departure delay (`dep_delay`) and precipitation (`precip`) in the full dataset. Is the relationship different between JFK, LGA, and EWR? I suggest answering this question by making a plot and writing down a one-sentence interpretation^[Hint: Read about [`geom_smooth()`](https://ggplot2.tidyverse.org/reference/geom_smooth.html) and consider how you might use it with the argument `method = "lm"` to plot a relationship between these two variables.].
 
 ```{r}
 #| fig-align: center
 flights |> 
-  left_join(weather, by = join_by(origin, year, month, day, hour)) |> 
+  left_join(weather) |> 
   ggplot(aes(x = precip, y = dep_delay)) + 
   geom_jitter(alpha = 0.1) + # <6>
   geom_smooth(method = "lm") + # <7> 
@@ -98,7 +100,7 @@ It looks like there is a slightly positive relationship between precipitation an
 ```{r}
 #| fig-align: center
 flights |> 
-  left_join(weather, by = join_by(origin, year, month, day, hour)) |> 
+  left_join(weather) |> 
   ggplot(aes(x = precip, y = dep_delay, color = origin)) + # <8> 
   geom_jitter(alpha = 0.1) + 
   geom_smooth(method = "lm", fill = "#f6f7f9") + 
