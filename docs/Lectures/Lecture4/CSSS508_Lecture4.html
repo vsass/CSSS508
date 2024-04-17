@@ -2491,12 +2491,233 @@
 <li>In <code>ggplot</code>, create a line plot showing life expectancy over time by country. Make the plot visually appealing!</li>
 </ol>
 <aside><ol class="aside-footnotes"><li id="fn9"><p>From the <code>gapminder</code> package</p></li></ol></aside></section>
-
-
-
-
-
+<section id="answers" class="slide level2">
+<h2>Answers</h2>
+<p>Question 1:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a></a>subset_gapminder <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb75-2"><a></a>  <span class="fu">filter</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"China"</span>,<span class="st">"India"</span>,<span class="st">"United States"</span>),  year <span class="sc">&gt;</span> <span class="dv">1980</span> ) <span class="sc">|&gt;</span></span>
+<span id="cb75-3"><a></a>  <span class="fu">select</span>(country, year, pop, lifeExp)</span>
+<span id="cb75-4"><a></a>subset_gapminder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 4
+   country        year        pop lifeExp
+   &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;
+ 1 China          1982 1000281000    65.5
+ 2 China          1987 1084035000    67.3
+ 3 China          1992 1164970000    68.7
+ 4 China          1997 1230075000    70.4
+ 5 China          2002 1280400000    72.0
+ 6 China          2007 1318683096    73.0
+ 7 India          1982  708000000    56.6
+ 8 India          1987  788000000    58.6
+ 9 India          1992  872000000    60.2
+10 India          1997  959000000    61.8
+11 India          2002 1034172547    62.9
+12 India          2007 1110396331    64.7
+13 United States  1982  232187835    74.6
+14 United States  1987  242803533    75.0
+15 United States  1992  256894189    76.1
+16 United States  1997  272911760    76.8
+17 United States  2002  287675526    77.3
+18 United States  2007  301139947    78.2</code></pre>
+</div>
+</div>
 </section>
+<section id="answers-1" class="slide level2">
+<h2>Answers</h2>
+<p>Question 2:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a></a><span class="co"># Option 1</span></span>
+<span id="cb77-2"><a></a><span class="fu">c</span>(<span class="fu">nrow</span>(subset_gapminder), <span class="fu">ncol</span>(subset_gapminder))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 18  4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a></a><span class="co"># Option 2</span></span>
+<span id="cb79-2"><a></a><span class="fu">glimpse</span>(subset_gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 18
+Columns: 4
+$ country &lt;fct&gt; "China", "China", "China", "China", "China", "China", "India",…
+$ year    &lt;int&gt; 1982, 1987, 1992, 1997, 2002, 2007, 1982, 1987, 1992, 1997, 20…
+$ pop     &lt;int&gt; 1000281000, 1084035000, 1164970000, 1230075000, 1280400000, 13…
+$ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58.553…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a></a><span class="co"># Option 3</span></span>
+<span id="cb81-2"><a></a><span class="fu">dim</span>(subset_gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 18  4</code></pre>
+</div>
+</div>
+</section>
+<section id="answers-2" class="slide level2">
+<h2>Answers</h2>
+<p>Question 3:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a></a>subset_gapminder <span class="ot">&lt;-</span> subset_gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb83-2"><a></a>  <span class="fu">arrange</span>(year, <span class="fu">desc</span>(pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a></a>subset_gapminder <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country        year        pop lifeExp
+  &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;
+1 China          1982 1000281000    65.5
+2 India          1982  708000000    56.6
+3 United States  1982  232187835    74.6
+4 China          1987 1084035000    67.3
+5 India          1987  788000000    58.6
+6 United States  1987  242803533    75.0</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a></a><span class="fu">print</span>(subset_gapminder[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country        year        pop lifeExp
+  &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;
+1 China          1982 1000281000    65.5
+2 India          1982  708000000    56.6
+3 United States  1982  232187835    74.6
+4 China          1987 1084035000    67.3
+5 India          1987  788000000    58.6
+6 United States  1987  242803533    75.0</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="answers-3" class="slide level2">
+<h2>Answers</h2>
+<p>Question 4:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a></a>subset_gapminder <span class="ot">&lt;-</span> subset_gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb88-2"><a></a>  <span class="fu">mutate</span>(<span class="at">pop_billions =</span> pop<span class="sc">/</span><span class="dv">1000000000</span>)</span>
+<span id="cb88-3"><a></a></span>
+<span id="cb88-4"><a></a>subset_gapminder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 5
+   country        year        pop lifeExp pop_billions
+   &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;        &lt;dbl&gt;
+ 1 China          1982 1000281000    65.5        1.00 
+ 2 India          1982  708000000    56.6        0.708
+ 3 United States  1982  232187835    74.6        0.232
+ 4 China          1987 1084035000    67.3        1.08 
+ 5 India          1987  788000000    58.6        0.788
+ 6 United States  1987  242803533    75.0        0.243
+ 7 China          1992 1164970000    68.7        1.16 
+ 8 India          1992  872000000    60.2        0.872
+ 9 United States  1992  256894189    76.1        0.257
+10 China          1997 1230075000    70.4        1.23 
+11 India          1997  959000000    61.8        0.959
+12 United States  1997  272911760    76.8        0.273
+13 China          2002 1280400000    72.0        1.28 
+14 India          2002 1034172547    62.9        1.03 
+15 United States  2002  287675526    77.3        0.288
+16 China          2007 1318683096    73.0        1.32 
+17 India          2007 1110396331    64.7        1.11 
+18 United States  2007  301139947    78.2        0.301</code></pre>
+</div>
+</div>
+</section>
+<section id="answers-4" class="slide level2">
+<h2>Answers</h2>
+<p>Question 5:</p>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Classic syntax</a></li><li><a href="#tabset-2-2">New syntax (dplyr 1.1.0)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a></a>subset_gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb90-2"><a></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span> </span>
+<span id="cb90-3"><a></a>  <span class="fu">summarize</span>(<span class="at">TotalPop_Billions =</span> <span class="fu">sum</span>(pop_billions))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+   year TotalPop_Billions
+  &lt;int&gt;             &lt;dbl&gt;
+1  1982              1.94
+2  1987              2.11
+3  1992              2.29
+4  1997              2.46
+5  2002              2.60
+6  2007              2.73</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-123"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-123-1"><a href="#annotated-cell-123-1"></a>subset_gapminder <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-123-2"><a href="#annotated-cell-123-2"></a>  <span class="fu">summarize</span>(<span class="at">TotalPop_Billions =</span> <span class="fu">sum</span>(pop_billions), </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-123" data-target-annotation="1">1</button><span id="annotated-cell-123-3" class="code-annotation-target"><a href="#annotated-cell-123-3"></a>            <span class="at">.by =</span> year)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-123" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-123" data-code-lines="3" data-code-annotation="1">This new syntax allows for per-operation grouping which means it is only active within a single verb at a time (as opposed to being applied to the entire tibble until <code>ungroup()</code> is called). Learn more about this new feature <a href="https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/">here</a>)</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+   year TotalPop_Billions
+  &lt;int&gt;             &lt;dbl&gt;
+1  1982              1.94
+2  1987              2.11
+3  1992              2.29
+4  1997              2.46
+5  2002              2.60
+6  2007              2.73</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="answers-5" class="slide level2">
+<h2>Answers</h2>
+<p>Question 6:</p>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Code</a></li><li><a href="#tabset-3-2">Plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a></a><span class="fu">library</span>(ggplot2) </span>
+<span id="cb93-2"><a></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb93-3"><a></a><span class="fu">library</span>(geomtextpath)</span>
+<span id="cb93-4"><a></a><span class="fu">ggplot</span>(subset_gapminder, <span class="fu">aes</span>(year, lifeExp, <span class="at">color =</span> country)) <span class="sc">+</span></span>
+<span id="cb93-5"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb93-6"><a></a>  <span class="fu">geom_textpath</span>(<span class="fu">aes</span>(<span class="at">label =</span> country), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb93-7"><a></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> </span>
+<span id="cb93-8"><a></a>  <span class="fu">ylab</span>(<span class="st">"Life Expectancy (years)"</span>) <span class="sc">+</span></span>
+<span id="cb93-9"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"Life Expectancy (1982-2007)"</span>,<span class="st">"China, India, and United States"</span>) <span class="sc">+</span></span>
+<span id="cb93-10"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1982</span>, <span class="dv">1987</span>, <span class="dv">1992</span>, <span class="dv">1997</span>, <span class="dv">2002</span>, <span class="dv">2007</span>), <span class="at">minor_breaks =</span> <span class="fu">c</span>()) <span class="sc">+</span></span>
+<span id="cb93-11"><a></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">80</span>)) <span class="sc">+</span> </span>
+<span id="cb93-12"><a></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">"Country"</span>) <span class="sc">+</span> </span>
+<span id="cb93-13"><a></a>  <span class="fu">theme_tufte</span>(<span class="at">base_size =</span> <span class="dv">20</span>) <span class="sc">+</span> </span>
+<span id="cb93-14"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-3-2">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="CSSS508_Lecture4_files/figure-revealjs/unnamed-chunk-65-1.svg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></section>
 <section>
 <section id="homework" class="title-slide slide level1 section-title center" data-background-color="#1e4655">
 <h1>Homework</h1>
