@@ -42,7 +42,7 @@ knitr::opts_chunk$set(comment = ">")
 
 [CS&SS 508 • Lecture 5]{.custom-subtitle}
 
-[{{< var lecture.five >}}]{.custom-subtitle2}
+[{{< var lectures.five >}}]{.custom-subtitle2}
 
 [Victoria Sass]{.custom-subtitle3}
 
@@ -254,7 +254,7 @@ billboard_renamed <- read_csv(file = "data/billboard_top100.csv",
                                col_names = c("year", "artist", "track", "time", "date_entered", 
                                              paste("wk", 1:76, sep = "_"))) # <1>
 
-billboard_renamed |>  names() |> head(10) # <2>
+billboard_renamed |> names() |> head(10) # <2>
 ```
 
 1. `paste` "pastes" together the first argument to the second argument (separated by whatever is specified in the `sep` argument) as character strings. Since the first argument here is a singular value, it is repeated for the entire length of the vector in the second argument. The first several values of `paste("wk", 1:76, sep = "_")` are: `r head(paste("wk", 1:76, sep = "_"))`
@@ -562,16 +562,14 @@ bb_types
 
 . . . 
 
-<br>
-
 ```{r}
 # re-read in data with column types specified
 billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv", 
                                col_types = bb_types) # <2> 
-billboard_2000_raw |> head(1)
+billboard_2000_raw |> select(wk66:wk76) # <3>
 ```
-
 2. This string now specifies the data type for each column of our data frame. Visit [this reference page](https://readr.tidyverse.org/reference/cols.html) to see all available column types and their short codes. 
+3. Checking the previously incorrectly parsed variables
 
 ```{r}
 #| echo: false
@@ -612,7 +610,7 @@ In summary, the `col_types` argument gives you greater control over how your dat
 
 ## Reading in Multiple Files 
 
-If you data are split across multiple files you can read them in all at once by specifying the `id` argument. 
+If your data are split across multiple files you can read them in all at once by specifying the `id` argument. 
 
 ```{r}
 #| output-location: fragment
@@ -761,6 +759,15 @@ To save `R` objects and all associated metadata you have two options:
 
 :::
 
+# Lab{.section-title background-color="#99a486"}
+
+## Importing & Tidying Data
+
+::: {.incremental}
+- Go to the [Lecture 5 Homepage](https://vsass.github.io/CSSS508/Lectures/Lecture5/CSSS508_Lecture5_index.html) and click on the link `Religion & Income` under the Data section. 
+- Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
+- Read in your data using the appropriate function from `readr`. 
+:::
 
 # Tidying and Reshaping Data {.section-title background-color="#99a486"}
 
@@ -1190,6 +1197,17 @@ wide_stats
 If there are multiple rows in the input that correspond to one cell in the output you'll get a list-column. This means that you 1) need to fix something in your code/data because it shouldn't be nested in this way or 2) need to use `unnest_wider()` or `unnest_longer()` in order to access this column of data. More on this [here](https://r4ds.hadley.nz/rectangling.html#unnesting). 
 :::
 
+# Lab{.section-title background-color="#99a486"}
+
+## Importing & Tidying Data
+
+- [Go to the [Lecture 5 Homepage](https://vsass.github.io/CSSS508/Lectures/Lecture5/CSSS508_Lecture5_index.html) and click on the link `Religion & Income` under the Data section.]{.semi-transparent}
+- [Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.]{.semi-transparent}
+- [Read in your data using the appropriate function from `readr`.]{.semi-transparent}
+- Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
+
+# Break!{.section-title background-color="#1e4655"}
+
 ## Data types in `R`
 
 Going back to our list of data types in `R`:  
@@ -1411,10 +1429,9 @@ There are four related functions to change the level ordering in `forcats`.
 #| fig-align: center
 #| code-fold: show
 relig_summary <- gss_cat |>
-  group_by(relig) |>
   summarize(
     tvhours = mean(tvhours, na.rm = TRUE),
-    n = n()
+    .by = relig
   )
 
 ggplot(relig_summary, aes(x = tvhours, y = relig)) + 
@@ -1446,10 +1463,9 @@ relig_summary |>
 #| fig-align: center
 #| code-fold: show
 rincome_summary <- gss_cat |>
-  group_by(rincome) |>
   summarize(
     age = mean(age, na.rm = TRUE),
-    n = n()
+    .by = rincome
   )
 
 ggplot(rincome_summary, aes(x = age, y = rincome)) + 
@@ -1479,9 +1495,9 @@ ggplot(rincome_summary, aes(x = age, y = fct_relevel(rincome, "Not applicable"))
 by_age <- gss_cat |>
   filter(!is.na(age)) |> 
   count(age, marital) |>
-  group_by(age) |>
   mutate(
-    prop = n / sum(n)
+    prop = n / sum(n), 
+    .by = age
   )
 
 ggplot(by_age, aes(x = age, y = prop, color = marital)) +
@@ -1512,7 +1528,6 @@ ggplot(by_age, aes(x = age, y = prop, color = fct_reorder2(marital, age, prop)))
 #| fig-align: center
 #| code-fold: show
 gss_cat |>
-  mutate(marital = marital) |> 
   ggplot(aes(x = marital)) + 
   geom_bar()
 ```
@@ -1653,6 +1668,16 @@ In practice there are only two ways in which ordered factors are different than 
 1) `scale_color_viridis()`/`scale_fill_viridis()` will be used automatically when mapping an ordered factored in `ggplot2` because it implies an ordered ranking
 2) If you use an ordered function in a linear model, it will use “polygonal contrasts”. You can learn more about what this means [here](https://debruine.github.io/faux/articles/contrasts.html).
 :::
+
+# Lab{.section-title background-color="#99a486"}
+
+## Importing & Tidying Data
+
+- [Go to the [Lecture 5 Homepage](https://vsass.github.io/CSSS508/Lectures/Lecture5/CSSS508_Lecture5_index.html) and click on the link `Religion & Income` under the Data section.]{.semi-transparent}
+- [Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.]{.semi-transparent}
+- [Read in your data using the appropriate function from `readr`.]{.semi-transparent}
+- [Pivot your data to make it tidy^[There should be 3 columns in your final dataset].]{.semi-transparent}
+- Turn two of the variables into factors^[Hint: Which two variables are categorical?].
 
 # Wrangling Date/<br>Date-Time Data {.section-title background-color="#99a486"}
 
@@ -2147,7 +2172,7 @@ x
 with_tz(x, tzone = "Australia/Lord_Howe") # <17> 
 ```
 
-17. The `+10:30` offset is the difference relative to `UTC` (functionally similar to Greenwich Mean Time) which is `2024-06-01 16:00:00 UTC` in this example.
+17. The `+1030` offset is the difference relative to `UTC` (functionally similar to Greenwich Mean Time) which is `2024-06-01 16:00:00 UTC` in this example.
 
 <br>
 
@@ -2186,34 +2211,25 @@ c(a, b, c)
 20. CDT = Central Daylight Time
 21. WAT = West Africa Time
 
-# Lab{.section-title background-color="#99a486"}
+# Lab{.section-title background-color="#99a486"} {visibility="hidden"} 
 
-## Importing & Tidying Data
+## Answers {visibility="hidden"} 
 
-Go to the [Lecture 5 Homepage](https://vsass.github.io/CSSS508/Lectures/Lecture5/CSSS508_Lecture5_index.html) and click on the link `Religion & Income` under the Data section. 
-
-1. Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
-2. Read in your data using the appropriate function from `readr`. 
-3. Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
-4. Turn two of the variables into factors^[Hint: Which two variables are categorical?].
-5. Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency^[You can determine this by summarizing the data or creating a visualization of the data.]?
-
-## Answers {visibility="hidden"}
-
-Question 1: Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
+Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
   
-## Answers {visibility="hidden"}
+. . . 
 
-Question 2: Read in your data using the appropriate function from `readr`. 
+Read in your data using the appropriate function from `readr`. 
 
 ```{r}
 religion_income <- read_csv(file = "data/religion-income.csv", 
-                            col_types = c("f", rep("i", 10)))
+                            col_types = c("f", rep("i", 10))) # <1>
 ```
+1. If you already know the data type for your variables you can explicitly read them in as such (i.e. in this case we'd want religion to be a factor since it is a categorical variable.)
 
-## Answers {auto-animate="true"} {visibility="hidden"}
+## Answers {auto-animate="true"} {visibility="hidden"} 
 
-Question 3: Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
+Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
 
 ```{r}
 #| output-location: fragment
@@ -2224,9 +2240,9 @@ religion_income_tidy <- religion_income |>
 religion_income_tidy
 ```
 
-## Answers {auto-animate="true"} {visibility="hidden"}
+## Answers {auto-animate="true"} {visibility="hidden"} 
 
-Question 4: Turn two of the variables into factors^[Hint: Which two variables are categorical?].
+Turn two of the variables into factors^[Hint: Which two variables are categorical?].
 
 ```{r}
 #| output-location: fragment
@@ -2240,7 +2256,26 @@ religion_income_tidy <- religion_income |>
                                          "$75-100k", "$100-150k", ">150k")))
 ```
 
-## Answers {visibility="hidden"}
+## Answers {auto-animate="true"} {visibility="hidden"} 
+
+Turn two of the variables into factors^[Hint: Which two variables are categorical?].
+
+```{r}
+#| eval: false
+#| code-line-numbers: "|9"
+religion_income_tidy <- religion_income |> 
+  pivot_longer(cols = !religion, 
+              names_to = "income", 
+              values_to = "frequency") |> 
+  mutate(income = fct(income, 
+                      levels = c("Don't know/refused", "<$10k", "$10-20k", 
+                                         "$20-30k", "$30-40k", "$40-50k", "$50-75k", 
+                                         "$75-100k", "$100-150k", ">150k")), 
+         religion = fct(religion))
+```
+2. If we hadn't initially read in religion as a factor, we'd need to recode it as one during this step.  
+
+## Answers {visibility="hidden"} 
 
 ```{r}
 #| output-location: fragment
@@ -2248,7 +2283,7 @@ religion_income_tidy
 ```
 
 
-## Answers {visibility="hidden"}
+## Answers {visibility="hidden"} 
 
 Question 5: Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency? You can determine this by **summarizing the data** or creating a visualization of the data.
 
@@ -2259,7 +2294,7 @@ religion_income_tidy |>
   slice_max(frequency)
 ```
 
-## Answers <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} {visibility="hidden"}
+## Answers <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} {visibility="hidden"} 
 
 Question 5: Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency? You can determine this by summarizing the data or creating a **visualization** of the data.
 
