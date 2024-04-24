@@ -2926,11 +2926,11 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a></a><span class="fu">as_datetime</span>(<span class="fu">today</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&gt; [1] "2024-04-23 UTC"</code></pre>
+<pre><code>&gt; [1] "2024-04-24 UTC"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a></a><span class="fu">as_date</span>(<span class="fu">now</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&gt; [1] "2024-04-23"</code></pre>
+<pre><code>&gt; [1] "2024-04-24"</code></pre>
 </div>
 </div>
 <p><br></p>
@@ -3102,8 +3102,8 @@
 </dl>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&gt; Time difference of 331 days
-&gt; [1] "28598400s (~47.29 weeks)"</code></pre>
+<pre><code>&gt; Time difference of 332 days
+&gt; [1] "28684800s (~47.43 weeks)"</code></pre>
 </div>
 </div>
 </div>
@@ -3620,7 +3620,7 @@
 &gt; [595] "W-SU"                             "WET"                             
 &gt; [597] "Zulu"                            
 &gt; attr(,"Version")
-&gt; [1] "2024a"</code></pre>
+&gt; [1] "2023c"</code></pre>
 </div>
 </div>
 </div>
@@ -3706,7 +3706,94 @@
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn30"><p>UTC (Coordinated Universal Time) is the standard time zone used by the scientific community and is roughly equivalent to GMT (Greenwich Mean Time). It does not have DST, which makes a convenient representation for computation.</p></li></ol></aside></section></section><section></section><section><section id="homework" class="title-slide slide level1 section-title center" data-background-color="#1e4655"><h1>Homework</h1>
+<aside><ol class="aside-footnotes"><li id="fn30"><p>UTC (Coordinated Universal Time) is the standard time zone used by the scientific community and is roughly equivalent to GMT (Greenwich Mean Time). It does not have DST, which makes a convenient representation for computation.</p></li></ol></aside></section></section><section><section id="lab-3" class="title-slide slide level1 section-title center" data-background-color="#99a486"><h1>Lab</h1>
+
+</section><section id="answers-1" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Answers</h2>
+<p>Pivot your data to make it tidy<sup>1</sup>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb145-1" class="hljs-ln-code"><a></a>religion_income_tidy <span class="ot">&lt;-</span> religion_income <span class="sc">|&gt;</span> </span>
+<span id="cb145-2" class="hljs-ln-code"><a></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>religion, </span>
+<span id="cb145-3" class="hljs-ln-code"><a></a>              <span class="at">names_to =</span> <span class="st">"income"</span>, </span>
+<span id="cb145-4" class="hljs-ln-code"><a></a>              <span class="at">values_to =</span> <span class="st">"frequency"</span>)</span>
+<span id="cb145-5" class="hljs-ln-code"><a></a>religion_income_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 180 × 3
+&gt;    religion income             frequency
+&gt;    &lt;fct&gt;    &lt;chr&gt;                  &lt;dbl&gt;
+&gt;  1 Agnostic &lt;$10k                     27
+&gt;  2 Agnostic $10-20k                   34
+&gt;  3 Agnostic $20-30k                   60
+&gt;  4 Agnostic $30-40k                   81
+&gt;  5 Agnostic $40-50k                   76
+&gt;  6 Agnostic $50-75k                  137
+&gt;  7 Agnostic $75-100k                 122
+&gt;  8 Agnostic $100-150k                109
+&gt;  9 Agnostic &gt;150k                     84
+&gt; 10 Agnostic Don't know/refused        96
+&gt; # ℹ 170 more rows</code></pre>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn32"><p>There should be 3 columns in your final dataset</p></li></ol></aside></section><section id="answers-2" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Answers</h2>
+<p>Turn two of the variables into factors<sup>1</sup>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb147-1" class="hljs-ln-code"><a></a>religion_income_tidy <span class="ot">&lt;-</span> religion_income <span class="sc">|&gt;</span> </span>
+<span id="cb147-2" class="hljs-ln-code"><a></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>religion, </span>
+<span id="cb147-3" class="hljs-ln-code"><a></a>              <span class="at">names_to =</span> <span class="st">"income"</span>, </span>
+<span id="cb147-4" class="hljs-ln-code"><a></a>              <span class="at">values_to =</span> <span class="st">"frequency"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb147-5" class="hljs-ln-code"><a></a>  <span class="fu">mutate</span>(<span class="at">income =</span> <span class="fu">fct</span>(income, </span>
+<span id="cb147-6" class="hljs-ln-code"><a></a>                      <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Don't know/refused"</span>, <span class="st">"&lt;$10k"</span>, <span class="st">"$10-20k"</span>, </span>
+<span id="cb147-7" class="hljs-ln-code"><a></a>                                         <span class="st">"$20-30k"</span>, <span class="st">"$30-40k"</span>, <span class="st">"$40-50k"</span>, <span class="st">"$50-75k"</span>, </span>
+<span id="cb147-8" class="hljs-ln-code"><a></a>                                         <span class="st">"$75-100k"</span>, <span class="st">"$100-150k"</span>, <span class="st">"&gt;150k"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+<aside><ol class="aside-footnotes"><li id="fn33"><p>Hint: Which two variables are categorical?</p></li></ol></aside></section><section id="answers-3" class="slide level2" data-auto-animate="true"><h2 data-id="quarto-animate-title">Answers</h2>
+<p>Turn two of the variables into factors<sup>1</sup>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-76" data-code-line-numbers="|9"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="annotated-cell-76-1" class="hljs-ln-code"><a href="#annotated-cell-76-1"></a>religion_income_tidy <span class="ot">&lt;-</span> religion_income <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-76-2" class="hljs-ln-code"><a href="#annotated-cell-76-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>religion, </span>
+<span id="annotated-cell-76-3" class="hljs-ln-code"><a href="#annotated-cell-76-3"></a>              <span class="at">names_to =</span> <span class="st">"income"</span>, </span>
+<span id="annotated-cell-76-4" class="hljs-ln-code"><a href="#annotated-cell-76-4"></a>              <span class="at">values_to =</span> <span class="st">"frequency"</span>) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-76-5" class="hljs-ln-code"><a href="#annotated-cell-76-5"></a>  <span class="fu">mutate</span>(<span class="at">income =</span> <span class="fu">fct</span>(income, </span>
+<span id="annotated-cell-76-6" class="hljs-ln-code"><a href="#annotated-cell-76-6"></a>                      <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Don't know/refused"</span>, <span class="st">"&lt;$10k"</span>, <span class="st">"$10-20k"</span>, </span>
+<span id="annotated-cell-76-7" class="hljs-ln-code"><a href="#annotated-cell-76-7"></a>                                         <span class="st">"$20-30k"</span>, <span class="st">"$30-40k"</span>, <span class="st">"$40-50k"</span>, <span class="st">"$50-75k"</span>, </span>
+<span id="annotated-cell-76-8" class="hljs-ln-code"><a href="#annotated-cell-76-8"></a>                                         <span class="st">"$75-100k"</span>, <span class="st">"$100-150k"</span>, <span class="st">"&gt;150k"</span>)), </span>
+<button class="code-annotation-anchor hljs-ln-code" data-target-cell="annotated-cell-76" data-target-annotation="2">2</button><span id="annotated-cell-76-9" class="code-annotation-target hljs-ln-code"><a href="#annotated-cell-76-9"></a>         <span class="at">religion =</span> <span class="fu">fct</span>(religion))</span><div class="code-annotation-gutter-bg hljs-ln-code"></div><div class="code-annotation-gutter hljs-ln-code"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-76" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-76" data-code-lines="9" data-code-annotation="2">If we hadn’t initially read in religion as a factor, we’d need to recode it as one during this step.</span>
+</dd>
+</dl>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn34"><p>Hint: Which two variables are categorical?</p></li></ol></aside></section><section id="answers-4" class="slide level2"><h2>Answers</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a></a>religion_income_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt; # A tibble: 180 × 3
+&gt;    religion income             frequency
+&gt;    &lt;fct&gt;    &lt;fct&gt;                  &lt;dbl&gt;
+&gt;  1 Agnostic &lt;$10k                     27
+&gt;  2 Agnostic $10-20k                   34
+&gt;  3 Agnostic $20-30k                   60
+&gt;  4 Agnostic $30-40k                   81
+&gt;  5 Agnostic $40-50k                   76
+&gt;  6 Agnostic $50-75k                  137
+&gt;  7 Agnostic $75-100k                 122
+&gt;  8 Agnostic $100-150k                109
+&gt;  9 Agnostic &gt;150k                     84
+&gt; 10 Agnostic Don't know/refused        96
+&gt; # ℹ 170 more rows</code></pre>
+</div>
+</div>
+</section></section><section><section id="homework" class="title-slide slide level1 section-title center" data-background-color="#1e4655"><h1>Homework</h1>
 
 </section><section id="section-4" class="slide level2" data-menu-title="Homework 5" data-background-iframe="https://vsass.github.io/CSSS508/Homework/HW5/homework5.html" data-background-interactive="TRUE"><h2></h2>
 
