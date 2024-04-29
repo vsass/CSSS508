@@ -44,7 +44,7 @@ knitr::opts_chunk$set(
 
 [CS&SS 508 • Lecture 6]{.custom-subtitle}
 
-[{{< var lecture.six >}}]{.custom-subtitle2}
+[{{< var lectures.six >}}]{.custom-subtitle2}
 
 [Victoria Sass]{.custom-subtitle3}
 
@@ -113,17 +113,27 @@ Returning, once again, to our list of data types in `R`:
 
 Returning, once again, to our list of data types in `R`: 
 
-* ~~Logicals~~
-* ~~Factors~~
-* ~~Date/Date-time~~
+* <span style="color:#af7aa1">Logicals<span>
+* <span style="color:#af7aa1">Factors<span>
+* Date/Date-time
 * Numbers
 * Missing Values
 * Strings
 
-![](images/logicals_factors.png){.absolute top=95 right=0 left=250 width="900" height="600"}
+![](images/logicals_factors.png){.absolute top=100 right=0 left=250 width="900" height="600"}
 
----
+## Data types in `R`
 
+Returning, once again, to our list of data types in `R`: 
+
+* Logicals
+* Factors
+* <span style="color:#af7aa1">Date/Date-time<span>
+* Numbers
+* Missing Values
+* Strings
+
+![](images/lubridate.png){.absolute top=75 right=0 left=200}
 
 ## Data types in `R`
 
@@ -217,11 +227,11 @@ A weighted count is simply a grouped sum, therefore `count` has a `wt` argument 
 
 . . . 
 
-Let's find out the number of miles each plane flew. 
-
 :::: {.columns}
 
-::: {.column width="50%"}
+::: {.column width="45%"}
+
+How many miles did each plane fly? 
 
 ```{r}
 flights |> 
@@ -231,12 +241,15 @@ flights |>
 
 :::
 
-::: {.column width="50%"}
+::: {.column width="55%"}
+
+::: {.fragment}
 This is equivalent to: 
 
 ```{r}
 flights |> count(tailnum, wt = distance) 
 ```
+:::
 
 :::
 
@@ -464,16 +477,6 @@ sd(x) # <24>
 ```
 24. $$s = \sqrt{\frac{\sum(x_i-\overline{x})^2}{n-1}}$$
 
-## Summary Functions 
-
-**Positions**
-
-```{r}
-first(x)
-last(x)
-nth(x, n = 77)
-```
-
 ## Common Numerical Manipulations
 
 These formulas can be used in a summary call but are also useful with `mutate()`, particularly if being applied to grouped data. 
@@ -492,6 +495,64 @@ x / first(x) # <22>
 21. Standardizes to range [0, 1].
 22. Computes an index based on the first observation.
 
+## Summary Functions 
+
+**Positions**
+
+```{r}
+first(x)
+last(x)
+nth(x, n = 77)
+```
+
+. . . 
+
+<br>
+
+These are all really helpful but is there a *good* summary descriptive statistics function?
+
+# {data-menu-title="`skimr`" background-image="images/skimr_logo.png" background-size="contain" background-position="center" .section-title background-color="#1e4655"}
+
+## Basic summary statistics
+
+. . . 
+
+```{r}
+summary(iris)
+```
+
+## Better summary statistics <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+A basic example:
+
+```{r}
+library(skimr)
+skim(iris)
+```
+
+## Better summary statistics <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+A more complex example: 
+
+```{r}
+skim(starwars)
+```
+
+## `skim` function
+
+Highlights of this summary statistics function: 
+
+::: {.incremental}
+- provides a larger set of statistics than `summary()` including number missing, complete, n, sd, histogram for numeric data
+- presentation is in a compact, organized format
+- reports each data type separately
+- handles a wide range of data classes including dates, logicals, strings, lists and more
+- can be used with `summary()` for an overall summary of the data (w/o specifics about columns)
+- individual columns can be selected for a summary of only a subset of the data
+- handles grouped data
+- behaves nicely in pipelines
+- produces knitted results for documents
+- easily and highly customizable (i.e. specify your own statistics and classes)
 
 # Missing Values{.section-title background-color="#99a486"}
 
@@ -596,7 +657,7 @@ If you need to explicitly identify an `NaN` you can use `is.nan()`.
 
 . . . 
 
-We've seen a couple of ways that implicit `NA`s can be made implicit in previous lectures: `pivoting` and `joining`. 
+We've seen a couple of ways that implicit `NA`s can be made explicit in previous lectures: `pivoting` and `joining`. 
 
 . . . 
 
@@ -644,7 +705,7 @@ stocks |>
 ::::
 
 ::: aside
-The `fill` argument of `complete` only allows you to supply 1 value per variable. If you have more than one value to fill, using `complete` to create the data structure you need, and `case_when` to replace `NA`s would be the most straightforward approach.
+The `fill` argument of `complete` only allows you to supply 1 value per variable. If you have more than one value to fill, use `complete` to create the data structure you need, and `case_when` to replace `NA`s would be the most straightforward approach.
 :::
 
 ## Missing Factor Levels
@@ -666,23 +727,48 @@ health <- tibble(
 
 For instance, we have this `health` dataset and we're interested in smokers:
 
+:::: {.columns}
+
+::: {.column width="45%"}
+::: {.fragment}
 ```{r}
 health
 ```
+:::
+::: {.fragment}
+```{r}
+health |> count(smoker)
+```
+:::
+:::
 
-. . . 
+::: {.column width="55%"}
 
+::: {.fragment}
 ```{r}
 levels(health$smoker) # <3> 
 ```
 3. This dataset only contains non-smokers, but we know that smokers exist; the group of smokers is simply empty. 
+:::
 
-. . . 
+::: {.fragment}
+
+<br>
+<br>
+<br>
+<br>
 
 ```{r}
 health |> count(smoker, .drop = FALSE) # <4>
 ```
 4. We can request `count()` to keep all the groups, even those not seen in the data by using `.drop = FALSE`.
+:::
+
+:::
+
+::::
+
+
 
 ## Missing Factors in Plots
 

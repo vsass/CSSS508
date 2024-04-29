@@ -10593,7 +10593,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#weighted-counts",
     "title": "",
     "section": "Weighted Counts",
-    "text": "Weighted Counts\nA weighted count is simply a grouped sum, therefore count has a wt argument to allow for the shorthand.\n\nLet’s find out the number of miles each plane flew.\n\n\n\nflights |&gt; \n  summarize(miles = sum(distance), \n            .by = tailnum)\n\n&gt; # A tibble: 4,044 × 2\n&gt;    tailnum  miles\n&gt;    &lt;chr&gt;    &lt;dbl&gt;\n&gt;  1 N14228  171713\n&gt;  2 N24211  172934\n&gt;  3 N619AA   32141\n&gt;  4 N804JB  311992\n&gt;  5 N668DN   50352\n&gt;  6 N39463  169905\n&gt;  7 N516JB  359585\n&gt;  8 N829AS   52549\n&gt;  9 N593JB  377619\n&gt; 10 N3ALAA   67925\n&gt; # ℹ 4,034 more rows\n\n\n\nThis is equivalent to:\n\nflights |&gt; count(tailnum, wt = distance) \n\n&gt; # A tibble: 4,044 × 2\n&gt;    tailnum      n\n&gt;    &lt;chr&gt;    &lt;dbl&gt;\n&gt;  1 D942DN    3418\n&gt;  2 N0EGMQ  250866\n&gt;  3 N10156  115966\n&gt;  4 N102UW   25722\n&gt;  5 N103US   24619\n&gt;  6 N104UW   25157\n&gt;  7 N10575  150194\n&gt;  8 N105UW   23618\n&gt;  9 N107US   21677\n&gt; 10 N108UW   32070\n&gt; # ℹ 4,034 more rows"
+    "text": "Weighted Counts\nA weighted count is simply a grouped sum, therefore count has a wt argument to allow for the shorthand.\n\n\n\nHow many miles did each plane fly?\n\nflights |&gt; \n  summarize(miles = sum(distance), \n            .by = tailnum)\n\n&gt; # A tibble: 4,044 × 2\n&gt;    tailnum  miles\n&gt;    &lt;chr&gt;    &lt;dbl&gt;\n&gt;  1 N14228  171713\n&gt;  2 N24211  172934\n&gt;  3 N619AA   32141\n&gt;  4 N804JB  311992\n&gt;  5 N668DN   50352\n&gt;  6 N39463  169905\n&gt;  7 N516JB  359585\n&gt;  8 N829AS   52549\n&gt;  9 N593JB  377619\n&gt; 10 N3ALAA   67925\n&gt; # ℹ 4,034 more rows\n\n\n\n\nThis is equivalent to:\n\nflights |&gt; count(tailnum, wt = distance) \n\n&gt; # A tibble: 4,044 × 2\n&gt;    tailnum      n\n&gt;    &lt;chr&gt;    &lt;dbl&gt;\n&gt;  1 D942DN    3418\n&gt;  2 N0EGMQ  250866\n&gt;  3 N10156  115966\n&gt;  4 N102UW   25722\n&gt;  5 N103US   24619\n&gt;  6 N104UW   25157\n&gt;  7 N10575  150194\n&gt;  8 N105UW   23618\n&gt;  9 N107US   21677\n&gt; 10 N108UW   32070\n&gt; # ℹ 4,034 more rows"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#recycling-rules",
@@ -10677,7 +10677,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\n\nCentral Tendency\n\n20x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\n\n\n20\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n\n\n\n&gt; [1] 256.85\n\n\n\nmedian(x)\n\n&gt; [1] 270\n\n\n\n21quantile(x, .95)\n\n\n21\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt;   95% \n&gt; 477.3"
+    "text": "Summary Functions\n\nCentral Tendency\n\n20x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\n\n\n20\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n\n\n\n&gt; [1] 248.42\n\n\n\nmedian(x)\n\n&gt; [1] 243.5\n\n\n\n21quantile(x, .95)\n\n\n21\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt;    95% \n&gt; 473.05"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#common-numerical-manipulations",
@@ -10726,21 +10726,21 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#implicit-nas",
     "title": "",
     "section": "Implicit NAs",
-    "text": "Implicit NAs\n\nAn implicit missing value is the absence of a presence.\n\n\nWe’ve seen a couple of ways that implicit NAs can be made implicit in previous lectures: pivoting and joining.\n\n\nFor example, if we really look at the dataset below, we can see that there are missing values that don’t appear as NA merely due to the current structure of the data.\n\nstocks\n\n&gt; # A tibble: 7 × 3\n&gt;    year   qtr price\n&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n&gt; 1  2020     1  1.88\n&gt; 2  2020     2  0.59\n&gt; 3  2020     3  0.35\n&gt; 4  2020     4  0.89\n&gt; 5  2021     2  0.34\n&gt; 6  2021     3  0.17\n&gt; 7  2021     4  2.66"
+    "text": "Implicit NAs\n\nAn implicit missing value is the absence of a presence.\n\n\nWe’ve seen a couple of ways that implicit NAs can be made explicit in previous lectures: pivoting and joining.\n\n\nFor example, if we really look at the dataset below, we can see that there are missing values that don’t appear as NA merely due to the current structure of the data.\n\nstocks\n\n&gt; # A tibble: 7 × 3\n&gt;    year   qtr price\n&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n&gt; 1  2020     1  1.88\n&gt; 2  2020     2  0.59\n&gt; 3  2020     3  0.35\n&gt; 4  2020     4  0.89\n&gt; 5  2021     2  0.34\n&gt; 6  2021     3  0.17\n&gt; 7  2021     4  2.66"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#implicit-nas-1",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#implicit-nas-1",
     "title": "",
     "section": "Implicit NAs",
-    "text": "Implicit NAs\ntidyr::complete() allows you to generate explicit missing values by providing a set of variables that define the combination of rows that should exist.\n\n\n\n\nstocks |&gt;\n  complete(year, qtr)\n\n&gt; # A tibble: 8 × 3\n&gt;    year   qtr price\n&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n&gt; 1  2020     1  1.88\n&gt; 2  2020     2  0.59\n&gt; 3  2020     3  0.35\n&gt; 4  2020     4  0.89\n&gt; 5  2021     1 NA   \n&gt; 6  2021     2  0.34\n&gt; 7  2021     3  0.17\n&gt; 8  2021     4  2.66\n\n\n\n\n\n\nstocks |&gt;\n  complete(year, qtr, fill = list(price = 0.93))\n\n&gt; # A tibble: 8 × 3\n&gt;    year   qtr price\n&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n&gt; 1  2020     1  1.88\n&gt; 2  2020     2  0.59\n&gt; 3  2020     3  0.35\n&gt; 4  2020     4  0.89\n&gt; 5  2021     1  0.93\n&gt; 6  2021     2  0.34\n&gt; 7  2021     3  0.17\n&gt; 8  2021     4  2.66\n\n\n\n\n\n\n\nThe fill argument of complete only allows you to supply 1 value per variable. If you have more than one value to fill, using complete to create the data structure you need, and case_when to replace NAs would be the most straightforward approach."
+    "text": "Implicit NAs\ntidyr::complete() allows you to generate explicit missing values by providing a set of variables that define the combination of rows that should exist.\n\n\n\n\nstocks |&gt;\n  complete(year, qtr)\n\n&gt; # A tibble: 8 × 3\n&gt;    year   qtr price\n&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n&gt; 1  2020     1  1.88\n&gt; 2  2020     2  0.59\n&gt; 3  2020     3  0.35\n&gt; 4  2020     4  0.89\n&gt; 5  2021     1 NA   \n&gt; 6  2021     2  0.34\n&gt; 7  2021     3  0.17\n&gt; 8  2021     4  2.66\n\n\n\n\n\n\nstocks |&gt;\n  complete(year, qtr, fill = list(price = 0.93))\n\n&gt; # A tibble: 8 × 3\n&gt;    year   qtr price\n&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n&gt; 1  2020     1  1.88\n&gt; 2  2020     2  0.59\n&gt; 3  2020     3  0.35\n&gt; 4  2020     4  0.89\n&gt; 5  2021     1  0.93\n&gt; 6  2021     2  0.34\n&gt; 7  2021     3  0.17\n&gt; 8  2021     4  2.66\n\n\n\n\n\n\n\nThe fill argument of complete only allows you to supply 1 value per variable. If you have more than one value to fill, use complete to create the data structure you need, and case_when to replace NAs would be the most straightforward approach."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#missing-factor-levels",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#missing-factor-levels",
     "title": "",
     "section": "Missing Factor Levels",
-    "text": "Missing Factor Levels\n\nThe last type of missingness is a theoretical level of a factor that doesn’t have any observations.\n\n\nFor instance, we have this health dataset and we’re interested in smokers:\n\nhealth\n\n&gt; # A tibble: 5 × 3\n&gt;   name    smoker   age\n&gt;   &lt;chr&gt;   &lt;fct&gt;  &lt;dbl&gt;\n&gt; 1 Ikaia   no        34\n&gt; 2 Oletta  no        88\n&gt; 3 Leriah  no        75\n&gt; 4 Dashay  no        47\n&gt; 5 Tresaun no        56\n\n\n\n\n\n3levels(health$smoker)\n\n\n3\n\nThis dataset only contains non-smokers, but we know that smokers exist; the group of smokers is simply empty.\n\n\n\n\n&gt; [1] \"yes\" \"no\"\n\n\n\n\n\n4health |&gt; count(smoker, .drop = FALSE)\n\n\n4\n\nWe can request count() to keep all the groups, even those not seen in the data by using .drop = FALSE.\n\n\n\n\n&gt; # A tibble: 2 × 2\n&gt;   smoker     n\n&gt;   &lt;fct&gt;  &lt;int&gt;\n&gt; 1 yes        0\n&gt; 2 no         5"
+    "text": "Missing Factor Levels\n\nThe last type of missingness is a theoretical level of a factor that doesn’t have any observations.\n\n\nFor instance, we have this health dataset and we’re interested in smokers:\n\n\n\n\nhealth\n\n&gt; # A tibble: 5 × 3\n&gt;   name    smoker   age\n&gt;   &lt;chr&gt;   &lt;fct&gt;  &lt;dbl&gt;\n&gt; 1 Ikaia   no        34\n&gt; 2 Oletta  no        88\n&gt; 3 Leriah  no        75\n&gt; 4 Dashay  no        47\n&gt; 5 Tresaun no        56\n\n\n\n\n\nhealth |&gt; count(smoker)\n\n&gt; # A tibble: 1 × 2\n&gt;   smoker     n\n&gt;   &lt;fct&gt;  &lt;int&gt;\n&gt; 1 no         5\n\n\n\n\n\n\n3levels(health$smoker)\n\n\n3\n\nThis dataset only contains non-smokers, but we know that smokers exist; the group of smokers is simply empty.\n\n\n\n\n&gt; [1] \"yes\" \"no\"\n\n\n\n\n   \n\n4health |&gt; count(smoker, .drop = FALSE)\n\n\n4\n\nWe can request count() to keep all the groups, even those not seen in the data by using .drop = FALSE.\n\n\n\n\n&gt; # A tibble: 2 × 2\n&gt;   smoker     n\n&gt;   &lt;fct&gt;  &lt;int&gt;\n&gt; 1 yes        0\n&gt; 2 no         5"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#missing-factors-in-plots",
@@ -10754,14 +10754,14 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-1",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 2\n\nmax(x)\n\n&gt; [1] 499\n\nrange(x)\n\n&gt; [1]   2 499\n\n\n\n22IQR(x)\n\n\n22\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 281.75\n\n\n\n23var(x)\n\n\n23\n\n\\[s^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\\]\n\n\n\n\n&gt; [1] 22802.63\n\n\n\n24sd(x)\n\n\n24\n\n\\[s = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\\]\n\n\n\n\n&gt; [1] 151.0054"
+    "text": "Summary Functions\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 1\n\nmax(x)\n\n&gt; [1] 493\n\nrange(x)\n\n&gt; [1]   1 493\n\n\n\n22IQR(x)\n\n\n22\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 271\n\n\n\n23var(x)\n\n\n23\n\n\\[s^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\\]\n\n\n\n\n&gt; [1] 22637.03\n\n\n\n24sd(x)\n\n\n24\n\n\\[s = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\\]\n\n\n\n\n&gt; [1] 150.4561"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-2",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-2",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\nPositions\n\nfirst(x)\n\n&gt; [1] 290\n\nlast(x)\n\n&gt; [1] 174\n\nnth(x, n = 77)\n\n&gt; [1] 11"
+    "text": "Summary Functions\nPositions\n\nfirst(x)\n\n&gt; [1] 46\n\nlast(x)\n\n&gt; [1] 432\n\nnth(x, n = 77)\n\n&gt; [1] 255\n\n\n\n\nThese are all really helpful but is there a good summary descriptive statistics function?"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#proper-matrix-math-1",
@@ -13719,5 +13719,54 @@
     "title": "",
     "section": "Office Hours",
     "text": "Office Hours\nI’ll be holding office hours at a different day/time this week:\n\n\n\n\nThursday (April 25th) from 10am - 12pm"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#data-types-in-r-3",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#data-types-in-r-3",
+    "title": "",
+    "section": "Data types in R",
+    "text": "Data types in R\nReturning, once again, to our list of data types in R:\n\nLogicals\nFactors\nDate/Date-time\nNumbers\nMissing Values\nStrings"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#quick-and-more-comprehensive-summary-statistics",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#quick-and-more-comprehensive-summary-statistics",
+    "title": "",
+    "section": "Quick and (more) comprehensive summary statistics",
+    "text": "Quick and (more) comprehensive summary statistics\n\n\nsummary(iris)\n\n&gt;   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   \n&gt;  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  \n&gt;  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  \n&gt;  Median :5.800   Median :3.000   Median :4.350   Median :1.300  \n&gt;  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  \n&gt;  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  \n&gt;  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  \n&gt;        Species  \n&gt;  setosa    :50  \n&gt;  versicolor:50  \n&gt;  virginica :50  \n&gt;                 \n&gt;                 \n&gt;"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#quick-and-more-comprehensive-summary-statistics-1",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#quick-and-more-comprehensive-summary-statistics-1",
+    "title": "",
+    "section": "Quick and (more) comprehensive summary statistics",
+    "text": "Quick and (more) comprehensive summary statistics\n\nlibrary(skimr)\nskim(iris)\n\n\nData summary\n\n\nName\niris\n\n\nNumber of rows\n150\n\n\nNumber of columns\n5\n\n\n_______________________\n\n\n\nColumn type frequency:\n\n\n\nfactor\n1\n\n\nnumeric\n4\n\n\n________________________\n\n\n\nGroup variables\nNone\n\n\n\nVariable type: factor\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nordered\nn_unique\ntop_counts\n\n\n\n\nSpecies\n0\n1\nFALSE\n3\nset: 50, ver: 50, vir: 50\n\n\n\nVariable type: numeric\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmean\nsd\np0\np25\np50\np75\np100\nhist\n\n\n\n\nSepal.Length\n0\n1\n5.84\n0.83\n4.3\n5.1\n5.80\n6.4\n7.9\n▆▇▇▅▂\n\n\nSepal.Width\n0\n1\n3.06\n0.44\n2.0\n2.8\n3.00\n3.3\n4.4\n▁▆▇▂▁\n\n\nPetal.Length\n0\n1\n3.76\n1.77\n1.0\n1.6\n4.35\n5.1\n6.9\n▇▁▆▇▂\n\n\nPetal.Width\n0\n1\n1.20\n0.76\n0.1\n0.3\n1.30\n1.8\n2.5\n▇▁▇▅▃"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#skim-function",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#skim-function",
+    "title": "",
+    "section": "skim function",
+    "text": "skim function\nHighlights of this summary statistics function:\n::: {.incremental} - provides a larger set of statistics than summary() including number missing, complete, n, sd, histogram for numeric data - presentation is in a compact, organized format - reports each data type separately - handles a wide range of data classes including dates, logicals, strings, lists and more - can be used with summary() for an overall summary of the data (w/o specifics about columns) - individual columns can be selected for a summary of only a subset of the data - handles grouped data - behaves nicely in pipelines - produces knitted results for documents - easily and highly customizable (i.e. specify your own statistics and classes)"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#better-summary-statistics",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#better-summary-statistics",
+    "title": "",
+    "section": "Better summary statistics ",
+    "text": "Better summary statistics \nA basic example:\n\nlibrary(skimr)\nskim(iris)\n\n\nData summary\n\n\nName\niris\n\n\nNumber of rows\n150\n\n\nNumber of columns\n5\n\n\n_______________________\n\n\n\nColumn type frequency:\n\n\n\nfactor\n1\n\n\nnumeric\n4\n\n\n________________________\n\n\n\nGroup variables\nNone\n\n\n\nVariable type: factor\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nordered\nn_unique\ntop_counts\n\n\n\n\nSpecies\n0\n1\nFALSE\n3\nset: 50, ver: 50, vir: 50\n\n\n\nVariable type: numeric\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmean\nsd\np0\np25\np50\np75\np100\nhist\n\n\n\n\nSepal.Length\n0\n1\n5.84\n0.83\n4.3\n5.1\n5.80\n6.4\n7.9\n▆▇▇▅▂\n\n\nSepal.Width\n0\n1\n3.06\n0.44\n2.0\n2.8\n3.00\n3.3\n4.4\n▁▆▇▂▁\n\n\nPetal.Length\n0\n1\n3.76\n1.77\n1.0\n1.6\n4.35\n5.1\n6.9\n▇▁▆▇▂\n\n\nPetal.Width\n0\n1\n1.20\n0.76\n0.1\n0.3\n1.30\n1.8\n2.5\n▇▁▇▅▃"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#better-summary-statistics-1",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#better-summary-statistics-1",
+    "title": "",
+    "section": "Better summary statistics ",
+    "text": "Better summary statistics \nA more complex example:\n\nskim(starwars)\n\n\nData summary\n\n\nName\nstarwars\n\n\nNumber of rows\n87\n\n\nNumber of columns\n14\n\n\n_______________________\n\n\n\nColumn type frequency:\n\n\n\ncharacter\n8\n\n\nlist\n3\n\n\nnumeric\n3\n\n\n________________________\n\n\n\nGroup variables\nNone\n\n\n\nVariable type: character\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmin\nmax\nempty\nn_unique\nwhitespace\n\n\n\n\nname\n0\n1.00\n3\n21\n0\n87\n0\n\n\nhair_color\n5\n0.94\n4\n13\n0\n12\n0\n\n\nskin_color\n0\n1.00\n3\n19\n0\n31\n0\n\n\neye_color\n0\n1.00\n3\n13\n0\n15\n0\n\n\nsex\n4\n0.95\n4\n14\n0\n4\n0\n\n\ngender\n4\n0.95\n8\n9\n0\n2\n0\n\n\nhomeworld\n10\n0.89\n4\n14\n0\n48\n0\n\n\nspecies\n4\n0.95\n3\n14\n0\n37\n0\n\n\n\nVariable type: list\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nn_unique\nmin_length\nmax_length\n\n\n\n\nfilms\n0\n1\n24\n1\n7\n\n\nvehicles\n0\n1\n11\n0\n2\n\n\nstarships\n0\n1\n17\n0\n5\n\n\n\nVariable type: numeric\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmean\nsd\np0\np25\np50\np75\np100\nhist\n\n\n\n\nheight\n6\n0.93\n174.36\n34.77\n66\n167.0\n180\n191.0\n264\n▁▁▇▅▁\n\n\nmass\n28\n0.68\n97.31\n169.46\n15\n55.6\n79\n84.5\n1358\n▇▁▁▁▁\n\n\nbirth_year\n44\n0.49\n87.57\n154.69\n8\n35.0\n52\n72.0\n896\n▇▁▁▁▁"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#basic-summary-statistics",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#basic-summary-statistics",
+    "title": "",
+    "section": "Basic summary statistics",
+    "text": "Basic summary statistics\n\n\nsummary(iris)\n\n&gt;   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   \n&gt;  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  \n&gt;  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  \n&gt;  Median :5.800   Median :3.000   Median :4.350   Median :1.300  \n&gt;  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  \n&gt;  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  \n&gt;  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  \n&gt;        Species  \n&gt;  setosa    :50  \n&gt;  versicolor:50  \n&gt;  virginica :50  \n&gt;                 \n&gt;                 \n&gt;"
   }
 ]
