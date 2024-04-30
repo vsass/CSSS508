@@ -10677,7 +10677,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\n\nCentral Tendency\n\n20x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\n\n\n20\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n\n\n\n&gt; [1] 258.87\n\n\n\nmedian(x)\n\n&gt; [1] 254\n\n\n\n21quantile(x, .95)\n\n\n21\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt;    95% \n&gt; 473.15"
+    "text": "Summary Functions\n\nCentral Tendency\n\n20x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\n\n\n20\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n\n\n\n&gt; [1] 244.05\n\n\n\nmedian(x)\n\n&gt; [1] 230.5\n\n\n\n21quantile(x, .95)\n\n\n21\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt;   95% \n&gt; 464.3"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#common-numerical-manipulations",
@@ -10754,14 +10754,14 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-1",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 16\n\nmax(x)\n\n&gt; [1] 498\n\nrange(x)\n\n&gt; [1]  16 498\n\n\n\n22IQR(x)\n\n\n22\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 193.25\n\n\n\n23var(x)\n\n\n23\n\n\\[s^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\\]\n\n\n\n\n&gt; [1] 17647.75\n\n\n\n24sd(x)\n\n\n24\n\n\\[s = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\\]\n\n\n\n\n&gt; [1] 132.8448"
+    "text": "Summary Functions\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 3\n\nmax(x)\n\n&gt; [1] 486\n\nrange(x)\n\n&gt; [1]   3 486\n\n\n\n22IQR(x)\n\n\n22\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 249.75\n\n\n\n23var(x)\n\n\n23\n\n\\[s^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\\]\n\n\n\n\n&gt; [1] 20434.01\n\n\n\n24sd(x)\n\n\n24\n\n\\[s = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\\]\n\n\n\n\n&gt; [1] 142.9476"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-2",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-2",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\nPositions\n\nfirst(x)\n\n&gt; [1] 119\n\nlast(x)\n\n&gt; [1] 349\n\nnth(x, n = 77)\n\n&gt; [1] 445\n\n\n\n\nThese are all really helpful but is there a good summary descriptive statistics function?"
+    "text": "Summary Functions\nPositions\n\nfirst(x)\n\n&gt; [1] 470\n\nlast(x)\n\n&gt; [1] 139\n\nnth(x, n = 77)\n\n&gt; [1] 464\n\n\n\n\nThese are all really helpful but is there a good summary descriptive statistics function?"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#proper-matrix-math-1",
@@ -13781,7 +13781,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#going-deeper-into-the-abyss-aka-nas",
     "title": "",
     "section": "Going deeper into the abyss (aka NAs)",
-    "text": "Going deeper into the abyss (aka NAs)\n\nA lot has been written about NAs and if they are a feature of your data you’re likely going to have to spend a great deal of time thinking about how they arose1 and if/how they bias your data.\n\n\n\n\nThe best package for really exploring your NAs is naniar, which provides tidyverse-style syntax for summarizing, visualizing, and manipulating missing data.\n\nIt provides the following for missing data:\n\n\na special data structure\nshorthand and numerical summaries (in variables and cases)\nvisualizations\n\n\n\n\n\n\n\n\n\n\n\nMissing Completely at Random? Missing at Random? Missing Not at Random? Read more about the differences here."
+    "text": "Going deeper into the abyss (aka NAs)\n\n\n\n\n\n\n\nArtwork by @allison_horst"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#naniar-examples",
@@ -13796,5 +13796,12 @@
     "title": "",
     "section": "visdat example",
     "text": "visdat example\n\nlibrary(visdat)\nvis_dat(airquality)\n\n\n\n\n\n\n\n\n\n\n\n\nYou can read more about this package and its functionality here. For an tidy-style approach for imputing missing values check out the simputation package."
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#going-deeper-into-the-abyss-aka-nas-1",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#going-deeper-into-the-abyss-aka-nas-1",
+    "title": "",
+    "section": "Going deeper into the abyss (aka NAs)",
+    "text": "Going deeper into the abyss (aka NAs)\nA lot has been written about NAs and if they are a feature of your data you’re likely going to have to spend a great deal of time thinking about how they arose1 and if/how they bias your data.\n\n\n\nThe best package for really exploring your NAs is naniar, which provides tidyverse-style syntax for summarizing, visualizing, and manipulating missing data.\n\nIt provides the following for missing data:\n\n\na special data structure\nshorthand and numerical summaries (in variables and cases)\nvisualizations\n\n\n\n\n\n\n\n\n\n\n\nMissing Completely at Random? Missing at Random? Missing Not at Random? Read more about the differences here."
   }
 ]
