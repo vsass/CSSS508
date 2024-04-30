@@ -553,6 +553,7 @@ Highlights of this summary statistics function:
 - behaves nicely in pipelines
 - produces knitted results for documents
 - easily and highly customizable (i.e. specify your own statistics and classes)
+:::
 
 # Missing Values{.section-title background-color="#99a486"}
 
@@ -817,6 +818,63 @@ is.na(NA)
 is.nan(NaN)
 ```
 
+## Going deeper into the abyss (aka `NA`s)
+
+. . . 
+
+A lot has been written about `NA`s and if they are a feature of your data you're likely going to have to spend a great deal of time thinking about how they arose^[Missing Completely at Random? Missing at Random? Missing Not at Random? Read more about the differences [here](https://www.ncbi.nlm.nih.gov/books/NBK493614/).] and if/how they bias your data. 
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+The best package for really exploring your `NA`s is [`naniar`](https://naniar.njtierney.com/), which provides tidyverse-style syntax for summarizing, visualizing, and manipulating missing data. 
+
+<br>
+
+It provides the following for missing data:
+
+::: {.incremental}
+- a special data structure
+- shorthand and numerical summaries (in variables and cases)
+- visualizations
+:::
+:::
+
+::: {.column width="50%"}
+![](images/naniar_logo.png){fig-align="center" width=60%}
+:::
+
+::::
+
+## `naniar` examples
+
+. . .
+
+![](images/missingness-data-structures.png){fig-align="center" width=80%}
+
+::: aside
+See more [here](https://naniar.njtierney.com/articles/naniar.html).
+:::
+
+## `visdat` example
+
+```{r} 
+#| fig-height: 5
+#| fig-format: png
+#| fig-align: center
+#| output-location: fragment
+library(visdat)
+vis_dat(airquality)
+```
+
+::: aside
+You can read more about this package and its functionality [here](https://cran.r-project.org/web/packages/visdat/vignettes/using_visdat.html). For an tidy-style approach for imputing missing values check out the [`simputation`](https://cran.r-project.org/web/packages/simputation/vignettes/intro.html) package.
+::: 
+
+# Break!{.section-title background-color="#1e4655"}
+
 # Vectors{.section-title background-color="#99a486"}
 
 ## Making Vectors
@@ -882,7 +940,7 @@ x
 x[c(7, 8)] <- c(9, 9)
 x
 ```
-  
+
 ## Element-wise Vector Math
 
 When doing arithmetic operations on vectors, R handles these *element-wise*:
@@ -914,7 +972,7 @@ x / 5 # <6>
 
 . . . 
 
-You generally only want to recycle scalars, or vectors the length 1. Technically, however, `R` will recycle any vector that's shorter in length (and it *won't always* give you a warning if the shorter vector is not a multiple of the longer vector).
+You generally only want to recycle scalars, or vectors the length 1. Technically, however, `R` will recycle any vector that's shorter in length (and it *won't always* give you a warning that that's what it's doing, i.e. if the longer vector is not a multiple of the shorter vector).
 
 . . . 
 
@@ -1034,11 +1092,17 @@ Similar to vectors, you can make assignments using Base `R` indexing methods.
 
 ```{r}
 a_matrix[1, c(1:3)] <- c("Hakim", "Tony", "Eduardo")
+a_matrix
 ```
 
 . . . 
 
 However, you can't add rows or columns to a matrix in this way. You can only reassign already-existing cell values. 
+
+```{r}
+#| error: true
+a_matrix[3, c(1:3)] <- c("Lucille", "Hanif", "June")
+```
 
 ## Binding Vectors
 

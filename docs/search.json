@@ -6913,7 +6913,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#matrices-two-dimensions",
     "title": "",
     "section": "Matrices: Two Dimensions",
-    "text": "Matrices: Two Dimensions\nMatrices extend vectors to two dimensions: rows and columns. We can construct them directly using matrix().\n\nR fills in a matrix column-by-column (not row-by-row!)\n\na_matrix &lt;- matrix(first_names, nrow = 2, ncol = 3)\na_matrix\n\n&gt;      [,1]    [,2]      [,3]     \n&gt; [1,] \"Andre\" \"Cecilia\" \"Edgar\"  \n&gt; [2,] \"Brady\" \"Danni\"   \"Francie\"\n\n\n\n\nSimilar to vectors, you can make assignments using Base R indexing methods.\n\n\n\na_matrix[1, c(1:3)] &lt;- c(\"Hakim\", \"Tony\", \"Eduardo\")\n\n\n\nHowever, you can’t add rows or columns to a matrix in this way. You can only reassign already-existing cell values."
+    "text": "Matrices: Two Dimensions\nMatrices extend vectors to two dimensions: rows and columns. We can construct them directly using matrix().\n\nR fills in a matrix column-by-column (not row-by-row!)\n\na_matrix &lt;- matrix(first_names, nrow = 2, ncol = 3)\na_matrix\n\n&gt;      [,1]    [,2]      [,3]     \n&gt; [1,] \"Andre\" \"Cecilia\" \"Edgar\"  \n&gt; [2,] \"Brady\" \"Danni\"   \"Francie\"\n\n\n\n\nSimilar to vectors, you can make assignments using Base R indexing methods.\n\n\n\na_matrix[1, c(1:3)] &lt;- c(\"Hakim\", \"Tony\", \"Eduardo\")\na_matrix\n\n&gt;      [,1]    [,2]    [,3]     \n&gt; [1,] \"Hakim\" \"Tony\"  \"Eduardo\"\n&gt; [2,] \"Brady\" \"Danni\" \"Francie\"\n\n\n\n\nHowever, you can’t add rows or columns to a matrix in this way. You can only reassign already-existing cell values.\n\na_matrix[3, c(1:3)] &lt;- c(\"Lucille\", \"Hanif\", \"June\")\n\n&gt; Error in `[&lt;-`(`*tmp*`, 3, c(1:3), value = c(\"Lucille\", \"Hanif\", \"June\": subscript out of bounds"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#binding-vectors",
@@ -10600,7 +10600,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#recycling-rules",
     "title": "",
     "section": "Recycling Rules",
-    "text": "Recycling Rules\nR handles mismatched lengths of vectors by recycling, or repeating, the short vector.\n\n\nx &lt;- c(1, 2, 10, 20)\n6x / 5\n\n\n6\n\nThis is shorthand for: x / c(5, 5, 5, 5)\n\n\n\n\n&gt; [1] 0.2 0.4 2.0 4.0\n\n\n\n\nYou generally only want to recycle scalars, or vectors the length 1. Technically, however, R will recycle any vector that’s shorter in length (and it won’t always give you a warning if the shorter vector is not a multiple of the longer vector).\n\n\n\nx * c(1, 2)\n\n&gt; [1]  1  4 10 40\n\nx * c(1, 2, 3)\n\n&gt; Warning in x * c(1, 2, 3): longer object length is not a multiple of shorter\n&gt; object length\n\n\n&gt; [1]  1  4 30 20"
+    "text": "Recycling Rules\nR handles mismatched lengths of vectors by recycling, or repeating, the short vector.\n\n\nx &lt;- c(1, 2, 10, 20)\n6x / 5\n\n\n6\n\nThis is shorthand for: x / c(5, 5, 5, 5)\n\n\n\n\n&gt; [1] 0.2 0.4 2.0 4.0\n\n\n\n\nYou generally only want to recycle scalars, or vectors the length 1. Technically, however, R will recycle any vector that’s shorter in length (and it won’t always give you a warning that that’s what it’s doing, i.e. if the longer vector is not a multiple of the shorter vector).\n\n\n\nx * c(1, 2)\n\n&gt; [1]  1  4 10 40\n\nx * c(1, 2, 3)\n\n&gt; Warning in x * c(1, 2, 3): longer object length is not a multiple of shorter\n&gt; object length\n\n\n&gt; [1]  1  4 30 20"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#recycling-with-logicals",
@@ -10677,7 +10677,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\n\nCentral Tendency\n\n20x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\n\n\n20\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n\n\n\n&gt; [1] 248.42\n\n\n\nmedian(x)\n\n&gt; [1] 243.5\n\n\n\n21quantile(x, .95)\n\n\n21\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt;    95% \n&gt; 473.05"
+    "text": "Summary Functions\n\nCentral Tendency\n\n20x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\n\n\n20\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n\n\n\n&gt; [1] 258.87\n\n\n\nmedian(x)\n\n&gt; [1] 254\n\n\n\n21quantile(x, .95)\n\n\n21\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt;    95% \n&gt; 473.15"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#common-numerical-manipulations",
@@ -10754,14 +10754,14 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-1",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 1\n\nmax(x)\n\n&gt; [1] 493\n\nrange(x)\n\n&gt; [1]   1 493\n\n\n\n22IQR(x)\n\n\n22\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 271\n\n\n\n23var(x)\n\n\n23\n\n\\[s^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\\]\n\n\n\n\n&gt; [1] 22637.03\n\n\n\n24sd(x)\n\n\n24\n\n\\[s = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\\]\n\n\n\n\n&gt; [1] 150.4561"
+    "text": "Summary Functions\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 16\n\nmax(x)\n\n&gt; [1] 498\n\nrange(x)\n\n&gt; [1]  16 498\n\n\n\n22IQR(x)\n\n\n22\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 193.25\n\n\n\n23var(x)\n\n\n23\n\n\\[s^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\\]\n\n\n\n\n&gt; [1] 17647.75\n\n\n\n24sd(x)\n\n\n24\n\n\\[s = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\\]\n\n\n\n\n&gt; [1] 132.8448"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-2",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-2",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\nPositions\n\nfirst(x)\n\n&gt; [1] 46\n\nlast(x)\n\n&gt; [1] 432\n\nnth(x, n = 77)\n\n&gt; [1] 255\n\n\n\n\nThese are all really helpful but is there a good summary descriptive statistics function?"
+    "text": "Summary Functions\nPositions\n\nfirst(x)\n\n&gt; [1] 119\n\nlast(x)\n\n&gt; [1] 349\n\nnth(x, n = 77)\n\n&gt; [1] 445\n\n\n\n\nThese are all really helpful but is there a good summary descriptive statistics function?"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#proper-matrix-math-1",
@@ -13746,7 +13746,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#skim-function",
     "title": "",
     "section": "skim function",
-    "text": "skim function\nHighlights of this summary statistics function:\n::: {.incremental} - provides a larger set of statistics than summary() including number missing, complete, n, sd, histogram for numeric data - presentation is in a compact, organized format - reports each data type separately - handles a wide range of data classes including dates, logicals, strings, lists and more - can be used with summary() for an overall summary of the data (w/o specifics about columns) - individual columns can be selected for a summary of only a subset of the data - handles grouped data - behaves nicely in pipelines - produces knitted results for documents - easily and highly customizable (i.e. specify your own statistics and classes)"
+    "text": "skim function\nHighlights of this summary statistics function:\n\n\nprovides a larger set of statistics than summary() including number missing, complete, n, sd, histogram for numeric data\npresentation is in a compact, organized format\nreports each data type separately\nhandles a wide range of data classes including dates, logicals, strings, lists and more\ncan be used with summary() for an overall summary of the data (w/o specifics about columns)\nindividual columns can be selected for a summary of only a subset of the data\nhandles grouped data\nbehaves nicely in pipelines\nproduces knitted results for documents\neasily and highly customizable (i.e. specify your own statistics and classes)"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#better-summary-statistics",
@@ -13768,5 +13768,33 @@
     "title": "",
     "section": "Basic summary statistics",
     "text": "Basic summary statistics\n\n\nsummary(iris)\n\n&gt;   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   \n&gt;  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  \n&gt;  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  \n&gt;  Median :5.800   Median :3.000   Median :4.350   Median :1.300  \n&gt;  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  \n&gt;  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  \n&gt;  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  \n&gt;        Species  \n&gt;  setosa    :50  \n&gt;  versicolor:50  \n&gt;  virginica :50  \n&gt;                 \n&gt;                 \n&gt;"
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#going-deeper-into-the-abyss",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#going-deeper-into-the-abyss",
+    "title": "",
+    "section": "Going deeper (into the abyss)",
+    "text": "Going deeper (into the abyss)\nA lot has been written about NAs and if they are a feature of your data you’re likely going to have to spend a great deal of time thinking about how they arose1 and if/how they bias your data.\n\n\n\n\n\n\n\nNaniar logo\n\n\n\n\n\nThe best package for really exploring your NAs is naniar, which provides tidyverse-style syntax for summarizing, visualizing, and manipulating missing data.\n\n\n\n\nMissing Completely at Random? Missing at Random? Missing Not at Random? Read more about the differences here."
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#going-deeper-into-the-abyss-aka-nas",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#going-deeper-into-the-abyss-aka-nas",
+    "title": "",
+    "section": "Going deeper into the abyss (aka NAs)",
+    "text": "Going deeper into the abyss (aka NAs)\n\nA lot has been written about NAs and if they are a feature of your data you’re likely going to have to spend a great deal of time thinking about how they arose1 and if/how they bias your data.\n\n\n\n\nThe best package for really exploring your NAs is naniar, which provides tidyverse-style syntax for summarizing, visualizing, and manipulating missing data.\n\nIt provides the following for missing data:\n\n\na special data structure\nshorthand and numerical summaries (in variables and cases)\nvisualizations\n\n\n\n\n\n\n\n\n\n\n\nMissing Completely at Random? Missing at Random? Missing Not at Random? Read more about the differences here."
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#naniar-examples",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#naniar-examples",
+    "title": "",
+    "section": "naniar examples",
+    "text": "naniar examples\n\n\n\n\n\n\n\n\n\nSee more here."
+  },
+  {
+    "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#visdat-example",
+    "href": "Lectures/Lecture6/CSSS508_Lecture6.html#visdat-example",
+    "title": "",
+    "section": "visdat example",
+    "text": "visdat example\n\nlibrary(visdat)\nvis_dat(airquality)\n\n\n\n\n\n\n\n\n\n\n\n\nYou can read more about this package and its functionality here. For an tidy-style approach for imputing missing values check out the simputation package."
   }
 ]
