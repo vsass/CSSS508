@@ -61,7 +61,7 @@ make_due_date_table_spring <- function(week){
     cols_align(align = "center") |> 
     cols_label(Homework = "#",
                Due_Date = "Homework Due",
-               Peer_Due_Date = "Peer Review Due",) |> 
+               Peer_Due_Date = "Peer Review Due") |> 
     # aligning table on page, picking font, increasing overall table size
     tab_options(table.align = "center", table.font.names = c("Quattrocento", "Raleway"), 
                 table.font.size = pct(100), table.border.top.style = "hidden") |>
