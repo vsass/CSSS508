@@ -904,22 +904,23 @@ This code takes a numeric vector and finds what each value represents as a perce
 #| output-location: fragment
 greet <- function(name, time = now()){ # <2>
   hr <- hour(time) 
-  greeting <- case_when(hr < 12 & hr >= 5 ~ rlang::englue("Good moring {name}."), # <3>
-                        hr < 17 & hr > 12 ~ rlang::englue("Good afternoon {name}."), # <3> 
+  greeting <- case_when(hr < 12 & hr >= 5 ~ rlang::englue("Good morning {name}."), # <3>
+                        hr < 17 & hr >= 12 ~ rlang::englue("Good afternoon {name}."), # <3> 
                         hr >= 17 ~ rlang::englue("Good evening {name}."), # <3>
                         .default = rlang::englue("Why are you awake rn, {name}???")) # <3>
   return(greeting) # <4>
 }
 
-greet("Vic")
+greet("Vic") # <5>
 ```
 2. By default this function will take the current time to determine the specific greeting.   
 3. Using `englue()` allows you to include user-specified values with `{ }`. 
 4. `return()` or `print()` or simply calling the variable `greeting` is necessary for the function to work as expected. 
+5. The last time this lecture (and therefore this code) was rendered was at `r lubridate::now()`
 
 ```{r}
 #| output-location: fragment
-greet("Vic", time = ymd_h("2023-11-21 2am"))
+greet("Vic", time = ymd_h("2024-05-14 2am"))
 ```
 
 # Homework{.section-title background-color="#1e4655"}
