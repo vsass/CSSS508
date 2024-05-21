@@ -7861,7 +7861,7 @@
     "href": "Homework/HW9/homework9.html",
     "title": "Homework 9",
     "section": "",
-    "text": "Answer each of the following questions. Be sure to display all your code in the rendered version (use echo: true throughout1).",
+    "text": "Answer each of the following questions using the iterative techniques covered in lecture. Be sure to display all your code in the rendered version (use echo: true throughout1).",
     "crumbs": [
       "Homework",
       "Homework 9"
@@ -12460,7 +12460,7 @@
     "href": "Lectures/Lecture9/CSSS508_Lecture9.html#step-3-combine-dataframes-into-one",
     "title": "",
     "section": "Step 3: Combine Dataframes into One",
-    "text": "Step 3: Combine Dataframes into One\nNow that we have all our individual dataframes in an element of a list, we can use list_rbind to combine them into one dataframe.\n\n\nlist_rbind(files)\n\n&gt; # A tibble: 1,704 × 5\n&gt;    country     continent lifeExp      pop gdpPercap\n&gt;    &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;\n&gt;  1 Afghanistan Asia         28.8  8425333      779.\n&gt;  2 Albania     Europe       55.2  1282697     1601.\n&gt;  3 Algeria     Africa       43.1  9279525     2449.\n&gt;  4 Angola      Africa       30.0  4232095     3521.\n&gt;  5 Argentina   Americas     62.5 17876956     5911.\n&gt;  6 Australia   Oceania      69.1  8691212    10040.\n&gt;  7 Austria     Europe       66.8  6927772     6137.\n&gt;  8 Bahrain     Asia         50.9   120447     9867.\n&gt;  9 Bangladesh  Asia         37.5 46886859      684.\n&gt; 10 Belgium     Europe       68    8730405     8343.\n&gt; # ℹ 1,694 more rows\n\n\n\n\nThe super efficient, full code for the last two steps would therefore be:\n\npaths |&gt; \n  map(readxl::read_excel) |&gt; \n  list_rbind()"
+    "text": "Step 3: Combine Dataframes into One\nNow that we have all our individual dataframes in elements of a list, we can use list_rbind to combine them into one dataframe.\n\n\nlist_rbind(files)\n\n&gt; # A tibble: 1,704 × 5\n&gt;    country     continent lifeExp      pop gdpPercap\n&gt;    &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;\n&gt;  1 Afghanistan Asia         28.8  8425333      779.\n&gt;  2 Albania     Europe       55.2  1282697     1601.\n&gt;  3 Algeria     Africa       43.1  9279525     2449.\n&gt;  4 Angola      Africa       30.0  4232095     3521.\n&gt;  5 Argentina   Americas     62.5 17876956     5911.\n&gt;  6 Australia   Oceania      69.1  8691212    10040.\n&gt;  7 Austria     Europe       66.8  6927772     6137.\n&gt;  8 Bahrain     Asia         50.9   120447     9867.\n&gt;  9 Bangladesh  Asia         37.5 46886859      684.\n&gt; 10 Belgium     Europe       68    8730405     8343.\n&gt; # ℹ 1,694 more rows\n\n\n\n\nThe super efficient, full code for the last two steps would therefore be:\n\npaths |&gt; \n  map(readxl::read_excel) |&gt; \n  list_rbind()"
   },
   {
     "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#data-in-the-filepath",
@@ -12488,7 +12488,7 @@
     "href": "Lectures/Lecture9/CSSS508_Lecture9.html#more-complex-cases",
     "title": "",
     "section": "More Complex Cases",
-    "text": "More Complex Cases\n\n\n\n\n Complicated Filenames\n\n\nThere might be other variables stored in the directory name, or maybe the file name contains multiple bits of data. In that case, use set_names() (without any arguments) to record the full path, and then use separate_wider_delim() and friends to turn them into useful columns. See example at the end of this section.\n\n\n\n\n\n\n\n\n Untidy data of the same structure\n\n\nYou can use map many times to perform different tidying and data manipulation tasks before combining datasets. Alternatively you can list_rbind first and then perform data manipulation tasks using a standard dplyr approach. See examples here.\n\n\n\n\n\n\n\n\n Heterogenous data\n\n\nRead this section of “R for Data Science”\n\n\n\n\n\n\n Troubleshooting\n\n\nRead this section of “R for Data Science”"
+    "text": "More Complex Cases\n\n\n\n\n Complicated Filenames\n\n\nThere may be other variables stored in the directory name, or maybe the file name contains multiple bits of data. If so, use set_names() (w/o arguments) to record the full path, then use separate_wider_delim() and friends to turn them into useful columns. See example at the end of this section.\n\n\n\n\n\n\n\n\n Untidy data of the same structure\n\n\nYou can use map many times to perform different tidying and data manipulation tasks before combining datasets. Alternatively you can list_rbind first and then perform data manipulation tasks using a standard dplyr approach. See examples here.\n\n\n\n\n\n\n\n\n Heterogenous data\n\n\nRead this section of “R for Data Science”\n\n\n\n\n\n\n Troubleshooting\n\n\nRead this section of “R for Data Science”"
   },
   {
     "objectID": "Lectures/Lecture9/CSSS508_Lecture9.html#saving-your-work",
