@@ -10,6 +10,7 @@ format:
     reference-location: margin
     theme: lecture_styles.scss
     controls: true
+    controls-tutorial: true
     slide-number: true
     code-link: true
     chalkboard: true
@@ -17,6 +18,7 @@ format:
     smaller: true
     preview-links: true
     code-line-numbers: true
+    code-annotations: hover
     history: false
     progress: true
     link-external-icon: true
@@ -187,31 +189,76 @@ gapminder$pop |> mean() |> log() |> sqrt() |> median()
 
 As you can see, pipes allow us to "chain" many function calls together easily. 
 
+\
+
 . . . 
 
 The so-called "native pipe" (i.e. built into base `R`) is relatively new. Before this, the pipe was a function from the `magrittr` package that looks like this: `%>%`. 
+
+\
 
 . . . 
 
 This latter version continues to work but has a different functionality than the new, native pipe. 
 
-. . . 
+## `%>%` versus `|>` {.smaller}
 
-Most importantly, while both the `magrittr` pipe and the native pipe take the LHS (left-hand side) and "pipe" it to the RHS (right-hand side), they operate differently when it comes to explicitly specifying which argument of the RHS to pipe the LHS into. 
+[Most importantly, while both the `magrittr` pipe and the native pipe take the LHS (left-hand side) and "pipe" it to the RHS (right-hand side), they operate differently when it comes to explicitly specifying which argument of the RHS to pipe the LHS into.]{style="font-size: 85%;"}
 
 . . . 
 
 ```{r}
-#| eval: false
 a <- c("Z", NA, "C", "G", "A")
-# magrittr pipe
-a %>% gsub('A', '-', x = .)
-
-# native pipe
-a |> gsub('A','-', x = _) # _ is the placeholder for |> 
-a |> gsub(pattern = 'A', replacement = '-') # leaving the "piped" argument as the only unnamed argument also works 
-a |> (\(placeholder) gsub('A', '-', x = placeholder))() # using an anonymous function call allows you to be explicit while specifying your own placeholder
 ```
+
+<hr>
+
+. . .
+
+:::: {.columns}
+
+::: {.column width="50%"}
+#### `%>%` (`magrittr` pipe)
+```{r}
+#| eval: false
+a %>% gsub(pattern = 'A', # <1>
+           replacement = '-', 
+           x = .) # <2>
+```
+1. `gsub` looks for a regular expression `pattern` (more on this in [Week 7](https://vsass.github.io/CSSS508/Lectures/Lecture7/CSSS508_Lecture7_index.html)) within the specified character vector `x`, and substitutes it with the specified `replacement` value. 
+2. By default, both pipes will pass the LHS to the first argument of the function on the RHS. If you need to pass the LHS to a different argument, i.e. the second, or third, etc., you need to explicitly tell the pipe which argument to pass it to. The placeholder for `%>%` is `.` (a period)
+
+\
+
+[Each of these examples returns:]{style="font-size: 85%;"}
+
+```{r}
+#| echo: false
+a |> gsub('A','-', x = _)
+```
+
+:::
+
+::: {.column width="50%"}
+#### `|>` (native `R` pipe)
+```{r}
+#| eval: false
+a |> gsub('A', # <3>
+          '-', # <3>
+          x = _) # <3> 
+a |> gsub(pattern = 'A', # <4>
+          replacement = '-') # <4>
+a |> (\(placeholder) # <5>
+      gsub('A', # <5>
+           '-', # <5>
+           x = placeholder))() # <5>
+```
+3. `_` is the placeholder for `|>`
+4. Leaving the "piped" argument as the only unnamed argument also works 
+5. Using an anonymous function call allows you to be explicit while specifying your own placeholder
+:::
+
+::::
 
 ::: aside
 You can read more about the differences between `|>` and `%>%` [here](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/#-vs) and anonymous functions [here](http://adv-r.had.co.nz/Functional-programming.html#anonymous-functions). Code above comes from responses to [this stackoverflow post](https://stackoverflow.com/questions/70598384/piping-second-or-higher-argument-in-native-pipe).
@@ -601,7 +648,6 @@ You can ask `R` what your current working directory is by running `getwd()` (`ge
 . . . 
 
 ```{r}
-#| output-location: fragment
 getwd()
 ```
 
@@ -701,10 +747,6 @@ For research to be reproducible, it must also be *portable*. Portable software o
   + `read_csv("C:/my_project/data/my_data.csv")`
 * Use `install.packages()` in `R` script or .qmd files.
 * Use `rm(list=ls())` anywhere but your console.
-
-:::{.fragment}
-
-:::
 
 ### **Do:**
 
@@ -940,31 +982,31 @@ ggplot(dTA = mpg) +
 
 5. What might be a good way to organize your homework assignments for this class? 
 
-## Solution: 1. Adjust settings 
+## Solution: 1. Adjust settings {visibility="hidden"}
 
 ![Clear .RData, Never save](images/clean-slate.png){fig-align="center" width=50%}
 
-## Solution: 1. Adjust settings 
+## Solution: 1. Adjust settings {visibility="hidden"}
 
 ![Native pipe](images/rstudio-pipe-options.png){fig-align="center" width=50%}
 
-## Solution: 1. Adjust settings 
+## Solution: 1. Adjust settings {visibility="hidden"}
 
 ![Highlight function calls; preview colors; rainbow parentheses](images/rainbow_function.png){fig-align="center" width=50%}
 
-## Solution: 1. Adjust settings 
+## Solution: 1. Adjust settings {visibility="hidden"}
 
 ![Code appearance](images/code_style.png){fig-align="center" width=50%}
 
-## Solution: 1. Adjust settings 
+## Solution: 1. Adjust settings {visibility="hidden"}
 
 ![Pane Layout](images/pane_arrangement.png){fig-align="center" width=50%}
 
-## Solution: 1. Adjust settings 
+## Solution: 1. Adjust settings {visibility="hidden"}
 
 ![Markdown Preferences](images/markdown_preferences.png){fig-align="center" width=50%}
 
-## Solution: 2. Readable code style 
+## Solution: 2. Readable code style {visibility="hidden"}
 
 ::: {.fragment .semi-fade-out fragment-index=1}
 ```{r}
@@ -1003,7 +1045,7 @@ flights |>
 ```
 :::
 
-## Solution: 3. *Option* + *Shift* + *K* / *Alt* + *Shift* + *K* 
+## Solution: 3. *Option* + *Shift* + *K* / *Alt* + *Shift* + *K* {visibility="hidden"}
 
 ![](images/keyboard_shortcuts.png){fig-align="center" width=80%}
 
@@ -1012,7 +1054,7 @@ You can find the same quick reference pop-up by clicking *Tools* > *Keyboard Sho
 :::
 
 
-## Solution: 4. Keyboard shortcut 
+## Solution: 4. Keyboard shortcut {visibility="hidden"}
 
 ::: {.fragment .semi-fade-out fragment-index=1}
 ```{r}
@@ -1024,6 +1066,8 @@ ggplot(dTA = mpg) +
   geom_smooth(method = "lm)
 ```
 :::
+
+\
 
 ::: {.fragment .fade-in fragment-index=1}
 ```{r}
@@ -1037,7 +1081,7 @@ ggplot(data = mpg,
 ```
 :::
 
-## Solution: 5. Organizing a class 
+## Solution: 5. Organizing a class {visibility="hidden"}
 
 :::: {.columns}
 
@@ -1109,6 +1153,8 @@ Reproducible studies can still be *wrong*... and in fact reproducibility makes p
 
 . . . 
 
+\
+
 Reproducibility means:
 
 * Transparent research practices.
@@ -1171,13 +1217,9 @@ For academic papers, degrees of reproducibility vary:
 0. "Read the article"
 1. Shared data with documentation
 2. Shared data and all code
-3. Interactive document
-4. Research compendium
-5. Docker compendium: Self-contained ecosystem
-:::
-
-::: aside
-We'll briefly discuss research compendiums, such as Docker, during the last lecture of class as well. 
+3. Interactive document^[A .qmd is one such example.]
+4. Research compendium^[Usually contains all code, data, documentation, and outputs related to the project, allowing others to reproduce your analyses.]
+5. Docker compendium^[A research compendium that includes a Dockerfile or container image so the full computational environment can be recreated, regardless of machine setup.]: Self-contained ecosystem
 :::
 
 ## Interactive Documents
@@ -1211,7 +1253,7 @@ Common Platforms:
 :::: {.columns}
 
 ::: {.column width="40%"}
-Given a vector of values: 
+Given a vector^[This is an example of a *named* vector, where each element is given a name (LHS) associated with its value (RHS).] of values: 
 
 ```{r}
 x <- c(a = "one", 
@@ -1231,41 +1273,41 @@ You can select from the vector
 ::: {.fragment}
 ```{r}
 #| output-location: fragment
-# with positive integers
-x[c(3, 1, 5)]
+x[c(3, 1, 5)] # <1>
 ```
+1. With positive integers
 :::
 
 ::: {.fragment}
 ```{r}
 #| output-location: fragment
-# even repeated values
-x[c(3, 1, 1, 5, 3)]
+x[c(3, 1, 1, 5, 3)] # <2>
 ```
+2. Even repeated values
 :::
 
 ::: {.fragment}
 ```{r}
 #| output-location: fragment
-# with negative integers
-x[c(-2, -6, -7)]
+x[c(-2, -6, -7)] # <3>
 ```
+3. With negative integers (removes these elements from the vector)
 :::
 
 ::: {.fragment}
 ```{r}
 #| output-location: fragment
-# with a logical vector
-x[!is.na(x)]
+x[!is.na(x)] # <4>
 ```
+4. With a logical vector
 ::: 
 
 ::: {.fragment}
 ```{r}
 #| output-location: fragment
-# or with a named vector
-x[c("c", "h")]
+x[c("c", "h")] # <5>
 ```
+5. Or with a named vector
 ::: 
 :::
 
@@ -1283,12 +1325,12 @@ You can select rows and columns from dataframes with `df[rows, cols]`.
 df <- tibble(
   x = 1:3, 
   y = c("a", "e", "f"), 
-  z = runif(3) # defaults: min = 0, max = 1
+  z = runif(3) # <1>
 )
 
 df
 ```
-
+1. defaults: `min = 0`, `max = 1`
 :::
 
 ::: {.column width="60%"}
@@ -1296,62 +1338,72 @@ df
 ::: {.fragment}
 ```{r}
 #| output-location: fragment
-# Select first row and second column
-df[1, 2]
+df[1, 2] # <2>
 ```
+2. Select first row and second column
 :::
 
 ::: {.fragment}
 ```{r}
 #| output-location: fragment
-# Select all rows and columns x and y
-df[, c("x" , "y")]
+df[, c("x" , "y")] # <3>
 ```
+3. Select all rows and columns `x` and `y`
 :::
 
 ::: {.fragment}
 ```{r}
 #| output-location: fragment
-# Select rows where `x` is greater than 1 and all columns
-df[df$x > 1, ]
+df[df$x > 1, ] # <4>
 ```
+4. Select rows based on a logical condition (more on this in [Week 4](https://vsass.github.io/CSSS508/Lectures/Lecture4/CSSS508_Lecture4_index.html)), i.e. where rows of `x` are greater than 1 and all columns
 :::
 :::
 ::::
 
-## `data.frame()` vs. `tibble()` <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+## `data.frame()` vs. `tibble()` 
 
-Tibbles are the tidyverse version of a base `R` dataframe. Usually you can use them interchangably without issue but they have slightly different behavior that's important to know about when indexing in this way. 
+[Tibbles are the tidyverse version of a base `R` dataframe. Usually you can use them interchangably without issue but they have slightly different behavior that's important to know about when indexing in this way.]{style="font-size: 85%;"}
 
 . . . 
 
-If `df` is a data.frame, then `df[, cols]` will return a vector if `col` selects a single column and a data frame if it selects more than one column. 
+:::: {.columns}
+
+::: {.column width="50%"}
+[If `df` is a data.frame, then `df[, cols]` will return a vector if `col` selects a single column and a data frame if it selects more than one column.]{style="font-size: 85%;"}
 
 ```{r}
 #| output-location: fragment
 df1 <- data.frame(x = 1:3)
 df1[, "x"]
 ```
-. . . 
+:::
 
-If `df` is a tibble, then `[` will always return a tibble.
+::: {.column width="50%"}
+
+[If `df` is a tibble, then `[` will always return a tibble.]{style="font-size: 85%;"}
 
 ```{r}
 #| output-location: fragment
 df2 <- tibble(x = 1:3)
 df2[, "x"]
 ```
+:::
+
+::::
 
 . . . 
 
-One way to avoid this ambiguity with `data.frames` is to explicitly specify `drop = FALSE`:
+\
+
+[One way to avoid this ambiguity with `data.frames` is to explicitly specify `drop = FALSE`:]{style="font-size: 85%;"}
 
 ```{r}
 #| output-location: fragment
 df1[, "x" , drop = FALSE]
 ```
 
-## Selecting from dataframes with `[[` and `$` <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+## Selecting from dataframes with `[[` and `$`
 
 `[`, which selects many elements, is paired with `[[` and `$`, which extract a single element.
 
@@ -1377,27 +1429,26 @@ tb
 
 ```{r}
 #| output-location: fragment
-# by position
-tb[[1]]
+tb[[1]] # <1>
 ```
+1. By position
 :::
 
 ::: {.fragment}
 ```{r}
 #| output-location: fragment
-# by name
-tb[["x"]]
+tb[["x"]] # <2>
 ```
-
+2. By name
 :::
 
 ::: {.fragment}
-`$` is specialized for access by name:
 
 ```{r}
 #| output-location: fragment
-tb$x
+tb$x # <3>
 ```
+3. `$` is specialized for access by name
 :::
 
 ::: {.fragment}

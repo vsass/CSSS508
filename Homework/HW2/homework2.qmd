@@ -1,6 +1,8 @@
 ---
 title: "Homework 2"
 highlight-style: a11y-dark
+reference-location: margin
+code-annotations: hover
 ---
 
 ```{r}
@@ -10,24 +12,29 @@ library(gapminder)
 
 ### Instructions
 
-In this homework, you'll pose a question regarding the Gapminder dataset and investigate it graphically. Rather than using the `gapminder` package like we did in lecture, you'll want to use the [`dslabs`](https://cran.r-project.org/web/packages/dslabs/dslabs.pdf) package^[Remember to install the package in your console first (not in your qmd file) and then load it with the library() function.], which has a larger subset of the Gapminder data (i.e. more observations and variables).
+In this homework, you'll pose a question regarding the Gapminder dataset and investigate it graphically. Rather than using the `gapminder` package like we did in lecture, you'll want to use the [`dslabs`](https://cran.r-project.org/web/packages/dslabs/dslabs.pdf) package^[Remember to install the package in your console first (not in your .qmd file) and then load it in your .qmd file with the `library()` function.], which has a larger subset of the Gapminder data (i.e. more observations and variables).
 
-* At the beginning of your document, write down a research question that is based on the Gapminder dataset (e.g., "How does population change over time in different countries?")
+* At the beginning of your document, write down a research question that is based on this larger version of the Gapminder dataset^[Run `dslabs::gapminder` in the console to read descriptions of all available variables.] (e.g., "How does population change over time in different countries?")
 * Create 3-6 plots to answer/investigate your research question. Consider histograms (`geom_histogram()`), scatterplots (`geom_point()`), or lineplots (`geom_line()`).
 * Be sure all titles, axes, and legends are clearly labelled (no raw variable names).
 * Include at least one plot with `facet_wrap()` or `facet_grid()`.
-* You can use other `geoms` like bar charts, box plots, add meaningful vertical or horizontal lines, etc. You may find [**this data visualization cheat sheet**](https://rstudio.github.io/cheatsheets/data-visualization.pdf) helpful.
+* You can use other `geoms` like bar charts or box plots, add meaningful vertical or horizontal lines, etc. You may find [**this data visualization cheat sheet**](https://rstudio.github.io/cheatsheets/data-visualization.pdf) helpful.
 
 Your document should be pleasant for a peer to look at, with some organization. You must write up your observations in words as well as showing the graphs. Upload both the `.qmd` file and the `.html` file to Canvas. 
 
-*Optional: If you'd like to compare several specific countries, you can adapt the following pseudo_code below to create a subset of the data with as many countries as you like. Replace `"country1"` et al. with the country name as it appears in the dataset. Use `unique(gapminder$country)` to see a complete list of all the countries available.:*
+*Optional: If you'd like to compare several specific countries, you can adapt the following pseudo code^[We'll cover how to do this type of data manipulation in Week 4.] below to create a subset of the data with as many countries as you like. Replace `"country1"` et al. with the country name as it appears in the dataset. Use `unique(gapminder$country)` to see a complete list of all the countries available.*
 
 ```{r}
 #| eval: false
 subset <- gapminder |> 
-  filter(country %in% c("county1", "country2", "country3"))
+  filter(country %in% c("county1", "country2", "country3")) # <1>
 ```
+1. `filter()` filters the rows of the dataset `gapminder` based upon a logical condition. `%in%` creates a logical vector the same length as `country`, evaluating whether each element in `country` matches any of the available values in the vector to its right (in this case, `country1`, `country2`, or `country3`).
 
+::: {.callout-warning icon=false}
+## <span style="color:orange">{{< fa exclamation-triangle >}}</span> Before you submit:
+Have you remembered to add `embed-resources: true` to your YAML?
+:::
 
 ### Due Dates
 
@@ -39,6 +46,6 @@ subset <- gapminder |>
 # reading in base due date schedule
 source("../due_dates_schedule.R")
 
-make_due_date_table_spring(2) |> 
+make_due_date_table_fall(2) |> 
   tab_options(table.background.color = "#f6f7f9")
 ```

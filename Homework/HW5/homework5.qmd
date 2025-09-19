@@ -1,6 +1,7 @@
 ---
 title: "Homework 5"
 code-annotations: hover
+reference-location: margin
 execute: 
   message: false
   warning: false
@@ -8,10 +9,6 @@ output:
   html_document:
     highlight-style: a11y-dark
 ---
-
-### [Key](homework5_key.qmd)
-
-Click link above for answers to homework 5.
 
 ### Data
 [billboard_top100.csv](../../Lectures/Lecture5/data/billboard_top100.csv)
@@ -188,7 +185,11 @@ Have you remembered to add `embed-resources: true` to your YAML?
 # reading in base due date schedule
 source("../due_dates_schedule.R")
 
-make_due_date_table_spring(5) |> 
-  tab_options(table.background.color = "#f6f7f9")
+make_due_date_table_fall(5) |> 
+  tab_options(table.background.color = "#f6f7f9") |> 
+  tab_footnote(
+    footnote = md("You will have **two weeks** to complete Homework 5"),
+    locations = cells_body(columns = Due_Date, rows = 5)
+  ) 
 ```
 

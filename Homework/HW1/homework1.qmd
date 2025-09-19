@@ -1,15 +1,21 @@
 ---
 title: "Homework 1"
 highlight-style: a11y-dark
+reference-location: margin
 ---
 
 ### Instructions
 
-Write up a .qmd file showing some exploratory analyses of the Swiss fertility data. Upload both the `.qmd` file and the `.html` file to Canvas. You must upload **BOTH** for credit.
+Write up a .qmd file showing some exploratory analyses of the Swiss fertility data^[`swiss` ia a built-in dataset in `R`. You can print the whole dataset by running `swiss` in your console. Use `names(swiss)` to see all available variable names. Running `View(swiss)` will pop up an interactive data viewer window.]. Upload both the `.qmd` file and the `.html` file to Canvas. You must upload **BOTH** for credit.
 
-Mix in-line R calculations, R output, and plots with text describing the relationships you see. Include *at least* one plot and one table using the `gt` package. You are encouraged to include more! You must use in-line R calculations/references at least once (e.g. functions like `nrow()`, `mean()`, `sd()`, `cor()`, `median()`, `min()`) and *may not hard-code any numbers referenced in your text*.
+Mix in-line `R` calculations, `R` output, and plots with text describing the relationships you see. Include *at least* one plot^[You can explore all built-in plots available in base `R` by running `library(help = "graphics")` in the console or check out sections [4.2](https://intro2r.com/simple-base-r-plots.html) & [4.3](https://intro2r.com/custom_plot.html) of [*An Introduction to R*](https://intro2r.com/).] and one table using the [`gt`](https://gt.rstudio.com/articles/gt.html) package^[You can keep this simple (like the example from lecture) or make it as complex as you'd like!]. You are encouraged to include more! You must use in-line `R` calculations/references at least once (e.g. functions like `nrow()`, `mean()`, `sd()`, `cor()`, `median()`, `min()`) and *may not hard-code any numbers referenced in your text*.
 
 Your document should be pleasant for a peer to look at, with some organization using sections or lists, and all plots labeled clearly. Use chunk options `echo` and `output` to limit the code/output you show in the .html. Discussion of specific values should be summarized in sentences in your text---*not as printed code and output*---and rounded so as not to be absurdly precise (e.g. round `x` with `round(x, 2)`).
+
+::: {.callout-warning icon=false}
+## <span style="color:orange">{{< fa exclamation-triangle >}}</span> Before you submit:
+Have you remembered to add `embed-resources: true` to your YAML?
+:::
 
 ### Template
 
@@ -33,7 +39,7 @@ Your document should be pleasant for a peer to look at, with some organization u
 # reading in base due date schedule
 source("../due_dates_schedule.R")
 
-make_due_date_table_spring(1) |> 
+make_due_date_table_fall(1) |> 
   tab_options(table.background.color = "#f6f7f9")
 ```
 

@@ -27,8 +27,8 @@ library(tidyverse)
 library(gt)
 
 schedule <- tibble(Homework = c(1:9), 
-                   Due_Date = c("2 April", "9 April", "16 April", "23 April", "30 April", "7 May", "14 May", "21 May", "28 May"), 
-                   Peer_Due_Date = c("7 April", "14 April", "21 April", "28 April", "5 May", "12 May", "19 May", "26 May", "2 June"))
+                   Due_Date = c("7 October", "14 October", "21 October", "28 October", "11 November", "18 November", "25 November", "2 December", "9 December"), 
+                   Peer_Due_Date = c("12 October", "19 October", "26 October", "2 November", "16 November", "21 November", "30 November", "7 December", "14 December"))
 
 schedule |> 
   gt() |> 
@@ -37,27 +37,39 @@ schedule |>
   cols_label(Homework = "#",
              Due_Date = "Homework Due",
              Peer_Due_Date = "Peer Review Due") |> 
+  # make column labels bold
+  tab_style(style = cell_text(weight = "bolder", size = "large"), 
+            locations = cells_column_labels(columns = everything())) |> 
   tab_style(style = cell_fill(color = "#c7cdac"),
             locations = list(cells_body(columns = c(Due_Date)), 
                              cells_column_labels(columns = c(Due_Date)))) |> 
-  tab_style(style = cell_fill(color = "#99a486"),
+  tab_style(style = list(cell_fill(color = "#99a486"), cell_text(color = "white")),
             locations = list(cells_body(columns = c(Peer_Due_Date)), 
                              cells_column_labels(columns = c(Peer_Due_Date)))) |> 
   tab_style(style = cell_fill(color = "#f6f7f9"),
             locations = list(cells_body(columns = Homework), 
-                             cells_column_labels(columns = Homework))) |> 
+                             cells_column_labels(columns = Homework), 
+                             cells_footnotes())) |> 
   tab_options(table.align = "left", 
               table.font.names = c("Raleway", "Fraunces"), 
-              table.border.top.style = "hidden") 
+              table.border.top.style = "hidden") |> 
+  tab_footnote(
+    footnote = md("You will have **two weeks** to complete Homework 5"),
+    locations = cells_body(columns = Due_Date, rows = 5)
+  ) |> 
+  tab_footnote(
+    footnote = md("We will cover content for Homework 6 **two weeks** prior to its due date"),
+    locations = cells_body(columns = Due_Date, rows = 6)
+  ) |> 
+  cols_width(Homework ~ pct(10), 
+             contains("Date") ~ px(45)) |> 
+  tab_options(table.width = pct(65), table.font.size = pct(110)) 
 ```
 
-------------------------------------------------------------------------
-
+\
 All assignments should be created using Quarto and uploaded to Canvas as both html and qmd files. Your document should be pleasant for a peer to look at and follow all instructions. Use sections for organization, label figures/tables, and use code chunks. 
 
 ### **Rubric Students Use to Grade Assignments:**
-
-\
 
 ```{r}
 #| echo: false
@@ -67,13 +79,13 @@ All assignments should be created using Quarto and uploaded to Canvas as both ht
 source("rubric.R")
 
 rubric |> 
-  tab_options(table.align = "left", table.font.size = pct(105))
+  tab_options(table.align = "left", table.width = pct(45), table.font.size = pct(110))
   
 ```
 
 ### **Peer Review:**
 
-You are required to **both grade and provide feedback** on a peer's homework each week. Reading/evaluating the work of others is useful and important! Good programmers realize that most problems have been solved by others; the trick is figuring out how to apply existing code to new problems. You will develop this skill by reading others' code, evaluating their approach to problems, providing suggestions, and pointing out when you learned something new. <span style="background-color: #decbe4;">**Good peer reviews** give constructive, polite, and insightful comments, are specific and concise, use the grading rubric above, and point out what you learned from their code.</span> <span style="background-color: #fdcdac;">**Poor peer reviews** are impolite or unprofessional, are generic (i.e., could be applied to anyone's homework), or fail to provide useful suggestions.</span>
+You are required to **both grade and provide feedback** on a peer's homework each week. Reading/evaluating the work of others is useful and important! Good programmers realize that most problems have been solved by others; the trick is figuring out how to apply existing code to new problems. You will develop this skill by reading others' code, evaluating their approach to problems, providing suggestions, and pointing out when you learned something new. <span style="background-color: rgba(249,157,27, 0.25);">**Poor peer reviews** are impolite or unprofessional, are generic (i.e., could be applied to anyone's homework), or fail to provide useful suggestions.</span> <span style="background-color: rgba(78,29,76, 0.25);">**Good peer reviews** give constructive, polite, and insightful comments, are specific and concise, use the grading rubric above, and point out what you learned from their code.</span> 
 
 ::: {.callout-important}
 ## Late Homework Will Automatically Lose Peer-Review Credit
@@ -82,7 +94,6 @@ Peer reviews are randomly assigned when the due date/time is reached. Therefore,
 
 ### **Rubric Instructor Uses to Grade Peer Review:**
 
-\
 
 ```{r}
 #| echo: false
@@ -90,7 +101,7 @@ Peer reviews are randomly assigned when the due date/time is reached. Therefore,
 #| message: false
 
 peer_review_rubric |> 
-  tab_options(table.align = "left", table.font.size = pct(105))
+  tab_options(table.align = "left", table.width = pct(55), table.font.size = pct(105))
 ```
 
 
@@ -98,8 +109,8 @@ peer_review_rubric |>
 
 A number of situations may warrant contacting the instructor:
 
-1.  If you believe you have received an unfair peer review, you can **resubmit** your homework for evaluation by the instructor. The assignment will be regraded, which may result in a higher, same, or lower grade.
+1.  If you believe you have received an unfair peer review, you can **request** for evaluation by the instructor. The assignment will be regraded, which may result in a higher, same, or lower grade.
 
-2.  If you wish for more feedback on a particular part of the homework, you can ask the instructor for additional explanation **without resubmitting** during office hours or over Slack. 
+2.  If you wish for more feedback on a particular part of the homework, you can ask the instructor for additional explanation during office hours or over Slack. 
 
-3.  If you receive no feedback, I will provide gentle peer review **on request**.
+3.  If you receive no feedback, I will provide peer review **by request**.
