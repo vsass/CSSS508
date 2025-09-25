@@ -373,31 +373,38 @@
 </div></div>
 
 <aside><div>
-<p>You may also see <code>&amp;&amp;</code> and <code>||</code> but they are what’s known as short-circuiting operators and are not to be used in <code>dplyr</code> functions (used for programming not data manipulation); they’ll only ever return a single <code>TRUE</code> or <code>FALSE</code>.</p>
+<p><span class="fragment">You may also see <code>&amp;&amp;</code> and <code>||</code> but they are what’s known as short-circuiting operators and are not to be used in <code>dplyr</code> functions (used for programming not data manipulation); they’ll only ever return a single <code>TRUE</code> or <code>FALSE</code>.</span></p>
 </div><ol class="aside-footnotes"><li id="fn3"><p>Note: there are TWO equal signs here!</p></li></ol></aside></section>
 <section id="unexpected-behavior" class="slide level2">
 <h2>Unexpected Behavior</h2>
 <p>Be careful using <code>==</code> with numbers:</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span> <span class="sc">/</span> <span class="dv">49</span> <span class="sc">*</span> <span class="dv">49</span>, <span class="fu">sqrt</span>(<span class="dv">2</span>) <span class="sc">^</span> <span class="dv">2</span>)</span>
-<span id="cb1-2"><a></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1"></a>(x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span> <span class="sc">/</span> <span class="dv">49</span> <span class="sc">*</span> <span class="dv">49</span>, <span class="fu">sqrt</span>(<span class="dv">2</span>) <span class="sc">^</span> <span class="dv">2</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="1" data-code-annotation="1">Wrapping an entire object assignment in parentheses simultaneously defines the object and shows you what it represents.</span>
+</dd>
+</dl>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 2</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1"></a>x <span class="sc">==</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2"></a><span class="fu">print</span>(x, <span class="at">digits =</span> <span class="dv">16</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1"></a>x <span class="sc">==</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2"></a><span class="fu">print</span>(x, <span class="at">digits =</span> <span class="dv">16</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1">Computers store numbers with a fixed number of decimal places so there’s no way to <em>precisely</em> represent decimals.</span>
-</dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="2"><code>dplyr::near()</code> is a useful alternative which ignores small differences.</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="2">Computers store numbers with a fixed number of decimal places so there’s no way to <em>precisely</em> represent decimals.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="3"><code>dplyr::near()</code> is a useful alternative which ignores small differences.</span>
 </dd>
 </dl>
 </div>
@@ -412,12 +419,12 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1"></a><span class="cn">NA</span> <span class="sc">&gt;</span> <span class="dv">5</span></span>
 <span id="annotated-cell-3-2"><a href="#annotated-cell-3-2"></a><span class="dv">10</span> <span class="sc">==</span> <span class="cn">NA</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3">3</button><span id="annotated-cell-3-3" class="code-annotation-target"><a href="#annotated-cell-3-3"></a><span class="cn">NA</span> <span class="sc">==</span> <span class="cn">NA</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="4">4</button><span id="annotated-cell-3-3" class="code-annotation-target"><a href="#annotated-cell-3-3"></a><span class="cn">NA</span> <span class="sc">==</span> <span class="cn">NA</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="3" data-code-annotation="3">The logic here: if you have one unknown and a second unknown, you don’t actually know if they equal one another!</span>
+<span data-code-cell="annotated-cell-3" data-code-lines="3" data-code-annotation="4">The logic here: if you have one unknown and a second unknown, you don’t actually know if they equal one another!</span>
 </dd>
 </dl>
 </div>
@@ -431,7 +438,7 @@
 <div class="fragment">
 <p>This is the reason we use <code>is.na()</code> to check for missingness.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">is.na</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">is.na</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  TRUE FALSE</code></pre>
 </div>
@@ -442,20 +449,20 @@
 <h2>Examples of Logical Operators</h2>
 <p>Let’s create two objects, <code>A</code> and <code>B</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>)</span>
-<span id="cb7-2"><a></a>B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>)</span>
+<span id="cb6-2"><a></a>B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>Comparisons:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1"></a>A <span class="sc">==</span> B</span>
 <span id="annotated-cell-6-2"><a href="#annotated-cell-6-2"></a>A <span class="sc">&gt;</span> B</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="4">4</button><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3"></a>A <span class="sc">%in%</span> B</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3"></a>A <span class="sc">%in%</span> B</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-6" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="3" data-code-annotation="4">Will return a vector the length of <code>A</code> that is <code>TRUE</code> whenever a value in <code>A</code> is anywhere in <code>B</code>. <br> <strong>Note</strong>: You CAN use <code>%in%</code> to search for <code>NA</code>s.</span>
+<span data-code-cell="annotated-cell-6" data-code-lines="3" data-code-annotation="1">Will return a vector the length of <code>A</code> that is <code>TRUE</code> whenever a value in <code>A</code> is anywhere in <code>B</code>. <br> <strong>Note</strong>: You CAN use <code>%in%</code> to search for <code>NA</code>s.</span>
 </dd>
 </dl>
 </div>
@@ -470,13 +477,13 @@
 <p>Combinations:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-7-1"><a href="#annotated-cell-7-1"></a>A <span class="sc">&gt;</span> <span class="dv">5</span> <span class="sc">&amp;</span> A <span class="sc">&lt;=</span> B </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="5">5</button><span id="annotated-cell-7-2" class="code-annotation-target"><a href="#annotated-cell-7-2"></a>B <span class="sc">&lt;</span> <span class="dv">10</span> <span class="sc">|</span> B <span class="sc">&gt;</span> <span class="dv">20</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2">2</button><span id="annotated-cell-7-2" class="code-annotation-target"><a href="#annotated-cell-7-2"></a>B <span class="sc">&lt;</span> <span class="dv">10</span> <span class="sc">|</span> B <span class="sc">&gt;</span> <span class="dv">20</span></span>
 <span id="annotated-cell-7-3"><a href="#annotated-cell-7-3"></a><span class="sc">!</span>(A <span class="sc">==</span> <span class="dv">10</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-7" data-target-annotation="5">5</dt>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-7" data-code-lines="2" data-code-annotation="5">Be sure not to cut corners (i.e.&nbsp;writing <br> <code>B &lt; 10 | &gt; 20</code>). The code won’t technically error but it won’t evaluate the way you expect it to. Read more about the confusing logic behind this <a href="https://r4ds.hadley.nz/logicals#order-of-operations">here</a>.</span>
+<span data-code-cell="annotated-cell-7" data-code-lines="2" data-code-annotation="2">Be sure not to cut corners (i.e.&nbsp;writing <br> <code>B &lt; 10 | &gt; 20</code>). The code won’t technically error but it won’t evaluate the way you expect it to. Read more about the confusing logic behind this <a href="https://r4ds.hadley.nz/logicals#sec-order-operations-boolean">here</a>. In essence the truncated second part of this conditional statement (&gt; 20) will evaluate to <code>TRUE</code> since any numeric that isn’t <code>0</code> for a logical operator is coerced to <code>TRUE</code>. Therefore this statement will actually always evaluate to <code>TRUE</code> and will return all elements of <code>B</code> instead of the ones that meet your specified condition.</span>
 </dd>
 </dl>
 </div>
@@ -507,33 +514,62 @@
 </div>
 </div></div>
 <div class="fragment">
+<hr>
+<p><br>
+</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1"></a>C <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="cn">NA</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="cn">NA</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="6">6</button><span id="annotated-cell-8-2" class="code-annotation-target"><a href="#annotated-cell-8-2"></a><span class="fu">any</span>(C <span class="sc">&lt;=</span> <span class="dv">10</span>)</span>
-<span id="annotated-cell-8-3"><a href="#annotated-cell-8-3"></a><span class="fu">all</span>(C <span class="sc">&lt;=</span> <span class="dv">20</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="7">7</button><span id="annotated-cell-8-4" class="code-annotation-target"><a href="#annotated-cell-8-4"></a><span class="fu">all</span>(C <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="8">8</button><span id="annotated-cell-8-5" class="code-annotation-target"><a href="#annotated-cell-8-5"></a><span class="fu">mean</span>(C, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>C <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="cn">NA</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="cn">NA</span>)</span>
+<span id="cb9-2"><a></a><span class="fu">any</span>(C <span class="sc">&lt;=</span> <span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-1" class="code-annotation-target"><a href="#annotated-cell-9-1"></a><span class="fu">all</span>(C <span class="sc">&lt;=</span> <span class="dv">20</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-8" data-target-annotation="6">6</dt>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="2" data-code-annotation="6">Like other summary functions, they’ll return <code>NA</code> if there are any missing values present and it’s <code>FALSE</code>.</span>
-</dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="7">7</dt>
-<dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="4" data-code-annotation="7">Use <code>na.rm = TRUE</code> to remove <code>NA</code>s prior to evaluation.</span>
-</dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="8">8</dt>
-<dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="5" data-code-annotation="8">When you evaluate a logical vector numerically, <code>TRUE</code> = 1 and <code>FALSE</code> = 0. This makes <code>sum()</code> and <code>mean()</code> useful when summarizing logical functions (sum gives number of <code>TRUE</code>s and mean gives the proportion).</span>
+<span data-code-cell="annotated-cell-9" data-code-lines="1" data-code-annotation="1">Like other summary functions, they’ll return <code>NA</code> if there are any missing values present and it’s <code>FALSE</code>.</span>
 </dd>
 </dl>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE
-[1] NA
-[1] TRUE
-[1] 11.25</code></pre>
+<pre><code>[1] NA</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="2">2</button><span id="annotated-cell-10-1" class="code-annotation-target"><a href="#annotated-cell-10-1"></a><span class="fu">all</span>(C <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-10" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-lines="1" data-code-annotation="2">Use <code>na.rm = TRUE</code> to remove <code>NA</code>s prior to evaluation.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="3">3</button><span id="annotated-cell-11-1" class="code-annotation-target"><a href="#annotated-cell-11-1"></a><span class="fu">mean</span>(C, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-11" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="1" data-code-annotation="3">When you evaluate a logical vector numerically, <code>TRUE</code> = 1 and <code>FALSE</code> = 0. This makes <code>sum()</code> and <code>mean()</code> useful when summarizing logical functions (sum gives number of <code>TRUE</code>s and mean gives the proportion).</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11.25</code></pre>
 </div>
 </div>
 </div>
@@ -546,20 +582,28 @@
 <p>If you want to use one value when a condition is <code>TRUE</code> and another value when it’s <code>FALSE</code>.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">if_else</span>(<span class="at">condition =</span> <span class="st">"A logical vector"</span>, </span>
-<span id="cb11-2"><a></a>        <span class="at">true =</span> <span class="st">"Output when condition is true"</span>, </span>
-<span id="cb11-3"><a></a>        <span class="at">false =</span> <span class="st">"Output when condition is false"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-1" class="code-annotation-target"><a href="#annotated-cell-12-1"></a><span class="fu">if_else</span>(<span class="at">condition =</span> <span class="st">"A logical vector"</span>,</span>
+<span id="annotated-cell-12-2"><a href="#annotated-cell-12-2"></a>        <span class="at">true =</span> <span class="st">"Output when condition is true"</span>,</span>
+<span id="annotated-cell-12-3"><a href="#annotated-cell-12-3"></a>        <span class="at">false =</span> <span class="st">"Output when condition is false"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="1,2,3" data-code-annotation="1">All of these arguments are required.</span>
+</dd>
+</dl>
+</div>
 </div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span><span class="sc">:</span><span class="dv">3</span>, <span class="cn">NA</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="9">9</button><span id="annotated-cell-10-2" class="code-annotation-target"><a href="#annotated-cell-10-2"></a><span class="fu">if_else</span>(x <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">"+ve"</span>, <span class="st">"-ve"</span>, <span class="st">"???"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span><span class="sc">:</span><span class="dv">3</span>, <span class="cn">NA</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="2">2</button><span id="annotated-cell-13-2" class="code-annotation-target"><a href="#annotated-cell-13-2"></a><span class="fu">if_else</span>(x <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">"+ve"</span>, <span class="st">"-ve"</span>, <span class="st">"???"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-10" data-target-annotation="9">9</dt>
+<dt data-target-cell="annotated-cell-13" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-10" data-code-lines="2" data-code-annotation="9">There’s an optional fourth argument, <code>missing</code> which will be used if the input is <code>NA</code>.</span>
+<span data-code-cell="annotated-cell-13" data-code-lines="2" data-code-annotation="2">There’s an optional fourth argument, <code>missing</code>, which will be used if the input is <code>NA</code>.</span>
 </dd>
 </dl>
 </div>
@@ -576,21 +620,21 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1"></a><span class="fu">case_when</span>(</span>
-<span id="annotated-cell-11-2"><a href="#annotated-cell-11-2"></a>  x <span class="sc">==</span> <span class="dv">0</span>   <span class="sc">~</span> <span class="st">"0"</span>,</span>
-<span id="annotated-cell-11-3"><a href="#annotated-cell-11-3"></a>  x <span class="sc">&lt;</span> <span class="dv">0</span>    <span class="sc">~</span> <span class="st">"-ve"</span>, </span>
-<span id="annotated-cell-11-4"><a href="#annotated-cell-11-4"></a>  x <span class="sc">&gt;</span> <span class="dv">0</span>    <span class="sc">~</span> <span class="st">"+ve"</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="10">10</button><span id="annotated-cell-11-5" class="code-annotation-target"><a href="#annotated-cell-11-5"></a>  <span class="fu">is.na</span>(x) <span class="sc">~</span> <span class="st">"???"</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="11">11</button><span id="annotated-cell-11-6" class="code-annotation-target"><a href="#annotated-cell-11-6"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-14-1"><a href="#annotated-cell-14-1"></a><span class="fu">case_when</span>(</span>
+<span id="annotated-cell-14-2"><a href="#annotated-cell-14-2"></a>  x <span class="sc">==</span> <span class="dv">0</span>   <span class="sc">~</span> <span class="st">"0"</span>,</span>
+<span id="annotated-cell-14-3"><a href="#annotated-cell-14-3"></a>  x <span class="sc">&lt;</span> <span class="dv">0</span>    <span class="sc">~</span> <span class="st">"-ve"</span>, </span>
+<span id="annotated-cell-14-4"><a href="#annotated-cell-14-4"></a>  x <span class="sc">&gt;</span> <span class="dv">0</span>    <span class="sc">~</span> <span class="st">"+ve"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="10">10</button><span id="annotated-cell-14-5" class="code-annotation-target"><a href="#annotated-cell-14-5"></a>  <span class="fu">is.na</span>(x) <span class="sc">~</span> <span class="st">"???"</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="11">11</button><span id="annotated-cell-14-6" class="code-annotation-target"><a href="#annotated-cell-14-6"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-11" data-target-annotation="10">10</dt>
+<dt data-target-cell="annotated-cell-14" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-cell="annotated-cell-11" data-code-lines="5" data-code-annotation="10">Use <code>.default</code> if you want to create a “default”/catch all value.</span>
+<span data-code-cell="annotated-cell-14" data-code-lines="5" data-code-annotation="10">Use <code>.default</code> if you want to create a “default”/catch all value.</span>
 </dd>
-<dt data-target-cell="annotated-cell-11" data-target-annotation="11">11</dt>
+<dt data-target-cell="annotated-cell-14" data-target-annotation="11">11</dt>
 <dd>
-<span data-code-cell="annotated-cell-11" data-code-lines="6" data-code-annotation="11">Both functions require compatible types: i.e.&nbsp;numerical and logical, strings and factors, dates and datetimes, <code>NA</code> and everything.</span>
+<span data-code-cell="annotated-cell-14" data-code-lines="6" data-code-annotation="11">Both functions require compatible types: i.e.&nbsp;numerical and logical, strings and factors, dates and datetimes, <code>NA</code> and everything.</span>
 </dd>
 </dl>
 </div>
@@ -612,63 +656,57 @@
 <li>Like <code>ggplot2</code>, <code>dplyr</code> is part of the <em>Tidyverse</em>, and included in the <code>tidyverse</code> package.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>To demonstrate data transformations we’re going to use the <code>nycflights13</code> dataset, which you’ll need to download and load into <code>R</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1"></a><span class="co"># Download and load data</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="12">12</button><span id="annotated-cell-13-2" class="code-annotation-target"><a href="#annotated-cell-13-2"></a><span class="co"># install.packages("nycflights13")</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="13">13</button><span id="annotated-cell-13-3" class="code-annotation-target"><a href="#annotated-cell-13-3"></a><span class="fu">library</span>(nycflights13)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="1">1</button><span id="annotated-cell-16-1" class="code-annotation-target"><a href="#annotated-cell-16-1"></a><span class="fu">library</span>(nycflights13)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-13" data-target-annotation="12">12</dt>
+<dt data-target-cell="annotated-cell-16" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-13" data-code-lines="2" data-code-annotation="12">Run in console.</span>
-</dd>
-<dt data-target-cell="annotated-cell-13" data-target-annotation="13">13</dt>
-<dd>
-<span data-code-cell="annotated-cell-13" data-code-lines="3" data-code-annotation="13">Load into <code>R</code> session.</span>
+<span data-code-cell="annotated-cell-16" data-code-lines="1" data-code-annotation="1">Run <code>install.packages("nycflights13")</code> in console first.</span>
 </dd>
 </dl>
 </div>
 </div>
 </div>
 <div class="fragment">
-<p><code>nycflights13</code> includes five data frames<sup>1</sup>, some of which contain missing data (<code>NA</code>):</p>
+<p><code>nycflights13</code> includes five data frames<sup>1</sup>:, some of which contain missing data (<code>NA</code>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="14">14</button><span id="annotated-cell-14-1" class="code-annotation-target"><a href="#annotated-cell-14-1"></a><span class="fu">data</span>(flights)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="15">15</button><span id="annotated-cell-14-2" class="code-annotation-target"><a href="#annotated-cell-14-2"></a><span class="fu">data</span>(airlines)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="16">16</button><span id="annotated-cell-14-3" class="code-annotation-target"><a href="#annotated-cell-14-3"></a><span class="fu">data</span>(airports)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="17">17</button><span id="annotated-cell-14-4" class="code-annotation-target"><a href="#annotated-cell-14-4"></a><span class="fu">data</span>(planes)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="18">18</button><span id="annotated-cell-14-5" class="code-annotation-target"><a href="#annotated-cell-14-5"></a><span class="fu">data</span>(weather)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="2">2</button><span id="annotated-cell-17-1" class="code-annotation-target"><a href="#annotated-cell-17-1"></a><span class="fu">data</span>(flights)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="3">3</button><span id="annotated-cell-17-2" class="code-annotation-target"><a href="#annotated-cell-17-2"></a><span class="fu">data</span>(airlines)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="4">4</button><span id="annotated-cell-17-3" class="code-annotation-target"><a href="#annotated-cell-17-3"></a><span class="fu">data</span>(airports)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="5">5</button><span id="annotated-cell-17-4" class="code-annotation-target"><a href="#annotated-cell-17-4"></a><span class="fu">data</span>(planes)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="6">6</button><span id="annotated-cell-17-5" class="code-annotation-target"><a href="#annotated-cell-17-5"></a><span class="fu">data</span>(weather)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-14" data-target-annotation="14">14</dt>
+<dt data-target-cell="annotated-cell-17" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-14" data-code-lines="1" data-code-annotation="14">flights leaving JFK, LGA, or EWR in 2013</span>
+<span data-code-cell="annotated-cell-17" data-code-lines="1" data-code-annotation="2">flights leaving JFK, LGA, or EWR in 2013</span>
 </dd>
-<dt data-target-cell="annotated-cell-14" data-target-annotation="15">15</dt>
+<dt data-target-cell="annotated-cell-17" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-14" data-code-lines="2" data-code-annotation="15">airline abbreviations</span>
+<span data-code-cell="annotated-cell-17" data-code-lines="2" data-code-annotation="3">airline abbreviations</span>
 </dd>
-<dt data-target-cell="annotated-cell-14" data-target-annotation="16">16</dt>
+<dt data-target-cell="annotated-cell-17" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-14" data-code-lines="3" data-code-annotation="16">airport metadata</span>
+<span data-code-cell="annotated-cell-17" data-code-lines="3" data-code-annotation="4">airport metadata</span>
 </dd>
-<dt data-target-cell="annotated-cell-14" data-target-annotation="17">17</dt>
+<dt data-target-cell="annotated-cell-17" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-14" data-code-lines="4" data-code-annotation="17">airplane metadata</span>
+<span data-code-cell="annotated-cell-17" data-code-lines="4" data-code-annotation="5">airplane metadata</span>
 </dd>
-<dt data-target-cell="annotated-cell-14" data-target-annotation="18">18</dt>
+<dt data-target-cell="annotated-cell-17" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-14" data-code-lines="5" data-code-annotation="18">hourly weather data for JFK, LGA, and EWR</span>
+<span data-code-cell="annotated-cell-17" data-code-lines="5" data-code-annotation="6">hourly weather data for JFK, LGA, and EWR</span>
 </dd>
 </dl>
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn5"><p>Note these are separate data frames, each needing to be loaded separately:</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn5"><p>Note these are separate data frames, each needing to be loaded separately. When loading a package containing datasets, you can define those data (i.e.&nbsp;explicitly add them to your working environment) by calling <code>data()</code> on their name.</p></li></ol></aside></section>
 <section id="dplyr-basics" class="slide level2">
 <h2><code>dplyr</code> Basics</h2>
 <p>All <code>dplyr</code> functions have the following in common:</p>
@@ -694,18 +732,18 @@
 <p>We often get <em>big</em> datasets, and we only want some of the entries. We can subset rows using <code>filter()</code>.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1"></a>delay_2hr <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1">1</button><span id="annotated-cell-15-2" class="code-annotation-target"><a href="#annotated-cell-15-2"></a>  <span class="fu">filter</span>(dep_delay <span class="sc">&gt;</span> <span class="dv">120</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="2">2</button><span id="annotated-cell-15-3" class="code-annotation-target"><a href="#annotated-cell-15-3"></a>delay_2hr</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-18"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-18-1"><a href="#annotated-cell-18-1"></a>delay_2hr <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-18" data-target-annotation="1">1</button><span id="annotated-cell-18-2" class="code-annotation-target"><a href="#annotated-cell-18-2"></a>  <span class="fu">filter</span>(dep_delay <span class="sc">&gt;</span> <span class="dv">120</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-18" data-target-annotation="2">2</button><span id="annotated-cell-18-3" class="code-annotation-target"><a href="#annotated-cell-18-3"></a>delay_2hr</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-18" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-lines="2" data-code-annotation="1">Here’s where all your new knowledge about logical operators comes in handy! Make sure to use <code>==</code> not <code>=</code> to test the logical condition.</span>
+<span data-code-cell="annotated-cell-18" data-code-lines="2" data-code-annotation="1">Here’s where all your new knowledge about logical operators comes in handy! Make sure to use <code>==</code> not <code>=</code> to test the logical condition.</span>
 </dd>
-<dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-18" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-lines="3" data-code-annotation="2">Now, <code>delay_2hr</code> is an object in our environment which contains rows corresponding to flights that experienced at least a 2 hour delay.</span>
+<span data-code-cell="annotated-cell-18" data-code-lines="3" data-code-annotation="2">Now, <code>delay_2hr</code> is an object in our environment which contains rows corresponding to flights that experienced at least a 2 hour delay.</span>
 </dd>
 </dl>
 </div>
@@ -737,13 +775,13 @@
 <div class="fragment">
 <p>We can select columns by name:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1"></a>flights <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="3">3</button><span id="annotated-cell-16-2" class="code-annotation-target"><a href="#annotated-cell-16-2"></a>  <span class="fu">select</span>(year, month, day)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-19"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-19-1"><a href="#annotated-cell-19-1"></a>flights <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="1">1</button><span id="annotated-cell-19-2" class="code-annotation-target"><a href="#annotated-cell-19-2"></a>  <span class="fu">select</span>(year, month, day)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-16" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-19" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-16" data-code-lines="2" data-code-annotation="3">You can use a <code>-</code> before a variable name or a vector of variables to drop them from the data (i.e.&nbsp;<br> <code>select(-c(year, month, day))</code>).</span>
+<span data-code-cell="annotated-cell-19" data-code-lines="2" data-code-annotation="1">You can use a <code>-</code> before a variable name or a vector of variables to drop them from the data (i.e.&nbsp;<br> <code>select(-c(year, month, day))</code>).</span>
 </dd>
 </dl>
 </div>
@@ -771,13 +809,13 @@
 <p>What if we want to keep every observation, but only use certain variables? Use <code>select()</code>!</p>
 <p>We can select columns between variables (inclusive):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-17-1"><a href="#annotated-cell-17-1"></a>flights <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="4">4</button><span id="annotated-cell-17-2" class="code-annotation-target"><a href="#annotated-cell-17-2"></a>  <span class="fu">select</span>(year<span class="sc">:</span>day)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-20"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-20-1"><a href="#annotated-cell-20-1"></a>flights <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-20" data-target-annotation="1">1</button><span id="annotated-cell-20-2" class="code-annotation-target"><a href="#annotated-cell-20-2"></a>  <span class="fu">select</span>(year<span class="sc">:</span>day)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-17" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-20" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-17" data-code-lines="2" data-code-annotation="4">Add a <code>!</code> before <code>year</code> and you’ll drop this group of variables from the data.</span>
+<span data-code-cell="annotated-cell-20" data-code-lines="2" data-code-annotation="1">Add a <code>!</code> before <code>year</code> and you’ll drop this group of variables from the data.</span>
 </dd>
 </dl>
 </div>
@@ -804,13 +842,13 @@
 <p>What if we want to keep every observation, but only use certain variables? Use <code>select()</code>!</p>
 <p>We can select columns based on a condition:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-18"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-18-1"><a href="#annotated-cell-18-1"></a>flights <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-18" data-target-annotation="5">5</button><span id="annotated-cell-18-2" class="code-annotation-target"><a href="#annotated-cell-18-2"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.character))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-21"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-21-1"><a href="#annotated-cell-21-1"></a>flights <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-21" data-target-annotation="1">1</button><span id="annotated-cell-21-2" class="code-annotation-target"><a href="#annotated-cell-21-2"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.character))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-18" data-target-annotation="5">5</dt>
+<dt data-target-cell="annotated-cell-21" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-18" data-code-lines="2" data-code-annotation="5">There are a number of helper functions you can use with <code>select()</code> including <code>starts_with()</code>, <code>ends_with()</code>, <code>contains()</code> and <code>num_range()</code>. Read more about these and more <a href="https://tidyselect.r-lib.org/reference/index.html">here</a>.</span>
+<span data-code-cell="annotated-cell-21" data-code-lines="2" data-code-annotation="1">There are a number of helper functions you can use with <code>select()</code> including <code>starts_with()</code>, <code>ends_with()</code>, <code>contains()</code> and <code>num_range()</code>. Read more about these and more <a href="https://tidyselect.r-lib.org/reference/index.html">here</a>.</span>
 </dd>
 </dl>
 </div>
@@ -837,13 +875,13 @@
 <p>You may want to find the unique combinations of variables in a dataset. Use <code>distinct()</code></p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-19"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-19-1"><a href="#annotated-cell-19-1"></a>flights <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="6">6</button><span id="annotated-cell-19-2" class="code-annotation-target"><a href="#annotated-cell-19-2"></a>  <span class="fu">distinct</span>(origin, dest)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-22"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-22-1"><a href="#annotated-cell-22-1"></a>flights <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="1">1</button><span id="annotated-cell-22-2" class="code-annotation-target"><a href="#annotated-cell-22-2"></a>  <span class="fu">distinct</span>(origin, dest)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-19" data-target-annotation="6">6</dt>
+<dt data-target-cell="annotated-cell-22" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-19" data-code-lines="2" data-code-annotation="6">Find all unique origin and destination pairs.</span>
+<span data-code-cell="annotated-cell-22" data-code-lines="2" data-code-annotation="1">Find all unique origin and destination pairs.</span>
 </dd>
 </dl>
 </div>
@@ -871,13 +909,13 @@
 <p>By default, <code>distinct()</code> drops unused variables. If you don’t want to drop them, add the argument <code>.keep_all = TRUE</code>:</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-20"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-20-1"><a href="#annotated-cell-20-1"></a>flights <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-20" data-target-annotation="7">7</button><span id="annotated-cell-20-2" class="code-annotation-target"><a href="#annotated-cell-20-2"></a>  <span class="fu">distinct</span>(origin, dest, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-23"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-23-1"><a href="#annotated-cell-23-1"></a>flights <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="1">1</button><span id="annotated-cell-23-2" class="code-annotation-target"><a href="#annotated-cell-23-2"></a>  <span class="fu">distinct</span>(origin, dest, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-20" data-target-annotation="7">7</dt>
+<dt data-target-cell="annotated-cell-23" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-20" data-code-lines="2" data-code-annotation="7">It’s not a coincidence that all of these distinct flights are on January 1: <code>distinct()</code> will find the first occurrence of a unique row in the dataset and discard the rest. Use <code>count()</code> if you’re looking for the number of occurrences.</span>
+<span data-code-cell="annotated-cell-23" data-code-lines="2" data-code-annotation="1">It’s not a coincidence that all of these distinct flights are on January 1: <code>distinct()</code> will find the first occurrence of a unique row in the dataset and discard the rest. Use <code>count()</code> if you’re looking for the number of occurrences.</span>
 </dd>
 </dl>
 </div>
@@ -907,13 +945,13 @@
 <h2>Count Unique Rows: <code>count()</code></h2>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-21"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-21-1"><a href="#annotated-cell-21-1"></a>flights <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-21" data-target-annotation="8">8</button><span id="annotated-cell-21-2" class="code-annotation-target"><a href="#annotated-cell-21-2"></a>  <span class="fu">count</span>(origin, dest, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-24"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-24-1"><a href="#annotated-cell-24-1"></a>flights <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="1">1</button><span id="annotated-cell-24-2" class="code-annotation-target"><a href="#annotated-cell-24-2"></a>  <span class="fu">count</span>(origin, dest, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-21" data-target-annotation="8">8</dt>
+<dt data-target-cell="annotated-cell-24" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-21" data-code-lines="2" data-code-annotation="8"><code>sort = TRUE</code> arranges them in descending order of number of occurrences.</span>
+<span data-code-cell="annotated-cell-24" data-code-lines="2" data-code-annotation="1"><code>sort = TRUE</code> arranges them in descending order of number of occurrences.</span>
 </dd>
 </dl>
 </div>
@@ -946,13 +984,13 @@
 <p>Sometimes it’s useful to sort rows in your data, in ascending (low to high) or descending (high to low) order. We do that with <code>arrange()</code>.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-22"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-22-1"><a href="#annotated-cell-22-1"></a>flights <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="1">1</button><span id="annotated-cell-22-2" class="code-annotation-target"><a href="#annotated-cell-22-2"></a>  <span class="fu">arrange</span>(year, month, day, dep_time)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-25"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-25-1"><a href="#annotated-cell-25-1"></a>flights <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-25" data-target-annotation="1">1</button><span id="annotated-cell-25-2" class="code-annotation-target"><a href="#annotated-cell-25-2"></a>  <span class="fu">arrange</span>(year, month, day, dep_time)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-22" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-25" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-22" data-code-lines="2" data-code-annotation="1">If you provide more than one column name, each additional column will be used to break ties in the values of preceding columns.</span>
+<span data-code-cell="annotated-cell-25" data-code-lines="2" data-code-annotation="1">If you provide more than one column name, each additional column will be used to break ties in the values of preceding columns.</span>
 </dd>
 </dl>
 </div>
@@ -983,8 +1021,8 @@
 <p>To sort in descending order, using <code>desc()</code> within <code>arrange()</code></p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>flights <span class="sc">|&gt;</span> </span>
-<span id="cb23-2"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(dep_delay))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb25-2"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(dep_delay))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -1012,13 +1050,13 @@
 <p>You may receive data with unintuitive variable names. Change them using <code>rename()</code>.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-24"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-24-1"><a href="#annotated-cell-24-1"></a>flights <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="2">2</button><span id="annotated-cell-24-2" class="code-annotation-target"><a href="#annotated-cell-24-2"></a>  <span class="fu">rename</span>(<span class="at">tail_num =</span> tailnum)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-27"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-27-1"><a href="#annotated-cell-27-1"></a>flights <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="1">1</button><span id="annotated-cell-27-2" class="code-annotation-target"><a href="#annotated-cell-27-2"></a>  <span class="fu">rename</span>(<span class="at">tail_num =</span> tailnum)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-24" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-27" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-24" data-code-lines="2" data-code-annotation="2"><code>rename(new_name = old_name)</code> is the format. Reminder to use <code>janitor::clean_names()</code> if you want to automate this process for a lot of variables.</span>
+<span data-code-cell="annotated-cell-27" data-code-lines="2" data-code-annotation="1"><code>rename(new_name = old_name)</code> is the format. Reminder to use <code>janitor::clean_names()</code> if you want to automate this process for a lot of variables.</span>
 </dd>
 </dl>
 </div>
@@ -1061,17 +1099,17 @@
 <p>You can add new columns to a data frame using <code>mutate()</code>.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-25"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-25-1"><a href="#annotated-cell-25-1"></a>flights <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-25-2"><a href="#annotated-cell-25-2"></a>  <span class="fu">mutate</span>(</span>
-<span id="annotated-cell-25-3"><a href="#annotated-cell-25-3"></a>    <span class="at">gain =</span> dep_delay <span class="sc">-</span> arr_delay,</span>
-<span id="annotated-cell-25-4"><a href="#annotated-cell-25-4"></a>    <span class="at">speed =</span> distance <span class="sc">/</span> air_time <span class="sc">*</span> <span class="dv">60</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-25" data-target-annotation="3">3</button><span id="annotated-cell-25-5" class="code-annotation-target"><a href="#annotated-cell-25-5"></a>    <span class="at">.before =</span> <span class="dv">1</span></span>
-<span id="annotated-cell-25-6"><a href="#annotated-cell-25-6"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-28"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-28-1"><a href="#annotated-cell-28-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-28-2"><a href="#annotated-cell-28-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="annotated-cell-28-3"><a href="#annotated-cell-28-3"></a>    <span class="at">gain =</span> dep_delay <span class="sc">-</span> arr_delay,</span>
+<span id="annotated-cell-28-4"><a href="#annotated-cell-28-4"></a>    <span class="at">speed =</span> distance <span class="sc">/</span> air_time <span class="sc">*</span> <span class="dv">60</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-28" data-target-annotation="1">1</button><span id="annotated-cell-28-5" class="code-annotation-target"><a href="#annotated-cell-28-5"></a>    <span class="at">.before =</span> <span class="dv">1</span></span>
+<span id="annotated-cell-28-6"><a href="#annotated-cell-28-6"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-25" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-28" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-25" data-code-lines="5" data-code-annotation="3">By default, <code>mutate()</code> adds new columns on the right hand side of your dataset, which makes it difficult to see if anything happened. You can use the <code>.before</code> argument to specify which numeric index (or variable name) to move the newly created variable to. <code>.after</code> is an alternative argument for this.</span>
+<span data-code-cell="annotated-cell-28" data-code-lines="5" data-code-annotation="1">By default, <code>mutate()</code> adds new columns on the right hand side of your dataset, which makes it difficult to see if anything happened. You can use the <code>.before</code> argument to specify which numeric index (or variable name) to move the newly created variable to. <code>.after</code> is an alternative argument for this.</span>
 </dd>
 </dl>
 </div>
@@ -1101,18 +1139,18 @@
 <h2>Specifying Variables to Keep: <code>mutate()</code></h2>
 <p>You can specify which columns to keep with the <code>.keep</code> argument:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-26"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-26-1"><a href="#annotated-cell-26-1"></a>flights <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-26-2"><a href="#annotated-cell-26-2"></a>  <span class="fu">mutate</span>(</span>
-<span id="annotated-cell-26-3"><a href="#annotated-cell-26-3"></a>    <span class="at">gain =</span> dep_delay <span class="sc">-</span> arr_delay,</span>
-<span id="annotated-cell-26-4"><a href="#annotated-cell-26-4"></a>    <span class="at">hours =</span> air_time <span class="sc">/</span> <span class="dv">60</span>,</span>
-<span id="annotated-cell-26-5"><a href="#annotated-cell-26-5"></a>    <span class="at">gain_per_hour =</span> gain <span class="sc">/</span> hours,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="4">4</button><span id="annotated-cell-26-6" class="code-annotation-target"><a href="#annotated-cell-26-6"></a>    <span class="at">.keep =</span> <span class="st">"used"</span></span>
-<span id="annotated-cell-26-7"><a href="#annotated-cell-26-7"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-29"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-29-1"><a href="#annotated-cell-29-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-29-2"><a href="#annotated-cell-29-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="annotated-cell-29-3"><a href="#annotated-cell-29-3"></a>    <span class="at">gain =</span> dep_delay <span class="sc">-</span> arr_delay,</span>
+<span id="annotated-cell-29-4"><a href="#annotated-cell-29-4"></a>    <span class="at">hours =</span> air_time <span class="sc">/</span> <span class="dv">60</span>,</span>
+<span id="annotated-cell-29-5"><a href="#annotated-cell-29-5"></a>    <span class="at">gain_per_hour =</span> gain <span class="sc">/</span> hours,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-29" data-target-annotation="1">1</button><span id="annotated-cell-29-6" class="code-annotation-target"><a href="#annotated-cell-29-6"></a>    <span class="at">.keep =</span> <span class="st">"used"</span></span>
+<span id="annotated-cell-29-7"><a href="#annotated-cell-29-7"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-26" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-29" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="6" data-code-annotation="4">“used” retains only the variables used to create the new variables, which is useful for checking your work. Other options include: “all,” “unused,” and “none.”</span>
+<span data-code-cell="annotated-cell-29" data-code-lines="6" data-code-annotation="1"><code>"used"</code> retains only the variables used to create the new variables, which is useful for checking your work. Other options include: <code>"all"</code> (default, returns all columns), <code>"unused"</code> (columns not used to create new columns) and <code>"none"</code> (only grouping variables and columns created by mutate are retained).</span>
 </dd>
 </dl>
 </div>
@@ -1138,13 +1176,13 @@
 <h2>Move Variables Around: <code>relocate()</code></h2>
 <p>You might want to collect related variables together or move important variables to the front. Use <code>relocate()</code>!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-27"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-27-1"><a href="#annotated-cell-27-1"></a>flights <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="5">5</button><span id="annotated-cell-27-2" class="code-annotation-target"><a href="#annotated-cell-27-2"></a>  <span class="fu">relocate</span>(time_hour, air_time)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-30"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-30-1"><a href="#annotated-cell-30-1"></a>flights <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-30" data-target-annotation="1">1</button><span id="annotated-cell-30-2" class="code-annotation-target"><a href="#annotated-cell-30-2"></a>  <span class="fu">relocate</span>(time_hour, air_time)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-27" data-target-annotation="5">5</dt>
+<dt data-target-cell="annotated-cell-30" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="2" data-code-annotation="5">By default <code>relocate()</code> moves variables to the front but you can also specify where to put them using the <code>.before</code> and <code>.after</code> arguments, just like in <code>mutate()</code>.</span>
+<span data-code-cell="annotated-cell-30" data-code-lines="2" data-code-annotation="1">By default <code>relocate()</code> moves variables to the front but you can also specify where to put them using the <code>.before</code> and <code>.after</code> arguments, just like in <code>mutate()</code>.</span>
 </dd>
 </dl>
 </div>
@@ -1178,13 +1216,13 @@
 <h2>Grouping Data: <code>group_by()</code></h2>
 <p>If you want to analyze your data by specific groupings, use <code>group_by()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-28"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-28-1"><a href="#annotated-cell-28-1"></a>flights <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-28" data-target-annotation="1">1</button><span id="annotated-cell-28-2" class="code-annotation-target"><a href="#annotated-cell-28-2"></a>  <span class="fu">group_by</span>(month)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-31"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-31-1"><a href="#annotated-cell-31-1"></a>flights <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-31" data-target-annotation="1">1</button><span id="annotated-cell-31-2" class="code-annotation-target"><a href="#annotated-cell-31-2"></a>  <span class="fu">group_by</span>(month)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-28" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-31" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-28" data-code-lines="2" data-code-annotation="1"><code>group_by()</code> doesn’t change the data but you’ll notice that the output indicates that it is “grouped by” month <code>(Groups: month [12])</code>. This means subsequent operations will now work “by month”.</span>
+<span data-code-cell="annotated-cell-31" data-code-lines="2" data-code-annotation="1"><code>group_by()</code> doesn’t change the data but you’ll notice that the output indicates that it is “grouped by” month <code>(Groups: month [12])</code>. This means subsequent operations will now work “by month”.</span>
 </dd>
 </dl>
 </div>
@@ -1228,15 +1266,15 @@
 <p>Let’s see what this looks like in our flights dataset:</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-29"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-29-1"><a href="#annotated-cell-29-1"></a>flights <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-29-2"><a href="#annotated-cell-29-2"></a>  <span class="fu">summarize</span>(</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-29" data-target-annotation="2">2</button><span id="annotated-cell-29-3" class="code-annotation-target"><a href="#annotated-cell-29-3"></a>    <span class="at">avg_delay =</span> <span class="fu">mean</span>(dep_delay)</span>
-<span id="annotated-cell-29-4"><a href="#annotated-cell-29-4"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-32"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-32-1"><a href="#annotated-cell-32-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-32-2"><a href="#annotated-cell-32-2"></a>  <span class="fu">summarize</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="1">1</button><span id="annotated-cell-32-3" class="code-annotation-target"><a href="#annotated-cell-32-3"></a>    <span class="at">avg_delay =</span> <span class="fu">mean</span>(dep_delay)</span>
+<span id="annotated-cell-32-4"><a href="#annotated-cell-32-4"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-29" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-32" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-29" data-code-lines="3" data-code-annotation="2">The <code>NA</code> produced here is a result of calling <code>mean</code> on <code>dep_delay</code>. Any summarizing function will return <code>NA</code> if <strong>any</strong> of the values are <code>NA</code>. We can set <code>na.rm = TRUE</code> to change this behavior.</span>
+<span data-code-cell="annotated-cell-32" data-code-lines="3" data-code-annotation="1">The <code>NA</code> produced here is a result of calling <code>mean</code> on <code>dep_delay</code>. Any summarizing function will return <code>NA</code> if <strong>any</strong> of the values are <code>NA</code>. We can set <code>na.rm = TRUE</code> to change this behavior.</span>
 </dd>
 </dl>
 </div>
@@ -1253,10 +1291,10 @@
 <h2><code>summarize()</code> Example</h2>
 <p>Let’s see what this looks like in our flights dataset:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>flights <span class="sc">|&gt;</span> </span>
-<span id="cb31-2"><a></a>  <span class="fu">summarize</span>(</span>
-<span id="cb31-3"><a></a>    <span class="at">avg_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) </span>
-<span id="cb31-4"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb33-2"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb33-3"><a></a>    <span class="at">avg_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb33-4"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   avg_delay
@@ -1270,11 +1308,11 @@
 <p>What if we want to summarize data by our groups? Use <code>group_by()</code> <strong>and</strong> <code>summarize()</code></p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>flights <span class="sc">|&gt;</span> </span>
-<span id="cb33-2"><a></a>  <span class="fu">group_by</span>(month) <span class="sc">|&gt;</span> </span>
-<span id="cb33-3"><a></a>  <span class="fu">summarize</span>(</span>
-<span id="cb33-4"><a></a>    <span class="at">delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb33-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb35-2"><a></a>  <span class="fu">group_by</span>(month) <span class="sc">|&gt;</span> </span>
+<span id="cb35-3"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb35-4"><a></a>    <span class="at">delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb35-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 2
    month delay
@@ -1295,24 +1333,24 @@
 </div>
 </div>
 <div class="fragment">
-<p>Because we did <code>group_by()</code> with <code>month</code>, then used <code>summarize()</code>, we get <em>one row per value of <code>month</code></em>!</p>
+<p>Because we did <code>group_by()</code> <em>with</em> <code>month</code>, <em>then</em> used <code>summarize()</code>, we get <strong>one row per value of <code>month</code></strong>!</p>
 </div>
 </section>
 <section id="summarizing-data-by-groups-1" class="slide level2">
 <h2>Summarizing Data by Groups</h2>
 <p>You can create any number of summaries in a single call to summarize().</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-32"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-32-1"><a href="#annotated-cell-32-1"></a>flights <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-32-2"><a href="#annotated-cell-32-2"></a>  <span class="fu">group_by</span>(month) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-32-3"><a href="#annotated-cell-32-3"></a>  <span class="fu">summarize</span>(</span>
-<span id="annotated-cell-32-4"><a href="#annotated-cell-32-4"></a>    <span class="at">delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="3">3</button><span id="annotated-cell-32-5" class="code-annotation-target"><a href="#annotated-cell-32-5"></a>    <span class="at">n =</span> <span class="fu">n</span>()</span>
-<span id="annotated-cell-32-6"><a href="#annotated-cell-32-6"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-35"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-35-1"><a href="#annotated-cell-35-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-35-2"><a href="#annotated-cell-35-2"></a>  <span class="fu">group_by</span>(month) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-35-3"><a href="#annotated-cell-35-3"></a>  <span class="fu">summarize</span>(</span>
+<span id="annotated-cell-35-4"><a href="#annotated-cell-35-4"></a>    <span class="at">delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-35" data-target-annotation="1">1</button><span id="annotated-cell-35-5" class="code-annotation-target"><a href="#annotated-cell-35-5"></a>    <span class="at">n =</span> <span class="fu">n</span>()</span>
+<span id="annotated-cell-35-6"><a href="#annotated-cell-35-6"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-32" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-35" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-32" data-code-lines="5" data-code-annotation="3"><code>n()</code> returns the number of rows in each group.</span>
+<span data-code-cell="annotated-cell-35" data-code-lines="5" data-code-annotation="1"><code>n()</code> returns the number of rows in each group.</span>
 </dd>
 </dl>
 </div>
@@ -1338,9 +1376,9 @@
 <section id="grouping-by-multiple-variables" class="slide level2 scrollable">
 <h2>Grouping by Multiple Variables <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>daily <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
-<span id="cb36-2"><a></a>  <span class="fu">group_by</span>(year, month, day)  </span>
-<span id="cb36-3"><a></a>daily</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>daily <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
+<span id="cb38-2"><a></a>  <span class="fu">group_by</span>(year, month, day)  </span>
+<span id="cb38-3"><a></a>daily</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
 # Groups:   year, month, day [365]
@@ -1369,7 +1407,7 @@
 <p><strong><span style="color:green"><i class="fa-solid fa-info-circle" aria-label="info-circle"></i></span> Summary &amp; Grouping Behavior</strong></p>
 </div>
 <div class="callout-content">
-<p>When you summarize a tibble grouped by more than one variable, each summary peels off the last group. You can change the default behavior by setting the <code>.groups</code> argument to a different value, e.g., “drop” to drop all grouping or “keep” to preserve the same groups. The default is “drop_last”.</p>
+<p>When you summarize a tibble grouped by more than one variable, each summary peels off the last group. You can change the default behavior by setting the <code>.groups</code> argument to a different value, e.g., <code>"drop"</code> to drop all grouping or <code>"keep"</code> to preserve the same groups. The default is <code>"drop_last"</code> if all groups have 1 row and <code>keep</code> otherwise (it’s recommended to use <code>reframe()</code> if this is the case, which is a more general version of <code>summarize()</code> that allows for an arbitrary number of rows per group and drops all grouping variables after execution).</p>
 </div>
 </div>
 </div>
@@ -1378,8 +1416,8 @@
 <section id="remove-grouping-ungroup" class="slide level2">
 <h2>Remove Grouping: <code>ungroup()</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>daily <span class="sc">|&gt;</span> </span>
-<span id="cb38-2"><a></a>  <span class="fu">ungroup</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>daily <span class="sc">|&gt;</span> </span>
+<span id="cb40-2"><a></a>  <span class="fu">ungroup</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -1401,20 +1439,20 @@
 </div>
 </div>
 </section>
-<section id="new-alternative-for-grouping-.by" class="slide level2">
-<h2>New Alternative for Grouping: <code>.by</code></h2>
+<section id="newer-alternative-for-grouping-.by" class="slide level2">
+<h2>Newer Alternative for Grouping: <code>.by</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-35"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-35-1"><a href="#annotated-cell-35-1"></a>flights <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-35-2"><a href="#annotated-cell-35-2"></a>  <span class="fu">summarize</span>(</span>
-<span id="annotated-cell-35-3"><a href="#annotated-cell-35-3"></a>    <span class="at">delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="annotated-cell-35-4"><a href="#annotated-cell-35-4"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-35" data-target-annotation="4">4</button><span id="annotated-cell-35-5" class="code-annotation-target"><a href="#annotated-cell-35-5"></a>    <span class="at">.by =</span> month</span>
-<span id="annotated-cell-35-6"><a href="#annotated-cell-35-6"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-38"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-38-1"><a href="#annotated-cell-38-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-38-2"><a href="#annotated-cell-38-2"></a>  <span class="fu">summarize</span>(</span>
+<span id="annotated-cell-38-3"><a href="#annotated-cell-38-3"></a>    <span class="at">delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="annotated-cell-38-4"><a href="#annotated-cell-38-4"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-38" data-target-annotation="1">1</button><span id="annotated-cell-38-5" class="code-annotation-target"><a href="#annotated-cell-38-5"></a>    <span class="at">.by =</span> month</span>
+<span id="annotated-cell-38-6"><a href="#annotated-cell-38-6"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-35" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-38" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-35" data-code-lines="5" data-code-annotation="4"><code>.by</code> works with all verbs and has the advantage that you don’t need to use the <code>.groups</code> argument to suppress the grouping message or <code>ungroup()</code> when you’re done.</span>
+<span data-code-cell="annotated-cell-38" data-code-lines="5" data-code-annotation="1"><code>.by</code> works with all verbs and has the advantage that you don’t need to use the <code>.groups</code> argument to suppress the grouping message or <code>ungroup()</code> when you’re done.</span>
 </dd>
 </dl>
 </div>
@@ -1454,15 +1492,15 @@
 <section id="select-specific-rows-per-group-slice_-1" class="slide level2">
 <h2>Select Specific Rows Per Group: <code>slice_*</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-36"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-36-1"><a href="#annotated-cell-36-1"></a>flights <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-36-2"><a href="#annotated-cell-36-2"></a>  <span class="fu">group_by</span>(dest) <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-36" data-target-annotation="5">5</button><span id="annotated-cell-36-3" class="code-annotation-target"><a href="#annotated-cell-36-3"></a>  <span class="fu">slice_max</span>(arr_delay, <span class="at">n =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-36-4"><a href="#annotated-cell-36-4"></a>  <span class="fu">relocate</span>(dest, arr_delay) </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-39"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-39-1"><a href="#annotated-cell-39-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-39-2"><a href="#annotated-cell-39-2"></a>  <span class="fu">group_by</span>(dest) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-39" data-target-annotation="1">1</button><span id="annotated-cell-39-3" class="code-annotation-target"><a href="#annotated-cell-39-3"></a>  <span class="fu">slice_max</span>(arr_delay, <span class="at">n =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-39-4"><a href="#annotated-cell-39-4"></a>  <span class="fu">relocate</span>(dest, arr_delay) </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-36" data-target-annotation="5">5</dt>
+<dt data-target-cell="annotated-cell-39" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-36" data-code-lines="3" data-code-annotation="5">You can vary <code>n</code> to select more than one row, or instead of <code>n =</code>, you can use <code>prop = 0.1</code> to select (e.g.) 10% of the rows in each group.</span>
+<span data-code-cell="annotated-cell-39" data-code-lines="3" data-code-annotation="1">You can vary <code>n</code> to select more than one row, or instead of <code>n</code>, you can use <code>prop</code> to select a proportion (between 0 and 1) of the rows in each group.</span>
 </dd>
 </dl>
 </div>
@@ -1489,8 +1527,34 @@
 </div>
 
 <aside><div>
-<p>There are 105 groups but 108 rows! Why? <code>slice_min()</code> and <code>slice_max()</code> keep tied values so <code>n = 1</code> means “give us all rows with the highest value.” If you want exactly one row per group you can set <code>with_ties = FALSE</code>.</p>
+<p><span class="fragment">There are 105 groups but 108 rows! Why? <code>slice_min()</code> and <code>slice_max()</code> keep tied values so <code>n = 1</code> means “give us all rows with the highest value.” If you want exactly one row per group you can set <code>with_ties = FALSE</code>.</span></p>
 </div></aside></section></section>
+<section>
+<section id="lab" class="title-slide slide level1 section-title center" data-background-color="#99a486">
+<h1>Lab</h1>
+
+</section>
+<section id="manipulating-data" class="slide level2">
+<h2>Manipulating Data</h2>
+<ol type="1">
+<li>Create a new object that contains the following from <code>gapminder</code><sup>1</sup>
+<ol type="i">
+<li>observations from China, India, and United States after 1980, <em>and</em></li>
+<li>variables corresponding to country, year, population, and life expectancy.</li>
+</ol></li>
+<li>How many rows and columns does the object contain?</li>
+<li>Sort the rows by <code>year</code> (ascending order) and <code>population</code> (descending order) and save that over (i.e.&nbsp;overwrite) the object created for answer 1. Print the first 6 rows.</li>
+<li>Create a new variable that contains population in billions.</li>
+<li>By year, calculate the total population (in billions) across these three countries</li>
+<li>In <code>ggplot</code>, create a line plot showing life expectancy over time by country. Make the plot visually appealing!</li>
+</ol>
+<aside><ol class="aside-footnotes"><li id="fn6"><p>Using the <code>gapminder</code> package</p></li></ol></aside></section>
+
+
+
+
+
+</section>
 <section>
 <section id="merging-data" class="title-slide slide level1 section-title center" data-background-color="#99a486">
 <h1>Merging Data</h1>
@@ -1545,139 +1609,121 @@
 <li class="fragment"><strong>Foreign</strong>: a variable (or set of variables) that corresponds to a primary key in another table.</li>
 </ol>
 </section>
-<section id="primary-keys" class="slide level2 scrollable">
-<h2>Primary Keys <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span></h2>
-<p>Let’s look at our data to gain a better sense of what this all means.</p>
+<section class="slide level2">
+
+<h3 id="primary-keys">Primary Keys</h3>
+<p><span style="font-size: 80%;">Let’s look at our data to gain a better sense of what this all means.</span></p>
 <div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1"><code>airlines</code></a></li><li><a href="#tabset-1-2"><code>airports</code></a></li><li><a href="#tabset-1-3"><code>planes</code></a></li><li><a href="#tabset-1-4"><code>weather</code></a></li><li><a href="#tabset-1-5"><code>flights</code></a></li></ul>
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1"><code>airlines</code></a></li><li><a href="#tabset-3-2"><code>airports</code></a></li><li><a href="#tabset-3-3"><code>planes</code></a></li><li><a href="#tabset-3-4"><code>weather</code></a></li><li><a href="#tabset-3-5"><code>flights</code></a></li></ul>
 <div class="tab-content">
-<div id="tabset-1-1">
-<div class="smaller-font">
-<p><code>airlines</code> records two pieces of data about each airline: its carrier code and its full name. You can identify an airline with its two letter carrier code, making <code>carrier</code> the primary key.</p>
-</div>
+<div id="tabset-3-1">
+<p><span style="font-size: 80%;"><code>airlines</code> records two pieces of data about each airline: its carrier code and its full name. You can identify an airline with its two letter carrier code, making <code>carrier</code> the primary key.</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a>airlines </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-106"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-106" data-target-annotation="1">1</button><span id="annotated-cell-106-1" class="code-annotation-target"><a href="#annotated-cell-106-1"></a><span class="fu">glimpse</span>(airlines)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-106" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-106" data-code-lines="1" data-code-annotation="1">Use <code>glimpse</code> on any dataset to see a transposed version of the data, making it possible to see all available column names, types, and a preview of as many values will fit on your current screen.</span>
+</dd>
+</dl>
+</div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 16 × 2
-   carrier name                       
-   &lt;chr&gt;   &lt;chr&gt;                      
- 1 9E      Endeavor Air Inc.          
- 2 AA      American Airlines Inc.     
- 3 AS      Alaska Airlines Inc.       
- 4 B6      JetBlue Airways            
- 5 DL      Delta Air Lines Inc.       
- 6 EV      ExpressJet Airlines Inc.   
- 7 F9      Frontier Airlines Inc.     
- 8 FL      AirTran Airways Corporation
- 9 HA      Hawaiian Airlines Inc.     
-10 MQ      Envoy Air                  
-11 OO      SkyWest Airlines Inc.      
-12 UA      United Air Lines Inc.      
-13 US      US Airways Inc.            
-14 VX      Virgin America             
-15 WN      Southwest Airlines Co.     
-16 YV      Mesa Airlines Inc.         </code></pre>
+<pre><code>Rows: 16
+Columns: 2
+$ carrier &lt;chr&gt; "9E", "AA", "AS", "B6", "DL", "EV", "F9", "FL", "HA", "MQ", "O…
+$ name    &lt;chr&gt; "Endeavor Air Inc.", "American Airlines Inc.", "Alaska Airline…</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-1-2">
-<div class="smaller-font">
-<p><code>airports</code> records data about each airport. You can identify each airport by its three letter airport code, making <code>faa</code> the primary key.</p>
-</div>
+<div id="tabset-3-2">
+<p><span style="font-size: 80%;"><code>airports</code> records data about each airport. You can identify each airport by its three letter airport code, making <code>faa</code> the primary key.</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>airports</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a><span class="fu">glimpse</span>(airports)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,458 × 8
-   faa   name                             lat    lon   alt    tz dst   tzone    
-   &lt;chr&gt; &lt;chr&gt;                          &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    
- 1 04G   Lansdowne Airport               41.1  -80.6  1044    -5 A     America/…
- 2 06A   Moton Field Municipal Airport   32.5  -85.7   264    -6 A     America/…
- 3 06C   Schaumburg Regional             42.0  -88.1   801    -6 A     America/…
- 4 06N   Randall Airport                 41.4  -74.4   523    -5 A     America/…
- 5 09J   Jekyll Island Airport           31.1  -81.4    11    -5 A     America/…
- 6 0A9   Elizabethton Municipal Airport  36.4  -82.2  1593    -5 A     America/…
- 7 0G6   Williams County Airport         41.5  -84.5   730    -5 A     America/…
- 8 0G7   Finger Lakes Regional Airport   42.9  -76.8   492    -5 A     America/…
- 9 0P2   Shoestring Aviation Airfield    39.8  -76.6  1000    -5 U     America/…
-10 0S9   Jefferson County Intl           48.1 -123.    108    -8 A     America/…
-# ℹ 1,448 more rows</code></pre>
+<pre><code>Rows: 1,458
+Columns: 8
+$ faa   &lt;chr&gt; "04G", "06A", "06C", "06N", "09J", "0A9", "0G6", "0G7", "0P2", "…
+$ name  &lt;chr&gt; "Lansdowne Airport", "Moton Field Municipal Airport", "Schaumbur…
+$ lat   &lt;dbl&gt; 41.13047, 32.46057, 41.98934, 41.43191, 31.07447, 36.37122, 41.4…
+$ lon   &lt;dbl&gt; -80.61958, -85.68003, -88.10124, -74.39156, -81.42778, -82.17342…
+$ alt   &lt;dbl&gt; 1044, 264, 801, 523, 11, 1593, 730, 492, 1000, 108, 409, 875, 10…
+$ tz    &lt;dbl&gt; -5, -6, -6, -5, -5, -5, -5, -5, -5, -8, -5, -6, -5, -5, -5, -5, …
+$ dst   &lt;chr&gt; "A", "A", "A", "A", "A", "A", "A", "A", "U", "A", "A", "U", "A",…
+$ tzone &lt;chr&gt; "America/New_York", "America/Chicago", "America/Chicago", "Ameri…</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-1-3">
-<div class="smaller-font">
-<p><code>planes</code> records data about each plane. You can identify a plane by its tail number, making <code>tailnum</code> the primary key.</p>
-</div>
+<div id="tabset-3-3">
+<p><span style="font-size: 80%;"><code>planes</code> records data about each plane. You can identify a plane by its tail number, making <code>tailnum</code> the primary key.</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>planes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a><span class="fu">glimpse</span>(planes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3,322 × 9
-   tailnum  year type              manufacturer model engines seats speed engine
-   &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;             &lt;chr&gt;        &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; 
- 1 N10156   2004 Fixed wing multi… EMBRAER      EMB-…       2    55    NA Turbo…
- 2 N102UW   1998 Fixed wing multi… AIRBUS INDU… A320…       2   182    NA Turbo…
- 3 N103US   1999 Fixed wing multi… AIRBUS INDU… A320…       2   182    NA Turbo…
- 4 N104UW   1999 Fixed wing multi… AIRBUS INDU… A320…       2   182    NA Turbo…
- 5 N10575   2002 Fixed wing multi… EMBRAER      EMB-…       2    55    NA Turbo…
- 6 N105UW   1999 Fixed wing multi… AIRBUS INDU… A320…       2   182    NA Turbo…
- 7 N107US   1999 Fixed wing multi… AIRBUS INDU… A320…       2   182    NA Turbo…
- 8 N108UW   1999 Fixed wing multi… AIRBUS INDU… A320…       2   182    NA Turbo…
- 9 N109UW   1999 Fixed wing multi… AIRBUS INDU… A320…       2   182    NA Turbo…
-10 N110UW   1999 Fixed wing multi… AIRBUS INDU… A320…       2   182    NA Turbo…
-# ℹ 3,312 more rows</code></pre>
+<pre><code>Rows: 3,322
+Columns: 9
+$ tailnum      &lt;chr&gt; "N10156", "N102UW", "N103US", "N104UW", "N10575", "N105UW…
+$ year         &lt;int&gt; 2004, 1998, 1999, 1999, 2002, 1999, 1999, 1999, 1999, 199…
+$ type         &lt;chr&gt; "Fixed wing multi engine", "Fixed wing multi engine", "Fi…
+$ manufacturer &lt;chr&gt; "EMBRAER", "AIRBUS INDUSTRIE", "AIRBUS INDUSTRIE", "AIRBU…
+$ model        &lt;chr&gt; "EMB-145XR", "A320-214", "A320-214", "A320-214", "EMB-145…
+$ engines      &lt;int&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, …
+$ seats        &lt;int&gt; 55, 182, 182, 182, 55, 182, 182, 182, 182, 182, 55, 55, 5…
+$ speed        &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turb…</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-1-4">
-<div class="smaller-font">
-<p><code>weather</code> records data about the weather at the origin airports. You can identify each observation by the combination of location and time, making <code>origin</code> and <code>time_hour</code> the compound primary key.</p>
-</div>
+<div id="tabset-3-4">
+<p><span style="font-size: 80%;"><code>weather</code> records data about the weather at the origin airports. You can identify each observation by the combination of location and time, making <code>origin</code> and <code>time_hour</code> the compound primary key.</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>weather</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a><span class="fu">glimpse</span>(weather)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 26,115 × 15
-   origin  year month   day  hour  temp  dewp humid wind_dir wind_speed
-   &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
- 1 EWR     2013     1     1     1  39.0  26.1  59.4      270      10.4 
- 2 EWR     2013     1     1     2  39.0  27.0  61.6      250       8.06
- 3 EWR     2013     1     1     3  39.0  28.0  64.4      240      11.5 
- 4 EWR     2013     1     1     4  39.9  28.0  62.2      250      12.7 
- 5 EWR     2013     1     1     5  39.0  28.0  64.4      260      12.7 
- 6 EWR     2013     1     1     6  37.9  28.0  67.2      240      11.5 
- 7 EWR     2013     1     1     7  39.0  28.0  64.4      240      15.0 
- 8 EWR     2013     1     1     8  39.9  28.0  62.2      250      10.4 
- 9 EWR     2013     1     1     9  39.9  28.0  62.2      260      15.0 
-10 EWR     2013     1     1    10  41    28.0  59.6      260      13.8 
-# ℹ 26,105 more rows
-# ℹ 5 more variables: wind_gust &lt;dbl&gt;, precip &lt;dbl&gt;, pressure &lt;dbl&gt;,
-#   visib &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<pre><code>Rows: 26,115
+Columns: 15
+$ origin     &lt;chr&gt; "EWR", "EWR", "EWR", "EWR", "EWR", "EWR", "EWR", "EWR", "EW…
+$ year       &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013,…
+$ month      &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+$ day        &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+$ hour       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, …
+$ temp       &lt;dbl&gt; 39.02, 39.02, 39.02, 39.92, 39.02, 37.94, 39.02, 39.92, 39.…
+$ dewp       &lt;dbl&gt; 26.06, 26.96, 28.04, 28.04, 28.04, 28.04, 28.04, 28.04, 28.…
+$ humid      &lt;dbl&gt; 59.37, 61.63, 64.43, 62.21, 64.43, 67.21, 64.43, 62.21, 62.…
+$ wind_dir   &lt;dbl&gt; 270, 250, 240, 250, 260, 240, 240, 250, 260, 260, 260, 330,…
+$ wind_speed &lt;dbl&gt; 10.35702, 8.05546, 11.50780, 12.65858, 12.65858, 11.50780, …
+$ wind_gust  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 20.…
+$ precip     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+$ pressure   &lt;dbl&gt; 1012.0, 1012.3, 1012.5, 1012.2, 1011.9, 1012.4, 1012.2, 101…
+$ visib      &lt;dbl&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,…
+$ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 03:00…</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-1-5">
-<div class="smaller-font">
-<p><code>flights</code> has three variables (<code>time_hour</code>, <code>flight</code>, <code>carrier</code>) that uniquely identify an observation. More significantly, however, it contains <strong>foreign keys</strong> that correspond to the primary keys of the other datasets.</p>
-</div>
+<div id="tabset-3-5">
+<p><span style="font-size: 80%;"><code>flights</code> has three variables (<code>time_hour</code>, <code>flight</code>, <code>carrier</code>) that uniquely identify an observation. More significantly, however, it contains <strong>foreign keys</strong> that correspond to the primary keys of the other datasets.</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a>flights</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a><span class="fu">glimpse</span>(flights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 336,776 × 19
-    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
-   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
- 1  2013     1     1      517            515         2      830            819
- 2  2013     1     1      533            529         4      850            830
- 3  2013     1     1      542            540         2      923            850
- 4  2013     1     1      544            545        -1     1004           1022
- 5  2013     1     1      554            600        -6      812            837
- 6  2013     1     1      554            558        -4      740            728
- 7  2013     1     1      555            600        -5      913            854
- 8  2013     1     1      557            600        -3      709            723
- 9  2013     1     1      557            600        -3      838            846
-10  2013     1     1      558            600        -2      753            745
-# ℹ 336,766 more rows
-# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
-#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
-#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<pre><code>Rows: 336,776
+Columns: 19
+$ year           &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2…
+$ month          &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ day            &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ dep_time       &lt;int&gt; 517, 533, 542, 544, 554, 554, 555, 557, 557, 558, 558, …
+$ sched_dep_time &lt;int&gt; 515, 529, 540, 545, 600, 558, 600, 600, 600, 600, 600, …
+$ dep_delay      &lt;dbl&gt; 2, 4, 2, -1, -6, -4, -5, -3, -3, -2, -2, -2, -2, -2, -1…
+$ arr_time       &lt;int&gt; 830, 850, 923, 1004, 812, 740, 913, 709, 838, 753, 849,…
+$ sched_arr_time &lt;int&gt; 819, 830, 850, 1022, 837, 728, 854, 723, 846, 745, 851,…
+$ arr_delay      &lt;dbl&gt; 11, 20, 33, -18, -25, 12, 19, -14, -8, 8, -2, -3, 7, -1…
+$ carrier        &lt;chr&gt; "UA", "UA", "AA", "B6", "DL", "UA", "B6", "EV", "B6", "…
+$ flight         &lt;int&gt; 1545, 1714, 1141, 725, 461, 1696, 507, 5708, 79, 301, 4…
+$ tailnum        &lt;chr&gt; "N14228", "N24211", "N619AA", "N804JB", "N668DN", "N394…
+$ origin         &lt;chr&gt; "EWR", "LGA", "JFK", "JFK", "LGA", "EWR", "EWR", "LGA",…
+$ dest           &lt;chr&gt; "IAH", "IAH", "MIA", "BQN", "ATL", "ORD", "FLL", "IAD",…
+$ air_time       &lt;dbl&gt; 227, 227, 160, 183, 116, 150, 158, 53, 140, 138, 149, 1…
+$ distance       &lt;dbl&gt; 1400, 1416, 1089, 1576, 762, 719, 1065, 229, 944, 733, …
+$ hour           &lt;dbl&gt; 5, 5, 5, 5, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6…
+$ minute         &lt;dbl&gt; 15, 29, 40, 45, 0, 58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 59, 0…
+$ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-01 0…</code></pre>
 </div>
 </div>
 </div>
@@ -1703,14 +1749,14 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-37"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-37-1"><a href="#annotated-cell-37-1"></a>planes <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-37" data-target-annotation="1">1</button><span id="annotated-cell-37-2" class="code-annotation-target"><a href="#annotated-cell-37-2"></a>  <span class="fu">count</span>(tailnum) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-37-3"><a href="#annotated-cell-37-3"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-46"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-46-1"><a href="#annotated-cell-46-1"></a>planes <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-46" data-target-annotation="1">1</button><span id="annotated-cell-46-2" class="code-annotation-target"><a href="#annotated-cell-46-2"></a>  <span class="fu">count</span>(tailnum) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-46-3"><a href="#annotated-cell-46-3"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-37" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-46" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-37" data-code-lines="2,3" data-code-annotation="1">If your primary keys uniquely identify each observation you’ll get an empty tibble in return.</span>
+<span data-code-cell="annotated-cell-46" data-code-lines="2,3" data-code-annotation="1">If your primary keys uniquely identify each observation you’ll get an empty tibble in return.</span>
 </dd>
 </dl>
 </div>
@@ -1724,13 +1770,13 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-38"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-38-1"><a href="#annotated-cell-38-1"></a>planes <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-38" data-target-annotation="2">2</button><span id="annotated-cell-38-2" class="code-annotation-target"><a href="#annotated-cell-38-2"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(tailnum))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-47"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-47-1"><a href="#annotated-cell-47-1"></a>planes <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-47" data-target-annotation="2">2</button><span id="annotated-cell-47-2" class="code-annotation-target"><a href="#annotated-cell-47-2"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(tailnum))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-38" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-47" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-38" data-code-lines="2" data-code-annotation="2">If none of your primary keys are missing you’ll get an empty tibble in return here too.</span>
+<span data-code-cell="annotated-cell-47" data-code-lines="2" data-code-annotation="2">If none of your primary keys are missing you’ll get an empty tibble in return here too.</span>
 </dd>
 </dl>
 </div>
@@ -1741,7 +1787,7 @@
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn6"><p>With the exception of <code>year</code>: it means year of departure in <code>flights</code> and year of manufacture in <code>planes</code>. </p></li><li id="fn7"><p>We’ll cover how to handle this shortly.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn7"><p>With the exception of <code>year</code>: it means year of departure in <code>flights</code> and year of manufacture in <code>planes</code>. </p></li><li id="fn8"><p>We’ll cover how to handle this shortly.</p></li></ol></aside></section>
 <section id="surrogate-keys" class="slide level2">
 <h2>Surrogate Keys</h2>
 <p>Sometimes you’ll want to create an index of your observations to serve as a surrogate key because the compound primary key is not particularly easy to reference.</p>
@@ -1750,14 +1796,14 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-39"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-39-1"><a href="#annotated-cell-39-1"></a>flights2 <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-39" data-target-annotation="3">3</button><span id="annotated-cell-39-2" class="code-annotation-target"><a href="#annotated-cell-39-2"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>(), <span class="at">.before =</span> <span class="dv">1</span>)</span>
-<span id="annotated-cell-39-3"><a href="#annotated-cell-39-3"></a>flights2</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-48"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-48-1"><a href="#annotated-cell-48-1"></a>flights2 <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-48" data-target-annotation="1">1</button><span id="annotated-cell-48-2" class="code-annotation-target"><a href="#annotated-cell-48-2"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>(), <span class="at">.before =</span> <span class="dv">1</span>)</span>
+<span id="annotated-cell-48-3"><a href="#annotated-cell-48-3"></a>flights2</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-39" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-48" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-39" data-code-lines="2" data-code-annotation="3"><code>row_number()</code> simply specifies the row number of the data frame.</span>
+<span data-code-cell="annotated-cell-48" data-code-lines="2" data-code-annotation="1"><code>row_number()</code> simply specifies the row number of the data frame.</span>
 </dd>
 </dl>
 </div>
@@ -1833,37 +1879,34 @@
 </div>
 </div></div>
 </section>
-<section id="left_join" class="slide level2 scrollable">
-<h2><code>left_join()</code> <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span></h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/joins_left.png" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
+<section id="left_join" class="slide level2">
+<h2><code>left_join()</code></h2>
 
-<aside><div>
-<ul>
-<li class="fragment">The most common type of join</li>
-<li class="fragment">Appends columns from <code>y</code> to <code>x</code> by the rows in <code>x</code>
-<ul>
-<li class="fragment"><code>NA</code> added if there is nothing from <code>y</code></li>
-</ul></li>
-<li class="fragment">Natural join: when all variables that appear in both datasets are used as the join key
-<ul>
-<li class="fragment">If the join_by() argument is not specified, <code>left_join()</code> will automatically join by all columns that have names and values in common.</li>
-</ul></li>
-</ul>
-</div></aside></section>
+<img data-src="images/joins_left.png" class="quarto-figure quarto-figure-center r-stretch"><div class="r-stack">
+<p><span class="fragment fade-in-then-out absolute" data-fragment-index="1" style="top: 0px; right: 0px; ">The most common type of join</span> <span class="fragment absolute" data-fragment-index="2" style="top: 0px; right: 0px; ">Appends columns from <code>y</code> to <code>x</code> by the rows in <code>x</code><br>
+(<code>NA</code> added if there is nothing from <code>y</code>)</span> <span class="fragment absolute" data-fragment-index="3" style="font-size: 80%;bottom: -225px; right: 0px; width: 500px; height: 400px; "><strong>Natural join</strong>: when all variables that appear in both datasets are used as the join key.<br>
+<br>
+<em>If the <code>join_by()</code> argument is not specified, <code>left_join()</code> will automatically join by all columns that have names and values in common.</em></span></p>
+</div>
+</section>
 <section id="left_join-in-nycflights13" class="slide level2">
 <h2><code>left_join</code> in <code>nycflights13</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a>flights2 <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
-<span id="cb55-2"><a></a>  <span class="fu">select</span>(year, time_hour, origin, dest, tailnum, carrier)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a></a>flights2 <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
+<span id="cb72-2"><a></a>  <span class="fu">select</span>(year, time_hour, origin, dest, tailnum, carrier)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With only the pertinent variables from the <code>flights</code> dataset, we can see how a <code>left_join</code> works with the <code>airlines</code> dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a>flights2 <span class="sc">|&gt;</span></span>
-<span id="cb56-2"><a></a>  <span class="fu">left_join</span>(airlines)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-50"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-50-1"><a href="#annotated-cell-50-1"></a>flights2 <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-50" data-target-annotation="1">1</button><span id="annotated-cell-50-2" class="code-annotation-target"><a href="#annotated-cell-50-2"></a>  <span class="fu">left_join</span>(<span class="at">y =</span> airlines)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-50" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-50" data-code-lines="2" data-code-annotation="1">The <code>airlines</code> dataset has variables <code>carrier</code> and <code>name</code></span>
+</dd>
+</dl>
+</div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stderr">
@@ -1890,8 +1933,16 @@
 <section id="different-variable-meanings" class="slide level2">
 <h2>Different variable meanings</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>flights2 <span class="sc">|&gt;</span> </span>
-<span id="cb59-2"><a></a>  <span class="fu">left_join</span>(planes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-51"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-51-1"><a href="#annotated-cell-51-1"></a>flights2 <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-51" data-target-annotation="1">1</button><span id="annotated-cell-51-2" class="code-annotation-target"><a href="#annotated-cell-51-2"></a>  <span class="fu">left_join</span>(planes)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-51" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-51" data-code-lines="2" data-code-annotation="1">The <code>planes</code> dataset has variables <code>tailnum</code>, <code>year</code>, <code>type</code>, <code>manufacturer</code>, <code>model</code>, <code>engines</code>, <code>seats</code>, <code>speed</code>, and <code>engine</code></span>
+</dd>
+</dl>
+</div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stderr">
@@ -1916,49 +1967,23 @@
 #   engine &lt;chr&gt;</code></pre>
 </div>
 </div>
-<div class="fragment">
-<p>When we try to do this, however, we get a bunch of <code>NA</code>s. Why?</p>
-</div>
-</section>
+<p><br>
+</p>
+<p><span class="fragment fade-in-then-out">When we try to do this, however, we get a bunch of <code>NA</code>s. Why?</span></p>
+
+<aside><div>
+<p><span class="fragment"><em>Join is trying to use tailnum and year as a compound key.</em> While both datasets have <code>year</code> as a variable, they mean <strong>different</strong> things. Therefore, we need to be explicit here about what to join by.</span></p>
+</div></aside></section>
 <section id="different-variable-meanings-1" class="slide level2">
 <h2>Different variable meanings</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a></a>flights2 <span class="sc">|&gt;</span> </span>
-<span id="cb62-2"><a></a>  <span class="fu">left_join</span>(planes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Joining with `by = join_by(year, tailnum)`</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 336,776 × 13
-    year time_hour           origin dest  tailnum carrier type  manufacturer
-   &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;       
- 1  2013 2013-01-01 05:00:00 EWR    IAH   N14228  UA      &lt;NA&gt;  &lt;NA&gt;        
- 2  2013 2013-01-01 05:00:00 LGA    IAH   N24211  UA      &lt;NA&gt;  &lt;NA&gt;        
- 3  2013 2013-01-01 05:00:00 JFK    MIA   N619AA  AA      &lt;NA&gt;  &lt;NA&gt;        
- 4  2013 2013-01-01 05:00:00 JFK    BQN   N804JB  B6      &lt;NA&gt;  &lt;NA&gt;        
- 5  2013 2013-01-01 06:00:00 LGA    ATL   N668DN  DL      &lt;NA&gt;  &lt;NA&gt;        
- 6  2013 2013-01-01 05:00:00 EWR    ORD   N39463  UA      &lt;NA&gt;  &lt;NA&gt;        
- 7  2013 2013-01-01 06:00:00 EWR    FLL   N516JB  B6      &lt;NA&gt;  &lt;NA&gt;        
- 8  2013 2013-01-01 06:00:00 LGA    IAD   N829AS  EV      &lt;NA&gt;  &lt;NA&gt;        
- 9  2013 2013-01-01 06:00:00 JFK    MCO   N593JB  B6      &lt;NA&gt;  &lt;NA&gt;        
-10  2013 2013-01-01 06:00:00 LGA    ORD   N3ALAA  AA      &lt;NA&gt;  &lt;NA&gt;        
-# ℹ 336,766 more rows
-# ℹ 5 more variables: model &lt;chr&gt;, engines &lt;int&gt;, seats &lt;int&gt;, speed &lt;int&gt;,
-#   engine &lt;chr&gt;</code></pre>
-</div>
-</div>
-<p><em>Join is trying to use tailnum and year as a compound key.</em> While both datasets have <code>year</code> as a variable, they mean different things. Therefore, we need to be explicit here about what to join by.</p>
-</section>
-<section id="different-variable-meanings-2" class="slide level2">
-<h2>Different variable meanings</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-44"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-44-1"><a href="#annotated-cell-44-1"></a>flights2 <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-44" data-target-annotation="4">4</button><span id="annotated-cell-44-2" class="code-annotation-target"><a href="#annotated-cell-44-2"></a>  <span class="fu">left_join</span>(planes, <span class="fu">join_by</span>(tailnum))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-52"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-52-1"><a href="#annotated-cell-52-1"></a>flights2 <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-52" data-target-annotation="1">1</button><span id="annotated-cell-52-2" class="code-annotation-target"><a href="#annotated-cell-52-2"></a>  <span class="fu">left_join</span>(<span class="at">y =</span> planes, <span class="at">by =</span> <span class="fu">join_by</span>(tailnum))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-44" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-52" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-44" data-code-lines="2" data-code-annotation="4"><code>join_by(tailnum)</code> is short for <code>join_by(tailnum == tailnum)</code> making these types of basic joins equi joins.</span>
+<span data-code-cell="annotated-cell-52" data-code-lines="2" data-code-annotation="1"><code>join_by(tailnum)</code> is short for <code>join_by(tailnum == tailnum)</code> making these types of basic joins equi joins.</span>
 </dd>
 </dl>
 </div>
@@ -1985,20 +2010,20 @@
 </div>
 
 <aside><div>
-<p>When you have the same variable name but they mean different things you can specify a particular suffix with the <code>suffix</code> argument.</p>
+<p><span class="fragment">When you have the same variable name but they mean different things you can specify a particular suffix with the <code>suffix</code> argument in the <code>_join</code> function. By default the suffix will be <code>.x</code> for the variable from the first dataset and <code>.y</code> for the variable from the second dataset.</span></p>
 </div></aside></section>
 <section id="different-variable-names" class="slide level2">
 <h2>Different variable names</h2>
 <p>If you have keys that have the same meaning (values) but are named different things in their respective datasets you’d also specify that with <code>join_by()</code></p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-45"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-45-1"><a href="#annotated-cell-45-1"></a>flights2 <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-45" data-target-annotation="5">5</button><span id="annotated-cell-45-2" class="code-annotation-target"><a href="#annotated-cell-45-2"></a>  <span class="fu">left_join</span>(airports, <span class="fu">join_by</span>(dest <span class="sc">==</span> faa))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-53"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-53-1"><a href="#annotated-cell-53-1"></a>flights2 <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-53" data-target-annotation="1">1</button><span id="annotated-cell-53-2" class="code-annotation-target"><a href="#annotated-cell-53-2"></a>  <span class="fu">left_join</span>(airports, <span class="fu">join_by</span>(dest <span class="sc">==</span> faa))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-45" data-target-annotation="5">5</dt>
+<dt data-target-cell="annotated-cell-53" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-45" data-code-lines="2" data-code-annotation="5"><code>by = c("dest" = "faa")</code> was the former syntax for this and you still might see that in older code.</span>
+<span data-code-cell="annotated-cell-53" data-code-lines="2" data-code-annotation="1"><code>by = c("dest" = "faa")</code> was the former syntax for this and you still might see that in older code. You can specify multiple <code>join_by</code>s by simply separating the conditional statements with <code>,</code> (i.e.&nbsp;<code>join_by(x == y, a == b)</code>).</span>
 </dd>
 </dl>
 </div>
@@ -2022,18 +2047,18 @@
 # ℹ 4 more variables: alt &lt;dbl&gt;, tz &lt;dbl&gt;, dst &lt;chr&gt;, tzone &lt;chr&gt;</code></pre>
 </div>
 </div>
+
 </div>
-<div class="fragment">
-<p>This will match <code>dest</code> to <code>faa</code> for the join and then drop <code>faa</code>.</p>
-</div>
-</section>
+<aside><div>
+<p><span class="fragment">This will match <code>dest</code> to <code>faa</code> for the join and then drop <code>faa</code>.</span></p>
+</div></aside></section>
 <section id="different-variable-names-1" class="slide level2">
 <h2>Different variable names</h2>
 <p>You can request <code>dplyr</code> to keep both keys with <code>keep = TRUE</code> argument.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a>flights2 <span class="sc">|&gt;</span> </span>
-<span id="cb67-2"><a></a>  <span class="fu">left_join</span>(airports, <span class="fu">join_by</span>(dest <span class="sc">==</span> faa), <span class="at">keep =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a></a>flights2 <span class="sc">|&gt;</span> </span>
+<span id="cb79-2"><a></a>  <span class="fu">left_join</span>(airports, <span class="fu">join_by</span>(dest <span class="sc">==</span> faa), <span class="at">keep =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -2059,15 +2084,15 @@
 <section id="right_join" class="slide level2">
 <h2><code>right_join()</code></h2>
 
-<img data-src="images/joins_right.png" class="r-stretch quarto-figure-center"><p class="caption">Has the same interface as a left_join but keeps all rows in <code>y</code> instead of <code>x</code></p></section>
+<img data-src="images/joins_right.png" class="r-stretch quarto-figure-center"><p class="caption">Has the same interface as a <code>left_join</code> but keeps all rows in <code>y</code> instead of <code>x</code></p></section>
 <section id="inner_join" class="slide level2">
 <h2><code>inner_join()</code></h2>
 
-<img data-src="images/joins_inner.png" class="r-stretch quarto-figure-center"><p class="caption">Has the same interface as a left_join but only keeps rows that occur in both x and y</p></section>
+<img data-src="images/joins_inner.png" class="r-stretch quarto-figure-center"><p class="caption">Has the same interface as a <code>left_join</code> but only keeps rows that occur in both x and y</p></section>
 <section id="full_join" class="slide level2">
 <h2><code>full_join()</code></h2>
 
-<img data-src="images/joins_full.png" class="r-stretch quarto-figure-center"><p class="caption">Has the same interface as a left_join but keeps all rows in either x or y</p></section>
+<img data-src="images/joins_full.png" class="r-stretch quarto-figure-center"><p class="caption">Has the same interface as a <code>left_join</code> but keeps all rows in either x or y</p></section>
 <section id="filtering-joins-1" class="slide level2">
 <h2><code>Filtering Joins</code></h2>
 <div class="columns">
@@ -2092,8 +2117,8 @@
 <p>We could use a semi-join to filter the airports dataset to show just the origin airports.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a>airports <span class="sc">|&gt;</span> </span>
-<span id="cb69-2"><a></a>  <span class="fu">semi_join</span>(flights2, <span class="fu">join_by</span>(faa <span class="sc">==</span> origin))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a></a>airports <span class="sc">|&gt;</span> </span>
+<span id="cb81-2"><a></a>  <span class="fu">semi_join</span>(flights2, <span class="fu">join_by</span>(faa <span class="sc">==</span> origin))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -2116,8 +2141,8 @@
 <p>We can find rows that are missing from airports by looking for flights that don’t have a matching destination airport.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a></a>airports <span class="sc">|&gt;</span> </span>
-<span id="cb71-2"><a></a>  <span class="fu">anti_join</span>(flights2, <span class="fu">join_by</span>(faa <span class="sc">==</span> origin))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a></a>airports <span class="sc">|&gt;</span> </span>
+<span id="cb83-2"><a></a>  <span class="fu">anti_join</span>(flights2, <span class="fu">join_by</span>(faa <span class="sc">==</span> origin))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -2140,7 +2165,7 @@
 
 </div>
 <aside><div>
-<p>This type of join is useful for finding missing values that are implicit in the data (i.e.&nbsp;<code>NA</code>s that don’t show up in the data but only exist as an absence.)</p>
+<p><span class="fragment">This type of join is useful for finding missing values that are implicit in the data (i.e.&nbsp;<code>NA</code>s that don’t show up in the data but only exist as an absence.)</span></p>
 </div></aside></section>
 <section id="more-than-one-match" class="slide level2">
 <h2>More Than One Match</h2>
@@ -2149,8 +2174,8 @@
 <p>There are three possible outcomes for a row in x:</p>
 <ul>
 <li class="fragment">If it doesn’t match anything, it’s dropped.</li>
-<li class="fragment">If it matches 1 row in y, it’s preserved.</li>
-<li class="fragment">If it matches more than 1 row in y, it’s duplicated once for each match.</li>
+<li class="fragment">If it matches 1 row in <code>y</code>, it’s preserved.</li>
+<li class="fragment">If it matches more than 1 row in<code>y</code>, it’s duplicated once for each match.</li>
 </ul>
 </div>
 <div class="fragment">
@@ -2160,13 +2185,20 @@
 <section id="more-than-one-match-1" class="slide level2">
 <h2>More Than One Match</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a></a>df1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="at">val_x =</span> <span class="fu">c</span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>))</span>
-<span id="cb73-2"><a></a>df2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="at">val_y =</span> <span class="fu">c</span>(<span class="st">"y1"</span>, <span class="st">"y2"</span>, <span class="st">"y3"</span>))</span>
-<span id="cb73-3"><a></a></span>
-<span id="cb73-4"><a></a>df1 <span class="sc">|&gt;</span> </span>
-<span id="cb73-5"><a></a>  <span class="fu">inner_join</span>(df2, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a></a>df1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="at">val_x =</span> <span class="fu">c</span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>))</span>
+<span id="cb85-2"><a></a>df2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="at">val_y =</span> <span class="fu">c</span>(<span class="st">"y1"</span>, <span class="st">"y2"</span>, <span class="st">"y3"</span>))</span>
+<span id="cb85-3"><a></a></span>
+<span id="cb85-4"><a></a>df1 <span class="sc">|&gt;</span> </span>
+<span id="cb85-5"><a></a>  <span class="fu">inner_join</span>(df2, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in inner_join(df1, df2, join_by(key)): Detected an unexpected many-to-many relationship between `x` and `y`.
+ℹ Row 2 of `x` matches multiple rows in `y`.
+ℹ Row 2 of `y` matches multiple rows in `x`.
+ℹ If a many-to-many relationship is expected, set `relationship =
+  "many-to-many"` to silence this warning.</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
     key val_x val_y
@@ -2178,12 +2210,12 @@
 5     2 x3    y3   </code></pre>
 </div>
 </div>
-<div class="fragment">
-<p>If you are doing this deliberately, you can set relationship = “many-to-many”, as the warning suggests.</p>
 
-</div>
 <aside><div>
-<p>Given their nature, filtering joins never duplicate rows like mutating joins do. They will only ever return a subset of the datasets.</p>
+<div class="r-stack">
+<p><span class="fragment fade-in-then-out">If you are doing this deliberately, you can set <code>relationship = "many-to-many"</code>, as the warning suggests.</span></p>
+<p><span class="fragment">Note: Given their nature, <em>filtering</em> joins never duplicate rows like mutating joins do. They will only ever return a subset of the datasets.</span></p>
+</div>
 </div></aside></section>
 <section id="non-equi-joins" class="slide level2">
 <h2>Non-Equi Joins</h2>
@@ -2203,7 +2235,7 @@
 
 </div>
 <aside><div>
-<p>Cross joins, aka self-joins, are useful when generating permutations (e.g.&nbsp;creating every possible combination of values). This comes in handy when creating datasets of predicted probabilities for plotting in ggplot.</p>
+<p><span class="fragment">Cross joins, aka self-joins, are useful when generating permutations (e.g.&nbsp;creating every possible combination of values). This comes in handy when creating datasets of predicted probabilities for plotting in ggplot.</span></p>
 </div></aside></section>
 <section id="non-equi-joins-1" class="slide level2">
 <h2>Non-Equi Joins</h2>
@@ -2224,7 +2256,7 @@
 
 <aside><div>
 <p>Inequality joins can be used to restrict the cross join so that instead of generating all permutations, we generate all combinations.</p>
-</div><ol class="aside-footnotes"><li id="fn8"><p>Overlap joins provide three helpers that use inequality joins to make it easier to work with intervals: <code>between()</code>, <code>within()</code>, <code>overlaps()</code>. Read more about their functionality and specifications <a href="https://dplyr.tidyverse.org/reference/join_by.html?q=within#overlap-joins">here</a>.</p></li></ol></aside></section>
+</div><ol class="aside-footnotes"><li id="fn9"><p>Overlap joins provide three helpers that use inequality joins to make it easier to work with intervals: <code>between()</code>, <code>within()</code>, <code>overlaps()</code>. Read more about their functionality and specifications <a href="https://dplyr.tidyverse.org/reference/join_by.html?q=within#overlap-joins">here</a>.</p></li></ol></aside></section>
 <section id="non-equi-joins-2" class="slide level2">
 <h2>Non-Equi Joins</h2>
 <p>The joins we’ve discussed thus far have all been equi-joins, where the rows match if the x key equals the y key. But you can also specify other types of relationships.</p>
@@ -2246,248 +2278,6 @@
 <aside><div>
 <p>Rolling joins are a special type of inequality join where instead of getting every row that satisfies the inequality, you get just the closest row. You can turn any inequality join into a rolling join by adding closest().</p>
 </div></aside></section></section>
-<section>
-<section id="lab" class="title-slide slide level1 section-title center" data-background-color="#99a486">
-<h1>Lab</h1>
-
-</section>
-<section id="manipulating-data" class="slide level2">
-<h2>Manipulating Data</h2>
-<ol type="1">
-<li>Create a new object that contains <code>gapminder</code><sup>1</sup> (1) observations from China, India, and United States after 1980, and (2) variables corresponding to country, year, population, and life expectancy.</li>
-<li>How many rows and columns does the object contain?</li>
-<li>Sort the rows by year (ascending order) and population (descending order) and save that over the object created for answer 1. Print the first 6 rows.</li>
-<li>Add a new variable that contains population in billions.</li>
-<li>By year, calculate the total population (in billions) across these three countries</li>
-<li>In <code>ggplot</code>, create a line plot showing life expectancy over time by country. Make the plot visually appealing!</li>
-</ol>
-<aside><ol class="aside-footnotes"><li id="fn9"><p>From the <code>gapminder</code> package</p></li></ol></aside></section>
-<section id="answers" class="slide level2">
-<h2>Answers</h2>
-<p>Question 1:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a></a>subset_gapminder <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb75-2"><a></a>  <span class="fu">filter</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"China"</span>,<span class="st">"India"</span>,<span class="st">"United States"</span>),  year <span class="sc">&gt;</span> <span class="dv">1980</span> ) <span class="sc">|&gt;</span></span>
-<span id="cb75-3"><a></a>  <span class="fu">select</span>(country, year, pop, lifeExp)</span>
-<span id="cb75-4"><a></a>subset_gapminder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 18 × 4
-   country        year        pop lifeExp
-   &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;
- 1 China          1982 1000281000    65.5
- 2 China          1987 1084035000    67.3
- 3 China          1992 1164970000    68.7
- 4 China          1997 1230075000    70.4
- 5 China          2002 1280400000    72.0
- 6 China          2007 1318683096    73.0
- 7 India          1982  708000000    56.6
- 8 India          1987  788000000    58.6
- 9 India          1992  872000000    60.2
-10 India          1997  959000000    61.8
-11 India          2002 1034172547    62.9
-12 India          2007 1110396331    64.7
-13 United States  1982  232187835    74.6
-14 United States  1987  242803533    75.0
-15 United States  1992  256894189    76.1
-16 United States  1997  272911760    76.8
-17 United States  2002  287675526    77.3
-18 United States  2007  301139947    78.2</code></pre>
-</div>
-</div>
-</section>
-<section id="answers-1" class="slide level2">
-<h2>Answers</h2>
-<p>Question 2:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a></a><span class="co"># Option 1</span></span>
-<span id="cb77-2"><a></a><span class="fu">c</span>(<span class="fu">nrow</span>(subset_gapminder), <span class="fu">ncol</span>(subset_gapminder))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 18  4</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a></a><span class="co"># Option 2</span></span>
-<span id="cb79-2"><a></a><span class="fu">glimpse</span>(subset_gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 18
-Columns: 4
-$ country &lt;fct&gt; "China", "China", "China", "China", "China", "China", "India",…
-$ year    &lt;int&gt; 1982, 1987, 1992, 1997, 2002, 2007, 1982, 1987, 1992, 1997, 20…
-$ pop     &lt;int&gt; 1000281000, 1084035000, 1164970000, 1230075000, 1280400000, 13…
-$ lifeExp &lt;dbl&gt; 65.525, 67.274, 68.690, 70.426, 72.028, 72.961, 56.596, 58.553…</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a></a><span class="co"># Option 3</span></span>
-<span id="cb81-2"><a></a><span class="fu">dim</span>(subset_gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 18  4</code></pre>
-</div>
-</div>
-</section>
-<section id="answers-2" class="slide level2">
-<h2>Answers</h2>
-<p>Question 3:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a></a>subset_gapminder <span class="ot">&lt;-</span> subset_gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb83-2"><a></a>  <span class="fu">arrange</span>(year, <span class="fu">desc</span>(pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><br></p>
-<div class="fragment">
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a></a>subset_gapminder <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 4
-  country        year        pop lifeExp
-  &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;
-1 China          1982 1000281000    65.5
-2 India          1982  708000000    56.6
-3 United States  1982  232187835    74.6
-4 China          1987 1084035000    67.3
-5 India          1987  788000000    58.6
-6 United States  1987  242803533    75.0</code></pre>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a></a><span class="fu">print</span>(subset_gapminder[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 4
-  country        year        pop lifeExp
-  &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;
-1 China          1982 1000281000    65.5
-2 India          1982  708000000    56.6
-3 United States  1982  232187835    74.6
-4 China          1987 1084035000    67.3
-5 India          1987  788000000    58.6
-6 United States  1987  242803533    75.0</code></pre>
-</div>
-</div>
-</div></div>
-</div>
-</section>
-<section id="answers-3" class="slide level2">
-<h2>Answers</h2>
-<p>Question 4:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a></a>subset_gapminder <span class="ot">&lt;-</span> subset_gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb88-2"><a></a>  <span class="fu">mutate</span>(<span class="at">pop_billions =</span> pop<span class="sc">/</span><span class="dv">1000000000</span>)</span>
-<span id="cb88-3"><a></a></span>
-<span id="cb88-4"><a></a>subset_gapminder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 18 × 5
-   country        year        pop lifeExp pop_billions
-   &lt;fct&gt;         &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;        &lt;dbl&gt;
- 1 China          1982 1000281000    65.5        1.00 
- 2 India          1982  708000000    56.6        0.708
- 3 United States  1982  232187835    74.6        0.232
- 4 China          1987 1084035000    67.3        1.08 
- 5 India          1987  788000000    58.6        0.788
- 6 United States  1987  242803533    75.0        0.243
- 7 China          1992 1164970000    68.7        1.16 
- 8 India          1992  872000000    60.2        0.872
- 9 United States  1992  256894189    76.1        0.257
-10 China          1997 1230075000    70.4        1.23 
-11 India          1997  959000000    61.8        0.959
-12 United States  1997  272911760    76.8        0.273
-13 China          2002 1280400000    72.0        1.28 
-14 India          2002 1034172547    62.9        1.03 
-15 United States  2002  287675526    77.3        0.288
-16 China          2007 1318683096    73.0        1.32 
-17 India          2007 1110396331    64.7        1.11 
-18 United States  2007  301139947    78.2        0.301</code></pre>
-</div>
-</div>
-</section>
-<section id="answers-4" class="slide level2">
-<h2>Answers</h2>
-<p>Question 5:</p>
-<div class="panel-tabset">
-<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Classic syntax</a></li><li><a href="#tabset-2-2">New syntax (dplyr 1.1.0)</a></li></ul>
-<div class="tab-content">
-<div id="tabset-2-1">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a></a>subset_gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb90-2"><a></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span> </span>
-<span id="cb90-3"><a></a>  <span class="fu">summarize</span>(<span class="at">TotalPop_Billions =</span> <span class="fu">sum</span>(pop_billions))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 2
-   year TotalPop_Billions
-  &lt;int&gt;             &lt;dbl&gt;
-1  1982              1.94
-2  1987              2.11
-3  1992              2.29
-4  1997              2.46
-5  2002              2.60
-6  2007              2.73</code></pre>
-</div>
-</div>
-</div>
-<div id="tabset-2-2">
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-123"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-123-1"><a href="#annotated-cell-123-1"></a>subset_gapminder <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-123-2"><a href="#annotated-cell-123-2"></a>  <span class="fu">summarize</span>(<span class="at">TotalPop_Billions =</span> <span class="fu">sum</span>(pop_billions), </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-123" data-target-annotation="1">1</button><span id="annotated-cell-123-3" class="code-annotation-target"><a href="#annotated-cell-123-3"></a>            <span class="at">.by =</span> year)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-123" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-123" data-code-lines="3" data-code-annotation="1">This new syntax allows for per-operation grouping which means it is only active within a single verb at a time (as opposed to being applied to the entire tibble until <code>ungroup()</code> is called). Learn more about this new feature <a href="https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/">here</a>)</span>
-</dd>
-</dl>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 2
-   year TotalPop_Billions
-  &lt;int&gt;             &lt;dbl&gt;
-1  1982              1.94
-2  1987              2.11
-3  1992              2.29
-4  1997              2.46
-5  2002              2.60
-6  2007              2.73</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="answers-5" class="slide level2">
-<h2>Answers</h2>
-<p>Question 6:</p>
-<div class="panel-tabset">
-<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Code</a></li><li><a href="#tabset-3-2">Plot</a></li></ul>
-<div class="tab-content">
-<div id="tabset-3-1">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a></a><span class="fu">library</span>(ggplot2) </span>
-<span id="cb93-2"><a></a><span class="fu">library</span>(ggthemes)</span>
-<span id="cb93-3"><a></a><span class="fu">library</span>(geomtextpath)</span>
-<span id="cb93-4"><a></a><span class="fu">ggplot</span>(subset_gapminder, <span class="fu">aes</span>(year, lifeExp, <span class="at">color =</span> country)) <span class="sc">+</span></span>
-<span id="cb93-5"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb93-6"><a></a>  <span class="fu">geom_textpath</span>(<span class="fu">aes</span>(<span class="at">label =</span> country), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb93-7"><a></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> </span>
-<span id="cb93-8"><a></a>  <span class="fu">ylab</span>(<span class="st">"Life Expectancy (years)"</span>) <span class="sc">+</span></span>
-<span id="cb93-9"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"Life Expectancy (1982-2007)"</span>,<span class="st">"China, India, and United States"</span>) <span class="sc">+</span></span>
-<span id="cb93-10"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1982</span>, <span class="dv">1987</span>, <span class="dv">1992</span>, <span class="dv">1997</span>, <span class="dv">2002</span>, <span class="dv">2007</span>), <span class="at">minor_breaks =</span> <span class="fu">c</span>()) <span class="sc">+</span></span>
-<span id="cb93-11"><a></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">80</span>)) <span class="sc">+</span> </span>
-<span id="cb93-12"><a></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">"Country"</span>) <span class="sc">+</span> </span>
-<span id="cb93-13"><a></a>  <span class="fu">theme_tufte</span>(<span class="at">base_size =</span> <span class="dv">20</span>) <span class="sc">+</span> </span>
-<span id="cb93-14"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div id="tabset-3-2">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="CSSS508_Lecture4_files/figure-revealjs/unnamed-chunk-65-1.svg" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section></section>
 <section>
 <section id="homework" class="title-slide slide level1 section-title center" data-background-color="#1e4655">
 <h1>Homework</h1>

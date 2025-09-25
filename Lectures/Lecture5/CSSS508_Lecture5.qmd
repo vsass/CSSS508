@@ -92,20 +92,6 @@ knitr::opts_chunk$set(comment = ">")
 
 ![](images/research_process_import.png){fig-align="center" width=7in}
 
-## Office Hours
-
-I'll be holding office hours at a different day/time this week:
-
-<br>
-
-:::{.r-stack}
-::: {.fragment .fade-down fragment-index=1}
-::: {.fragment .grow fragment-index=1}
-<span style="color:#1e4655">Thursday (April 25th) from 10am - 12pm</span>
-:::
-:::
-:::
-
 # Importing and Exporting Data{.section-title background-color="#99a486"}
 
 ## Data Packages
@@ -270,9 +256,11 @@ billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv",
 It takes a character vector to be used as column names (in their order of appearance). 
 
 ```{r}
-billboard_renamed <- read_csv(file = "data/billboard_top100.csv", 
-                               col_names = c("year", "artist", "track", "time", "date_entered", 
-                                             paste("wk", 1:76, sep = "_"))) # <1>
+billboard_renamed <- read_csv(
+  file = "data/billboard_top100.csv",
+  col_names = c("year", "artist", "track", "time", "date_entered",
+                paste("wk", 1:76, sep = "_")) # <1>
+  ) 
 
 billboard_renamed |> names() |> head(10) # <2>
 ```
@@ -299,18 +287,14 @@ If you simply want to change your variables to snake case (all lower case; words
 
 ```{r}
 #| output-location: fragment
-# Download pacakge first
-# install.packages("janitor") # <1> 
 
-# Create new object for renamed data
-billboard_renamed <- billboard_2000_raw |> 
+billboard_renamed <- billboard_2000_raw |> # <1>
   janitor::clean_names(numerals = "right") # <2>
 
 billboard_renamed |>  names() |> head(10)
 ```
-
-1. Run in the console first. 
-2. You can call a function without loading its package by specifying its package name followed by `::` before it; <br> The `numerals` argument specifies if you additionally want to put a separator before a number. 
+1. Create new object for renamed data
+2. Run `install.packages("janitor")` in the console first. You can then call a function from `janitor` without loading the entire package by specifying its package name followed by `::` before the function name.; <br> The `numerals` argument specifies if you additionally want to put a separator before a number. 
 
 ## Other Data File Types with `readr`
 
@@ -536,11 +520,11 @@ glimpse(billboard_2000_raw)
 
 ## What Went Wrong? 
 
-Since `readr` uses the values in the first 1000 rows to guess the type of the column (logical, numeric, date/date-time, character), if the first 1000 rows don't have any data, they will be coded as logical variables. 
+[Since `readr` uses the values in the first 1000 rows to guess the type of the column (logical, numeric, date/date-time, character), if the first 1000 rows don't have any data, they will be coded as logical variables. ]{style="font-size: 85%;"}
 
 . . . 
 
-There are not many songs in the data that charted for 60+ weeks—and none in the first 1000 that charted for 66+ weeks!
+[There are not many songs in the data that charted for 60+ weeks—and none in the first 1000 that charted for 66+ weeks!]{style="font-size: 85%;"}
 
 . . . 
 
@@ -550,24 +534,39 @@ There are not many songs in the data that charted for 60+ weeks—and none in th
 
 ```{r}
 #| output-location: fragment
-class(c(T, F, NA, FALSE, TRUE))
-class(c(1, NA, 17.5, 5.3, NA)) # <1>
-class(as.Date(c(NA, "2023-10-31", "1986-06-21", "1997-01-15"), tz = "America/Los_Angeles")) # <2>
-class(c("apple", NA, "mango", "blackberry", "plum")) 
-class(c(NA, NA, NA, NA, NA))
+class(c(T, F, NA, FALSE, TRUE)) # <1>
+```
+1. `class` returns the data type of its first argument.
+
+```{r}
+#| output-location: fragment
+class(c(1, NA, 17.5, 5.3, NA)) 
 ```
 
-1. `class` returns the data type of its first argument. 
-2. `as.Date` turns a character string of dates into an official date class in Base `R`. If we had an accompanying time stamp we would need to use `as.POSIXct` which turns a character string of dates and times into an official date-time class in Base `R`. 
+```{r}
+#| output-location: fragment
+class(as.Date(c(NA, "2023-10-31", "1986-06-21", "1997-01-15"), tz = "America/Los_Angeles")) # <2>
+```
+2. `as.Date` turns a character string of dates into an official date class in Base `R`. If we had an accompanying time stamp we would need to use `as.POSIXct` which turns a character string of dates and times into an official date-time class in Base `R`.
+
+```{r}
+#| output-location: fragment
+class(c("apple", NA, "mango", "blackberry", "plum")) 
+```
+
+```{r}
+#| output-location: fragment
+class(c(NA, NA, NA, NA, NA))
+```
 :::
 
 ::: aside
-Technically, `NA`s can be any data type depending upon what they are grouped with. However, by themselves they are a logical indicator of missing data, so their class is logical. 
+[Technically, `NA`s can be any data type depending upon what they are grouped with. However, by themselves they are a logical indicator of missing data, so their class is logical.]{.fragment style="font-size: 85%;"}
 :::
 
 ## Column types
 
-Since the `wk*` variables should all be read in as integers, we can specify this explicitly with the `col_types` argument. 
+[Since the `wk*` variables should all be read in as integers, we can specify this explicitly with the `col_types` argument. ]{style="font-size: 85%;"}
 
 . . . 
 
@@ -583,12 +582,11 @@ bb_types
 . . . 
 
 ```{r}
-# re-read in data with column types specified
 billboard_2000_raw <- read_csv(file = "data/billboard_top100.csv", 
                                col_types = bb_types) # <2> 
 billboard_2000_raw |> select(wk66:wk76) # <3>
 ```
-2. This string now specifies the data type for each column of our data frame. Visit [this reference page](https://readr.tidyverse.org/reference/cols.html) to see all available column types and their short codes. 
+2. When we re-read in the data, this string now specifies the data type for each column of our data frame. Visit [this reference page](https://readr.tidyverse.org/reference/cols.html) to see all available column types and their short codes. 
 3. Checking the previously incorrectly parsed variables
 
 ```{r}
@@ -646,7 +644,9 @@ If you have too many files to reasonably type out all their names you can also u
 ```{r}
 #| output-location: fragment
 # Create list of files with pattern-matching
-sales_files <- list.files("data", pattern = "sales\\.csv$", full.names = TRUE) # <1>
+sales_files <- list.files("data", 
+                          pattern = "sales\\.csv$", # <1>
+                          full.names = TRUE) 
 sales_files
 ```
 
@@ -985,14 +985,16 @@ This function usually takes three arguments:
 #| output-location: fragment 
 billboard_2000 <- billboard_renamed |> # <1>
   pivot_longer(cols = starts_with("wk_"), # <2>
-               names_to ="week",
-               values_to = "rank")
+               names_to ="week", # <3> 
+               values_to = "rank") # <4>
 
 billboard_2000 |> head(10)
 ```
 
 1. `billboard_renamed` here has snake_case variable names and correctly specified column types
-2. `starts_with()` is one of the helper functions from [`tidyselect`](https://tidyselect.r-lib.org/index.html) that helps select certain common patterns. We could have also used `cols = wk1:wk76`. 
+2. `starts_with()` is one of the helper functions from [`tidyselect`](https://tidyselect.r-lib.org/index.html) that helps select certain common patterns. We could have also used `cols = wk_1:wk_76`. 
+3. Creates a new variable `week` that will take values of the current column names we're pivoting
+4. Creates a new variable `value` that will take the values from the respective `wk_` column and row
 
 . . . 
 
@@ -1063,10 +1065,10 @@ head(billboard_2000$week)
 ```{r}
 #| output-location: fragment 
 billboard_2000 <- billboard_2000 |> 
-    mutate(week = parse_number(week)) # <3>
+    mutate(week = parse_number(week)) # <1>
 summary(billboard_2000$week)
 ```
-3. You can use `mutate()` to overwrite existing columns. 
+1. You can use `mutate()` to overwrite existing columns. 
 
 . . . 
 
@@ -1085,22 +1087,22 @@ billboard_2000 <- billboard_renamed |>
                names_to        = "week", 
                values_to       = "rank",
                values_drop_na  = TRUE,
-               names_prefix    = "wk_", # <4>
-               names_transform = list(week = as.integer)) # <5>
+               names_prefix    = "wk_", # <1>
+               names_transform = list(week = as.integer)) # <2>
 
 head(billboard_2000, 5)
 ```
 
-4. `names_prefix` is used to remove "wk_" from the values of `week`
-5. `names_transform` converts `week` into an integer number.
+1. `names_prefix` is used to remove "wk_" from the values of `week`
+2. `names_transform` converts `week` into an integer number. We'll cover `list`s in more detail next week but this is the structure required for this argument and it flexibly allows for multiple naming transformations to be applied at once. 
 
 ## Multiple Variables in Column Names
 
-A more challenging situation occurs when you have multiple pieces of information crammed into the column names, and you would like to store these in separate new variables.
+[A more challenging situation occurs when you have multiple pieces of information crammed into the column names, and you would like to store these in separate new variables.]{style="font-size: 85%;"}
 
 . . . 
 
-This dataset contains tuberculosis diagnoses collected by the World Health Organization. 
+[This dataset contains tuberculosis diagnoses collected by the World Health Organization.]{style="font-size: 85%;"}
 
 ```{r}
 #| output-location: fragment
@@ -1109,19 +1111,32 @@ who2
 
 . . . 
 
-The first two columns are self explanatory but what's going on with the rest?
+[The first two columns are self explanatory but what's going on with the rest?]{style="font-size: 85%;"}
 
 ## Multiple Variables in Column Names
 
 Data documentation and some minor investigation would lead you to figure out that the three elements in each of these column names are actually data!
 
+. . . 
+
+```{r}
+who2 |> select(-c(country, year)) |> names() # <1>
+```
+1. Remove the first two columns to see the more mysteriously-named variables. 
+
+::: {.aside}
+::: {.r-stack}
+::: {.fragment .fade-in-then-out}
 * The first piece, `sp`/`sn`/`rel`/`ep`, describes the method used for the diagnosis
 * The second piece, `m`/`f` is the gender (coded as a binary variable in this dataset)
 * The third piece, `014`/`1524`/`2534`/`3544`/`4554`/`5564`/`65` is the age range (014 represents 0-14, for example)
+:::
 
-. . . 
-
-To organize the six pieces of information in this dataset into six separate columns, we use `pivot_longer()` with a vector of column names for `names_to` and instructions for splitting the original variable names into pieces for `names_sep` as well as a column name for `values_to`!
+::: {.fragment}
+To organize the six pieces of information in this dataset into six separate columns, we'll use `pivot_longer()` with a vector of column names for `names_to` and instructions for splitting the original variable names into pieces for `names_sep` as well as a column name for `values_to`!
+:::
+:::
+:::
 
 ## Multiple Variables in Column Names
 
@@ -1129,14 +1144,15 @@ To organize the six pieces of information in this dataset into six separate colu
 #| output-location: fragment
 who2 |> 
   pivot_longer(
-    cols = !(country:year),
-    names_to = c("diagnosis", "gender", "age"), 
-    names_sep = "_", # <6>
+    cols = !(country:year), # <1>
+    names_to = c("diagnosis", "gender", "age"), # <2>
+    names_sep = "_", # <3>
     values_to = "count"
   )
 ```
-
-6. You can use `names_pattern` instead of `names_sep` to extract variables from more complicated naming scenarios once you've learned regular expressions in a few weeks. 
+1. You can also exclude variables by negating a vector of them.  
+2. `names_to` allows you to specify how to split up the current column names into new column names. 
+3. You can use `names_pattern` instead of `names_sep` to extract variables from more complicated naming scenarios once you've learned regular expressions. You'll get a basic introduction to them in a few weeks. 
 
 ## Variable & Values in Column Names
 
@@ -1149,7 +1165,7 @@ household
 
 . . . 
 
-The new challenge in this dataset is that the column names contain the names of two variables (`dob`, `name`) and the values of another (`child`, with values `1` or `2`).
+The new challenge in this dataset is that the column names contain the names of two variables (`dob`, `name`) and the *values* of another (`child`, with values `1` or `2`).
 
 ## Variable & Values in Column Names
 
@@ -1158,14 +1174,14 @@ The new challenge in this dataset is that the column names contain the names of 
 household |> 
   pivot_longer(
     cols = !family, 
-    names_to = c(".value", "child"), # <7>
+    names_to = c(".value", "child"), # <1>
     names_sep = "_", 
-    values_drop_na = TRUE # <8> 
+    values_drop_na = TRUE # <2> 
   )
 ```
 
-7. `.value` isn’t the name of a variable but a unique value that tells `pivot_longer` to use the first component of the pivoted column name as a variable name in the output. 
-8. Using `values_drop_na = TRUE` again since not every family has 2 children.
+1. `.value` isn’t the name of a variable but a unique value that tells `pivot_longer` to use the first component of the pivoted column name as a variable name in the output. 
+2. Using `values_drop_na = TRUE` again since not every family has 2 children.
 
 . . . 
 
@@ -1196,15 +1212,15 @@ A common cue to use `pivot_wider()` is having measurements of different quantiti
 ```{r}
 #| output-location: fragment
 wide_stats <- long_stats |> 
-  pivot_wider(id_cols = Group, # <9>
-              names_from = Statistic, # <10>
-              values_from = Value) # <11>
+  pivot_wider(id_cols = Group, # <1>
+              names_from = Statistic, # <2>
+              values_from = Value) # <3>
 wide_stats
 ```
 
-9. `id_cols` is the column that uniquely identifies each row in the new dataset. Default is everything not in `names_from` and `values_from`.
-10. `names_from` provides the names that will be used for the new columns
-11. `values_from` provides the values that will be used to populate the cells of the new columns.
+1. `id_cols` is the column that uniquely identifies each row in the new dataset. Default is everything not in `names_from` and `values_from`.
+2. `names_from` provides the names that will be used for the new columns
+3. `values_from` provides the values that will be used to populate the cells of the new columns.
 
 . . . 
 
@@ -1214,7 +1230,12 @@ wide_stats
 
 ::: {.callout-warning icon=false}
 ## <span style="color:orange">{{< fa triangle-exclamation >}}</span> Nested Data
-If there are multiple rows in the input that correspond to one cell in the output you'll get a list-column. This means that you 1) need to fix something in your code/data because it shouldn't be nested in this way or 2) need to use `unnest_wider()` or `unnest_longer()` in order to access this column of data. More on this [here](https://r4ds.hadley.nz/rectangling.html#unnesting). 
+If there are multiple rows in the input that correspond to one cell in the output you'll get a list-column. \
+This means that you:
+\
+&nbsp;&nbsp;&nbsp;&nbsp; 1) need to fix something in your code/data because it shouldn't be nested in this way or \
+&nbsp;&nbsp;&nbsp;&nbsp; 2) need to use `unnest_wider()` or `unnest_longer()` in order to access this column of data. \
+More on this [here](https://r4ds.hadley.nz/rectangling.html#unnesting). 
 :::
 
 # Lab{.section-title background-color="#99a486"}
@@ -1281,9 +1302,9 @@ month <- c("Dec", "Apr", "Jan", "Mar")
 
 . . . 
 
-The two main issues with coding this simply as a character string are that 
+The two main issues with coding this simply as a character string are that:
 
-1) It doesn't help catch *spelling errors* and that
+@) It doesn't help catch *spelling errors* and that
 
 ```{r}
 #| eval: false
@@ -1292,7 +1313,7 @@ month <- c("Dec", "Apr", "Jam", "Mar")
 
 . . . 
 
-2) Characters are *sorted alphabetically*, which is not necessarily intuitive or useful for your variable. 
+@) Characters are *sorted alphabetically*, which is not necessarily intuitive or useful for your variable. 
 
 ```{r}
 sort(month)
@@ -1455,7 +1476,8 @@ relig_summary <- gss_cat |>
   )
 
 ggplot(relig_summary, aes(x = tvhours, y = relig)) + 
-  geom_point()
+  geom_point() + 
+  theme_minimal(base_size = 16)
 ```
 
 **With `fct_reorder()`**
@@ -1467,11 +1489,13 @@ ggplot(relig_summary, aes(x = tvhours, y = relig)) +
 #| code-fold: show
 relig_summary |>
   mutate(
-    relig = fct_reorder(relig, tvhours)
+    relig = fct_reorder(relig, tvhours) # <1>
   ) |>
   ggplot(aes(x = tvhours, y = relig)) +
-  geom_point()
+  geom_point() + 
+  theme_minimal(base_size = 16)
 ```
+1. `relig` ordered by `tvhours`
 
 ### <span style="color:#4e79a7; font-family:Roboto Mono">fct_relevel^[Use `fct_relevel` for categorical variables that already have an inherent ordering.]</span>
 
@@ -1489,7 +1513,8 @@ rincome_summary <- gss_cat |>
   )
 
 ggplot(rincome_summary, aes(x = age, y = rincome)) + 
-  geom_point()
+  geom_point() + 
+  theme_minimal(base_size = 16)
 ```
 
 **With `fct_relevel()`**
@@ -1499,9 +1524,12 @@ ggplot(rincome_summary, aes(x = age, y = rincome)) +
 #| fig-height: 6
 #| fig-align: center
 #| code-fold: show
-ggplot(rincome_summary, aes(x = age, y = fct_relevel(rincome, "Not applicable"))) +
-  geom_point()
+ggplot(rincome_summary, 
+       aes(x = age, y = fct_relevel(rincome, "Not applicable"))) + # <1>
+  geom_point() + 
+  theme_minimal(base_size = 16) 
 ```
+1. Sets `"Not applicable"` as the first level of `rincome`
 
 ### <span style="color:#f28e2c; font-family:Roboto Mono">fct_reorder2</span>
 
@@ -1522,7 +1550,8 @@ by_age <- gss_cat |>
 
 ggplot(by_age, aes(x = age, y = prop, color = marital)) +
   geom_line(linewidth = 1) + 
-  scale_color_brewer(palette = "Set1")
+  scale_color_brewer(palette = "Set1") + 
+  theme_minimal(base_size = 16)
 ```
 
 **With `fct_reorder()`**
@@ -1532,11 +1561,16 @@ ggplot(by_age, aes(x = age, y = prop, color = marital)) +
 #| fig-height: 6
 #| fig-align: center
 #| code-fold: show
-ggplot(by_age, aes(x = age, y = prop, color = fct_reorder2(marital, age, prop))) +
+ggplot(by_age, 
+       aes(x = age, 
+           y = prop, 
+           color = fct_reorder2(marital, age, prop))) + # <1>
   geom_line(linewidth = 1) +
   scale_color_brewer(palette = "Set1") + 
-  labs(color = "marital") 
+  labs(color = "marital") + 
+  theme_minimal(base_size = 16)
 ```
+1. `marital` is being reordered by `prop` when `age` is at its maximum.
 
 ### <span style="color:#76b7b2; font-family:Roboto Mono">fct_infreq</span>
 
@@ -1549,7 +1583,8 @@ ggplot(by_age, aes(x = age, y = prop, color = fct_reorder2(marital, age, prop)))
 #| code-fold: show
 gss_cat |>
   ggplot(aes(x = marital)) + 
-  geom_bar()
+  geom_bar() + 
+  theme_minimal(base_size = 16)
 ```
 
 **With `fct_infreq()`**
@@ -1560,10 +1595,12 @@ gss_cat |>
 #| fig-align: center
 #| code-fold: show
 gss_cat |>
-  mutate(marital = marital |> fct_infreq() |> fct_rev()) |>
+  mutate(marital = marital |> fct_infreq() |> fct_rev()) |> # <1> 
   ggplot(aes(x = marital)) +
-  geom_bar()
+  geom_bar() + 
+  theme_minimal(base_size = 16)
 ```
+1. Orders `marital` levels by frequency (decreasing) and then reverses that order (increasing).
 
 :::
 
@@ -1658,11 +1695,11 @@ Sometimes you'll have several levels of a variable that have a small enough `N` 
 
 ```{r}
 gss_cat |>
-  mutate(relig = fct_lump_n(relig, n = 10)) |> # <9>
+  mutate(relig = fct_lump_n(relig, n = 10)) |> # <1>
   count(relig, sort = TRUE)
 ```
 
-9. Other functions include: `fct_lump_min()`, `fct_lump_prop()`, `fct_lump_lowfreq()`. Read more about them [here](https://forcats.tidyverse.org/reference/fct_lump.html). 
+1. Other functions include: `fct_lump_min()`, `fct_lump_prop()`, `fct_lump_lowfreq()`. Read more about them [here](https://forcats.tidyverse.org/reference/fct_lump.html). 
 
 ## Ordered Factors
 
@@ -1685,7 +1722,7 @@ ordered(c("a", "b", "c")) # <10>
 In practice there are only two ways in which ordered factors are different than factors: 
 
 :::{.incremental}
-1) `scale_color_viridis()`/`scale_fill_viridis()` will be used automatically when mapping an ordered factored in `ggplot2` because it implies an ordered ranking
+1) `scale_color_viridis()`/`scale_fill_viridis()` will be used automatically when mapping an ordered factor in `ggplot2` because it implies an ordered ranking
 2) If you use an ordered function in a linear model, it will use “polygonal contrasts”. You can learn more about what this means [here](https://debruine.github.io/faux/articles/contrasts.html).
 :::
 
@@ -2006,12 +2043,12 @@ Alternatively, you can round your date/time objects to a nearby unit with these 
 #| output-location: fragment
 datetime <- ymd_hms("2020-01-30 08:05:35")
 
-floor_date(datetime, unit = "week") # <5>
-round_date(datetime, unit = "week", week_start = 1) # <5>
-ceiling_date(datetime, unit = "hour") # <5>
+floor_date(datetime, unit = "week") # <1>
+round_date(datetime, unit = "week", week_start = 1) # <1>
+ceiling_date(datetime, unit = "hour") # <1>
 ```
 
-5. These functions take 3 arguments: a date/time vector, a unit of time to round by (valid base units include `second`, `minute`, `hour`, `day`, `week`, `month`, `bimonth`, `quarter`, `season`, `halfyear` and `year`), and the day of the week that the week starts (default is 7, or Sunday). 
+1. These functions take 3 arguments: a date/time vector, a unit of time to round by (valid base units include `second`, `minute`, `hour`, `day`, `week`, `month`, `bimonth`, `quarter`, `season`, `halfyear` and `year`), and the day of the week that the week starts (default is 7, or Sunday). 
 
 ## Spans of time
 
@@ -2030,12 +2067,12 @@ Durations represent precise physical time. When you subtract two dates, you'll g
 
 ```{r}
 s_age <- today() - ymd("2023-05-28")
-s_age # <6>    
-as.duration(s_age) # <7> 
+s_age # <1>    
+as.duration(s_age) # <2> 
 ```
 
-6. `difftime` objects record time spans in seconds, minutes, hours, days, or weeks. This is fairly ambiguous so `lubridate` provides a more consistent alternative: the `duration`, which always uses seconds. 
-7. Larger units are created by converting minutes, hours, days, weeks, and years to seconds. 
+1. `difftime` objects record time spans in seconds, minutes, hours, days, or weeks. This is fairly ambiguous so `lubridate` provides a more consistent alternative: the `duration`, which always uses seconds. 
+2. Larger units are created by converting minutes, hours, days, weeks, and years to seconds. 
 
 . . . 
 
@@ -2047,10 +2084,10 @@ dminutes(10)
 dhours(c(12, 24))
 ddays(0:5)
 dweeks(3)
-dyears(1) # <8> 
+dyears(1) # <1> 
 ```
 
-8. Aggregating to larger time units is more problematic. A year uses the “average” number of days in a year, i.e. 365.25. There’s no way to convert a month to a duration, because there’s just too much variation.
+1. Aggregating to larger time units is more problematic. A year uses the “average” number of days in a year, i.e. 365.25. There’s no way to convert a month to a duration, because there’s just too much variation.
 
 ## Math with Durations
 
@@ -2063,17 +2100,21 @@ dyears(1) + dweeks(12) + dhours(15)
 
 . . . 
 
+\
+
 Sometimes you'll get an unexpected results though: 
 
 ```{r}
 one_am <- ymd_hms("2026-03-08 01:00:00", tz = "America/New_York")
 one_am
-one_am + ddays(1) # <9> 
+one_am + ddays(1) # <1> 
 ```
 
-9. Daylight Savings Time is a human construction so March 8th only has 23 hours because it’s when DST starts. If we add a full days worth of seconds we end up with a different time and a different time zone. 
+1. Daylight Savings Time is a human construction so March 8th only has 23 hours because it’s when DST starts. If we add a full days worth of seconds we end up with a different time and a different time zone. 
 
 . . . 
+
+\
 
 For this reason, `lubridate` also has `periods`. 
 
@@ -2124,10 +2165,10 @@ ymd("2024-01-01") + years(1)
 
 # Daylight saving time
 one_am + ddays(1)
-one_am + days(1) # <10>
+one_am + days(1) # <1>
 ```
 
-10. Periods are more likely than durations to do what you expect. 
+1. Periods are more likely than durations to do what you expect. 
 
 ## Intervals
 
@@ -2138,12 +2179,12 @@ Intervals represent the length of a time span in human units. You can think of i
 Imagine we wanted to know how many days are in a year? 
 
 ```{r}
-years(1) / days(1) # <11>
-dyears(1) / ddays(365) # <12>
+years(1) / days(1) # <1>
+dyears(1) / ddays(365) # <2>
 ```
 
-11. Since this value changed depending on the year in question, lubridate gives an estimate (or the average) for the number of days in *any* given year. 
-12. A similar thing happens for durations. 
+1. Since this value changed depending on the year in question, lubridate gives an estimate (or the average) for the number of days in *any* given year. 
+2. A similar thing happens for durations. 
 
 . . . 
 
@@ -2152,30 +2193,31 @@ To be more accurate we need to give the specific range of time in questions.
 . . . 
 
 ```{r}
-y2023 <- ymd("2023-01-01") %--% ymd("2024-01-01") # <13>
+y2023 <- ymd("2023-01-01") %--% ymd("2024-01-01") # <3>
 y2024 <- ymd("2024-01-01") %--% ymd("2025-01-01")
 y2023
 y2024
-y2023 / days(1) # <14> 
+y2023 / days(1) # <4> 
 y2024 / days(1)
 ```
 
-13. You can create an interval by writing `start %--% end`.
-14. Now when we do this math we get the exact number of "human" days within the span of dates we specified. 
+3. You can create an interval by writing `start %--% end`.
+4. Now when we do this math we get the exact number of "human" days within the span of dates we specified. 
 
 ## Time zones
 
-Time zones are a very complicated topic because different places have different rules which can, or already have, change(d) over time! To really clarify things `R` uses the international standard IANA time zones which use a consistent naming scheme: `{area}/{location}`.
+[Time zones are a very complicated topic because different places have different rules which can, or already have, change(d) over time! To really clarify things `R` uses the international standard IANA time zones which use a consistent naming scheme: `{area}/{location}`.]{style="font-size: 85%;"}
 
 . . . 
 
 ```{r}
-Sys.timezone() # <15>
-OlsonNames() # <16>
+Sys.timezone() # <1>
 ```
-
-15. Use `Sys.timezone()` to find out which timezone `R` thinks you're in. 
-16. See the complete list of all time zone names with `OlsonNames()`
+1. Use `Sys.timezone()` to find out which timezone `R` thinks you're in. 
+```{r}
+OlsonNames() # <2>
+```
+2. See the complete list of all time zone names with `OlsonNames()`
 
 ## Changing Time Zones
 
@@ -2189,10 +2231,10 @@ There are two ways you may want to change the time zone:
 x <- ymd_hms("2024-06-01 12:00:00", tz = "America/New_York")
 x
 
-with_tz(x, tzone = "Australia/Lord_Howe") # <17> 
+with_tz(x, tzone = "Australia/Lord_Howe") # <1> 
 ```
 
-17. The `+1030` offset is the difference relative to `UTC` (functionally similar to Greenwich Mean Time) which is `2024-06-01 16:00:00 UTC` in this example.
+1. The `+1030` offset is the difference relative to `UTC` (functionally similar to Greenwich Mean Time) which is `2024-06-01 16:00:00 UTC` in this example.
 
 <br>
 
@@ -2202,38 +2244,55 @@ with_tz(x, tzone = "Australia/Lord_Howe") # <17>
 y <- ymd_hms("2024-06-01 9:00:00", tz = "America/Los_Angeles")
 y
 
-force_tz(y, tzone = "Australia/Lord_Howe") # <18> 
+force_tz(y, tzone = "Australia/Lord_Howe") # <2> 
 ```
 
-18. In this case the time zone was labelled incorrectly so by forcing the correct time zone we changed the underlying instant in time. 
+2. In this case the time zone was labelled incorrectly so by forcing the correct time zone we changed the underlying instant in time. 
 
 ## Default Time Zones 
 
-Time zones in `R` only control printing of date/time objects. Unless otherwise specified, lubridate always uses UTC^[UTC (Coordinated Universal Time) is the standard time zone used by the scientific community and is roughly equivalent to GMT (Greenwich Mean Time). It does not have DST, which makes a convenient representation for computation.]. 
+[Time zones in `R` only control printing of date/time objects. Unless otherwise specified, lubridate always uses UTC^[UTC (Coordinated Universal Time) is the standard time zone used by the scientific community and is roughly equivalent to GMT (Greenwich Mean Time). It does not have DST, which makes a convenient representation for computation.]. ]{style="font-size: 80%;"}
 
 . . . 
 
-Operations that combine date-times, like `c()`, will often drop the time zone. In that case, the date-times will display in the time zone of the first element:
+[Operations that combine date-times, like `c()`, will often drop the time zone. In that case, the date-times will display in the time zone of the first element:]{style="font-size: 80%;"}
 
 . . . 
 
 ```{r}
 a <- ymd_hms("2024-06-01 14:00:00", tz = "Asia/Gaza") 
+a # <1>
+```
+1. EEST = Eastern European Summer Time
+
+```{r}
 b <- ymd_hms("2024-06-01 14:00:00", tz = "Cuba") 
+b # <2>
+```
+2. CDT = Central Daylight Time
+
+```{r}
 c <- ymd_hms("2024-06-01 14:00:00", tz = "Africa/Kinshasa") 
-a # <19>
-b # <20>
-c # <21>
+c # <3>
+```
+3. WAT = West Africa Time
+
+```{r}
 c(a, b, c)
 ```
 
-19. EEST = Eastern European Summer Time
-20. CDT = Central Daylight Time
-21. WAT = West Africa Time
-
 # Lab{.section-title background-color="#99a486"} 
 
-## Answers {visibility="hidden"} 
+## Importing & Tidying Data
+
+- [Go to the [Lecture 5 Homepage](https://vsass.github.io/CSSS508/Lectures/Lecture5/CSSS508_Lecture5_index.html) and click on the link `Religion & Income` under the Data section.]{.semi-transparent}
+- [Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.]{.semi-transparent}
+- [Read in your data using the appropriate function from `readr`.]{.semi-transparent}
+- [Pivot your data to make it tidy^[There should be 3 columns in your final dataset].]{.semi-transparent}
+- [Turn two of the variables into factors^[Hint: Which two variables are categorical?].]{.semi-transparent}
+- Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency?^[You can determine this by *summarizing* the data **or** creating a *visualization* of the data.] 
+
+## Answers {visibility="hidden"}
 
 Click *File* > *Save* to download this data to the same folder where your source document^[`R` Script or `.qmd`] will be saved for this lab.
   
@@ -2247,7 +2306,7 @@ religion_income <- read_csv(file = "data/religion-income.csv",
 ```
 1. If you already know the data type for your variables you can explicitly read them in as such (i.e. in this case we'd want religion to be a factor since it is a categorical variable.)
 
-## Answers {auto-animate="true"} 
+## Answers {visibility="hidden" auto-animate="true"} 
 
 Pivot your data to make it tidy^[There should be 3 columns in your final dataset].
 
@@ -2260,7 +2319,7 @@ religion_income_tidy <- religion_income |>
 religion_income_tidy
 ```
 
-## Answers {auto-animate="true"} 
+## Answers {visibility="hidden" auto-animate="true"} 
 
 Turn two of the variables into factors^[Hint: Which two variables are categorical?].
 
@@ -2276,7 +2335,7 @@ religion_income_tidy <- religion_income |>
                                          "$75-100k", "$100-150k", ">150k")))
 ```
 
-## Answers {auto-animate="true"} 
+## Answers {visibility="hidden" auto-animate="true"} 
 
 Turn two of the variables into factors^[Hint: Which two variables are categorical?].
 
@@ -2291,11 +2350,11 @@ religion_income_tidy <- religion_income |>
                       levels = c("Don't know/refused", "<$10k", "$10-20k", 
                                          "$20-30k", "$30-40k", "$40-50k", "$50-75k", 
                                          "$75-100k", "$100-150k", ">150k")), 
-         religion = fct(religion)) # <2>
+         religion = fct(religion)) # <1>
 ```
-2. If we hadn't initially read in religion as a factor, we'd need to recode it as one during this step.  
+1. If we hadn't initially read in religion as a factor, we'd need to recode it as one during this step.  
 
-## Answers 
+## Answers {visibility="hidden"}
 
 ```{r}
 #| output-location: fragment
@@ -2303,20 +2362,27 @@ religion_income_tidy
 ```
 
 
-## Answers {visibility="hidden"} 
+## Answers {visibility="hidden"}
 
-Question 5: Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency? You can determine this by **summarizing the data** or creating a visualization of the data.
+[Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency?^[You can determine this by *summarizing* the data **or** creating a *visualization* of the data.] ]{style="font-size: 85%;"}
+
+. . . 
+
+#### Summarizing the data
 
 ```{r}
-# Data manipulation
 religion_income_tidy |> 
   filter(income != "Don't know/refused") |> 
   slice_max(frequency)
 ```
 
-## Answers <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} {visibility="hidden"} 
+## Answers <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} {visibility="hidden"}
 
-Question 5: Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency? You can determine this by summarizing the data or creating a **visualization** of the data.
+[Excluding the income category `Don't know/refused`, which religion-income combination has the largest frequency?^[You can determine this by *summarizing* the data **or** creating a *visualization* of the data.] ]{style="font-size: 85%;"}
+
+. . . 
+
+#### Data visualization
 
 ```{r}
 #| eval: false
@@ -2324,7 +2390,6 @@ Question 5: Excluding the income category `Don't know/refused`, which religion-i
 #| fig-width: 20
 #| fig-height: 15
 #| code-fold: true
-# Visualization
 library(ggthemes)
 library(geomtextpath)
 

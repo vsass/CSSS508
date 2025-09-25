@@ -223,28 +223,28 @@ Naturally, these types of expressions produce a binary outcome of `T` or `F` whi
 
 ::::
 
-::: aside
-You may also see `&&` and `||` but they are what's known as short-circuiting operators and are not to be used in `dplyr` functions (used for programming not data manipulation); they'll only ever return a single `TRUE` or `FALSE`.
+::: {.aside}
+[You may also see `&&` and `||` but they are what's known as short-circuiting operators and are not to be used in `dplyr` functions (used for programming not data manipulation); they'll only ever return a single `TRUE` or `FALSE`.]{.fragment}
 :::
 
 ## Unexpected Behavior
 
-Be careful using `==` with numbers: 
+Be careful using `==` with numbers:
 
 . . . 
 
 ```{r}
-x <- c(1 / 49 * 49, sqrt(2) ^ 2)
-x
+(x <- c(1 / 49 * 49, sqrt(2) ^ 2)) # <1>
 ```
+1. Wrapping an entire object assignment in parentheses simultaneously defines the object and shows you what it represents.
 
 ```{r}
-x == c(1, 2)# <1>
-print(x, digits = 16) # <2>
+x == c(1, 2) # <2>
+print(x, digits = 16) # <3>
 ```
 
-1. Computers store numbers with a fixed number of decimal places so there’s no way to *precisely* represent decimals.
-2. `dplyr::near()` is a useful alternative which ignores small differences. 
+2. Computers store numbers with a fixed number of decimal places so there’s no way to *precisely* represent decimals.
+3. `dplyr::near()` is a useful alternative which ignores small differences. 
 
 . . . 
 
@@ -253,14 +253,14 @@ Similarly mysterious, missing values (`NA`) represent the unknown. Almost anythi
 ```{r}
 NA > 5
 10 == NA
-NA == NA # <3> 
+NA == NA # <4> 
 ```
 
-3. The logic here: if you have one unknown and a second unknown, you don't actually know if they equal one another!
+4. The logic here: if you have one unknown and a second unknown, you don't actually know if they equal one another!
 
 . . .  
 
-This is the reason we use `is.na()` to check for missingness. 
+This is the reason we use `is.na()` to check for missingness.
 
 ```{r}
 is.na(c(NA, 5))
@@ -282,10 +282,10 @@ Comparisons:
 ```{r}
 A == B
 A > B
-A %in% B # <4>
+A %in% B # <1>
 ```
 
-4. Will return a vector the length of `A` that is `TRUE` whenever a value in `A` is anywhere in `B`. <br> **Note**: You CAN use `%in%` to search for `NA`s.
+1. Will return a vector the length of `A` that is `TRUE` whenever a value in `A` is anywhere in `B`. <br> **Note**: You CAN use `%in%` to search for `NA`s.
 
 . . . 
 
@@ -293,16 +293,17 @@ Combinations:
 
 ```{r}
 A > 5 & A <= B 
-B < 10 | B > 20 # <5>
+B < 10 | B > 20 # <2>
 !(A == 10)
 ```
-5. Be sure not to cut corners (i.e. writing <br> `B < 10 | > 20`). The code won't technically error but it won't evaluate the way you expect it to. Read more about the confusing logic behind this [here](https://r4ds.hadley.nz/logicals#order-of-operations). 
+2. Be sure not to cut corners (i.e. writing <br> `B < 10 | > 20`). The code won't technically error but it won't evaluate the way you expect it to. Read more about the confusing logic behind this [here](https://r4ds.hadley.nz/logicals#sec-order-operations-boolean). In essence the truncated second part of this conditional statement (> 20) will evaluate to `TRUE` since any numeric that isn't `0` for a logical operator is coerced to `TRUE`. Therefore this statement will actually always evaluate to `TRUE` and will return all elements of `B` instead of the ones that meet your specified condition. 
 
 ## Logical Summaries
 
 :::: {.columns}
 
 ::: {.column width="19%"}
+
 ::: {.fragment}
 * `any()`: 
 * `all()`: 
@@ -321,20 +322,38 @@ B < 10 | B > 20 # <5>
 
 . . .
 
+<hr>
+
+\
+
 ```{r}
 C <- c(5, 10, NA, 10, 20, NA)
-any(C <= 10) # <6> 
-all(C <= 20)
-all(C <= 20, na.rm = TRUE) # <7>
-mean(C, na.rm = TRUE) # <8> 
-
+any(C <= 10) 
 ```
 
-6. Like other summary functions, they'll return `NA` if there are any missing values present and it's `FALSE`. 
-7. Use `na.rm = TRUE` to remove `NA`s prior to evaluation. 
-8. When you evaluate a logical vector numerically, `TRUE` = 1 and `FALSE` = 0. This makes `sum()` and `mean()` useful when summarizing logical functions (sum gives number of `TRUE`s and mean gives the proportion). 
+. . . 
 
-## Conditional transformations
+```{r}
+all(C <= 20) # <1> 
+```
+1. Like other summary functions, they'll return `NA` if there are any missing values present and it's `FALSE`. 
+
+. . . 
+
+```{r}
+all(C <= 20, na.rm = TRUE) # <2>
+```
+2. Use `na.rm = TRUE` to remove `NA`s prior to evaluation. 
+
+. . . 
+
+```{r}
+mean(C, na.rm = TRUE) # <3> 
+
+```
+3. When you evaluate a logical vector numerically, `TRUE` = 1 and `FALSE` = 0. This makes `sum()` and `mean()` useful when summarizing logical functions (sum gives number of `TRUE`s and mean gives the proportion). 
+
+## Conditional transformations 
 
 <ins>**`if_else()`**</ins>
 
@@ -344,18 +363,19 @@ If you want to use one value when a condition is `TRUE` and another value when i
 
 ```{r}
 #| eval: false
-if_else(condition = "A logical vector", 
-        true = "Output when condition is true", 
-        false = "Output when condition is false")
+if_else(condition = "A logical vector", # <1>
+        true = "Output when condition is true", # <1>
+        false = "Output when condition is false") # <1>
 ```
+1. All of these arguments are required.
 
 . . . 
 
 ```{r}
 x <- c(-3:3, NA)
-if_else(x > 0, "+ve", "-ve", "???") # <9> 
+if_else(x > 0, "+ve", "-ve", "???") # <2> 
 ```
-9. There’s an optional fourth argument, `missing` which will be used if the input is `NA`.
+2. There’s an optional fourth argument, `missing`, which will be used if the input is `NA`.
 
 . . . 
 
@@ -395,32 +415,27 @@ library(tidyverse)
 To demonstrate data transformations we're going to use the `nycflights13` dataset, which you'll need to download and load into `R`
 
 ```{r}
-# Download and load data
-# install.packages("nycflights13") # <12>
-library(nycflights13) # <13>
+library(nycflights13) # <1>
 ```
-
-12. Run in console. 
-13. Load into `R` session. 
+1. Run `install.packages("nycflights13")` in console first. 
 
 . . . 
 
-`nycflights13` includes five data frames^[Note these are separate data frames, each needing to be loaded separately:], some of which contain missing data (`NA`):
+`nycflights13` includes five data frames^[Note these are separate data frames, each needing to be loaded separately. When loading a package containing datasets, you can define those data (i.e. explicitly add them to your working environment) by calling `data()` on their name.]:, some of which contain missing data (`NA`):
 
 ```{r}
 #| eval: false
-data(flights) # <14> 
-data(airlines) # <15>
-data(airports) # <16>
-data(planes) # <17>
-data(weather) # <18>
+data(flights) # <2> 
+data(airlines) # <3>
+data(airports) # <4>
+data(planes) # <5>
+data(weather) # <6>
 ```
-
-14. flights leaving JFK, LGA, or EWR in 2013
-15. airline abbreviations
-16. airport metadata
-17. airplane metadata
-18. hourly weather data for JFK, LGA, and EWR
+2. flights leaving JFK, LGA, or EWR in 2013
+3. airline abbreviations
+4. airport metadata
+5. airplane metadata
+6. hourly weather data for JFK, LGA, and EWR
 
 ## `dplyr` Basics
 
@@ -467,10 +482,10 @@ We can select columns by name:
 
 ```{r}
 flights |> 
-  select(year, month, day) # <3>
+  select(year, month, day) # <1>
 ```
 
-3. You can use a `-` before a variable name or a vector of variables to drop them from the data (i.e. <br> `select(-c(year, month, day))`).
+1. You can use a `-` before a variable name or a vector of variables to drop them from the data (i.e. <br> `select(-c(year, month, day))`).
 
 ## Subset Columns: `select()`
 
@@ -481,10 +496,10 @@ We can select columns between variables (inclusive):
 
 ```{r}
 flights |> 
-  select(year:day) # <4>
+  select(year:day) # <1>
 ```
 
-4. Add a `!` before `year` and you'll drop this group of variables from the data. 
+1. Add a `!` before `year` and you'll drop this group of variables from the data. 
 
 ## Subset Columns: `select()`
 
@@ -494,10 +509,10 @@ We can select columns based on a condition:
 
 ```{r}
 flights |> 
-  select(where(is.character)) # <5>
+  select(where(is.character)) # <1>
 ```
 
-5. There are a number of helper functions you can use with `select()` including `starts_with()`, `ends_with()`, `contains()` and `num_range()`. Read more about these and more [here](https://tidyselect.r-lib.org/reference/index.html). 
+1. There are a number of helper functions you can use with `select()` including `starts_with()`, `ends_with()`, `contains()` and `num_range()`. Read more about these and more [here](https://tidyselect.r-lib.org/reference/index.html). 
 
 ## Finding Unique Rows: `distinct()`
 
@@ -507,10 +522,10 @@ You may want to find the unique combinations of variables in a dataset.  Use `di
 
 ```{r}
 flights |> 
-  distinct(origin, dest) # <6>
+  distinct(origin, dest) # <1>
 ```
 
-6. Find all unique origin and destination pairs.
+1. Find all unique origin and destination pairs.
 
 ## `distinct()` drops variables!
 
@@ -520,10 +535,10 @@ By default, `distinct()` drops unused variables. If you don't want to drop them,
 
 ```{r}
 flights |> 
-  distinct(origin, dest, .keep_all = TRUE) # <7> 
+  distinct(origin, dest, .keep_all = TRUE) # <1> 
 ```
 
-7. It’s not a coincidence that all of these distinct flights are on January 1: `distinct()` will find the first occurrence of a unique row in the dataset and discard the rest. Use `count()` if you're looking for the number of occurrences. 
+1. It’s not a coincidence that all of these distinct flights are on January 1: `distinct()` will find the first occurrence of a unique row in the dataset and discard the rest. Use `count()` if you're looking for the number of occurrences. 
 
 ## Count Unique Rows: `count()` 
 
@@ -531,10 +546,10 @@ flights |>
 
 ```{r}
 flights |>
-  count(origin, dest, sort = TRUE) # <8>
+  count(origin, dest, sort = TRUE) # <1>
 ```
 
-8. `sort = TRUE` arranges them in descending order of number of occurrences. 
+1. `sort = TRUE` arranges them in descending order of number of occurrences. 
 
 # Modifying data{.section-title background-color="#99a486"}
 
@@ -570,10 +585,10 @@ You may receive data with unintuitive variable names. Change them using `rename(
 
 ```{r}
 flights |> 
-  rename(tail_num = tailnum) # <2>
+  rename(tail_num = tailnum) # <1>
 ```
 
-2. `rename(new_name = old_name)` is the format. Reminder to use `janitor::clean_names()` if you want to automate this process for a lot of variables. 
+1. `rename(new_name = old_name)` is the format. Reminder to use `janitor::clean_names()` if you want to automate this process for a lot of variables. 
 
 . . . 
 
@@ -593,11 +608,11 @@ flights |>
   mutate(
     gain = dep_delay - arr_delay,
     speed = distance / air_time * 60,
-    .before = 1 # <3> 
+    .before = 1 # <1> 
   )
 ```
 
-3. By default, `mutate()` adds new columns on the right hand side of your dataset, which makes it difficult to see if anything happened. You can use the `.before` argument to specify which numeric index (or variable name) to move the newly created variable to. `.after` is an alternative argument for this.   
+1. By default, `mutate()` adds new columns on the right hand side of your dataset, which makes it difficult to see if anything happened. You can use the `.before` argument to specify which numeric index (or variable name) to move the newly created variable to. `.after` is an alternative argument for this.   
 
 ## Specifying Variables to Keep: `mutate()`
 
@@ -609,11 +624,11 @@ flights |>
     gain = dep_delay - arr_delay,
     hours = air_time / 60,
     gain_per_hour = gain / hours,
-    .keep = "used" # <4> 
+    .keep = "used" # <1> 
   )
 ```
 
-4. "used" retains only the variables used to create the new variables, which is useful for checking your work. Other options include: "all," "unused," and "none."
+1. `"used"` retains only the variables used to create the new variables, which is useful for checking your work. Other options include: `"all"` (default, returns all columns), `"unused"` (columns not used to create new columns) and `"none"` (only grouping variables and columns created by mutate are retained). 
 
 ## Move Variables Around: `relocate()`
 
@@ -621,10 +636,10 @@ You might want to collect related variables together or move important variables
 
 ```{r}
 flights |> 
-  relocate(time_hour, air_time) # <5>
+  relocate(time_hour, air_time) # <1>
 ```
 
-5. By default `relocate()` moves variables to the front but you can also specify where to put them using the `.before` and `.after` arguments, just like in `mutate()`.
+1. By default `relocate()` moves variables to the front but you can also specify where to put them using the `.before` and `.after` arguments, just like in `mutate()`.
 
 # Summarizing data{.section-title background-color="#99a486"}
 
@@ -663,11 +678,11 @@ Let's see what this looks like in our flights dataset:
 ```{r}
 flights |> 
   summarize(
-    avg_delay = mean(dep_delay) # <2> 
+    avg_delay = mean(dep_delay) # <1> 
   )
 ```
 
-2. The `NA` produced here is a result of calling `mean` on `dep_delay`. Any summarizing function will return `NA` if **any** of the values are `NA`. We can set `na.rm = TRUE` to change this behavior. 
+1. The `NA` produced here is a result of calling `mean` on `dep_delay`. Any summarizing function will return `NA` if **any** of the values are `NA`. We can set `na.rm = TRUE` to change this behavior. 
 
 ## `summarize()` Example
 
@@ -696,7 +711,7 @@ flights |>
 
 . . . 
 
-Because we did `group_by()` with `month`, then used `summarize()`, we get *one row per value of `month`*!
+Because we did `group_by()` *with* `month`, *then* used `summarize()`, we get **one row per value of `month`**!
 
 ## Summarizing Data by Groups
 
@@ -707,11 +722,11 @@ flights |>
   group_by(month) |> 
   summarize(
     delay = mean(dep_delay, na.rm = TRUE), 
-    n = n() # <3>
+    n = n() # <1>
   )
 ```
 
-3. `n()` returns the number of rows in each group. 
+1. `n()` returns the number of rows in each group. 
 
 ## Grouping by Multiple Variables <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
@@ -725,7 +740,7 @@ daily
 
 ::: {.callout-tip icon=false}
 ## <span style="color:green">{{< fa info-circle >}}</span> Summary & Grouping Behavior
-When you summarize a tibble grouped by more than one variable, each summary peels off the last group. You can change the default behavior by setting the `.groups` argument to a different value, e.g., "drop" to drop all grouping or "keep" to preserve the same groups. The default is "drop_last". 
+When you summarize a tibble grouped by more than one variable, each summary peels off the last group. You can change the default behavior by setting the `.groups` argument to a different value, e.g., `"drop"` to drop all grouping or `"keep"` to preserve the same groups. The default is `"drop_last"` if all groups have 1 row and `keep` otherwise (it's recommended to use `reframe()` if this is the case, which is a more general version of `summarize()` that allows for an arbitrary number of rows per group and drops all grouping variables after execution). 
 :::
 
 ## Remove Grouping: `ungroup()`
@@ -735,18 +750,18 @@ daily |>
   ungroup() 
 ```
 
-## New Alternative for Grouping: `.by`
+## Newer Alternative for Grouping: `.by`
 
 ```{r}
 flights |> 
   summarize(
     delay = mean(dep_delay, na.rm = TRUE), 
     n = n(),
-    .by = month # <4>
+    .by = month # <1>
   )
 ```
 
-4. `.by` works with all verbs and has the advantage that you don’t need to use the `.groups` argument to suppress the grouping message or `ungroup()` when you’re done.
+1. `.by` works with all verbs and has the advantage that you don’t need to use the `.groups` argument to suppress the grouping message or `ungroup()` when you’re done.
 
 ## Select Specific Rows Per Group: `slice_*`
 
@@ -771,14 +786,177 @@ Let's find the flights that are most delayed upon arrival at each destination.
 ```{r}
 flights |> 
   group_by(dest) |> 
-  slice_max(arr_delay, n = 1) |> # <5>
+  slice_max(arr_delay, n = 1) |> # <1>
   relocate(dest, arr_delay) 
 ```
 
-5. You can vary `n` to select more than one row, or instead of `n =`, you can use `prop = 0.1` to select (e.g.) 10% of the rows in each group.
+1. You can vary `n` to select more than one row, or instead of `n`, you can use `prop` to select a proportion (between 0 and 1) of the rows in each group.
 
-::: aside
-There are 105 groups but 108 rows! Why? `slice_min()` and `slice_max()` keep tied values so `n = 1` means "give us all rows with the highest value." If you want exactly one row per group you can set `with_ties = FALSE`.
+::: {.aside}
+[There are 105 groups but 108 rows! Why? `slice_min()` and `slice_max()` keep tied values so `n = 1` means "give us all rows with the highest value." If you want exactly one row per group you can set `with_ties = FALSE`.]{.fragment}
+:::
+
+# Lab{.section-title background-color="#99a486"}
+
+## Manipulating Data
+
+1. Create a new object that contains the following from `gapminder`^[Using the `gapminder` package] 
+    i. observations from China, India, and United States after 1980, *and* 
+    ii. variables corresponding to country, year, population, and life expectancy. 
+1. How many rows and columns does the object contain?
+1. Sort the rows by `year` (ascending order) and `population` (descending order) and save that over (i.e. overwrite) the object created for answer 1. Print the first 6 rows.
+1. Create a new variable that contains population in billions.
+1. By year, calculate the total population (in billions) across these three countries
+1. In `ggplot`, create a line plot showing life expectancy over time by country. Make the plot visually appealing!
+
+## Answers {visibility="hidden"}
+
+Question 1:
+
+```{r}
+subset_gapminder <- gapminder |> 
+  filter(country %in% c("China","India","United States"),  year > 1980 ) |> # <1>
+  select(country, year, pop, lifeExp)
+subset_gapminder
+```
+1. You can specify multiple conditional conditions in `filter()` by separating them with commas
+
+## Answers {visibility="hidden"}
+
+Question 2: 
+```{r}
+# Option 1
+c(nrow(subset_gapminder), ncol(subset_gapminder))
+# Option 2
+glimpse(subset_gapminder)
+# Option 3
+dim(subset_gapminder)
+```
+
+. . . 
+
+## Answers {visibility="hidden"}
+
+Question 3:
+```{r}
+subset_gapminder <- subset_gapminder |> 
+  arrange(year, desc(pop)) # <1>
+```
+1. The default for `arrange()` is to sort in ascending order
+
+<br>
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+subset_gapminder |> head(6)
+```
+
+:::
+
+::: {.column width="50%"}
+```{r}
+print(subset_gapminder[1:6, ])
+```
+:::
+
+::::
+
+## Answers {visibility="hidden"}
+
+Question 4:
+```{r}
+subset_gapminder <- subset_gapminder |> 
+  mutate(pop_billions = pop/1000000000)
+
+subset_gapminder
+```
+
+## Answers {visibility="hidden"}
+
+Question 5:
+
+::: {.panel-tabset}
+
+### Classic syntax
+
+```{r}
+subset_gapminder |> 
+  group_by(year) |> 
+  summarize(TotalPop_Billions = sum(pop_billions))
+```
+
+### New syntax (dplyr 1.1.0)
+
+```{r}
+subset_gapminder |> 
+  summarize(TotalPop_Billions = sum(pop_billions), 
+            .by = year) # <1>
+```
+
+1. This new syntax allows for per-operation grouping which means it is only active within a single verb at a time (as opposed to being applied to the entire tibble until `ungroup()` is called). Learn more about this new feature [here](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/))
+
+:::
+
+## Answers {visibility="hidden"}
+
+Question 6:
+
+::: {.panel-tabset}
+
+### Code
+
+```{r}
+#| eval: false
+library(ggplot2) 
+library(ggthemes)
+library(geomtextpath)
+ggplot(subset_gapminder, 
+       aes(year, lifeExp, color = country)) + # <1>
+  geom_point() + # <2>
+  geom_textpath(aes(label = country), # <3>
+                show.legend = FALSE) + # <4>
+  labs(title = "Life Expectancy (1982-2007)","China, India, and United States", # <5>
+       x = "Year", # <5>
+       y = "Life Expectancy (years)") + # <5>
+  scale_x_continuous(breaks = c(1982, 1987, 1992, 1997, 2002, 2007)) + # <6>
+  ylim(c(50, 80)) + # <7>
+  theme_tufte(base_size = 20) # <8>
+```
+1. Map `year` to the x-axis, `lifeExp` to the y-axis, and `country` to color
+2. Add points geom to plot data
+3. Use `geom_textpath()` from the `geomtextpath` package to make nice labelled lines (specify mapping of `country` to the label)
+4. Remove legend (redundant with labelled lines)
+5. Add descriptive plot title and axis labels
+6. Limit x-axis ticks and labels to only six specified years
+7. Zoom in on y-axis range to limit whitespace
+8. Use nice theme from `ggthemes` package and increase text size throughout plot
+
+### Plot
+
+```{r}
+#| fig-height: 6
+#| fig-width: 12
+#| fig-align: center
+#| echo: false
+library(ggplot2)
+library(ggthemes)
+library(geomtextpath)
+ggplot(subset_gapminder, aes(year, lifeExp, color = country)) +
+  theme_tufte(base_size = 20) + 
+  geom_point() + 
+  geom_textpath(aes(label = country), show.legend = FALSE) +
+  xlab("Year") + 
+  ylab("Life Expectancy (years)") +
+  ggtitle("Life Expectancy (1982-2007)","China, India, and United States") +
+  scale_x_continuous(breaks = c(1982, 1987, 1992, 1997, 2002, 2007), minor_breaks = c()) +
+  ylim(c(50, 80)) + scale_color_discrete(name = "Country") + 
+  theme(legend.position = "bottom")
+```
+
 :::
 
 # Merging Data {.section-title background-color="#99a486"}
@@ -830,62 +1008,53 @@ Keys are the way that two datasets are connected to one another. The two types o
 2. **Foreign**: a variable (or set of variables) that corresponds to a primary key in another table.
 :::
 
-## Primary Keys <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+---
 
-Let's look at our data to gain a better sense of what this all means. 
+### Primary Keys
+
+[Let's look at our data to gain a better sense of what this all means.]{style="font-size: 80%;"}
 
 ::: {.panel-tabset}
 
 ### `airlines` 
 
-::: {.smaller-font}
-`airlines` records two pieces of data about each airline: its carrier code and its full name. You can identify an airline with its two letter carrier code, making `carrier` the primary key.
-:::
+[`airlines` records two pieces of data about each airline: its carrier code and its full name. You can identify an airline with its two letter carrier code, making `carrier` the primary key.]{style="font-size: 80%;"}
 
 ```{r}
-airlines 
+glimpse(airlines) # <1>
 ```
+1. Use `glimpse` on any dataset to see a transposed version of the data, making it possible to see all available column names, types, and a preview of as many values will fit on your current screen. 
 
 ### `airports`
 
-::: {.smaller-font}
-`airports` records data about each airport. You can identify each airport by its three letter airport code, making `faa` the primary key.
-:::
+[`airports` records data about each airport. You can identify each airport by its three letter airport code, making `faa` the primary key.]{style="font-size: 80%;"}
 
 ```{r}
-airports
+glimpse(airports)
 ```
-
 
 ### `planes`
 
-::: {.smaller-font}
-`planes` records data about each plane. You can identify a plane by its tail number, making `tailnum` the primary key.
-:::
+[`planes` records data about each plane. You can identify a plane by its tail number, making `tailnum` the primary key.]{style="font-size: 80%;"}
 
 ```{r}
-planes
+glimpse(planes)
 ```
-
 
 ### `weather`
 
-::: {.smaller-font}
-`weather` records data about the weather at the origin airports. You can identify each observation by the combination of location and time, making `origin` and `time_hour` the compound primary key.
-:::
+[`weather` records data about the weather at the origin airports. You can identify each observation by the combination of location and time, making `origin` and `time_hour` the compound primary key.]{style="font-size: 80%;"}
 
 ```{r}
-weather
+glimpse(weather)
 ```
 
 ### `flights`
 
-::: {.smaller-font}
-`flights` has three variables (`time_hour`, `flight`, `carrier`) that uniquely identify an observation. More significantly, however, it contains **foreign keys** that correspond to the primary keys of the other datasets.
-:::
+[`flights` has three variables (`time_hour`, `flight`, `carrier`) that uniquely identify an observation. More significantly, however, it contains **foreign keys** that correspond to the primary keys of the other datasets.]{style="font-size: 80%;"}
 
 ```{r}
-flights
+glimpse(flights)
 ```
 
 :::
@@ -944,11 +1113,11 @@ For example, our `flights` dataset has three variables that uniquely identify ea
 ```{r}
 #| output-location: fragment
 flights2 <- flights |> 
-  mutate(id = row_number(), .before = 1) # <3> 
+  mutate(id = row_number(), .before = 1) # <1> 
 flights2
 ```
 
-3. `row_number()` simply specifies the row number of the data frame. 
+1. `row_number()` simply specifies the row number of the data frame. 
 
 ## Basic (Equi-) Joins
 
@@ -1018,19 +1187,21 @@ Filter observations from one data frame based on whether or not they match an ob
 
 ::::
 
-## `left_join()` <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+## `left_join()` 
 
-![](images/joins_left.png){fig-align="center"}
+![](images/joins_left.png){fig-align="center"} 
 
-::: aside
+::: {.r-stack}
 ::: {.incremental}
-* The most common type of join
-* Appends columns from `y` to `x` by the rows in `x`
-    + `NA` added if there is nothing from `y`
-* Natural join: when all variables that appear in both datasets are used as the join key
-    + If the join_by() argument is not specified, `left_join()` will automatically join by all columns that have names and values in common. 
+[The most common type of join]{.fragment .fade-in-then-out fragment-index=1 .absolute top=0 right=0}
+[Appends columns from `y` to `x` by the rows in `x` \
+(`NA` added if there is nothing from `y`)]{.fragment fragment-index=2 .absolute top=0 right=0}
+[**Natural join**: when all variables that appear in both datasets are used as the join key. \
+\
+*If the `join_by()` argument is not specified, `left_join()` will automatically join by all columns that have names and values in common.*]{.fragment fragment-index=3 .absolute bottom=-225 right=0 style="font-size: 80%;" width="500" height="400"} 
 :::
 :::
+
 
 ## `left_join` in `nycflights13`
 
@@ -1045,8 +1216,9 @@ With only the pertinent variables from the `flights` dataset, we can see how a `
 #| output-location: fragment
 #| message: true
 flights2 |>
-  left_join(airlines)
+  left_join(y = airlines) # <1>
 ```
+1. The `airlines` dataset has variables `carrier` and `name`
 
 ## Different variable meanings
 
@@ -1054,35 +1226,30 @@ flights2 |>
 #| output-location: fragment
 #| message: true
 flights2 |> 
-  left_join(planes)
+  left_join(planes) # <1>
 ```
+1. The `planes` dataset has variables `tailnum`, `year`, `type`, `manufacturer`, `model`, `engines`, `seats`, `speed`, and `engine`
 
-. . . 
+\
 
-When we try to do this, however, we get a bunch of `NA`s. Why? 
-
-## Different variable meanings
-
-```{r}
-#| message: true
-flights2 |> 
-  left_join(planes)
-```
-
-*Join is trying to use tailnum and year as a compound key.* While both datasets have `year` as a variable, they mean different things. Therefore, we need to be explicit here about what to join by. 
-
-## Different variable meanings
-
-```{r}
-#| output-location: fragment
-flights2 |> 
-  left_join(planes, join_by(tailnum)) # <4>
-```
-
-4. `join_by(tailnum)` is short for `join_by(tailnum == tailnum)` making these types of basic joins equi joins. 
+[When we try to do this, however, we get a bunch of `NA`s. Why?]{.fragment .fade-in-then-out}
 
 ::: aside
-When you have the same variable name but they mean different things you can specify a particular suffix with the `suffix` argument.
+[*Join is trying to use tailnum and year as a compound key.* While both datasets have `year` as a variable, they mean **different** things. Therefore, we need to be explicit here about what to join by. ]{.fragment}
+:::
+
+## Different variable meanings
+
+```{r}
+#| output-location: fragment
+flights2 |> 
+  left_join(y = planes, by = join_by(tailnum)) # <1>
+```
+
+1. `join_by(tailnum)` is short for `join_by(tailnum == tailnum)` making these types of basic joins equi joins. 
+
+::: aside
+[When you have the same variable name but they mean different things you can specify a particular suffix with the `suffix` argument in the `_join` function. By default the suffix will be `.x` for the variable from the first dataset and `.y` for the variable from the second dataset.]{.fragment} 
 :::
 
 ## Different variable names
@@ -1094,14 +1261,16 @@ If you have keys that have the same meaning (values) but are named different thi
 ```{r}
 #| output-location: fragment
 flights2 |> 
-  left_join(airports, join_by(dest == faa)) # <5>
+  left_join(airports, join_by(dest == faa)) # <1>
 ```
 
-5. `by = c("dest" = "faa")` was the former syntax for this and you still might see that in older code. 
+1. `by = c("dest" = "faa")` was the former syntax for this and you still might see that in older code. You can specify multiple `join_by`s by simply separating the conditional statements with `,` (i.e. `join_by(x == y, a == b)`).
 
-. . . 
+::: aside
+[This will match `dest` to `faa` for the join and then drop `faa`.]{.fragment} 
+:::
 
-This will match `dest` to `faa` for the join and then drop `faa`. 
+ 
 
 ## Different variable names
 
@@ -1117,15 +1286,15 @@ flights2 |>
 
 ## `right_join()`
 
-![Has the same interface as a left_join but keeps all rows in `y` instead of `x`](images/joins_right.png){fig-align="center"}
+![Has the same interface as a `left_join` but keeps all rows in `y` instead of `x`](images/joins_right.png){fig-align="center"}
 
 ## `inner_join()`
 
-![Has the same interface as a left_join but only keeps rows that occur in both x and y](images/joins_inner.png){fig-align="center"}
+![Has the same interface as a `left_join` but only keeps rows that occur in both x and y](images/joins_inner.png){fig-align="center"}
 
 ## `full_join()`
 
-![Has the same interface as a left_join but keeps all rows in either x or y](images/joins_full.png){fig-align="center"}
+![Has the same interface as a `left_join` but keeps all rows in either x or y](images/joins_full.png){fig-align="center"}
 
 ## `Filtering Joins`
 
@@ -1186,7 +1355,7 @@ airports |>
 ```
 
 ::: aside
-This type of join is useful for finding missing values that are implicit in the data (i.e. `NA`s that don't show up in the data but only exist as an absence.)
+[This type of join is useful for finding missing values that are implicit in the data (i.e. `NA`s that don't show up in the data but only exist as an absence.)]{.fragment}
 :::
 
 ## More Than One Match
@@ -1199,8 +1368,8 @@ There are three possible outcomes for a row in x:
 
 ::: {.incremental}
 * If it doesn’t match anything, it’s dropped.
-* If it matches 1 row in y, it’s preserved.
-* If it matches more than 1 row in y, it’s duplicated once for each match.
+* If it matches 1 row in `y`, it’s preserved.
+* If it matches more than 1 row in` y`, it’s duplicated once for each match.
 :::
 
 . . . 
@@ -1211,7 +1380,7 @@ What happens if we match on more than one row?
 
 ```{r}
 #| output-location: fragment
-#| message: true
+#| warning: true
 df1 <- tibble(key = c(1, 2, 2), val_x = c("x1", "x2", "x3"))
 df2 <- tibble(key = c(1, 2, 2), val_y = c("y1", "y2", "y3"))
 
@@ -1219,13 +1388,12 @@ df1 |>
   inner_join(df2, join_by(key))
 ```
 
+::: {.aside}
+::: {.r-stack}
+[If you are doing this deliberately, you can set `relationship = "many-to-many"`, as the warning suggests.]{.fragment .fade-in-then-out}
 
-. . . 
-
-If you are doing this deliberately, you can set relationship = "many-to-many", as the warning suggests.
-
-::: aside
-Given their nature, filtering joins never duplicate rows like mutating joins do. They will only ever return a subset of the datasets.
+[Note: Given their nature, *filtering* joins never duplicate rows like mutating joins do. They will only ever return a subset of the datasets.]{.fragment}
+:::
 :::
 
 ## Non-Equi Joins
@@ -1253,7 +1421,7 @@ The joins we've discussed thus far have all been equi-joins, where the rows matc
 ::::
 
 ::: aside
-Cross joins, aka self-joins, are useful when generating permutations (e.g. creating every possible combination of values). This comes in handy when creating datasets of predicted probabilities for plotting in ggplot. 
+[Cross joins, aka self-joins, are useful when generating permutations (e.g. creating every possible combination of values). This comes in handy when creating datasets of predicted probabilities for plotting in ggplot.]{.fragment}
 :::
 
 ## Non-Equi Joins
@@ -1307,160 +1475,9 @@ The joins we've discussed thus far have all been equi-joins, where the rows matc
 Rolling joins are a special type of inequality join where instead of getting every row that satisfies the inequality, you get just the closest row. You can turn any inequality join into a rolling join by adding closest().
 :::
 
-# Lab{.section-title background-color="#99a486"}
 
-## Manipulating Data
-
-1. Create a new object that contains `gapminder`^[From the `gapminder` package] (1) observations from China, India, and United States after 1980, and (2) variables corresponding to country, year, population, and life expectancy. 
-1. How many rows and columns does the object contain?
-1. Sort the rows by year (ascending order) and population (descending order) and save that over the object created for answer 1. Print the first 6 rows.
-1. Add a new variable that contains population in billions.
-1. By year, calculate the total population (in billions) across these three countries
-1. In `ggplot`, create a line plot showing life expectancy over time by country. Make the plot visually appealing!
-
-
-
-## Answers 
-
-Question 1:
-
-```{r}
-subset_gapminder <- gapminder |> 
-  filter(country %in% c("China","India","United States"),  year > 1980 ) |>
-  select(country, year, pop, lifeExp)
-subset_gapminder
-```
-
-## Answers 
-
-Question 2: 
-```{r}
-# Option 1
-c(nrow(subset_gapminder), ncol(subset_gapminder))
-# Option 2
-glimpse(subset_gapminder)
-# Option 3
-dim(subset_gapminder)
-```
-
-. . . 
-
-## Answers 
-
-Question 3:
-```{r}
-subset_gapminder <- subset_gapminder |> 
-  arrange(year, desc(pop))
-```
-
-<br>
-
-. . . 
-
-:::: {.columns}
-
-::: {.column width="50%"}
-```{r}
-subset_gapminder |> head(6)
-```
-
-:::
-
-::: {.column width="50%"}
-```{r}
-print(subset_gapminder[1:6, ])
-```
-:::
-
-::::
-
-## Answers
-
-Question 4:
-```{r}
-subset_gapminder <- subset_gapminder |> 
-  mutate(pop_billions = pop/1000000000)
-
-subset_gapminder
-```
-
-## Answers 
-
-Question 5:
-
-::: {.panel-tabset}
-
-### Classic syntax
-
-```{r}
-subset_gapminder |> 
-  group_by(year) |> 
-  summarize(TotalPop_Billions = sum(pop_billions))
-```
-
-### New syntax (dplyr 1.1.0)
-
-```{r}
-subset_gapminder |> 
-  summarize(TotalPop_Billions = sum(pop_billions), 
-            .by = year) # <1>
-```
-
-1. This new syntax allows for per-operation grouping which means it is only active within a single verb at a time (as opposed to being applied to the entire tibble until `ungroup()` is called). Learn more about this new feature [here](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/))
-
-:::
-
-## Answers 
-
-Question 6:
-
-::: {.panel-tabset}
-
-### Code
-
-```{r}
-#| eval: false
-library(ggplot2) 
-library(ggthemes)
-library(geomtextpath)
-ggplot(subset_gapminder, aes(year, lifeExp, color = country)) +
-  geom_point() + 
-  geom_textpath(aes(label = country), show.legend = FALSE) +
-  xlab("Year") + 
-  ylab("Life Expectancy (years)") +
-  ggtitle("Life Expectancy (1982-2007)","China, India, and United States") +
-  scale_x_continuous(breaks = c(1982, 1987, 1992, 1997, 2002, 2007), minor_breaks = c()) +
-  ylim(c(50, 80)) + 
-  scale_color_discrete(name = "Country") + 
-  theme_tufte(base_size = 20) + 
-  theme(legend.position = "bottom")
-```
-
-
-### Plot
-
-```{r}
-#| fig-height: 6
-#| fig-width: 12
-#| fig-align: center
-#| echo: false
-library(ggplot2)
-library(ggthemes)
-library(geomtextpath)
-ggplot(subset_gapminder, aes(year, lifeExp, color = country)) +
-  theme_tufte(base_size = 20) + 
-  geom_point() + 
-  geom_textpath(aes(label = country), show.legend = FALSE) +
-  xlab("Year") + 
-  ylab("Life Expectancy (years)") +
-  ggtitle("Life Expectancy (1982-2007)","China, India, and United States") +
-  scale_x_continuous(breaks = c(1982, 1987, 1992, 1997, 2002, 2007), minor_breaks = c()) +
-  ylim(c(50, 80)) + scale_color_discrete(name = "Country") + 
-  theme(legend.position = "bottom")
-```
-
-:::
 
 # Homework{.section-title background-color="#1e4655"}
 
 ## {data-menu-title="Homework 4" background-iframe="https://vsass.github.io/CSSS508/Homework/HW4/homework4.html" background-interactive=TRUE}
+

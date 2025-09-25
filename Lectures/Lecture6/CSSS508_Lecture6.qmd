@@ -21,6 +21,7 @@ format:
     history: false
     progress: true
     link-external-icon: true
+    html-math-method: katex
     code-annotations: hover
     pointer:
       color: "#b18eb1"
@@ -173,7 +174,7 @@ parse_double(c("1", "2", "3.123"))
 
 <br>
 
-If you have values with extraneous non-numerical text you want to ignore there's a separate function for that.
+If you have values with extraneous non-numerical text that you want to ignore there's a separate function for that.
 
 . . . 
 
@@ -183,7 +184,7 @@ parse_number(c("USD 3,513", "59%", "$1,123,456.00"))
 
 ## `count()`
 
-A very useful and common exploratory data analysis tool is to check the relative sums of different categories of a variable. That's what `count()` is for!
+[A very useful and common exploratory data analysis tool is to check the relative sums of different categories of a variable. That's what `count()` is for!]{style="font-size: 85%;"}
 
 . . . 
 
@@ -193,7 +194,8 @@ data(flights)
 
 flights |> count(origin) # <1> 
 ```
-1. Add the argument `sort = TRUE` to see the most common values first (i.e. arranged in descending order).
+1. Add the argument `sort = TRUE` to see the most common values first (i.e. arranged in descending order). Otherwise the values you're counting will simply be arranged in alphabetical order (as shown here; by coincidence these also happen to also be in descending order in this example). 
+
 . . . 
 
 This is functionally the same as grouping and summarizing with `n()`.
@@ -238,7 +240,8 @@ How many miles did each plane fly?
 ```{r}
 flights |> 
   summarize(miles = sum(distance), 
-            .by = tailnum)
+            .by = tailnum) |> 
+  arrange(desc(miles))
 ```
 
 :::
@@ -249,7 +252,10 @@ flights |>
 This is equivalent to: 
 
 ```{r}
-flights |> count(tailnum, wt = distance) 
+flights |> 
+  count(tailnum,
+        wt = distance,
+        sort = TRUE) 
 ```
 :::
 
@@ -273,7 +279,7 @@ In addition to the standards (`+`, `-`, `/`, `*`, `^`), `R` has many other usefu
 
 . . . 
 
-**Pairwise min/max**
+#### Pairwise min/max
 
 ```{r}
 df
@@ -282,109 +288,130 @@ df
 ```{r}
 df |> 
   mutate(
-    min = pmin(x, y, na.rm = TRUE), # <6>
-    max = pmax(x, y, na.rm = TRUE) # <7>
+    min = pmin(x, y, na.rm = TRUE), # <1>
+    max = pmax(x, y, na.rm = TRUE) # <2>
   )
 ```
-6. `pmin()` returns the smallest value in each row. `min()`, by contrast, finds the smallest observation given a number of rows.
-7. `pmax()` returns the largest value in each row. `max()`, by contrast, finds the largest observation given a number of rows.
+1. `pmin()` returns the smallest value in each row. `min()`, by contrast, finds the smallest observation given a number of rows.
+2. `pmax()` returns the largest value in each row. `max()`, by contrast, finds the largest observation given a number of rows.
 
 ## Other Useful Arithmetic Functions
 
-**Modular arithmetic**
+#### Modular arithmetic
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+1:10 %/% 3 # <1>
+```
+1. Computes integer division. 
 
 ```{r}
-1:10 %/% 3 # <8>
+1:10 %% 3 # <2>
 ```
-8. Computes integer division. 
+2. Computes the remainder. 
 
+\
+\
+
+::: {.fragment fragment-index=1}
+We can see how this can be useful in our `flights` data which has curiously stored time
+:::
+
+
+:::
+
+::: {.column width="50%"}
+::: {.fragment fragment-index=1}
 ```{r}
-1:10 %% 3 # <9>
+flights |> 
+  mutate(hour = sched_dep_time %/% 100,
+         minute = sched_dep_time %% 100,
+         .keep = "used")
 ```
-9. Computes the remainder. 
+:::
 
-. . . 
+:::
 
-We can see how this can be useful in our `flights` data which has curiously stored time: 
+::::
 
-```{r}
-flights |> mutate(hour = sched_dep_time %/% 100,
-                  minute = sched_dep_time %% 100,
-                  .keep = "used")
-```
+
 
 ## Other Useful Arithmetic Functions
 
-**Logarithms**^[An incredibly useful transformation for dealing with data that ranges across multiple orders of magnitude and converting exponential growth to linear growth.]
+#### Logarithms^[An incredibly useful transformation for dealing with data that ranges across multiple orders of magnitude and converting exponential growth to linear growth.]
 
 ```{r}
-log(c(2.718282, 7.389056, 20.085537)) # <10> 
+log(c(2.718282, 7.389056, 20.085537)) # <1> 
 ```
-10. Inverse is `exp()`
+1. Inverse is `exp()`
 ```{r}
-log2(c(2, 4, 8)) # <11>
+log2(c(2, 4, 8)) # <2>
 ```
-11. Easy to interpret because a difference of 1 on the log scale corresponds to doubling on the original scale and a difference of -1 corresponds to halving. Inverse is `2^`. 
+2. Easy to interpret because a difference of 1 on the log scale corresponds to doubling on the original scale and a difference of -1 corresponds to halving. Inverse is `2^`. 
 ```{r}
-log10(c(10, 100, 1000)) # <12>
+log10(c(10, 100, 1000)) # <3>
 ```
-12. Easy to back-transform because everything is on the order of 10. Inverse is `10^`. 
+3. Easy to back-transform because everything is on the order of 10. Inverse is `^10`. 
 
 ## Other Useful Arithmetic Functions
 
-**Cumulative and Rolling Aggregates**
+#### Cumulative and Rolling Aggregates
 
-Base `R` provides `cumsum()`, `cumprod()`, `cummin()`, `cummax()` for running, or cumulative, sums, products, mins and maxes. `dplyr` provides `cummean()` for cumulative means.
+Base `R` provides `cumsum()`, `cumprod()`, `cummin()`, `cummax()` for cumulative (i.e. running) sums, products, mins and maxes. `dplyr` provides `cummean()` for cumulative means.
 
-. . . 
 
+::: {.fragment}
 ```{r}
 1:15
 ```
 
 ```{r}
-cumsum(1:15) # <13>
+cumsum(1:15) # <1>
 ```
-13. `cumsum()` is the most common in practice.
+1. `cumsum()` is the most common in practice.
+:::
 
-. . . 
+::: {.aside}
+[For complex rolling/sliding aggregates, check out the [`slidr` package](https://slider.r-lib.org/index.html).]{.fragment}
+:::
 
-For complex rolling/sliding aggregates, check out the [`slidr` package](https://slider.r-lib.org/index.html). 
 
 ## Other Useful Arithmetic Functions
 
-**Numeric Ranges**
+#### Numeric Ranges
 
 ```{r}
 x <- c(1, 2, 5, 10, 15, 20)
-cut(x, breaks = c(0, 5, 10, 15, 20)) # <14> 
+cut(x, breaks = c(0, 5, 10, 15, 20)) # <1> 
 ```
-14. `cut()` breaks up (aka bins) a numeric vector into discrete buckets
+1. `cut()` breaks up (aka bins) a numeric vector into discrete buckets
 
 . . . 
 
 ```{r}
-cut(x, breaks = c(0, 5, 10, 100)) # <15>
+cut(x, breaks = c(0, 5, 10, 100)) # <2>
 ```
-15. The bins don't have to be the same size.
+2. The bins don't have to be the same size.
 
 . . . 
 
 ```{r}
 cut(x, 
   breaks = c(0, 5, 10, 15, 20), 
-  labels = c("sm", "md", "lg", "xl") # <16>
+  labels = c("sm", "md", "lg", "xl") # <3>
 )
 ```
-16. You can optionally supply your own labels. Note that there should be one less labels than breaks.
+3. You can optionally supply your own labels. Note that there should be one less labels than breaks.
 
 . . . 
 
 ```{r}
-y <- c(NA, -10, 5, 10, 30) # <17>
+y <- c(NA, -10, 5, 10, 30) # <4>
 cut(y, breaks = c(0, 5, 10, 15, 20))
 ```
-17. Any values outside of the range of the breaks will become `NA`.
+4. Any values outside of the range of the breaks will become `NA`.
 
 ## Rounding 
 
@@ -426,37 +453,37 @@ round(c(1.5, 2.5))
 `floor()` and `ceiling()` are also useful rounding shortcuts.
 
 ```{r}
-floor(123.456) # <18>
+floor(123.456) # <1>
 ```
-18. Always rounds down.
+1. Always rounds down.
 ```{r}
-ceiling(123.456) # <19>
+ceiling(123.456) # <2>
 ```
-19. Always rounds up. 
+2. Always rounds up. 
 
 ## Summary Functions 
 
 . . . 
 
-**Central Tendency**
+#### Central Tendency
 
 ```{r}
-x <- sample(1:500, size = 100, replace = TRUE) # <20>
+x <- sample(1:500, size = 100, replace = TRUE) # <1>
 mean(x)
 ```
-20. `sample()` takes a vector of data, and samples `size` elements from it, with replacement if `replace` equals `TRUE`. 
+1. `sample()` takes a vector of data, and samples `size` elements from it, with replacement if `replace` equals `TRUE`. 
 ```{r}
 median(x)
 ```
 
 ```{r}
-quantile(x, .95) # <21>
+quantile(x, .95) # <2>
 ```
-21. A generalization of the median: `quantile(x, 0.95)` will find the value that’s greater than 95% of the values; `quantile(x, 0.5)` is equivalent to the median.
+2. A generalization of the median: `quantile(x, 0.95)` will find the value that’s greater than 95% of the values; `quantile(x, 0.5)` is equivalent to the median.
 
 ## Summary Functions 
 
-**Measures of Spread/Variation**
+#### Measures of Spread/Variation
 
 ```{r}
 min(x)
@@ -465,19 +492,19 @@ range(x)
 ```
 
 ```{r}
-IQR(x) # <22>
+IQR(x) # <1>
 ```
-22. Equivalent to `quantile(x, 0.75) - quantile(x, 0.25)` and gives you the range that contains the middle 50% of the data.
+1. Equivalent to `quantile(x, 0.75) - quantile(x, 0.25)` and gives you the range that contains the middle 50% of the data.
 
 ```{r}
-var(x) # <23>
+var(x) # <2>
 ```
-23. $$s^2 = \frac{\sum(x_i-\overline{x})^2}{n-1}$$ 
+2. $$s^2 = \frac{\sum(x_i-\overline{x})^2}{n-1}$$
 
 ```{r}
-sd(x) # <24>
+sd(x) # <3>
 ```
-24. $$s = \sqrt{\frac{\sum(x_i-\overline{x})^2}{n-1}}$$
+3. $$s = \sqrt{\frac{\sum(x_i-\overline{x})^2}{n-1}}$$
 
 ## Common Numerical Manipulations
 
@@ -487,19 +514,19 @@ These formulas can be used in a summary call but are also useful with `mutate()`
 
 ```{r}
 #| eval: false
-x / sum(x) # <19> 
-(x - mean(x)) / sd(x) # <20>
-(x - min(x)) / (max(x) - min(x)) # <21>
-x / first(x) # <22>
+x / sum(x) # <1> 
+(x - mean(x)) / sd(x) # <2>
+(x - min(x)) / (max(x) - min(x)) # <3>
+x / first(x) # <4>
 ```
-19. Calculates the proportion of a total.
-20. Computes a Z-score (standardized to mean 0 and sd 1). 
-21. Standardizes to range [0, 1].
-22. Computes an index based on the first observation.
+1. Calculates the proportion of a total.
+2. Computes a Z-score (standardized to mean 0 and sd 1). 
+3. Standardizes to range [0, 1].
+4. Computes an index based on the first observation.
 
 ## Summary Functions 
 
-**Positions**
+#### Positions
 
 ```{r}
 first(x)
@@ -528,17 +555,34 @@ summary(iris)
 A basic example:
 
 ```{r}
+#| eval: false
 library(skimr)
 skim(iris)
 ```
+
+<div class=small-code>
+```{r}
+#| echo: false
+library(skimr)
+skim(iris)
+```
+</div>
 
 ## Better summary statistics <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
 A more complex example: 
 
 ```{r}
+#| eval: false
 skim(starwars)
 ```
+
+<div class=small-code>
+```{r}
+#| echo: false
+skim(starwars)
+```
+</div>
 
 ## `skim` function
 
@@ -575,13 +619,13 @@ Depending on the reason for its missingness, there are different ways to deal wi
 
 . . . 
 
-**Data Entry Shorthand**
+#### Data Entry Shorthand
 
 If your data were entered by hand and `NA`s merely represent a value being carried forward from the last entry then you can use `fill()` to help complete your data.
 
 :::: {.columns}
 
-::: {.column width="50%"}
+::: {.column width="55%"}
 ::: {.fragment}
 ```{r}
 treatment <- tribble(
@@ -595,7 +639,7 @@ treatment <- tribble(
 :::
 :::
 
-::: {.column width="50%"}
+::: {.column width="45%"}
 ::: {.fragment}
 ```{r}
 treatment |>
@@ -608,7 +652,7 @@ treatment |>
 
 ## Explicit Missing Values
 
-**Represent A Fixed Value**
+#### Represent A Fixed Value
 
 Other times an `NA` represents some fixed value, usually `0`. 
 
@@ -616,15 +660,15 @@ Other times an `NA` represents some fixed value, usually `0`.
 
 ```{r}
 x <- c(1, 4, 5, 7, NA)
-coalesce(x, 0) # <2> 
+coalesce(x, 0) # <1> 
 ```
-2. `coalesce()` in the `dplyr` package takes a vector as the first argument and will replace any missing values with the value provided in the second argument. 
+1. `coalesce()` in the `dplyr` package takes a vector as the first argument and will replace any missing values with the value provided in the second argument. 
 
 . . . 
 
 <br>
 
-**Represented By a Fixed Value**
+#### Represented By a Fixed Value
 
 If the opposite issue occurs (i.e. a value is actually an `NA`), try specifying that to the `na` argument of your `readr` data import function. Otherwise, use `na_if()` from `dplyr`. 
 
@@ -635,7 +679,7 @@ na_if(x, -99)
 
 ## Explicit Missing Values
 
-**`NaN`s**
+#### `NaN`s
 
 A special sub-type of missing value is an `NaN`, or `N`ot `a` `N`umber. 
 
@@ -749,9 +793,9 @@ health |> count(smoker)
 
 ::: {.fragment}
 ```{r}
-levels(health$smoker) # <3> 
+levels(health$smoker) # <1> 
 ```
-3. This dataset only contains non-smokers, but we know that smokers exist; the group of smokers is simply empty. 
+1. This dataset only contains non-smokers, but we know that smokers exist; the group of smokers is simply empty. 
 :::
 
 ::: {.fragment}
@@ -762,9 +806,9 @@ levels(health$smoker) # <3>
 <br>
 
 ```{r}
-health |> count(smoker, .drop = FALSE) # <4>
+health |> count(smoker, .drop = FALSE) # <2>
 ```
-4. We can request `count()` to keep all the groups, even those not seen in the data by using `.drop = FALSE`.
+2. We can request `count()` to keep all the groups, even those not seen in the data by using `.drop = FALSE`.
 :::
 
 :::
@@ -958,9 +1002,9 @@ c(1, 2, 3) + c(4, 5, 6)
 ```
 
 ```{r}
-c(1, 2, 3, 4)^3 # <5> 
+c(1, 2, 3, 4)^3 # <1> 
 ```
-5. Exponentiation is carried out using the `^` operator.
+1. Exponentiation is carried out using the `^` operator.
 
 . . . 
 
@@ -974,9 +1018,9 @@ Other common operations: `*`, `/`, `exp()` = $e^x$, `log()` = $\log_e(x)$
 
 ```{r}
 x <- c(1, 2, 10, 20)
-x / 5 # <6> 
+x / 5 # <1> 
 ```
-6. This is shorthand for: `x / c(5, 5, 5, 5)`
+1. This is shorthand for: `x / c(5, 5, 5, 5)`
 
 . . . 
 
@@ -1000,10 +1044,10 @@ For example, take this code which attempts to find all flights in January and Fe
 
 ```{r}
 flights |> 
-  filter(month == c(1, 2)) |> # <7> 
+  filter(month == c(1, 2)) |> # <1> 
   head(5)
 ```
-7. A common mistake is to mix up `==` with `%in%`. This code will actually find flights in odd numbered rows that departed in January and flights in even numbered rows that departed in February. Unfortunately there’s no warning because `flights` has an even number of rows. 
+1. A common mistake is to mix up `==` with `%in%`. This code will actually find flights in odd numbered rows that departed in January and flights in even numbered rows that departed in February. Unfortunately there’s no warning because `flights` has an even number of rows. 
 
 . . . 
 
@@ -1019,14 +1063,22 @@ $$z_i = \frac{x_i - \text{mean}(x)}{\text{SD}(x)}$$
 
 ```{r}
 x <- c(97, 68, 75, 77, 69, 81)
-z <- (x - mean(x)) / sd(x)
+z <- (x - mean(x)) / sd(x) # <1>
 round(z, 2)
 ```
-
+1. Both `mean(x)` and `sd(x)` are scalars that will be recycled for every value in `x` to produce the standardization we want. 
 
 ## Math with Missing Values
 
-Even one `NA` "poisons the well": You'll get `NA` out of your calculations unless you add the extra argument `na.rm = TRUE` (available in some functions):
+\
+
+> Even one `NA` "poisons the well"
+
+. . . 
+
+\
+
+You'll get `NA` out of your calculations unless you add the extra argument `na.rm = TRUE` (available in some functions):
 
 . . . 
 
@@ -1060,9 +1112,9 @@ first_names[-3]
 * Passing a **logical condition**:
 
 ```{r}
-first_names[nchar(first_names) == 7] # <8>
+first_names[nchar(first_names) == 7] # <1>
 ```
-8. `nchar()` counts the number of characters in a character string. 
+1. `nchar()` counts the number of characters in a character string. 
 
 . . . 
 
@@ -1081,11 +1133,11 @@ pet_names["cat"]
 
 ## Matrices: Two Dimensions
 
-**Matrices** extend vectors to two **dimensions**: **rows** and **columns**. We can construct them directly using `matrix()`.
+[**Matrices** extend vectors to two **dimensions**: **rows** and **columns**. Use `matrix()` to construct them directly.]{style="font-size: 85%;"}
 
 . . . 
 
-R fills in a matrix column-by-column (**not** row-by-row!)
+[R fills in a matrix column-by-column (**not** row-by-row!)]{style="font-size: 85%;"}
 
 ```{r}
 a_matrix <- matrix(first_names, nrow = 2, ncol = 3)
@@ -1094,7 +1146,7 @@ a_matrix
 
 . . . 
 
-Similar to vectors, you can make assignments using Base `R` indexing methods. 
+[Similar to vectors, you can make assignments using Base `R` indexing methods.]{style="font-size: 85%;"}
 
 . . . 
 
@@ -1105,7 +1157,7 @@ a_matrix
 
 . . . 
 
-However, you can't add rows or columns to a matrix in this way. You can only reassign already-existing cell values. 
+[However, you can't add rows or columns to a matrix in this way. You can only reassign already-existing cell values.]{style="font-size: 85%;"}
 
 ```{r}
 #| error: true
@@ -1136,13 +1188,13 @@ a_matrix
 . . . 
 
 ```{r}
-a_matrix[1, 2] # <9> 
+a_matrix[1, 2] # <1> 
 ```
-9. Row 1, Column 2.
+1. Row 1, Column 2.
 ```{r}
-a_matrix[1, c(2,3)] # <10> 
+a_matrix[1, c(2,3)] # <2> 
 ```
-10. Row 1, Columns 2 and 3. 
+2. Row 1, Columns 2 and 3. 
 
 . . . 
 
@@ -1198,9 +1250,9 @@ bad_matrix
 ```
 
 ```{r}
-bad_matrix[ ,"Name", drop = FALSE] # <11>
+bad_matrix[ ,"Name", drop = FALSE] # <1>
 ```
-11. `drop = FALSE` maintains the matrix structure; when `drop = TRUE` (the default) it will be converted to a vector. 
+1. `drop = FALSE` maintains the matrix structure; when `drop = TRUE` (the default) it will be converted to a vector. 
 
 ## Matrix Arithmetic
 
@@ -1473,7 +1525,7 @@ You can supply names to index into named vectors as well. This is the same as ca
 
 ::::
 
-## Example: Regression Output <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+## Example: Regression Output
 
 When you perform linear regression in `R`, the output is a list!
 
@@ -1486,7 +1538,7 @@ names(lm_output)
 lm_output$coefficients
 ```
 
-. . . 
+## Example: Regression Output 
 
 What does a list object look like?
 
@@ -1570,7 +1622,7 @@ matrix(c("A", "B", "C", "D", "E", "F"), nrow = 2, byrow = TRUE)[ ,2, drop = FALS
     ii) `my_name` (your name as a character) 
     iii) `booleans` (vector of `TRUE` and `FALSE` alternating three times)
 
-## Answers
+## Answers {visibility="hidden"}
 
 1\. Write code to create the following matrix:
 
@@ -1587,7 +1639,7 @@ matrix_test
 matrix_test[ ,2, drop = FALSE]
 ```
 
-## Answers
+## Answers {visibility="hidden"}
 
 3\. Complete the following sentence: "Lists are to vectors, what data frames are to...**Matrices!**^[*Lists and data frames can contain mixed data types, while vectors and matrices can only contain one data type. Additionally, lists and vectors are **technically** one dimension while matrices and dataframes are two dimensions.*]" 
 

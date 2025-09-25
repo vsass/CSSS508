@@ -2,12 +2,14 @@
 title: "Homework 4 Key"
 code-annotations: hover
 code-fold: show
+reference-location: margin
 execute: 
   message: false
   warning: false
 output: 
   html_document:
     highlight-style: a11y-dark
+    
 ---
 
 ```{r}
@@ -39,39 +41,45 @@ The variable `arr_delay` contains arrival delays in minutes (negative values rep
 
 ```{r}
 #| fig-align: center
+#| fig-width: 9
+#| fig-height: 6
 flights |> 
   filter(dest == "SAN") |> 
   ggplot(aes(x = arr_delay)) +
   geom_histogram() + 
-  geom_vline(xintercept = 0, color = "#e15759") + # <2>
+  geom_vline(xintercept = 0, color = "#e15759") + # <1>
   labs(title = "Arrival delays from NYC airports to SAN in 2013",
        x = "Arrival delays (minutes)",
        y = "Count") +
-  theme_tufte() + 
-  theme(plot.background = element_rect(fill = "#f6f7f9", color = NA)) # <3>
+  theme_tufte(base_size = 14) + 
+  theme(plot.background = element_rect(fill = "#f6f7f9", 
+                                       color = NA)) # <2>
 ```
-2. `geom_vline` adds a vertical line to your plot which can be useful for demarcating comparison or threshold values.
-3. Changing the background color of my plot to match the website's color using `fill` and removing the border of the plot using `color`. 
+1. `geom_vline` adds a vertical line to your plot which can be useful for demarcating comparison or threshold values.
+2. Changing the background color of my plot to match the website's color using `fill` and removing the border of the plot using `color`. 
 
 #### Answer 3
 
 Use `left_join` to add weather data at departure to the subsetted data. If `time_hour` didn't exist in one or both of these datasets, which variables would you need to merge on? Calculate the mean temperature by `month` at departure (`temp`) across all flights.
 
 ```{r}
+#| fig-align: center
+#| fig-width: 9
+#| fig-height: 6
 flights |> 
   filter(dest == "SAN") |> 
   left_join(weather) |> 
-  summarize(avg_temp = mean(temp, na.rm = TRUE) |> round(2) |> number(suffix = "°F"), # <4>
+  summarize(avg_temp = mean(temp, na.rm = TRUE) |> round(2) |> number(suffix = "°F"), # <1>
             .by = month) |> 
   arrange(month) |> 
-  gt() |> # <5>
-  cols_align(align = "center") |> # <5>
-  cols_label(month = "Month", # <5>
-             avg_temp = "Average Temperature") |> # <5>
-  tab_options(table.background.color = "#f6f7f9") # <5>
+  gt() |> # <2>
+  cols_align(align = "center") |> # <2>
+  cols_label(month = "Month", # <2>
+             avg_temp = "Average Temperature") |> # <2>
+  tab_options(table.background.color = "#f6f7f9") # <2>
 ```
-4. When creating the mean temperature I also chose to round to two decimal places with `round()` and add the suffix `°F` with the `number` function from the `scales` package. This level of detail is not necessary for this assignment. 
-5. Making the table a bit nicer looking (again, not necessary here)
+1. When creating the mean temperature I also chose to round to two decimal places with `round()` and add the suffix `°F` with the `number` function from the `scales` package. This level of detail is not necessary for this assignment but it illustrates additional options available to you in the `scales` package. 
+2. Making the table a bit nicer looking (again, not necessary here)
 
 If `time_hour` didn't exist in one of both of these datasets you would have to join on `origin`, `year`, `month`, `day`, and `hour.` 
 
@@ -81,35 +89,52 @@ Investigate if there is a relationship between departure delay (`dep_delay`) and
 
 ```{r}
 #| fig-align: center
+#| fig-width: 9
+#| fig-height: 6
 flights |> 
   left_join(weather) |> 
-  ggplot(aes(x = precip, y = dep_delay)) + 
-  geom_jitter(alpha = 0.1) + # <6>
-  geom_smooth(method = "lm") + # <7> 
+  ggplot(aes(x = precip, 
+             y = dep_delay)) + 
+  geom_jitter(alpha = 0.1) + # <1>
+  geom_smooth(method = "lm") + # <2> 
   labs(title = "Does precipitation increase the likelihood of departure delays?",
        x = "Precipitation (in inches)",
        y = "Departure delay (in minutes)") + 
-  theme_tufte() + 
-  theme(plot.background = element_rect(fill = "#f6f7f9", color = NA))
+  theme_tufte(base_size = 14) + 
+  theme(plot.background = element_rect(fill = "#f6f7f9", 
+                                       color = NA))
 ```
-6. It can be helpful to make all points transparent if there is extreme over-plotting like in this plot. It allows you see more clearly see where there is over-plotting. 
-7. Adding a regression line allows for better visualization of the relationship between precipitation and departure delays. 
+1. It can be helpful to make all points transparent if there is extreme over-plotting like in this plot. It allows you see more clearly see where there is over-plotting. 
+2. Adding a regression line allows for better visualization of the relationship between precipitation and departure delays. 
 
 It looks like there is a slightly positive relationship between precipitation and the length of a departure delay. 
 
 ```{r}
 #| fig-align: center
+#| fig-width: 9
+#| fig-height: 6
 flights |> 
   left_join(weather) |> 
-  ggplot(aes(x = precip, y = dep_delay, color = origin)) + # <8> 
-  geom_jitter(alpha = 0.1) + 
-  geom_smooth(method = "lm", fill = "#f6f7f9") + 
+  ggplot(aes(x = precip, 
+             y = dep_delay, 
+             color = origin, # <1>
+             linetype = origin)) + # <1> 
+  geom_jitter(shape = 1) + # <2>
+  geom_smooth(method = "lm", 
+              fill = "#f6f7f9") + 
+  scale_color_manual(values = c("EWR" = "#fdc57e", # <3>
+                                "JFK" = "#648f7b", # <3>
+                                "LGA" = "#66629c")) + # <3>
   labs(title = "Does precipitation increase the likelihood of departure delays?",
        x = "Precipitation (in inches)",
        y = "Departure delay (in minutes)") + 
-  theme_tufte() + 
-  theme(plot.background = element_rect(fill = "#f6f7f9", color = NA))
+  theme_tufte(base_size = 14) + 
+  theme(plot.background = element_rect(fill = "#f6f7f9", 
+                                       color = NA), 
+        legend.position = "bottom")
 ```
-8. Just added the mapping aesthetic by `color` to visualize this by origin airport. 
+1. Just added the mapping aesthetic by `color` and `linetype` to visualize this by origin airport. 
+2. An alternative to using `alpha` to facilitate viewing over-plotted points is to use a shape that only applies color to the outline, rather than the whole point shape.
+3. Adding custom colors
 
-When broken down by origin airport it looks like this slight positive association is a bit stronger for JFK and LGA than it is for EWR. 
+When broken down by origin airport it looks like this slight positive association is just *a bit* larger for JFK and LGA than it is for EWR. 
