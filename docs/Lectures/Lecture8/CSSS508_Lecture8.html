@@ -96,7 +96,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #d4d0ab; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-fe6137f3f77d922efb55338ef52e64fb.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-13cfb892feeddeb820c7d4ed038b5a2f.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -315,25 +315,36 @@
 <h2>Simple, Motivating Example</h2>
 <div class="columns">
 <div class="column" style="width:62%;">
+<div class="small-code">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb1-2"><a></a>  <span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
-<span id="cb1-3"><a></a>  <span class="at">b =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
-<span id="cb1-4"><a></a>  <span class="at">c =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
-<span id="cb1-5"><a></a>  <span class="at">d =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
-<span id="cb1-6"><a></a>  )</span>
-<span id="cb1-7"><a></a>df</span>
-<span id="cb1-8"><a></a></span>
-<span id="cb1-9"><a></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
-<span id="cb1-10"><a></a>  <span class="at">a =</span> (a <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
-<span id="cb1-11"><a></a>    (<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb1-12"><a></a>  <span class="at">b =</span> (b <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
-<span id="cb1-13"><a></a>    (<span class="fu">max</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb1-14"><a></a>  <span class="at">c =</span> (c <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
-<span id="cb1-15"><a></a>    (<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb1-16"><a></a>  <span class="at">d =</span> (d <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
-<span id="cb1-17"><a></a>    (<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb1-18"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-25"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-25" data-target-annotation="1">1</button><span id="annotated-cell-25-1" class="code-annotation-target"><a href="#annotated-cell-25-1"></a><span class="fu">set.seed</span>(<span class="dv">5000</span>)</span>
+<span id="annotated-cell-25-2"><a href="#annotated-cell-25-2"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="annotated-cell-25-3"><a href="#annotated-cell-25-3"></a>  <span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
+<span id="annotated-cell-25-4"><a href="#annotated-cell-25-4"></a>  <span class="at">b =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
+<span id="annotated-cell-25-5"><a href="#annotated-cell-25-5"></a>  <span class="at">c =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>),</span>
+<span id="annotated-cell-25-6"><a href="#annotated-cell-25-6"></a>  <span class="at">d =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
+<span id="annotated-cell-25-7"><a href="#annotated-cell-25-7"></a>  )</span>
+<span id="annotated-cell-25-8"><a href="#annotated-cell-25-8"></a>df</span>
+<span id="annotated-cell-25-9"><a href="#annotated-cell-25-9"></a></span>
+<span id="annotated-cell-25-10"><a href="#annotated-cell-25-10"></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
+<span id="annotated-cell-25-11"><a href="#annotated-cell-25-11"></a>  <span class="at">a =</span> (a <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="annotated-cell-25-12"><a href="#annotated-cell-25-12"></a>    (<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="annotated-cell-25-13"><a href="#annotated-cell-25-13"></a>  <span class="at">b =</span> (b <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="annotated-cell-25-14"><a href="#annotated-cell-25-14"></a>    (<span class="fu">max</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="annotated-cell-25-15"><a href="#annotated-cell-25-15"></a>  <span class="at">c =</span> (c <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="annotated-cell-25-16"><a href="#annotated-cell-25-16"></a>    (<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="annotated-cell-25-17"><a href="#annotated-cell-25-17"></a>  <span class="at">d =</span> (d <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="annotated-cell-25-18"><a href="#annotated-cell-25-18"></a>    (<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="annotated-cell-25-19"><a href="#annotated-cell-25-19"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-25" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-25" data-code-lines="1" data-code-annotation="1"><code>set.seed()</code> allows you to reproduce the same numbers from any random number-generating process (i.e.&nbsp;<code>rnorm()</code>)</span>
+</dd>
+</dl>
+</div>
+</div>
 </div>
 <div class="fragment" data-fragment-index="3">
 <ul>
@@ -357,6 +368,8 @@
 </div>
 </div>
 </div>
+<p><br>
+</p>
 <div class="fragment" data-fragment-index="2">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -382,10 +395,10 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>(a <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb4-2"><a></a>(b <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb4-3"><a></a>(c <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb4-4"><a></a>(d <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>(a <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-2"><a></a>(b <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-3"><a></a>(c <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-4"><a></a>(d <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -395,7 +408,7 @@
 <p><br></p>
 <p>We can see how concise our code can be if we replace the varying part with 🟪:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>(🟪 <span class="sc">-</span> <span class="fu">min</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>(🟪 <span class="sc">-</span> <span class="fu">min</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(🟪, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -417,7 +430,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1">In this example, <code>ARGUMENT1</code>, <code>ARGUMENT2</code> values won’t exist outside of the function. <code>ARGUMENT2</code> is an optional argument as it’s been given a default value to use if the user does not specify one.</span>
+<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1">In this example, <code>ARGUMENT1</code> and <code>ARGUMENT2</code> values won’t exist outside of the function. <code>ARGUMENT2</code> is an optional argument as it’s been given a default value to use if the user does not specify one.</span>
 </dd>
 </dl>
 </div>
@@ -442,28 +455,33 @@
 </section>
 <section id="testing-your-function" class="slide level2">
 <h2>Testing Your Function</h2>
-<p>It’s good practice to test a few simple inputs to make sure your function works as expected.</p>
 <div class="fragment">
+<p><span style="font-size: 85%;">It’s good practice to test a few simple inputs to make sure your function works as expected.</span></p>
+</div>
+<div class="fragment">
+<div class="smaller-code">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">rescale01</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">rescale01</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] 0.0 0.5 1.0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">rescale01</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="cn">NA</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">rescale01</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="cn">NA</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] 0.00 0.25 0.50   NA 1.00</code></pre>
 </div>
 </div>
 </div>
-<div class="fragment">
-<p>Now we can rewrite our original code in a much simpler way!<sup>1</sup></p>
 </div>
 <div class="fragment">
+<p><span style="font-size: 85%;">Now we can rewrite our original code in a much simpler way!<sup>1</sup></span></p>
+</div>
+<div class="fragment">
+<div class="smaller-code">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">a =</span> <span class="fu">rescale01</span>(a),</span>
-<span id="cb10-2"><a></a>             <span class="at">b =</span> <span class="fu">rescale01</span>(b),</span>
-<span id="cb10-3"><a></a>             <span class="at">c =</span> <span class="fu">rescale01</span>(c),</span>
-<span id="cb10-4"><a></a>             <span class="at">d =</span> <span class="fu">rescale01</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">a =</span> <span class="fu">rescale01</span>(a),</span>
+<span id="cb9-2"><a></a>             <span class="at">b =</span> <span class="fu">rescale01</span>(b),</span>
+<span id="cb9-3"><a></a>             <span class="at">c =</span> <span class="fu">rescale01</span>(c),</span>
+<span id="cb9-4"><a></a>             <span class="at">d =</span> <span class="fu">rescale01</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; # A tibble: 5 × 4
 &gt;       a     b      c      d
@@ -473,6 +491,7 @@
 &gt; 3 0     0     0.0918 0     
 &gt; 4 1     0.439 0.656  0.372 
 &gt; 5 0.580 1     1      1</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -489,10 +508,10 @@
 <div class="fragment">
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb12-2"><a aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-3"><a aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
-<span id="cb12-4"><a aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb11-2"><a aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-3"><a aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb11-4"><a aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div><div class="column" style="width:58%;">
@@ -500,8 +519,8 @@
 <p><br></p>
 <p>Or you might find out through trial and error that our function doesn’t handle infinite values well.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cn">Inf</span>)</span>
-<span id="cb13-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">rescale01</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cn">Inf</span>)</span>
+<span id="cb12-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">rescale01</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt;  [1]   0   0   0   0   0   0   0   0   0   0 NaN</code></pre>
 </div>
@@ -510,10 +529,10 @@
 <div class="fragment">
 <p>Updating it to exclude infinite values makes it more general as it accounts for more use cases.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-hidden="true" tabindex="-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb15-2"><a aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">finite =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb15-3"><a aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
-<span id="cb15-4"><a aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb14-2"><a aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">finite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-3"><a aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb14-4"><a aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div></div>
@@ -552,18 +571,19 @@
 <section id="examples-of-mutate-functions" class="slide level2">
 <h2>Examples of Mutate Functions</h2>
 <div class="fragment">
+<div class="smaller-code">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1"></a>z_score <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-2" class="code-annotation-target"><a href="#annotated-cell-8-2"></a>  (x <span class="sc">-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="annotated-cell-8-3"><a href="#annotated-cell-8-3"></a>} </span>
-<span id="annotated-cell-8-4"><a href="#annotated-cell-8-4"></a></span>
-<span id="annotated-cell-8-5"><a href="#annotated-cell-8-5"></a>ages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">82</span>, <span class="dv">73</span>, <span class="dv">44</span>, <span class="dv">5</span>)</span>
-<span id="annotated-cell-8-6"><a href="#annotated-cell-8-6"></a><span class="fu">z_score</span>(ages)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-38"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-38-1"><a href="#annotated-cell-38-1"></a>z_score <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-38" data-target-annotation="1">1</button><span id="annotated-cell-38-2" class="code-annotation-target"><a href="#annotated-cell-38-2"></a>  (x <span class="sc">-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="annotated-cell-38-3"><a href="#annotated-cell-38-3"></a>} </span>
+<span id="annotated-cell-38-4"><a href="#annotated-cell-38-4"></a></span>
+<span id="annotated-cell-38-5"><a href="#annotated-cell-38-5"></a>ages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">82</span>, <span class="dv">73</span>, <span class="dv">44</span>, <span class="dv">5</span>)</span>
+<span id="annotated-cell-38-6"><a href="#annotated-cell-38-6"></a><span class="fu">z_score</span>(ages)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-38" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="2" data-code-annotation="1">Rescales a vector to have a mean of zero and a standard deviation of one.</span>
+<span data-code-cell="annotated-cell-38" data-code-lines="2" data-code-annotation="1">Rescales a vector to have a mean of zero and a standard deviation of one.</span>
 </dd>
 </dl>
 </div>
@@ -572,22 +592,24 @@
 </div>
 </div>
 </div>
+</div>
 <div class="fragment">
+<div class="smaller-code">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1"></a>clamp <span class="ot">&lt;-</span> <span class="cf">function</span>(x, min, max) { </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2">2</button><span id="annotated-cell-9-2" class="code-annotation-target"><a href="#annotated-cell-9-2"></a>  <span class="fu">case_when</span>(</span>
-<span id="annotated-cell-9-3"><a href="#annotated-cell-9-3"></a>    x <span class="sc">&lt;</span> min <span class="sc">~</span> min,</span>
-<span id="annotated-cell-9-4"><a href="#annotated-cell-9-4"></a>    x <span class="sc">&gt;</span> max <span class="sc">~</span> max,</span>
-<span id="annotated-cell-9-5"><a href="#annotated-cell-9-5"></a>    <span class="at">.default =</span> x</span>
-<span id="annotated-cell-9-6"><a href="#annotated-cell-9-6"></a>  ) </span>
-<span id="annotated-cell-9-7"><a href="#annotated-cell-9-7"></a>} </span>
-<span id="annotated-cell-9-8"><a href="#annotated-cell-9-8"></a></span>
-<span id="annotated-cell-9-9"><a href="#annotated-cell-9-9"></a><span class="fu">clamp</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">min =</span> <span class="dv">3</span>, <span class="at">max =</span> <span class="dv">7</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-40"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-40-1"><a href="#annotated-cell-40-1"></a>clamp <span class="ot">&lt;-</span> <span class="cf">function</span>(x, min, max) { </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-40" data-target-annotation="2">2</button><span id="annotated-cell-40-2" class="code-annotation-target"><a href="#annotated-cell-40-2"></a>  <span class="fu">case_when</span>(</span>
+<span id="annotated-cell-40-3"><a href="#annotated-cell-40-3"></a>    x <span class="sc">&lt;</span> min <span class="sc">~</span> min,</span>
+<span id="annotated-cell-40-4"><a href="#annotated-cell-40-4"></a>    x <span class="sc">&gt;</span> max <span class="sc">~</span> max,</span>
+<span id="annotated-cell-40-5"><a href="#annotated-cell-40-5"></a>    <span class="at">.default =</span> x</span>
+<span id="annotated-cell-40-6"><a href="#annotated-cell-40-6"></a>  ) </span>
+<span id="annotated-cell-40-7"><a href="#annotated-cell-40-7"></a>} </span>
+<span id="annotated-cell-40-8"><a href="#annotated-cell-40-8"></a></span>
+<span id="annotated-cell-40-9"><a href="#annotated-cell-40-9"></a><span class="fu">clamp</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">min =</span> <span class="dv">3</span>, <span class="at">max =</span> <span class="dv">7</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-40" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="2,3,4,5" data-code-annotation="2">Ensures all values of a vector lie in between a minimum or a maximum.</span>
+<span data-code-cell="annotated-cell-40" data-code-lines="2,3,4,5" data-code-annotation="2">Ensures all values of a vector lie in between a minimum or a maximum.</span>
 </dd>
 </dl>
 </div>
@@ -596,19 +618,21 @@
 </div>
 </div>
 </div>
+</div>
 <div class="fragment">
+<div class="smaller-code">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1"></a>first_upper <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="3">3</button><span id="annotated-cell-10-2" class="code-annotation-target"><a href="#annotated-cell-10-2"></a>  <span class="fu">str_sub</span>(x, <span class="dv">1</span>, <span class="dv">1</span>) <span class="ot">&lt;-</span> <span class="fu">str_to_upper</span>(<span class="fu">str_sub</span>(x, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="annotated-cell-10-3"><a href="#annotated-cell-10-3"></a>  x</span>
-<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4"></a>} </span>
-<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5"></a></span>
-<span id="annotated-cell-10-6"><a href="#annotated-cell-10-6"></a><span class="fu">first_upper</span>(<span class="st">"hi there, how's your day going?"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-42"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-42-1"><a href="#annotated-cell-42-1"></a>first_upper <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-42" data-target-annotation="3">3</button><span id="annotated-cell-42-2" class="code-annotation-target"><a href="#annotated-cell-42-2"></a>  <span class="fu">str_sub</span>(x, <span class="dv">1</span>, <span class="dv">1</span>) <span class="ot">&lt;-</span> <span class="fu">str_to_upper</span>(<span class="fu">str_sub</span>(x, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="annotated-cell-42-3"><a href="#annotated-cell-42-3"></a>  x</span>
+<span id="annotated-cell-42-4"><a href="#annotated-cell-42-4"></a>} </span>
+<span id="annotated-cell-42-5"><a href="#annotated-cell-42-5"></a></span>
+<span id="annotated-cell-42-6"><a href="#annotated-cell-42-6"></a><span class="fu">first_upper</span>(<span class="st">"hi there, how's your day going?"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-10" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-42" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-10" data-code-lines="2,3" data-code-annotation="3">Make the first character upper case.</span>
+<span data-code-cell="annotated-cell-42" data-code-lines="2,3" data-code-annotation="3">Make the first character upper case.</span>
 </dd>
 </dl>
 </div>
@@ -617,21 +641,22 @@
 </div>
 </div>
 </div>
+</div>
 </section>
 <section id="examples-of-summarize-functions" class="slide level2">
 <h2>Examples of Summarize Functions</h2>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1"></a>cv <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">FALSE</span>) {</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="4">4</button><span id="annotated-cell-11-2" class="code-annotation-target"><a href="#annotated-cell-11-2"></a>  <span class="fu">sd</span>(x, <span class="at">na.rm =</span> na.rm) <span class="sc">/</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> na.rm)</span>
-<span id="annotated-cell-11-3"><a href="#annotated-cell-11-3"></a>}</span>
-<span id="annotated-cell-11-4"><a href="#annotated-cell-11-4"></a></span>
-<span id="annotated-cell-11-5"><a href="#annotated-cell-11-5"></a><span class="fu">cv</span>(<span class="fu">runif</span>(<span class="dv">100</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">50</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1"></a>cv <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">FALSE</span>) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-2" class="code-annotation-target"><a href="#annotated-cell-5-2"></a>  <span class="fu">sd</span>(x, <span class="at">na.rm =</span> na.rm) <span class="sc">/</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> na.rm)</span>
+<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3"></a>}</span>
+<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4"></a></span>
+<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5"></a><span class="fu">cv</span>(<span class="fu">runif</span>(<span class="dv">100</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">50</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-11" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-11" data-code-lines="2" data-code-annotation="4">Calculation for the coefficient of variation, which divides the standard deviation by the mean.</span>
+<span data-code-cell="annotated-cell-5" data-code-lines="2" data-code-annotation="1">Calculation for the coefficient of variation, which divides the standard deviation by the mean.</span>
 </dd>
 </dl>
 </div>
@@ -642,21 +667,21 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1"></a>n_missing <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="5">5</button><span id="annotated-cell-12-2" class="code-annotation-target"><a href="#annotated-cell-12-2"></a>  <span class="fu">sum</span>(<span class="fu">is.na</span>(x))</span>
-<span id="annotated-cell-12-3"><a href="#annotated-cell-12-3"></a>} </span>
-<span id="annotated-cell-12-4"><a href="#annotated-cell-12-4"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="6">6</button><span id="annotated-cell-12-5" class="code-annotation-target"><a href="#annotated-cell-12-5"></a>var <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="dv">1</span>), <span class="cn">NA</span>, <span class="cn">NA</span>), <span class="at">size =</span> <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="annotated-cell-12-6"><a href="#annotated-cell-12-6"></a><span class="fu">n_missing</span>(var)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1"></a>n_missing <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2">2</button><span id="annotated-cell-6-2" class="code-annotation-target"><a href="#annotated-cell-6-2"></a>  <span class="fu">sum</span>(<span class="fu">is.na</span>(x))</span>
+<span id="annotated-cell-6-3"><a href="#annotated-cell-6-3"></a>} </span>
+<span id="annotated-cell-6-4"><a href="#annotated-cell-6-4"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="3">3</button><span id="annotated-cell-6-5" class="code-annotation-target"><a href="#annotated-cell-6-5"></a>var <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="dv">1</span>), <span class="cn">NA</span>, <span class="cn">NA</span>), <span class="at">size =</span> <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="annotated-cell-6-6"><a href="#annotated-cell-6-6"></a><span class="fu">n_missing</span>(var)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-12" data-target-annotation="5">5</dt>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-12" data-code-lines="2" data-code-annotation="5">Calculates the number of missing values (<a href="https://twitter.com/gbganalyst/status/1571619641390252033">Source</a>).</span>
+<span data-code-cell="annotated-cell-6" data-code-lines="2" data-code-annotation="2">Calculates the number of missing values (<a href="https://twitter.com/gbganalyst/status/1571619641390252033">Source</a>).</span>
 </dd>
-<dt data-target-cell="annotated-cell-12" data-target-annotation="6">6</dt>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-12" data-code-lines="5" data-code-annotation="6">Creating a random sample of 100 values with a mix of integers from 1 to 100 and <code>NA</code> values.</span>
+<span data-code-cell="annotated-cell-6" data-code-lines="5" data-code-annotation="3">Creating a random sample of 100 values with a mix of integers from 1 to 100 and <code>NA</code> values.</span>
 </dd>
 </dl>
 </div>
@@ -667,21 +692,21 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1"></a>mape <span class="ot">&lt;-</span> <span class="cf">function</span>(actual, predicted) {</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="7">7</button><span id="annotated-cell-13-2" class="code-annotation-target"><a href="#annotated-cell-13-2"></a>  <span class="fu">sum</span>(<span class="fu">abs</span>((actual <span class="sc">-</span> predicted) <span class="sc">/</span> actual)) <span class="sc">/</span> <span class="fu">length</span>(actual)</span>
-<span id="annotated-cell-13-3"><a href="#annotated-cell-13-3"></a>}</span>
-<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4"></a></span>
-<span id="annotated-cell-13-5"><a href="#annotated-cell-13-5"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="8">8</button><span id="annotated-cell-13-6" class="code-annotation-target"><a href="#annotated-cell-13-6"></a><span class="fu">mape</span>(cars<span class="sc">$</span>dist, model1<span class="sc">$</span>fitted.values)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-7-1"><a href="#annotated-cell-7-1"></a>mape <span class="ot">&lt;-</span> <span class="cf">function</span>(actual, predicted) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="4">4</button><span id="annotated-cell-7-2" class="code-annotation-target"><a href="#annotated-cell-7-2"></a>  <span class="fu">sum</span>(<span class="fu">abs</span>((actual <span class="sc">-</span> predicted) <span class="sc">/</span> actual)) <span class="sc">/</span> <span class="fu">length</span>(actual)</span>
+<span id="annotated-cell-7-3"><a href="#annotated-cell-7-3"></a>}</span>
+<span id="annotated-cell-7-4"><a href="#annotated-cell-7-4"></a></span>
+<span id="annotated-cell-7-5"><a href="#annotated-cell-7-5"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="5">5</button><span id="annotated-cell-7-6" class="code-annotation-target"><a href="#annotated-cell-7-6"></a><span class="fu">mape</span>(cars<span class="sc">$</span>dist, model1<span class="sc">$</span>fitted.values)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-13" data-target-annotation="7">7</dt>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-13" data-code-lines="2" data-code-annotation="7">Calculates the mean absolute percentage error which measures the average magnitude of error produced by a model, or how far off predictions are on average.</span>
+<span data-code-cell="annotated-cell-7" data-code-lines="2" data-code-annotation="4">Calculates the mean absolute percentage error which measures the average magnitude of error produced by a model, or how far off predictions are on average.</span>
 </dd>
-<dt data-target-cell="annotated-cell-13" data-target-annotation="8">8</dt>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-13" data-code-lines="6" data-code-annotation="8">This tells us that the average absolute percentage difference between the predicted values and the actual values is ~ 38%.</span>
+<span data-code-cell="annotated-cell-7" data-code-lines="6" data-code-annotation="5">This tells us that the average absolute percentage difference between the predicted values and the actual values is ~ 38%.</span>
 </dd>
 </dl>
 </div>
@@ -706,18 +731,18 @@
 <p>Data frame functions work like dplyr verbs: they take a data frame as the first argument, some extra arguments that say what to do with it, and return a data frame or a vector.</p>
 <h4 id="example">Example</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-14-1"><a href="#annotated-cell-14-1"></a>grouped_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(df, group_var, mean_var) {</span>
-<span id="annotated-cell-14-2"><a href="#annotated-cell-14-2"></a>  df <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="1">1</button><span id="annotated-cell-14-3" class="code-annotation-target"><a href="#annotated-cell-14-3"></a>    <span class="fu">group_by</span>(group_var) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-14-4"><a href="#annotated-cell-14-4"></a>    <span class="fu">summarize</span>(<span class="fu">mean</span>(mean_var))</span>
-<span id="annotated-cell-14-5"><a href="#annotated-cell-14-5"></a>}</span>
-<span id="annotated-cell-14-6"><a href="#annotated-cell-14-6"></a></span>
-<span id="annotated-cell-14-7"><a href="#annotated-cell-14-7"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">grouped_mean</span>(cut, carat)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1"></a>grouped_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(df, group_var, mean_var) {</span>
+<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2"></a>  df <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3"></a>    <span class="fu">group_by</span>(group_var) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-8-4"><a href="#annotated-cell-8-4"></a>    <span class="fu">summarize</span>(<span class="fu">mean</span>(mean_var))</span>
+<span id="annotated-cell-8-5"><a href="#annotated-cell-8-5"></a>}</span>
+<span id="annotated-cell-8-6"><a href="#annotated-cell-8-6"></a></span>
+<span id="annotated-cell-8-7"><a href="#annotated-cell-8-7"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">grouped_mean</span>(cut, carat)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-14" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-14" data-code-lines="3,4" data-code-annotation="1">The goal of this function is to compute the mean of <code>mean_var</code> grouped by <code>group_var.</code></span>
+<span data-code-cell="annotated-cell-8" data-code-lines="3,4" data-code-annotation="1">The goal of this function is to compute the mean of <code>mean_var</code> grouped by <code>group_var.</code></span>
 </dd>
 </dl>
 </div>
@@ -747,12 +772,12 @@
 <div class="tab-content">
 <div id="tabset-1-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>diamonds[diamonds<span class="sc">$</span>cut <span class="sc">==</span> <span class="st">"Ideal"</span> <span class="sc">&amp;</span> diamonds<span class="sc">$</span>price <span class="sc">&lt;</span> <span class="dv">1000</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>diamonds[diamonds<span class="sc">$</span>cut <span class="sc">==</span> <span class="st">"Ideal"</span> <span class="sc">&amp;</span> diamonds<span class="sc">$</span>price <span class="sc">&lt;</span> <span class="dv">1000</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-1-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>diamonds <span class="sc">|&gt;</span> <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">"Ideal"</span> <span class="sc">&amp;</span> price <span class="sc">&lt;</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>diamonds <span class="sc">|&gt;</span> <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">"Ideal"</span> <span class="sc">&amp;</span> price <span class="sc">&lt;</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -777,13 +802,13 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>grouped_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(df, group_var, mean_var) {</span>
-<span id="cb25-2"><a></a>  df <span class="sc">|&gt;</span> </span>
-<span id="cb25-3"><a></a>    <span class="fu">group_by</span>({{ group_var }}) <span class="sc">|&gt;</span> </span>
-<span id="cb25-4"><a></a>    <span class="fu">summarize</span>(<span class="fu">mean</span>({{ mean_var }}))</span>
-<span id="cb25-5"><a></a>}</span>
-<span id="cb25-6"><a></a></span>
-<span id="cb25-7"><a></a>diamonds <span class="sc">|&gt;</span> <span class="fu">grouped_mean</span>(cut, carat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>grouped_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(df, group_var, mean_var) {</span>
+<span id="cb24-2"><a></a>  df <span class="sc">|&gt;</span> </span>
+<span id="cb24-3"><a></a>    <span class="fu">group_by</span>({{ group_var }}) <span class="sc">|&gt;</span> </span>
+<span id="cb24-4"><a></a>    <span class="fu">summarize</span>(<span class="fu">mean</span>({{ mean_var }}))</span>
+<span id="cb24-5"><a></a>}</span>
+<span id="cb24-6"><a></a></span>
+<span id="cb24-7"><a></a>diamonds <span class="sc">|&gt;</span> <span class="fu">grouped_mean</span>(cut, carat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -814,28 +839,28 @@
 <section id="data-frame-function-examples" class="slide level2">
 <h2>Data Frame Function Examples</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1"></a>summary6 <span class="ot">&lt;-</span> <span class="cf">function</span>(data, var) {</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="2">2</button><span id="annotated-cell-16-2" class="code-annotation-target"><a href="#annotated-cell-16-2"></a>  data <span class="sc">|&gt;</span> <span class="fu">summarize</span>(</span>
-<span id="annotated-cell-16-3"><a href="#annotated-cell-16-3"></a>    <span class="at">min =</span> <span class="fu">min</span>({{ var }}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="annotated-cell-16-4"><a href="#annotated-cell-16-4"></a>    <span class="at">mean =</span> <span class="fu">mean</span>({{ var }}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="annotated-cell-16-5"><a href="#annotated-cell-16-5"></a>    <span class="at">median =</span> <span class="fu">median</span>({{ var }}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="annotated-cell-16-6"><a href="#annotated-cell-16-6"></a>    <span class="at">max =</span> <span class="fu">max</span>({{ var }}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="annotated-cell-16-7"><a href="#annotated-cell-16-7"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="annotated-cell-16-8"><a href="#annotated-cell-16-8"></a>    <span class="at">n_miss =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>({{ var }})),</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="3">3</button><span id="annotated-cell-16-9" class="code-annotation-target"><a href="#annotated-cell-16-9"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="annotated-cell-16-10"><a href="#annotated-cell-16-10"></a>  )</span>
-<span id="annotated-cell-16-11"><a href="#annotated-cell-16-11"></a>}</span>
-<span id="annotated-cell-16-12"><a href="#annotated-cell-16-12"></a></span>
-<span id="annotated-cell-16-13"><a href="#annotated-cell-16-13"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">summary6</span>(carat)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1"></a>summary6 <span class="ot">&lt;-</span> <span class="cf">function</span>(data, var) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-2" class="code-annotation-target"><a href="#annotated-cell-10-2"></a>  data <span class="sc">|&gt;</span> <span class="fu">summarize</span>(</span>
+<span id="annotated-cell-10-3"><a href="#annotated-cell-10-3"></a>    <span class="at">min =</span> <span class="fu">min</span>({{ var }}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4"></a>    <span class="at">mean =</span> <span class="fu">mean</span>({{ var }}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5"></a>    <span class="at">median =</span> <span class="fu">median</span>({{ var }}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="annotated-cell-10-6"><a href="#annotated-cell-10-6"></a>    <span class="at">max =</span> <span class="fu">max</span>({{ var }}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="annotated-cell-10-7"><a href="#annotated-cell-10-7"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="annotated-cell-10-8"><a href="#annotated-cell-10-8"></a>    <span class="at">n_miss =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>({{ var }})),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="2">2</button><span id="annotated-cell-10-9" class="code-annotation-target"><a href="#annotated-cell-10-9"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="annotated-cell-10-10"><a href="#annotated-cell-10-10"></a>  )</span>
+<span id="annotated-cell-10-11"><a href="#annotated-cell-10-11"></a>}</span>
+<span id="annotated-cell-10-12"><a href="#annotated-cell-10-12"></a></span>
+<span id="annotated-cell-10-13"><a href="#annotated-cell-10-13"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">summary6</span>(carat)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-16" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-16" data-code-lines="2,3,4,5,6,7,8" data-code-annotation="2">The goal of this function is to compute six common summary statistics for a specified variable of a dataset.</span>
+<span data-code-cell="annotated-cell-10" data-code-lines="2,3,4,5,6,7,8" data-code-annotation="1">The goal of this function is to compute six common summary statistics for a specified variable of a dataset.</span>
 </dd>
-<dt data-target-cell="annotated-cell-16" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-16" data-code-lines="9" data-code-annotation="3">Whenever you wrap <code>summarize()</code> in a helper function it’s good practice to set <code>.groups = "drop"</code> to both avoid the message and leave the data in an ungrouped state.</span>
+<span data-code-cell="annotated-cell-10" data-code-lines="9" data-code-annotation="2">Whenever you wrap <code>summarize()</code> in a helper function it’s good practice to set <code>.groups = "drop"</code> to both avoid the message and leave the data in an ungrouped state.</span>
 </dd>
 </dl>
 </div>
@@ -852,18 +877,18 @@
 <section id="data-frame-function-examples-1" class="slide level2">
 <h2>Data Frame Function Examples</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-17-1"><a href="#annotated-cell-17-1"></a>count_prop <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var, <span class="at">sort =</span> <span class="cn">FALSE</span>) {</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="4">4</button><span id="annotated-cell-17-2" class="code-annotation-target"><a href="#annotated-cell-17-2"></a>  df <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-17-3"><a href="#annotated-cell-17-3"></a>    <span class="fu">count</span>({{ var }}, <span class="at">sort =</span> sort) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-17-4"><a href="#annotated-cell-17-4"></a>    <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n))</span>
-<span id="annotated-cell-17-5"><a href="#annotated-cell-17-5"></a>}</span>
-<span id="annotated-cell-17-6"><a href="#annotated-cell-17-6"></a></span>
-<span id="annotated-cell-17-7"><a href="#annotated-cell-17-7"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">count_prop</span>(clarity)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1"></a>count_prop <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var, <span class="at">sort =</span> <span class="cn">FALSE</span>) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1">1</button><span id="annotated-cell-11-2" class="code-annotation-target"><a href="#annotated-cell-11-2"></a>  df <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-11-3"><a href="#annotated-cell-11-3"></a>    <span class="fu">count</span>({{ var }}, <span class="at">sort =</span> sort) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-11-4"><a href="#annotated-cell-11-4"></a>    <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n))</span>
+<span id="annotated-cell-11-5"><a href="#annotated-cell-11-5"></a>}</span>
+<span id="annotated-cell-11-6"><a href="#annotated-cell-11-6"></a></span>
+<span id="annotated-cell-11-7"><a href="#annotated-cell-11-7"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">count_prop</span>(clarity)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-17" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-17" data-code-lines="2,3,4" data-code-annotation="4">This function is a variation of <code>count()</code> which also calculates the proportion (<a href="https://twitter.com/Diabb6/status/1571635146658402309">Source</a>).</span>
+<span data-code-cell="annotated-cell-11" data-code-lines="2,3,4" data-code-annotation="1">This function is a variation of <code>count()</code> which also calculates the proportion (<a href="https://twitter.com/Diabb6/status/1571635146658402309">Source</a>).</span>
 </dd>
 </dl>
 </div>
@@ -883,7 +908,10 @@
 &gt; 8 IF       1790 0.0332</code></pre>
 </div>
 </div>
-</section></section>
+
+<aside><div>
+<p><span class="fragment">For more functions like this one, check out the <code>tabyl()</code> function and additional formatting options in the <code>janitor</code> package.</span></p>
+</div></aside></section></section>
 <section>
 <section id="plot-functions" class="title-slide slide level1 section-title center" data-background-color="#99a486">
 <h1>Plot Functions</h1>
@@ -937,23 +965,23 @@
 <p>You might want to create a function that has a bit of data manipulation <strong><em>and</em></strong> returns a plot.</p>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="annotated-cell-18"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-18" data-target-annotation="3">3</button><span id="annotated-cell-18-1" class="code-annotation-target"><a href="#annotated-cell-18-1"></a>sorted_bars <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var) {</span>
-<span id="annotated-cell-18-2"><a href="#annotated-cell-18-2"></a>  df <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-18" data-target-annotation="4">4</button><span id="annotated-cell-18-3" class="code-annotation-target"><a href="#annotated-cell-18-3"></a>    <span class="fu">mutate</span>({{ var }} <span class="sc">:</span><span class="er">=</span> <span class="fu">fct_rev</span>(<span class="fu">fct_infreq</span>({{ var }})))  <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-18-4"><a href="#annotated-cell-18-4"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> {{ var }})) <span class="sc">+</span> </span>
-<span id="annotated-cell-18-5"><a href="#annotated-cell-18-5"></a>    <span class="fu">geom_bar</span>() </span>
-<span id="annotated-cell-18-6"><a href="#annotated-cell-18-6"></a>}</span>
-<span id="annotated-cell-18-7"><a href="#annotated-cell-18-7"></a></span>
-<span id="annotated-cell-18-8"><a href="#annotated-cell-18-8"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">sorted_bars</span>(clarity)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-1" class="code-annotation-target"><a href="#annotated-cell-12-1"></a>sorted_bars <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var) {</span>
+<span id="annotated-cell-12-2"><a href="#annotated-cell-12-2"></a>  df <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="2">2</button><span id="annotated-cell-12-3" class="code-annotation-target"><a href="#annotated-cell-12-3"></a>    <span class="fu">mutate</span>({{ var }} <span class="sc">:</span><span class="er">=</span> <span class="fu">fct_rev</span>(<span class="fu">fct_infreq</span>({{ var }})))  <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-12-4"><a href="#annotated-cell-12-4"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> {{ var }})) <span class="sc">+</span> </span>
+<span id="annotated-cell-12-5"><a href="#annotated-cell-12-5"></a>    <span class="fu">geom_bar</span>() </span>
+<span id="annotated-cell-12-6"><a href="#annotated-cell-12-6"></a>}</span>
+<span id="annotated-cell-12-7"><a href="#annotated-cell-12-7"></a></span>
+<span id="annotated-cell-12-8"><a href="#annotated-cell-12-8"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">sorted_bars</span>(clarity)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-18" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-18" data-code-lines="1" data-code-annotation="3">This function creates a vertical bar chart where you automatically sort the bars in frequency order using <code>fct_infreq()</code>.</span>
+<span data-code-cell="annotated-cell-12" data-code-lines="1" data-code-annotation="1">This function creates a vertical bar chart where you automatically sort the bars in frequency order using <code>fct_infreq()</code>.</span>
 </dd>
-<dt data-target-cell="annotated-cell-18" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-18" data-code-lines="3" data-code-annotation="4"><code>:=</code> (commonly referred to as the “walrus operator”) is used here because we are generating the variable name based on user-supplied data. <code>R</code>’s syntax doesn’t allow anything to the left of <code>=</code> except for a single, literal name. To work around this problem, we use the special operator <code>:=</code> which tidy evaluation treats in exactly the same way as <code>=</code>.</span>
+<span data-code-cell="annotated-cell-12" data-code-lines="3" data-code-annotation="2"><code>:=</code> (commonly referred to as the “walrus operator”) is used here because we are generating the variable name based on user-supplied data. <code>R</code>’s syntax doesn’t allow anything to the left of <code>=</code> except for a single, literal name. To work around this problem, we use the special operator <code>:=</code> which tidy evaluation treats in exactly the same way as <code>=</code>.</span>
 </dd>
 </dl>
 </div>
@@ -985,21 +1013,21 @@
 <div class="fragment">
 <p>Let’s take our histogram example from before:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-19"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-19-1"><a href="#annotated-cell-19-1"></a>histogram <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var, binwidth) {</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="5">5</button><span id="annotated-cell-19-2" class="code-annotation-target"><a href="#annotated-cell-19-2"></a>  label <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">englue</span>(<span class="st">"A histogram of {{ var }} with binwidth {binwidth}"</span>)</span>
-<span id="annotated-cell-19-3"><a href="#annotated-cell-19-3"></a>  </span>
-<span id="annotated-cell-19-4"><a href="#annotated-cell-19-4"></a>  df <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-19-5"><a href="#annotated-cell-19-5"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> {{ var }})) <span class="sc">+</span> </span>
-<span id="annotated-cell-19-6"><a href="#annotated-cell-19-6"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> binwidth) <span class="sc">+</span> </span>
-<span id="annotated-cell-19-7"><a href="#annotated-cell-19-7"></a>    <span class="fu">labs</span>(<span class="at">title =</span> label)</span>
-<span id="annotated-cell-19-8"><a href="#annotated-cell-19-8"></a>}</span>
-<span id="annotated-cell-19-9"><a href="#annotated-cell-19-9"></a></span>
-<span id="annotated-cell-19-10"><a href="#annotated-cell-19-10"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">histogram</span>(carat, <span class="fl">0.1</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1"></a>histogram <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var, binwidth) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-2" class="code-annotation-target"><a href="#annotated-cell-13-2"></a>  label <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">englue</span>(<span class="st">"A histogram of {{ var }} with binwidth {binwidth}"</span>)</span>
+<span id="annotated-cell-13-3"><a href="#annotated-cell-13-3"></a>  </span>
+<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4"></a>  df <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-13-5"><a href="#annotated-cell-13-5"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> {{ var }})) <span class="sc">+</span> </span>
+<span id="annotated-cell-13-6"><a href="#annotated-cell-13-6"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> binwidth) <span class="sc">+</span> </span>
+<span id="annotated-cell-13-7"><a href="#annotated-cell-13-7"></a>    <span class="fu">labs</span>(<span class="at">title =</span> label)</span>
+<span id="annotated-cell-13-8"><a href="#annotated-cell-13-8"></a>}</span>
+<span id="annotated-cell-13-9"><a href="#annotated-cell-13-9"></a></span>
+<span id="annotated-cell-13-10"><a href="#annotated-cell-13-10"></a>diamonds <span class="sc">|&gt;</span> <span class="fu">histogram</span>(carat, <span class="fl">0.1</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-19" data-target-annotation="5">5</dt>
+<dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-19" data-code-lines="2" data-code-annotation="5"><code>rlang::englue()</code> works similarly to <code>str_glue()</code>, so any value wrapped in <br> <code>{ }</code> will be inserted into the string. But it also understands <code>{ }</code>, which automatically inserts the appropriate variable name.</span>
+<span data-code-cell="annotated-cell-13" data-code-lines="2" data-code-annotation="1"><code>rlang::englue()</code> works similarly to <code>str_glue()</code>, so any value wrapped in <br> <code>{ }</code> will be inserted into the string. But it also understands <code>{{ }}</code>, which automatically inserts the appropriate variable name.</span>
 </dd>
 </dl>
 </div>
@@ -1041,17 +1069,17 @@
 </ol>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">mean</span>(<span class="fu">is.na</span>(x))</span>
-<span id="cb29-2"><a></a><span class="fu">mean</span>(<span class="fu">is.na</span>(y))</span>
-<span id="cb29-3"><a></a><span class="fu">mean</span>(<span class="fu">is.na</span>(z))</span>
-<span id="cb29-4"><a></a></span>
-<span id="cb29-5"><a></a>x <span class="sc">/</span> <span class="fu">sum</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-6"><a></a>y <span class="sc">/</span> <span class="fu">sum</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-7"><a></a>z <span class="sc">/</span> <span class="fu">sum</span>(z, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-8"><a></a></span>
-<span id="cb29-9"><a></a><span class="fu">round</span>(x <span class="sc">/</span> <span class="fu">sum</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
-<span id="cb29-10"><a></a><span class="fu">round</span>(y <span class="sc">/</span> <span class="fu">sum</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
-<span id="cb29-11"><a></a><span class="fu">round</span>(z <span class="sc">/</span> <span class="fu">sum</span>(z, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">mean</span>(<span class="fu">is.na</span>(x))</span>
+<span id="cb28-2"><a></a><span class="fu">mean</span>(<span class="fu">is.na</span>(y))</span>
+<span id="cb28-3"><a></a><span class="fu">mean</span>(<span class="fu">is.na</span>(z))</span>
+<span id="cb28-4"><a></a></span>
+<span id="cb28-5"><a></a>x <span class="sc">/</span> <span class="fu">sum</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb28-6"><a></a>y <span class="sc">/</span> <span class="fu">sum</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb28-7"><a></a>z <span class="sc">/</span> <span class="fu">sum</span>(z, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb28-8"><a></a></span>
+<span id="cb28-9"><a></a><span class="fu">round</span>(x <span class="sc">/</span> <span class="fu">sum</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb28-10"><a></a><span class="fu">round</span>(y <span class="sc">/</span> <span class="fu">sum</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb28-11"><a></a><span class="fu">round</span>(z <span class="sc">/</span> <span class="fu">sum</span>(z, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -1061,165 +1089,10 @@
 </ol>
 </div>
 </section>
-<section id="answers" class="slide level2">
-<h2>Answers</h2>
-<ol type="1">
-<li>Practice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">mean</span>(<span class="fu">is.na</span>(x))</span>
-<span id="cb30-2"><a></a><span class="fu">mean</span>(<span class="fu">is.na</span>(y))</span>
-<span id="cb30-3"><a></a><span class="fu">mean</span>(<span class="fu">is.na</span>(z))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p><br></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-22"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-22-1"><a href="#annotated-cell-22-1"></a>prop_na <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="annotated-cell-22-2"><a href="#annotated-cell-22-2"></a>  <span class="fu">mean</span>(<span class="fu">is.na</span>(x))</span>
-<span id="annotated-cell-22-3"><a href="#annotated-cell-22-3"></a>}</span>
-<span id="annotated-cell-22-4"><a href="#annotated-cell-22-4"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="1">1</button><span id="annotated-cell-22-5" class="code-annotation-target"><a href="#annotated-cell-22-5"></a><span class="fu">set.seed</span>(<span class="dv">50</span>)</span>
-<span id="annotated-cell-22-6"><a href="#annotated-cell-22-6"></a>values <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="cn">NA</span>), <span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="annotated-cell-22-7"><a href="#annotated-cell-22-7"></a>values</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-22" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-22" data-code-lines="5" data-code-annotation="1"><code>set.seed()</code> is a function that can be used to create reproducible results when writing code that involves creating variables that take on random values.</span>
-</dd>
-</dl>
-</div>
-</div>
-<div class="cell fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code>&gt; [1] NA  4  2  7  3</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="fu">prop_na</span>(values)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code>&gt; [1] 0.2</code></pre>
-</div>
-</div>
-<p>This code calculates the proportion of <code>NA</code> values in a vector. I would call it <code>prop_na()</code> which would take a single argument, <code>x</code>, and return a single numeric value, between 0 and 1.</p>
-</div>
+
+
+
 </section>
-<section id="answers-1" class="slide level2">
-<h2>Answers</h2>
-<ol type="1">
-<li>Practice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>x <span class="sc">/</span> <span class="fu">sum</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb34-2"><a></a>y <span class="sc">/</span> <span class="fu">sum</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb34-3"><a></a>z <span class="sc">/</span> <span class="fu">sum</span>(z, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>sums_to_one <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">FALSE</span>) {</span>
-<span id="cb35-2"><a></a>  x <span class="sc">/</span> <span class="fu">sum</span>(x, <span class="at">na.rm =</span> na.rm)</span>
-<span id="cb35-3"><a></a>}</span>
-<span id="cb35-4"><a></a></span>
-<span id="cb35-5"><a></a><span class="fu">sums_to_one</span>(values)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code>&gt; [1] NA NA NA NA NA</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="fu">sums_to_one</span>(values, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code>&gt; [1]     NA 0.2500 0.1250 0.4375 0.1875</code></pre>
-</div>
-</div>
-<p>This code standardizes a vector so that it sums to one. It takes a numeric vector and an optional specification for removing <code>NA</code>s. While the original code had <code>na.rm = TRUE</code>, it’s best to set the default to <code>FALSE</code> which will alert the user if <code>NA</code>s are present by returning <code>NA</code>.</p>
-</div>
-</section>
-<section id="answers-2" class="slide level2">
-<h2>Answers</h2>
-<ol type="1">
-<li>Practice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="fu">round</span>(x <span class="sc">/</span> <span class="fu">sum</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
-<span id="cb39-2"><a></a><span class="fu">round</span>(y <span class="sc">/</span> <span class="fu">sum</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
-<span id="cb39-3"><a></a><span class="fu">round</span>(z <span class="sc">/</span> <span class="fu">sum</span>(z, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>pct_vec <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">FALSE</span>){</span>
-<span id="cb40-2"><a></a>  <span class="fu">round</span>(x <span class="sc">/</span> <span class="fu">sum</span>(x, <span class="at">na.rm =</span> na.rm) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
-<span id="cb40-3"><a></a>}</span>
-<span id="cb40-4"><a></a></span>
-<span id="cb40-5"><a></a><span class="fu">pct_vec</span>(values, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code>&gt; [1]   NA 25.0 12.5 43.8 18.8</code></pre>
-</div>
-</div>
-<p>This code takes a numeric vector and finds what each value represents as a percentage of the sum of the entire vector and rounds it to the first decimal place. There is also an optional <code>na.rm</code> argument set to <code>FALSE</code> by default.</p>
-</div>
-</section>
-<section id="answers-3" class="slide level2">
-<h2>Answers</h2>
-<ol start="2" type="1">
-<li>Bonus: Write a function that takes a name as an input (i.e.&nbsp;a character string) and returns a greeting based on the current time of day. <strong>Hint 1</strong>: use a time argument that defaults to <code>lubridate::now()</code>. That will make it easier to test your function. <strong>Hint 2</strong>: Use <code>rlang::englue</code> to combine your greetings with the name input.</li>
-</ol>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-29"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-29" data-target-annotation="2">2</button><span id="annotated-cell-29-1" class="code-annotation-target"><a href="#annotated-cell-29-1"></a>greet <span class="ot">&lt;-</span> <span class="cf">function</span>(name, <span class="at">time =</span> <span class="fu">now</span>()){</span>
-<span id="annotated-cell-29-2"><a href="#annotated-cell-29-2"></a>  hr <span class="ot">&lt;-</span> <span class="fu">hour</span>(time) </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-29" data-target-annotation="3">3</button><span id="annotated-cell-29-3" class="code-annotation-target"><a href="#annotated-cell-29-3"></a>  greeting <span class="ot">&lt;-</span> <span class="fu">case_when</span>(hr <span class="sc">&lt;</span> <span class="dv">12</span> <span class="sc">&amp;</span> hr <span class="sc">&gt;=</span> <span class="dv">5</span> <span class="sc">~</span> rlang<span class="sc">::</span><span class="fu">englue</span>(<span class="st">"Good morning {name}."</span>),</span>
-<span id="annotated-cell-29-4"><a href="#annotated-cell-29-4"></a>                        hr <span class="sc">&lt;</span> <span class="dv">17</span> <span class="sc">&amp;</span> hr <span class="sc">&gt;=</span> <span class="dv">12</span> <span class="sc">~</span> rlang<span class="sc">::</span><span class="fu">englue</span>(<span class="st">"Good afternoon {name}."</span>),</span>
-<span id="annotated-cell-29-5"><a href="#annotated-cell-29-5"></a>                        hr <span class="sc">&gt;=</span> <span class="dv">17</span> <span class="sc">~</span> rlang<span class="sc">::</span><span class="fu">englue</span>(<span class="st">"Good evening {name}."</span>),</span>
-<span id="annotated-cell-29-6"><a href="#annotated-cell-29-6"></a>                        <span class="at">.default =</span> rlang<span class="sc">::</span><span class="fu">englue</span>(<span class="st">"Why are you awake rn, {name}???"</span>))</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-29" data-target-annotation="4">4</button><span id="annotated-cell-29-7" class="code-annotation-target"><a href="#annotated-cell-29-7"></a>  <span class="fu">return</span>(greeting)</span>
-<span id="annotated-cell-29-8"><a href="#annotated-cell-29-8"></a>}</span>
-<span id="annotated-cell-29-9"><a href="#annotated-cell-29-9"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-29" data-target-annotation="5">5</button><span id="annotated-cell-29-10" class="code-annotation-target"><a href="#annotated-cell-29-10"></a><span class="fu">greet</span>(<span class="st">"Vic"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-29" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-29" data-code-lines="1" data-code-annotation="2">By default this function will take the current time to determine the specific greeting.<br>
-</span>
-</dd>
-<dt data-target-cell="annotated-cell-29" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-29" data-code-lines="3,4,5,6" data-code-annotation="3">Using <code>englue()</code> allows you to include user-specified values with <code>{ }</code>.</span>
-</dd>
-<dt data-target-cell="annotated-cell-29" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-cell="annotated-cell-29" data-code-lines="7" data-code-annotation="4"><code>return()</code> or <code>print()</code> or simply calling the variable <code>greeting</code> is necessary for the function to work as expected.</span>
-</dd>
-<dt data-target-cell="annotated-cell-29" data-target-annotation="5">5</dt>
-<dd>
-<span data-code-cell="annotated-cell-29" data-code-lines="10" data-code-annotation="5">The last time this lecture (and therefore this code) was rendered was at 2025-09-19 11:47:28.274573</span>
-</dd>
-</dl>
-</div>
-</div>
-<div class="cell fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code>&gt; [1] "Good morning Vic."</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">greet</span>(<span class="st">"Vic"</span>, <span class="at">time =</span> <span class="fu">ymd_h</span>(<span class="st">"2024-05-14 2am"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code>&gt; [1] "Why are you awake rn, Vic???"</code></pre>
-</div>
-</div>
-</div>
-</section></section>
 <section>
 <section id="homework" class="title-slide slide level1 section-title center" data-background-color="#1e4655">
 <h1>Homework</h1>

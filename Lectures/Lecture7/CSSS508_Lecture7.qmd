@@ -97,7 +97,7 @@ knitr::opts_chunk$set(comment = ">")
 -   We can create strings by surrounding text, numbers, spaces, or symbols with quotes!
     -   Examples: `"Hello! My name is Vic"` or `"%*$#01234"`
 -   You can create a string using either single quotes (`' '`) or double quotes (`" "`)
-    -   In the interests of consistency, the tidyverse style guide recommends using `" "`, unless the string contains multiple `" "`
+    -   In the interest of consistency, the tidyverse style guide recommends using `" "`, unless the string contains multiple `" "`. In that case it is recommended to use `' '` to define the entire string and `" "` for elements within the string that are themselves quoted. 
 :::
 
 ## Escaping with Strings
@@ -148,12 +148,12 @@ There are other things you may want to represent inside a character string, such
 
 ```{r}
 #| output-location: fragment
-str_view("Sometimes you need\nto create another line.") # <5>
-str_view("\tOther times you just need to indent somewhere.") # <6>
+str_view("Sometimes you need\nto create another line.") # <1>
+str_view("\tOther times you just need to indent somewhere.") # <2>
 ```
 
-5.  Use `\n` to create a new line. Helpful when plotting if you have variable names or values that are wordy! If you need to do this for one or more variables you can use `str_wrap()` and specify the character width you desire.
-6.  Use `\t` to add a tab. `str_view` will highlight tabs in blue in your console to make it stand out from other random whitespace.
+1.  Use `\n` to create a new line. Helpful when plotting if you have variable names or values that are wordy! If you need to do this for one or more variables you can use `str_wrap()` and specify the character width you desire.
+2.  Use `\t` to add a tab. `str_view` will highlight tabs in blue in your console to make it stand out from other random whitespace.
 
 . . .
 
@@ -220,14 +220,21 @@ You can create strings based on the value of other strings with `str_c()` (`str`
 
 ```{r}
 #| output-location: fragment
-str_c(c("CSSS", "STAT", "SOC"), 508) # <7>
-str_c(c("CSSS", "STAT", "SOC"), 508, sep = " ") # <8>
-str_c(c("CSSS", "STAT", "SOC"), 508, sep = " ", collapse = ", ") # <9>
+str_c(c("CSSS", "STAT", "SOC"), 508) # <1>
 ```
+1.  By default, `str_c` doesn't put a space between the vectors it is combining.
 
-7.  By default, `str_c` doesn't put a space between the vectors it is combining.
-8.  You can add a specific separator, including a space, using the `sep` argument.
-9.  If you want to combine the output into a single string, use `collapse`.
+```{r}
+#| output-location: fragment
+str_c(c("CSSS", "STAT", "SOC"), 508, sep = " ") # <2>
+```
+2.  You can add a specific separator, including a space, using the `sep` argument.
+
+```{r}
+#| output-location: fragment
+str_c(c("CSSS", "STAT", "SOC"), 508, sep = " ", collapse = ", ") # <3>
+```
+3.  If you want to combine the output into a single string, use `collapse`.
 
 ## Example #1 with Restaurant Data
 
@@ -236,12 +243,12 @@ str_c(c("CSSS", "STAT", "SOC"), 508, sep = " ", collapse = ", ") # <9>
 restaurants |> 
   select(Name, Address, City) |> 
   distinct() |> 
-  mutate(Sentence = str_c(Name, " is located at ", Address, " in ", City, "."), # <10>
-         .keep = "none") # <11>
+  mutate(Sentence = str_c(Name, " is located at ", Address, " in ", City, "."), # <1>
+         .keep = "none") # <2>
 ```
 
-10. Notice there are spaces at the beginning and end of the fixed character strings. This is because if we used the `sep` argument here it would add a space before the period at the end of the sentence. So instead, we can add them directly where we want them.
-11. Using `.keep = "none"` here in order to see *just* the results of our mutate.
+1. Notice there are spaces at the beginning and end of the fixed character strings. This is because if we used the `sep` argument here it would add a space before the period at the end of the sentence. So instead, we can add them directly where we want them.
+2. Using `.keep = "none"` here in order to see *just* the results of our mutate.
 
 ## Example #2 with Restaurant Data
 
@@ -267,12 +274,12 @@ If you want to create a summary of certain character strings you can use `str_fl
 ```{r}
 #| output-location: fragment
 restaurants |> 
-  select(Name, `Inspection Score`) |> # <11>
+  select(Name, `Inspection Score`) |> # <1>
   summarize(inspection_scores = str_flatten(`Inspection Score`, collapse = ", "), 
             .by = Name)
 ```
 
-11. Notice that when a variable has spaces in it's name (rather than being separated with an underscore in snake_case, for instance) you need to put backticks around it so `R` knows it is a singular object name.
+1. Notice that when a variable has spaces in it's name (rather than being separated with an underscore in snake_case, for instance) you need to put backticks around it so `R` knows it is a singular object name.
 
 ## Example #4 with Restaurant Data
 
@@ -318,7 +325,7 @@ long
 :::
 :::
 
-## Separating Character Strings into Multiple Variables
+## [Separating Character Strings into Multiple Variables]{style="font-size: 85%;"}
 
 Oftentimes you'll have multiple pieces of information in one single string. That's where the family of `separate_*` functions[^1] come in handy.
 
@@ -328,16 +335,16 @@ Oftentimes you'll have multiple pieces of information in one single string. That
 
 ```{r}
 #| eval: false
-separate_longer_delim(col, delim) # <12>
-separate_longer_position(col, width) # <13>
-separate_wider_delim(col, delim, names) # <14>
-separate_wider_position(col, widths) # <15>
+separate_longer_delim(col, delim) # <1>
+separate_longer_position(col, width) # <2>
+separate_wider_delim(col, delim, names) # <3>
+separate_wider_position(col, widths) # <4>
 ```
 
-12. Takes a string and splits it into many rows based on a specified delimiter. Tends to be most useful when the number of components varies from row to row.
-13. Rarer use case but also splits into many rows, now based on the width of the output desired.
-14. Takes a string and splits it into many columns based on a specified delimiter. Need to provide names for the new columns created by the split.
-15. Rather than a delimiter you provide a named integer vector where the name gives the name of the new column, and the value is the number of characters it occupies.
+1. Takes a string and splits it into many rows based on a specified delimiter. Tends to be most useful when the number of components varies from row to row.
+2. Rarer use case but also splits into many rows, now based on the width of the output desired.
+3. Takes a string and splits it into many columns based on a specified delimiter. Need to provide names for the new columns created by the split.
+4. Rather than a delimiter you provide a named integer vector where the name gives the name of the new column, and the value is the number of characters it occupies.
 
 ## Example with Restaurant Data
 
@@ -350,14 +357,15 @@ The most common use case will be the need to split a character string into multi
 ```{r}
 #| output-location: fragment
 restaurants |> 
-  select(`Inspection Date`) |> # <16>
+  select(`Inspection Date`) |> # <1>
   separate_wider_delim(`Inspection Date`, 
-                       delim = "/", 
+                       delim = "/", # <2>
                        names = c("month", "day", "year"))
 
 ```
 
-16. This variable was read in as a character string rather than a date object.
+1. This variable was read in as a character string rather than a date object.
+2. The specific symbol that separates each element, i.e. what we want to split on.
 
 ## `separate_wider_*` functions
 
@@ -395,13 +403,13 @@ debug <- restaurants |>
   separate_wider_delim(Address, 
                        delim = " ", 
                        names = c("num", "name", "type"), 
-                       too_many = "debug", # <17>
+                       too_many = "debug", # <1>
                        too_few = "debug") 
-debug[debug$Address_pieces == 4, ] # <18>
+debug[debug$Address_pieces == 4, ] # <2>
 ```
 
-17. `too_many = "drop"` will drop any additional pieces and `too_many = "merge"` will merge them all into the final column.
-18. Example of the `too_many` error (`Address_pieces` ranged from 4 to 9 in this dataset).
+1. `too_many = "drop"` will drop any additional pieces and `too_many = "merge"` will merge them all into the final column.
+2. Example of the `too_many` error (`Address_pieces` ranged from 4 to 9 in this dataset).
 
 ## `separate_wider_*` functions
 
@@ -416,12 +424,12 @@ debug <- restaurants |>
                        delim = " ", 
                        names = c("num", "name", "type"),
                        too_many = "debug",
-                       too_few = "debug") # <19>
-debug[debug$Address_pieces == 2, ] # <20>
+                       too_few = "debug") # <1>
+debug[debug$Address_pieces == 2, ] # <2>
 ```
 
-19. `too_few = "align_start"` and `too_few = "align_end"` will add `NA`s to the missing pieces depending on where they should go.
-20. Example of the `too_few` error.
+1. `too_few = "align_start"` and `too_few = "align_end"` will add `NA`s to the missing pieces depending on where they should go.
+2. Example of the `too_few` error.
 
 ## Modifying Strings: Converting Cases
 
@@ -482,7 +490,7 @@ str_trim(unique_names) |> head(3)
 ```
 
 ::: aside
-Two related functions are `str_squish()` which trims spaces around a string but also removes duplicate spaces inside it and `str_pad()` which *adds* "padding" to any string to make it a given minimum width.
+[Two related functions are `str_squish()` which trims spaces around a string but also removes duplicate spaces inside it and `str_pad()` which *adds* "padding" to any string to make it a given minimum width.]{.fragment}
 :::
 
 ## Counting Characters
@@ -495,12 +503,12 @@ At the most basic level you can use `str_length()` to count the characters are i
 #| output-location: fragment
 phone_numbers <- restaurants |>
   select(`Phone`) |> 
-  mutate(phone_length = str_length(`Phone`)) # <21> 
+  mutate(phone_length = str_length(`Phone`)) # <1> 
 
-phone_numbers |> count(phone_length) # <22>
+phone_numbers |> count(phone_length) # <2>
 ```
-21. Getting the length of `Phone`
-22. Getting the count of different lengths for `Phone` found in the data
+1. Getting the length of `Phone`
+2. Getting the count of different lengths for `Phone` found in the data
 
 . . .
 
@@ -508,10 +516,10 @@ phone_numbers |> count(phone_length) # <22>
 #| output-location: fragment
 phone_numbers |> 
   filter(phone_length %in% c(15, 18)) |> 
-  slice_head(n = 1, by = phone_length) # <23>
+  slice_head(n = 1, by = phone_length) # <3>
 ```
 
-23. Filtering for the two abnormal phone number lengths, and getting the first observation (row) by the two different numbers (15, 18).
+3. Filtering for the two abnormal phone number lengths, and getting the first observation (row) by the two different numbers (15, 18).
 
 ## Subsetting Strings
 
@@ -523,11 +531,11 @@ If we want to subset a string we can use `str_sub()`. Let's pull out just the ar
 #| output-location: fragment
 restaurants |> 
   select(`Phone`) |> 
-  mutate(area_code = str_sub(`Phone`, start = 2, end = 4)) |> # <24> 
+  mutate(area_code = str_sub(`Phone`, start = 2, end = 4)) |> # <1> 
   distinct(area_code)
 ```
 
-24. `start` and `end` are the positions where the "substring" should start and end (inclusive). You can also use negative values to count backwards from the end of a string. Note that `str_sub()` won't fail if the string is too short: it will just return as much as possible.
+1. `start` and `end` are the positions where the "substring" should start and end (inclusive). You can also use negative values to count backwards from the end of a string. Note that `str_sub()` won't fail if the string is too short: it will just return as much as possible.
 
 ## Working with Non-English Strings
 
@@ -583,10 +591,11 @@ We did this with numeric values earlier in this course!
 
 ```{r}
 restaurants |>  
+  select(Name, `Inspection Score`) |> 
   filter(`Inspection Score` < 10 | `Inspection Score` > 150)
 ```
 
-## Patterns: `str_detect()`
+## Patterns: `str_detect()` {auto-animate="true"}
 
 We can do similar pattern-checking using `str_detect()`:
 
@@ -613,9 +622,9 @@ restaurants |>
 
 <br>
 
-Hmmm...there are only 5 restaurants on a street with Pike in the name?!
+Hmmm...there are only 5 restaurants on a street with Pike in the name?! 🤨🤔
 
-## Patterns: `str_detect()` 
+## Patterns: `str_detect()` {auto-animate="true"}
 
 We can do similar pattern-checking using `str_detect()`:
 
@@ -629,7 +638,6 @@ str_detect(string, pattern) # <1>
 <br>
 
 ```{r}
-#| output-location: fragment
 restaurants |> 
   select(Name, Address) |> 
   mutate(Address = str_to_title(Address)) |> # <2>
@@ -638,6 +646,10 @@ restaurants |>
 ```
 
 2.  Note: Results are case-sensitive!! Therefore we need to transform all the addresses to the same case.
+
+<br>
+
+Hmmm...there are only 5 restaurants on a street with Pike in the name?! 🤨🤔
 
 ## Replacement: `str_replace()`
 
@@ -649,10 +661,10 @@ This function works very similarly to `str_detect()`, but with one extra argumen
 
 ```{r}
 #| eval: false
-str_replace(string, pattern, replacement) # <3> 
+str_replace(string, pattern, replacement) # <1> 
 ```
 
-3.  `replacement` is what `pattern` is substituted for.
+1.  `replacement` is what `pattern` is substituted for.
 
 . . .
 
@@ -660,11 +672,11 @@ str_replace(string, pattern, replacement) # <3>
 restaurants |> 
   select(`Inspection Date`) |> 
   mutate(full_date = str_replace(string = `Inspection Date`, 
-                                 pattern = "01/", # <4>
+                                 pattern = "01/", # <2>
                                  replacement = "January "))
 ```
 
-4.  In this case, our pattern is limited since `"01/"` occurs both for the month and the day. This would be a good place for a regular expression.
+2.  In this case, our pattern is limited since `"01/"` occurs both for the month and the day. This would be a good place for a regular expression.
 
 ## What are Regular Expressions? [{{< fa scroll >}}]{style="color:#99a486"} {.scrollable}
 
@@ -721,11 +733,11 @@ Let's go back to our example and see if we can use a regular expression to repla
 restaurants |> 
   select(`Inspection Date`) |> 
   mutate(full_date = str_replace(string = `Inspection Date`, 
-                                 pattern = "^01/", # <5>
+                                 pattern = "^01/", # <1>
                                  replacement = "January "))
 ```
 
-5.  We can pretty simply use a regex signifier (the starting anchor `^`) to make sure our replacement only happens to the `01/`s in the month position.
+1.  We can pretty simply use a regex signifier (the starting anchor `^`) to make sure our replacement only happens to the `01/`s in the month position.
 
 ## Separation with regex
 
@@ -734,12 +746,12 @@ Let's look at a more realistic example and introduce the regex version of our `s
 ```{r}
 #| output-location: fragment
 restaurants |> 
-  count(Description) |> # <6>
-  print(n = 33) # <7>
+  count(Description) |> # <1>
+  print(n = 33) # <2>
 ```
 
-6.  See all distinct values that `Description` takes to figure out how we need to separate this character vector.
-7.  You can force a tibble to print more than the default 10 rows by specifying the number with `print(n)`.
+1.  See all distinct values that `Description` takes to figure out how we need to separate this character vector.
+2.  You can force a tibble to print more than the default 10 rows by specifying the number with `print(n)`.
 
 <br>
 
@@ -749,15 +761,15 @@ restaurants |>
 #| output-location: fragment
 #| error: true
 res_sep <- restaurants |> 
-  distinct(Name, Description) |> # <8>
-  separate_wider_regex(cols = Description, # <9>
-                       patterns = c(capacity_description = "^.+", # <10>
+  distinct(Name, Description) |> # <1>
+  separate_wider_regex(cols = Description, # <2>
+                       patterns = c(capacity_description = "^.+", # <3>
                                     risk_category = "Risk ?(?:Category)? ?I{1,3}$")) 
 ```
 
-8.  For this example I want to limit the dataset just to the pertinent variables for illustrative purposes so I am only keeping the distinct values of `Name` and `Description`.
-9.  The `cols` argument of this function is the column you want to separate.
-10. The `patterns` argument takes a named character vector where the names become the column names and the character strings are regular expressions that match the desired contents of the vector.
+1.  For this example I want to limit the dataset just to the pertinent variables for illustrative purposes so I am only keeping the distinct values of `Name` and `Description`.
+2.  The `cols` argument of this function is the column you want to separate.
+3. The `patterns` argument takes a named character vector where the names become the column names and the character strings are regular expressions that match the desired contents of the vector.
 
 . . .
 
@@ -772,17 +784,17 @@ I've triggered the debugging error message which tells me how to diagnose/ignore
 res_sep <- restaurants |> 
   distinct(Name, Description) |> 
   separate_wider_regex(cols = Description, 
-                       patterns = c(capacity_description = "^.+", # <11>
-                                    risk_category = "Risk ?(?:Category)? ?I{1,3}$"), # <12>
+                       patterns = c(capacity_description = "^.+", # <1>
+                                    risk_category = "Risk ?(?:Category)? ?I{1,3}$"), # <2>
                        too_few = "debug") |> 
   distinct(capacity_description, risk_category, Description_ok, 
-           Description_matches, Description_remainder) |> # <13>
+           Description_matches, Description_remainder) |> # <3>
   print(n = 33)
 ```
 
-11. `"^"` matches the beginning of a string, <br> `"."` matches any character except a new line, and `"+"` quantifies that `"."`, asking it to return 1 or more characters.
-12. `"Risk"` matches exactly, `" ?"` matches a singular white space 0 or 1 time, <br> `"(?:Category)?"` **optionally** matches the exact word "Category", again `" ?"` matches a singular white space 0 or 1 time, `"I{1,3}"` matches "I" 1-3 times, and `"$"` signifies the end of the string.
-13. Using `distinct()` on the created and debugging variables allows us to see what didn't match.
+1. `"^"` matches the beginning of a string, <br> `"."` matches any character except a new line, and `"+"` quantifies that `"."`, asking it to return 1 or more characters.
+2. `"Risk"` matches exactly, `" ?"` matches a singular white space 0 or 1 time, <br> `"(?:Category)?"` **optionally** matches the exact word "Category", again `" ?"` matches a singular white space 0 or 1 time, `"I{1,3}"` matches "I" 1-3 times, and `"$"` signifies the end of the string.
+3. Using `distinct()` on the created and debugging variables allows us to see what didn't match.
 
 ## Separation with regex {auto-animate="true"}
 
@@ -793,11 +805,11 @@ res_sep <- restaurants |>
   separate_wider_regex(cols = Description, 
                        patterns = c(capacity_description = "^.+",
                                     risk_category = "Risk ?(?:Category)? ?I{1,3}$"), 
-                       too_few = "align_start") # <14>
+                       too_few = "align_start") # <1>
 res_sep
 ```
 
-14. Since the only non-match was the one without a valid value for `risk_category`, we can give `too_few` the value `align_start` which tells the function to fill in anything without a value for the second variable with an `NA`.
+1. Since the only non-match was the one without a valid value for `risk_category`, we can give `too_few` the value `align_start` which tells the function to fill in anything without a value for the second variable with an `NA`.
 
 . . .
 
@@ -813,13 +825,13 @@ res_sep <- restaurants |>
                        patterns = c(capacity_description = "^.+",
                                     risk_category = "Risk ?(?:Category)? ?I{1,3}$"), 
                        too_few = "align_start") |>
-  mutate(capacity_description = str_remove(capacity_description, pattern = " - $"), # <15> 
-         risk_category = str_remove(risk_category, pattern = "Risk ?(?:Category)? ")) # <16>
+  mutate(capacity_description = str_remove(capacity_description, pattern = " - $"), # <1> 
+         risk_category = str_remove(risk_category, pattern = "Risk ?(?:Category)? ")) # <2>
 res_sep
 ```
 
-15. We can remove the trailing `-` by using `str_remove` and providing the regular expression for that piece of the `capacity_description` string.
-16. Since this variable is already named `risk_category`, we can remove that language from the beginning of each string, by matching the first part of our original regular expression for this variable.
+1. We can remove the trailing `-` by using `str_remove` and providing the regular expression for that piece of the `capacity_description` string.
+2. Since this variable is already named `risk_category`, we can remove that language from the beginning of each string, by matching the first part of our original regular expression for this variable.
 
 ## Separation with regex
 
@@ -898,14 +910,14 @@ list.files(pattern = "\\.qmd$")
 #| output-location: fragment
 #| code-annotations: hover
 names(iris)
-iris %>% select(matches("[pt]al")) |> # <17>
+iris %>% select(matches("[pt]al")) |> # <1>
   names() 
 ```
-17. `[pt]` signifies match either `p` or `t`.
+1. `[pt]` signifies match either `p` or `t`.
 
 ## [pivot_longer()]{.color-blue} 
 
-`pivot_longer()`'s argument `names_pattern` takes a vector of regular expressions, just like `separate_wider_regex()`. It's useful when extracting data out of variable names with a complex structure.
+[`pivot_longer()`'s argument `names_pattern` takes a vector of regular expressions, just like `separate_wider_regex()`. It's useful when extracting data out of variable names with a complex structure.]{style="font-size: 85%;"}
 
 . . . 
 
@@ -916,15 +928,19 @@ names(who) |> head(n = 10)
 
 . . . 
 
+\
+
 ```{r}
 #| output-location: fragment
-who |> pivot_longer(cols = new_sp_m014:newrel_f65,
-                    names_to = c("diagnosis", "gender", "age"), 
-                    names_pattern = "new_?(.*)_(.)(.*)", # <18>
-                    values_to = "count") |> 
-  slice_head(n = 10)
+who |> 
+  pivot_longer(cols = new_sp_m014:newrel_f65,
+               names_to = c("diagnosis", "gender", "age"), 
+               names_pattern = "new_?(.*)_(.)(.*)", # <1>
+               values_to = "count") |> 
+  arrange(desc(count)) |> 
+  slice_head(n = 5)
 ```
-18. `"new_?(.*)_(.)(.*)"` explained: `new` matches exactly, then `_?` *optionally* matches an underscore, `(.*)` matches any number of characters and in this example it captures the new `diagnosis` variable, `_` matches exactly, `(.)` matches one character which captures the `gender` variable `m` or `f` in this example, and lastly, `(.*)` again matches any number of characters, in this case it captures the varying digits of the `age` variable.
+1. `"new_?(.*)_(.)(.*)"` explained: `new` matches exactly, then `_?` *optionally* matches an underscore, `(.*)` matches any number of characters and in this example it captures the new `diagnosis` variable, `_` matches exactly, `(.)` matches one character which captures the `gender` variable `m` or `f` in this example, and lastly, `(.*)` again matches any number of characters, in this case it captures the varying digits of the `age` variable.
 
 ## [separate_*_delim()]{.color-blue} 
 
@@ -994,11 +1010,11 @@ data(babynames)
 ::: {.incremental}
 1. What is the shortest name length? What is the longest name length? Mean? Median?
 2. What is the most popular letter for a name to start with?^[Hint, each name has a proportion that is necessary to incorporate here.] 
-3. Pick a year between 1880 and 2017 and use either `str_c()` or `str_glue()` to create a new variable that is a sentence stating what the most popular name was for each binary sex category in that year. Bonus: Add a line break in your sentence and use `str_view()` to see what the new string looks like^[Hint: Use `pull()` before running `str_view()` to extract the last column created (your sentence) as a vector.]. 
+3. Pick a year between 1880 and 2017 and use either `str_c()` or `str_glue()` to create a new variable that is a sentence stating what the most popular name was for each binary sex category in that year. Add a line break in your sentence and use `str_view()` to see what the new string looks like^[Hint: Use `pull()` before running `str_view()` to extract the last column created (your sentence) as a vector.]. 
 4. Optional bonus: Make a plot of the popularity of your own name/nickname over time. What year was your name most popular? Is that close to your birth year?
 :::
 
-## Answers 
+## Answers {visibility="hidden"}
 
 ```{r}
 #| output-location: fragment
@@ -1006,7 +1022,7 @@ babynames
 ```
 
 
-## Answers
+## Answers {visibility="hidden"}
 
 1. What is the shortest name length? What is the longest name length? Mean? Median?
 
@@ -1023,7 +1039,7 @@ babynames |>
             median = median(length))
 ```
 
-## Answers
+## Answers {visibility="hidden"}
 
 2. What is the most popular letter for a name to start with?^[Hint, each name has a proportion that is necessary to account for here.] 
 
@@ -1037,9 +1053,9 @@ babynames |>
   arrange(desc(n))
 ```
 
-## Answers
+## Answers {visibility="hidden"}
 
-3. Pick a year between 1880 and 2017 and use either `str_c()` or `str_glue()` to create a new variable that is a sentence stating what the most popular name was for each binary sex category in that year. Bonus: Add a line break in your sentence and use `str_view()` to see what the new string looks like^[Hint: Use `pull()` before running `str_view()` to extract the last column created (your sentence) as a vector.].
+3. Pick a year between 1880 and 2017 and use either `str_c()` or `str_glue()` to create a new variable that is a sentence stating what the most popular name was for each binary sex category in that year. Add a line break in your sentence and use `str_view()` to see what the new string looks like^[Hint: Use `pull()` before running `str_view()` to extract the last column created (your sentence) as a vector.].
 
 . . . 
 
@@ -1047,55 +1063,55 @@ babynames |>
 #| output-location: fragment
 babynames |> 
   filter(year == 1950) |> 
-  mutate(sex2 = if_else(sex == "F", "girl", "boy")) |> # <2>
-  slice_max(prop, by = c(sex)) |> # <3>
+  mutate(sex2 = if_else(sex == "F", "girl", "boy")) |> # <1>
+  slice_max(prop, by = c(sex)) |> # <2>
   mutate(Sentence = str_wrap(str_glue("The most popular name for {sex2}s in 
                                       {year} was {name}."), 
                              width = 25)) |> 
-  pull(Sentence) |> # <4>
+  pull(Sentence) |> # <3>
   str_view()
   
 ```
-2. Creating a new `sex2` variable for better interpretability of the final `Sentence` variable. 
-3. Getting the most popular (by proportion of all names) male and female names.
-4. `pull()` is similar to indexing with `$` in Base `R` but works well with pipes. This is necessary to do before `str_view()` which only takes a vector of values (not a column from a data frame).
+1. Creating a new `sex2` variable for better interpretability of the final `Sentence` variable. 
+2. Getting the most popular (by proportion of all names) male and female names.
+3. `pull()` is similar to indexing with `$` in Base `R` but works well with pipes. This is necessary to do before `str_view()` which only takes a vector of values (not a column from a data frame).
 
-## Answers
+## Answers {visibility="hidden"}
 
 4. Optional bonus: Make a plot of the popularity of your own name/nickname over time. What year was your name most popular? Is that close to your birth year?
 
 ```{r}
 #| eval: false
-library(ggrepel) # <5>
-library(ggthemes) # <6>
-library(patchwork) # <7>
+library(ggrepel) # <1>
+library(ggthemes) # <2>
+library(patchwork) # <3>
 
 colors <- c("#4e79a7","#f28e2c","#e15759","#76b7b2","#59a14f","#edc949",
             "#af7aa1","#ff9da7","#9c755f","#bab0ab")
 
 victoria_plot <- babynames |> 
   filter(name == "Victoria") |> 
-  mutate(sex2 = if_else(sex == "F", "Female", "Male")) |> # <8>
+  mutate(sex2 = if_else(sex == "F", "Female", "Male")) |> # <4>
   ggplot(aes(x = year, y = prop, group = name, fill = name)) +
   geom_density(stat = "identity", alpha = 0.25, color = colors[1]) + 
-  geom_vline(xintercept = 1988, color = colors[2], linetype = 2) + # <9>
-  geom_vline(data = babynames |> # <10>
-               filter(name == "Victoria") |> # <10>
-               mutate(sex2 = if_else(sex == "F", "Female", "Male")) |> # <10>
-               slice_max(prop, by = sex2), # <10>
-             aes(xintercept = year), color = colors[3]) + # <10>
-  facet_grid(sex2 ~ ., # <11>
-             scales = "free_y") + # <11> 
-  scale_fill_manual(values = colors[1]) + # <12>
+  geom_vline(xintercept = 1988, color = colors[2], linetype = 2) + # <5>
+  geom_vline(data = babynames |> # <6>
+               filter(name == "Victoria") |> # <6>
+               mutate(sex2 = if_else(sex == "F", "Female", "Male")) |> # <6>
+               slice_max(prop, by = sex2), # <6>
+             aes(xintercept = year), color = colors[3]) + # <6>
+  facet_grid(sex2 ~ ., # <7>
+             scales = "free_y") + # <7> 
+  scale_fill_manual(values = colors[1]) + # <8>
   labs(title = 'Popularity of the name "Victoria"',
        subtitle = "1880-2017, by binary sex category",
-       y = "", # <13>
-       x = "") + # <13>
+       y = "", # <9>
+       x = "") + # <9>
   theme_tufte(base_size = 16) + 
   theme(legend.position = "none", 
-        strip.background = element_rect(color="black", # <14>
-                                        fill= alpha(colors[10], 0.5), # <14>
-                                        linetype = 0)) # <14> 
+        strip.background = element_rect(color="black", # <10>
+                                        fill= alpha(colors[10], 0.5), # <10>
+                                        linetype = 0)) # <10> 
 
 vic_plot <- babynames |> 
   filter(name == "Vic") |> 
@@ -1116,37 +1132,37 @@ vic_plot <- babynames |>
        caption = "Note: y-axes are of different scales; 
        Orange, dashed line represents 1988; # 
        Red, solid line represents most popular # 
-       year for that name-sex pairing.",  # <15>
-       x = "Year") + # <15>
+       year for that name-sex pairing.",  # <11>
+       x = "Year") + # <11>
   theme_tufte(base_size = 16) + 
   theme(legend.position = "none", 
         strip.background = element_rect(color="black", 
                                         fill= alpha(colors[10], 0.5), 
                                         linetype = 0))
 
-combo_plots <- victoria_plot / vic_plot + ylab(NULL) # <16>
+combo_plots <- victoria_plot / vic_plot + ylab(NULL) # <12>
 
-wrap_elements(combo_plots) + # <17> 
+wrap_elements(combo_plots) + # <13> 
   theme_tufte(base_size = 16) +
-  labs(tag = "Proportion of all names given to U.S. newborns") + # <18>
-  theme(plot.tag = element_text(size = rel(1.25), angle = 90), # <18>
-        plot.tag.position = "left") # <18>
+  labs(tag = "Proportion of all names given to U.S. newborns") + # <14>
+  theme(plot.tag = element_text(size = rel(1.25), angle = 90), # <14>
+        plot.tag.position = "left") # <14>
    
 ```
-5. For labels that don't overlap.
-6. For extra built-in themes. 
-7. Allows distinct plots to be put together into one visualization. 
-8. Creating an alternative `sex` variable for facet visualization purposes. 
-9. Vertical line for birth year. 
-10. Vertical line for most popular year for that name/nickname.
-11. Facetting by `sex2` and allowing the y-axis to vary based on facet value. 
-12. Applying desired colors. 
-13. Leaving axes blank for final patchwork labelling. 
-14. Specifying color for facet labels. 
-15. Adding note and x-axis text since this plot will be at the bottom of the overall visualization.
-16. Creating object for patchwork visuaization. 
-17. Putting together the two separate plots. 
-18. Creating and plotting a y axis that spans both plots. 
+1. For labels that don't overlap.
+2. For extra built-in themes. 
+3. Allows distinct plots to be put together into one visualization. 
+4. Creating an alternative `sex` variable for facet visualization purposes. 
+5. Vertical line for birth year. 
+6. Vertical line for most popular year for that name/nickname.
+7. Facetting by `sex2` and allowing the y-axis to vary based on facet value. 
+8. Applying desired colors. 
+9. Leaving axes blank for final patchwork labelling. 
+10. Specifying color for facet labels. 
+11. Adding note and x-axis text since this plot will be at the bottom of the overall visualization.
+12. Creating object for patchwork visuaization. 
+13. Putting together the two separate plots. 
+14. Creating and plotting a y axis that spans both plots. 
 
 ```{r}
 #| echo: false
@@ -1216,33 +1232,33 @@ combo_plots <- victoria_plot / vic_plot + ylab(NULL)
 # dev.off()
 ```
 
-## {data-menu-title="Victoria/Vic Plots" background-image="victoria_vic_plots.png"  background-size="contain"}
+## {data-menu-title="Victoria/Vic Plots" background-image="victoria_vic_plots.png"  background-size="contain" visibility="hidden"}
 
-## Answers 
+## Answers {visibility="hidden"}
 
 Example using regular expressions:
 
 ```{r}
 #| eval: false
 nicknames <- babynames |> 
-  mutate(nickname = case_when(str_detect(name, pattern = "^Vi.{2}oria$") ~ "Victoria", # <19>
-                              str_detect(name, pattern = "^Vi.{2}or$") ~ "Victor", # <19>
-                              str_detect(name, pattern = "^Vi[ck]{1,2}$") ~ "Vic", # <19>
-                              str_detect(name, pattern = "^Tor[riey]*$") ~ "Tori", # <19> 
-                              str_detect(name, pattern = "^Vi[ck]+[iey]*$") ~ "Vicky", # <19>
+  mutate(nickname = case_when(str_detect(name, pattern = "^Vi.{2}oria$") ~ "Victoria", # <1>
+                              str_detect(name, pattern = "^Vi.{2}or$") ~ "Victor", # <1>
+                              str_detect(name, pattern = "^Vi[ck]{1,2}$") ~ "Vic", # <1>
+                              str_detect(name, pattern = "^Tor[riey]*$") ~ "Tori", # <1> 
+                              str_detect(name, pattern = "^Vi[ck]+[iey]*$") ~ "Vicky", # <1>
                                .default = NA)) |> 
-  filter(!is.na(nickname)) |> # <20>
-  mutate(prop2 = sum(prop), # <21> 
-         .by = c(year, nickname, sex)) |> # <21> 
+  filter(!is.na(nickname)) |> # <2>
+  mutate(prop2 = sum(prop), # <3> 
+         .by = c(year, nickname, sex)) |> # <3> 
   distinct(year, nickname, prop2, sex) |> 
-  mutate(sex2 = if_else(sex == "F", "Female", "Male"), # <22>
-         nickname = fct(nickname, levels = c("Victoria", "Victor", "Vicky", "Tori", "Vic"))) # <23>
+  mutate(sex2 = if_else(sex == "F", "Female", "Male"), # <4>
+         nickname = fct(nickname, levels = c("Victoria", "Victor", "Vicky", "Tori", "Vic"))) # <5>
 
 my_names <- nicknames |> 
   ggplot(aes(x = year, y = prop2, fill = nickname, group = nickname)) +
   geom_density(aes(color = nickname), stat = "identity", alpha = 0.15) +
   geom_vline(xintercept = 1988, color = colors[4], linetype = 2) +
-  scale_fill_manual(values = colors[c(1:3, 5:7)]) + # <24>
+  scale_fill_manual(values = colors[c(1:3, 5:7)]) + # <6>
   scale_color_manual(values = colors[c(1:3, 5:7)]) + 
   facet_grid(sex2 ~ .,
              scales = "free_y") + 
@@ -1258,12 +1274,12 @@ my_names <- nicknames |>
         strip.background = element_rect(color="black", fill= alpha(colors[10], 0.5), linetype = 0))
 my_names
 ```
-19. Creating a new variable that finds all spelling variations of "Victoria" and its most common derivatives using regular expressions. 
-20. Removing all names that don't match any of the versions of "Victoria" or its nicknames. 
-21. Calculating a new proportion that collapses all spelling variations into the most common variant. 
-22. Creating an alternative `sex` variable for facet visualization purposes. 
-23. Putting names in the order I want to assign for colors. 
-24. Picking the specific colors I want to assign to the 5 names
+1. Creating a new variable that finds all spelling variations of "Victoria" and its most common derivatives using regular expressions. 
+2. Removing all names that don't match any of the versions of "Victoria" or its nicknames. 
+3. Calculating a new proportion that collapses all spelling variations into the most common variant. 
+4. Creating an alternative `sex` variable for facet visualization purposes. 
+5. Putting names in the order I want to assign for colors. 
+6. Picking the specific colors I want to assign to the 5 names
 
 
 ```{r}
@@ -1308,7 +1324,7 @@ my_names <- nicknames |>
 # dev.off()
 ```
 
-## {data-menu-title="Nicknames Plot" background-image="nicknames.png" background-size="contain"}
+## {data-menu-title="Nicknames Plot" background-image="nicknames.png" background-size="contain" visibility="hidden"}
 
 # Homework{.section-title background-color="#1e4655"}
 

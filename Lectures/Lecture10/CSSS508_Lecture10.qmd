@@ -95,6 +95,12 @@ Today, we'll look at some of the ways you can extend your learning beyond the sc
 library(tidymodels)
 ```
 
+::: aside
+
+[Tidymodels is best suited for **predictive** modeling, which can be useful even if your main goal is *causal* inference (i.e. anomaly/outlier detection via machine learning techniques to impute missing values of an important variable)]{.fragment}
+
+:::
+
 ## `tidymodels` Packages
 
 ![](images/tidymodels_core.png){fig-align="center"}
@@ -127,7 +133,7 @@ library(tidymodels)
 ## `tidymodels` Resources
 
 ::: {.incremental}
-1. The [website for `tidymodels`](https://www.tidymodels.org/) has extensive documentation on all core `tidymodels` packages as well as related ones. 
+1. The [website for `tidymodels`](https://www.tidymodels.org/) has extensive documentation on all core `tidymodels` packages as well as related ones.^[They also provide a [great introductory tutorial](https://www.tidymodels.org/start/) to lay out the framework for why and how to use each core `tidymodels` package.]
 2. There is an excellent book online by Max Kuhn and Julia Silge called [Tidy Modeling with R](https://www.tmwr.org/) that provides a great overview of how to approach modeling within a tidy framework and well as showing how to use the various packages within `tidymodels`. 
 3. Additionally, there are also several related, online book resources: 
     * [Feature Engineering & Selection: A Practical Approach for Predictive Models](https://bookdown.org/max/FES/) by Max Kuhn and Kjell Johnson
@@ -170,21 +176,23 @@ Once we have data we want to visualize we can call `ggmap` to visualize the spat
 :::: {.columns}
 
 ::: {.column width="50%"}
+<div class=small-code>
 ```{r}
 #| eval: false
-bbox <- make_bbox(lon, lat, 
-                  data = violent_crimes) # <4>
-map <- get_stadiamap( bbox = bbox, 
-                      maptype = "stamen_toner_lite", 
-                      zoom = 14 ) # <5>
+bbox <- make_bbox(lon, lat, # <1>
+                  data = violent_crimes) # <1>
+map <- get_stadiamap(bbox = bbox, # <2>
+                     maptype = "stamen_toner_lite", # <2>
+                      zoom = 14) # <2>
 
 ggmap(map) + 
-  geom_point(data = violent_crimes, 
-             color = "red") # <6>
+  geom_point(data = violent_crimes, # <3>
+             color = "red") # <3>
 ```
-4. Creating the bounding box for the longitude and latitude. 
-5. Retrieving the map with specifications. 
-6. The only difference with layers using `ggmap` is that (1) you need to specify the data arguments in the layers and (2) the spatial aesthetics `x` and `y` are set to `lon` and `lat`, respectively. (If they’re named something different in your dataset, just put `mapping = aes(x = longitude, y = latitude)`, for example.)
+1. Creating the bounding box for the longitude and latitude. 
+2. Retrieving the map with specifications. 
+3. The only difference with layers using `ggmap` is that (1) you need to specify the data arguments in the layers and (2) the spatial aesthetics `x` and `y` are set to `lon` and `lat`, respectively. (If they’re named something different in your dataset, just put `mapping = aes(x = longitude, y = latitude)`, for example.)
+</div>
 :::
 
 ::: {.column width="50%"}
@@ -256,9 +264,9 @@ g <- ggplot(mpg, aes(cty, hwy)) +
   geom_count() + 
   geom_smooth(method = "lm", se = F) + 
   theme_bw() 
-ggMarginal(g, type = "histogram", fill = "transparent") # <7> 
+ggMarginal(g, type = "histogram", fill = "transparent") # <1> 
 ```
-7. Code that adds marginal plot.
+1. Code that adds marginal plot.
 
 ## Marginal Boxplot
 
@@ -273,9 +281,9 @@ g <- ggplot(mpg, aes(cty, hwy)) +
   geom_count() + 
   geom_smooth(method = "lm", se = F) + 
   theme_bw()
-ggMarginal(g, type = "boxplot", fill = "transparent") # <7>
+ggMarginal(g, type = "boxplot", fill = "transparent") # <1>
 ```
-7. Code that adds marginal plot.
+1. Code that adds marginal plot.
 
 ## Marginal Density Curve
 
@@ -290,9 +298,9 @@ g <- ggplot(mpg, aes(cty, hwy)) +
   geom_count() + 
   geom_smooth(method = "lm", se = F) + 
   theme_bw()
-ggMarginal(g, type = "density", fill = "transparent") # <7>
+ggMarginal(g, type = "density", fill = "transparent") # <1>
 ```
-7. Code that adds marginal plot.
+1. Code that adds marginal plot.
 
 ## Create Animations
 
@@ -300,7 +308,7 @@ ggMarginal(g, type = "density", fill = "transparent") # <7>
 #| eval: false
 library(gapminder)
 library(gganimate)
-library(gifski) # <8>
+library(gifski) # <1>
 
 ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
   geom_point(alpha = 0.7, show.legend = FALSE) +
@@ -308,12 +316,12 @@ ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
   scale_size(range = c(2, 12)) +
   scale_x_log10() +
   facet_wrap(~continent) +
-  labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'life expectancy') + # <9>
-  transition_time(year) + # <9>
-  ease_aes('linear') # <9>
+  labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'life expectancy') + # <2>
+  transition_time(year) + # <2>
+  ease_aes('linear') # <2>
 ```
-8. Need this package to create a gif of the `gganimate` output.
-9. `gganimate`-specific code. 
+1. Need this package to create a gif of the `gganimate` output.
+2. `gganimate`-specific code. 
 
 ## Create Animations
 
@@ -422,7 +430,7 @@ Also, this lab is part of CSSCR ([The Center for Social Science Computation and 
 
 <br>
 
-As you continue to learn `R` feel free to drop by^[We offer drop-in consulting 8am-6pm Monday-Friday and evening consulting via zoom 6-9pm Monday-Thursday.] with any/all of your `R` coding questions.
+As you continue to learn `R` feel free to drop by^[We offer drop-in consulting in Savery 119, 8am-6pm Monday-Friday.] with any/all of your `R` coding questions.
 
 ---
 

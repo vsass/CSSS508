@@ -380,9 +380,9 @@ We’re passing this function to `across()`, so `across()` can call it; we’re 
 ```{r}
 #| error: true
 airquality |> 
-  summarise(across(Ozone:Temp, median())) # <2>
+  summarise(across(Ozone:Temp, median())) # <1>
 ```
-2. This error arises because you’re calling the function with no input, `i.e. median()`.
+1. This error arises because you’re calling the function with no input, `i.e. median()`.
 
 ## Anonymous Functions
 
@@ -392,9 +392,9 @@ If the function you pass to `across()` has its own arguments that you want to sp
 
 ```{r}
 airquality |> 
-  summarise(across(Ozone:Temp, \(x) median(x, na.rm = TRUE))) # <3>
+  summarise(across(Ozone:Temp, \(x) median(x, na.rm = TRUE))) # <1>
 ```
-3. So-called anonymous, because we never explicitly gave it a name with `<-`. Another term programmers use for this is “lambda function”.
+1. So-called anonymous, because we never explicitly gave it a name with `<-`. Another term programmers use for this is “lambda function”.
 
 . . . 
 
@@ -404,9 +404,9 @@ You might also see older code that looks like this:
 
 ```{r}
 airquality |> 
-  summarise(across(Ozone:Temp, ~ median(.x, na.rm = TRUE))) # <4>
+  summarise(across(Ozone:Temp, ~ median(.x, na.rm = TRUE))) # <2>
 ```
-4. This is another way to write anonymous functions but it only works inside tidyverse functions and always uses the variable name `.x`. Base syntax is now recommended (i.e. `\(x) x + 1`).
+2. This is another way to write anonymous functions but it only works inside tidyverse functions and always uses the variable name `.x`. Base syntax is now recommended (i.e. `\(x) x + 1`).
 
 ## Calling multiple functions
 
@@ -421,31 +421,35 @@ If you need to call multiple functions within `across()`, you'll need to turn th
 ```{r}
 airquality |> 
   summarise(across(Ozone:Temp, 
-                   list(median = \(x) median(x, na.rm = TRUE), # <5> 
-                        n_miss = \(x) sum(is.na(x))))) # <5> 
+                   list(median = \(x) median(x, na.rm = TRUE), # <1> 
+                        n_miss = \(x) sum(is.na(x))))) # <1> 
 ```
-5. The names of the list are used to name the new variables. In fact, the columns are named using a glue specification `{.col}_{.fn}` where `.col` is the name of the original column and `.fn` is the name of the function.
+1. The names of the list are used to name the new variables. In fact, the columns are named using a glue specification `{.col}_{.fn}` where `.col` is the name of the original column and `.fn` is the name of the function.
 
 ## Column Names
 
-By default, the output of `across()` is given the same names as the inputs. This means that `across()` inside of mutate() will replace existing columns.
+[By default, the output of `across()` is given the same names as the inputs. This means that `across()` inside of mutate() will replace existing columns.]{style="font-size: 85%;"}
 
 . . . 
 
+<div class=smaller-code>
 ```{r}
 df |> mutate(across(a:d, rescale01))
 ```
+</div>
 
 . . . 
 
-If you’d like to instead create new columns, you can use the `.names` argument to give the output new names. 
+[If you’d like to instead create new columns, you can use the `.names` argument to give the output new names.]{style="font-size: 85%;"} 
 
 . . . 
 
+<div class=smaller-code>
 ```{r}
-df |> mutate(across(a:d, rescale01, .names = "{.col}_rescaled")) # <6>
+df |> mutate(across(a:d, rescale01, .names = "{.col}_rescaled")) # <1>
 ```
-6. `.col` simply represents the original variable name. 
+1. `.col` simply represents the original variable name. 
+</div>
 
 ## `if_any()` and `if_all()`
 
@@ -454,14 +458,14 @@ df |> mutate(across(a:d, rescale01, .names = "{.col}_rescaled")) # <6>
 . . . 
 
 ```{r}
-airquality |> filter(if_any(Ozone:Temp, is.na)) # <7>
+airquality |> filter(if_any(Ozone:Temp, is.na)) # <1>
 ```
-7. This is the same as `airquality |> filter(is.na(Ozone) | is.na(Solar.R) | is.na(Wind) | is.na(Temp))`
+1. This is the same as `airquality |> filter(is.na(Ozone) | is.na(Solar.R) | is.na(Wind) | is.na(Temp))`
 
 ```{r}
-airquality |> filter(if_all(Ozone:Temp, is.na)) # <8>
+airquality |> filter(if_all(Ozone:Temp, is.na)) # <2>
 ```
-8. This is the same as `airquality |> filter(is.na(Ozone) & is.na(Solar.R) & is.na(Wind) & is.na(Temp))`
+2. This is the same as `airquality |> filter(is.na(Ozone) & is.na(Solar.R) & is.na(Wind) & is.na(Temp))`
 
 ## `across()` in Functions
 
@@ -608,8 +612,9 @@ Now, what does `files` contain?
 ::: {.column width="30%"}
 ```{r}
 #| eval: false
-files[[1]]
+files[[1]] # <1>
 ```
+1. The first element of `files` is a `tibble`, meaning `files` is a list of all the datasets we told it to read in. 
 :::
 ::: {.column width="70%"}
 ```{r}
@@ -640,7 +645,7 @@ paths |>
   list_rbind()
 ```
 
-## Data in the Filepath
+## Data in the Filepath {auto-animate="true"}
 
 You may have noticed that we're missing a year indicator in our final dataset. That's because that information is actually a part of the filename itself. 
 
@@ -653,10 +658,10 @@ There's a way to include the filename in the data but we have to add another ste
 ```{r}
 #| eval: false
 files <- paths |> 
-  set_names(basename) |> # <4>
+  set_names(basename) |> # <1>
   map(readxl::read_excel)
 ```
-4. The `set_names` function takes the function `basename` which extracts just the file name from the full path. This line of code will therefore create a named vector of the file paths where the names are actually the filenames. 
+1. The `set_names` function takes the function `basename` which extracts just the file name from the full path. This line of code will therefore create a named vector of the file paths where the names are actually the filenames. 
 
 . . . 
 
@@ -664,22 +669,26 @@ What is this doing?
 
 :::: {.columns}
 ::: {.column width="30%"}
+<div class=smaller-code>
 ```{r}
 #| eval: false
 paths |> 
   set_names(basename)
 ```
+</div>
 :::
 ::: {.column width="70%"}
+<div class=smaller-code>
 ```{r}
 #| echo: false
 paths |> 
   set_names(basename)
 ```
+</div>
 :::
 ::::
 
-## Data in the Filepath
+## Data in the Filepath {auto-animate="true"}
 
 You may have noticed that we're missing a year indicator in our final dataset. That's because that information is actually a part of the filename itself. 
 
@@ -688,29 +697,38 @@ There's a way to include the filename in the data but we have to add another ste
 ```{r}
 #| eval: false
 files <- paths |> 
-  set_names(basename) |> # <4>
+  set_names(basename) |> # <1>
   map(readxl::read_excel)
 ```
-4. The `set_names` function takes the function `basename` which extracts just the file name from the full path. This line of code will therefore create a named vector of the file paths where the names are actually the filenames. 
+1. The `set_names` function takes the function `basename` which extracts just the file name from the full path. This line of code will therefore create a named vector of the file paths where the names are actually the filenames. 
 
 What is this doing? 
 
 :::: {.columns}
 ::: {.column width="35%"}
+<div class=smaller-code>
 ```{r}
 #| eval: false
 paths |> 
   set_names(basename) |> 
   map(readxl::read_excel)
 ```
+</div>
+
+\
+
+[Now each of our dataframes is named for the year of data it contains.]{.fragment style="font-size: 85%;"}
+
 :::
 ::: {.column width="65%"}
+<div class=small-code>
 ```{r}
 #| echo: false
 paths |> 
   set_names(basename) |> 
   map(readxl::read_excel)
 ```
+</div>
 :::
 ::::
 
@@ -724,19 +742,19 @@ To create a `year` variable we need to tell `list_rbind` to save the filename in
 gapminder <- paths |> 
   set_names(basename) |> 
   map(readxl::read_excel) |> 
-  list_rbind(names_to = "year") |> # <5>
-  mutate(year = parse_number(year)) # <6>
+  list_rbind(names_to = "year") |> # <1>
+  mutate(year = parse_number(year)) # <2>
 gapminder
 ```
-5. The name of each list element (the filename) will be saved as the variable `year`.
-6. Extracting just the numeric part of the filename which is the actual year. 
+1. The name of each list element (the filename) will be saved as the variable `year`.
+2. Extracting just the numeric part of the filename which is the actual year. 
 
 . . . 
 
 ```{r}
-write_csv(gapminder, "gapminder.csv") # <7>
+write_csv(gapminder, "gapminder.csv") # <3>
 ```
-7. Be sure to save your work so you can simply read in one file when working on this project in the future!
+3. Be sure to save your work so you can simply read in one file when working on this project in the future!
 
 ## More Complex Cases
 
@@ -834,7 +852,7 @@ If we were to run the above, it will apply the first two arguments to the `write
 
 . . . 
 
-Since we don't actually care about the output (i.e. the printed datasets) and only want the files to be written, there's an even better function we can use: `walk2()`. 
+Since we don't actually care about the output (i.e. the printed datasets) and only want the files to be written, there's an even better function we can use for this task: `walk2()`. 
 
 . . . 
 
@@ -926,12 +944,16 @@ The most one-to-one translation in this family is `lapply` (list apply) to `map`
 
 . . . 
 
+<div class=small-code>
 ```{r}
 lapply(swiss, FUN = median) # <1>
 ```
 1. Since all of the examples of `map` in today's lecture are fairly simple, you can swap in `lapply` for any of them.
+</div>
 
-Simply, `lapply()` is used to apply a function over a list of any kind (e.g. a data frame) and return a list.
+. . . 
+
+Simply put, `lapply()` is used to apply a function over a list of any kind (e.g. a data frame) and return a list.
 
 ## `sapply()`: Simple `lapply()`
 
@@ -1076,7 +1098,7 @@ When you're ready to dive into more advanced functional programming topics, incl
 
 4. What happens if you use a list of functions in `across()`, but don't name them? How is the output named?
 
-## Answers
+## Answers {visibility="hidden"}
 
 1. Compute the number of unique values in each column of `palmerpenguins::penguins`^[You'll need to download the `palmerpenguins` package in order to use `penguins` dataset.].
 
@@ -1089,7 +1111,7 @@ data(penguins)
 penguins |> summarise(across(everything(), n_distinct))
 ```
 
-## Answers
+## Answers {visibility="hidden"}
 
 2. Compute the mean of every column in `mtcars.`
 
@@ -1099,7 +1121,7 @@ penguins |> summarise(across(everything(), n_distinct))
 mtcars |> summarise(across(everything(), mean))
 ```
 
-## Answers 
+## Answers {visibility="hidden"}
 
 3. Group `diamonds` by `cut`, `clarity`, and `color` then count the number of observations and compute the mean of each numeric column.
 
@@ -1111,7 +1133,7 @@ diamonds |> summarise(n = n(),
                       .by = c(cut, clarity, color))
 ```
 
-## Answers 
+## Answers {visibility="hidden"}
 
 4. What happens if you use a list of functions in `across()` but don't name them? How is the output named?
 
@@ -1127,6 +1149,10 @@ airquality |>
     n = n()
   )
 ```
+
+\
+
+. . . 
 
 The default behavior of `across` if the names for multiple functions are not supplied is simply to append the variable name with a number, i.e. the first function will be `{.col}_1`, the second function will be `{.col}_2`, etc.
  

@@ -158,8 +158,10 @@ Before you can write effective code, you need to know *exactly* what you want:
 set.seed(5000)
 ```
 
+<div class=small-code>
 ```{r}
 #| eval: false
+set.seed(5000) # <1>
 df <- tibble(
   a = rnorm(5),
   b = rnorm(5),
@@ -179,6 +181,9 @@ df |> mutate(
     (max(d, na.rm = TRUE) - min(d, na.rm = TRUE))
   )
 ```
+1. `set.seed()` allows you to reproduce the same numbers from any random number-generating process (i.e. `rnorm()`) 
+
+</div>
 
 ::: {.incremental .fragment fragment-index=3}
 * What do you think this code does? 
@@ -202,6 +207,8 @@ df <- tibble(
 df
 ```
 :::
+
+\
 
 ::: {.fragment fragment-index=2}
 ```{r}
@@ -279,7 +286,7 @@ NAME <- function(ARGUMENT1, ARGUMENT2 = DEFAULT){ # <1>
   BODY 
 }
 ```
-1. In this example, `ARGUMENT1`, `ARGUMENT2` values won't exist outside of the function. `ARGUMENT2` is an optional argument as it's been given a default value to use if the user does not specify one. 
+1. In this example, `ARGUMENT1` and `ARGUMENT2` values won't exist outside of the function. `ARGUMENT2` is an optional argument as it's been given a default value to use if the user does not specify one. 
 
 . . . 
 
@@ -294,27 +301,33 @@ rescale01 <- function(x) { # <2>
 
 ## Testing Your Function
 
-It's good practice to test a few simple inputs to make sure your function works as expected.
+::: {.fragment}
+[It's good practice to test a few simple inputs to make sure your function works as expected.]{style="font-size: 85%;"}
+:::
 
-. . . 
-
+::: {.fragment}
+<div class=smaller-code>
 ```{r}
 rescale01(c(-10, 0, 10))
 rescale01(c(1, 2, 3, NA, 5))
 ```
+</div>
+:::
 
-. . . 
+::: {.fragment}
+[Now we can rewrite our original code in a much simpler way!^[We'll see how we can simplify this even further next week!]]{style="font-size: 85%;"}
+:::
 
-Now we can rewrite our original code in a much simpler way!^[We'll see how we can simplify this even further next week!]
-
-. . . 
-
+::: {.fragment}
+<div class=smaller-code>
 ```{r}
 df |> mutate(a = rescale01(a),
              b = rescale01(b),
              c = rescale01(c),
              d = rescale01(d))
 ```
+</div>
+:::
 
 ## Improving Your Function
 
@@ -410,6 +423,7 @@ There are two types of vector functions: mutate functions and summary functions.
 
 . . . 
 
+<div class=smaller-code>
 ```{r}
 z_score <- function(x) { 
   (x - mean(x, na.rm = TRUE)) / sd(x, na.rm = TRUE) # <1>
@@ -419,9 +433,11 @@ ages <- c(25, 82, 73, 44, 5)
 z_score(ages)
 ```
 1. Rescales a vector to have a mean of zero and a standard deviation of one.
+</div>
 
 . . . 
 
+<div class=smaller-code>
 ```{r}
 clamp <- function(x, min, max) { 
   case_when( # <2>
@@ -434,9 +450,11 @@ clamp <- function(x, min, max) {
 clamp(1:10, min = 3, max = 7)
 ```
 2. Ensures all values of a vector lie in between a minimum or a maximum. 
+</div>
 
 . . . 
 
+<div class=smaller-code>
 ```{r}
 first_upper <- function(x) { 
   str_sub(x, 1, 1) <- str_to_upper(str_sub(x, 1, 1)) # <3>
@@ -446,6 +464,7 @@ first_upper <- function(x) {
 first_upper("hi there, how's your day going?")
 ```
 3. Make the first character upper case. 
+</div>
 
 ## Examples of Summarize Functions
 
@@ -453,38 +472,38 @@ first_upper("hi there, how's your day going?")
 
 ```{r}
 cv <- function(x, na.rm = FALSE) {
-  sd(x, na.rm = na.rm) / mean(x, na.rm = na.rm) # <4>
+  sd(x, na.rm = na.rm) / mean(x, na.rm = na.rm) # <1>
 }
 
 cv(runif(100, min = 0, max = 50))
 ```
-4. Calculation for the coefficient of variation, which divides the standard deviation by the mean. 
+1. Calculation for the coefficient of variation, which divides the standard deviation by the mean. 
 
 . . . 
 
 ```{r}
 n_missing <- function(x) {
-  sum(is.na(x)) # <5>
+  sum(is.na(x)) # <2>
 } 
 
-var <- sample(c(seq(1, 20, 1), NA, NA), size = 100, replace = TRUE) # <6>
+var <- sample(c(seq(1, 20, 1), NA, NA), size = 100, replace = TRUE) # <3>
 n_missing(var)
 ```
-5. Calculates the number of missing values ([Source](https://twitter.com/gbganalyst/status/1571619641390252033)). 
-6. Creating a random sample of 100 values with a mix of integers from 1 to 100 and `NA` values. 
+2. Calculates the number of missing values ([Source](https://twitter.com/gbganalyst/status/1571619641390252033)). 
+3. Creating a random sample of 100 values with a mix of integers from 1 to 100 and `NA` values. 
 
 . . . 
 
 ```{r}
 mape <- function(actual, predicted) {
-  sum(abs((actual - predicted) / actual)) / length(actual) # <7>
+  sum(abs((actual - predicted) / actual)) / length(actual) # <4>
 }
 
 model1 <- lm(dist ~ speed, data = cars)
-mape(cars$dist, model1$fitted.values) # <8>
+mape(cars$dist, model1$fitted.values) # <5>
 ```
-7. Calculates the mean absolute percentage error which measures the average magnitude of error produced by a model, or how far off predictions are on average. 
-8. This tells us that the average absolute percentage difference between the predicted values and the actual values is ~ 38%.
+4. Calculates the mean absolute percentage error which measures the average magnitude of error produced by a model, or how far off predictions are on average. 
+5. This tells us that the average absolute percentage difference between the predicted values and the actual values is ~ 38%.
 
 # Data Frame Functions {.section-title background-color="#99a486"}
 
@@ -599,35 +618,39 @@ The two most common sub-types of tidy evaluation are **data-masking**^[Used in f
 ```{r}
 #| output-location: fragment
 summary6 <- function(data, var) {
-  data |> summarize( # <2>
-    min = min({{ var }}, na.rm = TRUE), # <2>
-    mean = mean({{ var }}, na.rm = TRUE), # <2>
-    median = median({{ var }}, na.rm = TRUE), # <2>
-    max = max({{ var }}, na.rm = TRUE), # <2>
-    n = n(), # <2>
-    n_miss = sum(is.na({{ var }})), # <2>
-    .groups = "drop" # <3>
+  data |> summarize( # <1>
+    min = min({{ var }}, na.rm = TRUE), # <1>
+    mean = mean({{ var }}, na.rm = TRUE), # <1>
+    median = median({{ var }}, na.rm = TRUE), # <1>
+    max = max({{ var }}, na.rm = TRUE), # <1>
+    n = n(), # <1>
+    n_miss = sum(is.na({{ var }})), # <1>
+    .groups = "drop" # <2>
   )
 }
 
 diamonds |> summary6(carat)
 ```
-2. The goal of this function is to compute six common summary statistics for a specified variable of a dataset.
-3. Whenever you wrap `summarize()` in a helper function it’s good practice to set `.groups = "drop"` to both avoid the message and leave the data in an ungrouped state.
+1. The goal of this function is to compute six common summary statistics for a specified variable of a dataset.
+2. Whenever you wrap `summarize()` in a helper function it’s good practice to set `.groups = "drop"` to both avoid the message and leave the data in an ungrouped state.
 
 ## Data Frame Function Examples 
 
 ```{r}
 #| output-location: fragment
 count_prop <- function(df, var, sort = FALSE) {
-  df |> # <4>
-    count({{ var }}, sort = sort) |> # <4>
-    mutate(prop = n / sum(n)) # <4>
+  df |> # <1>
+    count({{ var }}, sort = sort) |> # <1>
+    mutate(prop = n / sum(n)) # <1>
 }
 
 diamonds |> count_prop(clarity)
 ```
-4. This function is a variation of `count()` which also calculates the proportion ([Source](https://twitter.com/Diabb6/status/1571635146658402309)). 
+1. This function is a variation of `count()` which also calculates the proportion ([Source](https://twitter.com/Diabb6/status/1571635146658402309)). 
+
+::: {.aside}
+[For more functions like this one, check out the `tabyl()` function and additional formatting options in the `janitor` package.]{.fragment}
+:::
 
 # Plot Functions {.section-title background-color="#99a486"}
 
@@ -691,17 +714,17 @@ You might want to create a function that has a bit of data manipulation **_and_*
 ```{r}
 #| output-location: fragment
 #| fig-align: center
-sorted_bars <- function(df, var) { # <3>
+sorted_bars <- function(df, var) { # <1>
   df |> 
-    mutate({{ var }} := fct_rev(fct_infreq({{ var }})))  |> # <4>
+    mutate({{ var }} := fct_rev(fct_infreq({{ var }})))  |> # <2>
     ggplot(aes(y = {{ var }})) + 
     geom_bar() 
 }
 
 diamonds |> sorted_bars(clarity)
 ```
-3. This function creates a vertical bar chart where you automatically sort the bars in frequency order using `fct_infreq()`. 
-4. `:=` (commonly referred to as the “walrus operator”) is used here because we are generating the variable name based on user-supplied data. `R`’s syntax doesn’t allow anything to the left of `=` except for a single, literal name. To work around this problem, we use the special operator `:=` which tidy evaluation treats in exactly the same way as `=`.
+1. This function creates a vertical bar chart where you automatically sort the bars in frequency order using `fct_infreq()`. 
+2. `:=` (commonly referred to as the “walrus operator”) is used here because we are generating the variable name based on user-supplied data. `R`’s syntax doesn’t allow anything to the left of `=` except for a single, literal name. To work around this problem, we use the special operator `:=` which tidy evaluation treats in exactly the same way as `=`.
 
 ## Functions that Label
 
@@ -732,7 +755,7 @@ Let's take our histogram example from before:
 #| output: false
 #| echo: true
 histogram <- function(df, var, binwidth) {
-  label <- rlang::englue("A histogram of {{ var }} with binwidth {binwidth}") # <5>
+  label <- rlang::englue("A histogram of {{ var }} with binwidth {binwidth}") # <1>
   
   df |> 
     ggplot(aes(x = {{ var }})) + 
@@ -742,7 +765,7 @@ histogram <- function(df, var, binwidth) {
 
 diamonds |> histogram(carat, 0.1)
 ```
-5. `rlang::englue()` works similarly to `str_glue()`, so any value wrapped in <br> `{ }` will be inserted into the string. But it also understands `{{ }}`, which automatically inserts the appropriate variable name.
+1. `rlang::englue()` works similarly to `str_glue()`, so any value wrapped in <br> `{ }` will be inserted into the string. But it also understands `{{{ }}}`, which automatically inserts the appropriate variable name.
 
 . . . 
 
@@ -809,7 +832,7 @@ round(z / sum(z, na.rm = TRUE) * 100, 1)
 
 2. Bonus: Write a function that takes a name as an input (i.e. a character string) and returns a greeting based on the current time of day. **Hint**: use a time argument that defaults to `lubridate::now()`. That will make it easier to test your function.
 
-## Answers 
+## Answers {visibility="hidden"}
 
 1. Practice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?
 
@@ -843,7 +866,7 @@ prop_na(values)
 
 This code calculates the proportion of `NA` values in a vector. I would call it `prop_na()` which would take a single argument, `x`, and return a single numeric value, between 0 and 1. 
 
-## Answers 
+## Answers {visibility="hidden"}
 
 1. Practice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?
 
@@ -855,6 +878,8 @@ z / sum(z, na.rm = TRUE)
 ```
 
 . . . 
+
+\
 
 ```{r}
 #| output-location: fragment
@@ -872,7 +897,7 @@ sums_to_one(values, na.rm = TRUE)
 
 This code standardizes a vector so that it sums to one. It takes a numeric vector and an optional specification for removing `NA`s. While the original code had `na.rm = TRUE`, it's best to set the default to `FALSE` which will alert the user if `NA`s are present by returning `NA`. 
 
-## Answers 
+## Answers {visibility="hidden"}
 
 1. Practice turning the following code snippets into functions. Think about what each function does. What would you call it? How many arguments does it need?
 
@@ -882,6 +907,8 @@ round(x / sum(x, na.rm = TRUE) * 100, 1)
 round(y / sum(y, na.rm = TRUE) * 100, 1)
 round(z / sum(z, na.rm = TRUE) * 100, 1)
 ```
+
+\
 
 . . . 
 
@@ -896,7 +923,7 @@ pct_vec(values, na.rm = TRUE)
 
 This code takes a numeric vector and finds what each value represents as a percentage of the sum of the entire vector and rounds it to the first decimal place. There is also an optional `na.rm` argument set to `FALSE` by default.
 
-## Answers 
+## Answers {visibility="hidden"}
 
 2. Bonus: Write a function that takes a name as an input (i.e. a character string) and returns a greeting based on the current time of day. **Hint 1**: use a time argument that defaults to `lubridate::now()`. That will make it easier to test your function. **Hint 2**: Use `rlang::englue` to combine your greetings with the name input. 
 
@@ -904,25 +931,25 @@ This code takes a numeric vector and finds what each value represents as a perce
 
 ```{r}
 #| output-location: fragment
-greet <- function(name, time = now()){ # <2>
+greet <- function(name, time = now()){ # <1>
   hr <- hour(time) 
-  greeting <- case_when(hr < 12 & hr >= 5 ~ rlang::englue("Good morning {name}."), # <3>
-                        hr < 17 & hr >= 12 ~ rlang::englue("Good afternoon {name}."), # <3> 
-                        hr >= 17 ~ rlang::englue("Good evening {name}."), # <3>
-                        .default = rlang::englue("Why are you awake rn, {name}???")) # <3>
-  return(greeting) # <4>
+  greeting <- case_when(hr < 12 & hr >= 5 ~ rlang::englue("Good morning {name}."), # <2>
+                        hr < 17 & hr >= 12 ~ rlang::englue("Good afternoon {name}."), # <2> 
+                        hr >= 17 ~ rlang::englue("Good evening {name}."), # <2>
+                        .default = rlang::englue("Why are you awake rn, {name}???")) # <2>
+  return(greeting) # <3>
 }
 
-greet("Vic") # <5>
+greet("Vic") # <4>
 ```
-2. By default this function will take the current time to determine the specific greeting.   
-3. Using `englue()` allows you to include user-specified values with `{ }`. 
-4. `return()` or `print()` or simply calling the variable `greeting` is necessary for the function to work as expected. 
-5. The last time this lecture (and therefore this code) was rendered was at `r lubridate::now()`
+1. By default this function will take the current time to determine the specific greeting.   
+2. Using `englue()` allows you to include user-specified values with `{ }`. 
+3. `return()` or `print()` or simply calling the variable `greeting` is necessary for the function to work as expected. 
+4. The last time this lecture (and therefore this code) was rendered was at `r lubridate::now()`
 
 ```{r}
 #| output-location: fragment
-greet("Vic", time = ymd_h("2024-05-14 2am"))
+greet("Vic", time = ymd_h("2025-11-25 2am"))
 ```
 
 # Homework{.section-title background-color="#1e4655"}
