@@ -6,7 +6,7 @@ library(tidyverse)
 
 schedule_fall <- tibble(Homework = c(1:9), 
                              Due_Date = c("7 October", "14 October", "21 October", "28 October", "11 November", "18 November", "25 November", "2 December", "9 December"), 
-                             Peer_Due_Date = c("12 October", "19 October", "26 October", "2 November", "16 November", "21 November", "30 November", "7 December", "14 December"))
+                             Peer_Due_Date = c("12 October", "19 October", "26 October", "2 November", "16 November", "23 November", "30 November", "7 December", "14 December"))
 
 schedule_spring <- tibble(Homework = c(1:9), 
                                Due_Date = c("2 April", "9 April", "16 April", "23 April", "30 April", "7 May", "14 May", "21 May", "28 May"), 

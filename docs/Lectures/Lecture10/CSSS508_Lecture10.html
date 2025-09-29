@@ -1,257 +1,221 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>csss508_lecture10</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-c3c2c9e745155556954bc4da23476b10.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-09ad465de797c9fa47eb004b66687419.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-a91c5eb92031c01585ac21bee704d2ce.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 
-  <title>csss508_lecture10</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-      vertical-align: middle;
-    }
-    /* CSS for syntax highlighting */
-    html { -webkit-text-size-adjust: 100%; }
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #97947a;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #97947a;  padding-left: 4px; }
-    div.sourceCode
-      { color: #f8f8f2; background-color: #2b2b2b; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #f8f8f2; } /* Normal */
-    code span.al { color: #dcc6e0; } /* Alert */
-    code span.an { color: #d4d0ab; } /* Annotation */
-    code span.at { color: #ffd700; } /* Attribute */
-    code span.bn { color: #dcc6e0; } /* BaseN */
-    code span.bu { color: #f5ab35; } /* BuiltIn */
-    code span.cf { color: #ffa07a; } /* ControlFlow */
-    code span.ch { color: #abe338; } /* Char */
-    code span.cn { color: #ffa07a; } /* Constant */
-    code span.co { color: #d4d0ab; } /* Comment */
-    code span.cv { color: #d4d0ab; font-style: italic; } /* CommentVar */
-    code span.do { color: #d4d0ab; font-style: italic; } /* Documentation */
-    code span.dt { color: #dcc6e0; } /* DataType */
-    code span.dv { color: #dcc6e0; } /* DecVal */
-    code span.er { color: #dcc6e0; } /* Error */
-    code span.ex { color: #ffd700; } /* Extension */
-    code span.fl { color: #f5ab35; } /* Float */
-    code span.fu { color: #ffd700; } /* Function */
-    code span.im { } /* Import */
-    code span.in { color: #d4d0ab; } /* Information */
-    code span.kw { color: #ffa07a; } /* Keyword */
-    code span.op { color: #00e0e0; } /* Operator */
-    code span.ot { color: #ffa07a; } /* Other */
-    code span.pp { color: #dcc6e0; } /* Preprocessor */
-    code span.sc { color: #00e0e0; } /* SpecialChar */
-    code span.ss { color: #abe338; } /* SpecialString */
-    code span.st { color: #abe338; } /* String */
-    code span.va { color: #f5ab35; } /* Variable */
-    code span.vs { color: #abe338; } /* VerbatimString */
-    code span.wa { color: #d4d0ab; font-style: italic; } /* Warning */
-  </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-20f72829b6cbb51496d0911fbbb9d4d4.css">
-  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-pointer/pointer.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
-    .reveal div.sourceCode {
-      margin: 0;
-      overflow: auto;
-    }
-    .reveal div.hanging-indent {
-      margin-left: 1em;
-      text-indent: -1em;
-    }
-    .reveal .slide:not(.center) {
-      height: 100%;
-    }
-    .reveal .slide.scrollable {
-      overflow-y: auto;
-    }
-    .reveal .footnotes {
-      height: 100%;
-      overflow-y: auto;
-    }
-    .reveal .slide .absolute {
-      position: absolute;
-      display: block;
-    }
-    .reveal .footnotes ol {
-      counter-reset: ol;
-      list-style-type: none; 
-      margin-left: 0;
-    }
-    .reveal .footnotes ol li:before {
-      counter-increment: ol;
-      content: counter(ol) ". "; 
-    }
-    .reveal .footnotes ol li > p:first-child {
-      display: inline-block;
-    }
-    .reveal .slide ul,
-    .reveal .slide ol {
-      margin-bottom: 0.5em;
-    }
-    .reveal .slide ul li,
-    .reveal .slide ol li {
-      margin-top: 0.4em;
-      margin-bottom: 0.2em;
-    }
-    .reveal .slide ul[role="tablist"] li {
-      margin-bottom: 0;
-    }
-    .reveal .slide ul li > *:first-child,
-    .reveal .slide ol li > *:first-child {
-      margin-block-start: 0;
-    }
-    .reveal .slide ul li > *:last-child,
-    .reveal .slide ol li > *:last-child {
-      margin-block-end: 0;
-    }
-    .reveal .slide .columns:nth-child(3) {
-      margin-block-start: 0.8em;
-    }
-    .reveal blockquote {
-      box-shadow: none;
-    }
-    .reveal .tippy-content>* {
-      margin-top: 0.2em;
-      margin-bottom: 0.7em;
-    }
-    .reveal .tippy-content>*:last-child {
-      margin-bottom: 0.2em;
-    }
-    .reveal .slide > img.stretch.quarto-figure-center,
-    .reveal .slide > img.r-stretch.quarto-figure-center {
-      display: block;
-      margin-left: auto;
-      margin-right: auto; 
-    }
-    .reveal .slide > img.stretch.quarto-figure-left,
-    .reveal .slide > img.r-stretch.quarto-figure-left  {
-      display: block;
-      margin-left: 0;
-      margin-right: auto; 
-    }
-    .reveal .slide > img.stretch.quarto-figure-right,
-    .reveal .slide > img.r-stretch.quarto-figure-right  {
-      display: block;
-      margin-left: auto;
-      margin-right: 0; 
-    }
-  </style>
+
 </head>
-<body class="quarto-light">
-  <div class="reveal">
-    <div class="slides">
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="http://vsass.github.io"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">CS&amp;SS 508</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../Lectures/lectures.html"> 
+<span class="menu-text">Lectures</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../Homework/homework.html"> 
+<span class="menu-text">Homework</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="CSSS508_Lecture10.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
-<section id="title-slide" class="slide level2 center" data-menu-title="Next Steps" data-background="#1e4655" data-background-image="../../images/csss-logo.png" data-background-position="center top 5%" data-background-size="50%">
-<h2></h2>
+
+
+<section id="title-slide" class="level2" data-menu-title="Next Steps" data-background="#1e4655" data-background-image="../../images/csss-logo.png" data-background-position="center top 5%" data-background-size="50%">
+<h2 data-menu-title="Next Steps" data-background="#1e4655" data-background-image="../../images/csss-logo.png" data-background-position="center top 5%" data-background-size="50%" class="anchored" data-anchor-id="title-slide"></h2>
 <p><span class="custom-title">Next Steps</span></p>
 <p><span class="custom-subtitle">CS&amp;SS 508 • Lecture 10</span></p>
 <p><span class="custom-subtitle2">9 December 2025</span></p>
 <p><span class="custom-subtitle3">Victoria Sass</span></p>
 </section>
-<section>
-<section id="roadmap" class="title-slide slide level1 section-title center" data-background-color="#99a486">
-<h1>Roadmap</h1>
-
-</section>
-<section class="slide level2">
-
+<section id="roadmap" class="level1 section-title" data-background-color="#99a486">
+<h1 class="section-title" data-background-color="#99a486">Roadmap</h1>
+<hr>
 <p>You’ve already learned <strong>SO MUCH</strong> in this class:</p>
-<div class="fragment">
+<p>. . .</p>
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/data-science.png" class="quarto-figure quarto-figure-center"></p>
+<figure class="figure">
+<p><img src="images/data-science.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p>But if grad school teaches us anything, it’s that the more we learn, the more we realize how much more there is to learn. 🥴😑🫠</p>
+<hr>
+<p>This can be freeing! And even fun?! Let your curiosity run wild!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/r_knowledge.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<hr>
+<p>Today, we’ll look at some of the ways you can extend your learning beyond the scope of this introductory course.</p>
+<div class="incremental">
+<ul class="incremental">
+<li>Tidy modeling</li>
+<li>Even more visualizations</li>
+<li>Creating web applications</li>
+<li>Version control with Git/GitHub</li>
+<li>Creating slides, articles, books, and/or websites</li>
+</ul>
 </div>
 </section>
-<section class="slide level2">
-
-<p>This can be freeing! And even fun?! Let your curiosity run wild!</p>
-
-<img data-src="images/r_knowledge.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section class="slide level2">
-
-<p>Today, we’ll look at some of the ways you can extend your learning beyond the scope of this introductory course.</p>
-<ul>
-<li class="fragment">Tidy modeling</li>
-<li class="fragment">Even more visualizations</li>
-<li class="fragment">Creating web applications</li>
-<li class="fragment">Version control with Git/GitHub</li>
-<li class="fragment">Creating slides, articles, books, and/or websites</li>
-</ul>
-</section></section>
-<section>
-<section id="tidy-modeling" class="title-slide slide level1 section-title center" data-background-color="#99a486">
-<h1>Tidy Modeling</h1>
-
+<section id="tidy-modeling" class="level1 section-title page-columns page-full" data-background-color="#99a486">
+<h1 class="section-title" data-background-color="#99a486">Tidy Modeling</h1>
+<section id="modeling-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="modeling-in-r">Modeling in R</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/data-science-model.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
 </section>
-<section id="modeling-in-r" class="slide level2">
-<h2>Modeling in R</h2>
-
-<img data-src="images/data-science-model.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="modeling-with-tidymodels" class="slide level2">
-<h2>Modeling with <code>tidymodels</code></h2>
+<section id="modeling-with-tidymodels" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="modeling-with-tidymodels">Modeling with <code>tidymodels</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>&gt; ── Attaching packages ────────────────────────────────────── tidymodels 1.4.1 ──</code></pre>
 </div>
@@ -274,27 +238,35 @@
 </div>
 </div>
 
-<aside><div>
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p><span class="fragment">Tidymodels is best suited for <strong>predictive</strong> modeling, which can be useful even if your main goal is <em>causal</em> inference (i.e.&nbsp;anomaly/outlier detection via machine learning techniques to impute missing values of an important variable)</span></p>
-</div></aside></section>
-<section id="tidymodels-packages" class="slide level2">
-<h2><code>tidymodels</code> Packages</h2>
-
-<img data-src="images/tidymodels_core.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="tidymodels-approach" class="slide level2">
-<h2><code>tidymodels</code> Approach</h2>
-<p><br></p>
-
-<img data-src="images/tidymodels_usage.jpeg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="packages-using-tidymodels-framework" class="slide level2 scrollable">
-<h2>Packages Using Tidymodels Framework <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span></h2>
+</div></div></section>
+<section id="tidymodels-packages" class="level2">
+<h2 class="anchored" data-anchor-id="tidymodels-packages"><code>tidymodels</code> Packages</h2>
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/tidymodels_extra.jpeg" class="quarto-figure quarto-figure-center" style="width:60.0%;height:60.0%"></p>
+<figure class="figure">
+<p><img src="images/tidymodels_core.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="tidymodels-approach" class="level2">
+<h2 class="anchored" data-anchor-id="tidymodels-approach"><code>tidymodels</code> Approach</h2>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/tidymodels_usage.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="packages-using-tidymodels-framework" class="level2 scrollable page-columns page-full">
+<h2 class="scrollable anchored" data-anchor-id="packages-using-tidymodels-framework">Packages Using Tidymodels Framework <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span></h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/tidymodels_extra.jpeg" class="quarto-figure quarto-figure-center figure-img" style="width:60.0%;height:60.0%"></p>
 </figure>
 </div>
 
-<aside><div>
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
 <ol type="1">
 <li><code>applicable</code> compares new data points with the training data to see how much the new data points appear to be an extrapolation of the training data</li>
 <li><code>baguette</code> is for speeding up bagging pipelines</li>
@@ -309,44 +281,44 @@
 <li><code>modeldb</code> is also for working within SQL databases and it allows for dplyr and tidyeval use within a database</li>
 <li><code>tidyposterior</code> compares models using resampling statistics</li>
 </ol>
-</div></aside></section>
-<section id="tidymodels-resources" class="slide level2">
-<h2><code>tidymodels</code> Resources</h2>
-<ol type="1">
-<li class="fragment">The <a href="https://www.tidymodels.org/">website for <code>tidymodels</code></a> has extensive documentation on all core <code>tidymodels</code> packages as well as related ones.<sup>1</sup></li>
-<li class="fragment">There is an excellent book online by Max Kuhn and Julia Silge called <a href="https://www.tmwr.org/">Tidy Modeling with R</a> that provides a great overview of how to approach modeling within a tidy framework and well as showing how to use the various packages within <code>tidymodels</code>.</li>
-<li class="fragment">Additionally, there are also several related, online book resources:
-<ul>
-<li class="fragment"><a href="https://bookdown.org/max/FES/">Feature Engineering &amp; Selection: A Practical Approach for Predictive Models</a> by Max Kuhn and Kjell Johnson</li>
-<li class="fragment"><a href="https://moderndive.com/">Statistical Inference via Data Science: A Modern Dive into R and the Tidyverse</a> by Chester Ismay and Albert Y. Kim</li>
-<li class="fragment"><a href="https://smltar.com/">Supervised Machine Learning for Text Analysis in R</a> by Emil Hvitfeldt and Julia Silge</li>
-<li class="fragment"><a href="https://www.tidytextmining.com/">Text Mining with R: A Tidy Approach</a> by Julia Silge &amp; David Robinson</li>
+</div></div></section>
+<section id="tidymodels-resources" class="level2">
+<h2 class="anchored" data-anchor-id="tidymodels-resources"><code>tidymodels</code> Resources</h2>
+<div class="incremental">
+<ol class="incremental" type="1">
+<li>The <a href="https://www.tidymodels.org/">website for <code>tidymodels</code></a> has extensive documentation on all core <code>tidymodels</code> packages as well as related ones.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li>There is an excellent book online by Max Kuhn and Julia Silge called <a href="https://www.tmwr.org/">Tidy Modeling with R</a> that provides a great overview of how to approach modeling within a tidy framework and well as showing how to use the various packages within <code>tidymodels</code>.</li>
+<li>Additionally, there are also several related, online book resources:
+<ul class="incremental">
+<li><a href="https://bookdown.org/max/FES/">Feature Engineering &amp; Selection: A Practical Approach for Predictive Models</a> by Max Kuhn and Kjell Johnson</li>
+<li><a href="https://moderndive.com/">Statistical Inference via Data Science: A Modern Dive into R and the Tidyverse</a> by Chester Ismay and Albert Y. Kim</li>
+<li><a href="https://smltar.com/">Supervised Machine Learning for Text Analysis in R</a> by Emil Hvitfeldt and Julia Silge</li>
+<li><a href="https://www.tidytextmining.com/">Text Mining with R: A Tidy Approach</a> by Julia Silge &amp; David Robinson</li>
 </ul></li>
 </ol>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>They also provide a <a href="https://www.tidymodels.org/start/">great introductory tutorial</a> to lay out the framework for why and how to use each core <code>tidymodels</code> package.</p></li></ol></aside></section></section>
-<section>
-<section id="even-more-visualizations" class="title-slide slide level1 section-title center" data-background-color="#99a486">
-<h1>Even More Visualizations</h1>
-
+</div>
 </section>
-<section id="spatial-data-with-ggmap" class="slide level2">
-<h2>Spatial Data with <code>ggmap</code></h2>
+</section>
+<section id="even-more-visualizations" class="level1 section-title" data-background-color="#99a486">
+<h1 class="section-title" data-background-color="#99a486">Even More Visualizations</h1>
+<section id="spatial-data-with-ggmap" class="level2">
+<h2 class="anchored" data-anchor-id="spatial-data-with-ggmap">Spatial Data with <code>ggmap</code></h2>
 <p>There are numerous ways to work with spatial data in <code>R</code> but you can use <code>ggmap</code> to visualize spatial data in a tidyverse framework.</p>
-<div class="fragment">
+<p>. . .</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1"></a><span class="fu">source</span>(<span class="st">"stadia_api_key.R"</span>)</span>
-<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2"></a><span class="fu">library</span>(ggmap)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3"></a><span class="st">`</span><span class="at">%notin%</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(lhs, rhs) <span class="sc">!</span>(lhs <span class="sc">%in%</span> rhs)</span>
-<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-5" class="code-annotation-target"><a href="#annotated-cell-2-5"></a>violent_crimes <span class="ot">&lt;-</span> crime <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6"></a>  <span class="fu">filter</span>(offense <span class="sc">%notin%</span> <span class="fu">c</span>(<span class="st">"auto theft"</span>, <span class="st">"theft"</span>, <span class="st">"burglary"</span>),</span>
-<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7"></a>         <span class="fu">between</span>(lon, <span class="sc">-</span><span class="fl">95.39681</span>, <span class="sc">-</span><span class="fl">95.34188</span>),</span>
-<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8"></a>         <span class="fu">between</span>(lat, <span class="fl">29.73631</span>, <span class="fl">29.78400</span>)) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9"></a>  <span class="fu">mutate</span>(<span class="at">offense =</span> <span class="fu">fct_drop</span>(offense),</span>
-<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10"></a>         <span class="at">offense =</span> <span class="fu">fct_relevel</span>(offense, </span>
-<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11"></a>                               <span class="fu">c</span>(<span class="st">"robbery"</span>, <span class="st">"aggravated assault"</span>, <span class="st">"rape"</span>, <span class="st">"murder"</span>)))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"stadia_api_key.R"</span>)</span>
+<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggmap)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">%notin%</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(lhs, rhs) <span class="sc">!</span>(lhs <span class="sc">%in%</span> rhs)</span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-2-5" class="code-annotation-target"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>violent_crimes <span class="ot">&lt;-</span> crime <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(offense <span class="sc">%notin%</span> <span class="fu">c</span>(<span class="st">"auto theft"</span>, <span class="st">"theft"</span>, <span class="st">"burglary"</span>),</span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>         <span class="fu">between</span>(lon, <span class="sc">-</span><span class="fl">95.39681</span>, <span class="sc">-</span><span class="fl">95.34188</span>),</span>
+<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a>         <span class="fu">between</span>(lat, <span class="fl">29.73631</span>, <span class="fl">29.78400</span>)) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">offense =</span> <span class="fu">fct_drop</span>(offense),</span>
+<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">offense =</span> <span class="fu">fct_relevel</span>(offense, </span>
+<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">c</span>(<span class="st">"robbery"</span>, <span class="st">"aggravated assault"</span>, <span class="st">"rape"</span>, <span class="st">"murder"</span>)))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
 <span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1">You need to register for Stadia Maps or Google Maps and get a respective API key in order to download their maps. This <code>R</code> script simply saves my API key and registers it in the current session so it’s not included in my code that’s accessible on GitHub.</span>
@@ -362,27 +334,26 @@
 </dl>
 </div>
 </div>
-</div>
 </section>
-<section id="making-a-map" class="slide level2">
-<h2>Making a Map</h2>
+<section id="making-a-map" class="level2">
+<h2 class="anchored" data-anchor-id="making-a-map">Making a Map</h2>
 <p>Once we have data we want to visualize we can call <code>ggmap</code> to visualize the spatial area and layer on any geoms/stats as you would with <code>ggplot2.</code></p>
-<div class="fragment">
+<p>. . .</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="small-code">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1">1</button><span id="annotated-cell-11-1" class="code-annotation-target"><a href="#annotated-cell-11-1"></a>bbox <span class="ot">&lt;-</span> <span class="fu">make_bbox</span>(lon, lat,</span>
-<span id="annotated-cell-11-2"><a href="#annotated-cell-11-2"></a>                  <span class="at">data =</span> violent_crimes)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="2">2</button><span id="annotated-cell-11-3" class="code-annotation-target"><a href="#annotated-cell-11-3"></a>map <span class="ot">&lt;-</span> <span class="fu">get_stadiamap</span>(<span class="at">bbox =</span> bbox,</span>
-<span id="annotated-cell-11-4"><a href="#annotated-cell-11-4"></a>                     <span class="at">maptype =</span> <span class="st">"stamen_toner_lite"</span>,</span>
-<span id="annotated-cell-11-5"><a href="#annotated-cell-11-5"></a>                      <span class="at">zoom =</span> <span class="dv">14</span>)</span>
-<span id="annotated-cell-11-6"><a href="#annotated-cell-11-6"></a></span>
-<span id="annotated-cell-11-7"><a href="#annotated-cell-11-7"></a><span class="fu">ggmap</span>(map) <span class="sc">+</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="3">3</button><span id="annotated-cell-11-8" class="code-annotation-target"><a href="#annotated-cell-11-8"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> violent_crimes,</span>
-<span id="annotated-cell-11-9"><a href="#annotated-cell-11-9"></a>             <span class="at">color =</span> <span class="st">"red"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-11-1" class="code-annotation-target"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a>bbox <span class="ot">&lt;-</span> <span class="fu">make_bbox</span>(lon, lat,</span>
+<span id="annotated-cell-11-2"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> violent_crimes)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-11-3" class="code-annotation-target"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> <span class="fu">get_stadiamap</span>(<span class="at">bbox =</span> bbox,</span>
+<span id="annotated-cell-11-4"><a href="#annotated-cell-11-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">maptype =</span> <span class="st">"stamen_toner_lite"</span>,</span>
+<span id="annotated-cell-11-5"><a href="#annotated-cell-11-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">zoom =</span> <span class="dv">14</span>)</span>
+<span id="annotated-cell-11-6"><a href="#annotated-cell-11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-11-7"><a href="#annotated-cell-11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggmap</span>(map) <span class="sc">+</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-11-8" class="code-annotation-target"><a href="#annotated-cell-11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> violent_crimes,</span>
+<span id="annotated-cell-11-9"><a href="#annotated-cell-11-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"red"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
 <dd>
 <span data-code-cell="annotated-cell-11" data-code-lines="1,2" data-code-annotation="1">Creating the bounding box for the longitude and latitude.</span>
@@ -403,151 +374,158 @@
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="CSSS508_Lecture10_files/figure-revealjs/unnamed-chunk-5-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure class="figure">
+<p><img src="CSSS508_Lecture10_files/figure-revealjs/unnamed-chunk-5-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-</div></div>
+</div>
 </div>
 </section>
-<section id="using-different-geoms" class="slide level2">
-<h2>Using Different Geoms</h2>
+<section id="using-different-geoms" class="level2">
+<h2 class="anchored" data-anchor-id="using-different-geoms">Using Different Geoms</h2>
 <p>With <code>ggmap</code> you’re working with <code>ggplot2</code>, so you can add in other kinds of layers, use <code>patchwork</code>, etc. All the <code>ggplot2</code> geom’s are available.</p>
-<div class="fragment">
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb5-2"><a></a><span class="fu">library</span>(ggdensity)</span>
-<span id="cb5-3"><a></a><span class="fu">library</span>(geomtextpath)</span>
-<span id="cb5-4"><a></a></span>
-<span id="cb5-5"><a></a>robberies <span class="ot">&lt;-</span> violent_crimes <span class="sc">|&gt;</span> <span class="fu">filter</span>(offense <span class="sc">==</span> <span class="st">"robbery"</span>)</span>
-<span id="cb5-6"><a></a></span>
-<span id="cb5-7"><a></a>points_map <span class="ot">&lt;-</span> <span class="fu">ggmap</span>(map) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> robberies, <span class="at">color =</span> <span class="st">"red"</span>)</span>
-<span id="cb5-8"><a></a></span>
-<span id="cb5-9"><a></a>hdr_map <span class="ot">&lt;-</span> <span class="fu">ggmap</span>(map) <span class="sc">+</span> </span>
-<span id="cb5-10"><a></a>  <span class="fu">geom_hdr</span>(<span class="fu">aes</span>(lon, lat, <span class="at">fill =</span> <span class="fu">after_stat</span>(probs)), </span>
-<span id="cb5-11"><a></a>           <span class="at">data =</span> robberies,</span>
-<span id="cb5-12"><a></a>           <span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb5-13"><a></a>  <span class="fu">geom_labeldensity2d</span>(<span class="fu">aes</span>(lon, lat, <span class="at">level =</span> <span class="fu">after_stat</span>(probs)),</span>
-<span id="cb5-14"><a></a>                      <span class="at">data =</span> robberies, </span>
-<span id="cb5-15"><a></a>                      <span class="at">stat =</span> <span class="st">"hdr_lines"</span>, </span>
-<span id="cb5-16"><a></a>                      <span class="at">size =</span> <span class="dv">3</span>, <span class="at">boxcolour =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb5-17"><a></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="sc">+</span></span>
-<span id="cb5-18"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb5-19"><a></a></span>
-<span id="cb5-20"><a></a>(points_map <span class="sc">+</span> hdr_map) <span class="sc">&amp;</span> </span>
-<span id="cb5-21"><a></a>  <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_blank</span>(), <span class="at">axis.text =</span> <span class="fu">element_blank</span>(), <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-
-</div>
-</section>
-<section id="using-different-geoms-output" class="slide level2 output-location-slide"><h2>Using Different Geoms</h2><div class="cell output-location-slide" data-layout-align="center">
+<p>. . .</p>
+<div class="cell" data-layout-align="center" data-output-location="slide">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdensity)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geomtextpath)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>robberies <span class="ot">&lt;-</span> violent_crimes <span class="sc">|&gt;</span> <span class="fu">filter</span>(offense <span class="sc">==</span> <span class="st">"robbery"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>points_map <span class="ot">&lt;-</span> <span class="fu">ggmap</span>(map) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> robberies, <span class="at">color =</span> <span class="st">"red"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>hdr_map <span class="ot">&lt;-</span> <span class="fu">ggmap</span>(map) <span class="sc">+</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hdr</span>(<span class="fu">aes</span>(lon, lat, <span class="at">fill =</span> <span class="fu">after_stat</span>(probs)), </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> robberies,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_labeldensity2d</span>(<span class="fu">aes</span>(lon, lat, <span class="at">level =</span> <span class="fu">after_stat</span>(probs)),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> robberies, </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">stat =</span> <span class="st">"hdr_lines"</span>, </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                      <span class="at">size =</span> <span class="dv">3</span>, <span class="at">boxcolour =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="sc">+</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>(points_map <span class="sc">+</span> hdr_map) <span class="sc">&amp;</span> </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_blank</span>(), <span class="at">axis.text =</span> <span class="fu">element_blank</span>(), <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="CSSS508_Lecture10_files/figure-revealjs/unnamed-chunk-6-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure class="figure">
+<p><img src="CSSS508_Lecture10_files/figure-revealjs/unnamed-chunk-6-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
 </div>
-</div></section><section id="marginal-histogram" class="slide level2">
-<h2>Marginal Histogram</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1"></a><span class="fu">library</span>(ggExtra)</span>
-<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2"></a><span class="fu">data</span>(mpg, <span class="at">package =</span> <span class="st">"ggplot2"</span>)</span>
-<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3"></a></span>
-<span id="annotated-cell-4-4"><a href="#annotated-cell-4-4"></a>mpg_select <span class="ot">&lt;-</span> mpg <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-4-5"><a href="#annotated-cell-4-5"></a>  <span class="fu">filter</span>(hwy <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> cty <span class="sc">&gt;</span> <span class="dv">27</span>)</span>
-<span id="annotated-cell-4-6"><a href="#annotated-cell-4-6"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span> </span>
-<span id="annotated-cell-4-7"><a href="#annotated-cell-4-7"></a>  <span class="fu">geom_count</span>() <span class="sc">+</span> </span>
-<span id="annotated-cell-4-8"><a href="#annotated-cell-4-8"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> F) <span class="sc">+</span> </span>
-<span id="annotated-cell-4-9"><a href="#annotated-cell-4-9"></a>  <span class="fu">theme_bw</span>() </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-10" class="code-annotation-target"><a href="#annotated-cell-4-10"></a><span class="fu">ggMarginal</span>(g, <span class="at">type =</span> <span class="st">"histogram"</span>, <span class="at">fill =</span> <span class="st">"transparent"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="marginal-histogram" class="level2">
+<h2 class="anchored" data-anchor-id="marginal-histogram">Marginal Histogram</h2>
+<div class="cell" data-layout-align="center" data-output-location="fragment">
+<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggExtra)</span>
+<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mpg, <span class="at">package =</span> <span class="st">"ggplot2"</span>)</span>
+<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-4-4"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>mpg_select <span class="ot">&lt;-</span> mpg <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-4-5"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(hwy <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> cty <span class="sc">&gt;</span> <span class="dv">27</span>)</span>
+<span id="annotated-cell-4-6"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span> </span>
+<span id="annotated-cell-4-7"><a href="#annotated-cell-4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>() <span class="sc">+</span> </span>
+<span id="annotated-cell-4-8"><a href="#annotated-cell-4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> F) <span class="sc">+</span> </span>
+<span id="annotated-cell-4-9"><a href="#annotated-cell-4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-10" class="code-annotation-target"><a href="#annotated-cell-4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggMarginal</span>(g, <span class="at">type =</span> <span class="st">"histogram"</span>, <span class="at">fill =</span> <span class="st">"transparent"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
 <dd>
 <span data-code-cell="annotated-cell-4" data-code-lines="10" data-code-annotation="1">Code that adds marginal plot.</span>
 </dd>
 </dl>
 </div>
-</div>
-<div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="CSSS508_Lecture10_files/figure-revealjs/unnamed-chunk-7-1.svg" class="quarto-figure quarto-figure-center"></p>
+<figure class="figure">
+<p><img src="CSSS508_Lecture10_files/figure-revealjs/unnamed-chunk-7-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="marginal-boxplot" class="slide level2">
-<h2>Marginal Boxplot</h2>
+<section id="marginal-boxplot" class="level2">
+<h2 class="anchored" data-anchor-id="marginal-boxplot">Marginal Boxplot</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1"></a><span class="fu">library</span>(ggExtra)</span>
-<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2"></a><span class="fu">data</span>(mpg, <span class="at">package =</span> <span class="st">"ggplot2"</span>)</span>
-<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3"></a></span>
-<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4"></a>mpg_select <span class="ot">&lt;-</span> mpg <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5"></a>  <span class="fu">filter</span>(hwy <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> cty <span class="sc">&gt;</span> <span class="dv">27</span>)</span>
-<span id="annotated-cell-5-6"><a href="#annotated-cell-5-6"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span> </span>
-<span id="annotated-cell-5-7"><a href="#annotated-cell-5-7"></a>  <span class="fu">geom_count</span>() <span class="sc">+</span> </span>
-<span id="annotated-cell-5-8"><a href="#annotated-cell-5-8"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> F) <span class="sc">+</span> </span>
-<span id="annotated-cell-5-9"><a href="#annotated-cell-5-9"></a>  <span class="fu">theme_bw</span>()</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-10" class="code-annotation-target"><a href="#annotated-cell-5-10"></a><span class="fu">ggMarginal</span>(g, <span class="at">type =</span> <span class="st">"boxplot"</span>, <span class="at">fill =</span> <span class="st">"transparent"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggExtra)</span>
+<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mpg, <span class="at">package =</span> <span class="st">"ggplot2"</span>)</span>
+<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>mpg_select <span class="ot">&lt;-</span> mpg <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(hwy <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> cty <span class="sc">&gt;</span> <span class="dv">27</span>)</span>
+<span id="annotated-cell-5-6"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span> </span>
+<span id="annotated-cell-5-7"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>() <span class="sc">+</span> </span>
+<span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> F) <span class="sc">+</span> </span>
+<span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-5-10" class="code-annotation-target"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggMarginal</span>(g, <span class="at">type =</span> <span class="st">"boxplot"</span>, <span class="at">fill =</span> <span class="st">"transparent"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
 <dd>
 <span data-code-cell="annotated-cell-5" data-code-lines="10" data-code-annotation="1">Code that adds marginal plot.</span>
 </dd>
 </dl>
 </div>
-
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="CSSS508_Lecture10_files/figure-revealjs/unnamed-chunk-8-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
 </div>
-<img data-src="CSSS508_Lecture10_files/figure-revealjs/unnamed-chunk-8-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="marginal-density-curve" class="slide level2">
-<h2>Marginal Density Curve</h2>
+</div>
+</div>
+</section>
+<section id="marginal-density-curve" class="level2">
+<h2 class="anchored" data-anchor-id="marginal-density-curve">Marginal Density Curve</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1"></a><span class="fu">library</span>(ggExtra)</span>
-<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2"></a><span class="fu">data</span>(mpg, <span class="at">package =</span> <span class="st">"ggplot2"</span>)</span>
-<span id="annotated-cell-6-3"><a href="#annotated-cell-6-3"></a></span>
-<span id="annotated-cell-6-4"><a href="#annotated-cell-6-4"></a>mpg_select <span class="ot">&lt;-</span> mpg <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-6-5"><a href="#annotated-cell-6-5"></a>  <span class="fu">filter</span>(hwy <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> cty <span class="sc">&gt;</span> <span class="dv">27</span>)</span>
-<span id="annotated-cell-6-6"><a href="#annotated-cell-6-6"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span> </span>
-<span id="annotated-cell-6-7"><a href="#annotated-cell-6-7"></a>  <span class="fu">geom_count</span>() <span class="sc">+</span> </span>
-<span id="annotated-cell-6-8"><a href="#annotated-cell-6-8"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> F) <span class="sc">+</span> </span>
-<span id="annotated-cell-6-9"><a href="#annotated-cell-6-9"></a>  <span class="fu">theme_bw</span>()</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-10" class="code-annotation-target"><a href="#annotated-cell-6-10"></a><span class="fu">ggMarginal</span>(g, <span class="at">type =</span> <span class="st">"density"</span>, <span class="at">fill =</span> <span class="st">"transparent"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggExtra)</span>
+<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mpg, <span class="at">package =</span> <span class="st">"ggplot2"</span>)</span>
+<span id="annotated-cell-6-3"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-6-4"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a>mpg_select <span class="ot">&lt;-</span> mpg <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-6-5"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(hwy <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> cty <span class="sc">&gt;</span> <span class="dv">27</span>)</span>
+<span id="annotated-cell-6-6"><a href="#annotated-cell-6-6" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span> </span>
+<span id="annotated-cell-6-7"><a href="#annotated-cell-6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>() <span class="sc">+</span> </span>
+<span id="annotated-cell-6-8"><a href="#annotated-cell-6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> F) <span class="sc">+</span> </span>
+<span id="annotated-cell-6-9"><a href="#annotated-cell-6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-6-10" class="code-annotation-target"><a href="#annotated-cell-6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggMarginal</span>(g, <span class="at">type =</span> <span class="st">"density"</span>, <span class="at">fill =</span> <span class="st">"transparent"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
 <dd>
 <span data-code-cell="annotated-cell-6" data-code-lines="10" data-code-annotation="1">Code that adds marginal plot.</span>
 </dd>
 </dl>
 </div>
-
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="CSSS508_Lecture10_files/figure-revealjs/unnamed-chunk-9-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
 </div>
-<img data-src="CSSS508_Lecture10_files/figure-revealjs/unnamed-chunk-9-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="create-animations" class="slide level2">
-<h2>Create Animations</h2>
+</div>
+</div>
+</section>
+<section id="create-animations" class="level2">
+<h2 class="anchored" data-anchor-id="create-animations">Create Animations</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-7-1"><a href="#annotated-cell-7-1"></a><span class="fu">library</span>(gapminder)</span>
-<span id="annotated-cell-7-2"><a href="#annotated-cell-7-2"></a><span class="fu">library</span>(gganimate)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-3" class="code-annotation-target"><a href="#annotated-cell-7-3"></a><span class="fu">library</span>(gifski)</span>
-<span id="annotated-cell-7-4"><a href="#annotated-cell-7-4"></a></span>
-<span id="annotated-cell-7-5"><a href="#annotated-cell-7-5"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(gdpPercap, lifeExp, <span class="at">size =</span> pop, <span class="at">colour =</span> country)) <span class="sc">+</span></span>
-<span id="annotated-cell-7-6"><a href="#annotated-cell-7-6"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="annotated-cell-7-7"><a href="#annotated-cell-7-7"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> country_colors) <span class="sc">+</span></span>
-<span id="annotated-cell-7-8"><a href="#annotated-cell-7-8"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
-<span id="annotated-cell-7-9"><a href="#annotated-cell-7-9"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
-<span id="annotated-cell-7-10"><a href="#annotated-cell-7-10"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>continent) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2">2</button><span id="annotated-cell-7-11" class="code-annotation-target"><a href="#annotated-cell-7-11"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Year: {frame_time}'</span>, <span class="at">x =</span> <span class="st">'GDP per capita'</span>, <span class="at">y =</span> <span class="st">'life expectancy'</span>) <span class="sc">+</span></span>
-<span id="annotated-cell-7-12"><a href="#annotated-cell-7-12"></a>  <span class="fu">transition_time</span>(year) <span class="sc">+</span></span>
-<span id="annotated-cell-7-13"><a href="#annotated-cell-7-13"></a>  <span class="fu">ease_aes</span>(<span class="st">'linear'</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-7-1"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
+<span id="annotated-cell-7-2"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-7-3" class="code-annotation-target"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gifski)</span>
+<span id="annotated-cell-7-4"><a href="#annotated-cell-7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-7-5"><a href="#annotated-cell-7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(gdpPercap, lifeExp, <span class="at">size =</span> pop, <span class="at">colour =</span> country)) <span class="sc">+</span></span>
+<span id="annotated-cell-7-6"><a href="#annotated-cell-7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-7-7"><a href="#annotated-cell-7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> country_colors) <span class="sc">+</span></span>
+<span id="annotated-cell-7-8"><a href="#annotated-cell-7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
+<span id="annotated-cell-7-9"><a href="#annotated-cell-7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="annotated-cell-7-10"><a href="#annotated-cell-7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>continent) <span class="sc">+</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-7-11" class="code-annotation-target"><a href="#annotated-cell-7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Year: {frame_time}'</span>, <span class="at">x =</span> <span class="st">'GDP per capita'</span>, <span class="at">y =</span> <span class="st">'life expectancy'</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-7-12"><a href="#annotated-cell-7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_time</span>(year) <span class="sc">+</span></span>
+<span id="annotated-cell-7-13"><a href="#annotated-cell-7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ease_aes</span>(<span class="st">'linear'</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
 <dd>
 <span data-code-cell="annotated-cell-7" data-code-lines="3" data-code-annotation="1">Need this package to create a gif of the <code>gganimate</code> output.</span>
@@ -560,711 +538,644 @@
 </div>
 </div>
 </section>
-<section id="create-animations-1" class="slide level2">
-<h2>Create Animations</h2>
-
-<img data-src="images/gganmimate_example.gif" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="data-visualization-resources" class="slide level2">
-<h2>Data Visualization Resources</h2>
-<ol type="1">
-<li class="fragment">Hadley Wickham’s <em><code>ggplot2</code>: Elegant Graphics for Data Analysis (Second Edition)</em> is available through the <a href="https://orbiscascade-washington.primo.exlibrisgroup.com/permalink/01ALLIANCE_UW/1juclfo/alma99161977549501452">UW Library</a> and the forthcoming <a href="https://ggplot2-book.org/">Third Edition</a> is being written as we speak and will be available online soon!</li>
-<li class="fragment"><a href="https://r-spatial.org/book/">Spatial Data Science with Applications in R</a> by Edzer Pebesma and Roger Bivand</li>
-<li class="fragment">The <a href="https://r-spatial.github.io/sf/"><code>sf</code></a> package also works within the tidyverse framework and pairs very nicely with data from the census which can be easily accessed using <a href="https://walker-data.com/tidycensus/"><code>tidycensus</code></a></li>
-<li class="fragment">More ideas for visualizations can be found on <a href="https://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html">this master list</a> and by looking at <a href="https://exts.ggplot2.tidyverse.org/gallery/">ggplot2 extension packages</a>.</li>
-<li class="fragment">Think about taking <strong>CSSS 569</strong> with Chris Adolph (offered in Winter quarter) if you want to learn more about how to create visualizations in <code>R</code> and gain more understanding about best practices for conveying your data and findings effectively.</li>
-</ol>
-</section></section>
-<section>
-<section id="creating-web-applications" class="title-slide slide level1 section-title center" data-background-color="#99a486">
-<h1>Creating web applications</h1>
-
-</section>
-<section id="shiny" class="slide level2">
-<h2>Shiny</h2>
-<p>Shiny is an open source R package that provides an elegant and powerful web framework for building web applications using R. Shiny helps you turn your analyses into interactive web applications without requiring HTML, CSS, or JavaScript knowledge.</p>
-<div class="fragment">
+<section id="create-animations-1" class="level2">
+<h2 class="anchored" data-anchor-id="create-animations-1">Create Animations</h2>
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/ORCA_app.png" class="quarto-figure quarto-figure-center" style="width:80.0%;height:80.0%"></p>
+<figure class="figure">
+<p><img src="images/gganmimate_example.gif" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
+</section>
+<section id="data-visualization-resources" class="level2">
+<h2 class="anchored" data-anchor-id="data-visualization-resources">Data Visualization Resources</h2>
+<div class="incremental">
+<ol class="incremental" type="1">
+<li>Hadley Wickham’s <em><code>ggplot2</code>: Elegant Graphics for Data Analysis (Second Edition)</em> is available through the <a href="https://orbiscascade-washington.primo.exlibrisgroup.com/permalink/01ALLIANCE_UW/1juclfo/alma99161977549501452">UW Library</a> and the forthcoming <a href="https://ggplot2-book.org/">Third Edition</a> is being written as we speak and will be available online soon!</li>
+<li><a href="https://r-spatial.org/book/">Spatial Data Science with Applications in R</a> by Edzer Pebesma and Roger Bivand</li>
+<li>The <a href="https://r-spatial.github.io/sf/"><code>sf</code></a> package also works within the tidyverse framework and pairs very nicely with data from the census which can be easily accessed using <a href="https://walker-data.com/tidycensus/"><code>tidycensus</code></a></li>
+<li>More ideas for visualizations can be found on <a href="https://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html">this master list</a> and by looking at <a href="https://exts.ggplot2.tidyverse.org/gallery/">ggplot2 extension packages</a>.</li>
+<li>Think about taking <strong>CSSS 569</strong> with Chris Adolph (offered in Winter quarter) if you want to learn more about how to create visualizations in <code>R</code> and gain more understanding about best practices for conveying your data and findings effectively.</li>
+</ol>
 </div>
 </section>
-<section id="shiny-examples" class="slide level2" data-background-iframe="https://shiny.posit.co/r/gallery/#feature-demos" data-background-interactive="true">
-<h2>Shiny Examples</h2>
-</section></section>
-<section>
-<section id="version-control-with-gitgithub" class="title-slide slide level1 section-title center" data-background-color="#99a486">
-<h1>Version control with Git/GitHub</h1>
-
 </section>
-<section id="what-is-version-control" class="slide level2">
-<h2>What is Version Control?</h2>
+<section id="creating-web-applications" class="level1 section-title" data-background-color="#99a486">
+<h1 class="section-title" data-background-color="#99a486">Creating web applications</h1>
+<section id="shiny" class="level2">
+<h2 class="anchored" data-anchor-id="shiny">Shiny</h2>
+<p>Shiny is an open source R package that provides an elegant and powerful web framework for building web applications using R. Shiny helps you turn your analyses into interactive web applications without requiring HTML, CSS, or JavaScript knowledge.</p>
+<p>. . .</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/ORCA_app.png" class="quarto-figure quarto-figure-center figure-img" style="width:80.0%;height:80.0%"></p>
+</figure>
+</div>
+</section>
+<section id="shiny-examples" class="level2" data-background-iframe="https://shiny.posit.co/r/gallery/#feature-demos" data-background-interactive="true">
+<h2 data-background-iframe="https://shiny.posit.co/r/gallery/#feature-demos" data-background-interactive="true" class="anchored" data-anchor-id="shiny-examples">Shiny Examples</h2>
+</section>
+</section>
+<section id="version-control-with-gitgithub" class="level1 section-title" data-background-color="#99a486">
+<h1 class="section-title" data-background-color="#99a486">Version control with Git/GitHub</h1>
+<section id="what-is-version-control" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-version-control">What is Version Control?</h2>
 <p>Version control allows you to work work individually and/or collaboratively in a highly structured, documented way.</p>
-<div class="fragment">
+<p>. . .</p>
 <p>It’s basically like a robust save program for your project. You track and log changes you make over time and the version control system allows you to review or even restore earlier versions of your project.</p>
-</div>
-<div class="fragment">
+<p>. . .</p>
 <p><br></p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Originally meant for software developers, git has been adopted by computational social scientists to source code but also to keep track of the whole collection of files that make up a research project.</p>
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/git.png" class="quarto-figure quarto-figure-center"></p>
+<figure class="figure">
+<p><img src="images/git.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-</div></div>
+</div>
+</div>
+<p>. . .</p>
+</section>
+<section id="why-use-version-control" class="level2">
+<h2 class="anchored" data-anchor-id="why-use-version-control">Why Use Version Control?</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/diy_vs_git.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
 </div>
 </section>
-<section id="why-use-version-control" class="slide level2">
-<h2>Why Use Version Control?</h2>
-
-<img data-src="images/diy_vs_git.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="what-is-github" class="slide level2">
-<h2>What is Github?</h2>
-
-<img data-src="images/git_vs_github.jpeg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="why-use-github" class="slide level2">
-<h2>Why Use Github?</h2>
-
-<img data-src="images/git-workflow.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="collaboration-made-easier" class="slide level2">
-<h2>Collaboration Made “Easier”</h2>
+<section id="what-is-github" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-github">What is Github?</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/git_vs_github.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="why-use-github" class="level2">
+<h2 class="anchored" data-anchor-id="why-use-github">Why Use Github?</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/git-workflow.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="collaboration-made-easier" class="level2">
+<h2 class="anchored" data-anchor-id="collaboration-made-easier">Collaboration Made “Easier”</h2>
 <div class="columns">
 <div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/using_github.png" class="quarto-figure quarto-figure-center"></p>
+<figure class="figure">
+<p><img src="images/using_github.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
 </div><div class="column" style="width:60%;">
 <div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/collaboration.png" class="quarto-figure quarto-figure-center"></p>
+<figure class="figure">
+<p><img src="images/collaboration.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-</div></div>
-</section>
-<section id="git-integration-in-r-studio" class="slide level2">
-<h2>Git Integration in R Studio</h2>
-
-<img data-src="images/git_RStudio.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="gitgithub-resources" class="slide level2">
-<h2>Git/GitHub Resources</h2>
-<ol type="1">
-<li class="fragment">Hands down the best introduction to git and using git/GitHub with RStudio Projects is Jennifer Bryan’s online book <a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a></li>
-<li class="fragment">Software carpentry has a nice <a href="https://swcarpentry.github.io/git-novice/">beginner’s “class”</a> that’ll help you learn the git basics.</li>
-<li class="fragment">Here’s a user-contributed cheat-sheet for <a href="https://rstudio.github.io/cheatsheets/git-github.pdf">Using git and GitHub with RStudio</a>.</li>
-</ol>
-</section></section>
-<section>
-<section id="creating-slides-articles-books-andor-websites" class="title-slide slide level1 section-title center" data-background-color="#99a486">
-<h1>Creating slides, articles, books, and/or websites</h1>
-
-</section>
-<section id="quarto" class="slide level2" data-background-iframe="https://quarto.org/docs/guide/" data-background-interactive="true">
-<h2>Quarto</h2>
-</section></section>
-<section>
-<section id="thats-a-wrap" class="title-slide slide level1 section-title center" data-background-color="#99a486">
-<h1>That’s a Wrap!</h1>
-
-</section>
-<section id="plug-for-csscr" class="slide level2">
-<h2>Plug for CSSCR</h2>
-<p>Also, this lab is part of CSSCR (<a href="https://depts.washington.edu/csscr/">The Center for Social Science Computation and Research</a>) where I’m also on staff as a consultant. CSSCR is a resource center for the social science departments<sup>1</sup> at the University of Washington.</p>
-<p><br></p>
-<p>As you continue to learn <code>R</code> feel free to drop by<sup>2</sup> with any/all of your <code>R</code> coding questions.</p>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>Constituent member departments include The College of Education, The Department of Anthropology, The Department of Communication, The Department of Economics, The Department of Geography, The Department of Political Science, The Department of Psychology, The Department of Sociology, The Jackson School of International Studies, and The School of Social Work</p></li><li id="fn3"><p>We offer drop-in consulting in Savery 119, 8am-6pm Monday-Friday.</p></li></ol></aside></section>
-<section class="slide level2">
-
-<p>Thanks for spending so much time this quarter learning with me 😎</p>
-
-<img data-src="images/hate_class.png" class="quarto-figure quarto-figure-center r-stretch"><p>Don’t forget to fill out the course evaluation that you received via email!</p>
-
-
-</section></section>
-
-    </div>
-  <div class="quarto-auto-generated-content" style="display: none;">
-<div class="footer footer-default">
-
 </div>
-</div></div>
+</div>
+</section>
+<section id="git-integration-in-r-studio" class="level2">
+<h2 class="anchored" data-anchor-id="git-integration-in-r-studio">Git Integration in R Studio</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/git_RStudio.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="gitgithub-resources" class="level2">
+<h2 class="anchored" data-anchor-id="gitgithub-resources">Git/GitHub Resources</h2>
+<div class="incremental">
+<ol class="incremental" type="1">
+<li>Hands down the best introduction to git and using git/GitHub with RStudio Projects is Jennifer Bryan’s online book <a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a></li>
+<li>Software carpentry has a nice <a href="https://swcarpentry.github.io/git-novice/">beginner’s “class”</a> that’ll help you learn the git basics.</li>
+<li>Here’s a user-contributed cheat-sheet for <a href="https://rstudio.github.io/cheatsheets/git-github.pdf">Using git and GitHub with RStudio</a>.</li>
+</ol>
+</div>
+</section>
+</section>
+<section id="creating-slides-articles-books-andor-websites" class="level1 section-title" data-background-color="#99a486">
+<h1 class="section-title" data-background-color="#99a486">Creating slides, articles, books, and/or websites</h1>
+<section id="quarto" class="level2" data-background-iframe="https://quarto.org/docs/guide/" data-background-interactive="true">
+<h2 data-background-iframe="https://quarto.org/docs/guide/" data-background-interactive="true" class="anchored" data-anchor-id="quarto">Quarto</h2>
+</section>
+</section>
+<section id="thats-a-wrap" class="level1 section-title" data-background-color="#99a486">
+<h1 class="section-title" data-background-color="#99a486">That’s a Wrap!</h1>
+<section id="plug-for-csscr" class="level2">
+<h2 class="anchored" data-anchor-id="plug-for-csscr">Plug for CSSCR</h2>
+<p>Also, this lab is part of CSSCR (<a href="https://depts.washington.edu/csscr/">The Center for Social Science Computation and Research</a>) where I’m also on staff as a consultant. CSSCR is a resource center for the social science departments<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> at the University of Washington.</p>
+<p><br></p>
+<p>As you continue to learn <code>R</code> feel free to drop by<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> with any/all of your <code>R</code> coding questions.</p>
+<hr>
+<p>Thanks for spending so much time this quarter learning with me 😎</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/hate_class.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<p>Don’t forget to fill out the course evaluation that you received via email!</p>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
 
-  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+</section>
+</section>
 
-  <script>
 
-      // Full list of configuration options available at:
-      // https://revealjs.com/config/
-      Reveal.initialize({
-'controlsAuto': false,
-'previewLinksAuto': false,
-'pdfSeparateFragments': false,
-'autoAnimateEasing': "ease",
-'autoAnimateDuration': 1,
-'autoAnimateUnmatched': true,
-'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":true},
-'pointer': {"key":"q","color":"#b18eb1","pointerSize":16,"alwaysVisible":false},
-'smaller': true,
- 
-        // Display controls in the bottom right corner
-        controls: true,
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
-        // Help the user learn the controls by providing hints, for example by
-        // bouncing the down arrow when they first encounter a vertical slide
-        controlsTutorial: true,
+<ol>
+<li id="fn1"><p>They also provide a <a href="https://www.tidymodels.org/start/">great introductory tutorial</a> to lay out the framework for why and how to use each core <code>tidymodels</code> package.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Constituent member departments include The College of Education, The Department of Anthropology, The Department of Communication, The Department of Economics, The Department of Geography, The Department of Political Science, The Department of Psychology, The Department of Sociology, The Jackson School of International Studies, and The School of Social Work<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>We offer drop-in consulting in Savery 119, 8am-6pm Monday-Friday.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 
-        // Determines where controls appear, "edges" or "bottom-right"
-        controlsLayout: 'edges',
+<script>
+  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+  // slide changes (different for each slide format).
+  (function () {
+    // dispatch for htmlwidgets
+    function fireSlideEnter() {
+      const event = window.document.createEvent("Event");
+      event.initEvent("slideenter", true, true);
+      window.document.dispatchEvent(event);
+    }
 
-        // Visibility rule for backwards navigation arrows; "faded", "hidden"
-        // or "visible"
-        controlsBackArrows: 'faded',
+    function fireSlideChanged(previousSlide, currentSlide) {
+      fireSlideEnter();
 
-        // Display a presentation progress bar
-        progress: true,
+      // dispatch for shiny
+      if (window.jQuery) {
+        if (previousSlide) {
+          window.jQuery(previousSlide).trigger("hidden");
+        }
+        if (currentSlide) {
+          window.jQuery(currentSlide).trigger("shown");
+        }
+      }
+    }
 
-        // Display the page number of the current slide
-        slideNumber: 'c/t',
-
-        // 'all', 'print', or 'speaker'
-        showSlideNumber: 'all',
-
-        // Add the current slide number to the URL hash so that reloading the
-        // page/copying the URL will return you to the same slide
-        hash: true,
-
-        // Start with 1 for the hash rather than 0
-        hashOneBasedIndex: false,
-
-        // Flags if we should monitor the hash and change slides accordingly
-        respondToHashChanges: true,
-
-        // Push each slide change to the browser history
-        history: false,
-
-        // Enable keyboard shortcuts for navigation
-        keyboard: true,
-
-        // Enable the slide overview mode
-        overview: true,
-
-        // Disables the default reveal.js slide layout (scaling and centering)
-        // so that you can use custom CSS layout
-        disableLayout: false,
-
-        // Vertical centering of slides
-        center: false,
-
-        // Enables touch navigation on devices with touch input
-        touch: true,
-
-        // Loop the presentation
-        loop: false,
-
-        // Change the presentation direction to be RTL
-        rtl: false,
-
-        // see https://revealjs.com/vertical-slides/#navigation-mode
-        navigationMode: 'linear',
-
-        // Randomizes the order of slides each time the presentation loads
-        shuffle: false,
-
-        // Turns fragments on and off globally
-        fragments: true,
-
-        // Flags whether to include the current fragment in the URL,
-        // so that reloading brings you to the same fragment position
-        fragmentInURL: false,
-
-        // Flags if the presentation is running in an embedded mode,
-        // i.e. contained within a limited portion of the screen
-        embedded: false,
-
-        // Flags if we should show a help overlay when the questionmark
-        // key is pressed
-        help: true,
-
-        // Flags if it should be possible to pause the presentation (blackout)
-        pause: true,
-
-        // Flags if speaker notes should be visible to all viewers
-        showNotes: false,
-
-        // Global override for autoplaying embedded media (null/true/false)
-        autoPlayMedia: null,
-
-        // Global override for preloading lazy-loaded iframes (null/true/false)
-        preloadIframes: null,
-
-        // Number of milliseconds between automatically proceeding to the
-        // next slide, disabled when set to 0, this value can be overwritten
-        // by using a data-autoslide attribute on your slides
-        autoSlide: 0,
-
-        // Stop auto-sliding after user input
-        autoSlideStoppable: true,
-
-        // Use this method for navigation when auto-sliding
-        autoSlideMethod: null,
-
-        // Specify the average time in seconds that you think you will spend
-        // presenting each slide. This is used to show a pacing timer in the
-        // speaker view
-        defaultTiming: null,
-
-        // Enable slide navigation via mouse wheel
-        mouseWheel: false,
-
-        // The display mode that will be used to show slides
-        display: 'block',
-
-        // Hide cursor if inactive
-        hideInactiveCursor: true,
-
-        // Time before the cursor is hidden (in ms)
-        hideCursorTime: 5000,
-
-        // Opens links in an iframe preview overlay
-        previewLinks: true,
-
-        // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'none',
-
-        // Transition speed (default/fast/slow)
-        transitionSpeed: 'default',
-
-        // Transition style for full page slide backgrounds
-        // (none/fade/slide/convex/concave/zoom)
-        backgroundTransition: 'none',
-
-        // Number of slides away from the current that are visible
-        viewDistance: 3,
-
-        // Number of slides away from the current that are visible on mobile
-        // devices. It is advisable to set this to a lower number than
-        // viewDistance in order to save resources.
-        mobileViewDistance: 2,
-
-        // The "normal" size of the presentation, aspect ratio will be preserved
-        // when the presentation is scaled to fit different resolutions. Can be
-        // specified using percentage units.
-        width: 1050,
-
-        height: 700,
-
-        // Factor of the display size that should remain empty around the content
-        margin: 0.1,
-
-        math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
-          config: 'TeX-AMS_HTML-full',
-          tex2jax: {
-            inlineMath: [['\\(','\\)']],
-            displayMath: [['\\[','\\]']],
-            balanceBraces: true,
-            processEscapes: false,
-            processRefs: true,
-            processEnvironments: true,
-            preview: 'TeX',
-            skipTags: ['script','noscript','style','textarea','pre','code'],
-            ignoreClass: 'tex2jax_ignore',
-            processClass: 'tex2jax_process'
-          },
-        },
-
-        // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
-
-          RevealMath,
-          RevealNotes,
-          RevealSearch,
-          RevealZoom
-        ]
+    // hookup for slidy
+    if (window.w3c_slidy) {
+      window.w3c_slidy.add_observer(function (slide_num) {
+        // slide_num starts at position 1
+        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
       });
-    </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
+    }
 
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
+  })();
+</script>
 
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
             }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
           }
         }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
-      window.document.addEventListener("DOMContentLoaded", function (event) {
-        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-        tabsets.forEach(function(tabset) {
-          const tabby = new Tabby('#' + tabset.id);
-        });
-        const isCodeAnnotation = (el) => {
-          for (const clz of el.classList) {
-            if (clz.startsWith('code-annotation-')) {                     
-              return true;
-            }
-          }
-          return false;
-        }
-        const onCopySuccess = function(e) {
-          // button target
-          const button = e.trigger;
-          // don't keep focus
-          button.blur();
-          // flash "checked"
-          button.classList.add('code-copy-button-checked');
-          var currentTitle = button.getAttribute("title");
-          button.setAttribute("title", "Copied!");
-          let tooltip;
-          if (window.bootstrap) {
-            button.setAttribute("data-bs-toggle", "tooltip");
-            button.setAttribute("data-bs-placement", "left");
-            button.setAttribute("data-bs-title", "Copied!");
-            tooltip = new bootstrap.Tooltip(button, 
-              { trigger: "manual", 
-                customClass: "code-copy-button-tooltip",
-                offset: [0, -8]});
-            tooltip.show();    
-          }
-          setTimeout(function() {
-            if (tooltip) {
-              tooltip.hide();
-              button.removeAttribute("data-bs-title");
-              button.removeAttribute("data-bs-toggle");
-              button.removeAttribute("data-bs-placement");
-            }
-            button.setAttribute("title", currentTitle);
-            button.classList.remove('code-copy-button-checked');
-          }, 1000);
-          // clear code selection
-          e.clearSelection();
-        }
-        const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
-            }
-            return codeEl.innerText;
-        }
-        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-          text: getTextToCopy
-        });
-        clipboard.on('success', onCopySuccess);
-        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-            text: getTextToCopy,
-            container: window.document.getElementById('quarto-embedded-source-code-modal')
-          });
-          clipboardModal.on('success', onCopySuccess);
-        }
-          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-          var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
-          var isInternal = (href) => {
-              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-          }
-          // Inspect non-navigation links and adorn them if external
-         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-          for (var i=0; i<links.length; i++) {
-            const link = links[i];
-            if (!isInternal(link.href)) {
-              // undo the damage that might have been done by quarto-nav.js in the case of
-              // links that we want to consider external
-              if (link.dataset.originalHref !== undefined) {
-                link.href = link.dataset.originalHref;
-              }
-                // default icon
-                link.classList.add("external");
-            }
-          }
-        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-          const config = {
-            allowHTML: true,
-            maxWidth: 500,
-            delay: 100,
-            arrow: false,
-            appendTo: function(el) {
-                return el.closest('section.slide') || el.parentElement;
-            },
-            interactive: true,
-            interactiveBorder: 10,
-            theme: 'light-border',
-            placement: 'bottom-start',
-          };
-          if (contentFn) {
-            config.content = contentFn;
-          }
-          if (onTriggerFn) {
-            config.onTrigger = onTriggerFn;
-          }
-          if (onUntriggerFn) {
-            config.onUntrigger = onUntriggerFn;
-          }
-            config['offset'] = [0,0];
-            config['maxWidth'] = 700;
-          window.tippy(el, config); 
-        }
-        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-        for (var i=0; i<noterefs.length; i++) {
-          const ref = noterefs[i];
-          tippyHover(ref, function() {
-            // use id or data attribute instead here
-            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-            try { href = new URL(href).hash; } catch {}
-            const id = href.replace(/^#\/?/, "");
-            const note = window.document.getElementById(id);
-            if (note) {
-              return note.innerHTML;
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
             } else {
-              return "";
+              container.appendChild(child.cloneNode(true));
+              break;
             }
-          });
-        }
-            let selectedAnnoteEl;
-            const selectorForAnnotation = ( cell, annotation) => {
-              let cellAttr = 'data-code-cell="' + cell + '"';
-              let lineAttr = 'data-code-annotation="' +  annotation + '"';
-              const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-              return selector;
-            }
-            const selectCodeLines = (annoteEl) => {
-              const doc = window.document;
-              const targetCell = annoteEl.getAttribute("data-target-cell");
-              const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-              const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-              const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-              const lineIds = lines.map((line) => {
-                return targetCell + "-" + line;
-              })
-              let top = null;
-              let height = null;
-              let parent = null;
-              if (lineIds.length > 0) {
-                  //compute the position of the single el (top and bottom and make a div)
-                  const el = window.document.getElementById(lineIds[0]);
-                  top = el.offsetTop;
-                  height = el.offsetHeight;
-                  parent = el.parentElement.parentElement;
-                if (lineIds.length > 1) {
-                  const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-                  const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-                  height = bottom - top;
-                }
-                if (top !== null && height !== null && parent !== null) {
-                  // cook up a div (if necessary) and position it 
-                  let div = window.document.getElementById("code-annotation-line-highlight");
-                  if (div === null) {
-                    div = window.document.createElement("div");
-                    div.setAttribute("id", "code-annotation-line-highlight");
-                    div.style.position = 'absolute';
-                    parent.appendChild(div);
-                  }
-                  div.style.top = top - 2 + "px";
-                  div.style.height = height + 4 + "px";
-                  div.style.left = 0;
-                  let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-                  if (gutterDiv === null) {
-                    gutterDiv = window.document.createElement("div");
-                    gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                    gutterDiv.style.position = 'absolute';
-                    const codeCell = window.document.getElementById(targetCell);
-                    const gutter = codeCell.querySelector('.code-annotation-gutter');
-                    gutter.appendChild(gutterDiv);
-                  }
-                  gutterDiv.style.top = top - 2 + "px";
-                  gutterDiv.style.height = height + 4 + "px";
-                }
-                selectedAnnoteEl = annoteEl;
-              }
-            };
-            const unselectCodeLines = () => {
-              const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-              elementsIds.forEach((elId) => {
-                const div = window.document.getElementById(elId);
-                if (div) {
-                  div.remove();
-                }
-              });
-              selectedAnnoteEl = undefined;
-            };
-              // Handle positioning of the toggle
-          window.addEventListener(
-            "resize",
-            throttle(() => {
-              elRect = undefined;
-              if (selectedAnnoteEl) {
-                selectCodeLines(selectedAnnoteEl);
-              }
-            }, 10)
-          );
-          function throttle(fn, ms) {
-          let throttle = false;
-          let timer;
-            return (...args) => {
-              if(!throttle) { // first call gets through
-                  fn.apply(this, args);
-                  throttle = true;
-              } else { // all the others get throttled
-                  if(timer) clearTimeout(timer); // cancel #2
-                  timer = setTimeout(() => {
-                    fn.apply(this, args);
-                    timer = throttle = false;
-                  }, ms);
-              }
-            };
           }
-            const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
-            for (let i=0; i<annoteTargets.length; i++) {
-              const annoteTarget = annoteTargets[i];
-              const targetCell = annoteTarget.getAttribute("data-target-cell");
-              const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
-              const contentFn = () => {
-                const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-                if (content) {
-                  const tipContent = content.cloneNode(true);
-                  tipContent.classList.add("code-annotation-tip-content");
-                  return tipContent.outerHTML;
-                }
-              }
-              const config = {
-                allowHTML: true,
-                content: contentFn,
-                onShow: (instance) => {
-                  selectCodeLines(instance.reference);
-                  instance.reference.classList.add('code-annotation-active');
-                  window.tippy.hideAll();
-                },
-                onHide: (instance) => {
-                  unselectCodeLines();
-                  instance.reference.classList.remove('code-annotation-active');
-                },
-                maxWidth: 300,
-                delay: [50, 0],
-                duration: [200, 0],
-                offset: [5, 10],
-                arrow: true,
-                appendTo: function(el) {
-                  return el.parentElement.parentElement.parentElement;
-                },
-                interactive: true,
-                interactiveBorder: 10,
-                theme: 'light-border',
-                placement: 'right',
-                popperOptions: {
-                  modifiers: [
-                  {
-                    name: 'flip',
-                    options: {
-                      flipVariations: false, // true by default
-                      allowedAutoPlacements: ['right'],
-                      fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
-                    },
-                  },
-                  {
-                    name: 'preventOverflow',
-                    options: {
-                      mainAxis: false,
-                      altAxis: false
-                    }
-                  }
-                  ]        
-                }      
-              };
-              window.tippy(annoteTarget, config); 
-            }
-        const findCites = (el) => {
-          const parentEl = el.parentElement;
-          if (parentEl) {
-            const cites = parentEl.dataset.cites;
-            if (cites) {
-              return {
-                el,
-                cites: cites.split(' ')
-              };
-            } else {
-              return findCites(el.parentElement)
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
             }
           } else {
-            return undefined;
-          }
-        };
-        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-        for (var i=0; i<bibliorefs.length; i++) {
-          const ref = bibliorefs[i];
-          const citeInfo = findCites(ref);
-          if (citeInfo) {
-            tippyHover(citeInfo.el, function() {
-              var popup = window.document.createElement('div');
-              citeInfo.cites.forEach(function(cite) {
-                var citeDiv = window.document.createElement('div');
-                citeDiv.classList.add('hanging-indent');
-                citeDiv.classList.add('csl-entry');
-                var biblioDiv = window.document.getElementById('ref-' + cite);
-                if (biblioDiv) {
-                  citeDiv.innerHTML = biblioDiv.innerHTML;
-                }
-                popup.appendChild(citeDiv);
-              });
-              return popup.innerHTML;
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
             });
           }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
         }
+      }, function(instance) {
       });
-      </script>
-    
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Created with <a href="https://quarto.org/">Quarto</a> • <a href="https://creativecommons.org/licenses/by-nc/4.0/">License</a></p>
+</div>   
+    <div class="nav-footer-center">
+<p>Copyright © 2023 Victoria Sass <br> Course content adapted from <a href="https://clanfear.github.io/CSSS508/">Chuck Lanfear</a> and <a href="https://pearce790.github.io/CSSS508/index.html">Michael Pearce</a></p>
+</div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="mailto:vsass@uw.edu">
+      <i class="bi bi-envelope-at" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=A3lEdiIAAAAJ&amp;hl=en">
+      <i class="bi bi-google" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vsass">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="http://vsass.github.io/Sass_Victoria_CV_2023.pdf">
+      <i class="bi bi-file-person" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
 
 </body></html>
