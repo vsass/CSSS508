@@ -348,13 +348,13 @@
 <div class="fragment">
 <p>Now, load the <code>gapminder</code> package as well as the <code>tidyverse</code> package:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-28"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-28-1"><a href="#annotated-cell-28-1"></a><span class="fu">library</span>(gapminder)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-28" data-target-annotation="1">1</button><span id="annotated-cell-28-2" class="code-annotation-target"><a href="#annotated-cell-28-2"></a><span class="fu">library</span>(tidyverse)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-27"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-27-1"><a href="#annotated-cell-27-1"></a><span class="fu">library</span>(gapminder)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="1">1</button><span id="annotated-cell-27-2" class="code-annotation-target"><a href="#annotated-cell-27-2"></a><span class="fu">library</span>(tidyverse)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-28" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-27" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-28" data-code-lines="2" data-code-annotation="1">Every time you <code>library</code> (i.e.&nbsp;load) <code>tidyverse</code> it will tell you which individual packages it is loading, as well as all function conflicts it has with other packages loaded in the current session. This is useful information but you can suppress seeing/printing this output by adding the <code>message: false</code> chunk option to your code chunk.</span>
+<span data-code-cell="annotated-cell-27" data-code-lines="2" data-code-annotation="1">Every time you <code>library</code> (i.e.&nbsp;load) <code>tidyverse</code> it will tell you which individual packages it is loading, as well as all function conflicts it has with other packages loaded in the current session. This is useful information but you can suppress seeing/printing this output by adding the <code>message: false</code> chunk option to your code chunk.</span>
 </dd>
 </dl>
 </div>
@@ -587,7 +587,6 @@
 <h4 id="all-layers-have">All layers have:</h4>
 <p>an initializing <code>ggplot</code> call and at least one <code>geom</code> function.</p>
 <p><br></p>
-<div class="fragment">
 <div class="panel-tabset">
 <ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">same data &amp; aesthetics</a></li><li><a href="#tabset-1-2">same data, diff aesthetics</a></li><li><a href="#tabset-1-3">diff data &amp; aesthetics</a></li></ul>
 <div class="tab-content">
@@ -616,7 +615,6 @@
 <span id="cb8-4"><a></a>  <span class="fu">geom_yyy</span>(<span class="at">data =</span> [dataset2],</span>
 <span id="cb8-5"><a></a>           <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> [x_variable], <span class="at">y =</span> [y_variable])) <span class="sc">+</span></span>
 <span id="cb8-6"><a></a>  other options</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </div>
 </div>
 </div>
@@ -1285,54 +1283,54 @@
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-52"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-52-1"><a href="#annotated-cell-52-1"></a>gapminder_sub <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-52" data-target-annotation="1">1</button><span id="annotated-cell-52-2" class="code-annotation-target"><a href="#annotated-cell-52-2"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1952</span>, <span class="dv">1982</span>, <span class="dv">2002</span>))</span>
-<span id="annotated-cell-52-3"><a href="#annotated-cell-52-3"></a>  </span>
-<span id="annotated-cell-52-4"><a href="#annotated-cell-52-4"></a>scales_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> gapminder_sub,</span>
-<span id="annotated-cell-52-5"><a href="#annotated-cell-52-5"></a>                      <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">y =</span> gdpPercap, <span class="at">fill =</span> continent)) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-52" data-target-annotation="2">2</button><span id="annotated-cell-52-6" class="code-annotation-target"><a href="#annotated-cell-52-6"></a>              <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-52" data-target-annotation="3">3</button><span id="annotated-cell-52-7" class="code-annotation-target"><a href="#annotated-cell-52-7"></a>                          <span class="at">pch =</span> <span class="dv">21</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-52" data-target-annotation="4">4</button><span id="annotated-cell-52-8" class="code-annotation-target"><a href="#annotated-cell-52-8"></a>                          <span class="at">size =</span> <span class="dv">3</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-52" data-target-annotation="5">5</button><span id="annotated-cell-52-9" class="code-annotation-target"><a href="#annotated-cell-52-9"></a>                          <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-52" data-target-annotation="6">6</button><span id="annotated-cell-52-10" class="code-annotation-target"><a href="#annotated-cell-52-10"></a>              <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"D"</span>) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-52" data-target-annotation="7">7</button><span id="annotated-cell-52-11" class="code-annotation-target"><a href="#annotated-cell-52-11"></a>              <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(year),</span>
-<span id="annotated-cell-52-12"><a href="#annotated-cell-52-12"></a>                         <span class="at">cols =</span> <span class="fu">vars</span>(continent)) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-52" data-target-annotation="8">8</button><span id="annotated-cell-52-13" class="code-annotation-target"><a href="#annotated-cell-52-13"></a>              ggthemes<span class="sc">::</span><span class="fu">theme_tufte</span>(<span class="at">base_size =</span> <span class="dv">20</span>)</span>
-<span id="annotated-cell-52-14"><a href="#annotated-cell-52-14"></a>scales_plot</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-51"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-51-1"><a href="#annotated-cell-51-1"></a>gapminder_sub <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-51" data-target-annotation="1">1</button><span id="annotated-cell-51-2" class="code-annotation-target"><a href="#annotated-cell-51-2"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1952</span>, <span class="dv">1982</span>, <span class="dv">2002</span>))</span>
+<span id="annotated-cell-51-3"><a href="#annotated-cell-51-3"></a>  </span>
+<span id="annotated-cell-51-4"><a href="#annotated-cell-51-4"></a>scales_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> gapminder_sub, </span>
+<span id="annotated-cell-51-5"><a href="#annotated-cell-51-5"></a>       <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">y =</span> gdpPercap, <span class="at">fill =</span> continent)) <span class="sc">+</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-51" data-target-annotation="2">2</button><span id="annotated-cell-51-6" class="code-annotation-target"><a href="#annotated-cell-51-6"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-51" data-target-annotation="3">3</button><span id="annotated-cell-51-7" class="code-annotation-target"><a href="#annotated-cell-51-7"></a>              <span class="at">pch =</span> <span class="dv">21</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-51" data-target-annotation="4">4</button><span id="annotated-cell-51-8" class="code-annotation-target"><a href="#annotated-cell-51-8"></a>              <span class="at">size =</span> <span class="dv">3</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-51" data-target-annotation="5">5</button><span id="annotated-cell-51-9" class="code-annotation-target"><a href="#annotated-cell-51-9"></a>              <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-51" data-target-annotation="6">6</button><span id="annotated-cell-51-10" class="code-annotation-target"><a href="#annotated-cell-51-10"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"D"</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-51" data-target-annotation="7">7</button><span id="annotated-cell-51-11" class="code-annotation-target"><a href="#annotated-cell-51-11"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(year),</span>
+<span id="annotated-cell-51-12"><a href="#annotated-cell-51-12"></a>             <span class="at">cols =</span> <span class="fu">vars</span>(continent)) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-51" data-target-annotation="8">8</button><span id="annotated-cell-51-13" class="code-annotation-target"><a href="#annotated-cell-51-13"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_tufte</span>(<span class="at">base_size =</span> <span class="dv">20</span>)</span>
+<span id="annotated-cell-51-14"><a href="#annotated-cell-51-14"></a>scales_plot</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-52" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-51" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-52" data-code-lines="2" data-code-annotation="1">Create subset with only 3 years of the data</span>
+<span data-code-cell="annotated-cell-51" data-code-lines="2" data-code-annotation="1">Create subset with only 3 years of the data</span>
 </dd>
-<dt data-target-cell="annotated-cell-52" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-51" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-52" data-code-lines="6" data-code-annotation="2"><code>alpha</code> controls transparency and ranges from 0 (completely opaque) to 1 (completely solid)</span>
+<span data-code-cell="annotated-cell-51" data-code-lines="6" data-code-annotation="2"><code>alpha</code> controls transparency and ranges from 0 (completely opaque) to 1 (completely solid)</span>
 </dd>
-<dt data-target-cell="annotated-cell-52" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-51" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-52" data-code-lines="7" data-code-annotation="3">This shape is a circle with fill (therefore it can take different colors for its outline, via <code>color</code>, and its interior, via <code>fill</code>)</span>
+<span data-code-cell="annotated-cell-51" data-code-lines="7" data-code-annotation="3">This shape is a circle with fill (therefore it can take different colors for its outline, via <code>color</code>, and its interior, via <code>fill</code>)</span>
 </dd>
-<dt data-target-cell="annotated-cell-52" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-51" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-52" data-code-lines="8" data-code-annotation="4">Increase size of points</span>
+<span data-code-cell="annotated-cell-51" data-code-lines="8" data-code-annotation="4">Increase size of points</span>
 </dd>
-<dt data-target-cell="annotated-cell-52" data-target-annotation="5">5</dt>
+<dt data-target-cell="annotated-cell-51" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-52" data-code-lines="9" data-code-annotation="5">Outline of circle is black</span>
+<span data-code-cell="annotated-cell-51" data-code-lines="9" data-code-annotation="5">Outline of circle is black</span>
 </dd>
-<dt data-target-cell="annotated-cell-52" data-target-annotation="6">6</dt>
+<dt data-target-cell="annotated-cell-51" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-52" data-code-lines="10" data-code-annotation="6">Circle is filled by colors perceptable for various forms of color-blindness</span>
+<span data-code-cell="annotated-cell-51" data-code-lines="10" data-code-annotation="6">Circle is filled by colors perceptable for various forms of color-blindness</span>
 </dd>
-<dt data-target-cell="annotated-cell-52" data-target-annotation="7">7</dt>
+<dt data-target-cell="annotated-cell-51" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-cell="annotated-cell-52" data-code-lines="11,12" data-code-annotation="7">Facet by years in the row and by continent in the columns</span>
+<span data-code-cell="annotated-cell-51" data-code-lines="11,12" data-code-annotation="7">Facet by years in the row and by continent in the columns</span>
 </dd>
-<dt data-target-cell="annotated-cell-52" data-target-annotation="8">8</dt>
+<dt data-target-cell="annotated-cell-51" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-cell="annotated-cell-52" data-code-lines="13" data-code-annotation="8">Use a nice theme from the <code>ggthemes</code> package and increase text size throughout the plot</span>
+<span data-code-cell="annotated-cell-51" data-code-lines="13" data-code-annotation="8">Use a nice theme from the <code>ggthemes</code> package and increase text size throughout the plot</span>
 </dd>
 </dl>
 </div>
@@ -1349,14 +1347,13 @@
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-53"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-53-1"><a href="#annotated-cell-53-1"></a>scales_plot <span class="sc">+</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-53" data-target-annotation="9">9</button><span id="annotated-cell-53-2" class="code-annotation-target"><a href="#annotated-cell-53-2"></a>  <span class="fu">scale_y_log10</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">50000</span>, <span class="dv">115000</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-52"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-52" data-target-annotation="9">9</button><span id="annotated-cell-52-1" class="code-annotation-target"><a href="#annotated-cell-52-1"></a>scales_plot <span class="sc">+</span> <span class="fu">scale_y_log10</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">50000</span>, <span class="dv">115000</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-53" data-target-annotation="9">9</dt>
+<dt data-target-cell="annotated-cell-52" data-target-annotation="9">9</dt>
 <dd>
-<span data-code-cell="annotated-cell-53" data-code-lines="2" data-code-annotation="9">Transform the y axis to the logarithm to gain better visualization</span>
+<span data-code-cell="annotated-cell-52" data-code-lines="1" data-code-annotation="9">Transform the y axis to the logarithm to gain better visualization</span>
 </dd>
 </dl>
 </div>
@@ -1373,17 +1370,16 @@
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-54"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-54-1"><a href="#annotated-cell-54-1"></a>scales_plot <span class="sc">+</span> </span>
-<span id="annotated-cell-54-2"><a href="#annotated-cell-54-2"></a>  <span class="fu">scale_y_log10</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">50000</span>, <span class="dv">115000</span>)) <span class="sc">+</span></span>
-<span id="annotated-cell-54-3"><a href="#annotated-cell-54-3"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(year), </span>
-<span id="annotated-cell-54-4"><a href="#annotated-cell-54-4"></a>             <span class="at">cols =</span> <span class="fu">vars</span>(continent), </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-54" data-target-annotation="10">10</button><span id="annotated-cell-54-5" class="code-annotation-target"><a href="#annotated-cell-54-5"></a>             <span class="at">scales =</span> <span class="st">"free_x"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-53"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-53-1"><a href="#annotated-cell-53-1"></a>scales_plot <span class="sc">+</span> <span class="fu">scale_y_log10</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">50000</span>, <span class="dv">115000</span>)) <span class="sc">+</span></span>
+<span id="annotated-cell-53-2"><a href="#annotated-cell-53-2"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(year), </span>
+<span id="annotated-cell-53-3"><a href="#annotated-cell-53-3"></a>             <span class="at">cols =</span> <span class="fu">vars</span>(continent), </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-53" data-target-annotation="10">10</button><span id="annotated-cell-53-4" class="code-annotation-target"><a href="#annotated-cell-53-4"></a>             <span class="at">scales =</span> <span class="st">"free_x"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-54" data-target-annotation="10">10</dt>
+<dt data-target-cell="annotated-cell-53" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-cell="annotated-cell-54" data-code-lines="5" data-code-annotation="10">Make the x-axis vary by data</span>
+<span data-code-cell="annotated-cell-53" data-code-lines="4" data-code-annotation="10">Make the x-axis vary by data</span>
 </dd>
 </dl>
 </div>
@@ -1400,17 +1396,16 @@
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-55"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-55-1"><a href="#annotated-cell-55-1"></a>scales_plot <span class="sc">+</span> </span>
-<span id="annotated-cell-55-2"><a href="#annotated-cell-55-2"></a>  <span class="fu">scale_y_log10</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">50000</span>, <span class="dv">115000</span>)) <span class="sc">+</span></span>
-<span id="annotated-cell-55-3"><a href="#annotated-cell-55-3"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(year), </span>
-<span id="annotated-cell-55-4"><a href="#annotated-cell-55-4"></a>             <span class="at">cols =</span> <span class="fu">vars</span>(continent), </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-55" data-target-annotation="11">11</button><span id="annotated-cell-55-5" class="code-annotation-target"><a href="#annotated-cell-55-5"></a>             <span class="at">scales =</span> <span class="st">"free_y"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-54"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-54-1"><a href="#annotated-cell-54-1"></a>scales_plot <span class="sc">+</span> <span class="fu">scale_y_log10</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">50000</span>, <span class="dv">115000</span>)) <span class="sc">+</span></span>
+<span id="annotated-cell-54-2"><a href="#annotated-cell-54-2"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(year), </span>
+<span id="annotated-cell-54-3"><a href="#annotated-cell-54-3"></a>             <span class="at">cols =</span> <span class="fu">vars</span>(continent), </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-54" data-target-annotation="11">11</button><span id="annotated-cell-54-4" class="code-annotation-target"><a href="#annotated-cell-54-4"></a>             <span class="at">scales =</span> <span class="st">"free_y"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-55" data-target-annotation="11">11</dt>
+<dt data-target-cell="annotated-cell-54" data-target-annotation="11">11</dt>
 <dd>
-<span data-code-cell="annotated-cell-55" data-code-lines="5" data-code-annotation="11">Make the y-axis vary by data</span>
+<span data-code-cell="annotated-cell-54" data-code-lines="4" data-code-annotation="11">Make the y-axis vary by data</span>
 </dd>
 </dl>
 </div>
@@ -1427,17 +1422,16 @@
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-56"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-56-1"><a href="#annotated-cell-56-1"></a>scales_plot <span class="sc">+</span> </span>
-<span id="annotated-cell-56-2"><a href="#annotated-cell-56-2"></a>  <span class="fu">scale_y_log10</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">50000</span>, <span class="dv">115000</span>)) <span class="sc">+</span></span>
-<span id="annotated-cell-56-3"><a href="#annotated-cell-56-3"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(year), </span>
-<span id="annotated-cell-56-4"><a href="#annotated-cell-56-4"></a>             <span class="at">cols =</span> <span class="fu">vars</span>(continent), </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-56" data-target-annotation="12">12</button><span id="annotated-cell-56-5" class="code-annotation-target"><a href="#annotated-cell-56-5"></a>             <span class="at">scales =</span> <span class="st">"free"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-55"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-55-1"><a href="#annotated-cell-55-1"></a>scales_plot <span class="sc">+</span> <span class="fu">scale_y_log10</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">50000</span>, <span class="dv">115000</span>)) <span class="sc">+</span></span>
+<span id="annotated-cell-55-2"><a href="#annotated-cell-55-2"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(year), </span>
+<span id="annotated-cell-55-3"><a href="#annotated-cell-55-3"></a>             <span class="at">cols =</span> <span class="fu">vars</span>(continent), </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-55" data-target-annotation="12">12</button><span id="annotated-cell-55-4" class="code-annotation-target"><a href="#annotated-cell-55-4"></a>             <span class="at">scales =</span> <span class="st">"free"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-56" data-target-annotation="12">12</dt>
+<dt data-target-cell="annotated-cell-55" data-target-annotation="12">12</dt>
 <dd>
-<span data-code-cell="annotated-cell-56" data-code-lines="5" data-code-annotation="12">Make both axes vary by data</span>
+<span data-code-cell="annotated-cell-55" data-code-lines="4" data-code-annotation="12">Make both axes vary by data</span>
 </dd>
 </dl>
 </div>
@@ -1507,40 +1501,40 @@
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-57"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-57-1"><a href="#annotated-cell-57-1"></a>outliers <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-57-2"><a href="#annotated-cell-57-2"></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-57-3"><a href="#annotated-cell-57-3"></a>  <span class="fu">mutate</span>(<span class="at">outlier =</span> <span class="fu">case_when</span>(</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-57" data-target-annotation="1">1</button><span id="annotated-cell-57-4" class="code-annotation-target"><a href="#annotated-cell-57-4"></a>    <span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.25</span>) <span class="sc">-</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&gt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-57" data-target-annotation="2">2</button><span id="annotated-cell-57-5" class="code-annotation-target"><a href="#annotated-cell-57-5"></a>    <span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.75</span>) <span class="sc">+</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&lt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>,</span>
-<span id="annotated-cell-57-6"><a href="#annotated-cell-57-6"></a>    <span class="at">.default =</span> <span class="cn">NA</span>)</span>
-<span id="annotated-cell-57-7"><a href="#annotated-cell-57-7"></a>    ) <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-57" data-target-annotation="3">3</button><span id="annotated-cell-57-8" class="code-annotation-target"><a href="#annotated-cell-57-8"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(outlier)) <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-57" data-target-annotation="4">4</button><span id="annotated-cell-57-9" class="code-annotation-target"><a href="#annotated-cell-57-9"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> <span class="fu">group_by</span>(country) <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-57" data-target-annotation="5">5</button><span id="annotated-cell-57-10" class="code-annotation-target"><a href="#annotated-cell-57-10"></a>  <span class="fu">filter</span>(lifeExp <span class="sc">==</span> <span class="fu">min</span>(lifeExp))</span>
-<span id="annotated-cell-57-11"><a href="#annotated-cell-57-11"></a></span>
-<span id="annotated-cell-57-12"><a href="#annotated-cell-57-12"></a>outliers</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-56"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-56-1"><a href="#annotated-cell-56-1"></a>outliers <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-56-2"><a href="#annotated-cell-56-2"></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-56-3"><a href="#annotated-cell-56-3"></a>  <span class="fu">mutate</span>(<span class="at">outlier =</span> <span class="fu">case_when</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-56" data-target-annotation="1">1</button><span id="annotated-cell-56-4" class="code-annotation-target"><a href="#annotated-cell-56-4"></a>    <span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.25</span>) <span class="sc">-</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&gt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-56" data-target-annotation="2">2</button><span id="annotated-cell-56-5" class="code-annotation-target"><a href="#annotated-cell-56-5"></a>    <span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.75</span>) <span class="sc">+</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&lt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>,</span>
+<span id="annotated-cell-56-6"><a href="#annotated-cell-56-6"></a>    <span class="at">.default =</span> <span class="cn">NA</span>)</span>
+<span id="annotated-cell-56-7"><a href="#annotated-cell-56-7"></a>    ) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-56" data-target-annotation="3">3</button><span id="annotated-cell-56-8" class="code-annotation-target"><a href="#annotated-cell-56-8"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(outlier)) <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-56" data-target-annotation="4">4</button><span id="annotated-cell-56-9" class="code-annotation-target"><a href="#annotated-cell-56-9"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> <span class="fu">group_by</span>(country) <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-56" data-target-annotation="5">5</button><span id="annotated-cell-56-10" class="code-annotation-target"><a href="#annotated-cell-56-10"></a>  <span class="fu">filter</span>(lifeExp <span class="sc">==</span> <span class="fu">min</span>(lifeExp))</span>
+<span id="annotated-cell-56-11"><a href="#annotated-cell-56-11"></a></span>
+<span id="annotated-cell-56-12"><a href="#annotated-cell-56-12"></a>outliers</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-57" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-56" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-57" data-code-lines="4" data-code-annotation="1">Anything lower than the 1st quartile - 1.5*IQR</span>
+<span data-code-cell="annotated-cell-56" data-code-lines="4" data-code-annotation="1">Anything lower than the 1st quartile - 1.5*IQR</span>
 </dd>
-<dt data-target-cell="annotated-cell-57" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-56" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-57" data-code-lines="5" data-code-annotation="2">Anything higher than the 3rd quartile + 1.5*IQR</span>
+<span data-code-cell="annotated-cell-56" data-code-lines="5" data-code-annotation="2">Anything higher than the 3rd quartile + 1.5*IQR</span>
 </dd>
-<dt data-target-cell="annotated-cell-57" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-56" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-57" data-code-lines="8" data-code-annotation="3">Remove non-outliers (coded as missing in previous step)</span>
+<span data-code-cell="annotated-cell-56" data-code-lines="8" data-code-annotation="3">Remove non-outliers (coded as missing in previous step)</span>
 </dd>
-<dt data-target-cell="annotated-cell-57" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-56" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-57" data-code-lines="9" data-code-annotation="4">Regroup by country</span>
+<span data-code-cell="annotated-cell-56" data-code-lines="9" data-code-annotation="4">Regroup by country</span>
 </dd>
-<dt data-target-cell="annotated-cell-57" data-target-annotation="5">5</dt>
+<dt data-target-cell="annotated-cell-56" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-57" data-code-lines="10" data-code-annotation="5">Filter for just the minimum life expectancy for each country</span>
+<span data-code-cell="annotated-cell-56" data-code-lines="10" data-code-annotation="5">Filter for just the minimum life expectancy for each country</span>
 </dd>
 </dl>
 </div>
@@ -1569,21 +1563,21 @@
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-59"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-59-1"><a href="#annotated-cell-59-1"></a>no_outliers <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-59-2"><a href="#annotated-cell-59-2"></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-59-3"><a href="#annotated-cell-59-3"></a>  <span class="fu">mutate</span>(<span class="at">outlier =</span> <span class="fu">case_when</span>(</span>
-<span id="annotated-cell-59-4"><a href="#annotated-cell-59-4"></a>    <span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.25</span>) <span class="sc">-</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&gt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>,</span>
-<span id="annotated-cell-59-5"><a href="#annotated-cell-59-5"></a>    <span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.75</span>) <span class="sc">+</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&lt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>,</span>
-<span id="annotated-cell-59-6"><a href="#annotated-cell-59-6"></a>    <span class="at">.default =</span> <span class="cn">NA</span>)) <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-59" data-target-annotation="6">6</button><span id="annotated-cell-59-7" class="code-annotation-target"><a href="#annotated-cell-59-7"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(outlier))</span>
-<span id="annotated-cell-59-8"><a href="#annotated-cell-59-8"></a></span>
-<span id="annotated-cell-59-9"><a href="#annotated-cell-59-9"></a>no_outliers</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-58"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-58-1"><a href="#annotated-cell-58-1"></a>no_outliers <span class="ot">&lt;-</span> gapminder <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-58-2"><a href="#annotated-cell-58-2"></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-58-3"><a href="#annotated-cell-58-3"></a>  <span class="fu">mutate</span>(<span class="at">outlier =</span> <span class="fu">case_when</span>(</span>
+<span id="annotated-cell-58-4"><a href="#annotated-cell-58-4"></a>    <span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.25</span>) <span class="sc">-</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&gt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>,</span>
+<span id="annotated-cell-58-5"><a href="#annotated-cell-58-5"></a>    <span class="fu">quantile</span>(lifeExp, <span class="at">probs =</span> <span class="fl">0.75</span>) <span class="sc">+</span> (<span class="fu">IQR</span>(lifeExp) <span class="sc">*</span> <span class="fl">1.5</span>) <span class="sc">&lt;</span> lifeExp <span class="sc">~</span> <span class="st">"outlier"</span>,</span>
+<span id="annotated-cell-58-6"><a href="#annotated-cell-58-6"></a>    <span class="at">.default =</span> <span class="cn">NA</span>)) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-58" data-target-annotation="6">6</button><span id="annotated-cell-58-7" class="code-annotation-target"><a href="#annotated-cell-58-7"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(outlier))</span>
+<span id="annotated-cell-58-8"><a href="#annotated-cell-58-8"></a></span>
+<span id="annotated-cell-58-9"><a href="#annotated-cell-58-9"></a>no_outliers</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-59" data-target-annotation="6">6</dt>
+<dt data-target-cell="annotated-cell-58" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-59" data-code-lines="7" data-code-annotation="6">Remove outliers from original data</span>
+<span data-code-cell="annotated-cell-58" data-code-lines="7" data-code-annotation="6">Remove outliers from original data</span>
 </dd>
 </dl>
 </div>
@@ -1610,40 +1604,40 @@
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-61"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-61-1"><a href="#annotated-cell-61-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-61" data-target-annotation="7">7</button><span id="annotated-cell-61-2" class="code-annotation-target"><a href="#annotated-cell-61-2"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-61" data-target-annotation="8">8</button><span id="annotated-cell-61-3" class="code-annotation-target"><a href="#annotated-cell-61-3"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> no_outliers,</span>
-<span id="annotated-cell-61-4"><a href="#annotated-cell-61-4"></a>              <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), </span>
-<span id="annotated-cell-61-5"><a href="#annotated-cell-61-5"></a>              <span class="at">alpha =</span> <span class="fl">0.25</span>, </span>
-<span id="annotated-cell-61-6"><a href="#annotated-cell-61-6"></a>              <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-61" data-target-annotation="9">9</button><span id="annotated-cell-61-7" class="code-annotation-target"><a href="#annotated-cell-61-7"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> outliers,</span>
-<span id="annotated-cell-61-8"><a href="#annotated-cell-61-8"></a>              <span class="at">color =</span> <span class="st">"maroon"</span>,</span>
-<span id="annotated-cell-61-9"><a href="#annotated-cell-61-9"></a>              <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), </span>
-<span id="annotated-cell-61-10"><a href="#annotated-cell-61-10"></a>              <span class="at">alpha =</span> <span class="fl">0.7</span>, </span>
-<span id="annotated-cell-61-11"><a href="#annotated-cell-61-11"></a>              <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-61" data-target-annotation="10">10</button><span id="annotated-cell-61-12" class="code-annotation-target"><a href="#annotated-cell-61-12"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> outliers,</span>
-<span id="annotated-cell-61-13"><a href="#annotated-cell-61-13"></a>            <span class="fu">aes</span>(<span class="at">label =</span> country),</span>
-<span id="annotated-cell-61-14"><a href="#annotated-cell-61-14"></a>            <span class="at">color =</span> <span class="st">"maroon"</span>, </span>
-<span id="annotated-cell-61-15"><a href="#annotated-cell-61-15"></a>            <span class="at">size =</span> <span class="dv">8</span>) <span class="sc">+</span> </span>
-<span id="annotated-cell-61-16"><a href="#annotated-cell-61-16"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-60"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-60-1"><a href="#annotated-cell-60-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-60" data-target-annotation="7">7</button><span id="annotated-cell-60-2" class="code-annotation-target"><a href="#annotated-cell-60-2"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-60" data-target-annotation="8">8</button><span id="annotated-cell-60-3" class="code-annotation-target"><a href="#annotated-cell-60-3"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> no_outliers,</span>
+<span id="annotated-cell-60-4"><a href="#annotated-cell-60-4"></a>              <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), </span>
+<span id="annotated-cell-60-5"><a href="#annotated-cell-60-5"></a>              <span class="at">alpha =</span> <span class="fl">0.25</span>, </span>
+<span id="annotated-cell-60-6"><a href="#annotated-cell-60-6"></a>              <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-60" data-target-annotation="9">9</button><span id="annotated-cell-60-7" class="code-annotation-target"><a href="#annotated-cell-60-7"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> outliers,</span>
+<span id="annotated-cell-60-8"><a href="#annotated-cell-60-8"></a>              <span class="at">color =</span> <span class="st">"maroon"</span>,</span>
+<span id="annotated-cell-60-9"><a href="#annotated-cell-60-9"></a>              <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), </span>
+<span id="annotated-cell-60-10"><a href="#annotated-cell-60-10"></a>              <span class="at">alpha =</span> <span class="fl">0.7</span>, </span>
+<span id="annotated-cell-60-11"><a href="#annotated-cell-60-11"></a>              <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-60" data-target-annotation="10">10</button><span id="annotated-cell-60-12" class="code-annotation-target"><a href="#annotated-cell-60-12"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> outliers,</span>
+<span id="annotated-cell-60-13"><a href="#annotated-cell-60-13"></a>            <span class="fu">aes</span>(<span class="at">label =</span> country),</span>
+<span id="annotated-cell-60-14"><a href="#annotated-cell-60-14"></a>            <span class="at">color =</span> <span class="st">"maroon"</span>, </span>
+<span id="annotated-cell-60-15"><a href="#annotated-cell-60-15"></a>            <span class="at">size =</span> <span class="dv">8</span>) <span class="sc">+</span> </span>
+<span id="annotated-cell-60-16"><a href="#annotated-cell-60-16"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-61" data-target-annotation="7">7</dt>
+<dt data-target-cell="annotated-cell-60" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-cell="annotated-cell-61" data-code-lines="2" data-code-annotation="7">Remove outliers from boxplot geom</span>
+<span data-code-cell="annotated-cell-60" data-code-lines="2" data-code-annotation="7">Remove outliers from boxplot geom</span>
 </dd>
-<dt data-target-cell="annotated-cell-61" data-target-annotation="8">8</dt>
+<dt data-target-cell="annotated-cell-60" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-cell="annotated-cell-61" data-code-lines="3" data-code-annotation="8">Plot points that are not categorized as outliers <em>without</em> color</span>
+<span data-code-cell="annotated-cell-60" data-code-lines="3" data-code-annotation="8">Plot points that are not categorized as outliers <em>without</em> color</span>
 </dd>
-<dt data-target-cell="annotated-cell-61" data-target-annotation="9">9</dt>
+<dt data-target-cell="annotated-cell-60" data-target-annotation="9">9</dt>
 <dd>
-<span data-code-cell="annotated-cell-61" data-code-lines="7,8" data-code-annotation="9">Plot points that are categorized as outliers <em>with</em> color</span>
+<span data-code-cell="annotated-cell-60" data-code-lines="7,8" data-code-annotation="9">Plot points that are categorized as outliers <em>with</em> color</span>
 </dd>
-<dt data-target-cell="annotated-cell-61" data-target-annotation="10">10</dt>
+<dt data-target-cell="annotated-cell-60" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-cell="annotated-cell-61" data-code-lines="12,13" data-code-annotation="10">Only add identifying text to outlier points</span>
+<span data-code-cell="annotated-cell-60" data-code-lines="12,13" data-code-annotation="10">Only add identifying text to outlier points</span>
 </dd>
 </dl>
 </div>
@@ -1660,39 +1654,39 @@
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-62"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-62" data-target-annotation="11">11</button><span id="annotated-cell-62-1" class="code-annotation-target"><a href="#annotated-cell-62-1"></a><span class="fu">library</span>(ggrepel)</span>
-<span id="annotated-cell-62-2"><a href="#annotated-cell-62-2"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
-<span id="annotated-cell-62-3"><a href="#annotated-cell-62-3"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="annotated-cell-62-4"><a href="#annotated-cell-62-4"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> no_outliers, </span>
-<span id="annotated-cell-62-5"><a href="#annotated-cell-62-5"></a>              <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), </span>
-<span id="annotated-cell-62-6"><a href="#annotated-cell-62-6"></a>              <span class="at">alpha =</span> <span class="fl">0.25</span>, </span>
-<span id="annotated-cell-62-7"><a href="#annotated-cell-62-7"></a>              <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
-<span id="annotated-cell-62-8"><a href="#annotated-cell-62-8"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> outliers, </span>
-<span id="annotated-cell-62-9"><a href="#annotated-cell-62-9"></a>              <span class="at">color =</span> <span class="st">"maroon"</span>,</span>
-<span id="annotated-cell-62-10"><a href="#annotated-cell-62-10"></a>              <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), </span>
-<span id="annotated-cell-62-11"><a href="#annotated-cell-62-11"></a>              <span class="at">alpha =</span> <span class="fl">0.7</span>, </span>
-<span id="annotated-cell-62-12"><a href="#annotated-cell-62-12"></a>              <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="annotated-cell-62-13"><a href="#annotated-cell-62-13"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> outliers, </span>
-<span id="annotated-cell-62-14"><a href="#annotated-cell-62-14"></a>                   <span class="fu">aes</span>(<span class="at">label =</span> country), </span>
-<span id="annotated-cell-62-15"><a href="#annotated-cell-62-15"></a>                   <span class="at">color =</span> <span class="st">"maroon"</span>, </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-62" data-target-annotation="12">12</button><span id="annotated-cell-62-16" class="code-annotation-target"><a href="#annotated-cell-62-16"></a>                   <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="annotated-cell-62-17"><a href="#annotated-cell-62-17"></a>                   <span class="at">size =</span> <span class="dv">8</span>, </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-62" data-target-annotation="13">13</button><span id="annotated-cell-62-18" class="code-annotation-target"><a href="#annotated-cell-62-18"></a>                   <span class="at">max.overlaps =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
-<span id="annotated-cell-62-19"><a href="#annotated-cell-62-19"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-61"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-61" data-target-annotation="11">11</button><span id="annotated-cell-61-1" class="code-annotation-target"><a href="#annotated-cell-61-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="annotated-cell-61-2"><a href="#annotated-cell-61-2"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="annotated-cell-61-3"><a href="#annotated-cell-61-3"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-61-4"><a href="#annotated-cell-61-4"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> no_outliers, </span>
+<span id="annotated-cell-61-5"><a href="#annotated-cell-61-5"></a>              <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), </span>
+<span id="annotated-cell-61-6"><a href="#annotated-cell-61-6"></a>              <span class="at">alpha =</span> <span class="fl">0.25</span>, </span>
+<span id="annotated-cell-61-7"><a href="#annotated-cell-61-7"></a>              <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="annotated-cell-61-8"><a href="#annotated-cell-61-8"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> outliers, </span>
+<span id="annotated-cell-61-9"><a href="#annotated-cell-61-9"></a>              <span class="at">color =</span> <span class="st">"maroon"</span>,</span>
+<span id="annotated-cell-61-10"><a href="#annotated-cell-61-10"></a>              <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), </span>
+<span id="annotated-cell-61-11"><a href="#annotated-cell-61-11"></a>              <span class="at">alpha =</span> <span class="fl">0.7</span>, </span>
+<span id="annotated-cell-61-12"><a href="#annotated-cell-61-12"></a>              <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-61-13"><a href="#annotated-cell-61-13"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> outliers, </span>
+<span id="annotated-cell-61-14"><a href="#annotated-cell-61-14"></a>                   <span class="fu">aes</span>(<span class="at">label =</span> country), </span>
+<span id="annotated-cell-61-15"><a href="#annotated-cell-61-15"></a>                   <span class="at">color =</span> <span class="st">"maroon"</span>, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-61" data-target-annotation="12">12</button><span id="annotated-cell-61-16" class="code-annotation-target"><a href="#annotated-cell-61-16"></a>                   <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="annotated-cell-61-17"><a href="#annotated-cell-61-17"></a>                   <span class="at">size =</span> <span class="dv">8</span>, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-61" data-target-annotation="13">13</button><span id="annotated-cell-61-18" class="code-annotation-target"><a href="#annotated-cell-61-18"></a>                   <span class="at">max.overlaps =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-61-19"><a href="#annotated-cell-61-19"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-62" data-target-annotation="11">11</dt>
+<dt data-target-cell="annotated-cell-61" data-target-annotation="11">11</dt>
 <dd>
-<span data-code-cell="annotated-cell-62" data-code-lines="1" data-code-annotation="11">A package that provides additional geoms for <code>ggplot2</code> to repel overlapping text labels</span>
+<span data-code-cell="annotated-cell-61" data-code-lines="1" data-code-annotation="11">A package that provides additional geoms for <code>ggplot2</code> to repel overlapping text labels</span>
 </dd>
-<dt data-target-cell="annotated-cell-62" data-target-annotation="12">12</dt>
+<dt data-target-cell="annotated-cell-61" data-target-annotation="12">12</dt>
 <dd>
-<span data-code-cell="annotated-cell-62" data-code-lines="16" data-code-annotation="12">Allow points to be somewhat visible through text labels</span>
+<span data-code-cell="annotated-cell-61" data-code-lines="16" data-code-annotation="12">Allow points to be somewhat visible through text labels</span>
 </dd>
-<dt data-target-cell="annotated-cell-62" data-target-annotation="13">13</dt>
+<dt data-target-cell="annotated-cell-61" data-target-annotation="13">13</dt>
 <dd>
-<span data-code-cell="annotated-cell-62" data-code-lines="18" data-code-annotation="13">Tolerance for permissible overlapping labels (default is 10; I chose 13 so none of the outliers would be removed)</span>
+<span data-code-cell="annotated-cell-61" data-code-lines="18" data-code-annotation="13">Tolerance for permissible overlapping labels (default is 10; I chose 13 so none of the outliers would be removed)</span>
 </dd>
 </dl>
 </div>
@@ -1778,17 +1772,17 @@
 <div class="tab-content">
 <div id="tabset-6-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-65" data-code-line-numbers="4-6"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-65-1"><a href="#annotated-cell-65-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="annotated-cell-65-2"><a href="#annotated-cell-65-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="annotated-cell-65-3"><a href="#annotated-cell-65-3"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="annotated-cell-65-4"><a href="#annotated-cell-65-4"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-65" data-target-annotation="1">1</button><span id="annotated-cell-65-5" class="code-annotation-target"><a href="#annotated-cell-65-5"></a>            <span class="at">method =</span> <span class="st">"loess"</span>,</span>
-<span id="annotated-cell-65-6"><a href="#annotated-cell-65-6"></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-64" data-code-line-numbers="4-6"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-64-1"><a href="#annotated-cell-64-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="annotated-cell-64-2"><a href="#annotated-cell-64-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="annotated-cell-64-3"><a href="#annotated-cell-64-3"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="annotated-cell-64-4"><a href="#annotated-cell-64-4"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-64" data-target-annotation="1">1</button><span id="annotated-cell-64-5" class="code-annotation-target"><a href="#annotated-cell-64-5"></a>            <span class="at">method =</span> <span class="st">"loess"</span>,</span>
+<span id="annotated-cell-64-6"><a href="#annotated-cell-64-6"></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-65" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-64" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-65" data-code-lines="5" data-code-annotation="1">A <a href="https://en.wikipedia.org/wiki/Local_regression"><em>loess</em> curve</a> is something like a moving average.</span>
+<span data-code-cell="annotated-cell-64" data-code-lines="5" data-code-annotation="1">A <a href="https://en.wikipedia.org/wiki/Local_regression"><em>loess</em> curve</a> is something like a moving average.</span>
 </dd>
 </dl>
 </div>
@@ -1816,19 +1810,19 @@
 <div class="tab-content">
 <div id="tabset-7-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-66" data-code-line-numbers="7-8"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-66-1"><a href="#annotated-cell-66-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="annotated-cell-66-2"><a href="#annotated-cell-66-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="annotated-cell-66-3"><a href="#annotated-cell-66-3"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="annotated-cell-66-4"><a href="#annotated-cell-66-4"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
-<span id="annotated-cell-66-5"><a href="#annotated-cell-66-5"></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="annotated-cell-66-6"><a href="#annotated-cell-66-6"></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-66" data-target-annotation="1">1</button><span id="annotated-cell-66-7" class="code-annotation-target"><a href="#annotated-cell-66-7"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(continent),</span>
-<span id="annotated-cell-66-8"><a href="#annotated-cell-66-8"></a>             <span class="at">nrow =</span> <span class="dv">2</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-65" data-code-line-numbers="7-8"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-65-1"><a href="#annotated-cell-65-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="annotated-cell-65-2"><a href="#annotated-cell-65-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="annotated-cell-65-3"><a href="#annotated-cell-65-3"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="annotated-cell-65-4"><a href="#annotated-cell-65-4"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
+<span id="annotated-cell-65-5"><a href="#annotated-cell-65-5"></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="annotated-cell-65-6"><a href="#annotated-cell-65-6"></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-65" data-target-annotation="1">1</button><span id="annotated-cell-65-7" class="code-annotation-target"><a href="#annotated-cell-65-7"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(continent),</span>
+<span id="annotated-cell-65-8"><a href="#annotated-cell-65-8"></a>             <span class="at">nrow =</span> <span class="dv">2</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-66" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-65" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-66" data-code-lines="7" data-code-annotation="1">You can specify the faceting variable by wrapping the variable name in <code>vars()</code> (preferred), using <code>~ variable_name</code> notation, or quoting variable name(s) as a character vector.</span>
+<span data-code-cell="annotated-cell-65" data-code-lines="7" data-code-annotation="1">You can specify the faceting variable by wrapping the variable name in <code>vars()</code> (preferred), using <code>~ variable_name</code> notation, or quoting variable name(s) as a character vector.</span>
 </dd>
 </dl>
 </div>
@@ -1856,25 +1850,25 @@
 <div class="tab-content">
 <div id="tabset-8-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-67" data-code-line-numbers="9-10"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-67-1"><a href="#annotated-cell-67-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="annotated-cell-67-2"><a href="#annotated-cell-67-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="annotated-cell-67-3"><a href="#annotated-cell-67-3"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="annotated-cell-67-4"><a href="#annotated-cell-67-4"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
-<span id="annotated-cell-67-5"><a href="#annotated-cell-67-5"></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="annotated-cell-67-6"><a href="#annotated-cell-67-6"></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
-<span id="annotated-cell-67-7"><a href="#annotated-cell-67-7"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
-<span id="annotated-cell-67-8"><a href="#annotated-cell-67-8"></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-67" data-target-annotation="1">1</button><span id="annotated-cell-67-9" class="code-annotation-target"><a href="#annotated-cell-67-9"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-67" data-target-annotation="2">2</button><span id="annotated-cell-67-10" class="code-annotation-target"><a href="#annotated-cell-67-10"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-66" data-code-line-numbers="9-10"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-66-1"><a href="#annotated-cell-66-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="annotated-cell-66-2"><a href="#annotated-cell-66-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="annotated-cell-66-3"><a href="#annotated-cell-66-3"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="annotated-cell-66-4"><a href="#annotated-cell-66-4"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
+<span id="annotated-cell-66-5"><a href="#annotated-cell-66-5"></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="annotated-cell-66-6"><a href="#annotated-cell-66-6"></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
+<span id="annotated-cell-66-7"><a href="#annotated-cell-66-7"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
+<span id="annotated-cell-66-8"><a href="#annotated-cell-66-8"></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-66" data-target-annotation="1">1</button><span id="annotated-cell-66-9" class="code-annotation-target"><a href="#annotated-cell-66-9"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-66" data-target-annotation="2">2</button><span id="annotated-cell-66-10" class="code-annotation-target"><a href="#annotated-cell-66-10"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-67" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-66" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-67" data-code-lines="9" data-code-annotation="1">Create informative legend title</span>
+<span data-code-cell="annotated-cell-66" data-code-lines="9" data-code-annotation="1">Create informative legend title</span>
 </dd>
-<dt data-target-cell="annotated-cell-67" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-66" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-67" data-code-lines="10" data-code-annotation="2">Specify mapping variables and their respective color values</span>
+<span data-code-cell="annotated-cell-66" data-code-lines="10" data-code-annotation="2">Specify mapping variables and their respective color values</span>
 </dd>
 </dl>
 </div>
@@ -1902,27 +1896,27 @@
 <div class="tab-content">
 <div id="tabset-9-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-68" data-code-line-numbers="11-12"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-68-1"><a href="#annotated-cell-68-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="annotated-cell-68-2"><a href="#annotated-cell-68-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="annotated-cell-68-3"><a href="#annotated-cell-68-3"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="annotated-cell-68-4"><a href="#annotated-cell-68-4"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
-<span id="annotated-cell-68-5"><a href="#annotated-cell-68-5"></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="annotated-cell-68-6"><a href="#annotated-cell-68-6"></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
-<span id="annotated-cell-68-7"><a href="#annotated-cell-68-7"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
-<span id="annotated-cell-68-8"><a href="#annotated-cell-68-8"></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="annotated-cell-68-9"><a href="#annotated-cell-68-9"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="annotated-cell-68-10"><a href="#annotated-cell-68-10"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-68" data-target-annotation="1">1</button><span id="annotated-cell-68-11" class="code-annotation-target"><a href="#annotated-cell-68-11"></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-68" data-target-annotation="2">2</button><span id="annotated-cell-68-12" class="code-annotation-target"><a href="#annotated-cell-68-12"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-67" data-code-line-numbers="11-12"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-67-1"><a href="#annotated-cell-67-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="annotated-cell-67-2"><a href="#annotated-cell-67-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="annotated-cell-67-3"><a href="#annotated-cell-67-3"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="annotated-cell-67-4"><a href="#annotated-cell-67-4"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
+<span id="annotated-cell-67-5"><a href="#annotated-cell-67-5"></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="annotated-cell-67-6"><a href="#annotated-cell-67-6"></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
+<span id="annotated-cell-67-7"><a href="#annotated-cell-67-7"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
+<span id="annotated-cell-67-8"><a href="#annotated-cell-67-8"></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-67-9"><a href="#annotated-cell-67-9"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="annotated-cell-67-10"><a href="#annotated-cell-67-10"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-67" data-target-annotation="1">1</button><span id="annotated-cell-67-11" class="code-annotation-target"><a href="#annotated-cell-67-11"></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-67" data-target-annotation="2">2</button><span id="annotated-cell-67-12" class="code-annotation-target"><a href="#annotated-cell-67-12"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-68" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-67" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-68" data-code-lines="11" data-code-annotation="1">Use same legend title as previous scale to combine separate aesthetics into one legend</span>
+<span data-code-cell="annotated-cell-67" data-code-lines="11" data-code-annotation="1">Use same legend title as previous scale to combine separate aesthetics into one legend</span>
 </dd>
-<dt data-target-cell="annotated-cell-68" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-67" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-68" data-code-lines="12" data-code-annotation="2">Specify mapping variables and their respective size values</span>
+<span data-code-cell="annotated-cell-67" data-code-lines="12" data-code-annotation="2">Specify mapping variables and their respective size values</span>
 </dd>
 </dl>
 </div>
@@ -1950,22 +1944,22 @@
 <div class="tab-content">
 <div id="tabset-10-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-69" data-code-line-numbers="3,5"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-69-1"><a href="#annotated-cell-69-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="annotated-cell-69-2"><a href="#annotated-cell-69-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-69" data-target-annotation="1">1</button><span id="annotated-cell-69-3" class="code-annotation-target"><a href="#annotated-cell-69-3"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">"Country"</span>, <span class="at">size =</span> <span class="st">"Country"</span>)) <span class="sc">+</span></span>
-<span id="annotated-cell-69-4"><a href="#annotated-cell-69-4"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="annotated-cell-69-5"><a href="#annotated-cell-69-5"></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent, <span class="at">color =</span> <span class="st">"Continent"</span>, <span class="at">size =</span> <span class="st">"Continent"</span>)) <span class="sc">+</span></span>
-<span id="annotated-cell-69-6"><a href="#annotated-cell-69-6"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
-<span id="annotated-cell-69-7"><a href="#annotated-cell-69-7"></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="annotated-cell-69-8"><a href="#annotated-cell-69-8"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="annotated-cell-69-9"><a href="#annotated-cell-69-9"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
-<span id="annotated-cell-69-10"><a href="#annotated-cell-69-10"></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="annotated-cell-69-11"><a href="#annotated-cell-69-11"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-68" data-code-line-numbers="3,5"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-68-1"><a href="#annotated-cell-68-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="annotated-cell-68-2"><a href="#annotated-cell-68-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-68" data-target-annotation="1">1</button><span id="annotated-cell-68-3" class="code-annotation-target"><a href="#annotated-cell-68-3"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">"Country"</span>, <span class="at">size =</span> <span class="st">"Country"</span>)) <span class="sc">+</span></span>
+<span id="annotated-cell-68-4"><a href="#annotated-cell-68-4"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="annotated-cell-68-5"><a href="#annotated-cell-68-5"></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent, <span class="at">color =</span> <span class="st">"Continent"</span>, <span class="at">size =</span> <span class="st">"Continent"</span>)) <span class="sc">+</span></span>
+<span id="annotated-cell-68-6"><a href="#annotated-cell-68-6"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
+<span id="annotated-cell-68-7"><a href="#annotated-cell-68-7"></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-68-8"><a href="#annotated-cell-68-8"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="annotated-cell-68-9"><a href="#annotated-cell-68-9"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="annotated-cell-68-10"><a href="#annotated-cell-68-10"></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="annotated-cell-68-11"><a href="#annotated-cell-68-11"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-69" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-68" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-69" data-code-lines="3,5" data-code-annotation="1">Add mapping aesthetics for color and size for both <code>Country</code>- and <code>Continent</code>-specific line geoms</span>
+<span data-code-cell="annotated-cell-68" data-code-lines="3,5" data-code-annotation="1">Add mapping aesthetics for color and size for both <code>Country</code>- and <code>Continent</code>-specific line geoms</span>
 </dd>
 </dl>
 </div>
@@ -2030,30 +2024,30 @@
 <div class="tab-content">
 <div id="tabset-12-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-71" data-code-line-numbers="13-15"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-71-1"><a href="#annotated-cell-71-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="annotated-cell-71-2"><a href="#annotated-cell-71-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="annotated-cell-71-3"><a href="#annotated-cell-71-3"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="annotated-cell-71-4"><a href="#annotated-cell-71-4"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
-<span id="annotated-cell-71-5"><a href="#annotated-cell-71-5"></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="annotated-cell-71-6"><a href="#annotated-cell-71-6"></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
-<span id="annotated-cell-71-7"><a href="#annotated-cell-71-7"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
-<span id="annotated-cell-71-8"><a href="#annotated-cell-71-8"></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="annotated-cell-71-9"><a href="#annotated-cell-71-9"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="annotated-cell-71-10"><a href="#annotated-cell-71-10"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
-<span id="annotated-cell-71-11"><a href="#annotated-cell-71-11"></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="annotated-cell-71-12"><a href="#annotated-cell-71-12"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-71" data-target-annotation="1">1</button><span id="annotated-cell-71-13" class="code-annotation-target"><a href="#annotated-cell-71-13"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-71" data-target-annotation="2">2</button><span id="annotated-cell-71-14" class="code-annotation-target"><a href="#annotated-cell-71-14"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Years"</span>,</span>
-<span id="annotated-cell-71-15"><a href="#annotated-cell-71-15"></a>       <span class="at">x =</span> <span class="st">""</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-70" data-code-line-numbers="13-15"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-70-1"><a href="#annotated-cell-70-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="annotated-cell-70-2"><a href="#annotated-cell-70-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="annotated-cell-70-3"><a href="#annotated-cell-70-3"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="annotated-cell-70-4"><a href="#annotated-cell-70-4"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
+<span id="annotated-cell-70-5"><a href="#annotated-cell-70-5"></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="annotated-cell-70-6"><a href="#annotated-cell-70-6"></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
+<span id="annotated-cell-70-7"><a href="#annotated-cell-70-7"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
+<span id="annotated-cell-70-8"><a href="#annotated-cell-70-8"></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-70-9"><a href="#annotated-cell-70-9"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="annotated-cell-70-10"><a href="#annotated-cell-70-10"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="annotated-cell-70-11"><a href="#annotated-cell-70-11"></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="annotated-cell-70-12"><a href="#annotated-cell-70-12"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-70" data-target-annotation="1">1</button><span id="annotated-cell-70-13" class="code-annotation-target"><a href="#annotated-cell-70-13"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-70" data-target-annotation="2">2</button><span id="annotated-cell-70-14" class="code-annotation-target"><a href="#annotated-cell-70-14"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Years"</span>,</span>
+<span id="annotated-cell-70-15"><a href="#annotated-cell-70-15"></a>       <span class="at">x =</span> <span class="st">""</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-71" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-70" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-71" data-code-lines="13" data-code-annotation="1">Add a nicer theme and increase relative font size throughout plot</span>
+<span data-code-cell="annotated-cell-70" data-code-lines="13" data-code-annotation="1">Add a nicer theme and increase relative font size throughout plot</span>
 </dd>
-<dt data-target-cell="annotated-cell-71" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-70" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-71" data-code-lines="14,15" data-code-annotation="2">Since our x-axis is calendar year and our y-axis is years of life expectancy, let’s avoid confusion by assigning <code>Years</code> to the y-axis and removing the x-axis label (which can be inferred from the plot title we’ll add next)</span>
+<span data-code-cell="annotated-cell-70" data-code-lines="14,15" data-code-annotation="2">Since our x-axis is calendar year and our y-axis is years of life expectancy, let’s avoid confusion by assigning <code>Years</code> to the y-axis and removing the x-axis label (which can be inferred from the plot title we’ll add next)</span>
 </dd>
 </dl>
 </div>
@@ -2122,29 +2116,29 @@
 <div class="tab-content">
 <div id="tabset-14-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-73" data-code-line-numbers="18"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-73-1"><a href="#annotated-cell-73-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
-<span id="annotated-cell-73-2"><a href="#annotated-cell-73-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="annotated-cell-73-3"><a href="#annotated-cell-73-3"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="annotated-cell-73-4"><a href="#annotated-cell-73-4"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
-<span id="annotated-cell-73-5"><a href="#annotated-cell-73-5"></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
-<span id="annotated-cell-73-6"><a href="#annotated-cell-73-6"></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
-<span id="annotated-cell-73-7"><a href="#annotated-cell-73-7"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
-<span id="annotated-cell-73-8"><a href="#annotated-cell-73-8"></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="annotated-cell-73-9"><a href="#annotated-cell-73-9"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="annotated-cell-73-10"><a href="#annotated-cell-73-10"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
-<span id="annotated-cell-73-11"><a href="#annotated-cell-73-11"></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
-<span id="annotated-cell-73-12"><a href="#annotated-cell-73-12"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
-<span id="annotated-cell-73-13"><a href="#annotated-cell-73-13"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span> </span>
-<span id="annotated-cell-73-14"><a href="#annotated-cell-73-14"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Years"</span>, </span>
-<span id="annotated-cell-73-15"><a href="#annotated-cell-73-15"></a>       <span class="at">x =</span> <span class="st">""</span>, </span>
-<span id="annotated-cell-73-16"><a href="#annotated-cell-73-16"></a>       <span class="at">title =</span> <span class="st">"Life Expectancy, 1952-2007"</span>, </span>
-<span id="annotated-cell-73-17"><a href="#annotated-cell-73-17"></a>       <span class="at">subtitle =</span> <span class="st">"By continent and country"</span>) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-73" data-target-annotation="1">1</button><span id="annotated-cell-73-18" class="code-annotation-target"><a href="#annotated-cell-73-18"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-72" data-code-line-numbers="18"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-72-1"><a href="#annotated-cell-72-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder, </span>
+<span id="annotated-cell-72-2"><a href="#annotated-cell-72-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="annotated-cell-72-3"><a href="#annotated-cell-72-3"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="annotated-cell-72-4"><a href="#annotated-cell-72-4"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, </span>
+<span id="annotated-cell-72-5"><a href="#annotated-cell-72-5"></a>            <span class="at">method =</span> <span class="st">"loess"</span>, </span>
+<span id="annotated-cell-72-6"><a href="#annotated-cell-72-6"></a>            <span class="fu">aes</span>(<span class="at">group =</span> continent)) <span class="sc">+</span></span>
+<span id="annotated-cell-72-7"><a href="#annotated-cell-72-7"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, </span>
+<span id="annotated-cell-72-8"><a href="#annotated-cell-72-8"></a>             <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-72-9"><a href="#annotated-cell-72-9"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="annotated-cell-72-10"><a href="#annotated-cell-72-10"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="st">"black"</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="annotated-cell-72-11"><a href="#annotated-cell-72-11"></a>  <span class="fu">scale_size_manual</span>(<span class="at">name =</span> <span class="st">"Life Exp. for:"</span>, </span>
+<span id="annotated-cell-72-12"><a href="#annotated-cell-72-12"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Country"</span> <span class="ot">=</span> <span class="fl">0.25</span>, <span class="st">"Continent"</span> <span class="ot">=</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="annotated-cell-72-13"><a href="#annotated-cell-72-13"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span> </span>
+<span id="annotated-cell-72-14"><a href="#annotated-cell-72-14"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Years"</span>, </span>
+<span id="annotated-cell-72-15"><a href="#annotated-cell-72-15"></a>       <span class="at">x =</span> <span class="st">""</span>, </span>
+<span id="annotated-cell-72-16"><a href="#annotated-cell-72-16"></a>       <span class="at">title =</span> <span class="st">"Life Expectancy, 1952-2007"</span>, </span>
+<span id="annotated-cell-72-17"><a href="#annotated-cell-72-17"></a>       <span class="at">subtitle =</span> <span class="st">"By continent and country"</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-72" data-target-annotation="1">1</button><span id="annotated-cell-72-18" class="code-annotation-target"><a href="#annotated-cell-72-18"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-73" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-72" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-73" data-code-lines="18" data-code-annotation="1">The <code>theme()</code> function has <strong>many</strong> arguments that allow you to provide more granular, non-data, aesthetic customizations, such as rotating the x-axis text in this example.</span>
+<span data-code-cell="annotated-cell-72" data-code-lines="18" data-code-annotation="1">The <code>theme()</code> function has <strong>many</strong> arguments that allow you to provide more granular, non-data, aesthetic customizations, such as rotating the x-axis text in this example.</span>
 </dd>
 </dl>
 </div>
@@ -2265,7 +2259,7 @@
 <img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-101-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="ggridges" class="slide level2 scrollable">
 <h2><code>ggridges</code> <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span></h2>
-<p>We can visualize the differing distributions of a continuous variable by levels of a categorical variable with <a href="https://wilkelab.org/ggridges/"><code>ggridges</code></a>!</p>
+<p>We can visualize the differing distributions of a continuous variable by levels of a categorical variable with <a href="https://wilkelab.org/ggridges/">ggridges</a>!</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -2293,107 +2287,6 @@
 
 </div>
 <img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-102-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="ggwordcloud" class="slide level2 scrollable">
-<h2><code>ggwordcloud</code> <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span></h2>
-<p>If you are working with text data, you may want to visualize the sentiment of words in your documents. You can use <a href="https://lepennec.github.io/ggwordcloud/"><code>ggwordcloud</code></a> for that.</p>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-26" data-cap-location="margin"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="1">1</button><span id="annotated-cell-26-1" class="code-annotation-target"><a href="#annotated-cell-26-1"></a><span class="fu">library</span>(ggwordcloud)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="2">2</button><span id="annotated-cell-26-2" class="code-annotation-target"><a href="#annotated-cell-26-2"></a><span class="fu">library</span>(tidytext)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="3">3</button><span id="annotated-cell-26-3" class="code-annotation-target"><a href="#annotated-cell-26-3"></a><span class="fu">library</span>(textdata)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="4">4</button><span id="annotated-cell-26-4" class="code-annotation-target"><a href="#annotated-cell-26-4"></a><span class="fu">library</span>(janitor)</span>
-<span id="annotated-cell-26-5"><a href="#annotated-cell-26-5"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="5">5</button><span id="annotated-cell-26-6" class="code-annotation-target"><a href="#annotated-cell-26-6"></a>CSSS_508_Introductions <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="annotated-cell-26-7"><a href="#annotated-cell-26-7"></a>  <span class="st">"CSSS 508 Introductions.csv"</span>,</span>
-<span id="annotated-cell-26-8"><a href="#annotated-cell-26-8"></a>  <span class="at">col_select =</span> <span class="st">`</span><span class="at">What is one word that best describes your feelings about taking this class?</span><span class="st">`</span></span>
-<span id="annotated-cell-26-9"><a href="#annotated-cell-26-9"></a>)</span>
-<span id="annotated-cell-26-10"><a href="#annotated-cell-26-10"></a></span>
-<span id="annotated-cell-26-11"><a href="#annotated-cell-26-11"></a>feelings <span class="ot">&lt;-</span> CSSS_508_Introductions <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-26-12"><a href="#annotated-cell-26-12"></a>  <span class="fu">rename</span>(<span class="at">text =</span> <span class="st">`</span><span class="at">What is one word that best describes your feelings about taking this class?</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="6">6</button><span id="annotated-cell-26-13" class="code-annotation-target"><a href="#annotated-cell-26-13"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">str_to_lower</span>(text)) <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="7">7</button><span id="annotated-cell-26-14" class="code-annotation-target"><a href="#annotated-cell-26-14"></a>  <span class="fu">unnest_tokens</span>(word, text) <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="8">8</button><span id="annotated-cell-26-15" class="code-annotation-target"><a href="#annotated-cell-26-15"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word <span class="sc">%in%</span> stop_words<span class="sc">$</span>word) <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="9">9</button><span id="annotated-cell-26-16" class="code-annotation-target"><a href="#annotated-cell-26-16"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">str_replace_all</span>(word, <span class="st">"[[:punct:]]"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="10">10</button><span id="annotated-cell-26-17" class="code-annotation-target"><a href="#annotated-cell-26-17"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word <span class="sc">%in%</span>  <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"bit"</span>, <span class="st">"audit"</span>, <span class="st">"level"</span>, <span class="st">"understanding"</span>, <span class="st">"rr"</span>))</span>
-<span id="annotated-cell-26-18"><a href="#annotated-cell-26-18"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="11">11</button><span id="annotated-cell-26-19" class="code-annotation-target"><a href="#annotated-cell-26-19"></a>bing <span class="ot">&lt;-</span> <span class="fu">get_sentiments</span>(<span class="st">"bing"</span>)</span>
-<span id="annotated-cell-26-20"><a href="#annotated-cell-26-20"></a></span>
-<span id="annotated-cell-26-21"><a href="#annotated-cell-26-21"></a>word_sentiments <span class="ot">&lt;-</span> feelings <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="12">12</button><span id="annotated-cell-26-22" class="code-annotation-target"><a href="#annotated-cell-26-22"></a>  <span class="fu">inner_join</span>(bing, <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="13">13</button><span id="annotated-cell-26-23" class="code-annotation-target"><a href="#annotated-cell-26-23"></a>  <span class="fu">count</span>(word, sentiment, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
-<span id="annotated-cell-26-24"><a href="#annotated-cell-26-24"></a></span>
-<span id="annotated-cell-26-25"><a href="#annotated-cell-26-25"></a><span class="fu">ggplot</span>(word_sentiments, </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="14">14</button><span id="annotated-cell-26-26" class="code-annotation-target"><a href="#annotated-cell-26-26"></a>       <span class="fu">aes</span>(<span class="at">label =</span> word, <span class="at">size =</span> n, <span class="at">color =</span> sentiment)) <span class="sc">+</span></span>
-<span id="annotated-cell-26-27"><a href="#annotated-cell-26-27"></a>  <span class="fu">geom_text_wordcloud</span>() <span class="sc">+</span></span>
-<span id="annotated-cell-26-28"><a href="#annotated-cell-26-28"></a>  <span class="fu">scale_size_area</span>(<span class="at">max_size =</span> <span class="dv">30</span>) <span class="sc">+</span> </span>
-<span id="annotated-cell-26-29"><a href="#annotated-cell-26-29"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"positive"</span> <span class="ot">=</span> <span class="st">"#007190"</span>, <span class="st">"negative"</span> <span class="ot">=</span> <span class="st">"#c56127"</span>)) <span class="sc">+</span></span>
-<span id="annotated-cell-26-30"><a href="#annotated-cell-26-30"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="annotated-cell-26-31"><a href="#annotated-cell-26-31"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-26" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="1" data-code-annotation="1">Run <code>install.packages("ggwordcloud")</code> in console first</span>
-</dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="2" data-code-annotation="2">A package that provides functions to transform text to enable various types of text analyses</span>
-</dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="3" data-code-annotation="3">Provides various dictionaries to categorize words for sentiment analysis (i.e.&nbsp;bing)</span>
-</dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="4" data-code-annotation="4">Allows us to standardize text format (i.e.&nbsp;make all words lowercase)</span>
-</dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="5">5</dt>
-<dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="6,7,8,9" data-code-annotation="5">Reads in the responses to a specific question from last week’s introductory survey</span>
-</dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="6">6</dt>
-<dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="13" data-code-annotation="6">Makes all letters lowercase</span>
-</dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="7">7</dt>
-<dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="14" data-code-annotation="7">Takes character strings with any number of words and splits them into individual-word-strings (each row of new <code>word</code> variable is one word)</span>
-</dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="8">8</dt>
-<dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="15" data-code-annotation="8">Removes “stop words” (i.e.&nbsp;and, the, it, etc.) from <code>word</code></span>
-</dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="9">9</dt>
-<dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="16" data-code-annotation="9">Removes any punctuation</span>
-</dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="10">10</dt>
-<dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="17" data-code-annotation="10">Explicitly removes non-feeling related words</span>
-</dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="11">11</dt>
-<dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="19" data-code-annotation="11">Loads basic positive/negative sentiment dictionary (bing)</span>
-</dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="12">12</dt>
-<dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="22" data-code-annotation="12">Adds <code>sentiment</code> column (with values <code>positive</code>/<code>negative</code>) for the words in <code>word</code> variable</span>
-</dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="13">13</dt>
-<dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="23" data-code-annotation="13">Gets a count of the words (new variable <code>n</code>) to allow us to map by frequency</span>
-</dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="14">14</dt>
-<dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="26,27" data-code-annotation="14">For <code>geom_wordcloud</code> we want to map onto aesthetics <code>label</code>, <code>size</code>, and <code>color</code> and then we can use familiar ggplot functions to add further specifications (i.e.&nbsp;custom colors, themes. etc.)</span>
-</dd>
-</dl>
-</div>
-
-</div>
-<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-103-1.svg" class="margin-caption r-stretch quarto-figure-center"><p class="caption">Feelings about taking Introduction to R (Fall 2025)</p></section>
 <section id="correlation-matricies" class="slide level2 scrollable">
 <h2>Correlation Matricies <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span></h2>
 <p>Make visually appealing &amp; informative correlation plots in <a href=""><code>GGally</code></a> or <a href=""><code>ggcorrplot</code></a>.</p>
@@ -2404,43 +2297,116 @@
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-75"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="1">1</button><span id="annotated-cell-75-1" class="code-annotation-target"><a href="#annotated-cell-75-1"></a><span class="fu">library</span>(GGally)</span>
+<div class="sourceCode cell-code" id="annotated-cell-74"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-74" data-target-annotation="1">1</button><span id="annotated-cell-74-1" class="code-annotation-target"><a href="#annotated-cell-74-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="annotated-cell-74-2"><a href="#annotated-cell-74-2"></a></span>
+<span id="annotated-cell-74-3"><a href="#annotated-cell-74-3"></a><span class="fu">ggcorr</span>(swiss, </span>
+<span id="annotated-cell-74-4"><a href="#annotated-cell-74-4"></a>       <span class="at">geom =</span> <span class="st">"circle"</span>, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-74" data-target-annotation="2">2</button><span id="annotated-cell-74-5" class="code-annotation-target"><a href="#annotated-cell-74-5"></a>       <span class="at">min_size =</span> <span class="dv">25</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-74" data-target-annotation="3">3</button><span id="annotated-cell-74-6" class="code-annotation-target"><a href="#annotated-cell-74-6"></a>       <span class="at">max_size =</span> <span class="dv">25</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-74" data-target-annotation="4">4</button><span id="annotated-cell-74-7" class="code-annotation-target"><a href="#annotated-cell-74-7"></a>       <span class="at">label =</span> <span class="cn">TRUE</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-74" data-target-annotation="5">5</button><span id="annotated-cell-74-8" class="code-annotation-target"><a href="#annotated-cell-74-8"></a>       <span class="at">label_alpha =</span> <span class="cn">TRUE</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-74" data-target-annotation="6">6</button><span id="annotated-cell-74-9" class="code-annotation-target"><a href="#annotated-cell-74-9"></a>       <span class="at">label_round =</span> <span class="dv">2</span>,</span>
+<span id="annotated-cell-74-10"><a href="#annotated-cell-74-10"></a>       <span class="at">legend.position =</span> <span class="st">"inside"</span>,</span>
+<span id="annotated-cell-74-11"><a href="#annotated-cell-74-11"></a>       <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.6</span>), </span>
+<span id="annotated-cell-74-12"><a href="#annotated-cell-74-12"></a>       <span class="at">legend.size =</span> <span class="dv">12</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-74" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-74" data-code-lines="1" data-code-annotation="1">Run <code>install.packages("GGally")</code> in console first</span>
+</dd>
+<dt data-target-cell="annotated-cell-74" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-74" data-code-lines="5" data-code-annotation="2">Specify minimum size of shape</span>
+</dd>
+<dt data-target-cell="annotated-cell-74" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-74" data-code-lines="6" data-code-annotation="3">Specify maximum size of shape</span>
+</dd>
+<dt data-target-cell="annotated-cell-74" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-74" data-code-lines="7" data-code-annotation="4">Label circles with correlation coefficient</span>
+</dd>
+<dt data-target-cell="annotated-cell-74" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-74" data-code-lines="8" data-code-annotation="5">Weaker correlations have lower alpha</span>
+</dd>
+<dt data-target-cell="annotated-cell-74" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-cell="annotated-cell-74" data-code-lines="9" data-code-annotation="6">Round correlations coefficients to 2 decimal points</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-103-1.svg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-16-2">
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="annotated-cell-75"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="1">1</button><span id="annotated-cell-75-1" class="code-annotation-target"><a href="#annotated-cell-75-1"></a><span class="fu">library</span>(ggcorrplot)</span>
 <span id="annotated-cell-75-2"><a href="#annotated-cell-75-2"></a></span>
-<span id="annotated-cell-75-3"><a href="#annotated-cell-75-3"></a><span class="fu">ggcorr</span>(swiss, </span>
-<span id="annotated-cell-75-4"><a href="#annotated-cell-75-4"></a>       <span class="at">geom =</span> <span class="st">"circle"</span>, </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="2">2</button><span id="annotated-cell-75-5" class="code-annotation-target"><a href="#annotated-cell-75-5"></a>       <span class="at">min_size =</span> <span class="dv">25</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="3">3</button><span id="annotated-cell-75-6" class="code-annotation-target"><a href="#annotated-cell-75-6"></a>       <span class="at">max_size =</span> <span class="dv">25</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="4">4</button><span id="annotated-cell-75-7" class="code-annotation-target"><a href="#annotated-cell-75-7"></a>       <span class="at">label =</span> <span class="cn">TRUE</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="5">5</button><span id="annotated-cell-75-8" class="code-annotation-target"><a href="#annotated-cell-75-8"></a>       <span class="at">label_alpha =</span> <span class="cn">TRUE</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="6">6</button><span id="annotated-cell-75-9" class="code-annotation-target"><a href="#annotated-cell-75-9"></a>       <span class="at">label_round =</span> <span class="dv">2</span>,</span>
-<span id="annotated-cell-75-10"><a href="#annotated-cell-75-10"></a>       <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.75</span>), </span>
-<span id="annotated-cell-75-11"><a href="#annotated-cell-75-11"></a>       <span class="at">legend.size =</span> <span class="dv">12</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="2">2</button><span id="annotated-cell-75-3" class="code-annotation-target"><a href="#annotated-cell-75-3"></a>corr <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(swiss), <span class="dv">1</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="3">3</button><span id="annotated-cell-75-4" class="code-annotation-target"><a href="#annotated-cell-75-4"></a>p_mat <span class="ot">&lt;-</span> <span class="fu">cor_pmat</span>(swiss)</span>
+<span id="annotated-cell-75-5"><a href="#annotated-cell-75-5"></a></span>
+<span id="annotated-cell-75-6"><a href="#annotated-cell-75-6"></a><span class="fu">ggcorrplot</span>(corr,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="4">4</button><span id="annotated-cell-75-7" class="code-annotation-target"><a href="#annotated-cell-75-7"></a>           <span class="at">hc.order =</span> <span class="cn">TRUE</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="5">5</button><span id="annotated-cell-75-8" class="code-annotation-target"><a href="#annotated-cell-75-8"></a>           <span class="at">type =</span> <span class="st">"lower"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="6">6</button><span id="annotated-cell-75-9" class="code-annotation-target"><a href="#annotated-cell-75-9"></a>           <span class="at">p.mat =</span> p_mat,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="7">7</button><span id="annotated-cell-75-10" class="code-annotation-target"><a href="#annotated-cell-75-10"></a>           <span class="at">insig =</span> <span class="st">"pch"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="8">8</button><span id="annotated-cell-75-11" class="code-annotation-target"><a href="#annotated-cell-75-11"></a>           <span class="at">outline.color =</span> <span class="st">"black"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="9">9</button><span id="annotated-cell-75-12" class="code-annotation-target"><a href="#annotated-cell-75-12"></a>           <span class="at">ggtheme =</span> ggthemes<span class="sc">::</span><span class="fu">theme_tufte</span>(),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-75" data-target-annotation="10">10</button><span id="annotated-cell-75-13" class="code-annotation-target"><a href="#annotated-cell-75-13"></a>           <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#4e79a7"</span>, <span class="st">"white"</span>, <span class="st">"#e15759"</span>)) <span class="sc">+</span></span>
+<span id="annotated-cell-75-14"><a href="#annotated-cell-75-14"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.67</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-75" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-75" data-code-lines="1" data-code-annotation="1">Run <code>install.packages("GGally")</code> in console first</span>
+<span data-code-cell="annotated-cell-75" data-code-lines="1" data-code-annotation="1">Run <code>install.packages("ggcorrplot")</code> in console first</span>
 </dd>
 <dt data-target-cell="annotated-cell-75" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-75" data-code-lines="5" data-code-annotation="2">Specify minimum size of shape</span>
+<span data-code-cell="annotated-cell-75" data-code-lines="3" data-code-annotation="2">Compute correlation matrix</span>
 </dd>
 <dt data-target-cell="annotated-cell-75" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-75" data-code-lines="6" data-code-annotation="3">Specify maximum size of shape</span>
+<span data-code-cell="annotated-cell-75" data-code-lines="4" data-code-annotation="3">Compute matrix of correlation p-values</span>
 </dd>
 <dt data-target-cell="annotated-cell-75" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-75" data-code-lines="7" data-code-annotation="4">Label circles with correlation coefficient</span>
+<span data-code-cell="annotated-cell-75" data-code-lines="7" data-code-annotation="4">Use hierarchical clustering to group like-correlations together</span>
 </dd>
 <dt data-target-cell="annotated-cell-75" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-75" data-code-lines="8" data-code-annotation="5">Weaker correlations have lower alpha</span>
+<span data-code-cell="annotated-cell-75" data-code-lines="8" data-code-annotation="5">Only show lower half of correlation matrix</span>
 </dd>
 <dt data-target-cell="annotated-cell-75" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-75" data-code-lines="9" data-code-annotation="6">Round correlations coefficients to 2 decimal points</span>
+<span data-code-cell="annotated-cell-75" data-code-lines="9" data-code-annotation="6">Give corresponding p-values for correlation matrix</span>
+</dd>
+<dt data-target-cell="annotated-cell-75" data-target-annotation="7">7</dt>
+<dd>
+<span data-code-cell="annotated-cell-75" data-code-lines="10" data-code-annotation="7">Add default shape (an <code>X</code>) to correlations that are insignificant</span>
+</dd>
+<dt data-target-cell="annotated-cell-75" data-target-annotation="8">8</dt>
+<dd>
+<span data-code-cell="annotated-cell-75" data-code-lines="11" data-code-annotation="8">Outline cells in white</span>
+</dd>
+<dt data-target-cell="annotated-cell-75" data-target-annotation="9">9</dt>
+<dd>
+<span data-code-cell="annotated-cell-75" data-code-lines="12" data-code-annotation="9">Using a specific theme I like from <code>ggthemes</code> package</span>
+</dd>
+<dt data-target-cell="annotated-cell-75" data-target-annotation="10">10</dt>
+<dd>
+<span data-code-cell="annotated-cell-75" data-code-lines="13" data-code-annotation="10">Specify custom colors</span>
 </dd>
 </dl>
 </div>
@@ -2453,66 +2419,25 @@
 </div>
 </div>
 </div>
-<div id="tabset-16-2">
+<div id="tabset-16-3">
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-76"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-76" data-target-annotation="1">1</button><span id="annotated-cell-76-1" class="code-annotation-target"><a href="#annotated-cell-76-1"></a><span class="fu">library</span>(ggcorrplot)</span>
-<span id="annotated-cell-76-2"><a href="#annotated-cell-76-2"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-76" data-target-annotation="2">2</button><span id="annotated-cell-76-3" class="code-annotation-target"><a href="#annotated-cell-76-3"></a>corr <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(swiss), <span class="dv">1</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-76" data-target-annotation="3">3</button><span id="annotated-cell-76-4" class="code-annotation-target"><a href="#annotated-cell-76-4"></a>p_mat <span class="ot">&lt;-</span> <span class="fu">cor_pmat</span>(swiss)</span>
-<span id="annotated-cell-76-5"><a href="#annotated-cell-76-5"></a></span>
-<span id="annotated-cell-76-6"><a href="#annotated-cell-76-6"></a><span class="fu">ggcorrplot</span>(corr,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-76" data-target-annotation="4">4</button><span id="annotated-cell-76-7" class="code-annotation-target"><a href="#annotated-cell-76-7"></a>           <span class="at">hc.order =</span> <span class="cn">TRUE</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-76" data-target-annotation="5">5</button><span id="annotated-cell-76-8" class="code-annotation-target"><a href="#annotated-cell-76-8"></a>           <span class="at">type =</span> <span class="st">"lower"</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-76" data-target-annotation="6">6</button><span id="annotated-cell-76-9" class="code-annotation-target"><a href="#annotated-cell-76-9"></a>           <span class="at">p.mat =</span> p_mat,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-76" data-target-annotation="7">7</button><span id="annotated-cell-76-10" class="code-annotation-target"><a href="#annotated-cell-76-10"></a>           <span class="at">insig =</span> <span class="st">"pch"</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-76" data-target-annotation="8">8</button><span id="annotated-cell-76-11" class="code-annotation-target"><a href="#annotated-cell-76-11"></a>           <span class="at">outline.color =</span> <span class="st">"black"</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-76" data-target-annotation="9">9</button><span id="annotated-cell-76-12" class="code-annotation-target"><a href="#annotated-cell-76-12"></a>           <span class="at">ggtheme =</span> ggthemes<span class="sc">::</span><span class="fu">theme_tufte</span>(),</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-76" data-target-annotation="10">10</button><span id="annotated-cell-76-13" class="code-annotation-target"><a href="#annotated-cell-76-13"></a>           <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#4e79a7"</span>, <span class="st">"white"</span>, <span class="st">"#e15759"</span>)) <span class="sc">+</span></span>
-<span id="annotated-cell-76-14"><a href="#annotated-cell-76-14"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.67</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-76"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-76-1"><a href="#annotated-cell-76-1"></a><span class="fu">ggpairs</span>(swiss, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-76" data-target-annotation="1">1</button><span id="annotated-cell-76-2" class="code-annotation-target"><a href="#annotated-cell-76-2"></a>        <span class="at">lower =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="fu">wrap</span>(<span class="st">"smooth"</span>,</span>
+<span id="annotated-cell-76-3"><a href="#annotated-cell-76-3"></a>                                       <span class="at">alpha =</span> <span class="fl">0.5</span>, </span>
+<span id="annotated-cell-76-4"><a href="#annotated-cell-76-4"></a>                                       <span class="at">size=</span><span class="fl">0.2</span>))) <span class="sc">+</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-76" data-target-annotation="2">2</button><span id="annotated-cell-76-5" class="code-annotation-target"><a href="#annotated-cell-76-5"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_tufte</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-76" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-76" data-code-lines="1" data-code-annotation="1">Run <code>install.packages("ggcorrplot")</code> in console first</span>
+<span data-code-cell="annotated-cell-76" data-code-lines="2" data-code-annotation="1">Specify a smoothing line added to scatterplots</span>
 </dd>
 <dt data-target-cell="annotated-cell-76" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-76" data-code-lines="3" data-code-annotation="2">Compute correlation matrix</span>
-</dd>
-<dt data-target-cell="annotated-cell-76" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-76" data-code-lines="4" data-code-annotation="3">Compute matrix of correlation p-values</span>
-</dd>
-<dt data-target-cell="annotated-cell-76" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-cell="annotated-cell-76" data-code-lines="7" data-code-annotation="4">Use hierarchical clustering to group like-correlations together</span>
-</dd>
-<dt data-target-cell="annotated-cell-76" data-target-annotation="5">5</dt>
-<dd>
-<span data-code-cell="annotated-cell-76" data-code-lines="8" data-code-annotation="5">Only show lower half of correlation matrix</span>
-</dd>
-<dt data-target-cell="annotated-cell-76" data-target-annotation="6">6</dt>
-<dd>
-<span data-code-cell="annotated-cell-76" data-code-lines="9" data-code-annotation="6">Give corresponding p-values for correlation matrix</span>
-</dd>
-<dt data-target-cell="annotated-cell-76" data-target-annotation="7">7</dt>
-<dd>
-<span data-code-cell="annotated-cell-76" data-code-lines="10" data-code-annotation="7">Add default shape (an <code>X</code>) to correlations that are insignificant</span>
-</dd>
-<dt data-target-cell="annotated-cell-76" data-target-annotation="8">8</dt>
-<dd>
-<span data-code-cell="annotated-cell-76" data-code-lines="11" data-code-annotation="8">Outline cells in white</span>
-</dd>
-<dt data-target-cell="annotated-cell-76" data-target-annotation="9">9</dt>
-<dd>
-<span data-code-cell="annotated-cell-76" data-code-lines="12" data-code-annotation="9">Using a specific theme I like from <code>ggthemes</code> package</span>
-</dd>
-<dt data-target-cell="annotated-cell-76" data-target-annotation="10">10</dt>
-<dd>
-<span data-code-cell="annotated-cell-76" data-code-lines="13" data-code-annotation="10">Specify custom colors</span>
+<span data-code-cell="annotated-cell-76" data-code-lines="5" data-code-annotation="2">Add nice theme from <code>ggthemes</code></span>
 </dd>
 </dl>
 </div>
@@ -2520,37 +2445,6 @@
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-105-1.svg" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-16-3">
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-77"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-77-1"><a href="#annotated-cell-77-1"></a><span class="fu">ggpairs</span>(swiss, </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-77" data-target-annotation="1">1</button><span id="annotated-cell-77-2" class="code-annotation-target"><a href="#annotated-cell-77-2"></a>        <span class="at">lower =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="fu">wrap</span>(<span class="st">"smooth"</span>,</span>
-<span id="annotated-cell-77-3"><a href="#annotated-cell-77-3"></a>                                       <span class="at">alpha =</span> <span class="fl">0.5</span>, </span>
-<span id="annotated-cell-77-4"><a href="#annotated-cell-77-4"></a>                                       <span class="at">size=</span><span class="fl">0.2</span>))) <span class="sc">+</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-77" data-target-annotation="2">2</button><span id="annotated-cell-77-5" class="code-annotation-target"><a href="#annotated-cell-77-5"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_tufte</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-77" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-77" data-code-lines="2" data-code-annotation="1">Specify a smoothing line added to scatterplots</span>
-</dd>
-<dt data-target-cell="annotated-cell-77" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-77" data-code-lines="5" data-code-annotation="2">Add nice theme from <code>ggthemes</code></span>
-</dd>
-</dl>
-</div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-106-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2565,96 +2459,96 @@
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-27"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="1">1</button><span id="annotated-cell-27-1" class="code-annotation-target"><a href="#annotated-cell-27-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="annotated-cell-27-2"><a href="#annotated-cell-27-2"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="2">2</button><span id="annotated-cell-27-3" class="code-annotation-target"><a href="#annotated-cell-27-3"></a>plot_lifeExp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder,</span>
-<span id="annotated-cell-27-4"><a href="#annotated-cell-27-4"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, </span>
-<span id="annotated-cell-27-5"><a href="#annotated-cell-27-5"></a>                           <span class="at">y =</span> continent, </span>
-<span id="annotated-cell-27-6"><a href="#annotated-cell-27-6"></a>                           <span class="at">fill =</span> continent, </span>
-<span id="annotated-cell-27-7"><a href="#annotated-cell-27-7"></a>                           <span class="at">color =</span> continent)) <span class="sc">+</span> </span>
-<span id="annotated-cell-27-8"><a href="#annotated-cell-27-8"></a>  <span class="fu">geom_density_ridges</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span>
-<span id="annotated-cell-27-9"><a href="#annotated-cell-27-9"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="3">3</button><span id="annotated-cell-27-10" class="code-annotation-target"><a href="#annotated-cell-27-10"></a>plot_boxplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder,</span>
-<span id="annotated-cell-27-11"><a href="#annotated-cell-27-11"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> continent, </span>
-<span id="annotated-cell-27-12"><a href="#annotated-cell-27-12"></a>                           <span class="at">y =</span> lifeExp, </span>
-<span id="annotated-cell-27-13"><a href="#annotated-cell-27-13"></a>                           <span class="at">color =</span> continent), </span>
-<span id="annotated-cell-27-14"><a href="#annotated-cell-27-14"></a>                       <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="4">4</button><span id="annotated-cell-27-15" class="code-annotation-target"><a href="#annotated-cell-27-15"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>, <span class="at">varwidth =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="5">5</button><span id="annotated-cell-27-16" class="code-annotation-target"><a href="#annotated-cell-27-16"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="6">6</button><span id="annotated-cell-27-17" class="code-annotation-target"><a href="#annotated-cell-27-17"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> outliers,</span>
-<span id="annotated-cell-27-18"><a href="#annotated-cell-27-18"></a>              <span class="at">color =</span> <span class="st">"black"</span>,</span>
-<span id="annotated-cell-27-19"><a href="#annotated-cell-27-19"></a>              <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), </span>
-<span id="annotated-cell-27-20"><a href="#annotated-cell-27-20"></a>              <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="7">7</button><span id="annotated-cell-27-21" class="code-annotation-target"><a href="#annotated-cell-27-21"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> no_outliers,</span>
-<span id="annotated-cell-27-22"><a href="#annotated-cell-27-22"></a>              <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), </span>
-<span id="annotated-cell-27-23"><a href="#annotated-cell-27-23"></a>              <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="8">8</button><span id="annotated-cell-27-24" class="code-annotation-target"><a href="#annotated-cell-27-24"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> outliers,</span>
-<span id="annotated-cell-27-25"><a href="#annotated-cell-27-25"></a>                   <span class="fu">aes</span>(<span class="at">label =</span> country), </span>
-<span id="annotated-cell-27-26"><a href="#annotated-cell-27-26"></a>                   <span class="at">color =</span> <span class="st">"black"</span>, </span>
-<span id="annotated-cell-27-27"><a href="#annotated-cell-27-27"></a>                   <span class="at">alpha =</span> <span class="fl">0.6</span>, </span>
-<span id="annotated-cell-27-28"><a href="#annotated-cell-27-28"></a>                   <span class="at">max.overlaps =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="9">9</button><span id="annotated-cell-27-29" class="code-annotation-target"><a href="#annotated-cell-27-29"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="10">10</button><span id="annotated-cell-27-30" class="code-annotation-target"><a href="#annotated-cell-27-30"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="11">11</button><span id="annotated-cell-27-31" class="code-annotation-target"><a href="#annotated-cell-27-31"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="annotated-cell-27-32"><a href="#annotated-cell-27-32"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="annotated-cell-27-33"><a href="#annotated-cell-27-33"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="12">12</button><span id="annotated-cell-27-34" class="code-annotation-target"><a href="#annotated-cell-27-34"></a>plot_lifeExp <span class="sc">+</span> plot_boxplot</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-26"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="1">1</button><span id="annotated-cell-26-1" class="code-annotation-target"><a href="#annotated-cell-26-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="annotated-cell-26-2"><a href="#annotated-cell-26-2"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="2">2</button><span id="annotated-cell-26-3" class="code-annotation-target"><a href="#annotated-cell-26-3"></a>plot_lifeExp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder,</span>
+<span id="annotated-cell-26-4"><a href="#annotated-cell-26-4"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, </span>
+<span id="annotated-cell-26-5"><a href="#annotated-cell-26-5"></a>                           <span class="at">y =</span> continent, </span>
+<span id="annotated-cell-26-6"><a href="#annotated-cell-26-6"></a>                           <span class="at">fill =</span> continent, </span>
+<span id="annotated-cell-26-7"><a href="#annotated-cell-26-7"></a>                           <span class="at">color =</span> continent)) <span class="sc">+</span> </span>
+<span id="annotated-cell-26-8"><a href="#annotated-cell-26-8"></a>  <span class="fu">geom_density_ridges</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span>
+<span id="annotated-cell-26-9"><a href="#annotated-cell-26-9"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="3">3</button><span id="annotated-cell-26-10" class="code-annotation-target"><a href="#annotated-cell-26-10"></a>plot_boxplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder,</span>
+<span id="annotated-cell-26-11"><a href="#annotated-cell-26-11"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> continent, </span>
+<span id="annotated-cell-26-12"><a href="#annotated-cell-26-12"></a>                           <span class="at">y =</span> lifeExp, </span>
+<span id="annotated-cell-26-13"><a href="#annotated-cell-26-13"></a>                           <span class="at">color =</span> continent), </span>
+<span id="annotated-cell-26-14"><a href="#annotated-cell-26-14"></a>                       <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="4">4</button><span id="annotated-cell-26-15" class="code-annotation-target"><a href="#annotated-cell-26-15"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>, <span class="at">varwidth =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="5">5</button><span id="annotated-cell-26-16" class="code-annotation-target"><a href="#annotated-cell-26-16"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="6">6</button><span id="annotated-cell-26-17" class="code-annotation-target"><a href="#annotated-cell-26-17"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> outliers,</span>
+<span id="annotated-cell-26-18"><a href="#annotated-cell-26-18"></a>              <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="annotated-cell-26-19"><a href="#annotated-cell-26-19"></a>              <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), </span>
+<span id="annotated-cell-26-20"><a href="#annotated-cell-26-20"></a>              <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="7">7</button><span id="annotated-cell-26-21" class="code-annotation-target"><a href="#annotated-cell-26-21"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> no_outliers,</span>
+<span id="annotated-cell-26-22"><a href="#annotated-cell-26-22"></a>              <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>), </span>
+<span id="annotated-cell-26-23"><a href="#annotated-cell-26-23"></a>              <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="8">8</button><span id="annotated-cell-26-24" class="code-annotation-target"><a href="#annotated-cell-26-24"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> outliers,</span>
+<span id="annotated-cell-26-25"><a href="#annotated-cell-26-25"></a>                   <span class="fu">aes</span>(<span class="at">label =</span> country), </span>
+<span id="annotated-cell-26-26"><a href="#annotated-cell-26-26"></a>                   <span class="at">color =</span> <span class="st">"black"</span>, </span>
+<span id="annotated-cell-26-27"><a href="#annotated-cell-26-27"></a>                   <span class="at">alpha =</span> <span class="fl">0.6</span>, </span>
+<span id="annotated-cell-26-28"><a href="#annotated-cell-26-28"></a>                   <span class="at">max.overlaps =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="9">9</button><span id="annotated-cell-26-29" class="code-annotation-target"><a href="#annotated-cell-26-29"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="10">10</button><span id="annotated-cell-26-30" class="code-annotation-target"><a href="#annotated-cell-26-30"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="11">11</button><span id="annotated-cell-26-31" class="code-annotation-target"><a href="#annotated-cell-26-31"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="annotated-cell-26-32"><a href="#annotated-cell-26-32"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="annotated-cell-26-33"><a href="#annotated-cell-26-33"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="12">12</button><span id="annotated-cell-26-34" class="code-annotation-target"><a href="#annotated-cell-26-34"></a>plot_lifeExp <span class="sc">+</span> plot_boxplot</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-27" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="1" data-code-annotation="1">Run <code>install.packages("patchwork")</code> in console first</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="1" data-code-annotation="1">Run <code>install.packages("patchwork")</code> in console first</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="3,8" data-code-annotation="2">Create first plot object</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="3,8" data-code-annotation="2">Create first plot object</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="10" data-code-annotation="3">Create second plot object</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="10" data-code-annotation="3">Create second plot object</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="15" data-code-annotation="4">Remove <code>geom_boxplot</code> outliers and make width of boxes relative to N</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="15" data-code-annotation="4">Remove <code>geom_boxplot</code> outliers and make width of boxes relative to N</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="5">5</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="16" data-code-annotation="5">Flip the coordinates (<code>x</code> &amp; <code>y</code>) to align with first plot</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="16" data-code-annotation="5">Flip the coordinates (<code>x</code> &amp; <code>y</code>) to align with first plot</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="6">6</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="17" data-code-annotation="6">Add outlier datapoints</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="17" data-code-annotation="6">Add outlier datapoints</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="7">7</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="21" data-code-annotation="7">Add non-outlier datapoints</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="21" data-code-annotation="7">Add non-outlier datapoints</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="8">8</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="24" data-code-annotation="8">Mapping new dataset with the outliers</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="24" data-code-annotation="8">Mapping new dataset with the outliers</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="9">9</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="9">9</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="29" data-code-annotation="9">Remove y-axis text</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="29" data-code-annotation="9">Remove y-axis text</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="10">10</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="30" data-code-annotation="10">Remove y-axis ticks</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="30" data-code-annotation="10">Remove y-axis ticks</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="11">11</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="11">11</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="31" data-code-annotation="11">Remove y-axis title</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="31" data-code-annotation="11">Remove y-axis title</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="12">12</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="12">12</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="34" data-code-annotation="12">Adding both objects together places them side by side</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="34" data-code-annotation="12">Adding both objects together places them side by side</span>
 </dd>
 </dl>
 </div>
 
 </div>
-<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-107-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-106-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="themes-in-ggplot2" class="slide level2 scrollable">
 <h2>themes in <code>ggplot2</code> <span style="color:#99a486"><i class="fa-solid fa-scroll" aria-label="scroll"></i></span></h2>
 <p>There are several built-in themes within <code>ggplot2</code>.</p>
@@ -2665,20 +2559,20 @@
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-78"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-78" data-target-annotation="1">1</button><span id="annotated-cell-78-1" class="code-annotation-target"><a href="#annotated-cell-78-1"></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_bw</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-77"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-77" data-target-annotation="1">1</button><span id="annotated-cell-77-1" class="code-annotation-target"><a href="#annotated-cell-77-1"></a>plot_lifeExp <span class="sc">+</span> <span class="fu">theme_bw</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-78" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-77" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-78" data-code-lines="1" data-code-annotation="1">Reusing <code>plot_lifeExp</code> from previous slide and changing theme</span>
+<span data-code-cell="annotated-cell-77" data-code-lines="1" data-code-annotation="1">Reusing <code>plot_lifeExp</code> from previous slide and changing theme</span>
 </dd>
 </dl>
 </div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-108-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-107-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2693,7 +2587,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-109-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-108-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2708,7 +2602,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-110-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-109-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2723,7 +2617,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-111-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-110-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2738,7 +2632,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-112-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-111-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2753,7 +2647,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-113-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-112-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2768,7 +2662,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-114-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-113-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2783,7 +2677,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-115-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-114-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2807,7 +2701,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-116-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-115-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2822,7 +2716,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-117-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-116-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2837,7 +2731,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-118-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-117-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2852,7 +2746,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-119-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-118-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2867,7 +2761,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-120-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-119-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2882,7 +2776,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-121-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-120-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2897,7 +2791,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-122-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-121-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>
@@ -2912,7 +2806,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-123-1.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-122-1.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div>

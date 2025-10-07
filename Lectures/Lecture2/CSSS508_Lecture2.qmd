@@ -411,6 +411,7 @@ an initializing `ggplot` call and at least one `geom` function.
 
 <br>
 
+::: {.fragment}
 ::: {.panel-tabset}
 
 ### same data & aesthetics
@@ -446,6 +447,7 @@ ggplot() +
   other options
 ```
 
+:::
 :::
 
 # Example: Basic Jargon in Action!{.section-title background-color="#99a486"}
@@ -1421,16 +1423,16 @@ lifeExp_by_year +
 gapminder_sub <- gapminder |> 
   filter(year %in% c(1952, 1982, 2002)) # <1>
   
-scales_plot <- ggplot(data = gapminder_sub, 
-       aes(x = lifeExp, y = gdpPercap, fill = continent)) + 
-  geom_jitter(alpha = 0.5, # <2>
-              pch = 21, # <3>
-              size = 3, # <4>
-              color = "black") + # <5>
-  scale_fill_viridis_d(option = "D") + # <6>
-  facet_grid(rows = vars(year), # <7>
-             cols = vars(continent)) + # <7>
-  ggthemes::theme_tufte(base_size = 20) # <8>
+scales_plot <- ggplot(data = gapminder_sub,
+                      aes(x = lifeExp, y = gdpPercap, fill = continent)) +
+              geom_jitter(alpha = 0.5, # <2>
+                          pch = 21, # <3>
+                          size = 3, # <4>
+                          color = "black") + # <5>
+              scale_fill_viridis_d(option = "D") + # <6>
+              facet_grid(rows = vars(year), # <7>
+                         cols = vars(continent)) + # <7>
+              ggthemes::theme_tufte(base_size = 20) # <8>
 scales_plot
 ```
 1. Create subset with only 3 years of the data
@@ -1449,7 +1451,8 @@ scales_plot
 #| code-fold: true
 #| fig-width: 16
 #| fig-height: 8
-scales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) # <9>
+scales_plot + 
+  scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) # <9>
 ```
 9. Transform the y axis to the logarithm to gain better visualization
 
@@ -1460,7 +1463,8 @@ scales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) # <9>
 #| fig-align: center
 #| fig-width: 16
 #| fig-height: 8
-scales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +
+scales_plot + 
+  scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +
   facet_grid(rows = vars(year), 
              cols = vars(continent), 
              scales = "free_x") # <10>
@@ -1474,7 +1478,8 @@ scales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +
 #| fig-align: center
 #| fig-width: 16
 #| fig-height: 8
-scales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +
+scales_plot + 
+  scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +
   facet_grid(rows = vars(year), 
              cols = vars(continent), 
              scales = "free_y") # <11>
@@ -1488,7 +1493,8 @@ scales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +
 #| fig-align: center
 #| fig-width: 16
 #| fig-height: 8
-scales_plot + scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +
+scales_plot + 
+  scale_y_log10(breaks = c(250, 1000, 10000, 50000, 115000)) +
   facet_grid(rows = vars(year), 
              cols = vars(continent), 
              scales = "free") # <12>
@@ -1550,7 +1556,8 @@ outliers <- gapminder |>
                              quantile(lifeExp, probs = 0.75) + (IQR(lifeExp) * 1.5) < lifeExp ~ "outlier", 
                              .default = NA)) |> 
   filter(!is.na(outlier)) |> 
-  ungroup() |> group_by(country) |> 
+  ungroup() |> 
+  group_by(country) |> 
   filter(lifeExp == min(lifeExp)) 
 
 no_outliers <- gapminder |> 
@@ -2299,7 +2306,7 @@ gapminder |>
 
 ## `ggridges` <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
-We can visualize the differing distributions of a continuous variable by levels of a categorical variable with [ggridges](https://wilkelab.org/ggridges/)!
+We can visualize the differing distributions of a continuous variable by levels of a categorical variable with [`ggridges`](https://wilkelab.org/ggridges/)!
 
 ```{r}
 #| code-fold: true
@@ -2315,6 +2322,62 @@ ggplot(gapminder,
 ```
 1. Run `install.packages("ggridges")` in console first
 2. Add ridges, make all ridges a bit transparent, remove legend
+
+## `ggwordcloud` <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
+
+If you are working with text data, you may want to visualize the sentiment of words in your documents. You can use [`ggwordcloud`](https://lepennec.github.io/ggwordcloud/) for that. 
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+#| fig-cap: "Feelings about taking Introduction to R (Fall 2025)"
+#| fig-cap-location: margin
+library(ggwordcloud) # <1> 
+library(tidytext) # <2> 
+library(textdata) # <3> 
+library(janitor) # <4> 
+
+CSSS_508_Introductions <- read_csv( # <5>
+  "CSSS 508 Introductions.csv", # <5>
+  col_select = `What is one word that best describes your feelings about taking this class?` # <5>
+) # <5>
+
+feelings <- CSSS_508_Introductions |> 
+  rename(text = `What is one word that best describes your feelings about taking this class?`) |> 
+  mutate(text = str_to_lower(text)) |> # <6>
+  unnest_tokens(word, text) |> # <7>
+  filter(!word %in% stop_words$word) |>  # <8>
+  mutate(word = str_replace_all(word, "[[:punct:]]", "")) |> # <9>
+  filter(!word %in%  c("", "bit", "audit", "level", "understanding", "rr")) # <10>
+
+bing <- get_sentiments("bing") # <11>
+
+word_sentiments <- feelings |> 
+  inner_join(bing, by = "word") |> # <12>
+  count(word, sentiment, sort = TRUE) # <13>
+
+ggplot(word_sentiments, 
+       aes(label = word, size = n, color = sentiment)) + # <14>
+  geom_text_wordcloud() + # <14>
+  scale_size_area(max_size = 30) + 
+  scale_color_manual(values = c("positive" = "#007190", "negative" = "#c56127")) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+1. Run `install.packages("ggwordcloud")` in console first
+2. A package that provides functions to transform text to enable various types of text analyses
+3. Provides various dictionaries to categorize words for sentiment analysis (i.e. bing)
+4. Allows us to standardize text format (i.e. make all words lowercase)
+5. Reads in the responses to a specific question from last week's introductory survey
+6. Makes all letters lowercase
+7. Takes character strings with any number of words and splits them into individual-word-strings (each row of new `word` variable is one word)
+8. Removes "stop words" (i.e. and, the, it, etc.) from `word` 
+9. Removes any punctuation
+10. Explicitly removes non-feeling related words
+11. Loads basic positive/negative sentiment dictionary (bing)
+12. Adds `sentiment` column (with values `positive`/`negative`) for the words in `word` variable
+13. Gets a count of the words (new variable `n`) to allow us to map by frequency
+14. For `geom_wordcloud` we want to map onto aesthetics `label`, `size`, and `color` and then we can use familiar ggplot functions to add further specifications (i.e. custom colors, themes. etc.)
 
 ## Correlation Matricies <span style="color:#99a486">{{< fa scroll >}}</span> {.scrollable} 
 
@@ -2338,8 +2401,7 @@ ggcorr(swiss,
        label = TRUE, # <4>
        label_alpha = TRUE, # <5>
        label_round = 2, # <6>
-       legend.position = "inside",
-       legend.position.inside = c(0.15, 0.6), 
+       legend.position = c(0.2, 0.75), 
        legend.size = 12)
 ```
 1. Run `install.packages("GGally")` in console first
