@@ -1114,16 +1114,124 @@
 <li class="fragment"><p>Remove the legend from the plot.</p></li>
 </ol>
 </section>
+<section id="solution-1.-set-base-layer" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Solution: 1. Set Base Layer</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb25-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-43-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="solution-2.-add-histogram-layer" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Solution: 2. Add Histogram Layer</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb26-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb26-2" class="hljs-ln-code"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-44-1.svg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div>
+</div>
 
+<aside><div>
+<p>Setting the <code>bins</code> aesthetic tells ggplot how many values to bin by (lower is more fine-grained, higher is less descriptive).</p>
+</div></aside></section>
+<section id="solution-3.-add-label-layers" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Solution: 3. Add Label Layers</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27" data-code-line-numbers="3-5"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb27-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb27-2" class="hljs-ln-code"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb27-3" class="hljs-ln-code"><a></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb27-4" class="hljs-ln-code"><a></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb27-5" class="hljs-ln-code"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-45-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="solution-4.-add-fill-setting" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Solution: 4. Add fill setting</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb28" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb28-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb28-2" class="hljs-ln-code"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"salmon"</span>) <span class="sc">+</span></span>
+<span id="cb28-3" class="hljs-ln-code"><a></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb28-4" class="hljs-ln-code"><a></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb28-5" class="hljs-ln-code"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-46-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="solution-5.-add-fill-aesthetic" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Solution: 5. Add fill aesthetic</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb29-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">fill =</span> continent)) <span class="sc">+</span></span>
+<span id="cb29-2" class="hljs-ln-code"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb29-3" class="hljs-ln-code"><a></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb29-4" class="hljs-ln-code"><a></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb29-5" class="hljs-ln-code"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-47-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="solution-6.-change-geometry" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Solution: 6. Change geometry</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb30-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">fill =</span> continent)) <span class="sc">+</span></span>
+<span id="cb30-2" class="hljs-ln-code"><a></a>  <span class="fu">geom_freqpoly</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb30-3" class="hljs-ln-code"><a></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb30-4" class="hljs-ln-code"><a></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb30-5" class="hljs-ln-code"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-48-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="solution-6.-change-geometry-1" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Solution: 6. Change geometry</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31" data-code-line-numbers="2|1"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb31-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb31-2" class="hljs-ln-code"><a></a>  <span class="fu">geom_freqpoly</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb31-3" class="hljs-ln-code"><a></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb31-4" class="hljs-ln-code"><a></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb31-5" class="hljs-ln-code"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-49-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="solution-7.-add-facets" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Solution: 7. Add facets</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb32-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb32-2" class="hljs-ln-code"><a></a>  <span class="fu">geom_freqpoly</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb32-3" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(continent), <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-4" class="hljs-ln-code"><a></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb32-5" class="hljs-ln-code"><a></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb32-6" class="hljs-ln-code"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-50-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="solution-8.-add-nicer-theme" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Solution: 8. Add nicer theme</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb33" data-code-line-numbers="7"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb33-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb33-2" class="hljs-ln-code"><a></a>  <span class="fu">geom_freqpoly</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb33-3" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(continent), <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb33-4" class="hljs-ln-code"><a></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb33-5" class="hljs-ln-code"><a></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb33-6" class="hljs-ln-code"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>) <span class="sc">+</span></span>
+<span id="cb33-7" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-</section>
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-51-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="solution-9.-remove-legend" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Solution: 9. Remove legend</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34" data-code-line-numbers="8"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb34-1" class="hljs-ln-code"><a></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb34-2" class="hljs-ln-code"><a></a>  <span class="fu">geom_freqpoly</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb34-3" class="hljs-ln-code"><a></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(continent), <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb34-4" class="hljs-ln-code"><a></a>  <span class="fu">xlab</span>(<span class="st">"Life Expectancy"</span>) <span class="sc">+</span></span>
+<span id="cb34-5" class="hljs-ln-code"><a></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb34-6" class="hljs-ln-code"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of Life Expectancy in Gapminder Data"</span>) <span class="sc">+</span> </span>
+<span id="cb34-7" class="hljs-ln-code"><a></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb34-8" class="hljs-ln-code"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="CSSS508_Lecture2_files/figure-revealjs/unnamed-chunk-52-1.svg" class="quarto-figure quarto-figure-center r-stretch"></section></section>
 <section id="break" class="title-slide slide level1 section-title center" data-background-color="#1e4655">
 <h1>Break!</h1>
 
