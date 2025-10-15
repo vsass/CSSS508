@@ -1095,16 +1095,143 @@ temp.txt</code></pre>
 <li>What might be a good way to organize your homework assignments for this class?</li>
 </ol>
 </section>
+<section id="solution-1.-adjust-settings" class="slide level2">
+<h2>Solution: 1. Adjust settings</h2>
 
+<img data-src="images/clean-slate.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Clear .RData, Never save</p></section>
+<section id="solution-1.-adjust-settings-1" class="slide level2">
+<h2>Solution: 1. Adjust settings</h2>
 
+<img data-src="images/rstudio-pipe-options.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Native pipe</p></section>
+<section id="solution-1.-adjust-settings-2" class="slide level2">
+<h2>Solution: 1. Adjust settings</h2>
 
+<img data-src="images/rainbow_function.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Highlight function calls; preview colors; rainbow parentheses</p></section>
+<section id="solution-1.-adjust-settings-3" class="slide level2">
+<h2>Solution: 1. Adjust settings</h2>
 
+<img data-src="images/code_style.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Code appearance</p></section>
+<section id="solution-1.-adjust-settings-4" class="slide level2">
+<h2>Solution: 1. Adjust settings</h2>
 
+<img data-src="images/pane_arrangement.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Pane Layout</p></section>
+<section id="solution-1.-adjust-settings-5" class="slide level2">
+<h2>Solution: 1. Adjust settings</h2>
 
-
-
-
+<img data-src="images/markdown_preferences.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p class="caption">Markdown Preferences</p></section>
+<section id="solution-2.-readable-code-style" class="slide level2">
+<h2>Solution: 2. Readable code style</h2>
+<div class="fragment semi-fade-out" data-fragment-index="1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>flights<span class="sc">|&gt;</span><span class="fu">filter</span>(dest<span class="sc">==</span><span class="st">"IAH"</span>)<span class="sc">|&gt;</span><span class="fu">group_by</span>(year,month,day)<span class="sc">|&gt;</span><span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(),</span>
+<span id="cb19-2"><a></a><span class="at">delay=</span><span class="fu">mean</span>(arr_delay,<span class="at">na.rm=</span><span class="cn">TRUE</span>))<span class="sc">|&gt;</span><span class="fu">filter</span>(n<span class="sc">&gt;</span><span class="dv">10</span>)</span>
+<span id="cb19-3"><a></a></span>
+<span id="cb19-4"><a></a>flights<span class="sc">|&gt;</span><span class="fu">filter</span>(carrier<span class="sc">==</span><span class="st">"UA"</span>,dest<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"IAH"</span>,<span class="st">"HOU"</span>),sched_dep_time<span class="sc">&gt;</span></span>
+<span id="cb19-5"><a></a><span class="dv">0900</span>,sched_arr_time<span class="sc">&lt;</span><span class="dv">2000</span>)<span class="sc">|&gt;</span><span class="fu">group_by</span>(flight)<span class="sc">|&gt;</span><span class="fu">summarize</span>(<span class="at">delay=</span><span class="fu">mean</span>(</span>
+<span id="cb19-6"><a></a>arr_delay,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="at">cancelled=</span><span class="fu">sum</span>(<span class="fu">is.na</span>(arr_delay)),<span class="at">n=</span><span class="fu">n</span>())<span class="sc">|&gt;</span><span class="fu">filter</span>(n<span class="sc">&gt;</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a></a>  <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">"IAH"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb20-3"><a></a>  <span class="fu">group_by</span>(year, month, day) <span class="sc">|&gt;</span> </span>
+<span id="cb20-4"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb20-5"><a></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb20-6"><a></a>    <span class="at">delay =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-7"><a></a>    ) <span class="sc">|&gt;</span> </span>
+<span id="cb20-8"><a></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">10</span>)</span>
+<span id="cb20-9"><a></a></span>
+<span id="cb20-10"><a></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb20-11"><a></a>  <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">"UA"</span>, dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"IAH"</span>, <span class="st">"HOU"</span>), </span>
+<span id="cb20-12"><a></a>         sched_dep_time <span class="sc">&gt;</span> <span class="dv">0900</span>, sched_arr_time <span class="sc">&lt;</span> <span class="dv">2000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-13"><a></a>  <span class="fu">group_by</span>(flight) <span class="sc">|&gt;</span> </span>
+<span id="cb20-14"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb20-15"><a></a>    <span class="at">delay =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb20-16"><a></a>    <span class="at">cancelled =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(arr_delay)), </span>
+<span id="cb20-17"><a></a>    <span class="at">n =</span> <span class="fu">n</span>() </span>
+<span id="cb20-18"><a></a>    ) <span class="sc">|&gt;</span> </span>
+<span id="cb20-19"><a></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 </section>
+<section id="solution-3.-option-shift-k-alt-shift-k" class="slide level2">
+<h2>Solution: 3. <em>Option</em> + <em>Shift</em> + <em>K</em> / <em>Alt</em> + <em>Shift</em> + <em>K</em></h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/keyboard_shortcuts.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
+</figure>
+</div>
+
+<aside><div>
+<p>You can find the same quick reference pop-up by clicking <em>Tools</em> &gt; <em>Keyboard Shortcuts Help</em>.</p>
+</div></aside></section>
+<section id="solution-4.-keyboard-shortcut" class="slide level2">
+<h2>Solution: 4. Keyboard shortcut</h2>
+<div class="fragment semi-fade-out" data-fragment-index="1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">libary</span>(todyverse)</span>
+<span id="cb21-2"><a></a></span>
+<span id="cb21-3"><a></a><span class="fu">ggplot</span>(<span class="at">dTA =</span> mpg) <span class="sc">+</span> </span>
+<span id="cb21-4"><a></a>  <span class="fu">geom_point</span>(<span class="at">maping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ <span class="at">y =</span> hwy)) <span class="sc">+</span></span>
+<span id="cb21-5"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><br>
+</p>
+<div class="fragment fade-in" data-fragment-index="1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">libary</span>(tidyverse)</span>
+<span id="cb22-2"><a></a></span>
+<span id="cb22-3"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg, </span>
+<span id="cb22-4"><a></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy)) <span class="sc">+</span> </span>
+<span id="cb22-5"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-6"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="solution-5.-organizing-a-class" class="slide level2">
+<h2>Solution: 5. Organizing a class</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><br></p>
+<ol type="1">
+<li class="fragment">Create a folder for this class on a computer/system that gets backed up regularly</li>
+<li class="fragment">Either the class itself is an RStudio project or each homework assignment subfolder is a separate project</li>
+<li class="fragment">Everything within each homework assignment project gets saved into that specific folder (or a subfolder of that folder)</li>
+<li class="fragment">Anything required for each homework assignment (e.g.&nbsp;downloaded data) is saved into its project-specific folder</li>
+</ol>
+</div><div class="column" style="width:50%;">
+<div class="fragment">
+<p><br></p>
+<pre><code>CSSS508/
+   Homeworks/
+     HW1/
+       homework1.qmd
+       homework1.html
+     HW2/
+       homework2.qmd
+       homework2.html
+     HW3/
+       homework3.qmd
+       homework3.html
+     HW4/
+       homework4.qmd
+       homework4.html
+       data.csv
+     HW5/
+       homework5.qmd
+       homework5.html
+         data/
+           data_raw.csv
+           data_processed.Rdata
+     HW6/
+     HW7/
+     HW8/
+     HW9/</code></pre>
+</div>
+</div></div>
+</section></section>
 <section id="break" class="title-slide slide level1 section-title center" data-background-color="#1e4655">
 <h1>Break!</h1>
 
@@ -1372,9 +1499,9 @@ temp.txt</code></pre>
 <pre><code># A tibble: 3 × 3
       x y         z
   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-1     1 a     0.444
-2     2 e     0.215
-3     3 f     0.487</code></pre>
+1     1 a     0.550
+2     2 e     0.668
+3     3 f     0.586</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:60%;">
@@ -1439,8 +1566,8 @@ temp.txt</code></pre>
 <pre><code># A tibble: 2 × 3
       x y         z
   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-1     2 e     0.215
-2     3 f     0.487</code></pre>
+1     2 e     0.668
+2     3 f     0.586</code></pre>
 </div>
 </div>
 </div>
