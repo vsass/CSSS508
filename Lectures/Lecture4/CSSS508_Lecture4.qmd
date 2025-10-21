@@ -391,12 +391,12 @@ case_when(
   x == 0   ~ "0",
   x < 0    ~ "-ve", 
   x > 0    ~ "+ve",
-  is.na(x) ~ "???" # <10>
-) # <11> 
+  is.na(x) ~ "???" # <3>
+) # <4> 
 ```
 
-10. Use `.default` if you want to create a “default”/catch all value. 
-11. Both functions require compatible types: i.e. numerical and logical, strings and factors, dates and datetimes, `NA` and everything. 
+3. Use `.default` if you want to create a “default”/catch all value. 
+4. Both functions require compatible types: i.e. numerical and logical, strings and factors, dates and datetimes, `NA` and everything. 
 
 # {data-menu-title="`dplyr`" background-image="images/dplyr.png" background-size="contain" background-position="center" .section-title background-color="#1e4655"}
 
@@ -1059,10 +1059,11 @@ glimpse(flights)
 
 :::
 
+---
 
-## Foreign Keys
+### Foreign Keys
 
-![Note: grey shading indicates the primary key for that particular dataset.](images/relational.png){fig-align="center"}
+![These are variables in a dataset that refer to a primary key in another dataset. **Note**: pinkish shading indicates the primary key for that particular dataset.](images/relational.png){fig-align="center"}
 
 ::: {.incremental}
 * `flights$origin` --> `airports$faa`
@@ -1369,7 +1370,7 @@ There are three possible outcomes for a row in x:
 ::: {.incremental}
 * If it doesn’t match anything, it’s dropped.
 * If it matches 1 row in `y`, it’s preserved.
-* If it matches more than 1 row in` y`, it’s duplicated once for each match.
+* If it matches more than 1 row in ` y`, it’s duplicated once for each match.
 :::
 
 . . . 

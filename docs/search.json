@@ -1906,7 +1906,7 @@
     "href": "Lectures/Lecture4/CSSS508_Lecture4.html#conditional-transformations",
     "title": "",
     "section": "Conditional transformations",
-    "text": "Conditional transformations\n\nif_else()\n\nIf you want to use one value when a condition is TRUE and another value when it’s FALSE.\n\n\n1if_else(condition = \"A logical vector\",\n        true = \"Output when condition is true\",\n        false = \"Output when condition is false\")\n\n\n1\n\nAll of these arguments are required.\n\n\n\n\n\n\n\nx &lt;- c(-3:3, NA)\n2if_else(x &gt; 0, \"+ve\", \"-ve\", \"???\")\n\n\n2\n\nThere’s an optional fourth argument, missing, which will be used if the input is NA.\n\n\n\n\n[1] \"-ve\" \"-ve\" \"-ve\" \"-ve\" \"+ve\" \"+ve\" \"+ve\" \"???\"\n\n\n\n\n\ncase_when()\n\nA very useful extension of if_else() for multiple conditions1.\n\n\n\ncase_when(\n  x == 0   ~ \"0\",\n  x &lt; 0    ~ \"-ve\", \n  x &gt; 0    ~ \"+ve\",\n10  is.na(x) ~ \"???\"\n11)\n\n\n10\n\nUse .default if you want to create a “default”/catch all value.\n\n11\n\nBoth functions require compatible types: i.e. numerical and logical, strings and factors, dates and datetimes, NA and everything.\n\n\n\n\n[1] \"-ve\" \"-ve\" \"-ve\" \"0\"   \"+ve\" \"+ve\" \"+ve\" \"???\"\n\n\n\nNote that if multiple conditions match in case_when(), only the first will be used."
+    "text": "Conditional transformations\n\nif_else()\n\nIf you want to use one value when a condition is TRUE and another value when it’s FALSE.\n\n\n1if_else(condition = \"A logical vector\",\n        true = \"Output when condition is true\",\n        false = \"Output when condition is false\")\n\n\n1\n\nAll of these arguments are required.\n\n\n\n\n\n\n\nx &lt;- c(-3:3, NA)\n2if_else(x &gt; 0, \"+ve\", \"-ve\", \"???\")\n\n\n2\n\nThere’s an optional fourth argument, missing, which will be used if the input is NA.\n\n\n\n\n[1] \"-ve\" \"-ve\" \"-ve\" \"-ve\" \"+ve\" \"+ve\" \"+ve\" \"???\"\n\n\n\n\n\ncase_when()\n\nA very useful extension of if_else() for multiple conditions1.\n\n\n\ncase_when(\n  x == 0   ~ \"0\",\n  x &lt; 0    ~ \"-ve\", \n  x &gt; 0    ~ \"+ve\",\n3  is.na(x) ~ \"???\"\n4)\n\n\n3\n\nUse .default if you want to create a “default”/catch all value.\n\n4\n\nBoth functions require compatible types: i.e. numerical and logical, strings and factors, dates and datetimes, NA and everything.\n\n\n\n\n[1] \"-ve\" \"-ve\" \"-ve\" \"0\"   \"+ve\" \"+ve\" \"+ve\" \"???\"\n\n\n\nNote that if multiple conditions match in case_when(), only the first will be used."
   },
   {
     "objectID": "Lectures/Lecture4/CSSS508_Lecture4.html#dplyr",
@@ -2165,7 +2165,7 @@
     "href": "Lectures/Lecture4/CSSS508_Lecture4.html#foreign-keys",
     "title": "",
     "section": "Foreign Keys",
-    "text": "Foreign Keys\n\nNote: grey shading indicates the primary key for that particular dataset.\nflights$origin –&gt; airports$faa\nflights$dest –&gt; airports$faa\nflights$origin-flights$time_hour –&gt; weather$origin-weather$time_hour.\nflights$tailnum –&gt; planes$tailnum\nflights$carrier –&gt; airlines$carrier"
+    "text": "Foreign Keys\n\nThese are variables in a dataset that refer to a primary key in another dataset. Note: pinkish shading indicates the primary key for that particular dataset.\nflights$origin –&gt; airports$faa\nflights$dest –&gt; airports$faa\nflights$origin-flights$time_hour –&gt; weather$origin-weather$time_hour.\nflights$tailnum –&gt; planes$tailnum\nflights$carrier –&gt; airlines$carrier"
   },
   {
     "objectID": "Lectures/Lecture4/CSSS508_Lecture4.html#checking-keys",
@@ -2298,7 +2298,7 @@
     "href": "Lectures/Lecture4/CSSS508_Lecture4.html#more-than-one-match",
     "title": "",
     "section": "More Than One Match",
-    "text": "More Than One Match\n\n\nThere are three possible outcomes for a row in x:\n\nIf it doesn’t match anything, it’s dropped.\nIf it matches 1 row in y, it’s preserved.\nIf it matches more than 1 row iny, it’s duplicated once for each match.\n\n\n\nWhat happens if we match on more than one row?"
+    "text": "More Than One Match\n\n\nThere are three possible outcomes for a row in x:\n\nIf it doesn’t match anything, it’s dropped.\nIf it matches 1 row in y, it’s preserved.\nIf it matches more than 1 row in y, it’s duplicated once for each match.\n\n\n\nWhat happens if we match on more than one row?"
   },
   {
     "objectID": "Lectures/Lecture4/CSSS508_Lecture4.html#more-than-one-match-1",
