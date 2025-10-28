@@ -335,9 +335,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <ol start="4" type="1">
-<li>Create a dataset of the song(s) with the <span style="color:#e15759"><strong>most weeks in the top 3 by month of 2000</strong></span>. The final dataset should look like this:</li>
+<li>Create a dataset of the song(s) with the <span style="color:#e15759"><strong>most weeks in the top 3 by month of 2000</strong></span><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. The final dataset should look like this:</li>
 </ol>
-<div class="cell">
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;It’ll be helpful here to create month and year indicator variabels that use to specify a necessary logical condition and/or use to group your dataset for certain steps. <strong>Hint</strong>: There are many ways to arrive at this answer but one approach uses the functions <code>mutate</code>, <code>if_else</code>, <code>slice_max</code>, <code>distinct</code>, and <code>arrange</code>.</p></div></div><div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; # A tibble: 19 × 4
 &gt;    month artist              track                   peak_weeks
@@ -406,8 +406,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="annotated-cell-6-11"><a href="#annotated-cell-6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(billboard_top3_month_viz, </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="7">7</button><span id="annotated-cell-6-12" class="code-annotation-target"><a href="#annotated-cell-6-12" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(variable, variable, <span class="at">group =</span> variable, <span class="at">color =</span> variable)) <span class="sc">+</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="8">8</button><span id="annotated-cell-6-13" class="code-annotation-target"><a href="#annotated-cell-6-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span> <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="9">9</button><span id="annotated-cell-6-14" class="code-annotation-target"><a href="#annotated-cell-6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> billboard_top3_month_viz <span class="sc">|&gt;</span> <span class="cf">function</span>(variable, <span class="at">by =</span> track),</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="10">10</button><span id="annotated-cell-6-15" class="code-annotation-target"><a href="#annotated-cell-6-15" aria-hidden="true" tabindex="-1"></a>                   <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">label =</span> variable))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="9">9</button><span id="annotated-cell-6-14" class="code-annotation-target"><a href="#annotated-cell-6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> billboard_top3_month_viz <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-6-15"><a href="#annotated-cell-6-15" aria-hidden="true" tabindex="-1"></a>                     <span class="cf">function</span>(variable, <span class="at">by =</span> track),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="10">10</button><span id="annotated-cell-6-16" class="code-annotation-target"><a href="#annotated-cell-6-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">label =</span> variable))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
@@ -428,15 +429,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="7" data-code-annotation="5">In order to get the entire trajectory of a song we can’t simply filter for the month when it peaked. Then we’d only be able to plot that snippet of its trajectory. Hint: Which function returns <code>TRUE</code> if even 1 element it’s given is <code>TRUE</code>?</span>
+<span data-code-cell="annotated-cell-6" data-code-lines="7" data-code-annotation="5">In order to get the entire trajectory of a song we can’t simply filter for the month when it peaked. Then we’d only be able to plot that snippet of its trajectory. <strong>Hint</strong>: Which function returns <code>TRUE</code> if even 1 element it’s given is <code>TRUE</code> (look back at the logical operators section of lecture 3’s slides)?</span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="10" data-code-annotation="6">Load if you want to add labels</span>
+<span data-code-cell="annotated-cell-6" data-code-lines="10" data-code-annotation="6">Load if you want to add non-overlapping labels for the song name (ggplot’s own <code>geom_text</code> or <code>geom_label</code> can also be used if that’s not an issue for your trajectories).</span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="12" data-code-annotation="7">You want to visualize the ranking trajectory of a song over time. Hint: <code>group</code> is the variable you want to visualize.</span>
+<span data-code-cell="annotated-cell-6" data-code-lines="12" data-code-annotation="7">You want to visualize the ranking trajectory of a song over time. <strong>Hint</strong>: <code>group</code> is the variable you want to visualize.</span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="8">8</dt>
 <dd>
@@ -444,11 +445,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="9">9</dt>
 <dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="14" data-code-annotation="9">To properly label this plot you’ll need to subset the data, otherwise it will try to plot a label for every date available.</span>
+<span data-code-cell="annotated-cell-6" data-code-lines="14,15" data-code-annotation="9">To properly label this plot you’ll need to subset the data so there is only one observation per song; otherwise it will try to plot a label for every date available. <strong>Hint</strong>: revisit the <code>slice_</code> suite of functions in <code>dplyr</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="15" data-code-annotation="10">Which variable’s text are you trying to label?</span>
+<span data-code-cell="annotated-cell-6" data-code-lines="16" data-code-annotation="10">Which variable’s text are you trying to label?</span>
 </dd>
 </dl>
 </div>
@@ -474,23 +475,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="due-dates">Due Dates</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="zaadaghxim" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zaadaghxim table {
+<div id="fwkxknhtlp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fwkxknhtlp table {
   font-family: Quattrocento, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zaadaghxim thead, #zaadaghxim tbody, #zaadaghxim tfoot, #zaadaghxim tr, #zaadaghxim td, #zaadaghxim th {
+#fwkxknhtlp thead, #fwkxknhtlp tbody, #fwkxknhtlp tfoot, #fwkxknhtlp tr, #fwkxknhtlp td, #fwkxknhtlp th {
   border-style: none;
 }
 
-#zaadaghxim p {
+#fwkxknhtlp p {
   margin: 0;
   padding: 0;
 }
 
-#zaadaghxim .gt_table {
+#fwkxknhtlp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -516,12 +517,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#zaadaghxim .gt_caption {
+#fwkxknhtlp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zaadaghxim .gt_title {
+#fwkxknhtlp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -533,7 +534,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#zaadaghxim .gt_subtitle {
+#fwkxknhtlp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -545,7 +546,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#zaadaghxim .gt_heading {
+#fwkxknhtlp .gt_heading {
   background-color: #F6F7F9;
   text-align: center;
   border-bottom-color: #F6F7F9;
@@ -557,13 +558,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#zaadaghxim .gt_bottom_border {
+#fwkxknhtlp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zaadaghxim .gt_col_headings {
+#fwkxknhtlp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -578,7 +579,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#zaadaghxim .gt_col_heading {
+#fwkxknhtlp .gt_col_heading {
   color: #333333;
   background-color: #F6F7F9;
   font-size: 100%;
@@ -598,7 +599,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#zaadaghxim .gt_column_spanner_outer {
+#fwkxknhtlp .gt_column_spanner_outer {
   color: #333333;
   background-color: #F6F7F9;
   font-size: 100%;
@@ -610,15 +611,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#zaadaghxim .gt_column_spanner_outer:first-child {
+#fwkxknhtlp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zaadaghxim .gt_column_spanner_outer:last-child {
+#fwkxknhtlp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zaadaghxim .gt_column_spanner {
+#fwkxknhtlp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -630,11 +631,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#zaadaghxim .gt_spanner_row {
+#fwkxknhtlp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zaadaghxim .gt_group_heading {
+#fwkxknhtlp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -660,7 +661,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#zaadaghxim .gt_empty_group_heading {
+#fwkxknhtlp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #F6F7F9;
@@ -675,15 +676,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#zaadaghxim .gt_from_md > :first-child {
+#fwkxknhtlp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zaadaghxim .gt_from_md > :last-child {
+#fwkxknhtlp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zaadaghxim .gt_row {
+#fwkxknhtlp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -702,7 +703,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#zaadaghxim .gt_stub {
+#fwkxknhtlp .gt_stub {
   color: #333333;
   background-color: #F6F7F9;
   font-size: 100%;
@@ -715,7 +716,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#zaadaghxim .gt_stub_row_group {
+#fwkxknhtlp .gt_stub_row_group {
   color: #333333;
   background-color: #F6F7F9;
   font-size: 100%;
@@ -729,15 +730,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#zaadaghxim .gt_row_group_first td {
+#fwkxknhtlp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zaadaghxim .gt_row_group_first th {
+#fwkxknhtlp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zaadaghxim .gt_summary_row {
+#fwkxknhtlp .gt_summary_row {
   color: #333333;
   background-color: #F6F7F9;
   text-transform: inherit;
@@ -747,16 +748,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#zaadaghxim .gt_first_summary_row {
+#fwkxknhtlp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zaadaghxim .gt_first_summary_row.thick {
+#fwkxknhtlp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zaadaghxim .gt_last_summary_row {
+#fwkxknhtlp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -766,7 +767,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#zaadaghxim .gt_grand_summary_row {
+#fwkxknhtlp .gt_grand_summary_row {
   color: #333333;
   background-color: #F6F7F9;
   text-transform: inherit;
@@ -776,7 +777,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#zaadaghxim .gt_first_grand_summary_row {
+#fwkxknhtlp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -786,7 +787,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#zaadaghxim .gt_last_grand_summary_row_top {
+#fwkxknhtlp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -796,11 +797,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#zaadaghxim .gt_striped {
+#fwkxknhtlp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zaadaghxim .gt_table_body {
+#fwkxknhtlp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -809,7 +810,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#zaadaghxim .gt_footnotes {
+#fwkxknhtlp .gt_footnotes {
   color: #333333;
   background-color: #F6F7F9;
   border-bottom-style: none;
@@ -823,7 +824,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#zaadaghxim .gt_footnote {
+#fwkxknhtlp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -832,7 +833,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#zaadaghxim .gt_sourcenotes {
+#fwkxknhtlp .gt_sourcenotes {
   color: #333333;
   background-color: #F6F7F9;
   border-bottom-style: none;
@@ -846,7 +847,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#zaadaghxim .gt_sourcenote {
+#fwkxknhtlp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -854,72 +855,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#zaadaghxim .gt_left {
+#fwkxknhtlp .gt_left {
   text-align: left;
 }
 
-#zaadaghxim .gt_center {
+#fwkxknhtlp .gt_center {
   text-align: center;
 }
 
-#zaadaghxim .gt_right {
+#fwkxknhtlp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zaadaghxim .gt_font_normal {
+#fwkxknhtlp .gt_font_normal {
   font-weight: normal;
 }
 
-#zaadaghxim .gt_font_bold {
+#fwkxknhtlp .gt_font_bold {
   font-weight: bold;
 }
 
-#zaadaghxim .gt_font_italic {
+#fwkxknhtlp .gt_font_italic {
   font-style: italic;
 }
 
-#zaadaghxim .gt_super {
+#fwkxknhtlp .gt_super {
   font-size: 65%;
 }
 
-#zaadaghxim .gt_footnote_marks {
+#fwkxknhtlp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zaadaghxim .gt_asterisk {
+#fwkxknhtlp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zaadaghxim .gt_indent_1 {
+#fwkxknhtlp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zaadaghxim .gt_indent_2 {
+#fwkxknhtlp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zaadaghxim .gt_indent_3 {
+#fwkxknhtlp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zaadaghxim .gt_indent_4 {
+#fwkxknhtlp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zaadaghxim .gt_indent_5 {
+#fwkxknhtlp .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zaadaghxim .katex-display {
+#fwkxknhtlp .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zaadaghxim div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fwkxknhtlp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>

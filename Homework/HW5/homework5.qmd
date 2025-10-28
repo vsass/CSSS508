@@ -74,7 +74,7 @@ billboard_tidy_date
 
 :::
 
-4. Create a dataset of the song(s) with the <span style="color:#e15759">**most weeks in the top 3 by month of 2000**</span>. The final dataset should look like this:
+4. Create a dataset of the song(s) with the <span style="color:#e15759">**most weeks in the top 3 by month of 2000**</span>^[It'll be helpful here to create month and year indicator variabels that use to specify a necessary logical condition and/or use to group your dataset for certain steps. **Hint**: There are many ways to arrive at this answer but one approach uses the functions `mutate`, `if_else`, `slice_max`, `distinct`, and `arrange`.]. The final dataset should look like this:
 
 ```{r}
 #| echo: false
@@ -154,7 +154,8 @@ library(ggrepel) # <6>
 ggplot(billboard_top3_month_viz, 
        aes(variable, variable, group = variable, color = variable)) + # <7> 
   function + # <8>
-  geom_label_repel(data = billboard_top3_month_viz |> function(variable, by = track), # <9>
+  geom_label_repel(data = billboard_top3_month_viz |> # <9>
+                     function(variable, by = track), # <9>
                    mapping = aes(label = variable)) # <10> 
 ```
 
@@ -162,11 +163,11 @@ ggplot(billboard_top3_month_viz,
 2. Are there multiple years in this dataset?! Given that we're interested in the Billboard Top 100 for **2000** it might be useful to have a variable that allows us to discriminate between years. 
 3. To create some indicator of top 3 status you'll need to provide two conditions (one variable needs to be less than or equal to a certain value and another needs to equal a certain value)
 4. Need to create a variable that reflects when a particular song charted in the top 3 and `NA` otherwise
-5. In order to get the entire trajectory of a song we can't simply filter for the month when it peaked. Then we'd only be able to plot that snippet of its trajectory. Hint: Which function returns `TRUE` if even 1 element it's given is `TRUE`?
-6. Load if you want to add labels
-7. You want to visualize the ranking trajectory of a song over time. Hint: `group` is the variable you want to visualize.
+5. In order to get the entire trajectory of a song we can't simply filter for the month when it peaked. Then we'd only be able to plot that snippet of its trajectory. **Hint**: Which function returns `TRUE` if even 1 element it's given is `TRUE` (look back at the logical operators section of lecture 3's slides)?
+6. Load if you want to add non-overlapping labels for the song name (ggplot's own `geom_text` or `geom_label` can also be used if that's not an issue for your trajectories).
+7. You want to visualize the ranking trajectory of a song over time. **Hint**: `group` is the variable you want to visualize.
 8. What geometry would be appropriate here?
-9. To properly label this plot you'll need to subset the data, otherwise it will try to plot a label for every date available. 
+9. To properly label this plot you'll need to subset the data so there is only one observation per song; otherwise it will try to plot a label for every date available. **Hint**: revisit the `slice_` suite of functions in `dplyr`. 
 10. Which variable's text are you trying to label?
 
 :::
