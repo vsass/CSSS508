@@ -4422,7 +4422,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#other-useful-arithmetic-functions-4",
     "title": "",
     "section": "Other Useful Arithmetic Functions",
-    "text": "Other Useful Arithmetic Functions\nNumeric Ranges\n\nx &lt;- c(1, 2, 5, 10, 15, 20)\n1cut(x, breaks = c(0, 5, 10, 15, 20))\n\n\n1\n\ncut() breaks up (aka bins) a numeric vector into discrete buckets\n\n\n\n\n&gt; [1] (0,5]   (0,5]   (0,5]   (5,10]  (10,15] (15,20]\n&gt; Levels: (0,5] (5,10] (10,15] (15,20]\n\n\n. . .\n\n2cut(x, breaks = c(0, 5, 10, 100))\n\n\n2\n\nThe bins don’t have to be the same size.\n\n\n\n\n&gt; [1] (0,5]    (0,5]    (0,5]    (5,10]   (10,100] (10,100]\n&gt; Levels: (0,5] (5,10] (10,100]\n\n\n. . .\n\ncut(x, \n  breaks = c(0, 5, 10, 15, 20), \n3  labels = c(\"sm\", \"md\", \"lg\", \"xl\")\n)\n\n\n3\n\nYou can optionally supply your own labels. Note that there should be one less labels than breaks.\n\n\n\n\n&gt; [1] sm sm sm md lg xl\n&gt; Levels: sm md lg xl\n\n\n. . .\n\n4y &lt;- c(NA, -10, 5, 10, 30)\ncut(y, breaks = c(0, 5, 10, 15, 20))\n\n\n4\n\nAny values outside of the range of the breaks will become NA.\n\n\n\n\n&gt; [1] &lt;NA&gt;   &lt;NA&gt;   (0,5]  (5,10] &lt;NA&gt;  \n&gt; Levels: (0,5] (5,10] (10,15] (15,20]"
+    "text": "Other Useful Arithmetic Functions\nNumeric Ranges\n\n\nx &lt;- c(1, 2, 5, 10, 15, 20)\n1cut(x, breaks = c(0, 5, 10, 15, 20))\n\n\n1\n\ncut() breaks up (aka bins) a numeric vector into discrete buckets\n\n\n\n\n&gt; [1] (0,5]   (0,5]   (0,5]   (5,10]  (10,15] (15,20]\n&gt; Levels: (0,5] (5,10] (10,15] (15,20]\n\n\n\n\n\n2cut(x, breaks = c(0, 5, 10, 100))\n\n\n2\n\nThe bins don’t have to be the same size.\n\n\n\n\n&gt; [1] (0,5]    (0,5]    (0,5]    (5,10]   (10,100] (10,100]\n&gt; Levels: (0,5] (5,10] (10,100]\n\n\n\n\n\ncut(x, \n  breaks = c(0, 5, 10, 15, 20), \n3  labels = c(\"sm\", \"md\", \"lg\", \"xl\")\n)\n\n\n3\n\nYou can optionally supply your own labels. Note that there should be one less labels than breaks.\n\n\n\n\n&gt; [1] sm sm sm md lg xl\n&gt; Levels: sm md lg xl\n\n\n\n\n\n4y &lt;- c(NA, -10, 5, 10, 30)\ncut(y, breaks = c(0, 5, 10, 15, 20))\n\n\n4\n\nAny values outside of the range of the breaks will become NA.\n\n\n\n\n&gt; [1] &lt;NA&gt;   &lt;NA&gt;   (0,5]  (5,10] &lt;NA&gt;  \n&gt; Levels: (0,5] (5,10] (10,15] (15,20]"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#rounding",
@@ -4443,28 +4443,28 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\n\nCentral Tendency\n\n1x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\n\n\n1\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n\n\n\n&gt; [1] 243.79\n\n\n\nmedian(x)\n\n&gt; [1] 236\n\n\n\n2quantile(x, .95)\n\n\n2\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt;   95% \n&gt; 476.3"
+    "text": "Summary Functions\n\nCentral Tendency\n\n1x &lt;- sample(1:500, size = 100, replace = TRUE)\nmean(x)\n\n\n1\n\nsample() takes a vector of data, and samples size elements from it, with replacement if replace equals TRUE.\n\n\n\n\n&gt; [1] 242.37\n\n\n\nmedian(x)\n\n&gt; [1] 245.5\n\n\n\n2quantile(x, .95)\n\n\n2\n\nA generalization of the median: quantile(x, 0.95) will find the value that’s greater than 95% of the values; quantile(x, 0.5) is equivalent to the median.\n\n\n\n\n&gt;    95% \n&gt; 445.65"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-1",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-1",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 2\n\nmax(x)\n\n&gt; [1] 493\n\nrange(x)\n\n&gt; [1]   2 493\n\n\n\n1IQR(x)\n\n\n1\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 245\n\n\n\n2var(x)\n\n\n2\n\ns^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\n\n\n\n\n&gt; [1] 20461.1\n\n\n\n3sd(x)\n\n\n3\n\ns = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\n\n\n\n\n&gt; [1] 143.0423"
+    "text": "Summary Functions\nMeasures of Spread/Variation\n\nmin(x)\n\n&gt; [1] 9\n\nmax(x)\n\n&gt; [1] 495\n\nrange(x)\n\n&gt; [1]   9 495\n\n\n\n1IQR(x)\n\n\n1\n\nEquivalent to quantile(x, 0.75) - quantile(x, 0.25) and gives you the range that contains the middle 50% of the data.\n\n\n\n\n&gt; [1] 220.5\n\n\n\n2var(x)\n\n\n2\n\ns^2 = \\frac{\\sum(x_i-\\overline{x})^2}{n-1}\n\n\n\n\n&gt; [1] 17182.09\n\n\n\n3sd(x)\n\n\n3\n\ns = \\sqrt{\\frac{\\sum(x_i-\\overline{x})^2}{n-1}}\n\n\n\n\n&gt; [1] 131.0805"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#common-numerical-manipulations",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#common-numerical-manipulations",
     "title": "",
     "section": "Common Numerical Manipulations",
-    "text": "Common Numerical Manipulations\nThese formulas can be used in a summary call but are also useful with mutate(), particularly if being applied to grouped data.\n\n\n1x / sum(x)\n2(x - mean(x)) / sd(x)\n3(x - min(x)) / (max(x) - min(x))\n4x / first(x)\n\n\n1\n\nCalculates the proportion of a total.\n\n2\n\nComputes a Z-score (standardized to mean 0 and sd 1).\n\n3\n\nStandardizes to range [0, 1].\n\n4\n\nComputes an index based on the first observation."
+    "text": "Common Numerical Manipulations\nThese formulas can be used in a summary call but are also useful with mutate(), particularly if being applied to grouped data.\n\n1x / sum(x)\n2(x - mean(x)) / sd(x)\n3(x - min(x)) / (max(x) - min(x))\n4x / first(x)\n\n\n1\n\nCalculates the proportion of a total.\n\n2\n\nComputes a Z-score (standardized to mean 0 and sd 1).\n\n3\n\nStandardizes to range [0, 1].\n\n4\n\nComputes an index based on the first observation."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-2",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#summary-functions-2",
     "title": "",
     "section": "Summary Functions",
-    "text": "Summary Functions\nPositions\n\nfirst(x)\n\n&gt; [1] 122\n\nlast(x)\n\n&gt; [1] 300\n\nnth(x, n = 77)\n\n&gt; [1] 110\n\n\n. . .\n\nThese are all really helpful but is there a good summary descriptive statistics function?"
+    "text": "Summary Functions\nPositions\n\nfirst(x)\n\n&gt; [1] 492\n\nlast(x)\n\n&gt; [1] 216\n\nnth(x, n = 77)\n\n&gt; [1] 120\n\n\n\n\nThese are all really helpful but is there a good summary descriptive statistics function?"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#basic-summary-statistics",
@@ -4506,14 +4506,14 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#explicit-missing-values-1",
     "title": "",
     "section": "Explicit Missing Values",
-    "text": "Explicit Missing Values\nRepresent A Fixed Value\nOther times an NA represents some fixed value, usually 0.\n. . .\n\nx &lt;- c(1, 4, 5, 7, NA)\n1coalesce(x, 0)\n\n\n1\n\ncoalesce() in the dplyr package takes a vector as the first argument and will replace any missing values with the value provided in the second argument.\n\n\n\n\n&gt; [1] 1 4 5 7 0\n\n\n. . .\n\nRepresented By a Fixed Value\nIf the opposite issue occurs (i.e. a value is actually an NA), try specifying that to the na argument of your readr data import function. Otherwise, use na_if() from dplyr.\n\nx &lt;- c(1, 4, 5, 7, -99)\nna_if(x, -99)\n\n&gt; [1]  1  4  5  7 NA"
+    "text": "Explicit Missing Values\nRepresent A Fixed Value\nOther times an NA represents some fixed value, usually 0.\n\n\nx &lt;- c(1, 4, 5, 7, NA)\n1coalesce(x, 0)\n\n\n1\n\ncoalesce() in the dplyr package takes a vector as the first argument and will replace any missing values with the value provided in the second argument.\n\n\n\n\n&gt; [1] 1 4 5 7 0\n\n\n\n\n\nRepresented By a Fixed Value\nIf the opposite issue occurs (i.e. a value is actually an NA), try specifying that to the na argument of your readr data import function. Otherwise, use na_if() from dplyr.\n\n\n\nx &lt;- c(1, 4, 5, 7, -99)\nna_if(x, -99)\n\n&gt; [1]  1  4  5  7 NA"
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#explicit-missing-values-2",
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#explicit-missing-values-2",
     "title": "",
     "section": "Explicit Missing Values",
-    "text": "Explicit Missing Values\nNaNs\nA special sub-type of missing value is an NaN, or Not a Number.\n. . .\nThese generally behave similar to NAs and are likely the result of a mathematical operation that has an indeterminate result:\n\n0 / 0 \n\n&gt; [1] NaN\n\n0 * Inf\n\n&gt; [1] NaN\n\nInf - Inf\n\n&gt; [1] NaN\n\nsqrt(-1)\n\n&gt; [1] NaN\n\n\n. . .\nIf you need to explicitly identify an NaN you can use is.nan()."
+    "text": "Explicit Missing Values\nNaNs\nA special sub-type of missing value is an NaN, or Not a Number.\n\nThese generally behave similar to NAs and are likely the result of a mathematical operation that has an indeterminate result:\n\n0 / 0 \n\n&gt; [1] NaN\n\n0 * Inf\n\n&gt; [1] NaN\n\nInf - Inf\n\n&gt; [1] NaN\n\nsqrt(-1)\n\n&gt; [1] NaN\n\n\n\n\nIf you need to explicitly identify an NaN you can use is.nan()."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#implicit-nas",
@@ -4744,7 +4744,7 @@
     "href": "Lectures/Lecture6/CSSS508_Lecture6.html#pluck",
     "title": "",
     "section": "pluck()",
-    "text": "pluck()\nAn alternative to using Base R’s [[ ]] is using pluck() from the tidyverse’s purrr package.\n\n\n\n\nobj1 &lt;- list(\"a\", list(1, elt = \"foo\"))\nobj2 &lt;- list(\"b\", list(2, elt = \"bar\"))\nx &lt;- list(obj1, obj2)\nx\n\n&gt; [[1]]\n&gt; [[1]][[1]]\n&gt; [1] \"a\"\n&gt; \n&gt; [[1]][[2]]\n&gt; [[1]][[2]][[1]]\n&gt; [1] 1\n&gt; \n&gt; [[1]][[2]]$elt\n&gt; [1] \"foo\"\n&gt; \n&gt; \n&gt; \n&gt; [[2]]\n&gt; [[2]][[1]]\n&gt; [1] \"b\"\n&gt; \n&gt; [[2]][[2]]\n&gt; [[2]][[2]][[1]]\n&gt; [1] 2\n&gt; \n&gt; [[2]][[2]]$elt\n&gt; [1] \"bar\"\n\n\n\n\n\npluck(x, 1) \n\n&gt; [[1]]\n&gt; [1] \"a\"\n&gt; \n&gt; [[2]]\n&gt; [[2]][[1]]\n&gt; [1] 1\n&gt; \n&gt; [[2]]$elt\n&gt; [1] \"foo\"\n\n\n\nThis is the same as same as x[[1]]."
+    "text": "pluck()\nAn alternative to using Base R’s [[ ]] is using pluck() from the tidyverse’s purrr package.\n\n\n\n\nobj1 &lt;- list(\"a\", list(1, elt = \"foo\"))\nobj2 &lt;- list(\"b\", list(2, elt = \"bar\"))\nx &lt;- list(obj1, obj2)\nx\n\n&gt; [[1]]\n&gt; [[1]][[1]]\n&gt; [1] \"a\"\n&gt; \n&gt; [[1]][[2]]\n&gt; [[1]][[2]][[1]]\n&gt; [1] 1\n&gt; \n&gt; [[1]][[2]]$elt\n&gt; [1] \"foo\"\n&gt; \n&gt; \n&gt; \n&gt; [[2]]\n&gt; [[2]][[1]]\n&gt; [1] \"b\"\n&gt; \n&gt; [[2]][[2]]\n&gt; [[2]][[2]][[1]]\n&gt; [1] 2\n&gt; \n&gt; [[2]][[2]]$elt\n&gt; [1] \"bar\"\n\n\n\n\n\npluck(x, 1) \n\n&gt; [[1]]\n&gt; [1] \"a\"\n&gt; \n&gt; [[2]]\n&gt; [[2]][[1]]\n&gt; [1] 1\n&gt; \n&gt; [[2]]$elt\n&gt; [1] \"foo\"\n\n\n\nThis is the same as x[[1]]."
   },
   {
     "objectID": "Lectures/Lecture6/CSSS508_Lecture6.html#pluck-1",

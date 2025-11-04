@@ -97,6 +97,8 @@ This week we start getting more into the weeds of programming in `R`.
 
 . . . 
 
+<br>
+
 These skills will help you understand some of `R`'s quirks, how to troubleshoot errors when they arise, and how to write more efficient and automated code that does a lot of work for you! 
 
 ## Data types in `R`
@@ -382,21 +384,22 @@ cumsum(1:15) # <1>
 
 #### Numeric Ranges
 
+::: {.fragment}
 ```{r}
 x <- c(1, 2, 5, 10, 15, 20)
 cut(x, breaks = c(0, 5, 10, 15, 20)) # <1> 
 ```
 1. `cut()` breaks up (aka bins) a numeric vector into discrete buckets
+:::
 
-. . . 
-
+::: {.fragment}
 ```{r}
 cut(x, breaks = c(0, 5, 10, 100)) # <2>
 ```
 2. The bins don't have to be the same size.
+:::
 
-. . . 
-
+::: {.fragment}
 ```{r}
 cut(x, 
   breaks = c(0, 5, 10, 15, 20), 
@@ -404,14 +407,15 @@ cut(x,
 )
 ```
 3. You can optionally supply your own labels. Note that there should be one less labels than breaks.
-
-. . . 
-
+:::
+ 
+::: {.fragment}
 ```{r}
 y <- c(NA, -10, 5, 10, 30) # <4>
 cut(y, breaks = c(0, 5, 10, 15, 20))
 ```
 4. Any values outside of the range of the breaks will become `NA`.
+:::
 
 ## Rounding 
 
@@ -510,8 +514,6 @@ sd(x) # <3>
 
 These formulas can be used in a summary call but are also useful with `mutate()`, particularly if being applied to grouped data. 
 
-. . . 
-
 ```{r}
 #| eval: false
 x / sum(x) # <1> 
@@ -534,11 +536,11 @@ last(x)
 nth(x, n = 77)
 ```
 
-. . . 
-
 <br>
 
+::: {.fragment}
 These are all really helpful but is there a *good* summary descriptive statistics function?
+:::
 
 # {data-menu-title="`skimr`" background-image="images/skimr_logo.png" background-size="contain" background-position="center" .section-title background-color="#1e4655"}
 
@@ -656,26 +658,28 @@ treatment |>
 
 Other times an `NA` represents some fixed value, usually `0`. 
 
-. . . 
-
+::: {.fragment}
 ```{r}
 x <- c(1, 4, 5, 7, NA)
 coalesce(x, 0) # <1> 
 ```
 1. `coalesce()` in the `dplyr` package takes a vector as the first argument and will replace any missing values with the value provided in the second argument. 
-
-. . . 
+::: 
 
 <br>
 
+::: {.fragment}
 #### Represented By a Fixed Value
 
 If the opposite issue occurs (i.e. a value is actually an `NA`), try specifying that to the `na` argument of your `readr` data import function. Otherwise, use `na_if()` from `dplyr`. 
+:::
 
+::: {.fragment}
 ```{r}
 x <- c(1, 4, 5, 7, -99)
 na_if(x, -99)
 ```
+:::
 
 ## Explicit Missing Values
 
@@ -683,8 +687,7 @@ na_if(x, -99)
 
 A special sub-type of missing value is an `NaN`, or `N`ot `a` `N`umber. 
 
-. . . 
-
+::: {.fragment}
 These generally behave similar to `NA`s and are likely the result of a mathematical operation that has an indeterminate result:
 
 ```{r}
@@ -693,10 +696,11 @@ These generally behave similar to `NA`s and are likely the result of a mathemati
 Inf - Inf
 sqrt(-1)
 ```
+:::
 
-. . . 
-
+::: {.fragment}
 If you need to explicitly identify an `NaN` you can use `is.nan()`. 
+:::
 
 ## Implicit `NA`s
 
@@ -1463,7 +1467,7 @@ pluck(x, 1)
 
 <br>
 
-This is the same as same as `x[[1]]`.
+This is the same as `x[[1]]`.
 
 :::
 :::
