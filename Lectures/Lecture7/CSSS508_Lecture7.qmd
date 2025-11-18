@@ -275,11 +275,12 @@ If you want to create a summary of certain character strings you can use `str_fl
 #| output-location: fragment
 restaurants |> 
   select(Name, `Inspection Score`) |> # <1>
-  summarize(inspection_scores = str_flatten(`Inspection Score`, collapse = ", "), 
-            .by = Name)
+  summarize(inspection_scores = str_flatten(`Inspection Score`, collapse = ", "), # <2>
+            .by = Name) # <2>
 ```
 
 1. Notice that when a variable has spaces in it's name (rather than being separated with an underscore in snake_case, for instance) you need to put backticks around it so `R` knows it is a singular object name.
+2. Now we can see one row per restaurant with all their inspection scores combined into a single character string.
 
 ## Example #4 with Restaurant Data
 
@@ -787,14 +788,18 @@ res_sep <- restaurants |>
                        patterns = c(capacity_description = "^.+", # <1>
                                     risk_category = "Risk ?(?:Category)? ?I{1,3}$"), # <2>
                        too_few = "debug") |> 
-  distinct(capacity_description, risk_category, Description_ok, 
+  distinct(Description, capacity_description, risk_category, Description_ok, 
            Description_matches, Description_remainder) |> # <3>
-  print(n = 33)
+  filter(Description_ok == FALSE) |> # <4>
+  select(Description, capacity_description, risk_category) # <5>
+glimpse(res_sep)
 ```
 
 1. `"^"` matches the beginning of a string, <br> `"."` matches any character except a new line, and `"+"` quantifies that `"."`, asking it to return 1 or more characters.
 2. `"Risk"` matches exactly, `" ?"` matches a singular white space 0 or 1 time, <br> `"(?:Category)?"` **optionally** matches the exact word "Category", again `" ?"` matches a singular white space 0 or 1 time, `"I{1,3}"` matches "I" 1-3 times, and `"$"` signifies the end of the string.
-3. Using `distinct()` on the created and debugging variables allows us to see what didn't match.
+3. Using `distinct()` on the original, created, and debugging variables allows us to see what didn't match.
+4. Only show the unexpected results.
+5. See original `Description` and two created `capacity_description` and `risk_category` variables to see what we need to fix.
 
 ## Separation with regex {auto-animate="true"}
 
@@ -910,7 +915,7 @@ list.files(pattern = "\\.qmd$")
 #| output-location: fragment
 #| code-annotations: hover
 names(iris)
-iris %>% select(matches("[pt]al")) |> # <1>
+iris |> select(matches("[pt]al")) |> # <1>
   names() 
 ```
 1. `[pt]` signifies match either `p` or `t`.
@@ -923,15 +928,14 @@ iris %>% select(matches("[pt]al")) |> # <1>
 
 ```{r}
 #| output-location: fragment
-names(who) |> head(n = 10)
+names(who) 
 ```
 
 . . . 
 
-\
 
 ```{r}
-#| output-location: fragment
+#| output-location: slide
 who |> 
   pivot_longer(cols = new_sp_m014:newrel_f65,
                names_to = c("diagnosis", "gender", "age"), 
@@ -941,6 +945,35 @@ who |>
   slice_head(n = 5)
 ```
 1. `"new_?(.*)_(.)(.*)"` explained: `new` matches exactly, then `_?` *optionally* matches an underscore, `(.*)` matches any number of characters and in this example it captures the new `diagnosis` variable, `_` matches exactly, `(.)` matches one character which captures the `gender` variable `m` or `f` in this example, and lastly, `(.*)` again matches any number of characters, in this case it captures the varying digits of the `age` variable.
+
+
+## [pivot_longer()]{.color-blue} 
+
+[We can also use regular expressions to clean up `age ` so it reads as proper age range categories.]{style="font-size: 85%;"} 
+
+```{r}
+#| output-location: fragment
+who |> 
+  pivot_longer(cols = new_sp_m014:newrel_f65,
+               names_to = c("diagnosis", "gender", "age"), 
+               names_pattern = "new_?(.*)_(.)(.*)", # <1>
+               values_to = "count") |> 
+  mutate(age = if_else( # <2>
+    condition = str_detect(string = age, pattern = "^[0-9]{1,2}[0-9]{2}$"), # <3>
+    true = str_replace(string = age, # <4>
+                       pattern = "^([0-9]{1,2})([0-9]{2})$", # <4>
+                       replacement = "\\1-\\2"), # <4>
+    false = str_replace(string = age, # <5>
+                        pattern = "^([0-9]{2})$", # <5>
+                        replacement = "\\1+"))) |>  # <5>
+  arrange(desc(count)) |> 
+  slice_head(n = 5)
+```
+1. `"new_?(.*)_(.)(.*)"` explained: `new` matches exactly, then `_?` *optionally* matches an underscore, `(.*)` matches any number of characters and in this example it captures the new `diagnosis` variable, `_` matches exactly, `(.)` matches one character which captures the `gender` variable `m` or `f` in this example, and lastly, `(.*)` again matches any number of characters, in this case it captures the varying digits of the `age` variable.
+2. Using an `if_else` statement here allows us to specify two different pattern replacements for the two different pattern matches we have in the `age` variable.
+3. Identify which values in `age` represent range codes requiring a `-` (i.e. from start of string, match on 1 or two digits, followed by two digits before the end of the string)
+4. If that condition is `TRUE`, insert a `-` between captured group 1 (1 or 2 digits at the beginning of string) and captured group 2 (2 digits at the end of string) [capturing represented by `()`]
+5. If that condition is `FALSE`, add a `+` to 2-digit standalone ages
 
 ## [separate_*_delim()]{.color-blue} 
 
