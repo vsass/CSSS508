@@ -463,7 +463,7 @@ first_upper <- function(x) {
 
 first_upper("hi there, how's your day going?")
 ```
-3. Make the first character upper case. 
+3. Make the first character of a sentence upper case. 
 </div>
 
 ## Examples of Summarize Functions
@@ -583,7 +583,7 @@ Here we need some way to tell the functions within *our function* not to treat o
 
 ## Embracing 
 
-The tidy evaluation solution to this issue is called embracing, which means wrapping variable names in two sets of curly braces (i.e. `var` becomes `{{ var }}`). 
+The tidy evaluation solution to this issue is called embracing, which means wrapping variable names in two sets of curly braces (i.e. `var` becomes `{{{ var }}}`). 
 
 . . . 
 
@@ -755,7 +755,7 @@ Let's take our histogram example from before:
 #| output: false
 #| echo: true
 histogram <- function(df, var, binwidth) {
-  label <- rlang::englue("A histogram of {{ var }} with binwidth {binwidth}") # <1>
+  label <- rlang::englue("A histogram of {{ var }} with binwidth { binwidth }") # <1>
   
   df |> 
     ggplot(aes(x = {{ var }})) + 
@@ -773,7 +773,7 @@ diamonds |> histogram(carat, 0.1)
 #| echo: false
 #| output: false
 histogram <- function(df, var, binwidth) {
-  label <- rlang::englue("A histogram of {{var}} with binwidth {binwidth}")
+  label <- rlang::englue("A histogram of {{var}} with binwidth { binwidth }")
   
   df |> 
     ggplot(aes(x = {{ var }})) + 
@@ -781,7 +781,7 @@ histogram <- function(df, var, binwidth) {
     labs(title = label)
 }
 
-diamonds |> histogram(carat, 0.1)
+diamonds |> histogram(carat, 0.1) + theme_gray(base_size = 16)
 ggsave("histogram_label.png", width = 6, height = 8, units = "in")
 ```
 

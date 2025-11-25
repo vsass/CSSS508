@@ -96,7 +96,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #d4d0ab; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-13cfb892feeddeb820c7d4ed038b5a2f.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-34f78b4b98746889e37287d057a3918c.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -632,7 +632,7 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-42" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-42" data-code-lines="2,3" data-code-annotation="3">Make the first character upper case.</span>
+<span data-code-cell="annotated-cell-42" data-code-lines="2,3" data-code-annotation="3">Make the first character of a sentence upper case.</span>
 </dd>
 </dl>
 </div>
@@ -796,7 +796,7 @@
 </section>
 <section id="embracing" class="slide level2">
 <h2>Embracing</h2>
-<p>The tidy evaluation solution to this issue is called embracing, which means wrapping variable names in two sets of curly braces (i.e.&nbsp;<code>var</code> becomes <code>{ var }</code>).</p>
+<p>The tidy evaluation solution to this issue is called embracing, which means wrapping variable names in two sets of curly braces (i.e.&nbsp;<code>var</code> becomes <code>{{ var }}</code>).</p>
 <div class="fragment">
 <p>Embracing a variable tells <code>dplyr</code> to use the value stored inside the argument, not the argument as the literal variable name.</p>
 </div>
@@ -1014,7 +1014,7 @@
 <p>Let’s take our histogram example from before:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1"></a>histogram <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var, binwidth) {</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-2" class="code-annotation-target"><a href="#annotated-cell-13-2"></a>  label <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">englue</span>(<span class="st">"A histogram of {{ var }} with binwidth {binwidth}"</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-2" class="code-annotation-target"><a href="#annotated-cell-13-2"></a>  label <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">englue</span>(<span class="st">"A histogram of {{ var }} with binwidth { binwidth }"</span>)</span>
 <span id="annotated-cell-13-3"><a href="#annotated-cell-13-3"></a>  </span>
 <span id="annotated-cell-13-4"><a href="#annotated-cell-13-4"></a>  df <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-13-5"><a href="#annotated-cell-13-5"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> {{ var }})) <span class="sc">+</span> </span>
