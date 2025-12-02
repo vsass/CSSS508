@@ -256,7 +256,7 @@
 <p>If someone doesn’t know better, they might find the means of variables in the <code>swiss</code> data by typing a line of code for each column:</p>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>mean1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss<span class="sc">$</span>Fertility)</span>
+<div class="sourceCode cell-code" id="cb1" data-code-line-numbers="|3|6|7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>mean1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss<span class="sc">$</span>Fertility)</span>
 <span id="cb1-2"><a></a>mean2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss<span class="sc">$</span>Agriculture)</span>
 <span id="cb1-3"><a></a>mean3 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swissExamination)</span>
 <span id="cb1-4"><a></a>mean4 <span class="ot">&lt;-</span> <span class="fu">mean</span>(swiss<span class="sc">$</span>Fertility)</span>
@@ -385,9 +385,10 @@
 <div id="tabset-1-2">
 <div class="fragment" data-fragment-index="3">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { </span>
-<span id="cb8-2"><a></a>  (x <span class="sc">-</span> <span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> (<span class="fu">max</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb8-3"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb8-2"><a></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-3"><a></a>  (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb8-4"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p><br></p>
@@ -604,12 +605,16 @@
 <div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1"></a>airquality <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-10-2"><a href="#annotated-cell-10-2"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(Ozone<span class="sc">:</span>Temp, </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-3" class="code-annotation-target"><a href="#annotated-cell-10-3"></a>                   <span class="fu">list</span>(<span class="at">median =</span> \(x) <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4"></a>                        <span class="at">n_miss =</span> \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="2">2</button><span id="annotated-cell-10-4" class="code-annotation-target"><a href="#annotated-cell-10-4"></a>                        <span class="at">n_miss =</span> \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-10" data-code-lines="3,4" data-code-annotation="1">The names of the list are used to name the new variables. In fact, the columns are named using a glue specification <code>{.col}_{.fn}</code> where <code>.col</code> is the name of the original column and <code>.fn</code> is the name of the function.</span>
+<span data-code-cell="annotated-cell-10" data-code-lines="3" data-code-annotation="1">The names of the list are used to name the new variables. In fact, the columns are named using a glue specification <code>{.col}_{.fn}</code> where <code>.col</code> is the name of the original column and <code>.fn</code> is the name of the function.</span>
+</dd>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-lines="4" data-code-annotation="2">Anonymous functions are also necessary if nesting functions such as in this example.</span>
 </dd>
 </dl>
 </div>
@@ -750,20 +755,28 @@
 </section>
 <section id="across-in-functions" class="slide level2">
 <h2><code>across()</code> in Functions</h2>
-<p>Naturally, <code>across()</code> lends itself to functions because it allows you to operate on multiple columns simultaneously.</p>
+<p>Naturally, <code>across()</code> lends itself to use within user-defined functions because it allows you to operate on multiple columns simultaneously.</p>
 <div class="fragment">
-<p>Just remember to embrace with <code>{ }</code> when using an argument for column selection since the first argument of <code>across()</code> uses the tidy evaluation method tidy-select.</p>
+<p>Just remember to embrace with <code>{{ }}</code> when using an argument for column selection since the first argument of <code>across()</code> uses the tidy evaluation method tidy-select.</p>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>summarize_means <span class="ot">&lt;-</span> <span class="cf">function</span>(df, <span class="at">summary_vars =</span> <span class="fu">where</span>(is.numeric)) {</span>
-<span id="cb28-2"><a></a>  df <span class="sc">|&gt;</span> </span>
-<span id="cb28-3"><a></a>    <span class="fu">summarize</span>(</span>
-<span id="cb28-4"><a></a>      <span class="fu">across</span>({{ summary_vars }}, \(x) <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb28-5"><a></a>      <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb28-6"><a></a>      <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb28-7"><a></a>    )</span>
-<span id="cb28-8"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-1" class="code-annotation-target"><a href="#annotated-cell-13-1"></a>summarize_means <span class="ot">&lt;-</span> <span class="cf">function</span>(df, <span class="at">summary_vars =</span> <span class="fu">where</span>(is.numeric)) {</span>
+<span id="annotated-cell-13-2"><a href="#annotated-cell-13-2"></a>  df <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-13-3"><a href="#annotated-cell-13-3"></a>    <span class="fu">summarize</span>(</span>
+<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4"></a>      <span class="fu">across</span>({{ summary_vars }}, \(x) <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="annotated-cell-13-5"><a href="#annotated-cell-13-5"></a>      <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="annotated-cell-13-6"><a href="#annotated-cell-13-6"></a>      <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="annotated-cell-13-7"><a href="#annotated-cell-13-7"></a>    )</span>
+<span id="annotated-cell-13-8"><a href="#annotated-cell-13-8"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-lines="1,2,3,4,5,6,7,8" data-code-annotation="1">A function that takes a dataframe and (<em>optionally</em>) variable names and returns an ungrouped dataframe with the mean of each of those variables (with <code>NA</code>s removed) as well as the count of observations. If no variables are specified, it defaults to all numeric variables. <br><br> If the dataframe is grouped, the summary statistics will be evaluated by the values of the grouping variable(s).</span>
+</dd>
+</dl>
+</div>
 </div>
 </div>
 <div class="fragment">
@@ -771,9 +784,9 @@
 <div class="column" style="width:45%;">
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>diamonds <span class="sc">|&gt;</span> </span>
-<span id="cb29-2"><a></a>  <span class="fu">group_by</span>(cut) <span class="sc">|&gt;</span> </span>
-<span id="cb29-3"><a></a>  <span class="fu">summarize_means</span>(<span class="fu">c</span>(carat, x<span class="sc">:</span>z))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>diamonds <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a></a>  <span class="fu">group_by</span>(cut) <span class="sc">|&gt;</span> </span>
+<span id="cb28-3"><a></a>  <span class="fu">summarize_means</span>(<span class="fu">c</span>(carat, x<span class="sc">:</span>z))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:55%;">
 <div class="cell">
@@ -805,12 +818,12 @@
 <h2>Bad repetition redux</h2>
 <p>Imagine you have a directory full of excel spreadsheets you want to read into <code>R</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>data2019 <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/y2019.xlsx"</span>)</span>
-<span id="cb31-2"><a></a>data2020 <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/y2020.xlsx"</span>)</span>
-<span id="cb31-3"><a></a>data2021 <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/y2021.xlsx"</span>)</span>
-<span id="cb31-4"><a></a>data2022 <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/y2022.xlsx"</span>)</span>
-<span id="cb31-5"><a></a></span>
-<span id="cb31-6"><a></a>data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(data2019, data2020, data2021, data2022)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>data2019 <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/y2019.xlsx"</span>)</span>
+<span id="cb30-2"><a></a>data2020 <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/y2020.xlsx"</span>)</span>
+<span id="cb30-3"><a></a>data2021 <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/y2021.xlsx"</span>)</span>
+<span id="cb30-4"><a></a>data2022 <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/y2022.xlsx"</span>)</span>
+<span id="cb30-5"><a></a></span>
+<span id="cb30-6"><a></a>data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(data2019, data2020, data2021, data2022)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You could <em>technically</em> do it with copy and paste but we know that that’s probably not the most efficient, least error-prone approach.</p>
 <div class="fragment">
@@ -865,20 +878,20 @@
 <p>Now we want to read these excel sheets into a single object so we can use iteration in the next step! A list is the perfect tool for this.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>files <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb33-2"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1952.xlsx"</span>),</span>
-<span id="cb33-3"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1957.xlsx"</span>),</span>
-<span id="cb33-4"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1962.xlsx"</span>),</span>
-<span id="cb33-5"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1967.xlsx"</span>),</span>
-<span id="cb33-6"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1972.xlsx"</span>),</span>
-<span id="cb33-7"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1977.xlsx"</span>),</span>
-<span id="cb33-8"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1982.xlsx"</span>),</span>
-<span id="cb33-9"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1987.xlsx"</span>),</span>
-<span id="cb33-10"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1992.xlsx"</span>),</span>
-<span id="cb33-11"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1997.xlsx"</span>),</span>
-<span id="cb33-12"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/2002.xlsx"</span>),</span>
-<span id="cb33-13"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/2007.xlsx"</span>)</span>
-<span id="cb33-14"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>files <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb32-2"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1952.xlsx"</span>),</span>
+<span id="cb32-3"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1957.xlsx"</span>),</span>
+<span id="cb32-4"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1962.xlsx"</span>),</span>
+<span id="cb32-5"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1967.xlsx"</span>),</span>
+<span id="cb32-6"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1972.xlsx"</span>),</span>
+<span id="cb32-7"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1977.xlsx"</span>),</span>
+<span id="cb32-8"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1982.xlsx"</span>),</span>
+<span id="cb32-9"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1987.xlsx"</span>),</span>
+<span id="cb32-10"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1992.xlsx"</span>),</span>
+<span id="cb32-11"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/1997.xlsx"</span>),</span>
+<span id="cb32-12"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/2002.xlsx"</span>),</span>
+<span id="cb32-13"><a></a>  readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"data/gapminder/2007.xlsx"</span>)</span>
+<span id="cb32-14"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -887,14 +900,16 @@
 </section>
 <section id="step-2-using-map-instead" class="slide level2">
 <h2>Step 2: Using <code>map()</code> instead!</h2>
-<p>Instead of listing out all the <code>read_excel()</code> calls in our list, we can used the <code>map()</code> function from the tidyverse’s <code>purrr</code> package. <code>map()</code> is similar to <code>across()</code>, but instead of doing something to each column in a data frame, it does something to each element of a vector.</p>
+<p>Instead of listing out all the <code>read_excel()</code> calls in our list, we can used the <code>map()</code> function from the tidyverse’s <code>purrr</code> package. <code>map()</code> is similar to <code>across()</code>, but instead of modifying columns in a data frame, it does something to each element of a list/vector.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>files <span class="ot">&lt;-</span> <span class="fu">map</span>(paths, readxl<span class="sc">::</span>read_excel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>files <span class="ot">&lt;-</span> <span class="fu">map</span>(paths, readxl<span class="sc">::</span>read_excel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
 <p>Now, what does <code>files</code> contain?</p>
+</div>
+<div class="fragment">
 <div class="columns">
 <div class="column" style="width:30%;">
 <div class="cell">
@@ -909,6 +924,7 @@
 </div>
 </div>
 </div><div class="column" style="width:70%;">
+<div class="fragment">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; # A tibble: 142 × 5
@@ -927,6 +943,7 @@
 &gt; # ℹ 132 more rows</code></pre>
 </div>
 </div>
+</div>
 </div></div>
 </div>
 </section>
@@ -935,7 +952,7 @@
 <p>Now that we have all our individual dataframes in elements of a list, we can use <code>list_rbind</code> to combine them into one dataframe.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="fu">list_rbind</span>(files)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="fu">list_rbind</span>(files)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; # A tibble: 1,704 × 5
 &gt;    country     continent lifeExp      pop gdpPercap
@@ -957,21 +974,21 @@
 <div class="fragment">
 <p>The super efficient, full code for the last two steps would therefore be:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>paths <span class="sc">|&gt;</span> </span>
-<span id="cb38-2"><a></a>  <span class="fu">map</span>(readxl<span class="sc">::</span>read_excel) <span class="sc">|&gt;</span> </span>
-<span id="cb38-3"><a></a>  <span class="fu">list_rbind</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>paths <span class="sc">|&gt;</span> </span>
+<span id="cb37-2"><a></a>  <span class="fu">map</span>(readxl<span class="sc">::</span>read_excel) <span class="sc">|&gt;</span> </span>
+<span id="cb37-3"><a></a>  <span class="fu">list_rbind</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
-<section id="data-in-the-filepath" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">Data in the Filepath</h2>
+<section id="data-in-the-filepath" class="slide level2">
+<h2>Data in the Filepath</h2>
 <p>You may have noticed that we’re missing a year indicator in our final dataset. That’s because that information is actually a part of the filename itself.</p>
 <div class="fragment">
 <p>There’s a way to include the filename in the data but we have to add another step to our <code>paths</code> pipeline:</p>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-20"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-20-1"><a href="#annotated-cell-20-1"></a>files <span class="ot">&lt;-</span> paths <span class="sc">|&gt;</span> </span>
+<div class="sourceCode cell-code" id="annotated-cell-20" data-code-line-numbers="|2"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-20-1"><a href="#annotated-cell-20-1"></a>files <span class="ot">&lt;-</span> paths <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-20" data-target-annotation="1">1</button><span id="annotated-cell-20-2" class="code-annotation-target"><a href="#annotated-cell-20-2"></a>  <span class="fu">set_names</span>(basename) <span class="sc">|&gt;</span></span>
 <span id="annotated-cell-20-3"><a href="#annotated-cell-20-3"></a>  <span class="fu">map</span>(readxl<span class="sc">::</span>read_excel)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
@@ -990,11 +1007,12 @@
 <div class="column" style="width:30%;">
 <div class="smaller-code">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>paths <span class="sc">|&gt;</span> </span>
-<span id="cb39-2"><a></a>  <span class="fu">set_names</span>(basename)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>paths <span class="sc">|&gt;</span> </span>
+<span id="cb38-2"><a></a>  <span class="fu">set_names</span>(basename)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div><div class="column" style="width:70%;">
+<div class="fragment">
 <div class="smaller-code">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1013,15 +1031,16 @@
 </div>
 </div>
 </div>
+</div>
 </div></div>
 </div>
 </section>
-<section id="data-in-the-filepath-1" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">Data in the Filepath</h2>
+<section id="data-in-the-filepath-1" class="slide level2">
+<h2>Data in the Filepath</h2>
 <p>You may have noticed that we’re missing a year indicator in our final dataset. That’s because that information is actually a part of the filename itself.</p>
 <p>There’s a way to include the filename in the data but we have to add another step to our <code>paths</code> pipeline:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-21"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-21-1"><a href="#annotated-cell-21-1"></a>files <span class="ot">&lt;-</span> paths <span class="sc">|&gt;</span> </span>
+<div class="sourceCode cell-code" id="annotated-cell-21" data-code-line-numbers="2"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-21-1"><a href="#annotated-cell-21-1"></a>files <span class="ot">&lt;-</span> paths <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-21" data-target-annotation="1">1</button><span id="annotated-cell-21-2" class="code-annotation-target"><a href="#annotated-cell-21-2"></a>  <span class="fu">set_names</span>(basename) <span class="sc">|&gt;</span></span>
 <span id="annotated-cell-21-3"><a href="#annotated-cell-21-3"></a>  <span class="fu">map</span>(readxl<span class="sc">::</span>read_excel)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
@@ -1038,15 +1057,26 @@
 <div class="column" style="width:35%;">
 <div class="smaller-code">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>paths <span class="sc">|&gt;</span> </span>
-<span id="cb41-2"><a></a>  <span class="fu">set_names</span>(basename) <span class="sc">|&gt;</span> </span>
-<span id="cb41-3"><a></a>  <span class="fu">map</span>(readxl<span class="sc">::</span>read_excel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>paths <span class="sc">|&gt;</span> </span>
+<span id="cb40-2"><a></a>  <span class="fu">set_names</span>(basename) <span class="sc">|&gt;</span> </span>
+<span id="cb40-3"><a></a>  <span class="fu">map</span>(readxl<span class="sc">::</span>read_excel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p><br>
-</p>
-<p><span class="fragment" style="font-size: 85%;">Now each of our dataframes is named for the year of data it contains.</span></p>
+<p><span class="fragment" data-fragment-index="2" style="font-size: 75%;">Now each of our dataframes is named for the year of data it contains.</span></p>
+<div class="fragment" data-fragment-index="3" style="font-size: 75%;">
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong><span style="color:green"><i class="fa-solid fa-circle-info" aria-label="circle-info"></i></span> <code>map()</code> Variants</strong></p>
+</div>
+<div class="callout-content">
+<p>By default, <code>map()</code> returns a <code>list</code>. However, if you know the specific datatype you want returned, you can use any of the <a href="https://purrr.tidyverse.org/reference/map.html"><code>map()</code> variants</a> to return that explicitly.</p>
+</div>
+</div>
+</div>
+</div>
 </div><div class="column" style="width:65%;">
+<div class="fragment" data-fragment-index="1">
 <div class="small-code">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1244,6 +1274,7 @@
 </div>
 </div>
 </div>
+</div>
 </div></div>
 </section>
 <section id="data-in-the-filepath-2" class="slide level2">
@@ -1251,7 +1282,7 @@
 <p>To create a <code>year</code> variable we need to tell <code>list_rbind</code> to save the filename information.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-22"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-22-1"><a href="#annotated-cell-22-1"></a>gapminder <span class="ot">&lt;-</span> paths <span class="sc">|&gt;</span> </span>
+<div class="sourceCode cell-code" id="annotated-cell-22" data-code-line-numbers="|4|5"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-22-1"><a href="#annotated-cell-22-1"></a>gapminder <span class="ot">&lt;-</span> paths <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-22-2"><a href="#annotated-cell-22-2"></a>  <span class="fu">set_names</span>(basename) <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-22-3"><a href="#annotated-cell-22-3"></a>  <span class="fu">map</span>(readxl<span class="sc">::</span>read_excel) <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="1">1</button><span id="annotated-cell-22-4" class="code-annotation-target"><a href="#annotated-cell-22-4"></a>  <span class="fu">list_rbind</span>(<span class="at">names_to =</span> <span class="st">"year"</span>) <span class="sc">|&gt;</span></span>
@@ -1269,6 +1300,8 @@
 </dd>
 </dl>
 </div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; # A tibble: 1,704 × 6
 &gt;     year country     continent lifeExp      pop gdpPercap
@@ -1403,7 +1436,7 @@
 <p>For example, what if we want a different csv for each <code>clarity</code> type in the <code>diamonds</code> dataset?</p>
 <p>The easiest way to make these individual datasets is using <code>group_nest()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>by_clarity<span class="sc">$</span>data[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>by_clarity<span class="sc">$</span>data[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; # A tibble: 741 × 9
 &gt;    carat cut       color depth table price     x     y     z
@@ -1426,16 +1459,16 @@
 <h2>Using <code>walk()</code></h2>
 <p>We basically want to carry out the following but we can’t simply use <code>map()</code> because now we have <em>2</em> arguments that vary.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a><span class="fu">write_csv</span>(by_clarity<span class="sc">$</span>data[[<span class="dv">1</span>]], by_clarity<span class="sc">$</span>path[[<span class="dv">1</span>]])</span>
-<span id="cb47-2"><a></a><span class="fu">write_csv</span>(by_clarity<span class="sc">$</span>data[[<span class="dv">2</span>]], by_clarity<span class="sc">$</span>path[[<span class="dv">2</span>]])</span>
-<span id="cb47-3"><a></a><span class="fu">write_csv</span>(by_clarity<span class="sc">$</span>data[[<span class="dv">3</span>]], by_clarity<span class="sc">$</span>path[[<span class="dv">3</span>]])</span>
-<span id="cb47-4"><a></a>...</span>
-<span id="cb47-5"><a></a><span class="fu">write_csv</span>(by_clarity<span class="sc">$</span>by_clarity[[<span class="dv">8</span>]], by_clarity<span class="sc">$</span>path[[<span class="dv">8</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="fu">write_csv</span>(by_clarity<span class="sc">$</span>data[[<span class="dv">1</span>]], by_clarity<span class="sc">$</span>path[[<span class="dv">1</span>]])</span>
+<span id="cb46-2"><a></a><span class="fu">write_csv</span>(by_clarity<span class="sc">$</span>data[[<span class="dv">2</span>]], by_clarity<span class="sc">$</span>path[[<span class="dv">2</span>]])</span>
+<span id="cb46-3"><a></a><span class="fu">write_csv</span>(by_clarity<span class="sc">$</span>data[[<span class="dv">3</span>]], by_clarity<span class="sc">$</span>path[[<span class="dv">3</span>]])</span>
+<span id="cb46-4"><a></a>...</span>
+<span id="cb46-5"><a></a><span class="fu">write_csv</span>(by_clarity<span class="sc">$</span>by_clarity[[<span class="dv">8</span>]], by_clarity<span class="sc">$</span>path[[<span class="dv">8</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>So we could use <code>map2()</code>, which allows us to map over <strong>2</strong> inputs!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a><span class="fu">map2</span>(by_clarity<span class="sc">$</span>data, by_clarity<span class="sc">$</span>path, write_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a><span class="fu">map2</span>(by_clarity<span class="sc">$</span>data, by_clarity<span class="sc">$</span>path, write_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -1446,7 +1479,7 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a><span class="fu">walk2</span>(by_clarity<span class="sc">$</span>data, by_clarity<span class="sc">$</span>path, write_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a><span class="fu">walk2</span>(by_clarity<span class="sc">$</span>data, by_clarity<span class="sc">$</span>path, write_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This performs the exact same thing as <code>map2()</code> but throws the output away. Therefore we’re left with just the file-saving behavior which is what we’re after.</p>
 </div>
@@ -1457,11 +1490,11 @@
 <div class="fragment">
 <p>First let’s create a function that draws the plot we want.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a>carat_histogram <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
-<span id="cb50-2"><a></a>  <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> carat)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.1</span>)  </span>
-<span id="cb50-3"><a></a>}</span>
-<span id="cb50-4"><a></a></span>
-<span id="cb50-5"><a></a><span class="fu">carat_histogram</span>(by_clarity<span class="sc">$</span>data[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>carat_histogram <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
+<span id="cb49-2"><a></a>  <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> carat)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.1</span>)  </span>
+<span id="cb49-3"><a></a>}</span>
+<span id="cb49-4"><a></a></span>
+<span id="cb49-5"><a></a><span class="fu">carat_histogram</span>(by_clarity<span class="sc">$</span>data[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1477,12 +1510,24 @@
 <p>Now we can use <code>map()</code> to create a list of many plots and their eventual file paths:</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>by_clarity <span class="ot">&lt;-</span> by_clarity <span class="sc">|&gt;</span> </span>
-<span id="cb51-2"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb51-3"><a></a>    <span class="at">plot =</span> <span class="fu">map</span>(data, carat_histogram),</span>
-<span id="cb51-4"><a></a>    <span class="at">path =</span> <span class="fu">str_glue</span>(<span class="st">"clarity-{clarity}.png"</span>)</span>
-<span id="cb51-5"><a></a>  )</span>
-<span id="cb51-6"><a></a>by_clarity</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-30"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-30-1"><a href="#annotated-cell-30-1"></a>by_clarity <span class="ot">&lt;-</span> by_clarity <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-30-2"><a href="#annotated-cell-30-2"></a>  <span class="fu">mutate</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-30" data-target-annotation="1">1</button><span id="annotated-cell-30-3" class="code-annotation-target"><a href="#annotated-cell-30-3"></a>    <span class="at">plot =</span> <span class="fu">map</span>(data, carat_histogram),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-30" data-target-annotation="2">2</button><span id="annotated-cell-30-4" class="code-annotation-target"><a href="#annotated-cell-30-4"></a>    <span class="at">path =</span> <span class="fu">str_glue</span>(<span class="st">"clarity-{clarity}.png"</span>)</span>
+<span id="annotated-cell-30-5"><a href="#annotated-cell-30-5"></a>  )</span>
+<span id="annotated-cell-30-6"><a href="#annotated-cell-30-6"></a>by_clarity</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-30" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-30" data-code-lines="3" data-code-annotation="1">Creates a column called plot where each observation is the ggplot object for the corresponding data.</span>
+</dd>
+<dt data-target-cell="annotated-cell-30" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-30" data-code-lines="4" data-code-annotation="2">Overwrites the <code>path</code> column to specify the corresponding filepaths for each ggplot object in <code>plot</code>.</span>
+</dd>
+</dl>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; # A tibble: 8 × 4
 &gt;   clarity               data path             plot      
@@ -1500,7 +1545,7 @@
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a>by_clarity<span class="sc">$</span>plot[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>by_clarity<span class="sc">$</span>plot[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -1516,22 +1561,38 @@
 <p>Then use <code>walk2()</code> with <code>ggsave()</code> to save each plot:</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a><span class="fu">walk2</span>(</span>
-<span id="cb54-2"><a></a>  by_clarity<span class="sc">$</span>path,</span>
-<span id="cb54-3"><a></a>  by_clarity<span class="sc">$</span>plot,</span>
-<span id="cb54-4"><a></a>  \(path, plot) <span class="fu">ggsave</span>(path, plot, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>)</span>
-<span id="cb54-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-32"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-32-1"><a href="#annotated-cell-32-1"></a><span class="fu">walk2</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="1">1</button><span id="annotated-cell-32-2" class="code-annotation-target"><a href="#annotated-cell-32-2"></a>  by_clarity<span class="sc">$</span>path,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="2">2</button><span id="annotated-cell-32-3" class="code-annotation-target"><a href="#annotated-cell-32-3"></a>  by_clarity<span class="sc">$</span>plot,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="3">3</button><span id="annotated-cell-32-4" class="code-annotation-target"><a href="#annotated-cell-32-4"></a>  \(path, plot) <span class="fu">ggsave</span>(path, plot, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>)</span>
+<span id="annotated-cell-32-5"><a href="#annotated-cell-32-5"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-32" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-32" data-code-lines="2" data-code-annotation="1">The first argument (the filepath) provided to our anonymous function below.</span>
+</dd>
+<dt data-target-cell="annotated-cell-32" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-32" data-code-lines="3" data-code-annotation="2">The second argument (the ggplot object) provided to our anonymous function below.</span>
+</dd>
+<dt data-target-cell="annotated-cell-32" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-32" data-code-lines="4" data-code-annotation="3">Our anonymous function, specifying the first two required arguments of <code>ggsave()</code>, as well as any additional (optional) argument(s) we’d like to specify (in this case, the width and height of the saved plot).</span>
+</dd>
+</dl>
+</div>
 </div>
 <p><br></p>
 </div>
 <div class="fragment">
 <p>Which is shorthand for:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="fu">ggsave</span>(by_clarity<span class="sc">$</span>path[[<span class="dv">1</span>]], by_clarity<span class="sc">$</span>plot[[<span class="dv">1</span>]], <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>)</span>
-<span id="cb55-2"><a></a><span class="fu">ggsave</span>(by_clarity<span class="sc">$</span>path[[<span class="dv">2</span>]], by_clarity<span class="sc">$</span>plot[[<span class="dv">2</span>]], <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>)</span>
-<span id="cb55-3"><a></a><span class="fu">ggsave</span>(by_clarity<span class="sc">$</span>path[[<span class="dv">3</span>]], by_clarity<span class="sc">$</span>plot[[<span class="dv">3</span>]], <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>)</span>
-<span id="cb55-4"><a></a>...</span>
-<span id="cb55-5"><a></a><span class="fu">ggsave</span>(by_clarity<span class="sc">$</span>path[[<span class="dv">8</span>]], by_clarity<span class="sc">$</span>plot[[<span class="dv">8</span>]], <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="fu">ggsave</span>(by_clarity<span class="sc">$</span>path[[<span class="dv">1</span>]], by_clarity<span class="sc">$</span>plot[[<span class="dv">1</span>]], <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>)</span>
+<span id="cb52-2"><a></a><span class="fu">ggsave</span>(by_clarity<span class="sc">$</span>path[[<span class="dv">2</span>]], by_clarity<span class="sc">$</span>plot[[<span class="dv">2</span>]], <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>)</span>
+<span id="cb52-3"><a></a><span class="fu">ggsave</span>(by_clarity<span class="sc">$</span>path[[<span class="dv">3</span>]], by_clarity<span class="sc">$</span>plot[[<span class="dv">3</span>]], <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>)</span>
+<span id="cb52-4"><a></a>...</span>
+<span id="cb52-5"><a></a><span class="fu">ggsave</span>(by_clarity<span class="sc">$</span>path[[<span class="dv">8</span>]], by_clarity<span class="sc">$</span>plot[[<span class="dv">8</span>]], <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section></section>
@@ -1589,7 +1650,7 @@
 <p>A downside to <code>lapply()</code> is that lists can be hard to work with. <code>sapply()</code>, therefore, always tries to simplify the result.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a><span class="fu">sapply</span>(swiss, <span class="at">FUN =</span> median)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a><span class="fu">sapply</span>(swiss, <span class="at">FUN =</span> median)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt;        Fertility      Agriculture      Examination        Education 
 &gt;            70.40            54.10            16.00             8.00 
@@ -1604,7 +1665,7 @@
 <p>This version takes an additional argument that specifies the expected type, ensuring that simplification occurs the same way regardless of the input.</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a><span class="fu">vapply</span>(swiss, median, <span class="fu">double</span>(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a><span class="fu">vapply</span>(swiss, median, <span class="fu">double</span>(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt;        Fertility      Agriculture      Examination        Education 
 &gt;            70.40            54.10            16.00             8.00 
@@ -1622,9 +1683,9 @@
 <div class="columns">
 <div class="column" style="width:40%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">|&gt;</span> </span>
-<span id="cb61-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">|&gt;</span> </span>
-<span id="cb61-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">price =</span> <span class="fu">mean</span>(price))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">|&gt;</span> </span>
+<span id="cb58-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">|&gt;</span> </span>
+<span id="cb58-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">price =</span> <span class="fu">mean</span>(price))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; # A tibble: 5 × 2
 &gt;   cut       price
@@ -1638,7 +1699,15 @@
 </div>
 </div><div class="column" style="width:60%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(diamonds<span class="sc">$</span>price, diamonds<span class="sc">$</span>cut, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-85"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-85" data-target-annotation="1">1</button><span id="annotated-cell-85-1" class="code-annotation-target"><a href="#annotated-cell-85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(diamonds<span class="sc">$</span>price, diamonds<span class="sc">$</span>cut, mean)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-85" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-85" data-code-lines="1" data-code-annotation="1">The first argument (<code>X</code>) is grouped by the second argument (<code>INDEX</code>) and the third argument (<code>FUN</code>) is applied.</span>
+</dd>
+</dl>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt;      Fair      Good Very Good   Premium     Ideal 
 &gt;      4359      3929      3982      4584      3458</code></pre>
@@ -1657,7 +1726,7 @@
 <div class="fragment">
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a><span class="fu">apply</span>(swiss, <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN =</span> summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a><span class="fu">apply</span>(swiss, <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN =</span> summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt;         Fertility Agriculture Examination Education Catholic Infant.Mortality
 &gt; Min.        35.00        1.20        3.00      1.00    2.150            10.80
@@ -1685,9 +1754,9 @@
 <p><br></p>
 <p>The basic structure of a for loop looks like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a><span class="cf">for</span> (element <span class="cf">in</span> vector) {</span>
-<span id="cb67-2"><a></a>  <span class="co"># do something with element</span></span>
-<span id="cb67-3"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a><span class="cf">for</span> (element <span class="cf">in</span> vector) {</span>
+<span id="cb63-2"><a></a>  <span class="co"># do something with element</span></span>
+<span id="cb63-3"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -1699,9 +1768,9 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
-<span id="cb68-2"><a></a>    <span class="fu">print</span>(i)</span>
-<span id="cb68-3"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
+<span id="cb64-2"><a></a>    <span class="fu">print</span>(i)</span>
+<span id="cb64-3"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] 1
 &gt; [1] 2
@@ -1717,8 +1786,8 @@
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> <span class="sc">|&gt;</span></span>
-<span id="cb70-2"><a></a>  <span class="fu">walk</span>(\(x) <span class="fu">print</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> <span class="sc">|&gt;</span></span>
+<span id="cb66-2"><a></a>  <span class="fu">walk</span>(\(x) <span class="fu">print</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt; [1] 1
 &gt; [1] 2
